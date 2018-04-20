@@ -1,4 +1,4 @@
-# This is an example configuration file for the AdWords Next API Ruby client
+# This is an example configuration file for the Google Ads API Ruby client
 # library.
 # Please fill in the required fields and copy it to your home directory.
 
