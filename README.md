@@ -26,13 +26,13 @@ Alternatively, if you prefer not to or can't use the hosted gem on RubyGems, you
 can download the gem from the [Releases][] page and install it from the local
 file:
 
-    $ [sudo] gem install googleads-[version].gem
+    $ [sudo] gem install google-ads-googleads-[version].gem
 
 Or you can build it yourself from the source. After cloning the GitHub repo,
 navigate to the `google-ads-ruby` folder and run:
 
     $ rake build
-    $ gem install pkg/googleads-[version].gem
+    $ gem install pkg/google-ads-googleads-[version].gem
 
 [Releases]: https://github.com/googleads/google-ads-ruby/releases
 
