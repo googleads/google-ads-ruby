@@ -75,7 +75,7 @@ way:
 You can also modify these properties after instantiation by using the
 `configure` method on the `AdwordsClient`, using the same structure as above.
 
-[Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/
+[Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/overview
 [Authentication example]: https://github.com/googleads/google-ads-ruby/blob/master/examples/authentication/authenticate_in_standalone_application.rb
 [adwords_config.rb]: https://github.com/googleads/google-ads-ruby/blob/master/googleads_config.rb
 
