@@ -1,6 +1,6 @@
 {
   "interfaces": {
-    "google.ads.googleads.v0.services.GoogleAdsService": {
+    "google.ads.googleads.v0.services.AdGroupBidModifierService": {
       "retry_codes": {
         "idempotent": [
           "DEADLINE_EXCEEDED",
@@ -20,7 +20,12 @@
         }
       },
       "methods": {
-        "Search": {
+        "GetAdGroupBidModifier": {
+          "timeout_millis": 60000,
+          "retry_codes_name": "idempotent",
+          "retry_params_name": "default"
+        },
+        "MutateAdGroupBidModifiers": {
           "timeout_millis": 60000,
           "retry_codes_name": "non_idempotent",
           "retry_params_name": "default"

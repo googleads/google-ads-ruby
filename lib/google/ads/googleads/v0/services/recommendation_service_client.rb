@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/campaign_budget_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/recommendation_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/googleads/v0/services/campaign_budget_service_pb"
+require "google/ads/googleads/v0/services/recommendation_service_pb"
 require "google/ads/googleads/credentials"
 
 module Google
@@ -32,12 +32,12 @@ module Google
     module Googleads
       module V0
         module Services
-          # Service to manage campaign budgets.
+          # Service to manage recommendations.
           #
-          # @!attribute [r] campaign_budget_service_stub
-          #   @return [Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub]
-          class CampaignBudgetServiceClient
-            attr_reader :campaign_budget_service_stub
+          # @!attribute [r] recommendation_service_stub
+          #   @return [Google::Ads::Googleads::V0::Services::RecommendationService::Stub]
+          class RecommendationServiceClient
+            attr_reader :recommendation_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -53,20 +53,20 @@ module Google
             ].freeze
 
 
-            CAMPAIGN_BUDGET_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}/campaignBudgets/{campaign_budget}"
+            RECOMMENDATION_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "customers/{customer}/recommendations/{recommendation}"
             )
 
-            private_constant :CAMPAIGN_BUDGET_PATH_TEMPLATE
+            private_constant :RECOMMENDATION_PATH_TEMPLATE
 
-            # Returns a fully-qualified campaign_budget resource name string.
+            # Returns a fully-qualified recommendation resource name string.
             # @param customer [String]
-            # @param campaign_budget [String]
+            # @param recommendation [String]
             # @return [String]
-            def self.campaign_budget_path customer, campaign_budget
-              CAMPAIGN_BUDGET_PATH_TEMPLATE.render(
+            def self.recommendation_path customer, recommendation
+              RECOMMENDATION_PATH_TEMPLATE.render(
                 :"customer" => customer,
-                :"campaign_budget" => campaign_budget
+                :"recommendation" => recommendation
               )
             end
 
@@ -112,7 +112,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/googleads/v0/services/campaign_budget_service_services_pb"
+              require "google/ads/googleads/v0/services/recommendation_service_services_pb"
 
               credentials ||= Google::Ads::Googleads::Credentials.default
 
@@ -143,11 +143,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "campaign_budget_service_client_config.json"
+                "recommendation_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v0.services.CampaignBudgetService",
+                  "google.ads.googleads.v0.services.RecommendationService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -160,90 +160,89 @@ module Google
               # Allow overriding the service path/port in subclasses.
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
-              @campaign_budget_service_stub = Google::Gax::Grpc.create_stub(
+              @recommendation_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
                 channel: channel,
                 updater_proc: updater_proc,
                 scopes: scopes,
-                &Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub.method(:new)
+                &Google::Ads::Googleads::V0::Services::RecommendationService::Stub.method(:new)
               )
 
-              @get_campaign_budget = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:get_campaign_budget),
-                defaults["get_campaign_budget"],
+              @get_recommendation = Google::Gax.create_api_call(
+                @recommendation_service_stub.method(:get_recommendation),
+                defaults["get_recommendation"],
                 exception_transformer: exception_transformer
               )
-              @mutate_campaign_budgets = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:mutate_campaign_budgets),
-                defaults["mutate_campaign_budgets"],
+              @apply_recommendation = Google::Gax.create_api_call(
+                @recommendation_service_stub.method(:apply_recommendation),
+                defaults["apply_recommendation"],
                 exception_transformer: exception_transformer
               )
             end
 
             # Service calls
 
-            # Returns the requested Campaign Budget in full detail.
+            # Returns the requested recommendation in full detail.
             #
             # @param resource_name [String]
-            #   The resource name of the campaign budget to fetch.
+            #   The resource name of the recommendation to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @yieldparam result [Google::Ads::Googleads::V0::Resources::Recommendation]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @return [Google::Ads::Googleads::V0::Resources::Recommendation]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/googleads/v0/services"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
-            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CampaignBudgetServiceClient.campaign_budget_path("[CUSTOMER]", "[CAMPAIGN_BUDGET]")
-            #   response = campaign_budget_service_client.get_campaign_budget(formatted_resource_name)
+            #   recommendation_service_client = Google::Ads::Googleads::V0::Services::Recommendation.new
+            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::RecommendationServiceClient.recommendation_path("[CUSTOMER]", "[RECOMMENDATION]")
+            #   response = recommendation_service_client.get_recommendation(formatted_resource_name)
 
-            def get_campaign_budget \
+            def get_recommendation \
                 resource_name,
                 options: nil,
                 &block
               req = {
                 resource_name: resource_name
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetCampaignBudgetRequest)
-              @get_campaign_budget.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetRecommendationRequest)
+              @get_recommendation.call(req, options, &block)
             end
 
-            # Creates, updates, or removes campaign budgets. Operation statuses are
-            # returned.
+            # Applies given recommendations with corresponding apply parameters.
             #
             # @param customer_id [String]
-            #   The ID of the customer whose campaign budgets are being modified.
-            # @param operations [Array<Google::Ads::Googleads::V0::Services::CampaignBudgetOperation | Hash>]
-            #   The list of operations to perform on individual campaign budgets.
-            #   A hash of the same form as `Google::Ads::Googleads::V0::Services::CampaignBudgetOperation`
+            #   The ID of the customer with the recommendation.
+            # @param operations [Array<Google::Ads::Googleads::V0::Services::ApplyRecommendationOperation | Hash>]
+            #   The list of operations to apply recommendations.
+            #   A hash of the same form as `Google::Ads::Googleads::V0::Services::ApplyRecommendationOperation`
             #   can also be provided.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
+            # @yieldparam result [Google::Ads::Googleads::V0::Services::ApplyRecommendationResponse]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
+            # @return [Google::Ads::Googleads::V0::Services::ApplyRecommendationResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/googleads/v0/services"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
+            #   recommendation_service_client = Google::Ads::Googleads::V0::Services::Recommendation.new
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''
             #
             #   # TODO: Initialize +operations+:
             #   operations = []
-            #   response = campaign_budget_service_client.mutate_campaign_budgets(customer_id, operations)
+            #   response = recommendation_service_client.apply_recommendation(customer_id, operations)
 
-            def mutate_campaign_budgets \
+            def apply_recommendation \
                 customer_id,
                 operations,
                 options: nil,
@@ -252,8 +251,8 @@ module Google
                 customer_id: customer_id,
                 operations: operations
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsRequest)
-              @mutate_campaign_budgets.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::ApplyRecommendationRequest)
+              @apply_recommendation.call(req, options, &block)
             end
           end
         end

@@ -10,9 +10,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :RESOURCE_NOT_FOUND, 3
-    value :REQUIRED_FIELD_MISSING, 4
-    value :FIELD_NOT_CLEARABLE, 5
-    value :INVALID_FIELD_VALUE, 6
     value :ID_EXISTS_IN_MULTIPLE_MUTATES, 7
   end
 end

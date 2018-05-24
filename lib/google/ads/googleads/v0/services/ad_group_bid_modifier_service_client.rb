@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/campaign_budget_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/ad_group_bid_modifier_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/googleads/v0/services/campaign_budget_service_pb"
+require "google/ads/googleads/v0/services/ad_group_bid_modifier_service_pb"
 require "google/ads/googleads/credentials"
 
 module Google
@@ -32,12 +32,12 @@ module Google
     module Googleads
       module V0
         module Services
-          # Service to manage campaign budgets.
+          # Service to manage ad group bid modifiers.
           #
-          # @!attribute [r] campaign_budget_service_stub
-          #   @return [Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub]
-          class CampaignBudgetServiceClient
-            attr_reader :campaign_budget_service_stub
+          # @!attribute [r] ad_group_bid_modifier_service_stub
+          #   @return [Google::Ads::Googleads::V0::Services::AdGroupBidModifierService::Stub]
+          class AdGroupBidModifierServiceClient
+            attr_reader :ad_group_bid_modifier_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -53,20 +53,20 @@ module Google
             ].freeze
 
 
-            CAMPAIGN_BUDGET_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}/campaignBudgets/{campaign_budget}"
+            AD_GROUP_BID_MODIFIER_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "customers/{customer}/adGroupBidModifiers/{ad_group_bid_modifier}"
             )
 
-            private_constant :CAMPAIGN_BUDGET_PATH_TEMPLATE
+            private_constant :AD_GROUP_BID_MODIFIER_PATH_TEMPLATE
 
-            # Returns a fully-qualified campaign_budget resource name string.
+            # Returns a fully-qualified ad_group_bid_modifier resource name string.
             # @param customer [String]
-            # @param campaign_budget [String]
+            # @param ad_group_bid_modifier [String]
             # @return [String]
-            def self.campaign_budget_path customer, campaign_budget
-              CAMPAIGN_BUDGET_PATH_TEMPLATE.render(
+            def self.ad_group_bid_modifier_path customer, ad_group_bid_modifier
+              AD_GROUP_BID_MODIFIER_PATH_TEMPLATE.render(
                 :"customer" => customer,
-                :"campaign_budget" => campaign_budget
+                :"ad_group_bid_modifier" => ad_group_bid_modifier
               )
             end
 
@@ -112,7 +112,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/googleads/v0/services/campaign_budget_service_services_pb"
+              require "google/ads/googleads/v0/services/ad_group_bid_modifier_service_services_pb"
 
               credentials ||= Google::Ads::Googleads::Credentials.default
 
@@ -143,11 +143,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "campaign_budget_service_client_config.json"
+                "ad_group_bid_modifier_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v0.services.CampaignBudgetService",
+                  "google.ads.googleads.v0.services.AdGroupBidModifierService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -160,90 +160,90 @@ module Google
               # Allow overriding the service path/port in subclasses.
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
-              @campaign_budget_service_stub = Google::Gax::Grpc.create_stub(
+              @ad_group_bid_modifier_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
                 channel: channel,
                 updater_proc: updater_proc,
                 scopes: scopes,
-                &Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub.method(:new)
+                &Google::Ads::Googleads::V0::Services::AdGroupBidModifierService::Stub.method(:new)
               )
 
-              @get_campaign_budget = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:get_campaign_budget),
-                defaults["get_campaign_budget"],
+              @get_ad_group_bid_modifier = Google::Gax.create_api_call(
+                @ad_group_bid_modifier_service_stub.method(:get_ad_group_bid_modifier),
+                defaults["get_ad_group_bid_modifier"],
                 exception_transformer: exception_transformer
               )
-              @mutate_campaign_budgets = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:mutate_campaign_budgets),
-                defaults["mutate_campaign_budgets"],
+              @mutate_ad_group_bid_modifiers = Google::Gax.create_api_call(
+                @ad_group_bid_modifier_service_stub.method(:mutate_ad_group_bid_modifiers),
+                defaults["mutate_ad_group_bid_modifiers"],
                 exception_transformer: exception_transformer
               )
             end
 
             # Service calls
 
-            # Returns the requested Campaign Budget in full detail.
+            # Returns the requested ad group bid modifier in full detail.
             #
             # @param resource_name [String]
-            #   The resource name of the campaign budget to fetch.
+            #   The resource name of the ad group bid modifier to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @yieldparam result [Google::Ads::Googleads::V0::Resources::AdGroupBidModifier]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @return [Google::Ads::Googleads::V0::Resources::AdGroupBidModifier]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/googleads/v0/services"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
-            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CampaignBudgetServiceClient.campaign_budget_path("[CUSTOMER]", "[CAMPAIGN_BUDGET]")
-            #   response = campaign_budget_service_client.get_campaign_budget(formatted_resource_name)
+            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::V0::Services::AdGroupBidModifier.new
+            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::AdGroupBidModifierServiceClient.ad_group_bid_modifier_path("[CUSTOMER]", "[AD_GROUP_BID_MODIFIER]")
+            #   response = ad_group_bid_modifier_service_client.get_ad_group_bid_modifier(formatted_resource_name)
 
-            def get_campaign_budget \
+            def get_ad_group_bid_modifier \
                 resource_name,
                 options: nil,
                 &block
               req = {
                 resource_name: resource_name
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetCampaignBudgetRequest)
-              @get_campaign_budget.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetAdGroupBidModifierRequest)
+              @get_ad_group_bid_modifier.call(req, options, &block)
             end
 
-            # Creates, updates, or removes campaign budgets. Operation statuses are
-            # returned.
+            # Creates, updates, or removes ad group bid modifiers.
+            # Operation statuses are returned.
             #
             # @param customer_id [String]
-            #   The ID of the customer whose campaign budgets are being modified.
-            # @param operations [Array<Google::Ads::Googleads::V0::Services::CampaignBudgetOperation | Hash>]
-            #   The list of operations to perform on individual campaign budgets.
-            #   A hash of the same form as `Google::Ads::Googleads::V0::Services::CampaignBudgetOperation`
+            #   ID of the customer whose ad group bid modifiers are being modified.
+            # @param operations [Array<Google::Ads::Googleads::V0::Services::AdGroupBidModifierOperation | Hash>]
+            #   The list of operations to perform on individual ad group bid modifiers.
+            #   A hash of the same form as `Google::Ads::Googleads::V0::Services::AdGroupBidModifierOperation`
             #   can also be provided.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
+            # @yieldparam result [Google::Ads::Googleads::V0::Services::MutateAdGroupBidModifiersResponse]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
+            # @return [Google::Ads::Googleads::V0::Services::MutateAdGroupBidModifiersResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/googleads/v0/services"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
+            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::V0::Services::AdGroupBidModifier.new
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''
             #
             #   # TODO: Initialize +operations+:
             #   operations = []
-            #   response = campaign_budget_service_client.mutate_campaign_budgets(customer_id, operations)
+            #   response = ad_group_bid_modifier_service_client.mutate_ad_group_bid_modifiers(customer_id, operations)
 
-            def mutate_campaign_budgets \
+            def mutate_ad_group_bid_modifiers \
                 customer_id,
                 operations,
                 options: nil,
@@ -252,8 +252,8 @@ module Google
                 customer_id: customer_id,
                 operations: operations
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsRequest)
-              @mutate_campaign_budgets.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::MutateAdGroupBidModifiersRequest)
+              @mutate_ad_group_bid_modifiers.call(req, options, &block)
             end
           end
         end

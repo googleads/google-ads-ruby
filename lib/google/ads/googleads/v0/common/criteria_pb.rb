@@ -4,11 +4,67 @@
 require 'google/protobuf'
 
 require 'google/ads/googleads/v0/enums/keyword_match_type_pb'
+require 'google/ads/googleads/v0/enums/listing_custom_attribute_index_pb'
+require 'google/ads/googleads/v0/enums/listing_group_type_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.KeywordInfo" do
     optional :text, :message, 1, "google.protobuf.StringValue"
     optional :match_type, :enum, 2, "google.ads.googleads.v0.enums.KeywordMatchTypeEnum.KeywordMatchType"
+  end
+  add_message "google.ads.googleads.v0.common.LocationInfo" do
+  end
+  add_message "google.ads.googleads.v0.common.PlatformInfo" do
+  end
+  add_message "google.ads.googleads.v0.common.ListingGroupInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.ListingGroupTypeEnum.ListingGroupType"
+    optional :case_value, :message, 2, "google.ads.googleads.v0.common.ListingDimensionInfo"
+    optional :parent_criterion_id, :message, 3, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v0.common.ListingDimensionInfo" do
+    oneof :dimension do
+      optional :listing_brand, :message, 1, "google.ads.googleads.v0.common.ListingBrandInfo"
+      optional :hotel_id, :message, 2, "google.ads.googleads.v0.common.HotelIdInfo"
+      optional :hotel_class, :message, 3, "google.ads.googleads.v0.common.HotelClassInfo"
+      optional :hotel_country_region, :message, 4, "google.ads.googleads.v0.common.HotelCountryRegionInfo"
+      optional :hotel_state, :message, 5, "google.ads.googleads.v0.common.HotelStateInfo"
+      optional :hotel_city, :message, 6, "google.ads.googleads.v0.common.HotelCityInfo"
+      optional :listing_custom_attribute, :message, 7, "google.ads.googleads.v0.common.ListingCustomAttributeInfo"
+    end
+  end
+  add_message "google.ads.googleads.v0.common.ListingBrandInfo" do
+    optional :value, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.HotelIdInfo" do
+    optional :value, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.HotelClassInfo" do
+    optional :value, :message, 1, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v0.common.HotelCountryRegionInfo" do
+    optional :country_region_criterion, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.HotelStateInfo" do
+    optional :state_criterion, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.HotelCityInfo" do
+    optional :city_criterion, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.ListingCustomAttributeInfo" do
+    optional :value, :message, 1, "google.protobuf.StringValue"
+    optional :index, :enum, 2, "google.ads.googleads.v0.enums.ListingCustomAttributeIndexEnum.ListingCustomAttributeIndex"
+  end
+  add_message "google.ads.googleads.v0.common.HotelDateSelectionTypeInfo" do
+  end
+  add_message "google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo" do
+    optional :min_days, :message, 1, "google.protobuf.Int64Value"
+    optional :max_days, :message, 2, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v0.common.HotelLengthOfStayInfo" do
+    optional :min_nights, :message, 1, "google.protobuf.Int64Value"
+    optional :max_nights, :message, 2, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v0.common.HotelCheckInDayInfo" do
   end
 end
 
@@ -18,6 +74,21 @@ module Google
       module V0
         module Common
           KeywordInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.KeywordInfo").msgclass
+          LocationInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LocationInfo").msgclass
+          PlatformInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PlatformInfo").msgclass
+          ListingGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingGroupInfo").msgclass
+          ListingDimensionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingDimensionInfo").msgclass
+          ListingBrandInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingBrandInfo").msgclass
+          HotelIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelIdInfo").msgclass
+          HotelClassInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelClassInfo").msgclass
+          HotelCountryRegionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCountryRegionInfo").msgclass
+          HotelStateInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelStateInfo").msgclass
+          HotelCityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCityInfo").msgclass
+          ListingCustomAttributeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingCustomAttributeInfo").msgclass
+          HotelDateSelectionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelDateSelectionTypeInfo").msgclass
+          HotelAdvanceBookingWindowInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo").msgclass
+          HotelLengthOfStayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelLengthOfStayInfo").msgclass
+          HotelCheckInDayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCheckInDayInfo").msgclass
         end
       end
     end

@@ -6,7 +6,7 @@ require 'google/protobuf'
 require 'google/ads/googleads/v0/common/criteria_pb'
 require 'google/ads/googleads/v0/common/custom_parameter_pb'
 require 'google/ads/googleads/v0/enums/ad_group_criterion_status_pb'
-require 'google/ads/googleads/v0/enums/bid_source_pb'
+require 'google/ads/googleads/v0/enums/bidding_source_pb'
 require 'google/ads/googleads/v0/enums/criterion_type_pb'
 require 'google/ads/googleads/v0/enums/quality_score_bucket_pb'
 require 'google/protobuf/wrappers_pb'
@@ -25,15 +25,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :effective_cpc_bid_micros, :message, 18, "google.protobuf.Int64Value"
     optional :effective_cpm_bid_micros, :message, 19, "google.protobuf.Int64Value"
     optional :effective_cpv_bid_micros, :message, 20, "google.protobuf.Int64Value"
-    optional :effective_cpc_bid_source, :enum, 21, "google.ads.googleads.v0.enums.BidSourceEnum.BidSource"
-    optional :effective_cpm_bid_source, :enum, 22, "google.ads.googleads.v0.enums.BidSourceEnum.BidSource"
-    optional :effective_cpv_bid_source, :enum, 23, "google.ads.googleads.v0.enums.BidSourceEnum.BidSource"
+    optional :effective_cpc_bid_source, :enum, 21, "google.ads.googleads.v0.enums.BiddingSourceEnum.BiddingSource"
+    optional :effective_cpm_bid_source, :enum, 22, "google.ads.googleads.v0.enums.BiddingSourceEnum.BiddingSource"
+    optional :effective_cpv_bid_source, :enum, 23, "google.ads.googleads.v0.enums.BiddingSourceEnum.BiddingSource"
     optional :position_estimates, :message, 10, "google.ads.googleads.v0.resources.AdGroupCriterion.PositionEstimates"
     repeated :final_urls, :message, 11, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 13, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 14, "google.ads.googleads.v0.common.CustomParameter"
     oneof :criterion do
       optional :keyword, :message, 27, "google.ads.googleads.v0.common.KeywordInfo"
+      optional :listing_group, :message, 32, "google.ads.googleads.v0.common.ListingGroupInfo"
     end
   end
   add_message "google.ads.googleads.v0.resources.AdGroupCriterion.QualityInfo" do

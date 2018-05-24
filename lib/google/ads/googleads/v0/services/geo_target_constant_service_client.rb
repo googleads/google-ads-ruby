@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/campaign_budget_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/googleads/v0/services/geo_target_constant_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/googleads/v0/services/campaign_budget_service_pb"
+require "google/ads/googleads/v0/services/geo_target_constant_service_pb"
 require "google/ads/googleads/credentials"
 
 module Google
@@ -32,12 +32,12 @@ module Google
     module Googleads
       module V0
         module Services
-          # Service to manage campaign budgets.
+          # Service to fetch geo target constants.
           #
-          # @!attribute [r] campaign_budget_service_stub
-          #   @return [Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub]
-          class CampaignBudgetServiceClient
-            attr_reader :campaign_budget_service_stub
+          # @!attribute [r] geo_target_constant_service_stub
+          #   @return [Google::Ads::Googleads::V0::Services::GeoTargetConstantService::Stub]
+          class GeoTargetConstantServiceClient
+            attr_reader :geo_target_constant_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -53,20 +53,18 @@ module Google
             ].freeze
 
 
-            CAMPAIGN_BUDGET_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}/campaignBudgets/{campaign_budget}"
+            GEO_TARGET_CONSTANT_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "geoTargetConstants/{geo_target_constant}"
             )
 
-            private_constant :CAMPAIGN_BUDGET_PATH_TEMPLATE
+            private_constant :GEO_TARGET_CONSTANT_PATH_TEMPLATE
 
-            # Returns a fully-qualified campaign_budget resource name string.
-            # @param customer [String]
-            # @param campaign_budget [String]
+            # Returns a fully-qualified geo_target_constant resource name string.
+            # @param geo_target_constant [String]
             # @return [String]
-            def self.campaign_budget_path customer, campaign_budget
-              CAMPAIGN_BUDGET_PATH_TEMPLATE.render(
-                :"customer" => customer,
-                :"campaign_budget" => campaign_budget
+            def self.geo_target_constant_path geo_target_constant
+              GEO_TARGET_CONSTANT_PATH_TEMPLATE.render(
+                :"geo_target_constant" => geo_target_constant
               )
             end
 
@@ -112,7 +110,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/googleads/v0/services/campaign_budget_service_services_pb"
+              require "google/ads/googleads/v0/services/geo_target_constant_service_services_pb"
 
               credentials ||= Google::Ads::Googleads::Credentials.default
 
@@ -143,11 +141,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "campaign_budget_service_client_config.json"
+                "geo_target_constant_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v0.services.CampaignBudgetService",
+                  "google.ads.googleads.v0.services.GeoTargetConstantService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -160,100 +158,53 @@ module Google
               # Allow overriding the service path/port in subclasses.
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
-              @campaign_budget_service_stub = Google::Gax::Grpc.create_stub(
+              @geo_target_constant_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
                 channel: channel,
                 updater_proc: updater_proc,
                 scopes: scopes,
-                &Google::Ads::Googleads::V0::Services::CampaignBudgetService::Stub.method(:new)
+                &Google::Ads::Googleads::V0::Services::GeoTargetConstantService::Stub.method(:new)
               )
 
-              @get_campaign_budget = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:get_campaign_budget),
-                defaults["get_campaign_budget"],
-                exception_transformer: exception_transformer
-              )
-              @mutate_campaign_budgets = Google::Gax.create_api_call(
-                @campaign_budget_service_stub.method(:mutate_campaign_budgets),
-                defaults["mutate_campaign_budgets"],
+              @get_geo_target_constant = Google::Gax.create_api_call(
+                @geo_target_constant_service_stub.method(:get_geo_target_constant),
+                defaults["get_geo_target_constant"],
                 exception_transformer: exception_transformer
               )
             end
 
             # Service calls
 
-            # Returns the requested Campaign Budget in full detail.
+            # Returns the requested geo target constant in full detail.
             #
             # @param resource_name [String]
-            #   The resource name of the campaign budget to fetch.
+            #   The resource name of the geo target constant to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @yieldparam result [Google::Ads::Googleads::V0::Resources::GeoTargetConstant]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Resources::CampaignBudget]
+            # @return [Google::Ads::Googleads::V0::Resources::GeoTargetConstant]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/googleads/v0/services"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
-            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CampaignBudgetServiceClient.campaign_budget_path("[CUSTOMER]", "[CAMPAIGN_BUDGET]")
-            #   response = campaign_budget_service_client.get_campaign_budget(formatted_resource_name)
+            #   geo_target_constant_service_client = Google::Ads::Googleads::V0::Services::GeoTargetConstant.new
+            #   formatted_resource_name = Google::Ads::Googleads::V0::Services::GeoTargetConstantServiceClient.geo_target_constant_path("[GEO_TARGET_CONSTANT]")
+            #   response = geo_target_constant_service_client.get_geo_target_constant(formatted_resource_name)
 
-            def get_campaign_budget \
+            def get_geo_target_constant \
                 resource_name,
                 options: nil,
                 &block
               req = {
                 resource_name: resource_name
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetCampaignBudgetRequest)
-              @get_campaign_budget.call(req, options, &block)
-            end
-
-            # Creates, updates, or removes campaign budgets. Operation statuses are
-            # returned.
-            #
-            # @param customer_id [String]
-            #   The ID of the customer whose campaign budgets are being modified.
-            # @param operations [Array<Google::Ads::Googleads::V0::Services::CampaignBudgetOperation | Hash>]
-            #   The list of operations to perform on individual campaign budgets.
-            #   A hash of the same form as `Google::Ads::Googleads::V0::Services::CampaignBudgetOperation`
-            #   can also be provided.
-            # @param options [Google::Gax::CallOptions]
-            #   Overrides the default settings for this call, e.g, timeout,
-            #   retries, etc.
-            # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
-            # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
-            # @raise [Google::Gax::GaxError] if the RPC is aborted.
-            # @example
-            #   require "google/ads/googleads/v0/services"
-            #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
-            #
-            #   # TODO: Initialize +customer_id+:
-            #   customer_id = ''
-            #
-            #   # TODO: Initialize +operations+:
-            #   operations = []
-            #   response = campaign_budget_service_client.mutate_campaign_budgets(customer_id, operations)
-
-            def mutate_campaign_budgets \
-                customer_id,
-                operations,
-                options: nil,
-                &block
-              req = {
-                customer_id: customer_id,
-                operations: operations
-              }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsRequest)
-              @mutate_campaign_budgets.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::Googleads::V0::Services::GetGeoTargetConstantRequest)
+              @get_geo_target_constant.call(req, options, &block)
             end
           end
         end

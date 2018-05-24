@@ -25,7 +25,7 @@ require "pathname"
 require "google/gax"
 
 require "google/ads/googleads/v0/services/ad_group_service_pb"
-require "google/ads/googleads/v0/services/credentials"
+require "google/ads/googleads/credentials"
 
 module Google
   module Ads
@@ -114,10 +114,10 @@ module Google
               require "google/gax/grpc"
               require "google/ads/googleads/v0/services/ad_group_service_services_pb"
 
-              credentials ||= Google::Ads::Googleads::V0::Services::Credentials.default
+              credentials ||= Google::Ads::Googleads::Credentials.default
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)
-                updater_proc = Google::Ads::Googleads::V0::Services::Credentials.new(credentials).updater_proc
+                updater_proc = Google::Ads::Googleads::Credentials.new(credentials).updater_proc
               end
               if credentials.is_a?(GRPC::Core::Channel)
                 channel = credentials

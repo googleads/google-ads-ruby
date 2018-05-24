@@ -10,6 +10,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :KEYWORD, 2
+    value :PLATFORM, 6
+    value :LOCATION, 7
+    value :LISTING_GROUP, 8
   end
 end
 

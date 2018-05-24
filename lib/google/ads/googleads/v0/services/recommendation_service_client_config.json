@@ -1,6 +1,6 @@
 {
   "interfaces": {
-    "google.ads.googleads.v0.services.GoogleAdsService": {
+    "google.ads.googleads.v0.services.RecommendationService": {
       "retry_codes": {
         "idempotent": [
           "DEADLINE_EXCEEDED",
@@ -20,8 +20,13 @@
         }
       },
       "methods": {
-        "Search": {
-          "timeout_millis": 60000,
+        "GetRecommendation": {
+          "timeout_millis": 600000,
+          "retry_codes_name": "idempotent",
+          "retry_params_name": "default"
+        },
+        "ApplyRecommendation": {
+          "timeout_millis": 600000,
           "retry_codes_name": "non_idempotent",
           "retry_params_name": "default"
         }

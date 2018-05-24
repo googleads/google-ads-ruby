@@ -11,10 +11,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :resource_name, :string, 1
     optional :campaign, :message, 4, "google.protobuf.StringValue"
     optional :criterion_id, :message, 5, "google.protobuf.Int64Value"
+    optional :bid_modifier, :message, 14, "google.protobuf.FloatValue"
     optional :negative, :message, 7, "google.protobuf.BoolValue"
     optional :type, :enum, 6, "google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType"
     oneof :criterion do
       optional :keyword, :message, 8, "google.ads.googleads.v0.common.KeywordInfo"
+      optional :location, :message, 12, "google.ads.googleads.v0.common.LocationInfo"
+      optional :platform, :message, 13, "google.ads.googleads.v0.common.PlatformInfo"
     end
   end
 end
