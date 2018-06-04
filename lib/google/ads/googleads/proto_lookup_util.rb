@@ -130,7 +130,15 @@ module Google
           CustomParameter: ['common', 'custom_parameter_pb', 'CustomParameter'],
           Metrics: ['common', 'metrics_pb', 'Metrics'],
           PolicyViolationKey: ['common', 'policy_pb', 'PolicyViolationKey'],
-          Value: ['common', 'value_pb', 'Value']
+          Value: ['common', 'value_pb', 'Value'],
+          CampaignBudgetParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::CampaignBudgetParameters'],
+          TextAdParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::TextAdParameters'],
+          KeywordParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::KeywordParameters'],
+          TargetCpaOptInParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::TargetCpaOptInParameters']
         }.freeze
 
         ENUMS = {
@@ -200,13 +208,17 @@ module Google
               'KeywordViewServiceClient'],
           Recommendation: ['recommendation_service_client',
               'RecommendationServiceClient']
-        }
+        }.freeze
 
         OPERATIONS = {
           AdGroupAd: ['ad_group_ad_service_pb', 'AdGroupAdOperation'],
+          AdGroupBidModifier: ['ad_group_bid_modifier_service_pb',
+              'AdGroupBidModifierOperation'],
           AdGroupCriterion: ['ad_group_criterion_service_pb',
               'AdGroupCriterionOperation'],
           AdGroup: ['ad_group_service_pb', 'AdGroupOperation'],
+          ApplyRecommendation: ['recommendation_service_pb',
+              'ApplyRecommendationOperation'],
           BiddingStrategy: ['bidding_strategy_service_pb',
               'BiddingStrategyOperation'],
           CampaignBudget: ['campaign_budget_service_pb',
@@ -214,7 +226,7 @@ module Google
           CampaignCriterion: ['campaign_criterion_service_pb',
               'CampaignCriterionOperation'],
           Campaign: ['campaign_service_pb', 'CampaignOperation'],
-        }
+        }.freeze
 
         def initialize(version)
           @version = version
@@ -234,8 +246,9 @@ module Google
               resource_info[1])
           require require_path
 
-          class_path = resource_info.first == 'resources' ?
-              RESOURCE_CLASS_PATH : COMMON_CLASS_PATH
+          class_path = RESOURCE_CLASS_PATH
+          class_path = COMMON_CLASS_PATH if resource_info.first == 'common'
+          class_path = SERVICE_CLASS_PATH if resource_info.first == 'services'
           class_path = sprintf(class_path, @version, resource_info[2])
           return class_for_path(class_path)
         end
