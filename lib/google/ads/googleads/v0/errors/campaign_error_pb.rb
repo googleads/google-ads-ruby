@@ -43,6 +43,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CANNOT_SET_AD_ROTATION_MODE, 34
     value :CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED, 35
     value :CANNOT_SET_DATE_TO_PAST, 36
+    value :MISSING_HOTEL_CUSTOMER_LINK, 37
+    value :INVALID_HOTEL_CUSTOMER_LINK, 38
+    value :MISSING_HOTEL_SETTING, 39
   end
 end
 

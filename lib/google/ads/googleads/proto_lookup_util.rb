@@ -47,6 +47,8 @@ module Google
           PositionEstimates: ['resources', 'ad_group_criterion_pb',
             'AdGroupCriterion::PositionEstimates'],
           AdGroup: ['resources', 'ad_group_pb', 'AdGroup'],
+          AdGroupBidModifier: ['resources', 'ad_group_bid_modifier_pb',
+              'AdGroupBidModifier'],
           BiddingStrategy: ['resources', 'bidding_strategy_pb',
               'BiddingStrategy'],
           CampaignBudget: ['resources', 'campaign_budget_pb', 'CampaignBudget'],
@@ -55,12 +57,33 @@ module Google
           Campaign: ['resources', 'campaign_pb', 'Campaign'],
           NetworkSettings: ['resources', 'campaign_pb',
               'Campaign::NetworkSettings'],
+          HotelSettingInfo: ['resources', 'campaign_pb',
+              'Campaign::HotelSettingInfo'],
           DynamicSearchAdsSetting: ['resources', 'campaign_pb',
               'Campaign::DynamicSearchAdsSetting'],
           Customer: ['resources', 'customer_pb', 'Customer'],
+          GeoTargetConstant: ['resources', 'geo_target_constant_pb',
+              'GeoTargetConstant'],
           GoogleAdsField: ['resources', 'google_ads_field_pb',
               'GoogleAdsField'],
           KeywordView: ['resources', 'keyword_view_pb', 'KeywordView'],
+          Recommendation: ['resources', 'recommendation_pb', 'Recommendation'],
+          RecommendationImpact: ['resources', 'recommendation_pb',
+              'Recommendation::RecommendationImpact'],
+          RecommendationMetrics: ['resources', 'recommendation_pb',
+              'Recommendation::RecommendationMetrics'],
+          CampaignBudgetRecommendation: ['resources', 'recommendation_pb',
+              'Recommendation::CampaignBudgetRecommendation'],
+          CampaignBudgetRecommendationOption: ['resources', 'recommendation_pb',
+              'Recommendation::CampaignBudgetRecommendation::CampaignBudgetRecommendationOption'],
+          KeywordRecommendation: ['resources', 'recommendation_pb',
+              'Recommendation::KeywordRecommendation'],
+          TextAdRecommendation: ['resources', 'recommendation_pb',
+              'Recommendation::TextAdRecommendation'],
+          TargetCpaOptInRecommendation: ['resources', 'recommendation_pb',
+              'Recommendation::TargetCpaOptInRecommendation'],
+          TargetCpaOptInRecommendationOption: ['resources', 'recommendation_pb',
+              'Recommendation::TargetCpaOptInRecommendation::TargetCpaOptInRecommendationOption'],
           Ad: ['common', 'ad_pb', 'Ad'],
           TextAdInfo: ['common', 'ad_pb', 'TextAdInfo'],
           ExpandedTextAdInfo: ['common', 'ad_pb', 'ExpandedTextAdInfo'],
@@ -70,6 +93,7 @@ module Google
           CallOnlyAdInfo: ['common', 'ad_pb', 'CallOnlyAdInfo'],
           ExpandedDynamicSearchAdInfo: ['common', 'ad_pb',
               'ExpandedDynamicSearchAdInfo'],
+          HotelAdInfo: ['common', 'ad_pb', 'HotelAdInfo'],
           EnhancedCpc: ['common', 'bidding_pb', 'EnhancedCpc'],
           ManualCpc: ['common', 'bidding_pb', 'ManualCpc'],
           ManualCpm: ['common', 'bidding_pb', 'ManualCpm'],
@@ -82,10 +106,39 @@ module Google
           TargetRoas: ['common', 'bidding_pb', 'TargetRoas'],
           TargetSpend: ['common', 'bidding_pb', 'TargetSpend'],
           KeywordInfo: ['common', 'criteria_pb', 'KeywordInfo'],
+          LocationInfo: ['common', 'criteria_pb', 'LocationInfo'],
+          PlatformInfo: ['common', 'criteria_pb', 'PlatformInfo'],
+          ListingGroupInfo: ['common', 'criteria_pb', 'ListingGroupInfo'],
+          ListingDimensionInfo: ['common', 'criteria_pb',
+              'ListingDimensionInfo'],
+          ListingBrandInfo: ['common', 'criteria_pb', 'ListingBrandInfo'],
+          HotelIdInfo: ['common', 'criteria_pb', 'HotelIdInfo'],
+          HotelClassInfo: ['common', 'criteria_pb', 'HotelClassInfo'],
+          HotelCountryRegionInfo: ['common', 'criteria_pb',
+              'HotelCountryRegionInfo'],
+          HotelStateInfo: ['common', 'criteria_pb', 'HotelStateInfo'],
+          HotelCityInfo: ['common', 'criteria_pb', 'HotelCityInfo'],
+          ListingCustomAttributeInfo: ['common', 'criteria_pb',
+              'ListingCustomAttributeInfo'],
+          HotelDateSelectionTypeInfo: ['common', 'criteria_pb',
+              'HotelDateSelectionTypeInfo'],
+          HotelAdvanceBookingWindowInfo: ['common', 'criteria_pb',
+              'HotelAdvanceBookingWindowInfo'],
+          HotelLengthOfStayInfo: ['common', 'criteria_pb',
+              'HotelLengthOfStayInfo'],
+          HotelCheckInDayInfo: ['common', 'criteria_pb', 'HotelCheckInDayInfo'],
           CustomParameter: ['common', 'custom_parameter_pb', 'CustomParameter'],
           Metrics: ['common', 'metrics_pb', 'Metrics'],
           PolicyViolationKey: ['common', 'policy_pb', 'PolicyViolationKey'],
-          Value: ['common', 'value_pb', 'Value']
+          Value: ['common', 'value_pb', 'Value'],
+          CampaignBudgetParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::CampaignBudgetParameters'],
+          TextAdParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::TextAdParameters'],
+          KeywordParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::KeywordParameters'],
+          TargetCpaOptInParameters: ['services', 'recommendation_service_pb',
+              'ApplyRecommendationOperation::TargetCpaOptInParameters']
         }.freeze
 
         ENUMS = {
@@ -102,7 +155,7 @@ module Google
               'AdvertisingChannelSubType'],
           AdvertisingChannelType: ['advertising_channel_type_pb',
               'AdvertisingChannelType'],
-          BidSource: ['bid_source_pb', 'BidSource'],
+          BiddingSource: ['bidding_source_pb', 'BiddingSource'],
           BiddingStrategyType: ['bidding_strategy_type_pb',
               'BiddingStrategyType'],
           BudgetDeliveryMethod: ['budget_delivery_method_pb',
@@ -118,14 +171,23 @@ module Google
           GoogleAdsFieldDataType: ['google_ads_field_data_type_pb',
               'GoogleAdsFieldDataType'],
           KeywordMatchType: ['keyword_match_type_pb', 'KeywordMatchType'],
+          ListingCustomAttributeIndex: ['listing_custom_attribute_index_pb',
+              'ListingCustomAttributeIndex'],
+          ListingGroupType: ['listing_group_type_pb', 'ListingGroupType'],
           PageOnePromotedStrategyGoal: ['page_one_promoted_strategy_goal_pb',
               'PageOnePromotedStrategyGoal'],
           QualityScoreBucket: ['quality_score_bucket_pb', 'QualityScoreBucket'],
-          Slot: ['slot_pb', 'Slot']
+          RecommendationType: ['recommendation_type_pb', 'RecommendationType'],
+          Slot: ['slot_pb', 'Slot'],
+          TargetCpaOptInRecommendationGoal: [
+              'target_cpa_opt_in_recommendation_goal_pb',
+              'TargetCpaOptInRecommendationGoal']
         }.freeze
 
         SERVICES = {
           AdGroupAd: ['ad_group_ad_service_client', 'AdGroupAdServiceClient'],
+          AdGroupBidModifier: ['ad_group_bid_modifier_service_client',
+              'AdGroupBidModifierServiceClient'],
           AdGroupCriterion: ['ad_group_criterion_service_client',
               'AdGroupCriterionServiceClient'],
           AdGroup: ['ad_group_service_client', 'AdGroupServiceClient'],
@@ -137,18 +199,26 @@ module Google
               'CampaignCriterionServiceClient'],
           Campaign: ['campaign_service_client', 'CampaignServiceClient'],
           Customer: ['customer_service_client', 'CustomerServiceClient'],
+          GeoTargetConstant: ['geo_target_constant_service_client',
+              'GeoTargetConstantServiceClient'],
           GoogleAdsField: ['google_ads_field_service_client',
               'GoogleAdsFieldServiceClient'],
           GoogleAds: ['google_ads_service_client', 'GoogleAdsServiceClient'],
           KeywordView: ['keyword_view_service_client',
-              'KeywordViewServiceClient']
-        }
+              'KeywordViewServiceClient'],
+          Recommendation: ['recommendation_service_client',
+              'RecommendationServiceClient']
+        }.freeze
 
         OPERATIONS = {
           AdGroupAd: ['ad_group_ad_service_pb', 'AdGroupAdOperation'],
+          AdGroupBidModifier: ['ad_group_bid_modifier_service_pb',
+              'AdGroupBidModifierOperation'],
           AdGroupCriterion: ['ad_group_criterion_service_pb',
               'AdGroupCriterionOperation'],
           AdGroup: ['ad_group_service_pb', 'AdGroupOperation'],
+          ApplyRecommendation: ['recommendation_service_pb',
+              'ApplyRecommendationOperation'],
           BiddingStrategy: ['bidding_strategy_service_pb',
               'BiddingStrategyOperation'],
           CampaignBudget: ['campaign_budget_service_pb',
@@ -156,7 +226,7 @@ module Google
           CampaignCriterion: ['campaign_criterion_service_pb',
               'CampaignCriterionOperation'],
           Campaign: ['campaign_service_pb', 'CampaignOperation'],
-        }
+        }.freeze
 
         def initialize(version)
           @version = version
@@ -176,8 +246,9 @@ module Google
               resource_info[1])
           require require_path
 
-          class_path = resource_info.first == 'resources' ?
-              RESOURCE_CLASS_PATH : COMMON_CLASS_PATH
+          class_path = RESOURCE_CLASS_PATH
+          class_path = COMMON_CLASS_PATH if resource_info.first == 'common'
+          class_path = SERVICE_CLASS_PATH if resource_info.first == 'services'
           class_path = sprintf(class_path, @version, resource_info[2])
           return class_for_path(class_path)
         end

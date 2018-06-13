@@ -31,6 +31,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/adGroupAds/567_890'
     assert_equal(expected, util.ad_group_ad(1234, 567, 890))
 
+    expected = 'customers/1234/adGroupBidModifiers/567_890'
+    assert_equal(expected, util.ad_group_bid_modifier(1234, 567, 890))
+
     expected = 'customers/1234/adGroupCriteria/567_890'
     assert_equal(expected, util.ad_group_criterion(1234, 567, 890))
 
@@ -52,11 +55,17 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/123456'
     assert_equal(expected, util.customer(123456))
 
+    expected = 'geoTargetConstants/123456'
+    assert_equal(expected, util.geo_target_constant(123456))
+
     expected = 'googleAdsFields/test_field'
     assert_equal(expected, util.google_ads_field('test_field'))
 
     expected = 'customers/1234/keywordViews/567_890'
     assert_equal(expected, util.keyword_view(1234, 567, 890))
+
+    expected = 'customers/1234/recommendations/5678'
+    assert_equal(expected, util.recommendation(1234, 5678))
   end
 
   def test_malformed_path_input()

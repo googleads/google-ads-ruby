@@ -29,6 +29,14 @@ module Google
               customer_id.to_s, sprintf('%s_%s', ad_group_id.to_s, ad_id.to_s))
         end
 
+        def ad_group_bid_modifier(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:AdGroupBidModifier).
+              ad_group_bid_modifier_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
+        end
+
         def ad_group_criterion(customer_id, ad_group_id, criterion_id)
           @proto_lookup_util.service(:AdGroupCriterion).ad_group_criteria_path(
             customer_id.to_s,
@@ -67,6 +75,11 @@ module Google
           @proto_lookup_util.service(:Customer).customer_path(customer_id.to_s)
         end
 
+        def geo_target_constant(geo_target_constant_id)
+          @proto_lookup_util.service(:GeoTargetConstant).
+              geo_target_constant_path(geo_target_constant_id.to_s)
+        end
+
         def google_ads_field(google_ads_field)
           @proto_lookup_util.service(:GoogleAdsField).google_ads_field_path(
               google_ads_field.to_s)
@@ -77,6 +90,11 @@ module Google
             customer_id.to_s,
             sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
           )
+        end
+
+        def recommendation(customer_id, recommendation_id)
+          @proto_lookup_util.service(:Recommendation).recommendation_path(
+            customer_id.to_s, recommendation_id.to_s)
         end
       end
     end

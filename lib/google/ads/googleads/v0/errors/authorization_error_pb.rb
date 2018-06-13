@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :DEVELOPER_TOKEN_NOT_WHITELISTED, 3
     value :DEVELOPER_TOKEN_PROHIBITED, 4
     value :PROJECT_DISABLED, 5
+    value :AUTHORIZATION_ERROR, 6
   end
 end
 

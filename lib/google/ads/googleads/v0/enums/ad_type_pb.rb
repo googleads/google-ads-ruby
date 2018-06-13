@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :RESPONSIVE_DISPLAY_AD, 5
     value :CALL_ONLY_AD, 6
     value :EXPANDED_DYNAMIC_SEARCH_AD, 7
+    value :HOTEL_AD, 8
   end
 end
 

@@ -1,2 +1,5 @@
+0.2.0:
+  - Adding support for Google Ads API v0_1.
+
 0.1.0:
-  - Initial release with support for Google Ads API V0.
+  - Initial release with support for Google Ads API v0.

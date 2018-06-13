@@ -17,16 +17,12 @@ require "googleauth"
 module Google
   module Ads
     module Googleads
-      module V0
-        module Services
-          class Credentials < Google::Auth::Credentials
-            SCOPE = [
-            ].freeze
-            PATH_ENV_VARS = %w(GOOGLEADS_KEYFILE GOOGLE_CLOUD_KEYFILE GCLOUD_KEYFILE)
-            JSON_ENV_VARS = %w(GOOGLEADS_KEYFILE_JSON GOOGLE_CLOUD_KEYFILE_JSON GCLOUD_KEYFILE_JSON)
-            DEFAULT_PATHS = ["~/.config/gcloud/application_default_credentials.json"]
-          end
-        end
+      class Credentials < Google::Auth::Credentials
+        SCOPE = [
+        ].freeze
+        PATH_ENV_VARS = %w(GOOGLEADS_KEYFILE GOOGLE_CLOUD_KEYFILE GCLOUD_KEYFILE)
+        JSON_ENV_VARS = %w(GOOGLEADS_KEYFILE_JSON GOOGLE_CLOUD_KEYFILE_JSON GCLOUD_KEYFILE_JSON)
+        DEFAULT_PATHS = ["~/.config/gcloud/application_default_credentials.json"]
       end
     end
   end

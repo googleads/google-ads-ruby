@@ -8,6 +8,7 @@ require 'google/ads/googleads/v0/common/value_pb'
 require 'google/ads/googleads/v0/errors/ad_customizer_error_pb'
 require 'google/ads/googleads/v0/errors/ad_error_pb'
 require 'google/ads/googleads/v0/errors/ad_group_ad_error_pb'
+require 'google/ads/googleads/v0/errors/ad_group_bid_modifier_error_pb'
 require 'google/ads/googleads/v0/errors/ad_group_criterion_error_pb'
 require 'google/ads/googleads/v0/errors/ad_group_error_pb'
 require 'google/ads/googleads/v0/errors/ad_sharing_error_pb'
@@ -20,11 +21,13 @@ require 'google/ads/googleads/v0/errors/campaign_budget_error_pb'
 require 'google/ads/googleads/v0/errors/campaign_criterion_error_pb'
 require 'google/ads/googleads/v0/errors/campaign_error_pb'
 require 'google/ads/googleads/v0/errors/collection_size_error_pb'
+require 'google/ads/googleads/v0/errors/context_error_pb'
 require 'google/ads/googleads/v0/errors/criterion_error_pb'
 require 'google/ads/googleads/v0/errors/date_error_pb'
 require 'google/ads/googleads/v0/errors/date_range_error_pb'
 require 'google/ads/googleads/v0/errors/distinct_error_pb'
 require 'google/ads/googleads/v0/errors/feed_attribute_reference_error_pb'
+require 'google/ads/googleads/v0/errors/field_error_pb'
 require 'google/ads/googleads/v0/errors/field_mask_error_pb'
 require 'google/ads/googleads/v0/errors/function_error_pb'
 require 'google/ads/googleads/v0/errors/function_parsing_error_pb'
@@ -44,6 +47,7 @@ require 'google/ads/googleads/v0/errors/operator_error_pb'
 require 'google/ads/googleads/v0/errors/query_error_pb'
 require 'google/ads/googleads/v0/errors/quota_error_pb'
 require 'google/ads/googleads/v0/errors/range_error_pb'
+require 'google/ads/googleads/v0/errors/recommendation_error_pb'
 require 'google/ads/googleads/v0/errors/region_code_error_pb'
 require 'google/ads/googleads/v0/errors/request_error_pb'
 require 'google/ads/googleads/v0/errors/resource_access_denied_error_pb'
@@ -106,6 +110,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :null_error, :enum, 47, "google.ads.googleads.v0.errors.NullErrorEnum.NullError"
       optional :operator_error, :enum, 48, "google.ads.googleads.v0.errors.OperatorErrorEnum.OperatorError"
       optional :range_error, :enum, 49, "google.ads.googleads.v0.errors.RangeErrorEnum.RangeError"
+      optional :recommendation_error, :enum, 58, "google.ads.googleads.v0.errors.RecommendationErrorEnum.RecommendationError"
       optional :region_code_error, :enum, 51, "google.ads.googleads.v0.errors.RegionCodeErrorEnum.RegionCodeError"
       optional :setting_error, :enum, 52, "google.ads.googleads.v0.errors.SettingErrorEnum.SettingError"
       optional :string_format_error, :enum, 53, "google.ads.googleads.v0.errors.StringFormatErrorEnum.StringFormatError"
@@ -113,6 +118,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :operation_access_denied_error, :enum, 55, "google.ads.googleads.v0.errors.OperationAccessDeniedErrorEnum.OperationAccessDeniedError"
       optional :resource_access_denied_error, :enum, 56, "google.ads.googleads.v0.errors.ResourceAccessDeniedErrorEnum.ResourceAccessDeniedError"
       optional :resource_count_limit_exceeded_error, :enum, 57, "google.ads.googleads.v0.errors.ResourceCountLimitExceededErrorEnum.ResourceCountLimitExceededError"
+      optional :ad_group_bid_modifier_error, :enum, 59, "google.ads.googleads.v0.errors.AdGroupBidModifierErrorEnum.AdGroupBidModifierError"
+      optional :context_error, :enum, 60, "google.ads.googleads.v0.errors.ContextErrorEnum.ContextError"
+      optional :field_error, :enum, 61, "google.ads.googleads.v0.errors.FieldErrorEnum.FieldError"
     end
   end
   add_message "google.ads.googleads.v0.errors.ErrorLocation" do

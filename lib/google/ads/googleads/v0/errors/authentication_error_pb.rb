@@ -10,11 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :AUTHENTICATION_ERROR, 2
-    value :CLIENT_CUSTOMER_ID_IS_REQUIRED, 3
-    value :CLIENT_EMAIL_REQUIRED, 4
     value :CLIENT_CUSTOMER_ID_INVALID, 5
-    value :CLIENT_EMAIL_INVALID, 6
-    value :CLIENT_EMAIL_FAILED_TO_AUTHENTICATE, 7
     value :CUSTOMER_NOT_FOUND, 8
     value :GOOGLE_ACCOUNT_DELETED, 9
     value :GOOGLE_ACCOUNT_COOKIE_INVALID, 10

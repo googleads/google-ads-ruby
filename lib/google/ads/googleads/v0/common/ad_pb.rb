@@ -22,6 +22,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :responsive_display_ad, :message, 9, "google.ads.googleads.v0.common.ResponsiveDisplayAdInfo"
       optional :call_only_ad, :message, 13, "google.ads.googleads.v0.common.CallOnlyAdInfo"
       optional :expanded_dynamic_search_ad, :message, 14, "google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo"
+      optional :hotel_ad, :message, 15, "google.ads.googleads.v0.common.HotelAdInfo"
     end
   end
   add_message "google.ads.googleads.v0.common.TextAdInfo" do
@@ -59,6 +60,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo" do
     optional :description, :message, 1, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v0.common.HotelAdInfo" do
+  end
 end
 
 module Google
@@ -73,6 +76,7 @@ module Google
           ResponsiveDisplayAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ResponsiveDisplayAdInfo").msgclass
           CallOnlyAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CallOnlyAdInfo").msgclass
           ExpandedDynamicSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo").msgclass
+          HotelAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdInfo").msgclass
         end
       end
     end

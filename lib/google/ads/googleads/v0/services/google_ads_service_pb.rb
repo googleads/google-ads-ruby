@@ -10,13 +10,16 @@ require 'google/ads/googleads/v0/enums/device_pb'
 require 'google/ads/googleads/v0/enums/slot_pb'
 require 'google/ads/googleads/v0/resources/ad_group_pb'
 require 'google/ads/googleads/v0/resources/ad_group_ad_pb'
+require 'google/ads/googleads/v0/resources/ad_group_bid_modifier_pb'
 require 'google/ads/googleads/v0/resources/ad_group_criterion_pb'
 require 'google/ads/googleads/v0/resources/bidding_strategy_pb'
 require 'google/ads/googleads/v0/resources/campaign_pb'
 require 'google/ads/googleads/v0/resources/campaign_budget_pb'
 require 'google/ads/googleads/v0/resources/campaign_criterion_pb'
 require 'google/ads/googleads/v0/resources/customer_pb'
+require 'google/ads/googleads/v0/resources/geo_target_constant_pb'
 require 'google/ads/googleads/v0/resources/keyword_view_pb'
+require 'google/ads/googleads/v0/resources/recommendation_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
 require 'google/protobuf/wrappers_pb'
@@ -36,13 +39,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GoogleAdsRow" do
     optional :ad_group, :message, 3, "google.ads.googleads.v0.resources.AdGroup"
     optional :ad_group_ad, :message, 16, "google.ads.googleads.v0.resources.AdGroupAd"
+    optional :ad_group_bid_modifier, :message, 24, "google.ads.googleads.v0.resources.AdGroupBidModifier"
     optional :ad_group_criterion, :message, 17, "google.ads.googleads.v0.resources.AdGroupCriterion"
     optional :bidding_strategy, :message, 18, "google.ads.googleads.v0.resources.BiddingStrategy"
     optional :campaign_budget, :message, 19, "google.ads.googleads.v0.resources.CampaignBudget"
     optional :campaign, :message, 2, "google.ads.googleads.v0.resources.Campaign"
     optional :campaign_criterion, :message, 20, "google.ads.googleads.v0.resources.CampaignCriterion"
     optional :customer, :message, 1, "google.ads.googleads.v0.resources.Customer"
+    optional :geo_target_constant, :message, 23, "google.ads.googleads.v0.resources.GeoTargetConstant"
     optional :keyword_view, :message, 21, "google.ads.googleads.v0.resources.KeywordView"
+    optional :recommendation, :message, 22, "google.ads.googleads.v0.resources.Recommendation"
     optional :metrics, :message, 4, "google.ads.googleads.v0.common.Metrics"
     optional :ad_network_type, :enum, 5, "google.ads.googleads.v0.enums.AdNetworkTypeEnum.AdNetworkType"
     optional :date, :message, 6, "google.protobuf.StringValue"

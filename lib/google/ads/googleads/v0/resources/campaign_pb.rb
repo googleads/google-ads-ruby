@@ -25,6 +25,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :tracking_url_template, :message, 11, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 12, "google.ads.googleads.v0.common.CustomParameter"
     optional :network_settings, :message, 14, "google.ads.googleads.v0.resources.Campaign.NetworkSettings"
+    optional :hotel_setting, :message, 32, "google.ads.googleads.v0.resources.Campaign.HotelSettingInfo"
     optional :dynamic_search_ads_setting, :message, 33, "google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting"
     optional :campaign_budget, :message, 6, "google.protobuf.StringValue"
     optional :bidding_strategy_type, :enum, 22, "google.ads.googleads.v0.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
@@ -47,6 +48,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :target_content_network, :message, 3, "google.protobuf.BoolValue"
     optional :target_partner_search_network, :message, 4, "google.protobuf.BoolValue"
   end
+  add_message "google.ads.googleads.v0.resources.Campaign.HotelSettingInfo" do
+    optional :hotel_center_id, :message, 1, "google.protobuf.Int64Value"
+  end
   add_message "google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting" do
     optional :domain_name, :message, 1, "google.protobuf.StringValue"
     optional :language_code, :message, 2, "google.protobuf.StringValue"
@@ -62,6 +66,7 @@ module Google
         module Resources
           Campaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign").msgclass
           Campaign::NetworkSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.NetworkSettings").msgclass
+          Campaign::HotelSettingInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.HotelSettingInfo").msgclass
           Campaign::DynamicSearchAdsSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting").msgclass
         end
       end

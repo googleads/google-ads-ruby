@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :INTERNAL_ERROR, 2
     value :ERROR_CODE_NOT_PUBLISHED, 3
+    value :TRANSIENT_ERROR, 4
   end
 end
 

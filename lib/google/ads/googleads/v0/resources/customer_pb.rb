@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :time_zone, :message, 6, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 7, "google.protobuf.StringValue"
     optional :auto_tagging_enabled, :message, 8, "google.protobuf.BoolValue"
+    optional :has_partners_badge, :message, 9, "google.protobuf.BoolValue"
   end
 end
 
