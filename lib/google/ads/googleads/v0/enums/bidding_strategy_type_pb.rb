@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MAXIMIZE_CONVERSIONS, 10
     value :MAXIMIZE_CONVERSION_VALUE, 11
     value :PAGE_ONE_PROMOTED, 5
+    value :PERCENT_CPC, 12
     value :TARGET_CPA, 6
     value :TARGET_OUTRANK_SHARE, 7
     value :TARGET_ROAS, 8

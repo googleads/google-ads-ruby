@@ -47,6 +47,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :target_spend_micros, :message, 1, "google.protobuf.Int64Value"
     optional :cpc_bid_ceiling_micros, :message, 2, "google.protobuf.Int64Value"
   end
+  add_message "google.ads.googleads.v0.common.PercentCpc" do
+    optional :cpc_bid_ceiling_micros, :message, 1, "google.protobuf.Int64Value"
+    optional :enhanced_cpc_enabled, :message, 2, "google.protobuf.BoolValue"
+  end
 end
 
 module Google
@@ -64,6 +68,7 @@ module Google
           TargetOutrankShare = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetOutrankShare").msgclass
           TargetRoas = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetRoas").msgclass
           TargetSpend = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetSpend").msgclass
+          PercentCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PercentCpc").msgclass
         end
       end
     end

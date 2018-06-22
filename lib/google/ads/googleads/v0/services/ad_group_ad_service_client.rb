@@ -25,7 +25,7 @@ require "pathname"
 require "google/gax"
 
 require "google/ads/googleads/v0/services/ad_group_ad_service_pb"
-require "google/ads/googleads/credentials"
+require "google/ads/googleads/v0/services/credentials"
 
 module Google
   module Ads
@@ -44,6 +44,9 @@ module Google
 
             # The default port of the service.
             DEFAULT_SERVICE_PORT = 443
+
+            # The default set of gRPC interceptors.
+            GRPC_INTERCEPTORS = []
 
             DEFAULT_TIMEOUT = 30
 
@@ -114,10 +117,10 @@ module Google
               require "google/gax/grpc"
               require "google/ads/googleads/v0/services/ad_group_ad_service_services_pb"
 
-              credentials ||= Google::Ads::Googleads::Credentials.default
+              credentials ||= Google::Ads::Googleads::V0::Services::Credentials.default
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)
-                updater_proc = Google::Ads::Googleads::Credentials.new(credentials).updater_proc
+                updater_proc = Google::Ads::Googleads::V0::Services::Credentials.new(credentials).updater_proc
               end
               if credentials.is_a?(GRPC::Core::Channel)
                 channel = credentials
@@ -160,6 +163,7 @@ module Google
               # Allow overriding the service path/port in subclasses.
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
+              interceptors = self.class::GRPC_INTERCEPTORS
               @ad_group_ad_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
@@ -167,6 +171,7 @@ module Google
                 channel: channel,
                 updater_proc: updater_proc,
                 scopes: scopes,
+                interceptors: interceptors,
                 &Google::Ads::Googleads::V0::Services::AdGroupAdService::Stub.method(:new)
               )
 

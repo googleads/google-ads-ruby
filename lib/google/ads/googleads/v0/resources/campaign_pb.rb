@@ -40,6 +40,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :target_cpa, :message, 26, "google.ads.googleads.v0.common.TargetCpa"
       optional :target_roas, :message, 29, "google.ads.googleads.v0.common.TargetRoas"
       optional :target_spend, :message, 27, "google.ads.googleads.v0.common.TargetSpend"
+      optional :percent_cpc, :message, 34, "google.ads.googleads.v0.common.PercentCpc"
     end
   end
   add_message "google.ads.googleads.v0.resources.Campaign.NetworkSettings" do
