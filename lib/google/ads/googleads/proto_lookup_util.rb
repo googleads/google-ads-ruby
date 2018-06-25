@@ -105,6 +105,7 @@ module Google
           TargetOutrankShare: ['common', 'bidding_pb', 'TargetOutrankShare'],
           TargetRoas: ['common', 'bidding_pb', 'TargetRoas'],
           TargetSpend: ['common', 'bidding_pb', 'TargetSpend'],
+          PercentCpc: ['common', 'bidding_pb', 'PercentCpc'],
           KeywordInfo: ['common', 'criteria_pb', 'KeywordInfo'],
           LocationInfo: ['common', 'criteria_pb', 'LocationInfo'],
           PlatformInfo: ['common', 'criteria_pb', 'PlatformInfo'],

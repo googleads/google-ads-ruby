@@ -22,6 +22,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :cpa_bid_micros, :message, 16, "google.protobuf.Int64Value"
     optional :cpv_bid_micros, :message, 17, "google.protobuf.Int64Value"
     optional :target_roas_override, :message, 19, "google.protobuf.DoubleValue"
+    optional :percent_cpc_bid_micros, :message, 20, "google.protobuf.Int64Value"
   end
 end
 

@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.1.0'
   s.summary = 'Google client library for the Google Ads API'
 
-  s.add_dependency 'google-gax', '~> 1.2'
+  s.add_dependency 'google-gax', '~> 1.3'
 
   s.add_development_dependency 'bundler', '~> 1.9'
   s.add_development_dependency 'rake', '~> 11.3'
