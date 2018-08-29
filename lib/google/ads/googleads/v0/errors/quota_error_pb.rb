@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :RESOURCE_EXHAUSTED, 2
     value :ACCESS_PROHIBITED, 3
+    value :RESOURCE_TEMPORARILY_EXHAUSTED, 4
   end
 end
 

@@ -14,6 +14,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :DEVELOPER_TOKEN_PROHIBITED, 4
     value :PROJECT_DISABLED, 5
     value :AUTHORIZATION_ERROR, 6
+    value :ACTION_NOT_PERMITTED, 7
+    value :INCOMPLETE_SIGNUP, 8
   end
 end
 

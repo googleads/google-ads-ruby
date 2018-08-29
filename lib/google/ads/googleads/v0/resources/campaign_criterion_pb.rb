@@ -17,7 +17,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     oneof :criterion do
       optional :keyword, :message, 8, "google.ads.googleads.v0.common.KeywordInfo"
       optional :location, :message, 12, "google.ads.googleads.v0.common.LocationInfo"
-      optional :platform, :message, 13, "google.ads.googleads.v0.common.PlatformInfo"
+      optional :device, :message, 13, "google.ads.googleads.v0.common.DeviceInfo"
+      optional :ad_schedule, :message, 15, "google.ads.googleads.v0.common.AdScheduleInfo"
     end
   end
 end

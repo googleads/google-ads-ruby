@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :POLICY_ERROR, 5
     value :INVALID_BID_AMOUNT, 6
     value :ADGROUP_KEYWORD_LIMIT, 7
+    value :RECOMMENDATION_ALREADY_APPLIED, 8
   end
 end
 

@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::BiddingStrategy]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   bidding_strategy_service_client = Google::Ads::Googleads::V0::Services::BiddingStrategy.new
+            #   bidding_strategy_service_client = Google::Ads::Googleads::BiddingStrategy.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::BiddingStrategyServiceClient.bidding_strategy_path("[CUSTOMER]", "[BIDDING_STRATEGY]")
             #   response = bidding_strategy_service_client.get_bidding_strategy(formatted_resource_name)
 
@@ -237,9 +237,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::MutateBiddingStrategiesResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   bidding_strategy_service_client = Google::Ads::Googleads::V0::Services::BiddingStrategy.new
+            #   bidding_strategy_service_client = Google::Ads::Googleads::BiddingStrategy.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

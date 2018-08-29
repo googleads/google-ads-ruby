@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::CampaignCriterion]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   campaign_criterion_service_client = Google::Ads::Googleads::V0::Services::CampaignCriterion.new
+            #   campaign_criterion_service_client = Google::Ads::Googleads::CampaignCriterion.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CampaignCriterionServiceClient.campaign_criteria_path("[CUSTOMER]", "[CAMPAIGN_CRITERIA]")
             #   response = campaign_criterion_service_client.get_campaign_criterion(formatted_resource_name)
 
@@ -236,9 +236,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::MutateCampaignCriteriaResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   campaign_criterion_service_client = Google::Ads::Googleads::V0::Services::CampaignCriterion.new
+            #   campaign_criterion_service_client = Google::Ads::Googleads::CampaignCriterion.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

@@ -202,9 +202,9 @@ module Google
             #   object.
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   google_ads_service_client = Google::Ads::Googleads::V0::Services::GoogleAds.new
+            #   google_ads_service_client = Google::Ads::Googleads::GoogleAds.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

@@ -54,6 +54,12 @@ module Google
               customer_id.to_s, bidding_strategy_id.to_s)
         end
 
+        def campaign_bid_modifier(customer_id, campaign_bid_modifier_id)
+          @proto_lookup_util.service(:CampaignBidModifier).
+              campaign_bid_modifier_path(customer_id.to_s,
+                  campaign_bid_modifier_id.to_s)
+        end
+
         def campaign_budget(customer_id, campaign_budget_id)
           @proto_lookup_util.service(:CampaignBudget).campaign_budget_path(
               customer_id.to_s, campaign_budget_id.to_s)
@@ -64,6 +70,17 @@ module Google
             customer_id.to_s,
             sprintf('%s_%s', campaign_id.to_s, criterion_id.to_s)
           )
+        end
+
+        def campaign_group(customer_id, campaign_group_id)
+          @proto_lookup_util.service(:CampaignGroup).campaign_group_path(
+              customer_id.to_s, campaign_group_id.to_s)
+        end
+
+        def campaign_shared_set(customer_id, campaign_shared_set_id)
+          @proto_lookup_util.service(:CampaignSharedSet).
+              campaign_shared_set_path(customer_id.to_s,
+                  campaign_shared_set_id.to_s)
         end
 
         def campaign(customer_id, campaign_id)
@@ -95,6 +112,18 @@ module Google
         def recommendation(customer_id, recommendation_id)
           @proto_lookup_util.service(:Recommendation).recommendation_path(
             customer_id.to_s, recommendation_id.to_s)
+        end
+
+        def shared_criterion(customer_id, shared_set_id, criterion_id)
+          @proto_lookup_util.service(:SharedCriterion).shared_criteria_path(
+            customer_id.to_s,
+            sprintf('%s_%s', shared_set_id.to_s, criterion_id.to_s)
+          )
+        end
+
+        def shared_set(customer_id, shared_set_id)
+          @proto_lookup_util.service(:SharedSet).shared_set_path(
+              customer_id.to_s, shared_set_id.to_s)
         end
       end
     end

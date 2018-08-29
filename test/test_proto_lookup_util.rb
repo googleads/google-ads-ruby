@@ -57,7 +57,7 @@ class TestProtoLookupUtil < Minitest::Test
 
     ad = util.resource(:Ad).new
     assert_instance_of(
-        Google::Ads::Googleads::V0::Common::Ad, ad)
+        Google::Ads::Googleads::V0::Resources::Ad, ad)
 
     text_ad_info = util.resource(:TextAdInfo).new
     assert_instance_of(

@@ -10,7 +10,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :SEARCH_MOBILE_APP, 2
+    value :DISPLAY_MOBILE_APP, 3
     value :SEARCH_EXPRESS, 4
+    value :DISPLAY_EXPRESS, 5
+    value :SHOPPING_SMART_ADS, 6
   end
 end
 

@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MOBILE, 2
     value :TABLET, 3
     value :DESKTOP, 4
+    value :CONNECTED_TV, 5
   end
 end
 

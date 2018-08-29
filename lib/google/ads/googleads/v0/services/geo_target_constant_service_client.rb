@@ -195,9 +195,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::GeoTargetConstant]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   geo_target_constant_service_client = Google::Ads::Googleads::V0::Services::GeoTargetConstant.new
+            #   geo_target_constant_service_client = Google::Ads::Googleads::GeoTargetConstant.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::GeoTargetConstantServiceClient.geo_target_constant_path("[GEO_TARGET_CONSTANT]")
             #   response = geo_target_constant_service_client.get_geo_target_constant(formatted_resource_name)
 

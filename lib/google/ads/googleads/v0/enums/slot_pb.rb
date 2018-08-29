@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CONTENT, 5
     value :SEARCH_PARTNER_TOP, 6
     value :SEARCH_PARTNER_OTHER, 7
+    value :MIXED, 8
   end
 end
 
