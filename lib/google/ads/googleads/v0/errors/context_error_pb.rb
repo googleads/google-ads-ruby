@@ -10,6 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :OPERATION_NOT_PERMITTED_FOR_CONTEXT, 2
+    value :OPERATION_NOT_PERMITTED_FOR_REMOVED_RESOURCE, 3
   end
 end
 

@@ -3,15 +3,15 @@
 
 require 'google/protobuf'
 
-require 'google/ads/googleads/v0/common/ad_pb'
 require 'google/ads/googleads/v0/enums/ad_group_ad_status_pb'
+require 'google/ads/googleads/v0/resources/ad_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.AdGroupAd" do
     optional :resource_name, :string, 1
     optional :status, :enum, 3, "google.ads.googleads.v0.enums.AdGroupAdStatusEnum.AdGroupAdStatus"
     optional :ad_group, :message, 4, "google.protobuf.StringValue"
-    optional :ad, :message, 5, "google.ads.googleads.v0.common.Ad"
+    optional :ad, :message, 5, "google.ads.googleads.v0.resources.Ad"
   end
 end
 

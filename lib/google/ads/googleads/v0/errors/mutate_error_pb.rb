@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :RESOURCE_NOT_FOUND, 3
     value :ID_EXISTS_IN_MULTIPLE_MUTATES, 7
+    value :INCONSISTENT_FIELD_VALUES, 8
   end
 end
 

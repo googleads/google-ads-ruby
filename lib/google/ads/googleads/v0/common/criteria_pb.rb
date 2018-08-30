@@ -3,9 +3,16 @@
 
 require 'google/protobuf'
 
+require 'google/ads/googleads/v0/enums/day_of_week_pb'
+require 'google/ads/googleads/v0/enums/device_pb'
+require 'google/ads/googleads/v0/enums/hotel_date_selection_type_pb'
+require 'google/ads/googleads/v0/enums/interaction_type_pb'
 require 'google/ads/googleads/v0/enums/keyword_match_type_pb'
 require 'google/ads/googleads/v0/enums/listing_custom_attribute_index_pb'
 require 'google/ads/googleads/v0/enums/listing_group_type_pb'
+require 'google/ads/googleads/v0/enums/minute_of_hour_pb'
+require 'google/ads/googleads/v0/enums/product_condition_pb'
+require 'google/ads/googleads/v0/enums/product_type_level_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.KeywordInfo" do
@@ -13,13 +20,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :match_type, :enum, 2, "google.ads.googleads.v0.enums.KeywordMatchTypeEnum.KeywordMatchType"
   end
   add_message "google.ads.googleads.v0.common.LocationInfo" do
+    optional :geo_target_constant, :message, 1, "google.protobuf.StringValue"
   end
-  add_message "google.ads.googleads.v0.common.PlatformInfo" do
+  add_message "google.ads.googleads.v0.common.DeviceInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.DeviceEnum.Device"
   end
   add_message "google.ads.googleads.v0.common.ListingGroupInfo" do
     optional :type, :enum, 1, "google.ads.googleads.v0.enums.ListingGroupTypeEnum.ListingGroupType"
     optional :case_value, :message, 2, "google.ads.googleads.v0.common.ListingDimensionInfo"
-    optional :parent_criterion_id, :message, 3, "google.protobuf.Int64Value"
+    optional :parent_ad_group_criterion, :message, 3, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.common.ListingDimensionInfo" do
     oneof :dimension do
@@ -30,6 +39,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :hotel_state, :message, 5, "google.ads.googleads.v0.common.HotelStateInfo"
       optional :hotel_city, :message, 6, "google.ads.googleads.v0.common.HotelCityInfo"
       optional :listing_custom_attribute, :message, 7, "google.ads.googleads.v0.common.ListingCustomAttributeInfo"
+      optional :product_condition, :message, 10, "google.ads.googleads.v0.common.ProductConditionInfo"
+      optional :product_type, :message, 12, "google.ads.googleads.v0.common.ProductTypeInfo"
     end
   end
   add_message "google.ads.googleads.v0.common.ListingBrandInfo" do
@@ -54,7 +65,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :value, :message, 1, "google.protobuf.StringValue"
     optional :index, :enum, 2, "google.ads.googleads.v0.enums.ListingCustomAttributeIndexEnum.ListingCustomAttributeIndex"
   end
+  add_message "google.ads.googleads.v0.common.ProductConditionInfo" do
+    optional :condition, :enum, 1, "google.ads.googleads.v0.enums.ProductConditionEnum.ProductCondition"
+  end
+  add_message "google.ads.googleads.v0.common.ProductTypeInfo" do
+    optional :value, :message, 1, "google.protobuf.StringValue"
+    optional :level, :enum, 2, "google.ads.googleads.v0.enums.ProductTypeLevelEnum.ProductTypeLevel"
+  end
   add_message "google.ads.googleads.v0.common.HotelDateSelectionTypeInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.HotelDateSelectionTypeEnum.HotelDateSelectionType"
   end
   add_message "google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo" do
     optional :min_days, :message, 1, "google.protobuf.Int64Value"
@@ -65,6 +84,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :max_nights, :message, 2, "google.protobuf.Int64Value"
   end
   add_message "google.ads.googleads.v0.common.HotelCheckInDayInfo" do
+    optional :day_of_week, :enum, 1, "google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek"
+  end
+  add_message "google.ads.googleads.v0.common.InteractionTypeInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.InteractionTypeEnum.InteractionType"
+  end
+  add_message "google.ads.googleads.v0.common.AdScheduleInfo" do
+    optional :start_minute, :enum, 1, "google.ads.googleads.v0.enums.MinuteOfHourEnum.MinuteOfHour"
+    optional :end_minute, :enum, 2, "google.ads.googleads.v0.enums.MinuteOfHourEnum.MinuteOfHour"
+    optional :start_hour, :message, 3, "google.protobuf.Int32Value"
+    optional :end_hour, :message, 4, "google.protobuf.Int32Value"
+    optional :day_of_week, :enum, 5, "google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek"
   end
 end
 
@@ -75,7 +105,7 @@ module Google
         module Common
           KeywordInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.KeywordInfo").msgclass
           LocationInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LocationInfo").msgclass
-          PlatformInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PlatformInfo").msgclass
+          DeviceInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DeviceInfo").msgclass
           ListingGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingGroupInfo").msgclass
           ListingDimensionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingDimensionInfo").msgclass
           ListingBrandInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingBrandInfo").msgclass
@@ -85,10 +115,14 @@ module Google
           HotelStateInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelStateInfo").msgclass
           HotelCityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCityInfo").msgclass
           ListingCustomAttributeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingCustomAttributeInfo").msgclass
+          ProductConditionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductConditionInfo").msgclass
+          ProductTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductTypeInfo").msgclass
           HotelDateSelectionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelDateSelectionTypeInfo").msgclass
           HotelAdvanceBookingWindowInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo").msgclass
           HotelLengthOfStayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelLengthOfStayInfo").msgclass
           HotelCheckInDayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCheckInDayInfo").msgclass
+          InteractionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.InteractionTypeInfo").msgclass
+          AdScheduleInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AdScheduleInfo").msgclass
         end
       end
     end

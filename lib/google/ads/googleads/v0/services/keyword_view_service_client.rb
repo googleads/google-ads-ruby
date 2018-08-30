@@ -197,9 +197,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::KeywordView]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   keyword_view_service_client = Google::Ads::Googleads::V0::Services::KeywordView.new
+            #   keyword_view_service_client = Google::Ads::Googleads::KeywordView.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::KeywordViewServiceClient.keyword_view_path("[CUSTOMER]", "[KEYWORD_VIEW]")
             #   response = keyword_view_service_client.get_keyword_view(formatted_resource_name)
 

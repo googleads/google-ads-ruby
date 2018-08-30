@@ -210,9 +210,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::GoogleAdsField]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   google_ads_field_service_client = Google::Ads::Googleads::V0::Services::GoogleAdsField.new
+            #   google_ads_field_service_client = Google::Ads::Googleads::GoogleAdsField.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::GoogleAdsFieldServiceClient.google_ads_field_path("[GOOGLE_ADS_FIELD]")
             #   response = google_ads_field_service_client.get_google_ads_field(formatted_resource_name)
 
@@ -250,9 +250,9 @@ module Google
             #   object.
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   google_ads_field_service_client = Google::Ads::Googleads::V0::Services::GoogleAdsField.new
+            #   google_ads_field_service_client = Google::Ads::Googleads::GoogleAdsField.new(version: :v0)
             #
             #   # TODO: Initialize +query+:
             #   query = ''

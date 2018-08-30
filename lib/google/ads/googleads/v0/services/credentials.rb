@@ -22,8 +22,16 @@ module Google
           class Credentials < Google::Auth::Credentials
             SCOPE = [
             ].freeze
-            PATH_ENV_VARS = %w(GOOGLEADS_KEYFILE GOOGLE_CLOUD_KEYFILE GCLOUD_KEYFILE)
-            JSON_ENV_VARS = %w(GOOGLEADS_KEYFILE_JSON GOOGLE_CLOUD_KEYFILE_JSON GCLOUD_KEYFILE_JSON)
+            PATH_ENV_VARS = %w(GOOGLEADS_CREDENTIALS
+                               GOOGLEADS_KEYFILE
+                               GOOGLE_CLOUD_CREDENTIALS
+                               GOOGLE_CLOUD_KEYFILE
+                               GCLOUD_KEYFILE)
+            JSON_ENV_VARS = %w(GOOGLEADS_CREDENTIALS_JSON
+                               GOOGLEADS_KEYFILE_JSON
+                               GOOGLE_CLOUD_CREDENTIALS_JSON
+                               GOOGLE_CLOUD_KEYFILE_JSON
+                               GCLOUD_KEYFILE_JSON)
             DEFAULT_PATHS = ["~/.config/gcloud/application_default_credentials.json"]
           end
         end

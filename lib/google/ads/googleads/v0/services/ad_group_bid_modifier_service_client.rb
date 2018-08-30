@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::AdGroupBidModifier]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::V0::Services::AdGroupBidModifier.new
+            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::AdGroupBidModifier.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::AdGroupBidModifierServiceClient.ad_group_bid_modifier_path("[CUSTOMER]", "[AD_GROUP_BID_MODIFIER]")
             #   response = ad_group_bid_modifier_service_client.get_ad_group_bid_modifier(formatted_resource_name)
 
@@ -237,9 +237,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::MutateAdGroupBidModifiersResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::V0::Services::AdGroupBidModifier.new
+            #   ad_group_bid_modifier_service_client = Google::Ads::Googleads::AdGroupBidModifier.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

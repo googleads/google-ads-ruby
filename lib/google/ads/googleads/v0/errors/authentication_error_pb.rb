@@ -26,6 +26,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :LOGIN_COOKIE_INVALID, 20
     value :FAILED_TO_RETRIEVE_LOGIN_COOKIE, 21
     value :USER_ID_INVALID, 22
+    value :TWO_STEP_VERIFICATION_NOT_ENROLLED, 23
+    value :ADVANCED_PROTECTION_NOT_ENROLLED, 24
   end
 end
 

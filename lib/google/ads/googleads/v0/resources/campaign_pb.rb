@@ -27,9 +27,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :network_settings, :message, 14, "google.ads.googleads.v0.resources.Campaign.NetworkSettings"
     optional :hotel_setting, :message, 32, "google.ads.googleads.v0.resources.Campaign.HotelSettingInfo"
     optional :dynamic_search_ads_setting, :message, 33, "google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting"
+    optional :shopping_setting, :message, 36, "google.ads.googleads.v0.resources.Campaign.ShoppingSetting"
     optional :campaign_budget, :message, 6, "google.protobuf.StringValue"
     optional :bidding_strategy_type, :enum, 22, "google.ads.googleads.v0.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
     optional :start_date, :message, 19, "google.protobuf.StringValue"
+    optional :campaign_group, :message, 35, "google.protobuf.StringValue"
     optional :end_date, :message, 20, "google.protobuf.StringValue"
     oneof :campaign_bidding_strategy do
       optional :bidding_strategy, :message, 23, "google.protobuf.StringValue"
@@ -58,6 +60,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :use_supplied_urls_only, :message, 3, "google.protobuf.BoolValue"
     repeated :feed_ids, :message, 4, "google.protobuf.Int64Value"
   end
+  add_message "google.ads.googleads.v0.resources.Campaign.ShoppingSetting" do
+    optional :merchant_id, :message, 1, "google.protobuf.Int64Value"
+    optional :sales_country, :message, 2, "google.protobuf.StringValue"
+    optional :campaign_priority, :message, 3, "google.protobuf.Int32Value"
+    optional :enable_local, :message, 4, "google.protobuf.BoolValue"
+  end
 end
 
 module Google
@@ -69,6 +77,7 @@ module Google
           Campaign::NetworkSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.NetworkSettings").msgclass
           Campaign::HotelSettingInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.HotelSettingInfo").msgclass
           Campaign::DynamicSearchAdsSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting").msgclass
+          Campaign::ShoppingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.ShoppingSetting").msgclass
         end
       end
     end

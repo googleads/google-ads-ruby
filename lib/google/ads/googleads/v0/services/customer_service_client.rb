@@ -195,9 +195,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::Customer]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   customer_service_client = Google::Ads::Googleads::V0::Services::Customer.new
+            #   customer_service_client = Google::Ads::Googleads::Customer.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CustomerServiceClient.customer_path("[CUSTOMER]")
             #   response = customer_service_client.get_customer(formatted_resource_name)
 

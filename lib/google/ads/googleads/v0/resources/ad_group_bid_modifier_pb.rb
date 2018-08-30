@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/googleads/v0/common/criteria_pb'
+require 'google/ads/googleads/v0/enums/bid_modifier_source_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.AdGroupBidModifier" do
@@ -11,11 +12,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ad_group, :message, 2, "google.protobuf.StringValue"
     optional :criterion_id, :message, 3, "google.protobuf.Int64Value"
     optional :bid_modifier, :message, 4, "google.protobuf.DoubleValue"
+    optional :base_ad_group, :message, 9, "google.protobuf.StringValue"
+    optional :bid_modifier_source, :enum, 10, "google.ads.googleads.v0.enums.BidModifierSourceEnum.BidModifierSource"
     oneof :criterion do
       optional :hotel_date_selection_type, :message, 5, "google.ads.googleads.v0.common.HotelDateSelectionTypeInfo"
       optional :hotel_advance_booking_window, :message, 6, "google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo"
       optional :hotel_length_of_stay, :message, 7, "google.ads.googleads.v0.common.HotelLengthOfStayInfo"
       optional :hotel_check_in_day, :message, 8, "google.ads.googleads.v0.common.HotelCheckInDayInfo"
+      optional :device, :message, 11, "google.ads.googleads.v0.common.DeviceInfo"
     end
   end
 end

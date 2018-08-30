@@ -43,14 +43,23 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/biddingStrategies/5678'
     assert_equal(expected, util.bidding_strategy(1234, 5678))
 
+    expected = 'customers/1234/campaignBidModifiers/5678'
+    assert_equal(expected, util.campaign_bid_modifier(1234, 5678))
+
     expected = 'customers/1234/campaignBudgets/5678'
     assert_equal(expected, util.campaign_budget(1234, 5678))
 
     expected = 'customers/1234/campaignCriteria/567_890'
     assert_equal(expected, util.campaign_criterion(1234, 567, 890))
 
+    expected = 'customers/1234/campaignGroups/5678'
+    assert_equal(expected, util.campaign_group(1234, 5678))
+
     expected = 'customers/1234/campaigns/5678'
     assert_equal(expected, util.campaign(1234, 5678))
+
+    expected = 'customers/1234/campaignSharedSets/5678'
+    assert_equal(expected, util.campaign_shared_set(1234, 5678))
 
     expected = 'customers/123456'
     assert_equal(expected, util.customer(123456))
@@ -66,6 +75,12 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/recommendations/5678'
     assert_equal(expected, util.recommendation(1234, 5678))
+
+    expected = 'customers/1234/sharedCriteria/567_890'
+    assert_equal(expected, util.shared_criterion(1234, 567, 890))
+
+    expected = 'customers/1234/sharedSets/5678'
+    assert_equal(expected, util.shared_set(1234, 5678))
   end
 
   def test_malformed_path_input()

@@ -16,6 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CALL_ONLY_AD, 6
     value :EXPANDED_DYNAMIC_SEARCH_AD, 7
     value :HOTEL_AD, 8
+    value :SHOPPING_SMART_AD, 9
   end
 end
 

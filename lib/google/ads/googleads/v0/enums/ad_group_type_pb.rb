@@ -10,7 +10,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :SEARCH_STANDARD, 2
+    value :DISPLAY_STANDARD, 3
     value :HOTEL_ADS, 6
+    value :SHOPPING_SMART_ADS, 7
   end
 end
 

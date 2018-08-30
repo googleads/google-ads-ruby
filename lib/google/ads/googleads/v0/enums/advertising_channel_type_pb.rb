@@ -10,6 +10,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :SEARCH, 2
+    value :DISPLAY, 3
+    value :SHOPPING, 4
     value :HOTEL, 5
   end
 end

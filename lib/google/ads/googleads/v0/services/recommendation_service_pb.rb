@@ -3,8 +3,8 @@
 
 require 'google/protobuf'
 
-require 'google/ads/googleads/v0/common/ad_pb'
 require 'google/ads/googleads/v0/enums/keyword_match_type_pb'
+require 'google/ads/googleads/v0/resources/ad_pb'
 require 'google/ads/googleads/v0/resources/recommendation_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/wrappers_pb'
@@ -30,7 +30,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :new_budget_amount_micros, :message, 1, "google.protobuf.Int64Value"
   end
   add_message "google.ads.googleads.v0.services.ApplyRecommendationOperation.TextAdParameters" do
-    optional :ad, :message, 1, "google.ads.googleads.v0.common.Ad"
+    optional :ad, :message, 1, "google.ads.googleads.v0.resources.Ad"
   end
   add_message "google.ads.googleads.v0.services.ApplyRecommendationOperation.KeywordParameters" do
     optional :ad_group, :message, 1, "google.protobuf.StringValue"

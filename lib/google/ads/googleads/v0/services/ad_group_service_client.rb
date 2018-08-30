@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::AdGroup]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   ad_group_service_client = Google::Ads::Googleads::V0::Services::AdGroup.new
+            #   ad_group_service_client = Google::Ads::Googleads::AdGroup.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::AdGroupServiceClient.ad_group_path("[CUSTOMER]", "[AD_GROUP]")
             #   response = ad_group_service_client.get_ad_group(formatted_resource_name)
 
@@ -236,9 +236,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::MutateAdGroupsResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   ad_group_service_client = Google::Ads::Googleads::V0::Services::AdGroup.new
+            #   ad_group_service_client = Google::Ads::Googleads::AdGroup.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

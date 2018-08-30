@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CONTENT, 4
     value :YOUTUBE_SEARCH, 5
     value :YOUTUBE_WATCH, 6
+    value :MIXED, 7
   end
 end
 

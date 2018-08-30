@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::Recommendation]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   recommendation_service_client = Google::Ads::Googleads::V0::Services::Recommendation.new
+            #   recommendation_service_client = Google::Ads::Googleads::Recommendation.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::RecommendationServiceClient.recommendation_path("[CUSTOMER]", "[RECOMMENDATION]")
             #   response = recommendation_service_client.get_recommendation(formatted_resource_name)
 
@@ -236,9 +236,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::ApplyRecommendationResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   recommendation_service_client = Google::Ads::Googleads::V0::Services::Recommendation.new
+            #   recommendation_service_client = Google::Ads::Googleads::Recommendation.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

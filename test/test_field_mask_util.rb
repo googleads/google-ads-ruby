@@ -23,7 +23,7 @@ require 'google/protobuf/wrappers_pb'
 require 'google/ads/googleads'
 require 'google/ads/googleads/field_mask_util'
 require 'google/ads/googleads/v0/resources/campaign_pb'
-require 'google/ads/googleads/v0/common/ad_pb'
+require 'google/ads/googleads/v0/resources/ad_pb'
 
 class TestFieldMaskUtil < Minitest::Test
   def test_change_from_previous_value()
@@ -96,7 +96,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_repeated_field_addition()
-    test_object = Google::Ads::Googleads::V0::Common::Ad.new
+    test_object = Google::Ads::Googleads::V0::Resources::Ad.new
 
     test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
 
@@ -109,7 +109,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_repeated_field_removal()
-    test_object = Google::Ads::Googleads::V0::Common::Ad.new
+    test_object = Google::Ads::Googleads::V0::Resources::Ad.new
 
     test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
 
@@ -121,7 +121,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_changed()
-    test_object = Google::Ads::Googleads::V0::Common::Ad.new
+    test_object = Google::Ads::Googleads::V0::Resources::Ad.new
 
     text_ad = Google::Ads::Googleads::V0::Common::TextAdInfo.new
     text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')
@@ -138,7 +138,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_unchanged()
-    test_object = Google::Ads::Googleads::V0::Common::Ad.new
+    test_object = Google::Ads::Googleads::V0::Resources::Ad.new
 
     text_ad = Google::Ads::Googleads::V0::Common::TextAdInfo.new
     text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')

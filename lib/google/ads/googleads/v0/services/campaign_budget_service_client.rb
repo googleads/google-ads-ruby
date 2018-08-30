@@ -202,9 +202,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Resources::CampaignBudget]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
+            #   campaign_budget_service_client = Google::Ads::Googleads::CampaignBudget.new(version: :v0)
             #   formatted_resource_name = Google::Ads::Googleads::V0::Services::CampaignBudgetServiceClient.campaign_budget_path("[CUSTOMER]", "[CAMPAIGN_BUDGET]")
             #   response = campaign_budget_service_client.get_campaign_budget(formatted_resource_name)
 
@@ -237,9 +237,9 @@ module Google
             # @return [Google::Ads::Googleads::V0::Services::MutateCampaignBudgetsResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
-            #   require "google/ads/googleads/v0/services"
+            #   require "google/ads/googleads"
             #
-            #   campaign_budget_service_client = Google::Ads::Googleads::V0::Services::CampaignBudget.new
+            #   campaign_budget_service_client = Google::Ads::Googleads::CampaignBudget.new(version: :v0)
             #
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''

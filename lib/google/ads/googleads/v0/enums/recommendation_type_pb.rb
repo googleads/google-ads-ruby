@@ -13,6 +13,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :KEYWORD, 3
     value :TEXT_AD, 4
     value :TARGET_CPA_OPT_IN, 5
+    value :MAXIMIZE_CONVERSIONS_OPT_IN, 6
+    value :ENHANCED_CPC_OPT_IN, 7
+    value :SEARCH_PARTNERS_OPT_IN, 8
+    value :MAXIMIZE_CLICKS_OPT_IN, 9
+    value :OPTIMIZE_AD_ROTATION, 10
   end
 end
 
