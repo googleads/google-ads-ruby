@@ -18,12 +18,12 @@
 # Example demonstrating how to add a keyword to an ad group.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def add_keyword(customer_id, ad_group_id, keyword)
-  # This will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters.
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   agc_service = client.service(:AdGroupCriterion)
   ag_service = client.service(:AdGroup)
@@ -39,7 +39,7 @@ def add_keyword(customer_id, ad_group_id, keyword)
 
   # Optional field
   # All fields can be referenced from the protos directly.
-  # The protos are located in lib/google/ads/googleads/v0 folders
+  # The protos are located in lib/google/ads/google_ads/v0 folders
   # criterion.negative = Google::Protobuf::BoolValue.new(value: true)
 
   # Optional repeated field
@@ -96,7 +96,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     add_keyword(options[:customer_id], options[:ad_group_id], options[:keyword])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

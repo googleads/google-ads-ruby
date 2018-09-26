@@ -18,12 +18,12 @@
 # This example pauses an ad.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def pause_ad(customer_id, ad_group_id, ad_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   ad_group_ad_service = client.service(:AdGroupAd)
 
@@ -86,7 +86,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     pause_ad(options[:customer_id], options[:ad_group_id], options[:ad_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

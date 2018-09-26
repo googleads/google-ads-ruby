@@ -19,12 +19,12 @@
 # negative keywords in a campaign.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def get_campaign_targeting_criteria(customer_id, campaign_id)
-  # This will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters.
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   ga_service = client.service(:GoogleAds)
 
@@ -101,7 +101,7 @@ if __FILE__ == $PROGRAM_NAME
   begin
     get_campaign_targeting_criteria(options[:customer_id],
         options[:campaign_id])
-    rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+    rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)
         if error.location

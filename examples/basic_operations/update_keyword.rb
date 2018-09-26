@@ -18,12 +18,12 @@
 # Example demonstrating how to update a keyword in an ad group
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def update_keyword(customer_id, ad_group_id, criteria_id)
-  # This will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters.
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   agc_service = client.service(:AdGroupCriterion)
 
@@ -94,7 +94,7 @@ if __FILE__ == $PROGRAM_NAME
   begin
     update_keyword(options[:customer_id], options[:ad_group_id],
         options[:criteria_id])
-    rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+    rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)
         if error.location

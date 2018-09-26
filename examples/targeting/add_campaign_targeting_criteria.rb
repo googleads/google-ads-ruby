@@ -18,12 +18,12 @@
 # This code example illustrates adding campaign targeting criteria.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def add_campaign_targeting_criteria(customer_id, campaign_id, keyword)
-  # This will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters.
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   criteria_service = client.service(:CampaignCriterion)
   campaign_service = client.service(:Campaign)
@@ -88,7 +88,7 @@ if __FILE__ == $PROGRAM_NAME
   begin
     add_campaign_targeting_criteria(options[:customer_id],
         options[:campaign_id], options[:keyword])
-    rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+    rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)
         if error.location
