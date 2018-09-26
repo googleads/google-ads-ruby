@@ -40,7 +40,7 @@ def authenticate_in_standalone_application(client_id, client_secret)
       user_authorizer.get_credentials_from_code(code: authorization_code)
   printf("Your refresh token is: %s\n", user_credentials.refresh_token)
 
-  printf("Copy your refresh token above into your googleads_config.rb in your "\
+  printf("Copy your refresh token above into your google_ads_config.rb in your "\
       "home directory or use it when instantiating the library.\n")
 end
 

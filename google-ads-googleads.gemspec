@@ -16,17 +16,17 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 
-require_relative 'lib/google/ads/googleads/version.rb'
+require_relative 'lib/google/ads/google_ads/version.rb'
 
 Gem::Specification.new do |s|
   s.name          = 'google-ads-googleads'
-  s.version       = Google::Ads::Googleads::CLIENT_LIB_VERSION
+  s.version       = Google::Ads::GoogleAds::CLIENT_LIB_VERSION
   s.authors       = ['Google Inc']
   s.description   = '%s is a Google Ads API client library for Ruby' % s.name
   s.email         = ['adwordsapiadvisor+michael@google.com']
   s.files = Dir.glob(File.join('lib', '**', '*.rb')) +
       Dir.glob(File.join('lib', '**', '*.json')) +
-      %w(Rakefile README.md ChangeLog googleads_config.rb)
+      %w(Rakefile README.md ChangeLog google_ads_config.rb)
   s.homepage = 'https://github.com/googleads/google-ads-ruby'
   s.license = 'Apache-2.0'
   s.platform = Gem::Platform::RUBY
