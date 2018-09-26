@@ -19,12 +19,12 @@
 # instance, the name, currency, time zone etc.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def get_account_information(customer_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   customer_service = client.service(:Customer)
   resource_name = client.path.customer(customer_id)
@@ -77,7 +77,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     get_account_information(options[:customer_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

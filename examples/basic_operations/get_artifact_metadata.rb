@@ -22,12 +22,12 @@
 # selectable with the artifact.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def get_artifact_metadata(artifact_name)
-  # This will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters.
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   gaf_service = client.service(:GoogleAdsField)
 
@@ -114,7 +114,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     get_artifact_metadata(options[:artifact_name])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED

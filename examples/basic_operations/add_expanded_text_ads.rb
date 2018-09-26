@@ -19,13 +19,13 @@
 # run get_expanded_text_ads.rb.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 require 'date'
 
 def add_expanded_text_ads(customer_id, ad_group_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
   ad_group_ad_service = client.service(:AdGroupAd)
 
   # Create an ad group ad.
@@ -97,7 +97,7 @@ if __FILE__ == $0
 
   begin
     add_expanded_text_ads(options[:customer_id], options[:ad_group_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

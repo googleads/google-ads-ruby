@@ -18,12 +18,12 @@
 # This example gets all TEXT_AD recommendations.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def get_text_ad_recommendations(customer_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   ga_service = client.service(:GoogleAds)
 
@@ -95,7 +95,7 @@ if __FILE__ == $0
 
   begin
     get_text_ad_recommendations(options[:customer_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

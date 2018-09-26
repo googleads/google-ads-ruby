@@ -18,12 +18,12 @@
 # This example retrieves keywords for a customer or for a specific Ad Group.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def get_keywords(customer_id, ad_group_id=nil)
- # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   ga_service = client.service(:GoogleAds)
 
@@ -103,7 +103,7 @@ if __FILE__ == $0
 
   begin
     get_keywords(options[:customer_id], options[:ad_group_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

@@ -19,14 +19,17 @@
 
 require 'minitest/autorun'
 
-require 'google/ads/googleads/proto_lookup_util'
-require 'google/ads/googleads/path_lookup_util'
+require 'google/ads/google_ads/proto_lookup_util'
+require 'google/ads/google_ads/path_lookup_util'
 
 
 class TestPathLookupUtil < Minitest::Test
   def test_path_generation()
-    util = Google::Ads::Googleads::PathLookupUtil.new(
-        Google::Ads::Googleads::ProtoLookupUtil.new(:V0))
+    util = Google::Ads::GoogleAds::PathLookupUtil.new(
+        Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0))
+
+    expected = 'customers/1234/accountBudgetProposals/5678'
+    assert_equal(expected, util.account_budget_proposal(1234, 5678))
 
     expected = 'customers/1234/adGroupAds/567_890'
     assert_equal(expected, util.ad_group_ad(1234, 567, 890))
@@ -42,6 +45,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/biddingStrategies/5678'
     assert_equal(expected, util.bidding_strategy(1234, 5678))
+
+    expected = 'customers/1234/billingSetups/5678'
+    assert_equal(expected, util.billing_setup(1234, 5678))
 
     expected = 'customers/1234/campaignBidModifiers/5678'
     assert_equal(expected, util.campaign_bid_modifier(1234, 5678))
@@ -60,6 +66,12 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/campaignSharedSets/5678'
     assert_equal(expected, util.campaign_shared_set(1234, 5678))
+
+    expected = 'customers/1234/changeStatus/5678'
+    assert_equal(expected, util.change_status(1234, 5678))
+
+    expected = 'customers/1234/conversionActions/5678'
+    assert_equal(expected, util.conversion_action(1234,5678))
 
     expected = 'customers/123456'
     assert_equal(expected, util.customer(123456))
@@ -81,11 +93,14 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/sharedSets/5678'
     assert_equal(expected, util.shared_set(1234, 5678))
+
+    expected = 'customers/1234/videos/5678'
+    assert_equal(expected, util.video(1234, 5678))
   end
 
   def test_malformed_path_input()
-    util = Google::Ads::Googleads::PathLookupUtil.new(
-        Google::Ads::Googleads::ProtoLookupUtil.new(:V0))
+    util = Google::Ads::GoogleAds::PathLookupUtil.new(
+        Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0))
 
     assert_raises RuntimeError do
       util.campaign(nil, nil)

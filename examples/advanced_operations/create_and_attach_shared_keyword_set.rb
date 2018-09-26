@@ -19,14 +19,14 @@
 # attaches them to a campaign.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 require 'date'
 
 def create_and_attach_shared_keyword_set(customer_id, campaign_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
 
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   shared_set_service = client.service(:SharedSet)
   shared_criterion_service = client.service(:SharedCriterion)
@@ -129,7 +129,7 @@ if __FILE__ == $PROGRAM_NAME
   begin
     create_and_attach_shared_keyword_set(options[:customer_id],
         options[:campaign_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

@@ -19,12 +19,12 @@
 # for call interactions.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Create campaign Bid Modifier Service
   campaign_bid_modifier_service = client.service(:CampaignBidModifier)
@@ -104,7 +104,7 @@ if __FILE__ == $0
   begin
     add_campaign_bid_modifier(options[:customer_id],
         options[:campaign_id], options[:bid_modifier])
-    rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+    rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)
         if error.location
