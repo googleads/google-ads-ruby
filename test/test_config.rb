@@ -19,7 +19,7 @@
 
 require 'minitest/autorun'
 
-require 'google/ads/googleads/config'
+require 'google/ads/google_ads/config'
 
 class TestConfig < Minitest::Test
   def test_initialize()
@@ -28,7 +28,7 @@ class TestConfig < Minitest::Test
     client_secret_value = 'client_secret'
     developer_token_value = 'developer_token'
 
-    config = Google::Ads::Googleads::Config.new do |c|
+    config = Google::Ads::GoogleAds::Config.new do |c|
       c.refresh_token = refresh_token_value
       c.client_id = client_id_value
       c.client_secret = client_secret_value
@@ -42,7 +42,7 @@ class TestConfig < Minitest::Test
   end
 
   def test_configure()
-    config = Google::Ads::Googleads::Config.new
+    config = Google::Ads::GoogleAds::Config.new
 
     refresh_token_value = '1234'
     client_id_value = 'abcd'

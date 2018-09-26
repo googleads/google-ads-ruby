@@ -19,12 +19,12 @@
 # text ads, run get_text_ad_recommendations.rb.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 
 def apply_recommendation(customer_id, recommendation_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   recommendation_resource =
       client.path.recommendation(customer_id, recommendation_id)
@@ -35,7 +35,7 @@ def apply_recommendation(customer_id, recommendation_id)
   # values. This is an example to override a recommended ad when a
   # TextAdRecommendation is applied.
   # For details, please read
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v0.services#google.ads.googleads.v0.services.ApplyRecommendationOperation
+  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v0.services#google.ads.google_ads.v0.services.ApplyRecommendationOperation
   #
   # overriding_ad = client.resource(:Ad)
   # overriding_ad.id = client.wrapper.int64('INSERT_AD_ID_AS_INTEGER_HERE')
@@ -98,7 +98,7 @@ if __FILE__ == $0
 
   begin
     apply_recommendation(options[:customer_id], options[:recommendation_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location

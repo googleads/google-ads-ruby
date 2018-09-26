@@ -18,13 +18,13 @@
 # This example adds an ad group. To get ad groups, run get_ad_groups.rb.
 
 require 'optparse'
-require 'google/ads/googleads'
+require 'google/ads/google_ads'
 require 'date'
 
 def add_ad_groups(customer_id, campaign_id)
-  # GoogleadsClient will read a config file from ENV['HOME']/googleads_config.rb
-  # when called without parameters
-  client = Google::Ads::Googleads::GoogleadsClient.new
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
   ad_group_service = client.service(:AdGroup)
 
   # Create an ad group, setting an optional CPC value.
@@ -87,7 +87,7 @@ if __FILE__ == $0
 
   begin
     add_ad_groups(options[:customer_id], options[:campaign_id])
-  rescue Google::Ads::Googleads::Errors::GoogleAdsError => e
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
       if error.location
