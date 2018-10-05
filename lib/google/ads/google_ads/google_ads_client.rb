@@ -144,7 +144,7 @@ module Google
               # If there is an underlying GoogleAdsFailure, throw that one.
               if detail.is_a?(
                   Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure)
-                raise Google::Ads::GooglAads::Errors::GoogleAdsError.new(
+                raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
                     detail)
               end
               if detail.is_a?(Google::Protobuf::Any)
