@@ -10,10 +10,19 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :KEYWORD, 2
+    value :PLACEMENT, 3
     value :DEVICE, 6
     value :LOCATION, 7
     value :LISTING_GROUP, 8
     value :AD_SCHEDULE, 9
+    value :AGE_RANGE, 10
+    value :GENDER, 11
+    value :INCOME_RANGE, 12
+    value :PARENTAL_STATUS, 13
+    value :YOUTUBE_VIDEO, 14
+    value :YOUTUBE_CHANNEL, 15
+    value :PROXIMITY, 17
+    value :TOPIC, 18
   end
 end
 

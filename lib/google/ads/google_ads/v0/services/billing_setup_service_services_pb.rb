@@ -34,8 +34,7 @@ module Google
             #
             # Mutates:
             # The REMOVE operation cancels a pending billing setup.
-            # Functionality for creating new billing setups will be supported in a future
-            # version.
+            # The CREATE operation creates a new billing setup.
             class Service
 
               include GRPC::GenericService
@@ -46,7 +45,7 @@ module Google
 
               # Returns a billing setup.
               rpc :GetBillingSetup, GetBillingSetupRequest, Google::Ads::GoogleAds::V0::Resources::BillingSetup
-              # Cancels a pending billing setup.
+              # Creates a billing setup, or cancels an existing billing setup.
               rpc :MutateBillingSetup, MutateBillingSetupRequest, MutateBillingSetupResponse
             end
 

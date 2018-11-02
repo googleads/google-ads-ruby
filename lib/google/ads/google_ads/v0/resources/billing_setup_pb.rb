@@ -4,17 +4,26 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/enums/billing_setup_status_pb'
+require 'google/ads/google_ads/v0/enums/time_type_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.BillingSetup" do
     optional :resource_name, :string, 1
     optional :id, :message, 2, "google.protobuf.Int64Value"
     optional :status, :enum, 3, "google.ads.googleads.v0.enums.BillingSetupStatusEnum.BillingSetupStatus"
-    optional :payments_account_id, :message, 4, "google.protobuf.StringValue"
-    optional :payments_account_name, :message, 5, "google.protobuf.StringValue"
-    optional :payments_profile_id, :message, 6, "google.protobuf.StringValue"
-    optional :payments_profile_name, :message, 7, "google.protobuf.StringValue"
-    optional :secondary_payments_profile_id, :message, 8, "google.protobuf.StringValue"
+    optional :payments_account, :message, 11, "google.protobuf.StringValue"
+    optional :payments_account_info, :message, 12, "google.ads.googleads.v0.resources.BillingSetup.PaymentsAccountInfo"
+    oneof :start_time do
+      optional :start_date_time, :message, 9, "google.protobuf.StringValue"
+      optional :start_time_type, :enum, 10, "google.ads.googleads.v0.enums.TimeTypeEnum.TimeType"
+    end
+  end
+  add_message "google.ads.googleads.v0.resources.BillingSetup.PaymentsAccountInfo" do
+    optional :payments_account_id, :message, 1, "google.protobuf.StringValue"
+    optional :payments_account_name, :message, 2, "google.protobuf.StringValue"
+    optional :payments_profile_id, :message, 3, "google.protobuf.StringValue"
+    optional :payments_profile_name, :message, 4, "google.protobuf.StringValue"
+    optional :secondary_payments_profile_id, :message, 5, "google.protobuf.StringValue"
   end
 end
 
@@ -24,6 +33,7 @@ module Google
       module V0
         module Resources
           BillingSetup = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.BillingSetup").msgclass
+          BillingSetup::PaymentsAccountInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.BillingSetup.PaymentsAccountInfo").msgclass
         end
       end
     end

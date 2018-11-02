@@ -14,6 +14,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :tracking_url_template, :message, 7, "google.protobuf.StringValue"
     optional :auto_tagging_enabled, :message, 8, "google.protobuf.BoolValue"
     optional :has_partners_badge, :message, 9, "google.protobuf.BoolValue"
+    optional :call_reporting_setting, :message, 10, "google.ads.googleads.v0.resources.CallReportingSetting"
+  end
+  add_message "google.ads.googleads.v0.resources.CallReportingSetting" do
+    optional :call_reporting_enabled, :message, 1, "google.protobuf.BoolValue"
+    optional :call_conversion_reporting_enabled, :message, 2, "google.protobuf.BoolValue"
+    optional :call_conversion_action, :message, 9, "google.protobuf.StringValue"
   end
 end
 
@@ -23,6 +29,7 @@ module Google
       module V0
         module Resources
           Customer = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Customer").msgclass
+          CallReportingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.CallReportingSetting").msgclass
         end
       end
     end

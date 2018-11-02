@@ -30,9 +30,22 @@ module Google
                 account_budget_proposal_id.to_s)
         end
 
+        def account_budget(customer_id, account_budget_id)
+          @proto_lookup_util.service(:AccountBudget).
+              account_budget_path(customer_id.to_s, account_budget_id.to_s)
+        end
+
         def ad_group_ad(customer_id, ad_group_id, ad_id)
           @proto_lookup_util.service(:AdGroupAd).ad_group_ad_path(
               customer_id.to_s, sprintf('%s_%s', ad_group_id.to_s, ad_id.to_s))
+        end
+
+        def ad_group_audience_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:AdGroupAudienceView).
+              ad_group_audience_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
         end
 
         def ad_group_bid_modifier(customer_id, ad_group_id, criterion_id)
@@ -53,6 +66,13 @@ module Google
         def ad_group(customer_id, ad_group_id)
           @proto_lookup_util.service(:AdGroup).ad_group_path(
               customer_id.to_s, ad_group_id.to_s)
+        end
+
+        def age_range_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:AgeRangeView).age_range_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
         end
 
         def bidding_strategy(customer_id, bidding_strategy_id)
@@ -109,8 +129,41 @@ module Google
               customer_id.to_s, conversion_action_id.to_s)
         end
 
+        def customer_client_link(
+            customer_id, client_customer_id, manager_link_id)
+          @proto_lookup_util.service(:CustomerClientLink).
+              customer_client_link_path(
+                customer_id.to_s,
+                sprintf('%s_%s', client_customer_id.to_s, manager_link_id.to_s)
+              )
+        end
+
+        def customer_manager_link(
+            customer_id, manager_customer_id, manager_link_id)
+          @proto_lookup_util.service(:CustomerManagerLink).
+              customer_manager_link_path(
+                customer_id.to_s,
+                sprintf('%s_%s', manager_customer_id.to_s, manager_link_id.to_s)
+              )
+        end
+
         def customer(customer_id)
           @proto_lookup_util.service(:Customer).customer_path(customer_id.to_s)
+        end
+
+        def display_keyword_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:DisplayKeywordView).
+              display_keyword_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
+        end
+
+        def gender_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:GenderView).gender_view_path(
+            customer_id.to_s,
+            sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+          )
         end
 
         def geo_target_constant(geo_target_constant_id)
@@ -123,11 +176,47 @@ module Google
               google_ads_field.to_s)
         end
 
+        def hotel_group_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:HotelGroupView).hotel_group_view_path(
+            customer_id.to_s,
+            sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+          )
+        end
+
         def keyword_view(customer_id, ad_group_id, criterion_id)
           @proto_lookup_util.service(:KeywordView).keyword_view_path(
             customer_id.to_s,
             sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
           )
+        end
+
+        def managed_placement_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:ManagedPlacementView).
+              managed_placement_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
+        end
+
+        def media_file(customer_id, media_file_id)
+          @proto_lookup_util.service(:MediaFile).media_file_path(
+              customer_id.to_s, media_file_id.to_s)
+        end
+
+        def parental_status_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:ParentalStatusView).
+              parental_status_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
+        end
+
+        def product_group_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:ProductGroupView).
+              product_group_view_path(
+                customer_id.to_s,
+                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+              )
         end
 
         def recommendation(customer_id, recommendation_id)
@@ -145,6 +234,18 @@ module Google
         def shared_set(customer_id, shared_set_id)
           @proto_lookup_util.service(:SharedSet).shared_set_path(
               customer_id.to_s, shared_set_id.to_s)
+        end
+
+        def topic_constant(vertical_id)
+          @proto_lookup_util.service(:TopicConstant).topic_constant_path(
+              vertical_id.to_s)
+        end
+
+        def topic_view(customer_id, ad_group_id, criterion_id)
+          @proto_lookup_util.service(:TopicView).topic_view_path(
+            customer_id.to_s,
+            sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+          )
         end
 
         def video(customer_id, video_id)

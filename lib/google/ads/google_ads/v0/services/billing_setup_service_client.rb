@@ -40,8 +40,7 @@ module Google
           #
           # Mutates:
           # The REMOVE operation cancels a pending billing setup.
-          # Functionality for creating new billing setups will be supported in a future
-          # version.
+          # The CREATE operation creates a new billing setup.
           #
           # @!attribute [r] billing_setup_service_stub
           #   @return [Google::Ads::GoogleAds::V0::Services::BillingSetupService::Stub]
@@ -228,7 +227,7 @@ module Google
               @get_billing_setup.call(req, options, &block)
             end
 
-            # Cancels a pending billing setup.
+            # Creates a billing setup, or cancels an existing billing setup.
             #
             # @param customer_id [String]
             #   Id of the customer to apply the billing setup mutate operation to.

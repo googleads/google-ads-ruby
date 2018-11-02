@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 #
-# This example gets all BillingSetup objects available for the specified
+# This example retrieves all BillingSetup objects available for the specified
 # customerId.
 
 require 'optparse'
@@ -32,11 +32,12 @@ def get_billing_setup(customer_id)
   search_query = <<~QUERY
     SELECT billing_setup.id,
       billing_setup.status,
-      billing_setup.payments_account_id,
-      billing_setup.payments_account_name,
-      billing_setup.payments_profile_id,
-      billing_setup.payments_profile_name,
-      billing_setup.secondary_payments_profile_id
+      billing_setup.payments_account,
+      billing_setup.payments_account_info.payments_account_id,
+      billing_setup.payments_account_info.payments_account_name,
+      billing_setup.payments_account_info.payments_profile_id,
+      billing_setup.payments_account_info.payments_profile_name,
+      billing_setup.payments_account_info.secondary_payments_profile_id
     FROM billing_setup
   QUERY
 
@@ -48,17 +49,20 @@ def get_billing_setup(customer_id)
 
   response.each do |row|
     billing_setup = row.billing_setup
+    payments_account_info = billing_setup.payments_account_info
 
-    puts sprintf('Billing setup with ID %s, status %s, payments_account_id %s,'\
-        ' payments_account_name %s, payments_profile_id %s,'\
-        ' payments_profile_name %s, secondary_payments_profile_id %s',
+    puts sprintf('Billing setup with ID "%s", status "%s",'\
+        ' payments_account "%s", payments_account_id "%s",'\
+        ' payments_account_name "%s", payments_profile_id "%s",'\
+        ' payments_profile_name "%s", secondary_payments_profile_id "%s"',
         billing_setup.id,
         billing_setup.status,
-        billing_setup.payments_account_id,
-        billing_setup.payments_account_name,
-        billing_setup.payments_profile_id,
-        billing_setup.payments_profile_name,
-        billing_setup.secondary_payments_profile_id
+        billing_setup.payments_account,
+        payments_account_info.payments_account_id,
+        payments_account_info.payments_account_name,
+        payments_account_info.payments_profile_id,
+        payments_account_info.payments_profile_name,
+        payments_account_info.secondary_payments_profile_id
     )
   end
 end

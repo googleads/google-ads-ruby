@@ -53,6 +53,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MISSING_URL_TAG, 47
     value :DUPLICATE_URL_ID, 48
     value :INVALID_URL_ID, 49
+    value :FINAL_URL_SUFFIX_MALFORMED, 50
+    value :INVALID_TAG_IN_FINAL_URL_SUFFIX, 51
   end
 end
 

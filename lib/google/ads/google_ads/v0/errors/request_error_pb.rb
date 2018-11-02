@@ -24,6 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CANNOT_MODIFY_FOREIGN_FIELD, 15
     value :INVALID_ENUM_VALUE, 18
     value :DEVELOPER_TOKEN_PARAMETER_MISSING, 19
+    value :LOGIN_CUSTOMER_ID_PARAMETER_MISSING, 20
   end
 end
 

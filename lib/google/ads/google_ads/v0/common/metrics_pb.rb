@@ -34,6 +34,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ctr, :message, 30, "google.protobuf.DoubleValue"
     optional :engagement_rate, :message, 31, "google.protobuf.DoubleValue"
     optional :engagements, :message, 32, "google.protobuf.Int64Value"
+    optional :hotel_average_lead_value_micros, :message, 75, "google.protobuf.DoubleValue"
     optional :impressions, :message, 37, "google.protobuf.Int64Value"
     optional :interaction_rate, :message, 38, "google.protobuf.DoubleValue"
     optional :interactions, :message, 39, "google.protobuf.Int64Value"

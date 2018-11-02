@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HOTEL_AD, 8
     value :SHOPPING_SMART_AD, 9
     value :SHOPPING_PRODUCT_AD, 10
+    value :VIDEO_OUTSTREAM, 11
   end
 end
 

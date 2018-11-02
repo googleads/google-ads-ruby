@@ -15,6 +15,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HOTEL_ADS, 6
     value :SHOPPING_SMART_ADS, 7
     value :VIDEO_BUMPER, 8
+    value :VIDEO_TRUE_VIEW_IN_STREAM, 9
+    value :VIDEO_TRUE_VIEW_IN_DISPLAY, 10
+    value :VIDEO_NON_SKIPPABLE_IN_STREAM, 11
+    value :VIDEO_OUTSTREAM, 12
   end
 end
 

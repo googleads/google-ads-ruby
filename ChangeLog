@@ -1,3 +1,6 @@
+0.6.0:
+  - Adding support for Google Ads API v0_5.
+
 0.5.0:
   - Adding support for Google Ads API v0_4.
   - The namespace Googleads, with the path pattern "googleads", has changed to

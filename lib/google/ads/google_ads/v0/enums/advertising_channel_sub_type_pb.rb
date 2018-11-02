@@ -14,6 +14,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :SEARCH_EXPRESS, 4
     value :DISPLAY_EXPRESS, 5
     value :SHOPPING_SMART_ADS, 6
+    value :DISPLAY_GMAIL_AD, 7
+    value :DISPLAY_SMART_CAMPAIGN, 8
+    value :VIDEO_OUTSTREAM, 9
   end
 end
 

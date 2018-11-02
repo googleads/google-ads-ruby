@@ -178,6 +178,11 @@ module Google
                 defaults["get_customer"],
                 exception_transformer: exception_transformer
               )
+              @list_accessible_customers = Google::Gax.create_api_call(
+                @customer_service_stub.method(:list_accessible_customers),
+                defaults["list_accessible_customers"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -210,6 +215,28 @@ module Google
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::GetCustomerRequest)
               @get_customer.call(req, options, &block)
+            end
+
+            # Returns resource names of customers directly accessible by the
+            # user authenticating the call.
+            #
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::ListAccessibleCustomersResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::ListAccessibleCustomersResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v0)
+            #   response = customer_service_client.list_accessible_customers
+
+            def list_accessible_customers options: nil, &block
+              req = Google::Ads::GoogleAds::V0::Services::ListAccessibleCustomersRequest.new
+              @list_accessible_customers.call(req, options, &block)
             end
           end
         end

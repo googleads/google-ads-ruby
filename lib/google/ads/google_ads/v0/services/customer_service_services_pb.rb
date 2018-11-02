@@ -37,6 +37,9 @@ module Google
 
               # Returns the requested customer in full detail.
               rpc :GetCustomer, GetCustomerRequest, Google::Ads::GoogleAds::V0::Resources::Customer
+              # Returns resource names of customers directly accessible by the
+              # user authenticating the call.
+              rpc :ListAccessibleCustomers, ListAccessibleCustomersRequest, ListAccessibleCustomersResponse
             end
 
             Stub = Service.rpc_stub_class

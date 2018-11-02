@@ -178,6 +178,11 @@ module Google
                 defaults["get_geo_target_constant"],
                 exception_transformer: exception_transformer
               )
+              @suggest_geo_target_constants = Google::Gax.create_api_call(
+                @geo_target_constant_service_stub.method(:suggest_geo_target_constants),
+                defaults["suggest_geo_target_constants"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -210,6 +215,54 @@ module Google
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::GetGeoTargetConstantRequest)
               @get_geo_target_constant.call(req, options, &block)
+            end
+
+            # Returns GeoTargetConstant suggestions by location name or by resource name.
+            #
+            # @param locale [Google::Protobuf::StringValue | Hash]
+            #   If possible, returned geo targets are translated using this locale. If not,
+            #   en is used by default. This is also used as a hint for returned geo
+            #   targets.
+            #   A hash of the same form as `Google::Protobuf::StringValue`
+            #   can also be provided.
+            # @param location_names [Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::LocationNames | Hash]
+            #   The location names to search by. At most 25 names can be set.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::LocationNames`
+            #   can also be provided.
+            # @param geo_targets [Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::GeoTargets | Hash]
+            #   The geo target constant resource names to filter by.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::GeoTargets`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   geo_target_constant_service_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v0)
+            #
+            #   # TODO: Initialize +locale+:
+            #   locale = {}
+            #   response = geo_target_constant_service_client.suggest_geo_target_constants(locale)
+
+            def suggest_geo_target_constants \
+                locale,
+                location_names: nil,
+                geo_targets: nil,
+                options: nil,
+                &block
+              req = {
+                locale: locale,
+                location_names: location_names,
+                geo_targets: geo_targets
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest)
+              @suggest_geo_target_constants.call(req, options, &block)
             end
           end
         end

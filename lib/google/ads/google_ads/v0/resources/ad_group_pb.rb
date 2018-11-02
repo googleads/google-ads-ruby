@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/common/custom_parameter_pb'
+require 'google/ads/google_ads/v0/enums/ad_group_ad_rotation_mode_pb'
 require 'google/ads/google_ads/v0/enums/ad_group_status_pb'
 require 'google/ads/google_ads/v0/enums/ad_group_type_pb'
 require 'google/protobuf/wrappers_pb'
@@ -14,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :name, :message, 4, "google.protobuf.StringValue"
     optional :status, :enum, 5, "google.ads.googleads.v0.enums.AdGroupStatusEnum.AdGroupStatus"
     optional :type, :enum, 12, "google.ads.googleads.v0.enums.AdGroupTypeEnum.AdGroupType"
+    optional :ad_rotation_mode, :enum, 22, "google.ads.googleads.v0.enums.AdGroupAdRotationModeEnum.AdGroupAdRotationMode"
     optional :tracking_url_template, :message, 13, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 6, "google.ads.googleads.v0.common.CustomParameter"
     optional :campaign, :message, 10, "google.protobuf.StringValue"

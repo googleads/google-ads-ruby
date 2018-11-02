@@ -13,8 +13,10 @@ require 'google/ads/google_ads/v0/resources/account_budget_pb'
 require 'google/ads/google_ads/v0/resources/account_budget_proposal_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_ad_pb'
+require 'google/ads/google_ads/v0/resources/ad_group_audience_view_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_criterion_pb'
+require 'google/ads/google_ads/v0/resources/age_range_view_pb'
 require 'google/ads/google_ads/v0/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v0/resources/billing_setup_pb'
 require 'google/ads/google_ads/v0/resources/campaign_pb'
@@ -25,11 +27,21 @@ require 'google/ads/google_ads/v0/resources/campaign_group_pb'
 require 'google/ads/google_ads/v0/resources/campaign_shared_set_pb'
 require 'google/ads/google_ads/v0/resources/change_status_pb'
 require 'google/ads/google_ads/v0/resources/customer_pb'
+require 'google/ads/google_ads/v0/resources/customer_client_link_pb'
+require 'google/ads/google_ads/v0/resources/customer_manager_link_pb'
+require 'google/ads/google_ads/v0/resources/display_keyword_view_pb'
+require 'google/ads/google_ads/v0/resources/gender_view_pb'
 require 'google/ads/google_ads/v0/resources/geo_target_constant_pb'
+require 'google/ads/google_ads/v0/resources/hotel_group_view_pb'
 require 'google/ads/google_ads/v0/resources/keyword_view_pb'
+require 'google/ads/google_ads/v0/resources/managed_placement_view_pb'
+require 'google/ads/google_ads/v0/resources/parental_status_view_pb'
+require 'google/ads/google_ads/v0/resources/product_group_view_pb'
 require 'google/ads/google_ads/v0/resources/recommendation_pb'
 require 'google/ads/google_ads/v0/resources/shared_criterion_pb'
 require 'google/ads/google_ads/v0/resources/shared_set_pb'
+require 'google/ads/google_ads/v0/resources/topic_constant_pb'
+require 'google/ads/google_ads/v0/resources/topic_view_pb'
 require 'google/ads/google_ads/v0/resources/video_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
@@ -52,8 +64,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :account_budget_proposal, :message, 43, "google.ads.googleads.v0.resources.AccountBudgetProposal"
     optional :ad_group, :message, 3, "google.ads.googleads.v0.resources.AdGroup"
     optional :ad_group_ad, :message, 16, "google.ads.googleads.v0.resources.AdGroupAd"
+    optional :ad_group_audience_view, :message, 57, "google.ads.googleads.v0.resources.AdGroupAudienceView"
     optional :ad_group_bid_modifier, :message, 24, "google.ads.googleads.v0.resources.AdGroupBidModifier"
     optional :ad_group_criterion, :message, 17, "google.ads.googleads.v0.resources.AdGroupCriterion"
+    optional :age_range_view, :message, 48, "google.ads.googleads.v0.resources.AgeRangeView"
     optional :bidding_strategy, :message, 18, "google.ads.googleads.v0.resources.BiddingStrategy"
     optional :billing_setup, :message, 41, "google.ads.googleads.v0.resources.BillingSetup"
     optional :campaign_budget, :message, 19, "google.ads.googleads.v0.resources.CampaignBudget"
@@ -64,11 +78,21 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_shared_set, :message, 30, "google.ads.googleads.v0.resources.CampaignSharedSet"
     optional :change_status, :message, 37, "google.ads.googleads.v0.resources.ChangeStatus"
     optional :customer, :message, 1, "google.ads.googleads.v0.resources.Customer"
+    optional :customer_manager_link, :message, 61, "google.ads.googleads.v0.resources.CustomerManagerLink"
+    optional :customer_client_link, :message, 62, "google.ads.googleads.v0.resources.CustomerClientLink"
+    optional :display_keyword_view, :message, 47, "google.ads.googleads.v0.resources.DisplayKeywordView"
+    optional :gender_view, :message, 40, "google.ads.googleads.v0.resources.GenderView"
     optional :geo_target_constant, :message, 23, "google.ads.googleads.v0.resources.GeoTargetConstant"
+    optional :hotel_group_view, :message, 51, "google.ads.googleads.v0.resources.HotelGroupView"
     optional :keyword_view, :message, 21, "google.ads.googleads.v0.resources.KeywordView"
+    optional :managed_placement_view, :message, 53, "google.ads.googleads.v0.resources.ManagedPlacementView"
+    optional :parental_status_view, :message, 45, "google.ads.googleads.v0.resources.ParentalStatusView"
+    optional :product_group_view, :message, 54, "google.ads.googleads.v0.resources.ProductGroupView"
     optional :recommendation, :message, 22, "google.ads.googleads.v0.resources.Recommendation"
     optional :shared_criterion, :message, 29, "google.ads.googleads.v0.resources.SharedCriterion"
     optional :shared_set, :message, 27, "google.ads.googleads.v0.resources.SharedSet"
+    optional :topic_view, :message, 44, "google.ads.googleads.v0.resources.TopicView"
+    optional :topic_constant, :message, 31, "google.ads.googleads.v0.resources.TopicConstant"
     optional :video, :message, 39, "google.ads.googleads.v0.resources.Video"
     optional :metrics, :message, 4, "google.ads.googleads.v0.common.Metrics"
     optional :ad_network_type, :enum, 5, "google.ads.googleads.v0.enums.AdNetworkTypeEnum.AdNetworkType"
