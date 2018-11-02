@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v0.services.BillingSetupOperation" do
     oneof :operation do
+      optional :create, :message, 2, "google.ads.googleads.v0.resources.BillingSetup"
       optional :remove, :string, 1
     end
   end

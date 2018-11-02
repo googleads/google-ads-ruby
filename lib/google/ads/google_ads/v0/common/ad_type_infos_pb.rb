@@ -3,6 +3,8 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v0/enums/call_conversion_reporting_state_pb'
+require 'google/ads/google_ads/v0/enums/display_ad_format_setting_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.TextAdInfo" do
@@ -13,7 +15,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.ExpandedTextAdInfo" do
     optional :headline_part1, :message, 1, "google.protobuf.StringValue"
     optional :headline_part2, :message, 2, "google.protobuf.StringValue"
+    optional :headline_part3, :message, 6, "google.protobuf.StringValue"
     optional :description, :message, 3, "google.protobuf.StringValue"
+    optional :description2, :message, 7, "google.protobuf.StringValue"
     optional :path1, :message, 4, "google.protobuf.StringValue"
     optional :path2, :message, 5, "google.protobuf.StringValue"
   end
@@ -26,6 +30,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :long_headline, :message, 2, "google.protobuf.StringValue"
     optional :description, :message, 3, "google.protobuf.StringValue"
     optional :business_name, :message, 4, "google.protobuf.StringValue"
+    optional :allow_flexible_color, :message, 5, "google.protobuf.BoolValue"
+    optional :accent_color, :message, 6, "google.protobuf.StringValue"
+    optional :main_color, :message, 7, "google.protobuf.StringValue"
+    optional :call_to_action_text, :message, 8, "google.protobuf.StringValue"
+    optional :logo_image, :message, 9, "google.protobuf.StringValue"
+    optional :square_logo_image, :message, 10, "google.protobuf.StringValue"
+    optional :marketing_image, :message, 11, "google.protobuf.StringValue"
+    optional :square_marketing_image, :message, 12, "google.protobuf.StringValue"
+    optional :format_setting, :enum, 13, "google.ads.googleads.v0.enums.DisplayAdFormatSettingEnum.DisplayAdFormatSetting"
+    optional :price_prefix, :message, 14, "google.protobuf.StringValue"
+    optional :promo_text, :message, 15, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.common.CallOnlyAdInfo" do
     optional :country_code, :message, 1, "google.protobuf.StringValue"
@@ -36,6 +51,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :call_tracked, :message, 6, "google.protobuf.BoolValue"
     optional :disable_call_conversion, :message, 7, "google.protobuf.BoolValue"
     optional :phone_number_verification_url, :message, 8, "google.protobuf.StringValue"
+    optional :conversion_action, :message, 9, "google.protobuf.StringValue"
+    optional :conversion_reporting_state, :enum, 10, "google.ads.googleads.v0.enums.CallConversionReportingStateEnum.CallConversionReportingState"
   end
   add_message "google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo" do
     optional :description, :message, 1, "google.protobuf.StringValue"

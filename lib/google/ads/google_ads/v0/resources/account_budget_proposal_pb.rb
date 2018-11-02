@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :proposal_type, :enum, 4, "google.ads.googleads.v0.enums.AccountBudgetProposalTypeEnum.AccountBudgetProposalType"
     optional :status, :enum, 15, "google.ads.googleads.v0.enums.AccountBudgetProposalStatusEnum.AccountBudgetProposalStatus"
     optional :proposed_name, :message, 5, "google.protobuf.StringValue"
+    optional :approved_start_date_time, :message, 20, "google.protobuf.StringValue"
     optional :proposed_purchase_order_number, :message, 12, "google.protobuf.StringValue"
     optional :proposed_notes, :message, 13, "google.protobuf.StringValue"
     optional :creation_date_time, :message, 16, "google.protobuf.StringValue"
@@ -29,9 +30,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :proposed_end_date_time, :message, 19, "google.protobuf.StringValue"
       optional :proposed_end_time_type, :enum, 9, "google.ads.googleads.v0.enums.TimeTypeEnum.TimeType"
     end
+    oneof :approved_end_time do
+      optional :approved_end_date_time, :message, 21, "google.protobuf.StringValue"
+      optional :approved_end_time_type, :enum, 22, "google.ads.googleads.v0.enums.TimeTypeEnum.TimeType"
+    end
     oneof :proposed_spending_limit do
       optional :proposed_spending_limit_micros, :message, 10, "google.protobuf.Int64Value"
       optional :proposed_spending_limit_type, :enum, 11, "google.ads.googleads.v0.enums.SpendingLimitTypeEnum.SpendingLimitType"
+    end
+    oneof :approved_spending_limit do
+      optional :approved_spending_limit_micros, :message, 23, "google.protobuf.Int64Value"
+      optional :approved_spending_limit_type, :enum, 24, "google.ads.googleads.v0.enums.SpendingLimitTypeEnum.SpendingLimitType"
     end
   end
 end

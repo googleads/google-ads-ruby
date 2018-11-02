@@ -3,14 +3,13 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v0/common/tag_snippet_pb'
 require 'google/ads/google_ads/v0/enums/attribution_model_pb'
 require 'google/ads/google_ads/v0/enums/conversion_action_category_pb'
 require 'google/ads/google_ads/v0/enums/conversion_action_counting_type_pb'
 require 'google/ads/google_ads/v0/enums/conversion_action_status_pb'
 require 'google/ads/google_ads/v0/enums/conversion_action_type_pb'
 require 'google/ads/google_ads/v0/enums/data_driven_model_status_pb'
-require 'google/ads/google_ads/v0/enums/tracking_code_page_format_pb'
-require 'google/ads/google_ads/v0/enums/tracking_code_type_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.ConversionAction" do
@@ -27,19 +26,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :value_settings, :message, 11, "google.ads.googleads.v0.resources.ConversionAction.ValueSettings"
     optional :counting_type, :enum, 12, "google.ads.googleads.v0.enums.ConversionActionCountingTypeEnum.ConversionActionCountingType"
     optional :attribution_model_settings, :message, 13, "google.ads.googleads.v0.resources.ConversionAction.AttributionModelSettings"
-    repeated :tag_snippets, :message, 14, "google.ads.googleads.v0.resources.ConversionAction.TagSnippet"
+    repeated :tag_snippets, :message, 14, "google.ads.googleads.v0.common.TagSnippet"
     optional :phone_call_duration_seconds, :message, 15, "google.protobuf.Int64Value"
     optional :app_id, :message, 16, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.resources.ConversionAction.AttributionModelSettings" do
     optional :attribution_model, :enum, 1, "google.ads.googleads.v0.enums.AttributionModelEnum.AttributionModel"
     optional :data_driven_model_status, :enum, 2, "google.ads.googleads.v0.enums.DataDrivenModelStatusEnum.DataDrivenModelStatus"
-  end
-  add_message "google.ads.googleads.v0.resources.ConversionAction.TagSnippet" do
-    optional :type, :enum, 1, "google.ads.googleads.v0.enums.TrackingCodeTypeEnum.TrackingCodeType"
-    optional :page_format, :enum, 2, "google.ads.googleads.v0.enums.TrackingCodePageFormatEnum.TrackingCodePageFormat"
-    optional :global_site_tag, :message, 3, "google.protobuf.StringValue"
-    optional :event_snippet, :message, 4, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.resources.ConversionAction.ValueSettings" do
     optional :default_value, :message, 1, "google.protobuf.DoubleValue"
@@ -55,7 +48,6 @@ module Google
         module Resources
           ConversionAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction").msgclass
           ConversionAction::AttributionModelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.AttributionModelSettings").msgclass
-          ConversionAction::TagSnippet = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.TagSnippet").msgclass
           ConversionAction::ValueSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.ValueSettings").msgclass
         end
       end

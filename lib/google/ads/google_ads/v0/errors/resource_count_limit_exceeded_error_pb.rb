@@ -16,6 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :AD_GROUP_CRITERION_LIMIT, 6
     value :SHARED_SET_LIMIT, 7
     value :MATCHING_FUNCTION_LIMIT, 8
+    value :RESPONSE_ROW_LIMIT_EXCEEDED, 9
   end
 end
 

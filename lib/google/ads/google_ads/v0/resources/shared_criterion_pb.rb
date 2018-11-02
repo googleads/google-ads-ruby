@@ -14,6 +14,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :type, :enum, 4, "google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType"
     oneof :criterion do
       optional :keyword, :message, 3, "google.ads.googleads.v0.common.KeywordInfo"
+      optional :youtube_video, :message, 5, "google.ads.googleads.v0.common.YouTubeVideoInfo"
+      optional :youtube_channel, :message, 6, "google.ads.googleads.v0.common.YouTubeChannelInfo"
+      optional :placement, :message, 7, "google.ads.googleads.v0.common.PlacementInfo"
     end
   end
 end

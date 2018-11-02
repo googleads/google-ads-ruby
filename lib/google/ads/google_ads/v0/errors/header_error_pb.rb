@@ -9,7 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v0.errors.HeaderErrorEnum.HeaderError" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :INVALID_USER_SELECTED_CUSTOMER_ID, 2
+    value :INVALID_LOGIN_CUSTOMER_ID, 3
   end
 end
 

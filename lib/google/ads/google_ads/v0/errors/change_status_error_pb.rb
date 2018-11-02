@@ -9,7 +9,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v0.errors.ChangeStatusErrorEnum.ChangeStatusError" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :INVALID_START_DATE, 2
     value :START_DATE_TOO_OLD, 3
   end
 end

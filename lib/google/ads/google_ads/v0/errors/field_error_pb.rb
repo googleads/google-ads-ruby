@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_VALUE, 4
     value :VALUE_MUST_BE_UNSET, 5
     value :REQUIRED_NONEMPTY_LIST, 6
+    value :FIELD_CANNOT_BE_CLEARED, 7
   end
 end
 

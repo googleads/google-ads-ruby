@@ -3,23 +3,31 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v0/enums/age_range_type_pb'
 require 'google/ads/google_ads/v0/enums/day_of_week_pb'
 require 'google/ads/google_ads/v0/enums/device_pb'
+require 'google/ads/google_ads/v0/enums/gender_type_pb'
 require 'google/ads/google_ads/v0/enums/hotel_date_selection_type_pb'
+require 'google/ads/google_ads/v0/enums/income_range_type_pb'
 require 'google/ads/google_ads/v0/enums/interaction_type_pb'
 require 'google/ads/google_ads/v0/enums/keyword_match_type_pb'
 require 'google/ads/google_ads/v0/enums/listing_custom_attribute_index_pb'
 require 'google/ads/google_ads/v0/enums/listing_group_type_pb'
 require 'google/ads/google_ads/v0/enums/minute_of_hour_pb'
+require 'google/ads/google_ads/v0/enums/parental_status_type_pb'
 require 'google/ads/google_ads/v0/enums/product_channel_pb'
 require 'google/ads/google_ads/v0/enums/product_channel_exclusivity_pb'
 require 'google/ads/google_ads/v0/enums/product_condition_pb'
 require 'google/ads/google_ads/v0/enums/product_type_level_pb'
+require 'google/ads/google_ads/v0/enums/proximity_radius_units_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.KeywordInfo" do
     optional :text, :message, 1, "google.protobuf.StringValue"
     optional :match_type, :enum, 2, "google.ads.googleads.v0.enums.KeywordMatchTypeEnum.KeywordMatchType"
+  end
+  add_message "google.ads.googleads.v0.common.PlacementInfo" do
+    optional :url, :message, 1, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.common.LocationInfo" do
     optional :geo_target_constant, :message, 1, "google.protobuf.StringValue"
@@ -110,6 +118,47 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :end_hour, :message, 4, "google.protobuf.Int32Value"
     optional :day_of_week, :enum, 5, "google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek"
   end
+  add_message "google.ads.googleads.v0.common.AgeRangeInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.AgeRangeTypeEnum.AgeRangeType"
+  end
+  add_message "google.ads.googleads.v0.common.GenderInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.GenderTypeEnum.GenderType"
+  end
+  add_message "google.ads.googleads.v0.common.IncomeRangeInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.IncomeRangeTypeEnum.IncomeRangeType"
+  end
+  add_message "google.ads.googleads.v0.common.ParentalStatusInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.ParentalStatusTypeEnum.ParentalStatusType"
+  end
+  add_message "google.ads.googleads.v0.common.YouTubeVideoInfo" do
+    optional :video_id, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.YouTubeChannelInfo" do
+    optional :channel_id, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.ProximityInfo" do
+    optional :geo_point, :message, 1, "google.ads.googleads.v0.common.GeoPointInfo"
+    optional :radius, :message, 2, "google.protobuf.DoubleValue"
+    optional :radius_units, :enum, 3, "google.ads.googleads.v0.enums.ProximityRadiusUnitsEnum.ProximityRadiusUnits"
+    optional :address, :message, 4, "google.ads.googleads.v0.common.AddressInfo"
+  end
+  add_message "google.ads.googleads.v0.common.GeoPointInfo" do
+    optional :longitude_in_micro_degrees, :message, 1, "google.protobuf.Int32Value"
+    optional :latitude_in_micro_degrees, :message, 2, "google.protobuf.Int32Value"
+  end
+  add_message "google.ads.googleads.v0.common.AddressInfo" do
+    optional :postal_code, :message, 1, "google.protobuf.StringValue"
+    optional :province_code, :message, 2, "google.protobuf.StringValue"
+    optional :country_code, :message, 3, "google.protobuf.StringValue"
+    optional :province_name, :message, 4, "google.protobuf.StringValue"
+    optional :street_address, :message, 5, "google.protobuf.StringValue"
+    optional :street_address2, :message, 6, "google.protobuf.StringValue"
+    optional :city_name, :message, 7, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.TopicInfo" do
+    optional :topic_constant, :message, 1, "google.protobuf.StringValue"
+    repeated :path, :message, 2, "google.protobuf.StringValue"
+  end
 end
 
 module Google
@@ -118,6 +167,7 @@ module Google
       module V0
         module Common
           KeywordInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.KeywordInfo").msgclass
+          PlacementInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PlacementInfo").msgclass
           LocationInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LocationInfo").msgclass
           DeviceInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DeviceInfo").msgclass
           ListingGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingGroupInfo").msgclass
@@ -140,6 +190,16 @@ module Google
           HotelCheckInDayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCheckInDayInfo").msgclass
           InteractionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.InteractionTypeInfo").msgclass
           AdScheduleInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AdScheduleInfo").msgclass
+          AgeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AgeRangeInfo").msgclass
+          GenderInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GenderInfo").msgclass
+          IncomeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.IncomeRangeInfo").msgclass
+          ParentalStatusInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ParentalStatusInfo").msgclass
+          YouTubeVideoInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeVideoInfo").msgclass
+          YouTubeChannelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeChannelInfo").msgclass
+          ProximityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProximityInfo").msgclass
+          GeoPointInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GeoPointInfo").msgclass
+          AddressInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AddressInfo").msgclass
+          TopicInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TopicInfo").msgclass
         end
       end
     end

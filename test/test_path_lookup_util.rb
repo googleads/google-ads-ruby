@@ -31,8 +31,14 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/accountBudgetProposals/5678'
     assert_equal(expected, util.account_budget_proposal(1234, 5678))
 
+    expected = 'customers/1234/accountBudgets/5678'
+    assert_equal(expected, util.account_budget(1234, 5678))
+
     expected = 'customers/1234/adGroupAds/567_890'
     assert_equal(expected, util.ad_group_ad(1234, 567, 890))
+
+    expected = 'customers/1234/adGroupAudienceViews/567_890'
+    assert_equal(expected, util.ad_group_audience_view(1234, 567, 890))
 
     expected = 'customers/1234/adGroupBidModifiers/567_890'
     assert_equal(expected, util.ad_group_bid_modifier(1234, 567, 890))
@@ -42,6 +48,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/adGroups/5678'
     assert_equal(expected, util.ad_group(1234, 5678))
+
+    expected = 'customers/1234/ageRangeViews/567_890'
+    assert_equal(expected, util.age_range_view(1234, 567, 890))
 
     expected = 'customers/1234/biddingStrategies/5678'
     assert_equal(expected, util.bidding_strategy(1234, 5678))
@@ -73,8 +82,17 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/conversionActions/5678'
     assert_equal(expected, util.conversion_action(1234,5678))
 
+    expected = 'customers/1234/customerClientLinks/567_890'
+    assert_equal(expected, util.customer_client_link(1234, 567, 890))
+
+    expected = 'customers/1234/customerManagerLinks/567_890'
+    assert_equal(expected, util.customer_manager_link(1234, 567, 890))
+
     expected = 'customers/123456'
     assert_equal(expected, util.customer(123456))
+
+    expected = 'customers/1234/displayKeywordViews/567_890'
+    assert_equal(expected, util.display_keyword_view(1234, 567, 890))
 
     expected = 'geoTargetConstants/123456'
     assert_equal(expected, util.geo_target_constant(123456))
@@ -82,8 +100,23 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'googleAdsFields/test_field'
     assert_equal(expected, util.google_ads_field('test_field'))
 
+    expected = 'customers/1234/hotelGroupViews/567_890'
+    assert_equal(expected, util.hotel_group_view(1234, 567, 890))
+
     expected = 'customers/1234/keywordViews/567_890'
     assert_equal(expected, util.keyword_view(1234, 567, 890))
+
+    expected = 'customers/1234/managedPlacementViews/567_890'
+    assert_equal(expected, util.managed_placement_view(1234, 567, 890))
+
+    expected = 'customers/1234/mediaFiles/5678'
+    assert_equal(expected, util.media_file(1234, 5678))
+
+    expected = 'customers/1234/parentalStatusViews/567_890'
+    assert_equal(expected, util.parental_status_view(1234, 567, 890))
+
+    expected = 'customers/1234/productGroupViews/567_890'
+    assert_equal(expected, util.product_group_view(1234, 567, 890))
 
     expected = 'customers/1234/recommendations/5678'
     assert_equal(expected, util.recommendation(1234, 5678))
@@ -93,6 +126,12 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/sharedSets/5678'
     assert_equal(expected, util.shared_set(1234, 5678))
+
+    expected = 'topicConstants/123456'
+    assert_equal(expected, util.topic_constant(123456))
+
+    expected = 'customers/1234/topicViews/567_890'
+    assert_equal(expected, util.topic_view(1234, 567, 890))
 
     expected = 'customers/1234/videos/5678'
     assert_equal(expected, util.video(1234, 5678))

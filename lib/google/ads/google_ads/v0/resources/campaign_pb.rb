@@ -33,6 +33,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :start_date, :message, 19, "google.protobuf.StringValue"
     optional :campaign_group, :message, 35, "google.protobuf.StringValue"
     optional :end_date, :message, 20, "google.protobuf.StringValue"
+    optional :final_url_suffix, :message, 38, "google.protobuf.StringValue"
     oneof :campaign_bidding_strategy do
       optional :bidding_strategy, :message, 23, "google.protobuf.StringValue"
       optional :manual_cpc, :message, 24, "google.ads.googleads.v0.common.ManualCpc"

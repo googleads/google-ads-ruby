@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v0/enums/geo_target_constant_status_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.GeoTargetConstant" do
@@ -11,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :name, :message, 4, "google.protobuf.StringValue"
     optional :country_code, :message, 5, "google.protobuf.StringValue"
     optional :target_type, :message, 6, "google.protobuf.StringValue"
+    optional :status, :enum, 7, "google.ads.googleads.v0.enums.GeoTargetConstantStatusEnum.GeoTargetConstantStatus"
   end
 end
 

@@ -16,9 +16,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :type, :enum, 6, "google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType"
     oneof :criterion do
       optional :keyword, :message, 8, "google.ads.googleads.v0.common.KeywordInfo"
+      optional :placement, :message, 9, "google.ads.googleads.v0.common.PlacementInfo"
       optional :location, :message, 12, "google.ads.googleads.v0.common.LocationInfo"
       optional :device, :message, 13, "google.ads.googleads.v0.common.DeviceInfo"
       optional :ad_schedule, :message, 15, "google.ads.googleads.v0.common.AdScheduleInfo"
+      optional :age_range, :message, 16, "google.ads.googleads.v0.common.AgeRangeInfo"
+      optional :gender, :message, 17, "google.ads.googleads.v0.common.GenderInfo"
+      optional :income_range, :message, 18, "google.ads.googleads.v0.common.IncomeRangeInfo"
+      optional :parental_status, :message, 19, "google.ads.googleads.v0.common.ParentalStatusInfo"
+      optional :youtube_video, :message, 20, "google.ads.googleads.v0.common.YouTubeVideoInfo"
+      optional :youtube_channel, :message, 21, "google.ads.googleads.v0.common.YouTubeChannelInfo"
+      optional :proximity, :message, 23, "google.ads.googleads.v0.common.ProximityInfo"
+      optional :topic, :message, 24, "google.ads.googleads.v0.common.TopicInfo"
     end
   end
 end

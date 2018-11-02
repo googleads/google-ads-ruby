@@ -20,14 +20,67 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def add_campaign_targeting_criteria(customer_id, campaign_id, keyword)
+def add_campaign_targeting_criteria(
+    customer_id, campaign_id, keyword, location_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   criteria_service = client.service(:CampaignCriterion)
-  campaign_service = client.service(:Campaign)
 
+  negative_keyword = create_negative_keyword(client, customer_id,
+      campaign_id, keyword)
+  location = create_location(client, customer_id, campaign_id, location_id)
+  proximity = create_proximity(client, customer_id, campaign_id)
+
+  operations = [
+    {create: negative_keyword},
+    {create: location},
+    {create: proximity}
+  ]
+
+  response = criteria_service.mutate_campaign_criteria(customer_id, operations)
+  response.results.each do |resource|
+    puts sprintf("Added campaign criterion %s", resource.resource_name)
+  end
+end
+
+def create_proximity(client, customer_id, campaign_id)
+  criterion = client.resource(:CampaignCriterion)
+  criterion.campaign = client.wrapper.string(
+      client.path.campaign(customer_id, campaign_id))
+
+  criterion.proximity = client.resource(:ProximityInfo)
+  criterion.proximity.address = client.resource(:AddressInfo)
+  criterion.proximity.address.street_address =
+      client.wrapper.string("38 avenue de l'Opéra")
+  criterion.proximity.address.city_name = client.wrapper.string("Paris")
+  criterion.proximity.address.postal_code = client.wrapper.string("75002")
+  criterion.proximity.address.country_code = client.wrapper.string("FR")
+  criterion.proximity.radius = client.wrapper.double(10)
+  # Default is kilometers.
+  criterion.proximity.radius_units = client.enum(:ProximityRadiusUnits)::MILES
+
+  return criterion
+end
+
+def create_location(client, customer_id, campaign_id, location_id)
+  criterion = client.resource(:CampaignCriterion)
+  criterion.campaign = client.wrapper.string(
+      client.path.campaign(customer_id, campaign_id))
+
+  criterion.location = client.resource(:LocationInfo)
+  # Besides using location_id, you can also search by location names from
+  # GeoTargetConstantService.suggest_geo_target_constants() and directly
+  # apply GeoTargetConstant.resource_name here. An example can be found
+  # in get_geo_target_constant_by_names.rb.
+  criterion.location.geo_target_constant = client.wrapper.string(
+      client.path.geo_target_constant(location_id))
+
+  return criterion
+end
+
+def create_negative_keyword(client, customer_id, campaign_id, keyword)
   criterion = client.resource(:CampaignCriterion)
   criterion.campaign = client.wrapper.string(
       client.path.campaign(customer_id, campaign_id))
@@ -36,11 +89,7 @@ def add_campaign_targeting_criteria(customer_id, campaign_id, keyword)
   criterion.keyword.text = client.wrapper.string(keyword)
   criterion.keyword.match_type = client.enum(:KeywordMatchType)::BROAD
 
-  operation = {create: criterion}
-  response = criteria_service.mutate_campaign_criteria(customer_id, [operation])
-
-  puts sprintf("Added campaign criterion %s",
-      response.results.first.resource_name)
+  return criterion
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -57,6 +106,9 @@ if __FILE__ == $PROGRAM_NAME
   options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
   options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
   options[:keyword] = 'jupiter cruise'
+  # For more information on determining location_id value, see:
+  # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+  options[:location_id] = '21167' # New York
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -76,6 +128,10 @@ if __FILE__ == $PROGRAM_NAME
       options[:keyword] = v
     end
 
+    opts.on('-l', '--location-id LOCATION-ID', String, '(Optional) Location ID') do |v|
+      options[:location_id] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -87,7 +143,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     add_campaign_targeting_criteria(options[:customer_id],
-        options[:campaign_id], options[:keyword])
+        options[:campaign_id], options[:keyword], options[:location_id])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)

@@ -37,6 +37,8 @@ module Google
 
               # Returns the requested geo target constant in full detail.
               rpc :GetGeoTargetConstant, GetGeoTargetConstantRequest, Google::Ads::GoogleAds::V0::Resources::GeoTargetConstant
+              # Returns GeoTargetConstant suggestions by location name or by resource name.
+              rpc :SuggestGeoTargetConstants, SuggestGeoTargetConstantsRequest, SuggestGeoTargetConstantsResponse
             end
 
             Stub = Service.rpc_stub_class

@@ -18,6 +18,7 @@ require 'google/ads/google_ads/v0/errors/authentication_error_pb'
 require 'google/ads/google_ads/v0/errors/authorization_error_pb'
 require 'google/ads/google_ads/v0/errors/bidding_error_pb'
 require 'google/ads/google_ads/v0/errors/bidding_strategy_error_pb'
+require 'google/ads/google_ads/v0/errors/billing_setup_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_budget_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_error_pb'
@@ -28,6 +29,9 @@ require 'google/ads/google_ads/v0/errors/collection_size_error_pb'
 require 'google/ads/google_ads/v0/errors/context_error_pb'
 require 'google/ads/google_ads/v0/errors/conversion_action_error_pb'
 require 'google/ads/google_ads/v0/errors/criterion_error_pb'
+require 'google/ads/google_ads/v0/errors/customer_client_link_error_pb'
+require 'google/ads/google_ads/v0/errors/customer_error_pb'
+require 'google/ads/google_ads/v0/errors/customer_manager_link_error_pb'
 require 'google/ads/google_ads/v0/errors/database_error_pb'
 require 'google/ads/google_ads/v0/errors/date_error_pb'
 require 'google/ads/google_ads/v0/errors/date_range_error_pb'
@@ -38,13 +42,14 @@ require 'google/ads/google_ads/v0/errors/field_error_pb'
 require 'google/ads/google_ads/v0/errors/field_mask_error_pb'
 require 'google/ads/google_ads/v0/errors/function_error_pb'
 require 'google/ads/google_ads/v0/errors/function_parsing_error_pb'
+require 'google/ads/google_ads/v0/errors/geo_target_constant_suggestion_error_pb'
 require 'google/ads/google_ads/v0/errors/header_error_pb'
 require 'google/ads/google_ads/v0/errors/id_error_pb'
 require 'google/ads/google_ads/v0/errors/image_error_pb'
 require 'google/ads/google_ads/v0/errors/internal_error_pb'
 require 'google/ads/google_ads/v0/errors/list_operation_error_pb'
 require 'google/ads/google_ads/v0/errors/media_bundle_error_pb'
-require 'google/ads/google_ads/v0/errors/media_error_pb'
+require 'google/ads/google_ads/v0/errors/media_file_error_pb'
 require 'google/ads/google_ads/v0/errors/multiplier_error_pb'
 require 'google/ads/google_ads/v0/errors/mutate_error_pb'
 require 'google/ads/google_ads/v0/errors/new_resource_creation_error_pb'
@@ -105,6 +110,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_criterion_error, :enum, 29, "google.ads.googleads.v0.errors.CampaignCriterionErrorEnum.CampaignCriterionError"
       optional :collection_size_error, :enum, 31, "google.ads.googleads.v0.errors.CollectionSizeErrorEnum.CollectionSizeError"
       optional :criterion_error, :enum, 32, "google.ads.googleads.v0.errors.CriterionErrorEnum.CriterionError"
+      optional :customer_error, :enum, 90, "google.ads.googleads.v0.errors.CustomerErrorEnum.CustomerError"
       optional :date_error, :enum, 33, "google.ads.googleads.v0.errors.DateErrorEnum.DateError"
       optional :date_range_error, :enum, 34, "google.ads.googleads.v0.errors.DateRangeErrorEnum.DateRangeError"
       optional :distinct_error, :enum, 35, "google.ads.googleads.v0.errors.DistinctErrorEnum.DistinctError"
@@ -114,7 +120,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :id_error, :enum, 39, "google.ads.googleads.v0.errors.IdErrorEnum.IdError"
       optional :image_error, :enum, 40, "google.ads.googleads.v0.errors.ImageErrorEnum.ImageError"
       optional :media_bundle_error, :enum, 42, "google.ads.googleads.v0.errors.MediaBundleErrorEnum.MediaBundleError"
-      optional :media_error, :enum, 43, "google.ads.googleads.v0.errors.MediaErrorEnum.MediaError"
+      optional :media_file_error, :enum, 86, "google.ads.googleads.v0.errors.MediaFileErrorEnum.MediaFileError"
       optional :multiplier_error, :enum, 44, "google.ads.googleads.v0.errors.MultiplierErrorEnum.MultiplierError"
       optional :new_resource_creation_error, :enum, 45, "google.ads.googleads.v0.errors.NewResourceCreationErrorEnum.NewResourceCreationError"
       optional :not_empty_error, :enum, 46, "google.ads.googleads.v0.errors.NotEmptyErrorEnum.NotEmptyError"
@@ -143,6 +149,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :enum_error, :enum, 70, "google.ads.googleads.v0.errors.EnumErrorEnum.EnumError"
       optional :account_budget_proposal_error, :enum, 77, "google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum.AccountBudgetProposalError"
       optional :change_status_error, :enum, 79, "google.ads.googleads.v0.errors.ChangeStatusErrorEnum.ChangeStatusError"
+      optional :geo_target_constant_suggestion_error, :enum, 81, "google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum.GeoTargetConstantSuggestionError"
+      optional :billing_setup_error, :enum, 87, "google.ads.googleads.v0.errors.BillingSetupErrorEnum.BillingSetupError"
+      optional :customer_client_link_error, :enum, 88, "google.ads.googleads.v0.errors.CustomerClientLinkErrorEnum.CustomerClientLinkError"
+      optional :customer_manager_link_error, :enum, 91, "google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum.CustomerManagerLinkError"
     end
   end
   add_message "google.ads.googleads.v0.errors.ErrorLocation" do

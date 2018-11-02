@@ -19,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ad_group, :message, 5, "google.protobuf.StringValue"
     optional :type, :enum, 25, "google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType"
     optional :negative, :message, 31, "google.protobuf.BoolValue"
+    optional :bid_modifier, :message, 44, "google.protobuf.DoubleValue"
     optional :cpc_bid_micros, :message, 16, "google.protobuf.Int64Value"
     optional :cpm_bid_micros, :message, 17, "google.protobuf.Int64Value"
     optional :cpv_bid_micros, :message, 24, "google.protobuf.Int64Value"
@@ -37,7 +38,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     repeated :url_custom_parameters, :message, 14, "google.ads.googleads.v0.common.CustomParameter"
     oneof :criterion do
       optional :keyword, :message, 27, "google.ads.googleads.v0.common.KeywordInfo"
+      optional :placement, :message, 28, "google.ads.googleads.v0.common.PlacementInfo"
       optional :listing_group, :message, 32, "google.ads.googleads.v0.common.ListingGroupInfo"
+      optional :age_range, :message, 36, "google.ads.googleads.v0.common.AgeRangeInfo"
+      optional :gender, :message, 37, "google.ads.googleads.v0.common.GenderInfo"
+      optional :income_range, :message, 38, "google.ads.googleads.v0.common.IncomeRangeInfo"
+      optional :parental_status, :message, 39, "google.ads.googleads.v0.common.ParentalStatusInfo"
+      optional :youtube_video, :message, 40, "google.ads.googleads.v0.common.YouTubeVideoInfo"
+      optional :youtube_channel, :message, 41, "google.ads.googleads.v0.common.YouTubeChannelInfo"
+      optional :topic, :message, 43, "google.ads.googleads.v0.common.TopicInfo"
     end
   end
   add_message "google.ads.googleads.v0.resources.AdGroupCriterion.QualityInfo" do
