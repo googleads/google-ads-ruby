@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :currency_code, :message, 5, "google.protobuf.StringValue"
     optional :time_zone, :message, 6, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 7, "google.protobuf.StringValue"
+    optional :final_url_suffix, :message, 11, "google.protobuf.StringValue"
     optional :auto_tagging_enabled, :message, 8, "google.protobuf.BoolValue"
     optional :has_partners_badge, :message, 9, "google.protobuf.BoolValue"
     optional :call_reporting_setting, :message, 10, "google.ads.googleads.v0.resources.CallReportingSetting"

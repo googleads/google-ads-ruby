@@ -1,3 +1,7 @@
+0.7.0:
+  - Adding support for Google Ads API v0_6.
+  - Adding configuration file support for login_customer_id.
+
 0.6.0:
   - Adding support for Google Ads API v0_5.
 

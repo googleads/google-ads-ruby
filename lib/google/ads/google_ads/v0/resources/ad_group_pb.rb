@@ -4,9 +4,11 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/common/custom_parameter_pb'
+require 'google/ads/google_ads/v0/common/explorer_auto_optimizer_setting_pb'
 require 'google/ads/google_ads/v0/enums/ad_group_ad_rotation_mode_pb'
 require 'google/ads/google_ads/v0/enums/ad_group_status_pb'
 require 'google/ads/google_ads/v0/enums/ad_group_type_pb'
+require 'google/ads/google_ads/v0/enums/targeting_dimension_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.AdGroup" do
@@ -25,6 +27,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :cpv_bid_micros, :message, 17, "google.protobuf.Int64Value"
     optional :target_roas_override, :message, 19, "google.protobuf.DoubleValue"
     optional :percent_cpc_bid_micros, :message, 20, "google.protobuf.Int64Value"
+    optional :explorer_auto_optimizer_setting, :message, 21, "google.ads.googleads.v0.common.ExplorerAutoOptimizerSetting"
+    optional :display_custom_bid_dimension, :enum, 23, "google.ads.googleads.v0.enums.TargetingDimensionEnum.TargetingDimension"
+    optional :final_url_suffix, :message, 24, "google.protobuf.StringValue"
   end
 end
 

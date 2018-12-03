@@ -89,9 +89,21 @@ module Google
             end
           end
 
+          headers = {
+            :"developer-token" => @config.developer_token
+          }
+          if @config.login_customer_id
+            login_customer_id = @config.login_customer_id
+            if !login_customer_id.is_a? Integer || login_customer_id <= 0 ||
+                login_customer_id > 9_999_999_999
+              raise sprintf('Invalid login_customer_id. Must be an integer ' \
+                  '0 < x <= 9,999,999,999. Got %s', login_customer_id)
+            end
+            headers[:"login-customer-id"] = login_customer_id
+          end
           return class_to_return.new(
             credentials: get_updater_proc(),
-            metadata: {:"developer-token" => @config.developer_token},
+            metadata: headers,
             exception_transformer: ERROR_TRANSFORMER
           )
         end

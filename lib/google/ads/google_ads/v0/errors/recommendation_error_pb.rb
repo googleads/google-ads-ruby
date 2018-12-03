@@ -17,6 +17,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :ADGROUP_KEYWORD_LIMIT, 7
     value :RECOMMENDATION_ALREADY_APPLIED, 8
     value :RECOMMENDATION_INVALIDATED, 9
+    value :TOO_MANY_OPERATIONS, 10
+    value :NO_OPERATIONS, 11
+    value :DIFFERENT_TYPES_NOT_SUPPORTED, 12
+    value :DUPLICATE_RESOURCE_NAME, 13
+    value :RECOMMENDATION_ALREADY_DISMISSED, 14
   end
 end
 

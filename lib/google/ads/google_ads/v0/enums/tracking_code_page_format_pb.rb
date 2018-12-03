@@ -10,6 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :HTML, 2
+    value :AMP, 3
   end
 end
 

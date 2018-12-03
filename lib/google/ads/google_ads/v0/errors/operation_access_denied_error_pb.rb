@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CREATE_AS_REMOVED_NOT_PERMITTED, 8
     value :OPERATION_NOT_PERMITTED_FOR_REMOVED_RESOURCE, 9
     value :OPERATION_NOT_PERMITTED_FOR_AD_GROUP_TYPE, 10
+    value :MUTATE_NOT_PERMITTED_FOR_CUSTOMER, 11
   end
 end
 

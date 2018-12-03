@@ -21,8 +21,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :PARENTAL_STATUS, 13
     value :YOUTUBE_VIDEO, 14
     value :YOUTUBE_CHANNEL, 15
+    value :USER_LIST, 16
     value :PROXIMITY, 17
     value :TOPIC, 18
+    value :LISTING_SCOPE, 19
+    value :LANGUAGE, 20
+    value :IP_BLOCK, 21
+    value :CONTENT_LABEL, 22
+    value :CARRIER, 23
+    value :USER_INTEREST, 24
   end
 end
 

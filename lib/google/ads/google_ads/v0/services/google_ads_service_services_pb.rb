@@ -37,6 +37,8 @@ module Google
 
               # Returns all rows that match the search query.
               rpc :Search, SearchGoogleAdsRequest, SearchGoogleAdsResponse
+              # Creates, updates, or removes resources. Operation statuses are returned.
+              rpc :Mutate, MutateGoogleAdsRequest, MutateGoogleAdsResponse
             end
 
             Stub = Service.rpc_stub_class

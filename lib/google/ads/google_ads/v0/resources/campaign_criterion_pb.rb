@@ -24,10 +24,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :gender, :message, 17, "google.ads.googleads.v0.common.GenderInfo"
       optional :income_range, :message, 18, "google.ads.googleads.v0.common.IncomeRangeInfo"
       optional :parental_status, :message, 19, "google.ads.googleads.v0.common.ParentalStatusInfo"
+      optional :user_list, :message, 22, "google.ads.googleads.v0.common.UserListInfo"
       optional :youtube_video, :message, 20, "google.ads.googleads.v0.common.YouTubeVideoInfo"
       optional :youtube_channel, :message, 21, "google.ads.googleads.v0.common.YouTubeChannelInfo"
       optional :proximity, :message, 23, "google.ads.googleads.v0.common.ProximityInfo"
       optional :topic, :message, 24, "google.ads.googleads.v0.common.TopicInfo"
+      optional :listing_scope, :message, 25, "google.ads.googleads.v0.common.ListingScopeInfo"
+      optional :language, :message, 26, "google.ads.googleads.v0.common.LanguageInfo"
+      optional :ip_block, :message, 27, "google.ads.googleads.v0.common.IpBlockInfo"
+      optional :content_label, :message, 28, "google.ads.googleads.v0.common.ContentLabelInfo"
+      optional :carrier, :message, 29, "google.ads.googleads.v0.common.CarrierInfo"
+      optional :user_interest, :message, 30, "google.ads.googleads.v0.common.UserInterestInfo"
     end
   end
 end

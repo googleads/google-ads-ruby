@@ -12,6 +12,7 @@ require 'google/ads/google_ads/v0/errors/ad_group_ad_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_bid_modifier_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_error_pb'
+require 'google/ads/google_ads/v0/errors/ad_group_feed_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_sharing_error_pb'
 require 'google/ads/google_ads/v0/errors/adx_error_pb'
 require 'google/ads/google_ads/v0/errors/authentication_error_pb'
@@ -22,6 +23,7 @@ require 'google/ads/google_ads/v0/errors/billing_setup_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_budget_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_error_pb'
+require 'google/ads/google_ads/v0/errors/campaign_feed_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_group_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_shared_set_error_pb'
 require 'google/ads/google_ads/v0/errors/change_status_error_pb'
@@ -31,6 +33,7 @@ require 'google/ads/google_ads/v0/errors/conversion_action_error_pb'
 require 'google/ads/google_ads/v0/errors/criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/customer_client_link_error_pb'
 require 'google/ads/google_ads/v0/errors/customer_error_pb'
+require 'google/ads/google_ads/v0/errors/customer_feed_error_pb'
 require 'google/ads/google_ads/v0/errors/customer_manager_link_error_pb'
 require 'google/ads/google_ads/v0/errors/database_error_pb'
 require 'google/ads/google_ads/v0/errors/date_error_pb'
@@ -38,6 +41,9 @@ require 'google/ads/google_ads/v0/errors/date_range_error_pb'
 require 'google/ads/google_ads/v0/errors/distinct_error_pb'
 require 'google/ads/google_ads/v0/errors/enum_error_pb'
 require 'google/ads/google_ads/v0/errors/feed_attribute_reference_error_pb'
+require 'google/ads/google_ads/v0/errors/feed_error_pb'
+require 'google/ads/google_ads/v0/errors/feed_item_error_pb'
+require 'google/ads/google_ads/v0/errors/feed_mapping_error_pb'
 require 'google/ads/google_ads/v0/errors/field_error_pb'
 require 'google/ads/google_ads/v0/errors/field_mask_error_pb'
 require 'google/ads/google_ads/v0/errors/function_error_pb'
@@ -47,6 +53,12 @@ require 'google/ads/google_ads/v0/errors/header_error_pb'
 require 'google/ads/google_ads/v0/errors/id_error_pb'
 require 'google/ads/google_ads/v0/errors/image_error_pb'
 require 'google/ads/google_ads/v0/errors/internal_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_ad_group_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_campaign_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_idea_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_keyword_error_pb'
+require 'google/ads/google_ads/v0/errors/keyword_plan_negative_keyword_error_pb'
 require 'google/ads/google_ads/v0/errors/list_operation_error_pb'
 require 'google/ads/google_ads/v0/errors/media_bundle_error_pb'
 require 'google/ads/google_ads/v0/errors/media_file_error_pb'
@@ -72,6 +84,7 @@ require 'google/ads/google_ads/v0/errors/shared_set_error_pb'
 require 'google/ads/google_ads/v0/errors/string_format_error_pb'
 require 'google/ads/google_ads/v0/errors/string_length_error_pb'
 require 'google/ads/google_ads/v0/errors/url_field_error_pb'
+require 'google/ads/google_ads/v0/errors/user_list_error_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.errors.GoogleAdsFailure" do
@@ -147,12 +160,25 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :policy_finding_error, :enum, 68, "google.ads.googleads.v0.errors.PolicyFindingErrorEnum.PolicyFindingError"
       optional :campaign_group_error, :enum, 69, "google.ads.googleads.v0.errors.CampaignGroupErrorEnum.CampaignGroupError"
       optional :enum_error, :enum, 70, "google.ads.googleads.v0.errors.EnumErrorEnum.EnumError"
+      optional :keyword_plan_error, :enum, 71, "google.ads.googleads.v0.errors.KeywordPlanErrorEnum.KeywordPlanError"
+      optional :keyword_plan_campaign_error, :enum, 72, "google.ads.googleads.v0.errors.KeywordPlanCampaignErrorEnum.KeywordPlanCampaignError"
+      optional :keyword_plan_negative_keyword_error, :enum, 73, "google.ads.googleads.v0.errors.KeywordPlanNegativeKeywordErrorEnum.KeywordPlanNegativeKeywordError"
+      optional :keyword_plan_ad_group_error, :enum, 74, "google.ads.googleads.v0.errors.KeywordPlanAdGroupErrorEnum.KeywordPlanAdGroupError"
+      optional :keyword_plan_keyword_error, :enum, 75, "google.ads.googleads.v0.errors.KeywordPlanKeywordErrorEnum.KeywordPlanKeywordError"
+      optional :keyword_plan_idea_error, :enum, 76, "google.ads.googleads.v0.errors.KeywordPlanIdeaErrorEnum.KeywordPlanIdeaError"
       optional :account_budget_proposal_error, :enum, 77, "google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum.AccountBudgetProposalError"
+      optional :user_list_error, :enum, 78, "google.ads.googleads.v0.errors.UserListErrorEnum.UserListError"
       optional :change_status_error, :enum, 79, "google.ads.googleads.v0.errors.ChangeStatusErrorEnum.ChangeStatusError"
+      optional :feed_error, :enum, 80, "google.ads.googleads.v0.errors.FeedErrorEnum.FeedError"
       optional :geo_target_constant_suggestion_error, :enum, 81, "google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum.GeoTargetConstantSuggestionError"
+      optional :feed_item_error, :enum, 83, "google.ads.googleads.v0.errors.FeedItemErrorEnum.FeedItemError"
       optional :billing_setup_error, :enum, 87, "google.ads.googleads.v0.errors.BillingSetupErrorEnum.BillingSetupError"
       optional :customer_client_link_error, :enum, 88, "google.ads.googleads.v0.errors.CustomerClientLinkErrorEnum.CustomerClientLinkError"
       optional :customer_manager_link_error, :enum, 91, "google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum.CustomerManagerLinkError"
+      optional :feed_mapping_error, :enum, 92, "google.ads.googleads.v0.errors.FeedMappingErrorEnum.FeedMappingError"
+      optional :customer_feed_error, :enum, 93, "google.ads.googleads.v0.errors.CustomerFeedErrorEnum.CustomerFeedError"
+      optional :ad_group_feed_error, :enum, 94, "google.ads.googleads.v0.errors.AdGroupFeedErrorEnum.AdGroupFeedError"
+      optional :campaign_feed_error, :enum, 96, "google.ads.googleads.v0.errors.CampaignFeedErrorEnum.CampaignFeedError"
     end
   end
   add_message "google.ads.googleads.v0.errors.ErrorLocation" do

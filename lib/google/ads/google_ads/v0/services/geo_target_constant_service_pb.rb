@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest" do
     optional :locale, :message, 3, "google.protobuf.StringValue"
+    optional :country_code, :message, 5, "google.protobuf.StringValue"
     oneof :query do
       optional :location_names, :message, 1, "google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.LocationNames"
       optional :geo_targets, :message, 2, "google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.GeoTargets"

@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :hotel_length_of_stay, :message, 7, "google.ads.googleads.v0.common.HotelLengthOfStayInfo"
       optional :hotel_check_in_day, :message, 8, "google.ads.googleads.v0.common.HotelCheckInDayInfo"
       optional :device, :message, 11, "google.ads.googleads.v0.common.DeviceInfo"
+      optional :preferred_content, :message, 12, "google.ads.googleads.v0.common.PreferredContentInfo"
     end
   end
 end

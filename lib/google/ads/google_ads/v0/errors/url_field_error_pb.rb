@@ -47,6 +47,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_TAG_IN_URL_CUSTOM_PARAMETER_VALUE, 41
     value :REDUNDANT_NESTED_URL_CUSTOM_PARAMETER_TAG, 42
     value :MISSING_PROTOCOL, 43
+    value :INVALID_PROTOCOL, 52
     value :INVALID_URL, 44
     value :DESTINATION_URL_DEPRECATED, 45
     value :INVALID_TAG_IN_URL, 46
@@ -55,6 +56,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_URL_ID, 49
     value :FINAL_URL_SUFFIX_MALFORMED, 50
     value :INVALID_TAG_IN_FINAL_URL_SUFFIX, 51
+    value :INVALID_TOP_LEVEL_DOMAIN, 53
+    value :MALFORMED_TOP_LEVEL_DOMAIN, 54
+    value :MALFORMED_URL, 55
+    value :MISSING_HOST, 56
   end
 end
 

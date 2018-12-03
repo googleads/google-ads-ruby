@@ -9,7 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v0.errors.NewResourceCreationErrorEnum.NewResourceCreationError" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :CANNOT_SET_ID_FOR_ADD, 2
+    value :CANNOT_SET_ID_FOR_CREATE, 2
     value :DUPLICATE_TEMP_IDS, 3
     value :TEMP_ID_RESOURCE_HAD_ERRORS, 4
   end

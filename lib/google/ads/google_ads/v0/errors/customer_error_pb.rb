@@ -10,6 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :STATUS_CHANGE_DISALLOWED, 2
+    value :ACCOUNT_NOT_SET_UP, 3
   end
 end
 

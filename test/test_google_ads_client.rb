@@ -85,6 +85,26 @@ class TestGoogleAdsClient < Minitest::Test
         Google::Ads::GoogleAds::V0::Services::CampaignServiceClient))
   end
 
+  def test_service_with_login_customer_id_set()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.login_customer_id = 1234567890
+    end
+
+    service = client.service(:Campaign)
+    assert(service.is_a?(
+        Google::Ads::GoogleAds::V0::Services::CampaignServiceClient))
+  end
+
+  def test_service_with_invalid_login_customer_id_set()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.login_customer_id = 'abcd'
+    end
+
+    assert_raises do
+      service = client.service(:Campaign)
+    end
+  end
+
   def test_resource_lookup()
     client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
       # No setup.

@@ -225,6 +225,10 @@ module Google
             #   targets.
             #   A hash of the same form as `Google::Protobuf::StringValue`
             #   can also be provided.
+            # @param country_code [Google::Protobuf::StringValue | Hash]
+            #   Returned geo targets are restricted to this country code.
+            #   A hash of the same form as `Google::Protobuf::StringValue`
+            #   can also be provided.
             # @param location_names [Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::LocationNames | Hash]
             #   The location names to search by. At most 25 names can be set.
             #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::SuggestGeoTargetConstantsRequest::LocationNames`
@@ -248,16 +252,21 @@ module Google
             #
             #   # TODO: Initialize +locale+:
             #   locale = {}
-            #   response = geo_target_constant_service_client.suggest_geo_target_constants(locale)
+            #
+            #   # TODO: Initialize +country_code+:
+            #   country_code = {}
+            #   response = geo_target_constant_service_client.suggest_geo_target_constants(locale, country_code)
 
             def suggest_geo_target_constants \
                 locale,
+                country_code,
                 location_names: nil,
                 geo_targets: nil,
                 options: nil,
                 &block
               req = {
                 locale: locale,
+                country_code: country_code,
                 location_names: location_names,
                 geo_targets: geo_targets
               }.delete_if { |_, v| v.nil? }

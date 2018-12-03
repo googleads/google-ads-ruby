@@ -43,9 +43,12 @@ def apply_recommendation(customer_id, recommendation_id)
   # text_ad_parameters.ad = overriding_ad
   # apply_recommendation_operation.text_ad = text_ad_parameters
 
+  partial_failure = false
+
   # Issues a mutate request to apply the recommendation.
   recommendation_service = client.service(:Recommendation)
   response = recommendation_service.apply_recommendation(customer_id,
+      partial_failure,
       [apply_recommendation_operation])
   applied_recommendation = response.results.first
 
