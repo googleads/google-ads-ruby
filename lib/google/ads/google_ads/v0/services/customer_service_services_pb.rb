@@ -37,9 +37,13 @@ module Google
 
               # Returns the requested customer in full detail.
               rpc :GetCustomer, GetCustomerRequest, Google::Ads::GoogleAds::V0::Resources::Customer
+              # Updates a customer. Operation statuses are returned.
+              rpc :MutateCustomer, MutateCustomerRequest, MutateCustomerResponse
               # Returns resource names of customers directly accessible by the
               # user authenticating the call.
               rpc :ListAccessibleCustomers, ListAccessibleCustomersRequest, ListAccessibleCustomersResponse
+              # Creates a new client under manager. The new client customer is returned.
+              rpc :CreateCustomerClient, CreateCustomerClientRequest, CreateCustomerClientResponse
             end
 
             Stub = Service.rpc_stub_class

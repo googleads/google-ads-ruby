@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/enums/call_conversion_reporting_state_pb'
 require 'google/ads/google_ads/v0/enums/display_ad_format_setting_pb'
+require 'google/ads/google_ads/v0/enums/mime_type_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.TextAdInfo" do
@@ -63,6 +64,38 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v0.common.ShoppingProductAdInfo" do
   end
+  add_message "google.ads.googleads.v0.common.GmailAdInfo" do
+    optional :teaser, :message, 1, "google.ads.googleads.v0.common.GmailTeaser"
+    optional :header_image, :message, 2, "google.protobuf.StringValue"
+    optional :marketing_image, :message, 3, "google.protobuf.StringValue"
+    optional :marketing_image_headline, :message, 4, "google.protobuf.StringValue"
+    optional :marketing_image_description, :message, 5, "google.protobuf.StringValue"
+    optional :marketing_image_display_call_to_action, :message, 6, "google.ads.googleads.v0.common.DisplayCallToAction"
+  end
+  add_message "google.ads.googleads.v0.common.GmailTeaser" do
+    optional :headline, :message, 1, "google.protobuf.StringValue"
+    optional :description, :message, 2, "google.protobuf.StringValue"
+    optional :business_name, :message, 3, "google.protobuf.StringValue"
+    optional :logo_image, :message, 4, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.DisplayCallToAction" do
+    optional :text, :message, 1, "google.protobuf.StringValue"
+    optional :text_color, :message, 2, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.ImageAdInfo" do
+    optional :pixel_width, :message, 4, "google.protobuf.Int64Value"
+    optional :pixel_height, :message, 5, "google.protobuf.Int64Value"
+    optional :image_url, :message, 6, "google.protobuf.StringValue"
+    optional :preview_pixel_width, :message, 7, "google.protobuf.Int64Value"
+    optional :preview_pixel_height, :message, 8, "google.protobuf.Int64Value"
+    optional :preview_image_url, :message, 9, "google.protobuf.StringValue"
+    optional :mime_type, :enum, 10, "google.ads.googleads.v0.enums.MimeTypeEnum.MimeType"
+    optional :name, :message, 11, "google.protobuf.StringValue"
+    oneof :image do
+      optional :media_file, :message, 1, "google.protobuf.StringValue"
+      optional :data, :message, 2, "google.protobuf.BytesValue"
+    end
+  end
 end
 
 module Google
@@ -79,6 +112,10 @@ module Google
           HotelAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdInfo").msgclass
           ShoppingSmartAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingSmartAdInfo").msgclass
           ShoppingProductAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingProductAdInfo").msgclass
+          GmailAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailAdInfo").msgclass
+          GmailTeaser = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailTeaser").msgclass
+          DisplayCallToAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DisplayCallToAction").msgclass
+          ImageAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ImageAdInfo").msgclass
         end
       end
     end

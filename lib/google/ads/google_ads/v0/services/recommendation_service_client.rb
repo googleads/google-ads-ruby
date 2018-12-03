@@ -185,6 +185,11 @@ module Google
                 defaults["apply_recommendation"],
                 exception_transformer: exception_transformer
               )
+              @dismiss_recommendation = Google::Gax.create_api_call(
+                @recommendation_service_stub.method(:dismiss_recommendation),
+                defaults["dismiss_recommendation"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -223,8 +228,15 @@ module Google
             #
             # @param customer_id [String]
             #   The ID of the customer with the recommendation.
+            # @param partial_failure [true, false]
+            #   If true, successful operations will be carried out and invalid
+            #   operations will return errors. If false, operations will be carried
+            #   out as a transaction if and only if they are all valid.
+            #   Default is false.
             # @param operations [Array<Google::Ads::GoogleAds::V0::Services::ApplyRecommendationOperation | Hash>]
             #   The list of operations to apply recommendations.
+            #   If partial_failure=false all recommendations should be of the same type
+            #   There is a limit of 100 operations per request.
             #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::ApplyRecommendationOperation`
             #   can also be provided.
             # @param options [Google::Gax::CallOptions]
@@ -243,21 +255,79 @@ module Google
             #   # TODO: Initialize +customer_id+:
             #   customer_id = ''
             #
+            #   # TODO: Initialize +partial_failure+:
+            #   partial_failure = false
+            #
             #   # TODO: Initialize +operations+:
             #   operations = []
-            #   response = recommendation_service_client.apply_recommendation(customer_id, operations)
+            #   response = recommendation_service_client.apply_recommendation(customer_id, partial_failure, operations)
 
             def apply_recommendation \
                 customer_id,
+                partial_failure,
                 operations,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
+                partial_failure: partial_failure,
                 operations: operations
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::ApplyRecommendationRequest)
               @apply_recommendation.call(req, options, &block)
+            end
+
+            # Dismisses given recommendations.
+            #
+            # @param customer_id [String]
+            #   The ID of the customer with the recommendation.
+            # @param partial_failure [true, false]
+            #   If true, successful operations will be carried out and invalid
+            #   operations will return errors. If false, operations will be carried in a
+            #   single transaction if and only if they are all valid.
+            #   Default is false.
+            # @param operations [Array<Google::Ads::GoogleAds::V0::Services::DismissRecommendationRequest::DismissRecommendationOperation | Hash>]
+            #   The list of operations to dismiss recommendations.
+            #   If partial_failure=false all recommendations should be of the same type
+            #   There is a limit of 100 operations per request.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::DismissRecommendationRequest::DismissRecommendationOperation`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::DismissRecommendationResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::DismissRecommendationResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   recommendation_service_client = Google::Ads::GoogleAds::Recommendation.new(version: :v0)
+            #
+            #   # TODO: Initialize +customer_id+:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize +partial_failure+:
+            #   partial_failure = false
+            #
+            #   # TODO: Initialize +operations+:
+            #   operations = []
+            #   response = recommendation_service_client.dismiss_recommendation(customer_id, partial_failure, operations)
+
+            def dismiss_recommendation \
+                customer_id,
+                partial_failure,
+                operations,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                partial_failure: partial_failure,
+                operations: operations
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::DismissRecommendationRequest)
+              @dismiss_recommendation.call(req, options, &block)
             end
           end
         end

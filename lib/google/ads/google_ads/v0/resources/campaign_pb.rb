@@ -5,6 +5,8 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/common/bidding_pb'
 require 'google/ads/google_ads/v0/common/custom_parameter_pb'
+require 'google/ads/google_ads/v0/common/frequency_cap_pb'
+require 'google/ads/google_ads/v0/common/real_time_bidding_setting_pb'
 require 'google/ads/google_ads/v0/enums/ad_serving_optimization_status_pb'
 require 'google/ads/google_ads/v0/enums/advertising_channel_sub_type_pb'
 require 'google/ads/google_ads/v0/enums/advertising_channel_type_pb'
@@ -24,6 +26,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :advertising_channel_sub_type, :enum, 10, "google.ads.googleads.v0.enums.AdvertisingChannelSubTypeEnum.AdvertisingChannelSubType"
     optional :tracking_url_template, :message, 11, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 12, "google.ads.googleads.v0.common.CustomParameter"
+    optional :real_time_bidding_setting, :message, 39, "google.ads.googleads.v0.common.RealTimeBiddingSetting"
     optional :network_settings, :message, 14, "google.ads.googleads.v0.resources.Campaign.NetworkSettings"
     optional :hotel_setting, :message, 32, "google.ads.googleads.v0.resources.Campaign.HotelSettingInfo"
     optional :dynamic_search_ads_setting, :message, 33, "google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting"
@@ -34,6 +37,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_group, :message, 35, "google.protobuf.StringValue"
     optional :end_date, :message, 20, "google.protobuf.StringValue"
     optional :final_url_suffix, :message, 38, "google.protobuf.StringValue"
+    repeated :frequency_caps, :message, 40, "google.ads.googleads.v0.common.FrequencyCapEntry"
     oneof :campaign_bidding_strategy do
       optional :bidding_strategy, :message, 23, "google.protobuf.StringValue"
       optional :manual_cpc, :message, 24, "google.ads.googleads.v0.common.ManualCpc"

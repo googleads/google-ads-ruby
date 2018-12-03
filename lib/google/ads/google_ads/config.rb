@@ -24,12 +24,14 @@ module Google
         attr_accessor :client_id
         attr_accessor :client_secret
         attr_accessor :developer_token
+        attr_accessor :login_customer_id
 
         def initialize(&block)
           @refresh_token = nil
           @client_id = nil
           @client_secret = nil
           @developer_token = nil
+          @login_customer_id = nil
           yield self if block_given?
         end
 

@@ -37,7 +37,11 @@ def get_geo_target_constant_by_names()
   # 'en' is used by default.
   locale = client.wrapper.string('en')
 
-  response = gtc_service.suggest_geo_target_constants(locale,
+  # A list of country codes can be referenced here:
+  # https://developers.google.com/adwords/api/docs/appendix/geotargeting
+  country_code = client.wrapper.string('FR')
+
+  response = gtc_service.suggest_geo_target_constants(locale, country_code,
       location_names: location_names)
 
   response.geo_target_constant_suggestions.each do |suggestion|

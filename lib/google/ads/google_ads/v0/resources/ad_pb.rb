@@ -19,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :type, :enum, 5, "google.ads.googleads.v0.enums.AdTypeEnum.AdType"
     optional :added_by_google_ads, :message, 19, "google.protobuf.BoolValue"
     optional :device_preference, :enum, 20, "google.ads.googleads.v0.enums.DeviceEnum.Device"
+    optional :name, :message, 23, "google.protobuf.StringValue"
     oneof :ad_data do
       optional :text_ad, :message, 6, "google.ads.googleads.v0.common.TextAdInfo"
       optional :expanded_text_ad, :message, 7, "google.ads.googleads.v0.common.ExpandedTextAdInfo"
@@ -29,6 +30,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :hotel_ad, :message, 15, "google.ads.googleads.v0.common.HotelAdInfo"
       optional :shopping_smart_ad, :message, 17, "google.ads.googleads.v0.common.ShoppingSmartAdInfo"
       optional :shopping_product_ad, :message, 18, "google.ads.googleads.v0.common.ShoppingProductAdInfo"
+      optional :gmail_ad, :message, 21, "google.ads.googleads.v0.common.GmailAdInfo"
+      optional :image_ad, :message, 22, "google.ads.googleads.v0.common.ImageAdInfo"
     end
   end
 end

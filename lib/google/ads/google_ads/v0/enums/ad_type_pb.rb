@@ -18,7 +18,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HOTEL_AD, 8
     value :SHOPPING_SMART_AD, 9
     value :SHOPPING_PRODUCT_AD, 10
-    value :VIDEO_OUTSTREAM, 11
+    value :VIDEO_AD, 12
+    value :GMAIL_AD, 13
+    value :IMAGE_AD, 14
   end
 end
 

@@ -17,6 +17,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :start_date_time, :message, 9, "google.protobuf.StringValue"
       optional :start_time_type, :enum, 10, "google.ads.googleads.v0.enums.TimeTypeEnum.TimeType"
     end
+    oneof :end_time do
+      optional :end_date_time, :message, 13, "google.protobuf.StringValue"
+      optional :end_time_type, :enum, 14, "google.ads.googleads.v0.enums.TimeTypeEnum.TimeType"
+    end
   end
   add_message "google.ads.googleads.v0.resources.BillingSetup.PaymentsAccountInfo" do
     optional :payments_account_id, :message, 1, "google.protobuf.StringValue"

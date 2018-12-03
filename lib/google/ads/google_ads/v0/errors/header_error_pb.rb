@@ -10,6 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :INVALID_LOGIN_CUSTOMER_ID, 3
+    value :MALFORMED_TASK_INFO, 4
   end
 end
 

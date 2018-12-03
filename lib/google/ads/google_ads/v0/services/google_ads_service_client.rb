@@ -173,6 +173,11 @@ module Google
                 defaults["search"],
                 exception_transformer: exception_transformer
               )
+              @mutate = Google::Gax.create_api_call(
+                @google_ads_service_stub.method(:mutate),
+                defaults["mutate"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -238,6 +243,47 @@ module Google
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::SearchGoogleAdsRequest)
               @search.call(req, options, &block)
+            end
+
+            # Creates, updates, or removes resources. Operation statuses are returned.
+            #
+            # @param customer_id [String]
+            #   The ID of the customer whose resources are being modified.
+            # @param mutate_operations [Array<Google::Ads::GoogleAds::V0::Services::MutateOperation | Hash>]
+            #   The list of operations to perform on individual resources.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::MutateOperation`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::MutateGoogleAdsResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::MutateGoogleAdsResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   google_ads_service_client = Google::Ads::GoogleAds::GoogleAds.new(version: :v0)
+            #
+            #   # TODO: Initialize +customer_id+:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize +mutate_operations+:
+            #   mutate_operations = []
+            #   response = google_ads_service_client.mutate(customer_id, mutate_operations)
+
+            def mutate \
+                customer_id,
+                mutate_operations,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                mutate_operations: mutate_operations
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateGoogleAdsRequest)
+              @mutate.call(req, options, &block)
             end
           end
         end

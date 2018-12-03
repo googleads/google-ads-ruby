@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :id, :message, 3, "google.protobuf.Int64Value"
     optional :name, :message, 4, "google.protobuf.StringValue"
     optional :amount_micros, :message, 5, "google.protobuf.Int64Value"
+    optional :total_amount_micros, :message, 10, "google.protobuf.Int64Value"
     optional :status, :enum, 6, "google.ads.googleads.v0.enums.BudgetStatusEnum.BudgetStatus"
     optional :delivery_method, :enum, 7, "google.ads.googleads.v0.enums.BudgetDeliveryMethodEnum.BudgetDeliveryMethod"
     optional :explicitly_shared, :message, 8, "google.protobuf.BoolValue"

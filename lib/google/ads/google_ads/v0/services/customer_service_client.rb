@@ -178,9 +178,19 @@ module Google
                 defaults["get_customer"],
                 exception_transformer: exception_transformer
               )
+              @mutate_customer = Google::Gax.create_api_call(
+                @customer_service_stub.method(:mutate_customer),
+                defaults["mutate_customer"],
+                exception_transformer: exception_transformer
+              )
               @list_accessible_customers = Google::Gax.create_api_call(
                 @customer_service_stub.method(:list_accessible_customers),
                 defaults["list_accessible_customers"],
+                exception_transformer: exception_transformer
+              )
+              @create_customer_client = Google::Gax.create_api_call(
+                @customer_service_stub.method(:create_customer_client),
+                defaults["create_customer_client"],
                 exception_transformer: exception_transformer
               )
             end
@@ -217,6 +227,47 @@ module Google
               @get_customer.call(req, options, &block)
             end
 
+            # Updates a customer. Operation statuses are returned.
+            #
+            # @param customer_id [String]
+            #   The ID of the customer being modified.
+            # @param operation [Google::Ads::GoogleAds::V0::Services::CustomerOperation | Hash]
+            #   The operation to perform on the customer
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::CustomerOperation`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::MutateCustomerResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::MutateCustomerResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v0)
+            #
+            #   # TODO: Initialize +customer_id+:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize +operation+:
+            #   operation = {}
+            #   response = customer_service_client.mutate_customer(customer_id, operation)
+
+            def mutate_customer \
+                customer_id,
+                operation,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                operation: operation
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateCustomerRequest)
+              @mutate_customer.call(req, options, &block)
+            end
+
             # Returns resource names of customers directly accessible by the
             # user authenticating the call.
             #
@@ -237,6 +288,48 @@ module Google
             def list_accessible_customers options: nil, &block
               req = Google::Ads::GoogleAds::V0::Services::ListAccessibleCustomersRequest.new
               @list_accessible_customers.call(req, options, &block)
+            end
+
+            # Creates a new client under manager. The new client customer is returned.
+            #
+            # @param customer_id [String]
+            #   The ID of the Manager under whom client customer is being created.
+            # @param customer_client [Google::Ads::GoogleAds::V0::Resources::Customer | Hash]
+            #   The new client customer to create. The resource name on this customer
+            #   will be ignored.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Resources::Customer`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::CreateCustomerClientResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::CreateCustomerClientResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v0)
+            #
+            #   # TODO: Initialize +customer_id+:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize +customer_client+:
+            #   customer_client = {}
+            #   response = customer_service_client.create_customer_client(customer_id, customer_client)
+
+            def create_customer_client \
+                customer_id,
+                customer_client,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                customer_client: customer_client
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::CreateCustomerClientRequest)
+              @create_customer_client.call(req, options, &block)
             end
           end
         end

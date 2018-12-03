@@ -9,7 +9,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v0.enums.ProductConditionEnum.ProductCondition" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :OLD, 2
     value :NEW, 3
     value :REFURBISHED, 4
     value :USED, 5

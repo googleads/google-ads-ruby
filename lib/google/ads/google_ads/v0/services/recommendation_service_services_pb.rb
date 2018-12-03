@@ -39,6 +39,8 @@ module Google
               rpc :GetRecommendation, GetRecommendationRequest, Google::Ads::GoogleAds::V0::Resources::Recommendation
               # Applies given recommendations with corresponding apply parameters.
               rpc :ApplyRecommendation, ApplyRecommendationRequest, ApplyRecommendationResponse
+              # Dismisses given recommendations.
+              rpc :DismissRecommendation, DismissRecommendationRequest, DismissRecommendationResponse
             end
 
             Stub = Service.rpc_stub_class

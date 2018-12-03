@@ -14,7 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CUSTOMER_NOT_FOUND, 8
     value :GOOGLE_ACCOUNT_DELETED, 9
     value :GOOGLE_ACCOUNT_COOKIE_INVALID, 10
-    value :FAILED_TO_AUTHENTICATE_GOOGLE_ACCOUNT, 11
+    value :GOOGLE_ACCOUNT_AUTHENTICATION_FAILED, 25
     value :GOOGLE_ACCOUNT_USER_AND_ADS_USER_MISMATCH, 12
     value :LOGIN_COOKIE_REQUIRED, 13
     value :NOT_ADS_USER, 14
@@ -24,7 +24,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :OAUTH_TOKEN_REVOKED, 18
     value :OAUTH_TOKEN_HEADER_INVALID, 19
     value :LOGIN_COOKIE_INVALID, 20
-    value :FAILED_TO_RETRIEVE_LOGIN_COOKIE, 21
     value :USER_ID_INVALID, 22
     value :TWO_STEP_VERIFICATION_NOT_ENROLLED, 23
     value :ADVANCED_PROTECTION_NOT_ENROLLED, 24
