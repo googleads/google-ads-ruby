@@ -24,11 +24,14 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/proto_lookup_util'
 require 'google/ads/google_ads/path_lookup_util'
+require 'google/ads/google_ads/logging_interceptor'
 
 require 'google/ads/google_ads/errors'
 require 'google/ads/google_ads/v0/errors/errors_pb'
 
 require 'google/gax'
+
+require 'logger'
 
 module Google
   module Ads
@@ -37,6 +40,8 @@ module Google
         API_VERSION = :V0
 
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
+
+        attr_reader :logger
 
         def initialize(config_path = nil, &block)
           if block_given?
@@ -69,6 +74,13 @@ module Google
               Google::Ads::GoogleAds::ProtoLookupUtil.new(API_VERSION)
           @path_lookup_util =
               Google::Ads::GoogleAds::PathLookupUtil.new(@proto_lookup_util)
+
+          begin
+            @logger = create_default_logger
+          rescue
+            STDERR.puts(
+                "Could not create default logger. Check your config file.")
+          end
         end
 
         def configure(&block)
@@ -82,11 +94,18 @@ module Google
         def service(name)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
+          # We need a local reference to refer to from within the class block
+          # below.
+          logger = @logger
+
           class_to_return = @proto_lookup_util.service(name)
-          unless service_path.nil? || service_path.empty?
-            class_to_return = Class.new(class_to_return) do
+          class_to_return = Class.new(class_to_return) do
+            unless service_path.nil? || service_path.empty?
               const_set('SERVICE_ADDRESS', service_path.freeze)
             end
+            logging_interceptor =
+                Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+            const_set('GRPC_INTERCEPTORS', [logging_interceptor])
           end
 
           headers = {
@@ -148,6 +167,12 @@ module Google
           @path_lookup_util
         end
 
+        # Set the logger to use. This will only take effect on services fetched
+        # after setting this value.
+        def logger=(logger)
+          @logger = logger
+        end
+
         private
 
         ERROR_TRANSFORMER = Proc.new do |gax_error|
@@ -189,6 +214,13 @@ module Google
             refresh_token: @config.refresh_token,
             scope: ['https://www.googleapis.com/auth/adwords']
           ).updater_proc
+        end
+
+        # Create the default logger, useful if the user hasn't defined one.
+        def create_default_logger()
+          logger = Logger.new(@config.log_target)
+          logger.level = Logger.const_get(@config.log_level)
+          return logger
         end
       end
     end

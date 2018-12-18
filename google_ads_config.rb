@@ -16,4 +16,19 @@ Google::Ads::GoogleAds::Config.new do |c|
   # make sure fetch a new copy of the service after each time you change the
   # value.
   # c.login_customer_id = 'INSERT_LOGIN_CUSTOMER_ID_HERE'
+
+  # Logging-related fields. If you want to specify your own custom logger, then
+  # call client.logger = your_logger, which will override all these options and
+  # use your custom logger instead, exactly as you configured it.
+
+  # By default, only log warnings or errors. You can change this to 'INFO' to
+  # log all requests and responses from the server.
+  # Valid values are 'FATAL', 'ERROR', 'WARN', 'INFO', and 'DEBUG'
+  c.log_level = 'WARN'
+
+  # The location where you want the logs to be recorded. This will be passed
+  # along to the logger.
+  # You can provide a filename as a String, an IO object like STDOUT or STDERR,
+  # or an open file.
+  c.log_target = STDOUT
 end

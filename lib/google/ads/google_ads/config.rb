@@ -26,12 +26,18 @@ module Google
         attr_accessor :developer_token
         attr_accessor :login_customer_id
 
+        attr_accessor :log_level
+        attr_accessor :log_target
+
         def initialize(&block)
           @refresh_token = nil
           @client_id = nil
           @client_secret = nil
           @developer_token = nil
           @login_customer_id = nil
+
+          @log_level = nil
+          @log_target = nil
           yield self if block_given?
         end
 
