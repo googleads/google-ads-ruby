@@ -95,6 +95,17 @@ library.
 
 [examples]: https://github.com/googleads/google-ads-ruby/blob/master/examples
 
+## Logging
+
+See the instructions in
+[google_ads_config.rb](https://github.com/googleads/google-ads-ruby/blob/master/google_ads_config.rb)
+for complete setup.
+
+Logging is set up via the Config object, accessed via `client.config` or specified
+in your default config loaded when instantiating a `GoogleAdsClient`.
+
+You can also specify your own logger by setting `client.logger`.
+
 # Authors
 
 Author:
