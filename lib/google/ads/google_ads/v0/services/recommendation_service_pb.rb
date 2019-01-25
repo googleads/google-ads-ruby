@@ -52,16 +52,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.DismissRecommendationRequest" do
     optional :customer_id, :string, 1
     optional :partial_failure, :bool, 2
-    repeated :operations, :message, 3, "google.ads.googleads.v0.services.DismissRecommendationRequest.DismissRecommendationOperation"
+    repeated :operations, :message, 3, "google.ads.googleads.v0.services.DismissRecommendationOperation"
   end
-  add_message "google.ads.googleads.v0.services.DismissRecommendationRequest.DismissRecommendationOperation" do
+  add_message "google.ads.googleads.v0.services.DismissRecommendationOperation" do
     optional :resource_name, :string, 1
   end
   add_message "google.ads.googleads.v0.services.DismissRecommendationResponse" do
-    repeated :results, :message, 1, "google.ads.googleads.v0.services.DismissRecommendationResponse.DismissRecommendationResult"
+    repeated :results, :message, 1, "google.ads.googleads.v0.services.DismissRecommendationResult"
     optional :partial_failure_error, :message, 2, "google.rpc.Status"
   end
-  add_message "google.ads.googleads.v0.services.DismissRecommendationResponse.DismissRecommendationResult" do
+  add_message "google.ads.googleads.v0.services.DismissRecommendationResult" do
     optional :resource_name, :string, 1
   end
 end
@@ -81,9 +81,9 @@ module Google
           ApplyRecommendationResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ApplyRecommendationResponse").msgclass
           ApplyRecommendationResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ApplyRecommendationResult").msgclass
           DismissRecommendationRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationRequest").msgclass
-          DismissRecommendationRequest::DismissRecommendationOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationRequest.DismissRecommendationOperation").msgclass
+          DismissRecommendationOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationOperation").msgclass
           DismissRecommendationResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationResponse").msgclass
-          DismissRecommendationResponse::DismissRecommendationResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationResponse.DismissRecommendationResult").msgclass
+          DismissRecommendationResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.DismissRecommendationResult").msgclass
         end
       end
     end

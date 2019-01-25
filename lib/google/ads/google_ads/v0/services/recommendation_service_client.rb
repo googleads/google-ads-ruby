@@ -286,11 +286,11 @@ module Google
             #   operations will return errors. If false, operations will be carried in a
             #   single transaction if and only if they are all valid.
             #   Default is false.
-            # @param operations [Array<Google::Ads::GoogleAds::V0::Services::DismissRecommendationRequest::DismissRecommendationOperation | Hash>]
+            # @param operations [Array<Google::Ads::GoogleAds::V0::Services::DismissRecommendationOperation | Hash>]
             #   The list of operations to dismiss recommendations.
             #   If partial_failure=false all recommendations should be of the same type
             #   There is a limit of 100 operations per request.
-            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::DismissRecommendationRequest::DismissRecommendationOperation`
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::DismissRecommendationOperation`
             #   can also be provided.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
