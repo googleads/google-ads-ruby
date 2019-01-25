@@ -685,7 +685,7 @@ module Google
           ConversionAction: ['conversion_action_service_pb',
                'ConversionActionOperation'],
           DismissRecommendation: ['recommendation_service_pb',
-              'DismissRecommendationOperation'],
+              'DismissRecommendationRequest::DismissRecommendationOperation'],
           FeedItem: ['feed_item_service_pb', 'FeedItemOperation'],
           FeedMapping: ['feed_mapping_service_pb', 'FeedMappingOperation'],
           Feed: ['feed_service_pb', 'FeedOperation'],
