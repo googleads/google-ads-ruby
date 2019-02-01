@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          TrackingCodeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TrackingCodeTypeEnum").msgclass
-          TrackingCodeTypeEnum::TrackingCodeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TrackingCodeTypeEnum.TrackingCodeType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  TrackingCodeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TrackingCodeTypeEnum").msgclass
+  TrackingCodeTypeEnum::TrackingCodeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TrackingCodeTypeEnum.TrackingCodeType").enummodule
 end

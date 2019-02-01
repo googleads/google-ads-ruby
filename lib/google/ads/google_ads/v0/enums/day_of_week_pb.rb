@@ -19,15 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          DayOfWeekEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.DayOfWeekEnum").msgclass
-          DayOfWeekEnum::DayOfWeek = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  DayOfWeekEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.DayOfWeekEnum").msgclass
+  DayOfWeekEnum::DayOfWeek = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek").enummodule
 end

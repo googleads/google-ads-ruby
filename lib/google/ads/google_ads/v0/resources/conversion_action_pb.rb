@@ -41,16 +41,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          ConversionAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction").msgclass
-          ConversionAction::AttributionModelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.AttributionModelSettings").msgclass
-          ConversionAction::ValueSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.ValueSettings").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  ConversionAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction").msgclass
+  ConversionAction::AttributionModelSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.AttributionModelSettings").msgclass
+  ConversionAction::ValueSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ConversionAction.ValueSettings").msgclass
 end

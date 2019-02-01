@@ -25,7 +25,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData" do
     optional :oauth_info, :message, 1, "google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData.OAuthInfo"
     optional :email_address, :message, 2, "google.protobuf.StringValue"
-    optional :business_account_identifier, :message, 3, "google.protobuf.StringValue"
+    optional :business_account_id, :message, 10, "google.protobuf.StringValue"
     optional :business_name_filter, :message, 4, "google.protobuf.StringValue"
     repeated :category_filters, :message, 5, "google.protobuf.StringValue"
     repeated :label_filters, :message, 6, "google.protobuf.StringValue"
@@ -56,20 +56,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          Feed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed").msgclass
-          Feed::PlacesLocationFeedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData").msgclass
-          Feed::PlacesLocationFeedData::OAuthInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData.OAuthInfo").msgclass
-          Feed::AffiliateLocationFeedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.AffiliateLocationFeedData").msgclass
-          FeedAttribute = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttribute").msgclass
-          FeedAttributeOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttributeOperation").msgclass
-          FeedAttributeOperation::Operator = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttributeOperation.Operator").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  Feed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed").msgclass
+  Feed::PlacesLocationFeedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData").msgclass
+  Feed::PlacesLocationFeedData::OAuthInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.PlacesLocationFeedData.OAuthInfo").msgclass
+  Feed::AffiliateLocationFeedData = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Feed.AffiliateLocationFeedData").msgclass
+  FeedAttribute = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttribute").msgclass
+  FeedAttributeOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttributeOperation").msgclass
+  FeedAttributeOperation::Operator = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.FeedAttributeOperation.Operator").enummodule
 end

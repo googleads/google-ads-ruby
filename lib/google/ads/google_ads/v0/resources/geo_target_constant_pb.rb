@@ -13,17 +13,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :country_code, :message, 5, "google.protobuf.StringValue"
     optional :target_type, :message, 6, "google.protobuf.StringValue"
     optional :status, :enum, 7, "google.ads.googleads.v0.enums.GeoTargetConstantStatusEnum.GeoTargetConstantStatus"
+    optional :canonical_name, :message, 8, "google.protobuf.StringValue"
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          GeoTargetConstant = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.GeoTargetConstant").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  GeoTargetConstant = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.GeoTargetConstant").msgclass
 end

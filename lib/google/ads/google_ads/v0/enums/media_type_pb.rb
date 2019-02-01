@@ -18,15 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          MediaTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.MediaTypeEnum").msgclass
-          MediaTypeEnum::MediaType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.MediaTypeEnum.MediaType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  MediaTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.MediaTypeEnum").msgclass
+  MediaTypeEnum::MediaType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.MediaTypeEnum.MediaType").enummodule
 end

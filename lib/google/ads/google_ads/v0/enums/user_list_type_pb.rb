@@ -18,15 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          UserListTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListTypeEnum").msgclass
-          UserListTypeEnum::UserListType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListTypeEnum.UserListType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  UserListTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListTypeEnum").msgclass
+  UserListTypeEnum::UserListType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListTypeEnum.UserListType").enummodule
 end

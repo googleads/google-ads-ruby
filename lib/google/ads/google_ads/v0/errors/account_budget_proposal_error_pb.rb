@@ -34,15 +34,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          AccountBudgetProposalErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum").msgclass
-          AccountBudgetProposalErrorEnum::AccountBudgetProposalError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum.AccountBudgetProposalError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  AccountBudgetProposalErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum").msgclass
+  AccountBudgetProposalErrorEnum::AccountBudgetProposalError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.AccountBudgetProposalErrorEnum.AccountBudgetProposalError").enummodule
 end

@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -209,16 +209,16 @@ module Google
             #
             #   keyword_plan_idea_service_client = Google::Ads::GoogleAds::KeywordPlanIdea.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +language+:
+            #   # TODO: Initialize `language`:
             #   language = {}
             #
-            #   # TODO: Initialize +geo_target_constants+:
+            #   # TODO: Initialize `geo_target_constants`:
             #   geo_target_constants = []
             #
-            #   # TODO: Initialize +keyword_plan_network+:
+            #   # TODO: Initialize `keyword_plan_network`:
             #   keyword_plan_network = :UNSPECIFIED
             #   response = keyword_plan_idea_service_client.generate_keyword_ideas(customer_id, language, geo_target_constants, keyword_plan_network)
 

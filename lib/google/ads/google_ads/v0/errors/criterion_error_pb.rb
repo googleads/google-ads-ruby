@@ -92,18 +92,21 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HOTEL_LENGTH_OF_STAY_OVERLAPS_WITH_EXISTING_CRITERION, 82
     value :HOTEL_ADVANCE_BOOKING_WINDOW_OVERLAPS_WITH_EXISTING_CRITERION, 83
     value :FIELD_INCOMPATIBLE_WITH_NEGATIVE_TARGETING, 84
+    value :INVALID_WEBPAGE_CONDITION, 85
+    value :INVALID_WEBPAGE_CONDITION_URL, 86
+    value :WEBPAGE_CONDITION_URL_CANNOT_BE_EMPTY, 87
+    value :WEBPAGE_CONDITION_URL_UNSUPPORTED_PROTOCOL, 88
+    value :WEBPAGE_CONDITION_URL_CANNOT_BE_IP_ADDRESS, 89
+    value :WEBPAGE_CONDITION_URL_DOMAIN_NOT_CONSISTENT_WITH_CAMPAIGN_SETTING, 90
+    value :WEBPAGE_CONDITION_URL_CANNOT_BE_PUBLIC_SUFFIX, 91
+    value :WEBPAGE_CONDITION_URL_INVALID_PUBLIC_SUFFIX, 92
+    value :WEBPAGE_CONDITION_URL_VALUE_TRACK_VALUE_NOT_SUPPORTED, 93
+    value :WEBPAGE_CRITERION_URL_EQUALS_CAN_HAVE_ONLY_ONE_CONDITION, 94
+    value :WEBPAGE_CRITERION_NOT_SUPPORTED_ON_NON_DSA_AD_GROUP, 95
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          CriterionErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CriterionErrorEnum").msgclass
-          CriterionErrorEnum::CriterionError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CriterionErrorEnum.CriterionError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  CriterionErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CriterionErrorEnum").msgclass
+  CriterionErrorEnum::CriterionError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CriterionErrorEnum.CriterionError").enummodule
 end

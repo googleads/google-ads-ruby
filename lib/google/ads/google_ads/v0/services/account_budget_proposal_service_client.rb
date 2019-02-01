@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -253,10 +253,10 @@ module Google
             #
             #   account_budget_proposal_service_client = Google::Ads::GoogleAds::AccountBudgetProposal.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +operation+:
+            #   # TODO: Initialize `operation`:
             #   operation = {}
             #   response = account_budget_proposal_service_client.mutate_account_budget_proposal(customer_id, operation)
 

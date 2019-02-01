@@ -61,25 +61,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          PolicyViolationKey = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyViolationKey").msgclass
-          PolicyValidationParameter = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyValidationParameter").msgclass
-          PolicyTopicEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEntry").msgclass
-          PolicyTopicEvidence = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence").msgclass
-          PolicyTopicEvidence::TextList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.TextList").msgclass
-          PolicyTopicEvidence::WebsiteList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.WebsiteList").msgclass
-          PolicyTopicEvidence::DestinationTextList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.DestinationTextList").msgclass
-          PolicyTopicEvidence::DestinationMismatch = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.DestinationMismatch").msgclass
-          PolicyTopicConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint").msgclass
-          PolicyTopicConstraint::CountryConstraintList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.CountryConstraintList").msgclass
-          PolicyTopicConstraint::ResellerConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.ResellerConstraint").msgclass
-          PolicyTopicConstraint::CountryConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.CountryConstraint").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  PolicyViolationKey = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyViolationKey").msgclass
+  PolicyValidationParameter = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyValidationParameter").msgclass
+  PolicyTopicEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEntry").msgclass
+  PolicyTopicEvidence = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence").msgclass
+  PolicyTopicEvidence::TextList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.TextList").msgclass
+  PolicyTopicEvidence::WebsiteList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.WebsiteList").msgclass
+  PolicyTopicEvidence::DestinationTextList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.DestinationTextList").msgclass
+  PolicyTopicEvidence::DestinationMismatch = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicEvidence.DestinationMismatch").msgclass
+  PolicyTopicConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint").msgclass
+  PolicyTopicConstraint::CountryConstraintList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.CountryConstraintList").msgclass
+  PolicyTopicConstraint::ResellerConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.ResellerConstraint").msgclass
+  PolicyTopicConstraint::CountryConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PolicyTopicConstraint.CountryConstraint").msgclass
 end

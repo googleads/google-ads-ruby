@@ -21,15 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          KeywordPlanCampaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanCampaign").msgclass
-          KeywordPlanGeoTarget = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanGeoTarget").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  KeywordPlanCampaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanCampaign").msgclass
+  KeywordPlanGeoTarget = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanGeoTarget").msgclass
 end

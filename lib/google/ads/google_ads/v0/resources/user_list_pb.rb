@@ -34,18 +34,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     oneof :user_list do
       optional :crm_based_user_list, :message, 19, "google.ads.googleads.v0.common.CrmBasedUserListInfo"
       optional :similar_user_list, :message, 20, "google.ads.googleads.v0.common.SimilarUserListInfo"
+      optional :rule_based_user_list, :message, 21, "google.ads.googleads.v0.common.RuleBasedUserListInfo"
+      optional :logical_user_list, :message, 22, "google.ads.googleads.v0.common.LogicalUserListInfo"
+      optional :basic_user_list, :message, 23, "google.ads.googleads.v0.common.BasicUserListInfo"
     end
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          UserList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.UserList").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  UserList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.UserList").msgclass
 end

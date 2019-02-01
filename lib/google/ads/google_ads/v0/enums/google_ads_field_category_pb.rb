@@ -16,15 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          GoogleAdsFieldCategoryEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.GoogleAdsFieldCategoryEnum").msgclass
-          GoogleAdsFieldCategoryEnum::GoogleAdsFieldCategory = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.GoogleAdsFieldCategoryEnum.GoogleAdsFieldCategory").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  GoogleAdsFieldCategoryEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.GoogleAdsFieldCategoryEnum").msgclass
+  GoogleAdsFieldCategoryEnum::GoogleAdsFieldCategory = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.GoogleAdsFieldCategoryEnum.GoogleAdsFieldCategory").enummodule
 end

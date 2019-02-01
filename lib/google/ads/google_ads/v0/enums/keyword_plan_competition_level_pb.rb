@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          KeywordPlanCompetitionLevelEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.KeywordPlanCompetitionLevelEnum").msgclass
-          KeywordPlanCompetitionLevelEnum::KeywordPlanCompetitionLevel = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.KeywordPlanCompetitionLevelEnum.KeywordPlanCompetitionLevel").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  KeywordPlanCompetitionLevelEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.KeywordPlanCompetitionLevelEnum").msgclass
+  KeywordPlanCompetitionLevelEnum::KeywordPlanCompetitionLevel = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.KeywordPlanCompetitionLevelEnum.KeywordPlanCompetitionLevel").enummodule
 end

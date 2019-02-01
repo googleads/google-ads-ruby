@@ -43,7 +43,7 @@ def get_keyword_stats(customer_id)
            metrics.clicks,
            metrics.cost_micros
     FROM keyword_view
-    WHERE date DURING LAST_7_DAYS
+    WHERE segments.date DURING LAST_7_DAYS
       AND campaign.advertising_channel_type = 'SEARCH'
       AND ad_group.status = 'ENABLED'
       AND ad_group_criterion.status IN ('ENABLED', 'PAUSED')

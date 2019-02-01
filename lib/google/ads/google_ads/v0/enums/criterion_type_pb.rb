@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :KEYWORD, 2
     value :PLACEMENT, 3
+    value :MOBILE_APP_CATEGORY, 4
     value :DEVICE, 6
     value :LOCATION, 7
     value :LISTING_GROUP, 8
@@ -30,18 +31,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CONTENT_LABEL, 22
     value :CARRIER, 23
     value :USER_INTEREST, 24
+    value :WEBPAGE, 25
+    value :OPERATING_SYSTEM_VERSION, 26
+    value :APP_PAYMENT_MODEL, 27
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          CriterionTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.CriterionTypeEnum").msgclass
-          CriterionTypeEnum::CriterionType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  CriterionTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.CriterionTypeEnum").msgclass
+  CriterionTypeEnum::CriterionType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.CriterionTypeEnum.CriterionType").enummodule
 end

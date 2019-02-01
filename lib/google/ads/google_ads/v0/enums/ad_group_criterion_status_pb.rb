@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AdGroupCriterionStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupCriterionStatusEnum").msgclass
-          AdGroupCriterionStatusEnum::AdGroupCriterionStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupCriterionStatusEnum.AdGroupCriterionStatus").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AdGroupCriterionStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupCriterionStatusEnum").msgclass
+  AdGroupCriterionStatusEnum::AdGroupCriterionStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupCriterionStatusEnum.AdGroupCriterionStatus").enummodule
 end

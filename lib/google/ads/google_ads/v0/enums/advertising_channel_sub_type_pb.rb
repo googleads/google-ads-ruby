@@ -17,18 +17,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :DISPLAY_GMAIL_AD, 7
     value :DISPLAY_SMART_CAMPAIGN, 8
     value :VIDEO_OUTSTREAM, 9
+    value :VIDEO_ACTION, 10
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AdvertisingChannelSubTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdvertisingChannelSubTypeEnum").msgclass
-          AdvertisingChannelSubTypeEnum::AdvertisingChannelSubType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdvertisingChannelSubTypeEnum.AdvertisingChannelSubType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AdvertisingChannelSubTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdvertisingChannelSubTypeEnum").msgclass
+  AdvertisingChannelSubTypeEnum::AdvertisingChannelSubType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdvertisingChannelSubTypeEnum.AdvertisingChannelSubType").enummodule
 end

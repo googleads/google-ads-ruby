@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          NullErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.NullErrorEnum").msgclass
-          NullErrorEnum::NullError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.NullErrorEnum.NullError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  NullErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.NullErrorEnum").msgclass
+  NullErrorEnum::NullError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.NullErrorEnum.NullError").enummodule
 end

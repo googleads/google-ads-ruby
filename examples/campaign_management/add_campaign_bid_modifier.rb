@@ -41,7 +41,7 @@ def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
   campaign_bid_modifier.bid_modifier = client.wrapper.double(bid_modifier)
 
   # Sets the Interaction Type.
-  campaign_bid_modifier.interaction_type = client.resource(:InteractionType)
+  campaign_bid_modifier.interaction_type = client.resource(:InteractionTypeInfo)
   campaign_bid_modifier.interaction_type.type =
       client.enum(:InteractionType)::CALLS
 

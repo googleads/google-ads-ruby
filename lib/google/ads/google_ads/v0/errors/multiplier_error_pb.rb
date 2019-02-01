@@ -24,15 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          MultiplierErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MultiplierErrorEnum").msgclass
-          MultiplierErrorEnum::MultiplierError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MultiplierErrorEnum.MultiplierError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  MultiplierErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MultiplierErrorEnum").msgclass
+  MultiplierErrorEnum::MultiplierError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MultiplierErrorEnum.MultiplierError").enummodule
 end

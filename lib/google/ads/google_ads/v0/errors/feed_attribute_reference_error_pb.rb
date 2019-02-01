@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          FeedAttributeReferenceErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedAttributeReferenceErrorEnum").msgclass
-          FeedAttributeReferenceErrorEnum::FeedAttributeReferenceError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedAttributeReferenceErrorEnum.FeedAttributeReferenceError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  FeedAttributeReferenceErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedAttributeReferenceErrorEnum").msgclass
+  FeedAttributeReferenceErrorEnum::FeedAttributeReferenceError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedAttributeReferenceErrorEnum.FeedAttributeReferenceError").enummodule
 end

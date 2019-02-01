@@ -17,15 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          DateRangeErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DateRangeErrorEnum").msgclass
-          DateRangeErrorEnum::DateRangeError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DateRangeErrorEnum.DateRangeError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  DateRangeErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DateRangeErrorEnum").msgclass
+  DateRangeErrorEnum::DateRangeError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DateRangeErrorEnum.DateRangeError").enummodule
 end

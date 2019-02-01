@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -228,6 +228,14 @@ module Google
             #   The list of operations to perform on individual campaign bid modifiers.
             #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::CampaignBidModifierOperation`
             #   can also be provided.
+            # @param partial_failure [true, false]
+            #   If true, successful operations will be carried out and invalid
+            #   operations will return errors. If false, all operations will be carried
+            #   out in one transaction if and only if they are all valid.
+            #   Default is false.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed. Only errors are
+            #   returned, not results.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -241,21 +249,25 @@ module Google
             #
             #   campaign_bid_modifier_service_client = Google::Ads::GoogleAds::CampaignBidModifier.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +operations+:
+            #   # TODO: Initialize `operations`:
             #   operations = []
             #   response = campaign_bid_modifier_service_client.mutate_campaign_bid_modifiers(customer_id, operations)
 
             def mutate_campaign_bid_modifiers \
                 customer_id,
                 operations,
+                partial_failure: nil,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
-                operations: operations
+                operations: operations,
+                partial_failure: partial_failure,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateCampaignBidModifiersRequest)
               @mutate_campaign_bid_modifiers.call(req, options, &block)

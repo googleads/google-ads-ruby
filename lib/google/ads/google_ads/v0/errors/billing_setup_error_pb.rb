@@ -27,15 +27,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          BillingSetupErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BillingSetupErrorEnum").msgclass
-          BillingSetupErrorEnum::BillingSetupError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BillingSetupErrorEnum.BillingSetupError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  BillingSetupErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BillingSetupErrorEnum").msgclass
+  BillingSetupErrorEnum::BillingSetupError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BillingSetupErrorEnum.BillingSetupError").enummodule
 end

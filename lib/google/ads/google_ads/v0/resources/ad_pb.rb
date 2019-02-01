@@ -32,18 +32,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :shopping_product_ad, :message, 18, "google.ads.googleads.v0.common.ShoppingProductAdInfo"
       optional :gmail_ad, :message, 21, "google.ads.googleads.v0.common.GmailAdInfo"
       optional :image_ad, :message, 22, "google.ads.googleads.v0.common.ImageAdInfo"
+      optional :video_ad, :message, 24, "google.ads.googleads.v0.common.VideoAdInfo"
     end
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          Ad = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Ad").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  Ad = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Ad").msgclass
 end

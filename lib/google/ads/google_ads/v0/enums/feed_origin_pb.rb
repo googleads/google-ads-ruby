@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          FeedOriginEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FeedOriginEnum").msgclass
-          FeedOriginEnum::FeedOrigin = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FeedOriginEnum.FeedOrigin").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  FeedOriginEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FeedOriginEnum").msgclass
+  FeedOriginEnum::FeedOrigin = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FeedOriginEnum.FeedOrigin").enummodule
 end

@@ -9,14 +9,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          AdGroupAudienceView = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAudienceView").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  AdGroupAudienceView = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAudienceView").msgclass
 end

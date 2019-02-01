@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          PreferredContentTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PreferredContentTypeEnum").msgclass
-          PreferredContentTypeEnum::PreferredContentType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PreferredContentTypeEnum.PreferredContentType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  PreferredContentTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PreferredContentTypeEnum").msgclass
+  PreferredContentTypeEnum::PreferredContentType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PreferredContentTypeEnum.PreferredContentType").enummodule
 end

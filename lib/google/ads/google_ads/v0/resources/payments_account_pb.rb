@@ -15,14 +15,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          PaymentsAccount = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.PaymentsAccount").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  PaymentsAccount = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.PaymentsAccount").msgclass
 end

@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          TimeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TimeTypeEnum").msgclass
-          TimeTypeEnum::TimeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TimeTypeEnum.TimeType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  TimeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TimeTypeEnum").msgclass
+  TimeTypeEnum::TimeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.TimeTypeEnum.TimeType").enummodule
 end

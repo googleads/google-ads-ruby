@@ -20,15 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          ConversionActionTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ConversionActionTypeEnum").msgclass
-          ConversionActionTypeEnum::ConversionActionType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ConversionActionTypeEnum.ConversionActionType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  ConversionActionTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ConversionActionTypeEnum").msgclass
+  ConversionActionTypeEnum::ConversionActionType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ConversionActionTypeEnum.ConversionActionType").enummodule
 end

@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          RegionCodeErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RegionCodeErrorEnum").msgclass
-          RegionCodeErrorEnum::RegionCodeError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RegionCodeErrorEnum.RegionCodeError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  RegionCodeErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RegionCodeErrorEnum").msgclass
+  RegionCodeErrorEnum::RegionCodeError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RegionCodeErrorEnum.RegionCodeError").enummodule
 end

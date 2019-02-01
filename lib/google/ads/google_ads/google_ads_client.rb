@@ -16,6 +16,28 @@
 #
 # GoogleAds client class to configure settings and fetch services.
 
+# We need to define all modules for all known versions in advance because of a
+# generation issue where they are defined in a single line, which cannot be used
+# to create new modules.
+module Google
+  module Ads
+    module GoogleAds
+      module V0
+        module Common
+        end
+        module Enums
+        end
+        module Errors
+        end
+        module Resources
+        end
+        module Services
+        end
+      end
+    end
+  end
+end
+
 require 'googleauth'
 
 require 'google/ads/google_ads/patches'

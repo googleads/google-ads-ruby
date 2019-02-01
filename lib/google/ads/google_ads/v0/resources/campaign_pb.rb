@@ -7,12 +7,16 @@ require 'google/ads/google_ads/v0/common/bidding_pb'
 require 'google/ads/google_ads/v0/common/custom_parameter_pb'
 require 'google/ads/google_ads/v0/common/frequency_cap_pb'
 require 'google/ads/google_ads/v0/common/real_time_bidding_setting_pb'
+require 'google/ads/google_ads/v0/common/targeting_setting_pb'
 require 'google/ads/google_ads/v0/enums/ad_serving_optimization_status_pb'
 require 'google/ads/google_ads/v0/enums/advertising_channel_sub_type_pb'
 require 'google/ads/google_ads/v0/enums/advertising_channel_type_pb'
 require 'google/ads/google_ads/v0/enums/bidding_strategy_type_pb'
+require 'google/ads/google_ads/v0/enums/brand_safety_suitability_pb'
 require 'google/ads/google_ads/v0/enums/campaign_serving_status_pb'
 require 'google/ads/google_ads/v0/enums/campaign_status_pb'
+require 'google/ads/google_ads/v0/enums/vanity_pharma_display_url_mode_pb'
+require 'google/ads/google_ads/v0/enums/vanity_pharma_text_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.Campaign" do
@@ -31,13 +35,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :hotel_setting, :message, 32, "google.ads.googleads.v0.resources.Campaign.HotelSettingInfo"
     optional :dynamic_search_ads_setting, :message, 33, "google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting"
     optional :shopping_setting, :message, 36, "google.ads.googleads.v0.resources.Campaign.ShoppingSetting"
+    optional :targeting_setting, :message, 43, "google.ads.googleads.v0.common.TargetingSetting"
     optional :campaign_budget, :message, 6, "google.protobuf.StringValue"
     optional :bidding_strategy_type, :enum, 22, "google.ads.googleads.v0.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
     optional :start_date, :message, 19, "google.protobuf.StringValue"
-    optional :campaign_group, :message, 35, "google.protobuf.StringValue"
     optional :end_date, :message, 20, "google.protobuf.StringValue"
     optional :final_url_suffix, :message, 38, "google.protobuf.StringValue"
     repeated :frequency_caps, :message, 40, "google.ads.googleads.v0.common.FrequencyCapEntry"
+    optional :video_brand_safety_suitability, :enum, 42, "google.ads.googleads.v0.enums.BrandSafetySuitabilityEnum.BrandSafetySuitability"
+    optional :vanity_pharma, :message, 44, "google.ads.googleads.v0.resources.Campaign.VanityPharma"
+    optional :selective_optimization, :message, 45, "google.ads.googleads.v0.resources.Campaign.SelectiveOptimization"
+    optional :tracking_setting, :message, 46, "google.ads.googleads.v0.resources.Campaign.TrackingSetting"
     oneof :campaign_bidding_strategy do
       optional :bidding_strategy, :message, 23, "google.protobuf.StringValue"
       optional :manual_cpc, :message, 24, "google.ads.googleads.v0.common.ManualCpc"
@@ -49,6 +57,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :target_roas, :message, 29, "google.ads.googleads.v0.common.TargetRoas"
       optional :target_spend, :message, 27, "google.ads.googleads.v0.common.TargetSpend"
       optional :percent_cpc, :message, 34, "google.ads.googleads.v0.common.PercentCpc"
+      optional :target_cpm, :message, 41, "google.ads.googleads.v0.common.TargetCpm"
     end
   end
   add_message "google.ads.googleads.v0.resources.Campaign.NetworkSettings" do
@@ -72,20 +81,25 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_priority, :message, 3, "google.protobuf.Int32Value"
     optional :enable_local, :message, 4, "google.protobuf.BoolValue"
   end
+  add_message "google.ads.googleads.v0.resources.Campaign.TrackingSetting" do
+    optional :tracking_url, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.resources.Campaign.VanityPharma" do
+    optional :vanity_pharma_display_url_mode, :enum, 1, "google.ads.googleads.v0.enums.VanityPharmaDisplayUrlModeEnum.VanityPharmaDisplayUrlMode"
+    optional :vanity_pharma_text, :enum, 2, "google.ads.googleads.v0.enums.VanityPharmaTextEnum.VanityPharmaText"
+  end
+  add_message "google.ads.googleads.v0.resources.Campaign.SelectiveOptimization" do
+    repeated :conversion_actions, :message, 1, "google.protobuf.StringValue"
+  end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          Campaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign").msgclass
-          Campaign::NetworkSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.NetworkSettings").msgclass
-          Campaign::HotelSettingInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.HotelSettingInfo").msgclass
-          Campaign::DynamicSearchAdsSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting").msgclass
-          Campaign::ShoppingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.ShoppingSetting").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  Campaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign").msgclass
+  Campaign::NetworkSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.NetworkSettings").msgclass
+  Campaign::HotelSettingInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.HotelSettingInfo").msgclass
+  Campaign::DynamicSearchAdsSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.DynamicSearchAdsSetting").msgclass
+  Campaign::ShoppingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.ShoppingSetting").msgclass
+  Campaign::TrackingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.TrackingSetting").msgclass
+  Campaign::VanityPharma = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.VanityPharma").msgclass
+  Campaign::SelectiveOptimization = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Campaign.SelectiveOptimization").msgclass
 end

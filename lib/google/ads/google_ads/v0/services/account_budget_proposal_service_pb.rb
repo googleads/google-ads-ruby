@@ -29,18 +29,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetAccountBudgetProposalRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetAccountBudgetProposalRequest").msgclass
-          MutateAccountBudgetProposalRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalRequest").msgclass
-          AccountBudgetProposalOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.AccountBudgetProposalOperation").msgclass
-          MutateAccountBudgetProposalResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalResponse").msgclass
-          MutateAccountBudgetProposalResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalResult").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetAccountBudgetProposalRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetAccountBudgetProposalRequest").msgclass
+  MutateAccountBudgetProposalRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalRequest").msgclass
+  AccountBudgetProposalOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.AccountBudgetProposalOperation").msgclass
+  MutateAccountBudgetProposalResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalResponse").msgclass
+  MutateAccountBudgetProposalResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAccountBudgetProposalResult").msgclass
 end

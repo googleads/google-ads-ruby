@@ -96,28 +96,32 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :data, :message, 2, "google.protobuf.BytesValue"
     end
   end
-end
-
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          TextAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TextAdInfo").msgclass
-          ExpandedTextAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ExpandedTextAdInfo").msgclass
-          DynamicSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DynamicSearchAdInfo").msgclass
-          ResponsiveDisplayAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ResponsiveDisplayAdInfo").msgclass
-          CallOnlyAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CallOnlyAdInfo").msgclass
-          ExpandedDynamicSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo").msgclass
-          HotelAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdInfo").msgclass
-          ShoppingSmartAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingSmartAdInfo").msgclass
-          ShoppingProductAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingProductAdInfo").msgclass
-          GmailAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailAdInfo").msgclass
-          GmailTeaser = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailTeaser").msgclass
-          DisplayCallToAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DisplayCallToAction").msgclass
-          ImageAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ImageAdInfo").msgclass
-        end
-      end
+  add_message "google.ads.googleads.v0.common.VideoTrueViewInStreamAdInfo" do
+    optional :action_button_label, :message, 1, "google.protobuf.StringValue"
+    optional :action_headline, :message, 2, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.VideoAdInfo" do
+    optional :media_file, :message, 1, "google.protobuf.StringValue"
+    oneof :format do
+      optional :in_stream, :message, 2, "google.ads.googleads.v0.common.VideoTrueViewInStreamAdInfo"
     end
   end
+end
+
+module Google::Ads::GoogleAds::V0::Common
+  TextAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TextAdInfo").msgclass
+  ExpandedTextAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ExpandedTextAdInfo").msgclass
+  DynamicSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DynamicSearchAdInfo").msgclass
+  ResponsiveDisplayAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ResponsiveDisplayAdInfo").msgclass
+  CallOnlyAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CallOnlyAdInfo").msgclass
+  ExpandedDynamicSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ExpandedDynamicSearchAdInfo").msgclass
+  HotelAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdInfo").msgclass
+  ShoppingSmartAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingSmartAdInfo").msgclass
+  ShoppingProductAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ShoppingProductAdInfo").msgclass
+  GmailAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailAdInfo").msgclass
+  GmailTeaser = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GmailTeaser").msgclass
+  DisplayCallToAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DisplayCallToAction").msgclass
+  ImageAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ImageAdInfo").msgclass
+  VideoTrueViewInStreamAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.VideoTrueViewInStreamAdInfo").msgclass
+  VideoAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.VideoAdInfo").msgclass
 end

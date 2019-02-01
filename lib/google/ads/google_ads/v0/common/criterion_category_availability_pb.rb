@@ -26,16 +26,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          CriterionCategoryAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryAvailability").msgclass
-          CriterionCategoryChannelAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryChannelAvailability").msgclass
-          CriterionCategoryLocaleAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryLocaleAvailability").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  CriterionCategoryAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryAvailability").msgclass
+  CriterionCategoryChannelAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryChannelAvailability").msgclass
+  CriterionCategoryLocaleAvailability = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CriterionCategoryLocaleAvailability").msgclass
 end

@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -250,10 +250,10 @@ module Google
             #
             #   geo_target_constant_service_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v0)
             #
-            #   # TODO: Initialize +locale+:
+            #   # TODO: Initialize `locale`:
             #   locale = {}
             #
-            #   # TODO: Initialize +country_code+:
+            #   # TODO: Initialize `country_code`:
             #   country_code = {}
             #   response = geo_target_constant_service_client.suggest_geo_target_constants(locale, country_code)
 

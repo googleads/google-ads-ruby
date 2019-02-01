@@ -14,18 +14,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :AD_GROUP_CRITERION, 5
     value :CAMPAIGN, 6
     value :CAMPAIGN_CRITERION, 7
+    value :FEED, 9
+    value :FEED_ITEM, 10
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          ChangeStatusResourceTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ChangeStatusResourceTypeEnum").msgclass
-          ChangeStatusResourceTypeEnum::ChangeStatusResourceType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ChangeStatusResourceTypeEnum.ChangeStatusResourceType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  ChangeStatusResourceTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ChangeStatusResourceTypeEnum").msgclass
+  ChangeStatusResourceTypeEnum::ChangeStatusResourceType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ChangeStatusResourceTypeEnum.ChangeStatusResourceType").enummodule
 end

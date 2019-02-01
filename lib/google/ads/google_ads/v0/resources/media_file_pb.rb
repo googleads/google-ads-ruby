@@ -18,6 +18,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     oneof :mediatype do
       optional :image, :message, 3, "google.ads.googleads.v0.resources.MediaImage"
       optional :media_bundle, :message, 4, "google.ads.googleads.v0.resources.MediaBundle"
+      optional :audio, :message, 10, "google.ads.googleads.v0.resources.MediaAudio"
+      optional :video, :message, 11, "google.ads.googleads.v0.resources.MediaVideo"
     end
   end
   add_message "google.ads.googleads.v0.resources.MediaImage" do
@@ -26,18 +28,21 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.resources.MediaBundle" do
     optional :data, :message, 1, "google.protobuf.BytesValue"
   end
+  add_message "google.ads.googleads.v0.resources.MediaAudio" do
+    optional :ad_duration_millis, :message, 1, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v0.resources.MediaVideo" do
+    optional :ad_duration_millis, :message, 1, "google.protobuf.Int64Value"
+    optional :youtube_video_id, :message, 2, "google.protobuf.StringValue"
+    optional :advertising_id_code, :message, 3, "google.protobuf.StringValue"
+    optional :isci_code, :message, 4, "google.protobuf.StringValue"
+  end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          MediaFile = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaFile").msgclass
-          MediaImage = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaImage").msgclass
-          MediaBundle = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaBundle").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  MediaFile = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaFile").msgclass
+  MediaImage = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaImage").msgclass
+  MediaBundle = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaBundle").msgclass
+  MediaAudio = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaAudio").msgclass
+  MediaVideo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.MediaVideo").msgclass
 end

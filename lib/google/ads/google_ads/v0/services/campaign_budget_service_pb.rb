@@ -6,6 +6,8 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v0/resources/campaign_budget_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
+require 'google/protobuf/wrappers_pb'
+require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GetCampaignBudgetRequest" do
     optional :resource_name, :string, 1
@@ -13,6 +15,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.MutateCampaignBudgetsRequest" do
     optional :customer_id, :string, 1
     repeated :operations, :message, 2, "google.ads.googleads.v0.services.CampaignBudgetOperation"
+    optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v0.services.CampaignBudgetOperation" do
     optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -23,6 +27,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
   end
   add_message "google.ads.googleads.v0.services.MutateCampaignBudgetsResponse" do
+    optional :partial_failure_error, :message, 3, "google.rpc.Status"
     repeated :results, :message, 2, "google.ads.googleads.v0.services.MutateCampaignBudgetResult"
   end
   add_message "google.ads.googleads.v0.services.MutateCampaignBudgetResult" do
@@ -30,18 +35,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetCampaignBudgetRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCampaignBudgetRequest").msgclass
-          MutateCampaignBudgetsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetsRequest").msgclass
-          CampaignBudgetOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CampaignBudgetOperation").msgclass
-          MutateCampaignBudgetsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetsResponse").msgclass
-          MutateCampaignBudgetResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetResult").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetCampaignBudgetRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCampaignBudgetRequest").msgclass
+  MutateCampaignBudgetsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetsRequest").msgclass
+  CampaignBudgetOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CampaignBudgetOperation").msgclass
+  MutateCampaignBudgetsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetsResponse").msgclass
+  MutateCampaignBudgetResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCampaignBudgetResult").msgclass
 end

@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.MutateCustomerRequest" do
     optional :customer_id, :string, 1
     optional :operation, :message, 4, "google.ads.googleads.v0.services.CustomerOperation"
+    optional :validate_only, :bool, 5
   end
   add_message "google.ads.googleads.v0.services.CreateCustomerClientRequest" do
     optional :customer_id, :string, 1
@@ -39,22 +40,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetCustomerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCustomerRequest").msgclass
-          MutateCustomerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerRequest").msgclass
-          CreateCustomerClientRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CreateCustomerClientRequest").msgclass
-          CustomerOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CustomerOperation").msgclass
-          CreateCustomerClientResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CreateCustomerClientResponse").msgclass
-          MutateCustomerResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerResponse").msgclass
-          MutateCustomerResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerResult").msgclass
-          ListAccessibleCustomersRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ListAccessibleCustomersRequest").msgclass
-          ListAccessibleCustomersResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ListAccessibleCustomersResponse").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetCustomerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCustomerRequest").msgclass
+  MutateCustomerRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerRequest").msgclass
+  CreateCustomerClientRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CreateCustomerClientRequest").msgclass
+  CustomerOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CustomerOperation").msgclass
+  CreateCustomerClientResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CreateCustomerClientResponse").msgclass
+  MutateCustomerResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerResponse").msgclass
+  MutateCustomerResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerResult").msgclass
+  ListAccessibleCustomersRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ListAccessibleCustomersRequest").msgclass
+  ListAccessibleCustomersResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ListAccessibleCustomersResponse").msgclass
 end

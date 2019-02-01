@@ -8,6 +8,7 @@ require 'google/ads/google_ads/v0/resources/keyword_plan_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
 require 'google/protobuf/wrappers_pb'
+require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GetKeywordPlanRequest" do
     optional :resource_name, :string, 1
@@ -15,6 +16,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.MutateKeywordPlansRequest" do
     optional :customer_id, :string, 1
     repeated :operations, :message, 2, "google.ads.googleads.v0.services.KeywordPlanOperation"
+    optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v0.services.KeywordPlanOperation" do
     optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -25,6 +28,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
   end
   add_message "google.ads.googleads.v0.services.MutateKeywordPlansResponse" do
+    optional :partial_failure_error, :message, 3, "google.rpc.Status"
     repeated :results, :message, 2, "google.ads.googleads.v0.services.MutateKeywordPlansResult"
   end
   add_message "google.ads.googleads.v0.services.MutateKeywordPlansResult" do
@@ -69,27 +73,19 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetKeywordPlanRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetKeywordPlanRequest").msgclass
-          MutateKeywordPlansRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansRequest").msgclass
-          KeywordPlanOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanOperation").msgclass
-          MutateKeywordPlansResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansResponse").msgclass
-          MutateKeywordPlansResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansResult").msgclass
-          GenerateForecastMetricsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateForecastMetricsRequest").msgclass
-          GenerateForecastMetricsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateForecastMetricsResponse").msgclass
-          KeywordPlanCampaignForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanCampaignForecast").msgclass
-          KeywordPlanAdGroupForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanAdGroupForecast").msgclass
-          KeywordPlanKeywordForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanKeywordForecast").msgclass
-          ForecastMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ForecastMetrics").msgclass
-          GenerateHistoricalMetricsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateHistoricalMetricsRequest").msgclass
-          GenerateHistoricalMetricsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateHistoricalMetricsResponse").msgclass
-          KeywordPlanKeywordHistoricalMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanKeywordHistoricalMetrics").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetKeywordPlanRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetKeywordPlanRequest").msgclass
+  MutateKeywordPlansRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansRequest").msgclass
+  KeywordPlanOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanOperation").msgclass
+  MutateKeywordPlansResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansResponse").msgclass
+  MutateKeywordPlansResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateKeywordPlansResult").msgclass
+  GenerateForecastMetricsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateForecastMetricsRequest").msgclass
+  GenerateForecastMetricsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateForecastMetricsResponse").msgclass
+  KeywordPlanCampaignForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanCampaignForecast").msgclass
+  KeywordPlanAdGroupForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanAdGroupForecast").msgclass
+  KeywordPlanKeywordForecast = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanKeywordForecast").msgclass
+  ForecastMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ForecastMetrics").msgclass
+  GenerateHistoricalMetricsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateHistoricalMetricsRequest").msgclass
+  GenerateHistoricalMetricsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateHistoricalMetricsResponse").msgclass
+  KeywordPlanKeywordHistoricalMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordPlanKeywordHistoricalMetrics").msgclass
 end

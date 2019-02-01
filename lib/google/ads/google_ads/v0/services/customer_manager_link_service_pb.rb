@@ -5,20 +5,33 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/resources/customer_manager_link_pb'
 require 'google/api/annotations_pb'
+require 'google/protobuf/field_mask_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GetCustomerManagerLinkRequest" do
     optional :resource_name, :string, 1
   end
-end
-
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetCustomerManagerLinkRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCustomerManagerLinkRequest").msgclass
-        end
-      end
+  add_message "google.ads.googleads.v0.services.MutateCustomerManagerLinkRequest" do
+    optional :customer_id, :string, 1
+    repeated :operations, :message, 2, "google.ads.googleads.v0.services.CustomerManagerLinkOperation"
+  end
+  add_message "google.ads.googleads.v0.services.CustomerManagerLinkOperation" do
+    optional :update_mask, :message, 4, "google.protobuf.FieldMask"
+    oneof :operation do
+      optional :update, :message, 2, "google.ads.googleads.v0.resources.CustomerManagerLink"
     end
   end
+  add_message "google.ads.googleads.v0.services.MutateCustomerManagerLinkResponse" do
+    repeated :results, :message, 1, "google.ads.googleads.v0.services.MutateCustomerManagerLinkResult"
+  end
+  add_message "google.ads.googleads.v0.services.MutateCustomerManagerLinkResult" do
+    optional :resource_name, :string, 1
+  end
+end
+
+module Google::Ads::GoogleAds::V0::Services
+  GetCustomerManagerLinkRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetCustomerManagerLinkRequest").msgclass
+  MutateCustomerManagerLinkRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerManagerLinkRequest").msgclass
+  CustomerManagerLinkOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.CustomerManagerLinkOperation").msgclass
+  MutateCustomerManagerLinkResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerManagerLinkResponse").msgclass
+  MutateCustomerManagerLinkResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateCustomerManagerLinkResult").msgclass
 end

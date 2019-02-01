@@ -20,15 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          CustomerManagerLinkErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum").msgclass
-          CustomerManagerLinkErrorEnum::CustomerManagerLinkError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum.CustomerManagerLinkError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  CustomerManagerLinkErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum").msgclass
+  CustomerManagerLinkErrorEnum::CustomerManagerLinkError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CustomerManagerLinkErrorEnum.CustomerManagerLinkError").enummodule
 end

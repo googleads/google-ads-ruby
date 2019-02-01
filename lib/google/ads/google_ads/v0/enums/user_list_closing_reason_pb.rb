@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          UserListClosingReasonEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListClosingReasonEnum").msgclass
-          UserListClosingReasonEnum::UserListClosingReason = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListClosingReasonEnum.UserListClosingReason").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  UserListClosingReasonEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListClosingReasonEnum").msgclass
+  UserListClosingReasonEnum::UserListClosingReason = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.UserListClosingReasonEnum.UserListClosingReason").enummodule
 end

@@ -17,18 +17,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :youtube_video, :message, 5, "google.ads.googleads.v0.common.YouTubeVideoInfo"
       optional :youtube_channel, :message, 6, "google.ads.googleads.v0.common.YouTubeChannelInfo"
       optional :placement, :message, 7, "google.ads.googleads.v0.common.PlacementInfo"
+      optional :mobile_app_category, :message, 8, "google.ads.googleads.v0.common.MobileAppCategoryInfo"
     end
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          SharedCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.SharedCriterion").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  SharedCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.SharedCriterion").msgclass
 end

@@ -17,15 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          PolicyTopicEvidenceDestinationMismatchUrlTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyTopicEvidenceDestinationMismatchUrlTypeEnum").msgclass
-          PolicyTopicEvidenceDestinationMismatchUrlTypeEnum::PolicyTopicEvidenceDestinationMismatchUrlType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyTopicEvidenceDestinationMismatchUrlTypeEnum.PolicyTopicEvidenceDestinationMismatchUrlType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  PolicyTopicEvidenceDestinationMismatchUrlTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyTopicEvidenceDestinationMismatchUrlTypeEnum").msgclass
+  PolicyTopicEvidenceDestinationMismatchUrlTypeEnum::PolicyTopicEvidenceDestinationMismatchUrlType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyTopicEvidenceDestinationMismatchUrlTypeEnum.PolicyTopicEvidenceDestinationMismatchUrlType").enummodule
 end

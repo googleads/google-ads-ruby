@@ -18,21 +18,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :PAGE_ONE_PROMOTED, 5
     value :PERCENT_CPC, 12
     value :TARGET_CPA, 6
+    value :TARGET_CPM, 14
     value :TARGET_OUTRANK_SHARE, 7
     value :TARGET_ROAS, 8
     value :TARGET_SPEND, 9
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          BiddingStrategyTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BiddingStrategyTypeEnum").msgclass
-          BiddingStrategyTypeEnum::BiddingStrategyType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BiddingStrategyTypeEnum.BiddingStrategyType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  BiddingStrategyTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BiddingStrategyTypeEnum").msgclass
+  BiddingStrategyTypeEnum::BiddingStrategyType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BiddingStrategyTypeEnum.BiddingStrategyType").enummodule
 end

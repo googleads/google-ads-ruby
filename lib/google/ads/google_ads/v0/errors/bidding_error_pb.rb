@@ -29,18 +29,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :BID_TOO_BIG, 31
     value :BID_TOO_MANY_FRACTIONAL_DIGITS, 32
     value :INVALID_DOMAIN_NAME, 33
+    value :NOT_COMPATIBLE_WITH_PAYMENT_MODE, 34
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          BiddingErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BiddingErrorEnum").msgclass
-          BiddingErrorEnum::BiddingError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BiddingErrorEnum.BiddingError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  BiddingErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BiddingErrorEnum").msgclass
+  BiddingErrorEnum::BiddingError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.BiddingErrorEnum.BiddingError").enummodule
 end

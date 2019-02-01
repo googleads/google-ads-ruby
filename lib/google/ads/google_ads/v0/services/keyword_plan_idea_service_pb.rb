@@ -38,19 +38,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GenerateKeywordIdeasRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeasRequest").msgclass
-          KeywordAndUrlSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordAndUrlSeed").msgclass
-          KeywordSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordSeed").msgclass
-          UrlSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.UrlSeed").msgclass
-          GenerateKeywordIdeaResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeaResponse").msgclass
-          GenerateKeywordIdeaResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeaResult").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GenerateKeywordIdeasRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeasRequest").msgclass
+  KeywordAndUrlSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordAndUrlSeed").msgclass
+  KeywordSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.KeywordSeed").msgclass
+  UrlSeed = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.UrlSeed").msgclass
+  GenerateKeywordIdeaResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeaResponse").msgclass
+  GenerateKeywordIdeaResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GenerateKeywordIdeaResult").msgclass
 end

@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -180,6 +180,11 @@ module Google
                 defaults["get_customer_manager_link"],
                 exception_transformer: exception_transformer
               )
+              @mutate_customer_manager_link = Google::Gax.create_api_call(
+                @customer_manager_link_service_stub.method(:mutate_customer_manager_link),
+                defaults["mutate_customer_manager_link"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -212,6 +217,47 @@ module Google
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::GetCustomerManagerLinkRequest)
               @get_customer_manager_link.call(req, options, &block)
+            end
+
+            # Creates or updates customer manager links. Operation statuses are returned.
+            #
+            # @param customer_id [String]
+            #   The ID of the customer whose customer manager links are being modified.
+            # @param operations [Array<Google::Ads::GoogleAds::V0::Services::CustomerManagerLinkOperation | Hash>]
+            #   The list of operations to perform on individual customer manager links.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::CustomerManagerLinkOperation`
+            #   can also be provided.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::MutateCustomerManagerLinkResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V0::Services::MutateCustomerManagerLinkResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   customer_manager_link_service_client = Google::Ads::GoogleAds::CustomerManagerLink.new(version: :v0)
+            #
+            #   # TODO: Initialize `customer_id`:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize `operations`:
+            #   operations = []
+            #   response = customer_manager_link_service_client.mutate_customer_manager_link(customer_id, operations)
+
+            def mutate_customer_manager_link \
+                customer_id,
+                operations,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                operations: operations
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateCustomerManagerLinkRequest)
+              @mutate_customer_manager_link.call(req, options, &block)
             end
           end
         end

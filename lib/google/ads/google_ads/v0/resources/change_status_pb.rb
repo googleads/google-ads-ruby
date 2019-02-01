@@ -17,17 +17,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ad_group_ad, :message, 9, "google.protobuf.StringValue"
     optional :ad_group_criterion, :message, 10, "google.protobuf.StringValue"
     optional :campaign_criterion, :message, 11, "google.protobuf.StringValue"
+    optional :feed, :message, 12, "google.protobuf.StringValue"
+    optional :feed_item, :message, 13, "google.protobuf.StringValue"
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          ChangeStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ChangeStatus").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  ChangeStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.ChangeStatus").msgclass
 end

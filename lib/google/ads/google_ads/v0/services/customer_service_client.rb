@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -235,6 +235,9 @@ module Google
             #   The operation to perform on the customer
             #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::CustomerOperation`
             #   can also be provided.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed. Only errors are
+            #   returned, not results.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -248,21 +251,23 @@ module Google
             #
             #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +operation+:
+            #   # TODO: Initialize `operation`:
             #   operation = {}
             #   response = customer_service_client.mutate_customer(customer_id, operation)
 
             def mutate_customer \
                 customer_id,
                 operation,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
-                operation: operation
+                operation: operation,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateCustomerRequest)
               @mutate_customer.call(req, options, &block)
@@ -312,10 +317,10 @@ module Google
             #
             #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +customer_client+:
+            #   # TODO: Initialize `customer_client`:
             #   customer_client = {}
             #   response = customer_service_client.create_customer_client(customer_id, customer_client)
 

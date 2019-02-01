@@ -48,15 +48,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          CampaignErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CampaignErrorEnum").msgclass
-          CampaignErrorEnum::CampaignError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CampaignErrorEnum.CampaignError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  CampaignErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CampaignErrorEnum").msgclass
+  CampaignErrorEnum::CampaignError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.CampaignErrorEnum.CampaignError").enummodule
 end

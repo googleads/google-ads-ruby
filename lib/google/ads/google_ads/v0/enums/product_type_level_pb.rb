@@ -17,15 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          ProductTypeLevelEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ProductTypeLevelEnum").msgclass
-          ProductTypeLevelEnum::ProductTypeLevel = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ProductTypeLevelEnum.ProductTypeLevel").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  ProductTypeLevelEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ProductTypeLevelEnum").msgclass
+  ProductTypeLevelEnum::ProductTypeLevel = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ProductTypeLevelEnum.ProductTypeLevel").enummodule
 end
