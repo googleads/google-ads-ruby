@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # Encoding: utf-8
 #
-# Copyright:: Copyright 2018 Google LLC
+# Copyright:: Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example illustrates how to get campaign criteria, which is getting
-# negative keywords in a campaign.
+# This example gets Hotel-ads performance statistics for the 50 Hotel ad groups
+# with the most impressions over the last 7 days.
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_keyword_stats(customer_id)
+def get_hotel_ads_performance(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -108,7 +108,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_keyword_stats(options[:customer_id])
+    get_hotel_ads_performance(options[:customer_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
