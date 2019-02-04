@@ -52,7 +52,7 @@ module Google
             response_message = "Incoming response (errors): \n"
 
             most_recent_error = Google::Gax::GaxError.new('')
-            most_recent_error.status_details.each do |detail|
+            most_recent_error.status_details && most_recent_error.status_details.each do |detail|
               if detail.is_a?(
                   Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure)
                 detail.errors.each_with_index do |error, i|
