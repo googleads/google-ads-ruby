@@ -15,14 +15,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          KeywordPlanNegativeKeyword = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanNegativeKeyword").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  KeywordPlanNegativeKeyword = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.KeywordPlanNegativeKeyword").msgclass
 end

@@ -20,15 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          FrequencyCapEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.FrequencyCapEntry").msgclass
-          FrequencyCapKey = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.FrequencyCapKey").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  FrequencyCapEntry = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.FrequencyCapEntry").msgclass
+  FrequencyCapKey = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.FrequencyCapKey").msgclass
 end

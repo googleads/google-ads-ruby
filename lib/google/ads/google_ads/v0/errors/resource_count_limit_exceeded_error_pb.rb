@@ -20,15 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          ResourceCountLimitExceededErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ResourceCountLimitExceededErrorEnum").msgclass
-          ResourceCountLimitExceededErrorEnum::ResourceCountLimitExceededError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ResourceCountLimitExceededErrorEnum.ResourceCountLimitExceededError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  ResourceCountLimitExceededErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ResourceCountLimitExceededErrorEnum").msgclass
+  ResourceCountLimitExceededErrorEnum::ResourceCountLimitExceededError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ResourceCountLimitExceededErrorEnum.ResourceCountLimitExceededError").enummodule
 end

@@ -16,15 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          PolicyApprovalStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyApprovalStatusEnum").msgclass
-          PolicyApprovalStatusEnum::PolicyApprovalStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyApprovalStatusEnum.PolicyApprovalStatus").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  PolicyApprovalStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyApprovalStatusEnum").msgclass
+  PolicyApprovalStatusEnum::PolicyApprovalStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PolicyApprovalStatusEnum.PolicyApprovalStatus").enummodule
 end

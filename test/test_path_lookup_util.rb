@@ -52,6 +52,12 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/adGroups/5678'
     assert_equal(expected, util.ad_group(1234, 5678))
 
+    expected = 'customers/1234/adParameters/56_78_90'
+    assert_equal(expected, util.ad_parameter(1234, 56, 78, 90))
+
+    expected = 'customers/1234/adScheduleViews/567_890'
+    assert_equal(expected, util.ad_schedule_view(1234, 567, 890))
+
     expected = 'customers/1234/ageRangeViews/567_890'
     assert_equal(expected, util.age_range_view(1234, 567, 890))
 
@@ -75,9 +81,6 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/campaignFeeds/567_890'
     assert_equal(expected, util.campaign_feed(1234, 567, 890))
-
-    expected = 'customers/1234/campaignGroups/5678'
-    assert_equal(expected, util.campaign_group(1234, 5678))
 
     expected = 'customers/1234/campaignSharedSets/5678'
     assert_equal(expected, util.campaign_shared_set(1234, 5678))
@@ -160,6 +163,15 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/mediaFiles/5678'
     assert_equal(expected, util.media_file(1234, 5678))
 
+    expected = 'mobileAppCategoryConstants/123456'
+    assert_equal(expected, util.mobile_app_category_constant(123456))
+
+    expected = 'mobileDeviceConstants/123456'
+    assert_equal(expected, util.mobile_device_constant(123456))
+
+    expected = 'operatingSystemVersionConstants/123456'
+    assert_equal(expected, util.operating_system_version_constant(123456))
+
     expected = 'customers/1234/parentalStatusViews/567_890'
     assert_equal(expected, util.parental_status_view(1234, 567, 890))
 
@@ -168,6 +180,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/recommendations/5678'
     assert_equal(expected, util.recommendation(1234, 5678))
+
+    expected = 'customers/1234/remarketingActions/5678'
+    assert_equal(expected, util.remarketing_action(1234, 5678))
 
     expected = 'customers/1234/searchTermViews/56_78_90'
     assert_equal(expected, util.search_term_view(1234, 56, 78, 90))

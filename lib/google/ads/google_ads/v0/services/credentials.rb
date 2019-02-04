@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ module Google
           class Credentials < Google::Auth::Credentials
             SCOPE = [
             ].freeze
-            PATH_ENV_VARS = %w(GOOGLEADS_KEYFILE
-                               GOOGLEADS_CREDENTIALS
+            PATH_ENV_VARS = %w(GOOGLEADS_CREDENTIALS
+                               GOOGLEADS_KEYFILE
                                GOOGLE_CLOUD_CREDENTIALS
                                GOOGLE_CLOUD_KEYFILE
                                GCLOUD_KEYFILE)
-            JSON_ENV_VARS = %w(GOOGLEADS_KEYFILE_JSON
-                               GOOGLEADS_CREDENTIALS_JSON
+            JSON_ENV_VARS = %w(GOOGLEADS_CREDENTIALS_JSON
+                               GOOGLEADS_KEYFILE_JSON
                                GOOGLE_CLOUD_CREDENTIALS_JSON
                                GOOGLE_CLOUD_KEYFILE_JSON
                                GCLOUD_KEYFILE_JSON)

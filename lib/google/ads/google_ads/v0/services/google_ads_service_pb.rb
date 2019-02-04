@@ -4,14 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/common/metrics_pb'
-require 'google/ads/google_ads/v0/enums/ad_network_type_pb'
-require 'google/ads/google_ads/v0/enums/day_of_week_pb'
-require 'google/ads/google_ads/v0/enums/device_pb'
-require 'google/ads/google_ads/v0/enums/hotel_date_selection_type_pb'
-require 'google/ads/google_ads/v0/enums/month_of_year_pb'
-require 'google/ads/google_ads/v0/enums/placeholder_type_pb'
-require 'google/ads/google_ads/v0/enums/search_term_match_type_pb'
-require 'google/ads/google_ads/v0/enums/slot_pb'
+require 'google/ads/google_ads/v0/common/segments_pb'
 require 'google/ads/google_ads/v0/resources/account_budget_pb'
 require 'google/ads/google_ads/v0/resources/account_budget_proposal_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_pb'
@@ -20,6 +13,7 @@ require 'google/ads/google_ads/v0/resources/ad_group_audience_view_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_criterion_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_feed_pb'
+require 'google/ads/google_ads/v0/resources/ad_schedule_view_pb'
 require 'google/ads/google_ads/v0/resources/age_range_view_pb'
 require 'google/ads/google_ads/v0/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v0/resources/billing_setup_pb'
@@ -29,10 +23,10 @@ require 'google/ads/google_ads/v0/resources/campaign_bid_modifier_pb'
 require 'google/ads/google_ads/v0/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v0/resources/campaign_criterion_pb'
 require 'google/ads/google_ads/v0/resources/campaign_feed_pb'
-require 'google/ads/google_ads/v0/resources/campaign_group_pb'
 require 'google/ads/google_ads/v0/resources/campaign_shared_set_pb'
 require 'google/ads/google_ads/v0/resources/carrier_constant_pb'
 require 'google/ads/google_ads/v0/resources/change_status_pb'
+require 'google/ads/google_ads/v0/resources/conversion_action_pb'
 require 'google/ads/google_ads/v0/resources/customer_pb'
 require 'google/ads/google_ads/v0/resources/customer_client_pb'
 require 'google/ads/google_ads/v0/resources/customer_client_link_pb'
@@ -54,9 +48,14 @@ require 'google/ads/google_ads/v0/resources/keyword_plan_negative_keyword_pb'
 require 'google/ads/google_ads/v0/resources/keyword_view_pb'
 require 'google/ads/google_ads/v0/resources/language_constant_pb'
 require 'google/ads/google_ads/v0/resources/managed_placement_view_pb'
+require 'google/ads/google_ads/v0/resources/media_file_pb'
+require 'google/ads/google_ads/v0/resources/mobile_app_category_constant_pb'
+require 'google/ads/google_ads/v0/resources/mobile_device_constant_pb'
+require 'google/ads/google_ads/v0/resources/operating_system_version_constant_pb'
 require 'google/ads/google_ads/v0/resources/parental_status_view_pb'
 require 'google/ads/google_ads/v0/resources/product_group_view_pb'
 require 'google/ads/google_ads/v0/resources/recommendation_pb'
+require 'google/ads/google_ads/v0/resources/remarketing_action_pb'
 require 'google/ads/google_ads/v0/resources/search_term_view_pb'
 require 'google/ads/google_ads/v0/resources/shared_criterion_pb'
 require 'google/ads/google_ads/v0/resources/shared_set_pb'
@@ -73,7 +72,6 @@ require 'google/ads/google_ads/v0/services/bidding_strategy_service_pb'
 require 'google/ads/google_ads/v0/services/campaign_bid_modifier_service_pb'
 require 'google/ads/google_ads/v0/services/campaign_budget_service_pb'
 require 'google/ads/google_ads/v0/services/campaign_criterion_service_pb'
-require 'google/ads/google_ads/v0/services/campaign_group_service_pb'
 require 'google/ads/google_ads/v0/services/campaign_service_pb'
 require 'google/ads/google_ads/v0/services/campaign_shared_set_service_pb'
 require 'google/ads/google_ads/v0/services/conversion_action_service_pb'
@@ -82,13 +80,14 @@ require 'google/ads/google_ads/v0/services/shared_set_service_pb'
 require 'google/ads/google_ads/v0/services/user_list_service_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
-require 'google/protobuf/wrappers_pb'
+require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.SearchGoogleAdsRequest" do
     optional :customer_id, :string, 1
     optional :query, :string, 2
     optional :page_token, :string, 3
     optional :page_size, :int32, 4
+    optional :validate_only, :bool, 5
   end
   add_message "google.ads.googleads.v0.services.SearchGoogleAdsResponse" do
     repeated :results, :message, 1, "google.ads.googleads.v0.services.GoogleAdsRow"
@@ -106,6 +105,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ad_group_criterion, :message, 17, "google.ads.googleads.v0.resources.AdGroupCriterion"
     optional :ad_group_feed, :message, 67, "google.ads.googleads.v0.resources.AdGroupFeed"
     optional :age_range_view, :message, 48, "google.ads.googleads.v0.resources.AgeRangeView"
+    optional :ad_schedule_view, :message, 89, "google.ads.googleads.v0.resources.AdScheduleView"
     optional :bidding_strategy, :message, 18, "google.ads.googleads.v0.resources.BiddingStrategy"
     optional :billing_setup, :message, 41, "google.ads.googleads.v0.resources.BillingSetup"
     optional :campaign_budget, :message, 19, "google.ads.googleads.v0.resources.CampaignBudget"
@@ -114,10 +114,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_bid_modifier, :message, 26, "google.ads.googleads.v0.resources.CampaignBidModifier"
     optional :campaign_criterion, :message, 20, "google.ads.googleads.v0.resources.CampaignCriterion"
     optional :campaign_feed, :message, 63, "google.ads.googleads.v0.resources.CampaignFeed"
-    optional :campaign_group, :message, 25, "google.ads.googleads.v0.resources.CampaignGroup"
     optional :campaign_shared_set, :message, 30, "google.ads.googleads.v0.resources.CampaignSharedSet"
     optional :carrier_constant, :message, 66, "google.ads.googleads.v0.resources.CarrierConstant"
     optional :change_status, :message, 37, "google.ads.googleads.v0.resources.ChangeStatus"
+    optional :conversion_action, :message, 103, "google.ads.googleads.v0.resources.ConversionAction"
     optional :customer, :message, 1, "google.ads.googleads.v0.resources.Customer"
     optional :customer_manager_link, :message, 61, "google.ads.googleads.v0.resources.CustomerManagerLink"
     optional :customer_client_link, :message, 62, "google.ads.googleads.v0.resources.CustomerClientLink"
@@ -139,6 +139,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :keyword_plan_keyword, :message, 36, "google.ads.googleads.v0.resources.KeywordPlanKeyword"
     optional :language_constant, :message, 55, "google.ads.googleads.v0.resources.LanguageConstant"
     optional :managed_placement_view, :message, 53, "google.ads.googleads.v0.resources.ManagedPlacementView"
+    optional :media_file, :message, 90, "google.ads.googleads.v0.resources.MediaFile"
+    optional :mobile_app_category_constant, :message, 87, "google.ads.googleads.v0.resources.MobileAppCategoryConstant"
+    optional :mobile_device_constant, :message, 98, "google.ads.googleads.v0.resources.MobileDeviceConstant"
+    optional :operating_system_version_constant, :message, 86, "google.ads.googleads.v0.resources.OperatingSystemVersionConstant"
     optional :parental_status_view, :message, 45, "google.ads.googleads.v0.resources.ParentalStatusView"
     optional :product_group_view, :message, 54, "google.ads.googleads.v0.resources.ProductGroupView"
     optional :recommendation, :message, 22, "google.ads.googleads.v0.resources.Recommendation"
@@ -148,39 +152,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :topic_view, :message, 44, "google.ads.googleads.v0.resources.TopicView"
     optional :user_interest, :message, 59, "google.ads.googleads.v0.resources.UserInterest"
     optional :user_list, :message, 38, "google.ads.googleads.v0.resources.UserList"
+    optional :remarketing_action, :message, 60, "google.ads.googleads.v0.resources.RemarketingAction"
     optional :topic_constant, :message, 31, "google.ads.googleads.v0.resources.TopicConstant"
     optional :video, :message, 39, "google.ads.googleads.v0.resources.Video"
     optional :metrics, :message, 4, "google.ads.googleads.v0.common.Metrics"
-    optional :ad_network_type, :enum, 5, "google.ads.googleads.v0.enums.AdNetworkTypeEnum.AdNetworkType"
-    optional :date, :message, 6, "google.protobuf.StringValue"
-    optional :day_of_week, :enum, 7, "google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek"
-    optional :device, :enum, 8, "google.ads.googleads.v0.enums.DeviceEnum.Device"
-    optional :hotel_booking_window_days, :message, 83, "google.protobuf.Int64Value"
-    optional :hotel_center_id, :message, 72, "google.protobuf.Int64Value"
-    optional :hotel_check_in_date, :message, 73, "google.protobuf.StringValue"
-    optional :hotel_check_in_day_of_week, :enum, 74, "google.ads.googleads.v0.enums.DayOfWeekEnum.DayOfWeek"
-    optional :hotel_city, :message, 75, "google.protobuf.StringValue"
-    optional :hotel_class, :message, 76, "google.protobuf.Int32Value"
-    optional :hotel_country, :message, 77, "google.protobuf.StringValue"
-    optional :hotel_date_selection_type, :enum, 78, "google.ads.googleads.v0.enums.HotelDateSelectionTypeEnum.HotelDateSelectionType"
-    optional :hotel_length_of_stay, :message, 79, "google.protobuf.Int32Value"
-    optional :hotel_state, :message, 81, "google.protobuf.StringValue"
-    optional :hour, :message, 9, "google.protobuf.Int32Value"
-    optional :month, :message, 10, "google.protobuf.StringValue"
-    optional :month_of_year, :enum, 28, "google.ads.googleads.v0.enums.MonthOfYearEnum.MonthOfYear"
-    optional :partner_hotel_id, :message, 82, "google.protobuf.StringValue"
-    optional :placeholder_type, :enum, 65, "google.ads.googleads.v0.enums.PlaceholderTypeEnum.PlaceholderType"
-    optional :quarter, :message, 12, "google.protobuf.StringValue"
-    optional :search_term_match_type, :enum, 56, "google.ads.googleads.v0.enums.SearchTermMatchTypeEnum.SearchTermMatchType"
-    optional :slot, :enum, 13, "google.ads.googleads.v0.enums.SlotEnum.Slot"
-    optional :week, :message, 14, "google.protobuf.StringValue"
-    optional :year, :message, 15, "google.protobuf.Int32Value"
+    optional :segments, :message, 102, "google.ads.googleads.v0.common.Segments"
   end
   add_message "google.ads.googleads.v0.services.MutateGoogleAdsRequest" do
     optional :customer_id, :string, 1
     repeated :mutate_operations, :message, 2, "google.ads.googleads.v0.services.MutateOperation"
+    optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v0.services.MutateGoogleAdsResponse" do
+    optional :partial_failure_error, :message, 3, "google.rpc.Status"
     repeated :mutate_operation_responses, :message, 1, "google.ads.googleads.v0.services.MutateOperationResponse"
   end
   add_message "google.ads.googleads.v0.services.MutateOperation" do
@@ -192,7 +177,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :bidding_strategy_operation, :message, 6, "google.ads.googleads.v0.services.BiddingStrategyOperation"
       optional :campaign_bid_modifier_operation, :message, 7, "google.ads.googleads.v0.services.CampaignBidModifierOperation"
       optional :campaign_budget_operation, :message, 8, "google.ads.googleads.v0.services.CampaignBudgetOperation"
-      optional :campaign_group_operation, :message, 9, "google.ads.googleads.v0.services.CampaignGroupOperation"
       optional :campaign_operation, :message, 10, "google.ads.googleads.v0.services.CampaignOperation"
       optional :campaign_shared_set_operation, :message, 11, "google.ads.googleads.v0.services.CampaignSharedSetOperation"
       optional :conversion_action_operation, :message, 12, "google.ads.googleads.v0.services.ConversionActionOperation"
@@ -211,7 +195,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :bidding_strategy_result, :message, 6, "google.ads.googleads.v0.services.MutateBiddingStrategyResult"
       optional :campaign_bid_modifier_result, :message, 7, "google.ads.googleads.v0.services.MutateCampaignBidModifierResult"
       optional :campaign_budget_result, :message, 8, "google.ads.googleads.v0.services.MutateCampaignBudgetResult"
-      optional :campaign_group_result, :message, 9, "google.ads.googleads.v0.services.MutateCampaignGroupResult"
       optional :campaign_result, :message, 10, "google.ads.googleads.v0.services.MutateCampaignResult"
       optional :campaign_shared_set_result, :message, 11, "google.ads.googleads.v0.services.MutateCampaignSharedSetResult"
       optional :conversion_action_result, :message, 12, "google.ads.googleads.v0.services.MutateConversionActionResult"
@@ -223,20 +206,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          SearchGoogleAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsRequest").msgclass
-          SearchGoogleAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsResponse").msgclass
-          GoogleAdsRow = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GoogleAdsRow").msgclass
-          MutateGoogleAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateGoogleAdsRequest").msgclass
-          MutateGoogleAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateGoogleAdsResponse").msgclass
-          MutateOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateOperation").msgclass
-          MutateOperationResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateOperationResponse").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  SearchGoogleAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsRequest").msgclass
+  SearchGoogleAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsResponse").msgclass
+  GoogleAdsRow = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GoogleAdsRow").msgclass
+  MutateGoogleAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateGoogleAdsRequest").msgclass
+  MutateGoogleAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateGoogleAdsResponse").msgclass
+  MutateOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateOperation").msgclass
+  MutateOperationResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateOperationResponse").msgclass
 end

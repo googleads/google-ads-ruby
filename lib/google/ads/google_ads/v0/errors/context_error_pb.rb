@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          ContextErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ContextErrorEnum").msgclass
-          ContextErrorEnum::ContextError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ContextErrorEnum.ContextError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  ContextErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ContextErrorEnum").msgclass
+  ContextErrorEnum::ContextError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ContextErrorEnum.ContextError").enummodule
 end

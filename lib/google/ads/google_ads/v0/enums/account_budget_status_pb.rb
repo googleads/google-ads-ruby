@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AccountBudgetStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AccountBudgetStatusEnum").msgclass
-          AccountBudgetStatusEnum::AccountBudgetStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AccountBudgetStatusEnum.AccountBudgetStatus").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AccountBudgetStatusEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AccountBudgetStatusEnum").msgclass
+  AccountBudgetStatusEnum::AccountBudgetStatus = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AccountBudgetStatusEnum.AccountBudgetStatus").enummodule
 end

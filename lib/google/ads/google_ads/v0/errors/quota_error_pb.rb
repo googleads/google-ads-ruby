@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          QuotaErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QuotaErrorEnum").msgclass
-          QuotaErrorEnum::QuotaError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QuotaErrorEnum.QuotaError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  QuotaErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QuotaErrorEnum").msgclass
+  QuotaErrorEnum::QuotaError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QuotaErrorEnum.QuotaError").enummodule
 end

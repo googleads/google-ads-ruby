@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          DatabaseErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DatabaseErrorEnum").msgclass
-          DatabaseErrorEnum::DatabaseError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DatabaseErrorEnum.DatabaseError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  DatabaseErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DatabaseErrorEnum").msgclass
+  DatabaseErrorEnum::DatabaseError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.DatabaseErrorEnum.DatabaseError").enummodule
 end

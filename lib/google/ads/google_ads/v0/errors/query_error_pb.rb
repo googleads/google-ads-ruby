@@ -58,18 +58,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNEXPECTED_FROM_CLAUSE, 47
     value :UNRECOGNIZED_FIELD, 32
     value :UNEXPECTED_INPUT, 11
+    value :REQUESTED_METRICS_FOR_MANAGER, 59
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          QueryErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QueryErrorEnum").msgclass
-          QueryErrorEnum::QueryError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QueryErrorEnum.QueryError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  QueryErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QueryErrorEnum").msgclass
+  QueryErrorEnum::QueryError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.QueryErrorEnum.QueryError").enummodule
 end

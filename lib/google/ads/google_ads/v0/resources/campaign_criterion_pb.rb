@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     oneof :criterion do
       optional :keyword, :message, 8, "google.ads.googleads.v0.common.KeywordInfo"
       optional :placement, :message, 9, "google.ads.googleads.v0.common.PlacementInfo"
+      optional :mobile_app_category, :message, 10, "google.ads.googleads.v0.common.MobileAppCategoryInfo"
       optional :location, :message, 12, "google.ads.googleads.v0.common.LocationInfo"
       optional :device, :message, 13, "google.ads.googleads.v0.common.DeviceInfo"
       optional :ad_schedule, :message, 15, "google.ads.googleads.v0.common.AdScheduleInfo"
@@ -35,18 +36,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :content_label, :message, 28, "google.ads.googleads.v0.common.ContentLabelInfo"
       optional :carrier, :message, 29, "google.ads.googleads.v0.common.CarrierInfo"
       optional :user_interest, :message, 30, "google.ads.googleads.v0.common.UserInterestInfo"
+      optional :webpage, :message, 31, "google.ads.googleads.v0.common.WebpageInfo"
+      optional :operating_system_version, :message, 32, "google.ads.googleads.v0.common.OperatingSystemVersionInfo"
     end
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          CampaignCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.CampaignCriterion").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  CampaignCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.CampaignCriterion").msgclass
 end

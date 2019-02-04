@@ -16,15 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          SharedSetErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.SharedSetErrorEnum").msgclass
-          SharedSetErrorEnum::SharedSetError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.SharedSetErrorEnum.SharedSetError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  SharedSetErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.SharedSetErrorEnum").msgclass
+  SharedSetErrorEnum::SharedSetError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.SharedSetErrorEnum.SharedSetError").enummodule
 end

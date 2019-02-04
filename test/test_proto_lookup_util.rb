@@ -148,7 +148,7 @@ class TestProtoLookupUtil < Minitest::Test
 
     # If we throw any exceptions, that's a fail.
     util.all_operations.each do |k, v|
-      util.operation(v.last.chomp('Operation'))
+      util.operation(v.last.split('::').last.chomp('Operation'))
     end
   end
 

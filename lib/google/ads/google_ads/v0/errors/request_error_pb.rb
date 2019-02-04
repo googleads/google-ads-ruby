@@ -25,18 +25,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_ENUM_VALUE, 18
     value :DEVELOPER_TOKEN_PARAMETER_MISSING, 19
     value :LOGIN_CUSTOMER_ID_PARAMETER_MISSING, 20
+    value :VALIDATE_ONLY_REQUEST_HAS_PAGE_TOKEN, 21
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          RequestErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RequestErrorEnum").msgclass
-          RequestErrorEnum::RequestError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RequestErrorEnum.RequestError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  RequestErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RequestErrorEnum").msgclass
+  RequestErrorEnum::RequestError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.RequestErrorEnum.RequestError").enummodule
 end

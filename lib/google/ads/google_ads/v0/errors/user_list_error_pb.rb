@@ -32,18 +32,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :APP_ID_NOT_SET, 31
     value :USERLIST_NAME_IS_RESERVED_FOR_SYSTEM_LIST, 32
     value :ADVERTISER_NOT_WHITELISTED_FOR_USING_UPLOADED_DATA, 33
+    value :RULE_TYPE_IS_NOT_SUPPORTED, 34
+    value :CAN_NOT_ADD_A_SIMILAR_USERLIST_AS_LOGICAL_LIST_OPERAND, 35
+    value :CAN_NOT_MIX_CRM_BASED_IN_LOGICAL_LIST_WITH_OTHER_LISTS, 36
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          UserListErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.UserListErrorEnum").msgclass
-          UserListErrorEnum::UserListError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.UserListErrorEnum.UserListError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  UserListErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.UserListErrorEnum").msgclass
+  UserListErrorEnum::UserListError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.UserListErrorEnum.UserListError").enummodule
 end

@@ -16,15 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          GeoTargetConstantSuggestionErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum").msgclass
-          GeoTargetConstantSuggestionErrorEnum::GeoTargetConstantSuggestionError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum.GeoTargetConstantSuggestionError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  GeoTargetConstantSuggestionErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum").msgclass
+  GeoTargetConstantSuggestionErrorEnum::GeoTargetConstantSuggestionError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GeoTargetConstantSuggestionErrorEnum.GeoTargetConstantSuggestionError").enummodule
 end

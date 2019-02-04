@@ -11,14 +11,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetKeywordViewRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetKeywordViewRequest").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetKeywordViewRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetKeywordViewRequest").msgclass
 end

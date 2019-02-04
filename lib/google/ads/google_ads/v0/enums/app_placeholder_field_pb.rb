@@ -20,15 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AppPlaceholderFieldEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AppPlaceholderFieldEnum").msgclass
-          AppPlaceholderFieldEnum::AppPlaceholderField = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AppPlaceholderFieldEnum.AppPlaceholderField").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AppPlaceholderFieldEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AppPlaceholderFieldEnum").msgclass
+  AppPlaceholderFieldEnum::AppPlaceholderField = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AppPlaceholderFieldEnum.AppPlaceholderField").enummodule
 end

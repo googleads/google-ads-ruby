@@ -13,6 +13,7 @@ require 'google/ads/google_ads/v0/errors/ad_group_bid_modifier_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_group_feed_error_pb'
+require 'google/ads/google_ads/v0/errors/ad_parameter_error_pb'
 require 'google/ads/google_ads/v0/errors/ad_sharing_error_pb'
 require 'google/ads/google_ads/v0/errors/adx_error_pb'
 require 'google/ads/google_ads/v0/errors/authentication_error_pb'
@@ -24,7 +25,6 @@ require 'google/ads/google_ads/v0/errors/campaign_budget_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_criterion_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_feed_error_pb'
-require 'google/ads/google_ads/v0/errors/campaign_group_error_pb'
 require 'google/ads/google_ads/v0/errors/campaign_shared_set_error_pb'
 require 'google/ads/google_ads/v0/errors/change_status_error_pb'
 require 'google/ads/google_ads/v0/errors/collection_size_error_pb'
@@ -40,9 +40,11 @@ require 'google/ads/google_ads/v0/errors/date_error_pb'
 require 'google/ads/google_ads/v0/errors/date_range_error_pb'
 require 'google/ads/google_ads/v0/errors/distinct_error_pb'
 require 'google/ads/google_ads/v0/errors/enum_error_pb'
+require 'google/ads/google_ads/v0/errors/extension_setting_error_pb'
 require 'google/ads/google_ads/v0/errors/feed_attribute_reference_error_pb'
 require 'google/ads/google_ads/v0/errors/feed_error_pb'
 require 'google/ads/google_ads/v0/errors/feed_item_error_pb'
+require 'google/ads/google_ads/v0/errors/feed_item_validation_error_pb'
 require 'google/ads/google_ads/v0/errors/feed_mapping_error_pb'
 require 'google/ads/google_ads/v0/errors/field_error_pb'
 require 'google/ads/google_ads/v0/errors/field_mask_error_pb'
@@ -70,6 +72,7 @@ require 'google/ads/google_ads/v0/errors/null_error_pb'
 require 'google/ads/google_ads/v0/errors/operation_access_denied_error_pb'
 require 'google/ads/google_ads/v0/errors/operator_error_pb'
 require 'google/ads/google_ads/v0/errors/policy_finding_error_pb'
+require 'google/ads/google_ads/v0/errors/policy_violation_error_pb'
 require 'google/ads/google_ads/v0/errors/query_error_pb'
 require 'google/ads/google_ads/v0/errors/quota_error_pb'
 require 'google/ads/google_ads/v0/errors/range_error_pb'
@@ -158,7 +161,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :header_error, :enum, 66, "google.ads.googleads.v0.errors.HeaderErrorEnum.HeaderError"
       optional :database_error, :enum, 67, "google.ads.googleads.v0.errors.DatabaseErrorEnum.DatabaseError"
       optional :policy_finding_error, :enum, 68, "google.ads.googleads.v0.errors.PolicyFindingErrorEnum.PolicyFindingError"
-      optional :campaign_group_error, :enum, 69, "google.ads.googleads.v0.errors.CampaignGroupErrorEnum.CampaignGroupError"
       optional :enum_error, :enum, 70, "google.ads.googleads.v0.errors.EnumErrorEnum.EnumError"
       optional :keyword_plan_error, :enum, 71, "google.ads.googleads.v0.errors.KeywordPlanErrorEnum.KeywordPlanError"
       optional :keyword_plan_campaign_error, :enum, 72, "google.ads.googleads.v0.errors.KeywordPlanCampaignErrorEnum.KeywordPlanCampaignError"
@@ -179,10 +181,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :customer_feed_error, :enum, 93, "google.ads.googleads.v0.errors.CustomerFeedErrorEnum.CustomerFeedError"
       optional :ad_group_feed_error, :enum, 94, "google.ads.googleads.v0.errors.AdGroupFeedErrorEnum.AdGroupFeedError"
       optional :campaign_feed_error, :enum, 96, "google.ads.googleads.v0.errors.CampaignFeedErrorEnum.CampaignFeedError"
+      optional :ad_parameter_error, :enum, 101, "google.ads.googleads.v0.errors.AdParameterErrorEnum.AdParameterError"
+      optional :feed_item_validation_error, :enum, 102, "google.ads.googleads.v0.errors.FeedItemValidationErrorEnum.FeedItemValidationError"
+      optional :extension_setting_error, :enum, 103, "google.ads.googleads.v0.errors.ExtensionSettingErrorEnum.ExtensionSettingError"
+      optional :policy_violation_error, :enum, 105, "google.ads.googleads.v0.errors.PolicyViolationErrorEnum.PolicyViolationError"
     end
   end
   add_message "google.ads.googleads.v0.errors.ErrorLocation" do
-    optional :operation_index, :message, 1, "google.protobuf.Int64Value"
     repeated :field_path_elements, :message, 2, "google.ads.googleads.v0.errors.ErrorLocation.FieldPathElement"
   end
   add_message "google.ads.googleads.v0.errors.ErrorLocation.FieldPathElement" do
@@ -205,21 +210,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          GoogleAdsFailure = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GoogleAdsFailure").msgclass
-          GoogleAdsError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GoogleAdsError").msgclass
-          ErrorCode = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorCode").msgclass
-          ErrorLocation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorLocation").msgclass
-          ErrorLocation::FieldPathElement = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorLocation.FieldPathElement").msgclass
-          ErrorDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorDetails").msgclass
-          PolicyViolationDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.PolicyViolationDetails").msgclass
-          PolicyFindingDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.PolicyFindingDetails").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  GoogleAdsFailure = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GoogleAdsFailure").msgclass
+  GoogleAdsError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.GoogleAdsError").msgclass
+  ErrorCode = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorCode").msgclass
+  ErrorLocation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorLocation").msgclass
+  ErrorLocation::FieldPathElement = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorLocation.FieldPathElement").msgclass
+  ErrorDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ErrorDetails").msgclass
+  PolicyViolationDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.PolicyViolationDetails").msgclass
+  PolicyFindingDetails = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.PolicyFindingDetails").msgclass
 end

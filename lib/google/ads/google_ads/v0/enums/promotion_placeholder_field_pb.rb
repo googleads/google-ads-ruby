@@ -26,15 +26,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          PromotionPlaceholderFieldEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PromotionPlaceholderFieldEnum").msgclass
-          PromotionPlaceholderFieldEnum::PromotionPlaceholderField = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PromotionPlaceholderFieldEnum.PromotionPlaceholderField").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  PromotionPlaceholderFieldEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PromotionPlaceholderFieldEnum").msgclass
+  PromotionPlaceholderFieldEnum::PromotionPlaceholderField = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.PromotionPlaceholderFieldEnum.PromotionPlaceholderField").enummodule
 end

@@ -22,15 +22,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          OperationAccessDeniedErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.OperationAccessDeniedErrorEnum").msgclass
-          OperationAccessDeniedErrorEnum::OperationAccessDeniedError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.OperationAccessDeniedErrorEnum.OperationAccessDeniedError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  OperationAccessDeniedErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.OperationAccessDeniedErrorEnum").msgclass
+  OperationAccessDeniedErrorEnum::OperationAccessDeniedError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.OperationAccessDeniedErrorEnum.OperationAccessDeniedError").enummodule
 end

@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          BudgetDeliveryMethodEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BudgetDeliveryMethodEnum").msgclass
-          BudgetDeliveryMethodEnum::BudgetDeliveryMethod = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BudgetDeliveryMethodEnum.BudgetDeliveryMethod").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  BudgetDeliveryMethodEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BudgetDeliveryMethodEnum").msgclass
+  BudgetDeliveryMethodEnum::BudgetDeliveryMethod = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BudgetDeliveryMethodEnum.BudgetDeliveryMethod").enummodule
 end

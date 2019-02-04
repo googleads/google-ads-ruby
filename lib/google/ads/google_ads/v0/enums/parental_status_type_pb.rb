@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          ParentalStatusTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ParentalStatusTypeEnum").msgclass
-          ParentalStatusTypeEnum::ParentalStatusType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ParentalStatusTypeEnum.ParentalStatusType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  ParentalStatusTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ParentalStatusTypeEnum").msgclass
+  ParentalStatusTypeEnum::ParentalStatusType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.ParentalStatusTypeEnum.ParentalStatusType").enummodule
 end

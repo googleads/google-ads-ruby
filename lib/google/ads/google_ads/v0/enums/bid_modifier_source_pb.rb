@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          BidModifierSourceEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BidModifierSourceEnum").msgclass
-          BidModifierSourceEnum::BidModifierSource = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BidModifierSourceEnum.BidModifierSource").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  BidModifierSourceEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BidModifierSourceEnum").msgclass
+  BidModifierSourceEnum::BidModifierSource = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.BidModifierSourceEnum.BidModifierSource").enummodule
 end

@@ -15,14 +15,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          TagSnippet = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TagSnippet").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  TagSnippet = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TagSnippet").msgclass
 end

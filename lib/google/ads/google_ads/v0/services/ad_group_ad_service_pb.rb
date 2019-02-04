@@ -7,6 +7,8 @@ require 'google/ads/google_ads/v0/common/policy_pb'
 require 'google/ads/google_ads/v0/resources/ad_group_ad_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
+require 'google/protobuf/wrappers_pb'
+require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GetAdGroupAdRequest" do
     optional :resource_name, :string, 1
@@ -14,6 +16,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.MutateAdGroupAdsRequest" do
     optional :customer_id, :string, 1
     repeated :operations, :message, 2, "google.ads.googleads.v0.services.AdGroupAdOperation"
+    optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v0.services.AdGroupAdOperation" do
     optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -25,6 +29,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
   end
   add_message "google.ads.googleads.v0.services.MutateAdGroupAdsResponse" do
+    optional :partial_failure_error, :message, 3, "google.rpc.Status"
     repeated :results, :message, 2, "google.ads.googleads.v0.services.MutateAdGroupAdResult"
   end
   add_message "google.ads.googleads.v0.services.MutateAdGroupAdResult" do
@@ -32,18 +37,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetAdGroupAdRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetAdGroupAdRequest").msgclass
-          MutateAdGroupAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdsRequest").msgclass
-          AdGroupAdOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.AdGroupAdOperation").msgclass
-          MutateAdGroupAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdsResponse").msgclass
-          MutateAdGroupAdResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdResult").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetAdGroupAdRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetAdGroupAdRequest").msgclass
+  MutateAdGroupAdsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdsRequest").msgclass
+  AdGroupAdOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.AdGroupAdOperation").msgclass
+  MutateAdGroupAdsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdsResponse").msgclass
+  MutateAdGroupAdResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateAdGroupAdResult").msgclass
 end

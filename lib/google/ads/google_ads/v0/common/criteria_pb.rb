@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v0/enums/age_range_type_pb'
+require 'google/ads/google_ads/v0/enums/app_payment_model_type_pb'
 require 'google/ads/google_ads/v0/enums/content_label_type_pb'
 require 'google/ads/google_ads/v0/enums/day_of_week_pb'
 require 'google/ads/google_ads/v0/enums/device_pb'
@@ -22,6 +23,8 @@ require 'google/ads/google_ads/v0/enums/product_channel_exclusivity_pb'
 require 'google/ads/google_ads/v0/enums/product_condition_pb'
 require 'google/ads/google_ads/v0/enums/product_type_level_pb'
 require 'google/ads/google_ads/v0/enums/proximity_radius_units_pb'
+require 'google/ads/google_ads/v0/enums/webpage_condition_operand_pb'
+require 'google/ads/google_ads/v0/enums/webpage_condition_operator_pb'
 require 'google/protobuf/wrappers_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.KeywordInfo" do
@@ -30,6 +33,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v0.common.PlacementInfo" do
     optional :url, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.MobileAppCategoryInfo" do
+    optional :mobile_app_category_constant, :message, 1, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v0.common.LocationInfo" do
     optional :geo_target_constant, :message, 1, "google.protobuf.StringValue"
@@ -185,57 +191,69 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.common.UserInterestInfo" do
     optional :user_interest_category, :message, 1, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v0.common.WebpageInfo" do
+    optional :criterion_name, :message, 1, "google.protobuf.StringValue"
+    repeated :conditions, :message, 2, "google.ads.googleads.v0.common.WebpageConditionInfo"
+  end
+  add_message "google.ads.googleads.v0.common.WebpageConditionInfo" do
+    optional :operand, :enum, 1, "google.ads.googleads.v0.enums.WebpageConditionOperandEnum.WebpageConditionOperand"
+    optional :operator, :enum, 2, "google.ads.googleads.v0.enums.WebpageConditionOperatorEnum.WebpageConditionOperator"
+    optional :argument, :message, 3, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.OperatingSystemVersionInfo" do
+    optional :operating_system_version_constant, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v0.common.AppPaymentModelInfo" do
+    optional :type, :enum, 1, "google.ads.googleads.v0.enums.AppPaymentModelTypeEnum.AppPaymentModelType"
+  end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          KeywordInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.KeywordInfo").msgclass
-          PlacementInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PlacementInfo").msgclass
-          LocationInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LocationInfo").msgclass
-          DeviceInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DeviceInfo").msgclass
-          PreferredContentInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PreferredContentInfo").msgclass
-          ListingGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingGroupInfo").msgclass
-          ListingScopeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingScopeInfo").msgclass
-          ListingDimensionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingDimensionInfo").msgclass
-          ListingBrandInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingBrandInfo").msgclass
-          HotelIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelIdInfo").msgclass
-          HotelClassInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelClassInfo").msgclass
-          HotelCountryRegionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCountryRegionInfo").msgclass
-          HotelStateInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelStateInfo").msgclass
-          HotelCityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCityInfo").msgclass
-          ListingCustomAttributeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingCustomAttributeInfo").msgclass
-          ProductChannelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductChannelInfo").msgclass
-          ProductChannelExclusivityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductChannelExclusivityInfo").msgclass
-          ProductConditionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductConditionInfo").msgclass
-          ProductOfferIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductOfferIdInfo").msgclass
-          ProductTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductTypeInfo").msgclass
-          HotelDateSelectionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelDateSelectionTypeInfo").msgclass
-          HotelAdvanceBookingWindowInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo").msgclass
-          HotelLengthOfStayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelLengthOfStayInfo").msgclass
-          HotelCheckInDayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCheckInDayInfo").msgclass
-          InteractionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.InteractionTypeInfo").msgclass
-          AdScheduleInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AdScheduleInfo").msgclass
-          AgeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AgeRangeInfo").msgclass
-          GenderInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GenderInfo").msgclass
-          IncomeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.IncomeRangeInfo").msgclass
-          ParentalStatusInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ParentalStatusInfo").msgclass
-          YouTubeVideoInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeVideoInfo").msgclass
-          YouTubeChannelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeChannelInfo").msgclass
-          UserListInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.UserListInfo").msgclass
-          ProximityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProximityInfo").msgclass
-          GeoPointInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GeoPointInfo").msgclass
-          AddressInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AddressInfo").msgclass
-          TopicInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TopicInfo").msgclass
-          LanguageInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LanguageInfo").msgclass
-          IpBlockInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.IpBlockInfo").msgclass
-          ContentLabelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ContentLabelInfo").msgclass
-          CarrierInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CarrierInfo").msgclass
-          UserInterestInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.UserInterestInfo").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  KeywordInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.KeywordInfo").msgclass
+  PlacementInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PlacementInfo").msgclass
+  MobileAppCategoryInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.MobileAppCategoryInfo").msgclass
+  LocationInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LocationInfo").msgclass
+  DeviceInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.DeviceInfo").msgclass
+  PreferredContentInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PreferredContentInfo").msgclass
+  ListingGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingGroupInfo").msgclass
+  ListingScopeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingScopeInfo").msgclass
+  ListingDimensionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingDimensionInfo").msgclass
+  ListingBrandInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingBrandInfo").msgclass
+  HotelIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelIdInfo").msgclass
+  HotelClassInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelClassInfo").msgclass
+  HotelCountryRegionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCountryRegionInfo").msgclass
+  HotelStateInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelStateInfo").msgclass
+  HotelCityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCityInfo").msgclass
+  ListingCustomAttributeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ListingCustomAttributeInfo").msgclass
+  ProductChannelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductChannelInfo").msgclass
+  ProductChannelExclusivityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductChannelExclusivityInfo").msgclass
+  ProductConditionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductConditionInfo").msgclass
+  ProductOfferIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductOfferIdInfo").msgclass
+  ProductTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProductTypeInfo").msgclass
+  HotelDateSelectionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelDateSelectionTypeInfo").msgclass
+  HotelAdvanceBookingWindowInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelAdvanceBookingWindowInfo").msgclass
+  HotelLengthOfStayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelLengthOfStayInfo").msgclass
+  HotelCheckInDayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.HotelCheckInDayInfo").msgclass
+  InteractionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.InteractionTypeInfo").msgclass
+  AdScheduleInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AdScheduleInfo").msgclass
+  AgeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AgeRangeInfo").msgclass
+  GenderInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GenderInfo").msgclass
+  IncomeRangeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.IncomeRangeInfo").msgclass
+  ParentalStatusInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ParentalStatusInfo").msgclass
+  YouTubeVideoInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeVideoInfo").msgclass
+  YouTubeChannelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.YouTubeChannelInfo").msgclass
+  UserListInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.UserListInfo").msgclass
+  ProximityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ProximityInfo").msgclass
+  GeoPointInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.GeoPointInfo").msgclass
+  AddressInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AddressInfo").msgclass
+  TopicInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TopicInfo").msgclass
+  LanguageInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.LanguageInfo").msgclass
+  IpBlockInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.IpBlockInfo").msgclass
+  ContentLabelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ContentLabelInfo").msgclass
+  CarrierInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.CarrierInfo").msgclass
+  UserInterestInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.UserInterestInfo").msgclass
+  WebpageInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.WebpageInfo").msgclass
+  WebpageConditionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.WebpageConditionInfo").msgclass
+  OperatingSystemVersionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.OperatingSystemVersionInfo").msgclass
+  AppPaymentModelInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.AppPaymentModelInfo").msgclass
 end

@@ -19,15 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AgeRangeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AgeRangeTypeEnum").msgclass
-          AgeRangeTypeEnum::AgeRangeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AgeRangeTypeEnum.AgeRangeType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AgeRangeTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AgeRangeTypeEnum").msgclass
+  AgeRangeTypeEnum::AgeRangeType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AgeRangeTypeEnum.AgeRangeType").enummodule
 end

@@ -21,16 +21,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetGoogleAdsFieldRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetGoogleAdsFieldRequest").msgclass
-          SearchGoogleAdsFieldsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsFieldsRequest").msgclass
-          SearchGoogleAdsFieldsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsFieldsResponse").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetGoogleAdsFieldRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetGoogleAdsFieldRequest").msgclass
+  SearchGoogleAdsFieldsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsFieldsRequest").msgclass
+  SearchGoogleAdsFieldsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SearchGoogleAdsFieldsResponse").msgclass
 end

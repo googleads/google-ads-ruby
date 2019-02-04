@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -62,11 +62,26 @@ module Google
 
             private_constant :HOTEL_PERFORMANCE_VIEW_PATH_TEMPLATE
 
+            CUSTOMER_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "customers/{customer}"
+            )
+
+            private_constant :CUSTOMER_PATH_TEMPLATE
+
             # Returns a fully-qualified hotel_performance_view resource name string.
             # @param customer [String]
             # @return [String]
             def self.hotel_performance_view_path customer
               HOTEL_PERFORMANCE_VIEW_PATH_TEMPLATE.render(
+                :"customer" => customer
+              )
+            end
+
+            # Returns a fully-qualified customer resource name string.
+            # @param customer [String]
+            # @return [String]
+            def self.customer_path customer
+              CUSTOMER_PATH_TEMPLATE.render(
                 :"customer" => customer
               )
             end
@@ -198,7 +213,7 @@ module Google
             #   require "google/ads/google_ads"
             #
             #   hotel_performance_view_service_client = Google::Ads::GoogleAds::HotelPerformanceView.new(version: :v0)
-            #   formatted_resource_name = Google::Ads::GoogleAds::V0::Services::HotelPerformanceViewServiceClient.hotel_performance_view_path("[CUSTOMER]")
+            #   formatted_resource_name = Google::Ads::GoogleAds::V0::Services::HotelPerformanceViewServiceClient.customer_path("[CUSTOMER]")
             #   response = hotel_performance_view_service_client.get_hotel_performance_view(formatted_resource_name)
 
             def get_hotel_performance_view \

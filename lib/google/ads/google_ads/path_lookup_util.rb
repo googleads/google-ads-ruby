@@ -75,11 +75,26 @@ module Google
               customer_id.to_s, ad_group_id.to_s)
         end
 
+        def ad_parameter(customer_id, ad_group_id, criterion_id,
+            parameter_index)
+          @proto_lookup_util.service(:AdParameter).ad_parameter_path(
+            customer_id.to_s,
+            sprintf('%s_%s_%s', ad_group_id, criterion_id, parameter_index)
+          )
+        end
+
+        def ad_schedule_view(customer_id, campaign_id, criterion_id)
+          @proto_lookup_util.service(:AdScheduleView).ad_schedule_view_path(
+            customer_id.to_s,
+            sprintf('%s_%s', campaign_id, criterion_id)
+          )
+        end
+
         def age_range_view(customer_id, ad_group_id, criterion_id)
           @proto_lookup_util.service(:AgeRangeView).age_range_view_path(
-                customer_id.to_s,
-                sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
-              )
+            customer_id.to_s,
+            sprintf('%s_%s', ad_group_id.to_s, criterion_id.to_s)
+          )
         end
 
         def bidding_strategy(customer_id, bidding_strategy_id)
@@ -123,11 +138,6 @@ module Google
             customer_id.to_s,
             sprintf('%s_%s', campaign_id.to_s, feed_id.to_s)
           )
-        end
-
-        def campaign_group(customer_id, campaign_group_id)
-          @proto_lookup_util.service(:CampaignGroup).campaign_group_path(
-              customer_id.to_s, campaign_group_id.to_s)
         end
 
         def campaign_shared_set(customer_id, campaign_shared_set_id)
@@ -300,6 +310,21 @@ module Google
               customer_id.to_s, media_file_id.to_s)
         end
 
+        def mobile_app_category_constant(mobile_app_category_id)
+          @proto_lookup_util.service(:MobileAppCategoryConstant).
+              mobile_app_category_constant_path(mobile_app_category_id.to_s)
+        end
+
+        def mobile_device_constant(criterion_id)
+          @proto_lookup_util.service(:MobileDeviceConstant).
+              mobile_device_constant_path(criterion_id.to_s)
+        end
+
+        def operating_system_version_constant(criterion_id)
+          @proto_lookup_util.service(:OperatingSystemVersionConstant).
+              operating_system_version_constant_path(criterion_id.to_s)
+        end
+
         def parental_status_view(customer_id, ad_group_id, criterion_id)
           @proto_lookup_util.service(:ParentalStatusView).
               parental_status_view_path(
@@ -319,6 +344,14 @@ module Google
         def recommendation(customer_id, recommendation_id)
           @proto_lookup_util.service(:Recommendation).recommendation_path(
             customer_id.to_s, recommendation_id.to_s)
+        end
+
+        def remarketing_action(customer_id, remarketing_action_id)
+          @proto_lookup_util.service(:RemarketingAction).
+              remarketing_action_path(
+                customer_id.to_s,
+                remarketing_action_id.to_s
+              )
         end
 
         def search_term_view(customer_id, campaign_id, ad_group_id, search_term)

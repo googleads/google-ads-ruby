@@ -10,19 +10,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
     value :INVALID_LOGIN_CUSTOMER_ID, 3
-    value :MALFORMED_TASK_INFO, 4
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          HeaderErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.HeaderErrorEnum").msgclass
-          HeaderErrorEnum::HeaderError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.HeaderErrorEnum.HeaderError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  HeaderErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.HeaderErrorEnum").msgclass
+  HeaderErrorEnum::HeaderError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.HeaderErrorEnum.HeaderError").enummodule
 end

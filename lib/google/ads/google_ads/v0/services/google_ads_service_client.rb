@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -194,6 +194,8 @@ module Google
             #   parameter does not affect the return value. If page streaming is
             #   performed per-page, this determines the maximum number of
             #   resources in a page.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -211,10 +213,10 @@ module Google
             #
             #   google_ads_service_client = Google::Ads::GoogleAds::GoogleAds.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +query+:
+            #   # TODO: Initialize `query`:
             #   query = ''
             #
             #   # Iterate over all results.
@@ -234,12 +236,14 @@ module Google
                 customer_id,
                 query,
                 page_size: nil,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
                 query: query,
-                page_size: page_size
+                page_size: page_size,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::SearchGoogleAdsRequest)
               @search.call(req, options, &block)
@@ -253,6 +257,14 @@ module Google
             #   The list of operations to perform on individual resources.
             #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::MutateOperation`
             #   can also be provided.
+            # @param partial_failure [true, false]
+            #   If true, successful operations will be carried out and invalid
+            #   operations will return errors. If false, all operations will be carried
+            #   out in one transaction if and only if they are all valid.
+            #   Default is false.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed. Only errors are
+            #   returned, not results.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -266,21 +278,25 @@ module Google
             #
             #   google_ads_service_client = Google::Ads::GoogleAds::GoogleAds.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize +mutate_operations+:
+            #   # TODO: Initialize `mutate_operations`:
             #   mutate_operations = []
             #   response = google_ads_service_client.mutate(customer_id, mutate_operations)
 
             def mutate \
                 customer_id,
                 mutate_operations,
+                partial_failure: nil,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
-                mutate_operations: mutate_operations
+                mutate_operations: mutate_operations,
+                partial_failure: partial_failure,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateGoogleAdsRequest)
               @mutate.call(req, options, &block)

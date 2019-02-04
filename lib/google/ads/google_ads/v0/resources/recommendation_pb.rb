@@ -82,27 +82,19 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          Recommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation").msgclass
-          Recommendation::RecommendationImpact = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.RecommendationImpact").msgclass
-          Recommendation::RecommendationMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.RecommendationMetrics").msgclass
-          Recommendation::CampaignBudgetRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.CampaignBudgetRecommendation").msgclass
-          Recommendation::CampaignBudgetRecommendation::CampaignBudgetRecommendationOption = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.CampaignBudgetRecommendation.CampaignBudgetRecommendationOption").msgclass
-          Recommendation::KeywordRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.KeywordRecommendation").msgclass
-          Recommendation::TextAdRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TextAdRecommendation").msgclass
-          Recommendation::TargetCpaOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TargetCpaOptInRecommendation").msgclass
-          Recommendation::TargetCpaOptInRecommendation::TargetCpaOptInRecommendationOption = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TargetCpaOptInRecommendation.TargetCpaOptInRecommendationOption").msgclass
-          Recommendation::MaximizeConversionsOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.MaximizeConversionsOptInRecommendation").msgclass
-          Recommendation::EnhancedCpcOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.EnhancedCpcOptInRecommendation").msgclass
-          Recommendation::SearchPartnersOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.SearchPartnersOptInRecommendation").msgclass
-          Recommendation::MaximizeClicksOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.MaximizeClicksOptInRecommendation").msgclass
-          Recommendation::OptimizeAdRotationRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.OptimizeAdRotationRecommendation").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  Recommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation").msgclass
+  Recommendation::RecommendationImpact = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.RecommendationImpact").msgclass
+  Recommendation::RecommendationMetrics = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.RecommendationMetrics").msgclass
+  Recommendation::CampaignBudgetRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.CampaignBudgetRecommendation").msgclass
+  Recommendation::CampaignBudgetRecommendation::CampaignBudgetRecommendationOption = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.CampaignBudgetRecommendation.CampaignBudgetRecommendationOption").msgclass
+  Recommendation::KeywordRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.KeywordRecommendation").msgclass
+  Recommendation::TextAdRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TextAdRecommendation").msgclass
+  Recommendation::TargetCpaOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TargetCpaOptInRecommendation").msgclass
+  Recommendation::TargetCpaOptInRecommendation::TargetCpaOptInRecommendationOption = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.TargetCpaOptInRecommendation.TargetCpaOptInRecommendationOption").msgclass
+  Recommendation::MaximizeConversionsOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.MaximizeConversionsOptInRecommendation").msgclass
+  Recommendation::EnhancedCpcOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.EnhancedCpcOptInRecommendation").msgclass
+  Recommendation::SearchPartnersOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.SearchPartnersOptInRecommendation").msgclass
+  Recommendation::MaximizeClicksOptInRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.MaximizeClicksOptInRecommendation").msgclass
+  Recommendation::OptimizeAdRotationRecommendation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.Recommendation.OptimizeAdRotationRecommendation").msgclass
 end

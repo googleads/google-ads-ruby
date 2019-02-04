@@ -33,6 +33,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :cpc_bid_ceiling_micros, :message, 2, "google.protobuf.Int64Value"
     optional :cpc_bid_floor_micros, :message, 3, "google.protobuf.Int64Value"
   end
+  add_message "google.ads.googleads.v0.common.TargetCpm" do
+  end
   add_message "google.ads.googleads.v0.common.TargetOutrankShare" do
     optional :target_outrank_share_micros, :message, 1, "google.protobuf.Int32Value"
     optional :competitor_domain, :message, 2, "google.protobuf.StringValue"
@@ -55,25 +57,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Common
-          EnhancedCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.EnhancedCpc").msgclass
-          ManualCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpc").msgclass
-          ManualCpm = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpm").msgclass
-          ManualCpv = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpv").msgclass
-          MaximizeConversions = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.MaximizeConversions").msgclass
-          MaximizeConversionValue = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.MaximizeConversionValue").msgclass
-          PageOnePromoted = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PageOnePromoted").msgclass
-          TargetCpa = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetCpa").msgclass
-          TargetOutrankShare = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetOutrankShare").msgclass
-          TargetRoas = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetRoas").msgclass
-          TargetSpend = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetSpend").msgclass
-          PercentCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PercentCpc").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Common
+  EnhancedCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.EnhancedCpc").msgclass
+  ManualCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpc").msgclass
+  ManualCpm = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpm").msgclass
+  ManualCpv = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.ManualCpv").msgclass
+  MaximizeConversions = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.MaximizeConversions").msgclass
+  MaximizeConversionValue = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.MaximizeConversionValue").msgclass
+  PageOnePromoted = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PageOnePromoted").msgclass
+  TargetCpa = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetCpa").msgclass
+  TargetCpm = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetCpm").msgclass
+  TargetOutrankShare = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetOutrankShare").msgclass
+  TargetRoas = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetRoas").msgclass
+  TargetSpend = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.TargetSpend").msgclass
+  PercentCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.common.PercentCpc").msgclass
 end

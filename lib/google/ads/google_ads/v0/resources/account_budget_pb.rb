@@ -62,15 +62,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          AccountBudget = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AccountBudget").msgclass
-          AccountBudget::PendingAccountBudgetProposal = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AccountBudget.PendingAccountBudgetProposal").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  AccountBudget = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AccountBudget").msgclass
+  AccountBudget::PendingAccountBudgetProposal = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AccountBudget.PendingAccountBudgetProposal").msgclass
 end

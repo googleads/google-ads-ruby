@@ -49,15 +49,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          ImageErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ImageErrorEnum").msgclass
-          ImageErrorEnum::ImageError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ImageErrorEnum.ImageError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  ImageErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ImageErrorEnum").msgclass
+  ImageErrorEnum::ImageError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.ImageErrorEnum.ImageError").enummodule
 end

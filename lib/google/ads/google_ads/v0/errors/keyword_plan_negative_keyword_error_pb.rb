@@ -12,15 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          KeywordPlanNegativeKeywordErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.KeywordPlanNegativeKeywordErrorEnum").msgclass
-          KeywordPlanNegativeKeywordErrorEnum::KeywordPlanNegativeKeywordError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.KeywordPlanNegativeKeywordErrorEnum.KeywordPlanNegativeKeywordError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  KeywordPlanNegativeKeywordErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.KeywordPlanNegativeKeywordErrorEnum").msgclass
+  KeywordPlanNegativeKeywordErrorEnum::KeywordPlanNegativeKeywordError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.KeywordPlanNegativeKeywordErrorEnum.KeywordPlanNegativeKeywordError").enummodule
 end

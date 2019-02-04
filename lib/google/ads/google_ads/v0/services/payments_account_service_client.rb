@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -187,7 +187,7 @@ module Google
             #
             #   payments_account_service_client = Google::Ads::GoogleAds::PaymentsAccount.new(version: :v0)
             #
-            #   # TODO: Initialize +customer_id+:
+            #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #   response = payments_account_service_client.list_payments_accounts(customer_id)
 

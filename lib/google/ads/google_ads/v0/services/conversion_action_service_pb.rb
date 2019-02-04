@@ -6,6 +6,8 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v0/resources/conversion_action_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
+require 'google/protobuf/wrappers_pb'
+require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.GetConversionActionRequest" do
     optional :resource_name, :string, 1
@@ -13,6 +15,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v0.services.MutateConversionActionsRequest" do
     optional :customer_id, :string, 1
     repeated :operations, :message, 2, "google.ads.googleads.v0.services.ConversionActionOperation"
+    optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v0.services.ConversionActionOperation" do
     optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -23,6 +27,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
   end
   add_message "google.ads.googleads.v0.services.MutateConversionActionsResponse" do
+    optional :partial_failure_error, :message, 3, "google.rpc.Status"
     repeated :results, :message, 2, "google.ads.googleads.v0.services.MutateConversionActionResult"
   end
   add_message "google.ads.googleads.v0.services.MutateConversionActionResult" do
@@ -30,18 +35,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetConversionActionRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetConversionActionRequest").msgclass
-          MutateConversionActionsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionsRequest").msgclass
-          ConversionActionOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ConversionActionOperation").msgclass
-          MutateConversionActionsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionsResponse").msgclass
-          MutateConversionActionResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionResult").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetConversionActionRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetConversionActionRequest").msgclass
+  MutateConversionActionsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionsRequest").msgclass
+  ConversionActionOperation = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.ConversionActionOperation").msgclass
+  MutateConversionActionsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionsResponse").msgclass
+  MutateConversionActionResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.MutateConversionActionResult").msgclass
 end

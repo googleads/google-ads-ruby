@@ -13,15 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          SpendingLimitTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SpendingLimitTypeEnum").msgclass
-          SpendingLimitTypeEnum::SpendingLimitType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SpendingLimitTypeEnum.SpendingLimitType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  SpendingLimitTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SpendingLimitTypeEnum").msgclass
+  SpendingLimitTypeEnum::SpendingLimitType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SpendingLimitTypeEnum.SpendingLimitType").enummodule
 end

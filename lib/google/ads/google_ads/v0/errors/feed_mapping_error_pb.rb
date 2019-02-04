@@ -28,15 +28,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          FeedMappingErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedMappingErrorEnum").msgclass
-          FeedMappingErrorEnum::FeedMappingError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedMappingErrorEnum.FeedMappingError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  FeedMappingErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedMappingErrorEnum").msgclass
+  FeedMappingErrorEnum::FeedMappingError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.FeedMappingErrorEnum.FeedMappingError").enummodule
 end

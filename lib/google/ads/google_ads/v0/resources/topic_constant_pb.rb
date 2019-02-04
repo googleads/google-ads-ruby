@@ -13,14 +13,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          TopicConstant = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.TopicConstant").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  TopicConstant = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.TopicConstant").msgclass
 end

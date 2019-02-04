@@ -17,15 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          SearchTermMatchTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SearchTermMatchTypeEnum").msgclass
-          SearchTermMatchTypeEnum::SearchTermMatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SearchTermMatchTypeEnum.SearchTermMatchType").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  SearchTermMatchTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SearchTermMatchTypeEnum").msgclass
+  SearchTermMatchTypeEnum::SearchTermMatchType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.SearchTermMatchTypeEnum.SearchTermMatchType").enummodule
 end

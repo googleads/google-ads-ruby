@@ -36,19 +36,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Services
-          GetGeoTargetConstantRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetGeoTargetConstantRequest").msgclass
-          SuggestGeoTargetConstantsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest").msgclass
-          SuggestGeoTargetConstantsRequest::LocationNames = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.LocationNames").msgclass
-          SuggestGeoTargetConstantsRequest::GeoTargets = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.GeoTargets").msgclass
-          SuggestGeoTargetConstantsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsResponse").msgclass
-          GeoTargetConstantSuggestion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GeoTargetConstantSuggestion").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Services
+  GetGeoTargetConstantRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GetGeoTargetConstantRequest").msgclass
+  SuggestGeoTargetConstantsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest").msgclass
+  SuggestGeoTargetConstantsRequest::LocationNames = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.LocationNames").msgclass
+  SuggestGeoTargetConstantsRequest::GeoTargets = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsRequest.GeoTargets").msgclass
+  SuggestGeoTargetConstantsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.SuggestGeoTargetConstantsResponse").msgclass
+  GeoTargetConstantSuggestion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.services.GeoTargetConstantSuggestion").msgclass
 end

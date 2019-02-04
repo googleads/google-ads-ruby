@@ -13,18 +13,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :ID_EXISTS_IN_MULTIPLE_MUTATES, 7
     value :INCONSISTENT_FIELD_VALUES, 8
     value :MUTATE_NOT_ALLOWED, 9
+    value :RESOURCE_NOT_IN_GOOGLE_ADS, 10
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Errors
-          MutateErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MutateErrorEnum").msgclass
-          MutateErrorEnum::MutateError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MutateErrorEnum.MutateError").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Errors
+  MutateErrorEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MutateErrorEnum").msgclass
+  MutateErrorEnum::MutateError = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.errors.MutateErrorEnum.MutateError").enummodule
 end

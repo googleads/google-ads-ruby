@@ -15,15 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          FrequencyCapTimeUnitEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FrequencyCapTimeUnitEnum").msgclass
-          FrequencyCapTimeUnitEnum::FrequencyCapTimeUnit = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FrequencyCapTimeUnitEnum.FrequencyCapTimeUnit").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  FrequencyCapTimeUnitEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FrequencyCapTimeUnitEnum").msgclass
+  FrequencyCapTimeUnitEnum::FrequencyCapTimeUnit = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.FrequencyCapTimeUnitEnum.FrequencyCapTimeUnit").enummodule
 end

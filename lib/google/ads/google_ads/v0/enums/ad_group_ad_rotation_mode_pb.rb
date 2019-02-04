@@ -14,15 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Enums
-          AdGroupAdRotationModeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupAdRotationModeEnum").msgclass
-          AdGroupAdRotationModeEnum::AdGroupAdRotationMode = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupAdRotationModeEnum.AdGroupAdRotationMode").enummodule
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Enums
+  AdGroupAdRotationModeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupAdRotationModeEnum").msgclass
+  AdGroupAdRotationModeEnum::AdGroupAdRotationMode = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.enums.AdGroupAdRotationModeEnum.AdGroupAdRotationMode").enummodule
 end

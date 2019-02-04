@@ -24,15 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          AdGroupAd = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAd").msgclass
-          AdGroupAdPolicySummary = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAdPolicySummary").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  AdGroupAd = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAd").msgclass
+  AdGroupAdPolicySummary = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupAdPolicySummary").msgclass
 end

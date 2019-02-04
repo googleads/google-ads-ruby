@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v0/services/campaign_group_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v0/services/mobile_device_constant_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/google_ads/v0/services/campaign_group_service_pb"
+require "google/ads/google_ads/v0/services/mobile_device_constant_service_pb"
 require "google/ads/google_ads/v0/services/credentials"
 
 module Google
@@ -32,12 +32,12 @@ module Google
     module GoogleAds
       module V0
         module Services
-          # Service to manage campaign groups.
+          # Service to fetch mobile device constants.
           #
-          # @!attribute [r] campaign_group_service_stub
-          #   @return [Google::Ads::GoogleAds::V0::Services::CampaignGroupService::Stub]
-          class CampaignGroupServiceClient
-            attr_reader :campaign_group_service_stub
+          # @!attribute [r] mobile_device_constant_service_stub
+          #   @return [Google::Ads::GoogleAds::V0::Services::MobileDeviceConstantService::Stub]
+          class MobileDeviceConstantServiceClient
+            attr_reader :mobile_device_constant_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -56,20 +56,18 @@ module Google
             ].freeze
 
 
-            CAMPAIGN_GROUP_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}/campaignGroups/{campaign_group}"
+            MOBILE_DEVICE_CONSTANT_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "mobileDeviceConstants/{mobile_device_constant}"
             )
 
-            private_constant :CAMPAIGN_GROUP_PATH_TEMPLATE
+            private_constant :MOBILE_DEVICE_CONSTANT_PATH_TEMPLATE
 
-            # Returns a fully-qualified campaign_group resource name string.
-            # @param customer [String]
-            # @param campaign_group [String]
+            # Returns a fully-qualified mobile_device_constant resource name string.
+            # @param mobile_device_constant [String]
             # @return [String]
-            def self.campaign_group_path customer, campaign_group
-              CAMPAIGN_GROUP_PATH_TEMPLATE.render(
-                :"customer" => customer,
-                :"campaign_group" => campaign_group
+            def self.mobile_device_constant_path mobile_device_constant
+              MOBILE_DEVICE_CONSTANT_PATH_TEMPLATE.render(
+                :"mobile_device_constant" => mobile_device_constant
               )
             end
 
@@ -115,7 +113,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/google_ads/v0/services/campaign_group_service_services_pb"
+              require "google/ads/google_ads/v0/services/mobile_device_constant_service_services_pb"
 
               credentials ||= Google::Ads::GoogleAds::V0::Services::Credentials.default
 
@@ -146,11 +144,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "campaign_group_service_client_config.json"
+                "mobile_device_constant_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v0.services.CampaignGroupService",
+                  "google.ads.googleads.v0.services.MobileDeviceConstantService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -164,7 +162,7 @@ module Google
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
               interceptors = self.class::GRPC_INTERCEPTORS
-              @campaign_group_service_stub = Google::Gax::Grpc.create_stub(
+              @mobile_device_constant_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
@@ -172,93 +170,46 @@ module Google
                 updater_proc: updater_proc,
                 scopes: scopes,
                 interceptors: interceptors,
-                &Google::Ads::GoogleAds::V0::Services::CampaignGroupService::Stub.method(:new)
+                &Google::Ads::GoogleAds::V0::Services::MobileDeviceConstantService::Stub.method(:new)
               )
 
-              @get_campaign_group = Google::Gax.create_api_call(
-                @campaign_group_service_stub.method(:get_campaign_group),
-                defaults["get_campaign_group"],
-                exception_transformer: exception_transformer
-              )
-              @mutate_campaign_groups = Google::Gax.create_api_call(
-                @campaign_group_service_stub.method(:mutate_campaign_groups),
-                defaults["mutate_campaign_groups"],
+              @get_mobile_device_constant = Google::Gax.create_api_call(
+                @mobile_device_constant_service_stub.method(:get_mobile_device_constant),
+                defaults["get_mobile_device_constant"],
                 exception_transformer: exception_transformer
               )
             end
 
             # Service calls
 
-            # Returns the requested campaign group in full detail.
+            # Returns the requested mobile device constant in full detail.
             #
             # @param resource_name [String]
-            #   The resource name of the campaign group to fetch.
+            #   Resource name of the mobile device to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V0::Resources::CampaignGroup]
+            # @yieldparam result [Google::Ads::GoogleAds::V0::Resources::MobileDeviceConstant]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V0::Resources::CampaignGroup]
+            # @return [Google::Ads::GoogleAds::V0::Resources::MobileDeviceConstant]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_group_service_client = Google::Ads::GoogleAds::CampaignGroup.new(version: :v0)
-            #   formatted_resource_name = Google::Ads::GoogleAds::V0::Services::CampaignGroupServiceClient.campaign_group_path("[CUSTOMER]", "[CAMPAIGN_GROUP]")
-            #   response = campaign_group_service_client.get_campaign_group(formatted_resource_name)
+            #   mobile_device_constant_service_client = Google::Ads::GoogleAds::MobileDeviceConstant.new(version: :v0)
+            #   formatted_resource_name = Google::Ads::GoogleAds::V0::Services::MobileDeviceConstantServiceClient.mobile_device_constant_path("[MOBILE_DEVICE_CONSTANT]")
+            #   response = mobile_device_constant_service_client.get_mobile_device_constant(formatted_resource_name)
 
-            def get_campaign_group \
+            def get_mobile_device_constant \
                 resource_name,
                 options: nil,
                 &block
               req = {
                 resource_name: resource_name
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::GetCampaignGroupRequest)
-              @get_campaign_group.call(req, options, &block)
-            end
-
-            # Creates, updates, or removes campaign groups. Operation statuses are
-            # returned.
-            #
-            # @param customer_id [String]
-            #   The ID of the customer whose campaign groups are being modified.
-            # @param operations [Array<Google::Ads::GoogleAds::V0::Services::CampaignGroupOperation | Hash>]
-            #   The list of operations to perform on individual campaign groups.
-            #   A hash of the same form as `Google::Ads::GoogleAds::V0::Services::CampaignGroupOperation`
-            #   can also be provided.
-            # @param options [Google::Gax::CallOptions]
-            #   Overrides the default settings for this call, e.g, timeout,
-            #   retries, etc.
-            # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V0::Services::MutateCampaignGroupsResponse]
-            # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V0::Services::MutateCampaignGroupsResponse]
-            # @raise [Google::Gax::GaxError] if the RPC is aborted.
-            # @example
-            #   require "google/ads/google_ads"
-            #
-            #   campaign_group_service_client = Google::Ads::GoogleAds::CampaignGroup.new(version: :v0)
-            #
-            #   # TODO: Initialize +customer_id+:
-            #   customer_id = ''
-            #
-            #   # TODO: Initialize +operations+:
-            #   operations = []
-            #   response = campaign_group_service_client.mutate_campaign_groups(customer_id, operations)
-
-            def mutate_campaign_groups \
-                customer_id,
-                operations,
-                options: nil,
-                &block
-              req = {
-                customer_id: customer_id,
-                operations: operations
-              }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::MutateCampaignGroupsRequest)
-              @mutate_campaign_groups.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V0::Services::GetMobileDeviceConstantRequest)
+              @get_mobile_device_constant.call(req, options, &block)
             end
           end
         end

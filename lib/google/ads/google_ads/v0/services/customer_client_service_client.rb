@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ module Google
     module GoogleAds
       module V0
         module Services
-          # Service to manage customer clients in a manager hierarchy.
+          # Service to get clients in a customer's hierarchy.
           #
           # @!attribute [r] customer_client_service_stub
           #   @return [Google::Ads::GoogleAds::V0::Services::CustomerClientService::Stub]
@@ -184,10 +184,10 @@ module Google
 
             # Service calls
 
-            # Returns the requested customer client in full detail.
+            # Returns the requested client in full detail.
             #
             # @param resource_name [String]
-            #   The resource name of the customer client to fetch.
+            #   The resource name of the client to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.

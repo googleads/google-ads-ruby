@@ -39,6 +39,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     oneof :criterion do
       optional :keyword, :message, 27, "google.ads.googleads.v0.common.KeywordInfo"
       optional :placement, :message, 28, "google.ads.googleads.v0.common.PlacementInfo"
+      optional :mobile_app_category, :message, 29, "google.ads.googleads.v0.common.MobileAppCategoryInfo"
       optional :listing_group, :message, 32, "google.ads.googleads.v0.common.ListingGroupInfo"
       optional :age_range, :message, 36, "google.ads.googleads.v0.common.AgeRangeInfo"
       optional :gender, :message, 37, "google.ads.googleads.v0.common.GenderInfo"
@@ -49,6 +50,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :youtube_channel, :message, 41, "google.ads.googleads.v0.common.YouTubeChannelInfo"
       optional :topic, :message, 43, "google.ads.googleads.v0.common.TopicInfo"
       optional :user_interest, :message, 45, "google.ads.googleads.v0.common.UserInterestInfo"
+      optional :webpage, :message, 46, "google.ads.googleads.v0.common.WebpageInfo"
+      optional :app_payment_model, :message, 47, "google.ads.googleads.v0.common.AppPaymentModelInfo"
     end
   end
   add_message "google.ads.googleads.v0.resources.AdGroupCriterion.QualityInfo" do
@@ -61,19 +64,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :first_page_cpc_micros, :message, 1, "google.protobuf.Int64Value"
     optional :first_position_cpc_micros, :message, 2, "google.protobuf.Int64Value"
     optional :top_of_page_cpc_micros, :message, 3, "google.protobuf.Int64Value"
+    optional :estimated_add_clicks_at_first_position_cpc, :message, 4, "google.protobuf.Int64Value"
+    optional :estimated_add_cost_at_first_position_cpc, :message, 5, "google.protobuf.Int64Value"
   end
 end
 
-module Google
-  module Ads
-    module GoogleAds
-      module V0
-        module Resources
-          AdGroupCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion").msgclass
-          AdGroupCriterion::QualityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion.QualityInfo").msgclass
-          AdGroupCriterion::PositionEstimates = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion.PositionEstimates").msgclass
-        end
-      end
-    end
-  end
+module Google::Ads::GoogleAds::V0::Resources
+  AdGroupCriterion = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion").msgclass
+  AdGroupCriterion::QualityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion.QualityInfo").msgclass
+  AdGroupCriterion::PositionEstimates = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v0.resources.AdGroupCriterion.PositionEstimates").msgclass
 end
