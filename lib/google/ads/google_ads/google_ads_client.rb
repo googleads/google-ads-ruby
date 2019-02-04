@@ -140,7 +140,7 @@ module Google
               raise sprintf('Invalid login_customer_id. Must be an integer ' \
                   '0 < x <= 9,999,999,999. Got %s', login_customer_id)
             end
-            headers[:"login-customer-id"] = login_customer_id
+            headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
           return class_to_return.new(
             credentials: get_updater_proc(),
