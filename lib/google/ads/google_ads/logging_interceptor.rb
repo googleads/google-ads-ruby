@@ -29,9 +29,13 @@ module Google
         end
 
         def request_response(request:, call:, method:, metadata: {})
+          customer_id = request.customer_id if request.respond_to?(:customer_id)
+          # CustomerService get requests have a different format.
+          customer_id =
+              request.resource_name.split('/').last if customer_id.nil?
           summary_message =
               sprintf("CID: %s, Host: %s, Method: %s",
-                request.customer_id,
+                customer_id,
                 call.instance_variable_get('@wrapped').peer,
                 method
               )
