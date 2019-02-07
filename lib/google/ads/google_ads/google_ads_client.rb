@@ -135,7 +135,7 @@ module Google
           }
           if @config.login_customer_id
             login_customer_id = @config.login_customer_id
-            if !login_customer_id.is_a? Integer || login_customer_id <= 0 ||
+            if !login_customer_id.is_a?(Integer) || login_customer_id <= 0 ||
                 login_customer_id > 9_999_999_999
               raise sprintf('Invalid login_customer_id. Must be an integer ' \
                   '0 < x <= 9,999,999,999. Got %s', login_customer_id)
