@@ -125,9 +125,12 @@ module Google
             unless service_path.nil? || service_path.empty?
               const_set('SERVICE_ADDRESS', service_path.freeze)
             end
-            logging_interceptor =
-                Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
-            const_set('GRPC_INTERCEPTORS', [logging_interceptor])
+
+            if logger
+              logging_interceptor =
+                  Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+              const_set('GRPC_INTERCEPTORS', [logging_interceptor])
+            end
           end
 
           headers = {
