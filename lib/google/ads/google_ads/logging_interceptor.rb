@@ -29,10 +29,12 @@ module Google
         end
 
         def request_response(request:, call:, method:, metadata: {})
+          customer_id = "N/A"
           customer_id = request.customer_id if request.respond_to?(:customer_id)
           # CustomerService get requests have a different format.
-          customer_id =
-              request.resource_name.split('/').last if customer_id.nil?
+          if request.respond_to?(:resource_name)
+            customer_id = request.resource_name.split('/').last
+          end
           summary_message =
               sprintf("CID: %s, Host: %s, Method: %s",
                 customer_id,
