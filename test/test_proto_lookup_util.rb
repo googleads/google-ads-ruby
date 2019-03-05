@@ -19,28 +19,32 @@
 
 require 'minitest/autorun'
 
-require 'google/ads/google_ads/proto_lookup_util'
+require 'google/ads/google_ads/utils/v0/proto_lookup_util'
 
 module Google
   module Ads
     module GoogleAds
-      class ProtoLookupUtil
-        public :class_for_path
+      module Utils
+        module V0
+          class ProtoLookupUtil
+            public :class_for_path
 
-        def all_resources
-          RESOURCES
-        end
+            def all_resources
+              RESOURCES
+            end
 
-        def all_enums
-          ENUMS
-        end
+            def all_enums
+              ENUMS
+            end
 
-        def all_services
-          SERVICES
-        end
+            def all_services
+              SERVICES
+            end
 
-        def all_operations
-          OPERATIONS
+            def all_operations
+              OPERATIONS
+            end
+          end
         end
       end
     end
@@ -49,7 +53,7 @@ end
 
 class TestProtoLookupUtil < Minitest::Test
   def test_resource_instances()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     campaign = util.resource(:Campaign).new
     assert_instance_of(
@@ -70,7 +74,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_all_resource_references()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     # If we throw any exceptions, that's a fail.
     util.all_resources.each do |k, v|
@@ -79,7 +83,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_bad_resource_lookup()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     assert_raises ArgumentError do
       util.resource(:NotAResource)
@@ -87,7 +91,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_enum_instances()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     campaign_status = util.enum(:CampaignStatus)
     assert_equal(0, campaign_status::UNSPECIFIED)
@@ -101,7 +105,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_all_enum_references()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     # If we throw any exceptions, that's a fail.
     util.all_enums.each do |k, v|
@@ -110,7 +114,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_bad_enum_lookup()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     assert_raises ArgumentError do
       util.enum(:NotAnEnum)
@@ -118,7 +122,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_all_service_references()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     # If we throw any exceptions, that's a fail.
     util.all_services.each do |k, v|
@@ -127,7 +131,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_bad_service_lookup()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     assert_raises ArgumentError do
       util.service(:NotAService)
@@ -135,7 +139,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_operation_instance()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     campaign_operation = util.operation(:Campaign).new
 
@@ -144,7 +148,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_all_operation_references()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     # If we throw any exceptions, that's a fail.
     util.all_operations.each do |k, v|
@@ -153,7 +157,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_bad_operation_lookup()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     assert_raises ArgumentError do
       util.operation(:NotAnOperation)
@@ -161,7 +165,7 @@ class TestProtoLookupUtil < Minitest::Test
   end
 
   def test_class_for_path()
-    util = Google::Ads::GoogleAds::ProtoLookupUtil.new(:V0)
+    util = Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil.new()
 
     expected = Google::Ads::GoogleAds::V0::Services::CampaignServiceClient
     result = util.class_for_path(

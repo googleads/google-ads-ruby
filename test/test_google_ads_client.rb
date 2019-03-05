@@ -27,6 +27,8 @@ module Google
     module GoogleAds
       class GoogleAdsClient
         attr_reader :config
+
+        public :valid_version?, :proto_lookup_util, :path_lookup_util
       end
     end
   end
@@ -81,8 +83,10 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     service = client.service(:Campaign)
+    # We can't use assert_instance_of because we may have technically gotten
+    # back a sub-class of the service.
     assert(service.is_a?(
-        Google::Ads::GoogleAds::V0::Services::CampaignServiceClient))
+        Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
   end
 
   def test_service_with_login_customer_id_set()
@@ -91,8 +95,10 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     service = client.service(:Campaign)
+    # We can't use assert_instance_of because we may have technically gotten
+    # back a sub-class of the service.
     assert(service.is_a?(
-        Google::Ads::GoogleAds::V0::Services::CampaignServiceClient))
+        Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
   end
 
   def test_service_with_invalid_login_customer_id_set()
@@ -112,5 +118,38 @@ class TestGoogleAdsClient < Minitest::Test
 
     expected = 'customers/1234/campaigns/5678'
     assert_equal(expected, client.path.campaign(1234, 5678))
+  end
+
+  def test_valid_version()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      # No setup.
+    end
+
+    assert_equal(true, client.valid_version?(:V0))
+    assert_equal(false, client.valid_version?(:ABCD))
+  end
+
+  def test_proto_instantiation()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      # No setup.
+    end
+
+    util = client.proto_lookup_util(:V0)
+    assert_instance_of(Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil, util)
+    assert_raises do
+      util = client.proto_lookup_util(:ABCD)
+    end
+  end
+
+  def test_path_instantiation()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      # No setup.
+    end
+
+    util = client.path_lookup_util(:V0)
+    assert_instance_of(Google::Ads::GoogleAds::Utils::V0::PathLookupUtil, util)
+    assert_raises do
+      util = client.proto_lookup_util(:ABCD)
+    end
   end
 end

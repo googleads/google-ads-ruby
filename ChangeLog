@@ -1,4 +1,6 @@
-0.8.1:
+1.0.0:
+  - Adding support for Google Ads API v1.
+  - Adding support for versioned path and proto lookup utils.
   - Fix to logging interceptor for customer service requests.
 
 0.8.0:
