@@ -1,3 +1,6 @@
+0.8.1:
+  - Fix to logging interceptor for customer service requests.
+
 0.8.0:
   - Adding support for Google Ads API v0_7.
 
