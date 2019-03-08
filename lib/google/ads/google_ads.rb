@@ -20,6 +20,11 @@ require 'google/ads/google_ads/google_ads_client'
 module Google
   module Ads
     module GoogleAds
+      KNOWN_API_VERSIONS = [:V0, :V1]
+
+      def self.valid_version?(version)
+        KNOWN_API_VERSIONS.include?(version)
+      end
     end
   end
 end

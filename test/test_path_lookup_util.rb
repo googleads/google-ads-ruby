@@ -19,6 +19,7 @@
 
 require 'minitest/autorun'
 
+require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/utils/v1/proto_lookup_util'
 require 'google/ads/google_ads/utils/v1/path_lookup_util'
 
