@@ -104,8 +104,6 @@ module Google
             @config = eval_result
           end
 
-          @lookup_util = Google::Ads::GoogleAds::LookupUtil.instance
-
           begin
             @logger = create_default_logger
           rescue
@@ -206,8 +204,6 @@ module Google
 
         private
 
-        attr_reader :lookup_util
-
         ERROR_TRANSFORMER = Proc.new do |gax_error|
           begin
             gax_error.status_details.each do |detail|
@@ -254,6 +250,10 @@ module Google
           logger = Logger.new(@config.log_target)
           logger.level = Logger.const_get(@config.log_level)
           return logger
+        end
+
+        def lookup_util
+          Google::Ads::GoogleAds::LookupUtil.instance
         end
       end
     end
