@@ -1,11 +1,7 @@
-require 'singleton'
-
 module Google
   module Ads
     module GoogleAds
       class LookupUtil
-
-        include Singleton
 
         def initialize
           @proto_lookup_utils = {}

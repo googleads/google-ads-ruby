@@ -75,6 +75,7 @@ module Google
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
 
         attr_reader :logger
+        attr_writer :lookup_util
 
         def initialize(config_path = nil, &block)
           if block_given?
@@ -253,7 +254,7 @@ module Google
         end
 
         def lookup_util
-          Google::Ads::GoogleAds::LookupUtil.instance
+          @lookup_util ||= Google::Ads::GoogleAds::LookupUtil.new
         end
       end
     end

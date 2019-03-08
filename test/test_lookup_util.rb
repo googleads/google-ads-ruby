@@ -33,7 +33,7 @@ end
 
 class TestLookupUtil < Minitest::Test
   def test_proto_instantiation()
-    lookup_util = Google::Ads::GoogleAds::LookupUtil.instance
+    lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
     util = lookup_util.proto_lookup_util(:V0)
     assert_instance_of(Google::Ads::GoogleAds::Utils::V0::ProtoLookupUtil, util)
@@ -43,7 +43,7 @@ class TestLookupUtil < Minitest::Test
   end
 
   def test_path_instantiation()
-    lookup_util = Google::Ads::GoogleAds::LookupUtil.instance
+    lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
     util = lookup_util.path_lookup_util(:V0)
     assert_instance_of(Google::Ads::GoogleAds::Utils::V0::PathLookupUtil, util)
