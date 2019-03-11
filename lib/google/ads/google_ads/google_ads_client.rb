@@ -70,7 +70,6 @@ module Google
   module Ads
     module GoogleAds
       class GoogleAdsClient
-        DEFAULT_API_VERSION = :V1
 
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
 
@@ -121,7 +120,7 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name, version = DEFAULT_API_VERSION)
+        def service(name, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           # We need a local reference to refer to from within the class block
@@ -161,7 +160,7 @@ module Google
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name, version = DEFAULT_API_VERSION)
+        def resource(name, version = default_api_version)
           lookup_util.resource(name, version)
         end
 
@@ -169,7 +168,7 @@ module Google
         # :Campaign will return an instantiated CampaignOperation.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def operation(name, version = DEFAULT_API_VERSION)
+        def operation(name, version = default_api_version)
           lookup_util.operation(name, version)
         end
 
@@ -178,7 +177,7 @@ module Google
         # CampaignStatusEnum.
         #
         # Raises ArgumentError if no enum can be found for the provided type.
-        def enum(name, version = DEFAULT_API_VERSION)
+        def enum(name, version = default_api_version)
           lookup_util.enum(name, version)
         end
 
@@ -193,7 +192,7 @@ module Google
         end
 
         # Returns a reference to the PathLookupUtil to generate resource names.
-        def path(version = DEFAULT_API_VERSION)
+        def path(version = default_api_version)
           lookup_util.path(version)
         end
 
@@ -255,6 +254,10 @@ module Google
 
         def lookup_util
           @lookup_util ||= Google::Ads::GoogleAds::LookupUtil.new
+        end
+
+        def default_api_version
+          Google::Ads::GoogleAds::DEFAULT_API_VERSION
         end
       end
     end
