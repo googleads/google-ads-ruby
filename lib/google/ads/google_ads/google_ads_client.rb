@@ -73,7 +73,7 @@ module Google
 
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
 
-        attr_accessor :logger
+        attr_reader :logger
         attr_writer :lookup_util
 
         def initialize(config_path = nil, &block)
@@ -194,6 +194,12 @@ module Google
         # Returns a reference to the PathLookupUtil to generate resource names.
         def path(version = default_api_version)
           lookup_util.path(version)
+        end
+
+        # Set the logger to use. This will only take effect on services fetched
+        # after setting this value.
+        def logger=(logger)
+          @logger = logger
         end
 
         private
