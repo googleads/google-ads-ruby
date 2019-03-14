@@ -37,7 +37,7 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name, version)
+        def raw_service(name, version)
           proto_lookup_util(version).service(name)
         end
 

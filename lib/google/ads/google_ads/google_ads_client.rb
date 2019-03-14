@@ -127,7 +127,7 @@ module Google
           # below.
           logger = @logger
 
-          class_to_return = lookup_util.service(name, version)
+          class_to_return = lookup_util.raw_service(name, version)
           class_to_return = Class.new(class_to_return) do
             unless service_path.nil? || service_path.empty?
               const_set('SERVICE_ADDRESS', service_path.freeze)
