@@ -41,8 +41,21 @@ module Google
                 call.instance_variable_get('@wrapped').peer,
                 method
               )
-          request_message = sprintf("Outgoing request: Headers: %s Payload: %s",
-              metadata.to_json, request.to_json)
+
+          # calling #to_json on some protos (specifically those with non-UTF8
+          # encodable byte values) causes a segfault, however #inspect works
+          # so we check if the proto contains a bytevalue, and if it does
+          # we #inspect instead of #to_json
+          request_inspect = if /Google::Protobuf::BytesValue/ === request.inspect
+            request.inspect
+          else
+            request.to_json
+          end
+          request_message = sprintf(
+            "Outgoing request: Headers: %s Payload: %s",
+            metadata.to_json,
+            request_inspect,
+          )
           begin
             response = yield
             summary_message += ", IsFault: no"
