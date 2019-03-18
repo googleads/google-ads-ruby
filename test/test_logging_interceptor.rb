@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Tests the WrapperUtil class.
+# Tests the LoggingInterceptor class.
 
 require 'minitest/autorun'
 
@@ -47,17 +47,17 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_request
-    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest.new({
-      customer_id: "5469611700",
+    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest.new(
+      customer_id: "123123123",
       operations: [
-        Google::Ads::GoogleAds::V1::Services::MediaFileOperation.new({
-          create: Google::Ads::GoogleAds::V1::Resources::MediaFile.new({
-            image: Google::Ads::GoogleAds::V1::Resources::MediaImage.new({
+        Google::Ads::GoogleAds::V1::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V1::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V1::Resources::MediaImage.new(
               data: Google::Protobuf::BytesValue.new(value: File.open("test/fixtures/sam.jpg", "rb").read)
-            })
-          })
-        })
+            )
+          )
+        )
       ]
-    })
+    )
   end
 end

@@ -46,7 +46,8 @@ module Google
           # encodable byte values) causes a segfault, however #inspect works
           # so we check if the proto contains a bytevalue, and if it does
           # we #inspect instead of #to_json
-          request_inspect = if /Google::Protobuf::BytesValue/ === request.inspect
+          ri = request.inspect
+          request_inspect = if /Google::Protobuf::BytesValue/ === ri
             request.inspect
           else
             request.to_json
