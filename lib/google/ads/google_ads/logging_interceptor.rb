@@ -23,9 +23,46 @@ module Google
   module Ads
     module GoogleAds
       class LoggingInterceptor < GRPC::ClientInterceptor
-        def initialize(logger)
+        def initialize(logger, inspect_strategy)
           super()
           @logger = logger
+          @inspect_strategy = method(inspect_strategy)
+        end
+
+        def r_inspect(request)
+          # calling #to_json on some protos (specifically those with non-UTF8
+          # encodable byte values) causes a segfault, however #inspect works
+          # so we check if the proto contains a bytevalue, and if it does
+          # we #inspect instead of #to_json
+          ri = request.inspect
+          request_inspect = if /Google::Protobuf::BytesValue/ === ri
+            ri
+          else
+            request.to_json
+          end
+
+          request_inspect
+        end
+
+        def r_threequal(request)
+          if Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest === request
+            request.inspect
+          else
+            request.to_json
+          end
+        end
+
+        def r_bytes_inspect(request)
+          if contains_bytes_field(request.class.descriptor)
+            request.inspect
+          else
+            request.to_json
+          end
+        end
+
+        def contains_bytes_field(descriptor)
+          return false if descriptor.nil?
+          descriptor.map { |x| x.type == :bytes || (x.type == :message && contains_bytes_field(x.subtype)) }.any?
         end
 
         def request_response(request:, call:, method:, metadata: {})
@@ -42,16 +79,7 @@ module Google
                 method
               )
 
-          # calling #to_json on some protos (specifically those with non-UTF8
-          # encodable byte values) causes a segfault, however #inspect works
-          # so we check if the proto contains a bytevalue, and if it does
-          # we #inspect instead of #to_json
-          ri = request.inspect
-          request_inspect = if /Google::Protobuf::BytesValue/ === ri
-            request.inspect
-          else
-            request.to_json
-          end
+          request_inspect = @inspect_strategy.call(request)
           request_message = sprintf(
             "Outgoing request: Headers: %s Payload: %s",
             metadata.to_json,
