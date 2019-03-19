@@ -55,6 +55,7 @@ require 'googleauth'
 require 'google/ads/google_ads/patches'
 require 'google/ads/google_ads/config'
 require 'google/ads/google_ads/field_mask_util'
+require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
 
@@ -69,12 +70,12 @@ module Google
   module Ads
     module GoogleAds
       class GoogleAdsClient
-        DEFAULT_API_VERSION = :V1
-        KNOWN_API_VERSIONS = [:V0, :V1]
 
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
 
         attr_reader :logger
+        # Allow setting the lookup_util manually for users who use it before creating the client.
+        attr_writer :lookup_util
 
         def initialize(config_path = nil, &block)
           if block_given?
@@ -103,8 +104,6 @@ module Google
             end
             @config = eval_result
           end
-          @proto_lookup_utils = {}
-          @path_lookup_utils = {}
 
           begin
             @logger = create_default_logger
@@ -122,14 +121,14 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name, version = DEFAULT_API_VERSION)
+        def service(name, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           # We need a local reference to refer to from within the class block
           # below.
           logger = @logger
 
-          class_to_return = proto_lookup_util(version).service(name)
+          class_to_return = lookup_util.raw_service(name, version)
           class_to_return = Class.new(class_to_return) do
             unless service_path.nil? || service_path.empty?
               const_set('SERVICE_ADDRESS', service_path.freeze)
@@ -162,16 +161,16 @@ module Google
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name, version = DEFAULT_API_VERSION)
-          proto_lookup_util(version).resource(name).new
+        def resource(name, version = default_api_version)
+          lookup_util.resource(name, version)
         end
 
         # Return an operation for the provided entity type. For example, passing
         # :Campaign will return an instantiated CampaignOperation.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def operation(name, version = DEFAULT_API_VERSION)
-          proto_lookup_util(version).operation(name).new
+        def operation(name, version = default_api_version)
+          lookup_util.operation(name, version)
         end
 
         # Return a reference to the enum class for the provided enum type. For
@@ -179,8 +178,8 @@ module Google
         # CampaignStatusEnum.
         #
         # Raises ArgumentError if no enum can be found for the provided type.
-        def enum(name, version = DEFAULT_API_VERSION)
-          proto_lookup_util(version).enum(name)
+        def enum(name, version = default_api_version)
+          lookup_util.enum(name, version)
         end
 
         # Returns a reference to the FieldMaskUtil class for ease of access.
@@ -194,8 +193,8 @@ module Google
         end
 
         # Returns a reference to the PathLookupUtil to generate resource names.
-        def path(version = DEFAULT_API_VERSION)
-          path_lookup_util(version)
+        def path(version = default_api_version)
+          lookup_util.path(version)
         end
 
         # Set the logger to use. This will only take effect on services fetched
@@ -254,54 +253,12 @@ module Google
           return logger
         end
 
-        def valid_version?(version)
-          KNOWN_API_VERSIONS.include?(version)
+        def lookup_util
+          @lookup_util ||= Google::Ads::GoogleAds::LookupUtil.new
         end
 
-        # Load up the proto lookup util for the given version, storing a copy
-        # of it if this is the first time we needed it.
-        def proto_lookup_util(version)
-          unless valid_version?(version)
-            raise sprintf('Unknown version %s', version)
-          end
-          if @proto_lookup_utils[version].nil?
-            path_version = version.downcase
-            require sprintf('google/ads/google_ads/utils/%s/proto_lookup_util',
-                path_version)
-            class_path = sprintf(
-              'Google::Ads::GoogleAds::Utils::%s::ProtoLookupUtil',
-              version
-            )
-            @proto_lookup_utils[version] = class_for_path(class_path).new
-          end
-          @proto_lookup_utils[version]
-        end
-
-        # Load up the path lookup util for the given version, storing a copy
-        # of it if this is the first time we needed it.
-        def path_lookup_util(version)
-          unless valid_version?(version)
-            raise sprintf('Unknown version %s', version)
-          end
-          if @path_lookup_utils[version].nil?
-            path_version = version.downcase
-            require sprintf('google/ads/google_ads/utils/%s/path_lookup_util',
-                path_version)
-            class_path = sprintf(
-              'Google::Ads::GoogleAds::Utils::%s::PathLookupUtil',
-              version
-            )
-            @path_lookup_utils[version] = class_for_path(class_path).new(
-                proto_lookup_util(version))
-          end
-          @path_lookup_utils[version]
-        end
-
-        # Converts complete class path into class object.
-        def class_for_path(path)
-          path.split('::').inject(Kernel) do |scope, const_name|
-            scope.const_get(const_name)
-          end
+        def default_api_version
+          Google::Ads::GoogleAds::DEFAULT_API_VERSION
         end
       end
     end
