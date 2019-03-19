@@ -27,12 +27,12 @@ PAGE_SIZE = 1000
 
 def result_row_as_csv_hash(result_row)
   {
-    id: result_row.campaign.id.value,
-    name: result_row.campaign.name.value,
-    date: Time.parse(result_row.segments.date.value),
-    impressions: result_row.metrics.impressions.value,
-    clicks: result_row.metrics.clicks.value,
-    cost_micros: result_row.metrics.cost_micros.value,
+    "campaign.id": result_row.campaign.id.value,
+    "campaign.name": result_row.campaign.name.value,
+    "campaign.date": Time.parse(result_row.segments.date.value),
+    "metrics.impressions": result_row.metrics.impressions.value,
+    "metrics.clicks": result_row.metrics.clicks.value,
+    "metrics.cost_micros": result_row.metrics.cost_micros.value,
   }
 end
 
@@ -85,7 +85,7 @@ if __FILE__ == $PROGRAM_NAME
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
-
+  options[:output_file_path] = __FILE__.gsub(".rb", ".csv")
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
 
@@ -94,6 +94,10 @@ if __FILE__ == $PROGRAM_NAME
 
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
+    end
+
+    opts.on('-O', '--output-file-path OUTPUT-FILE-PATH', String, 'Output File Path') do |v|
+      options[:output_file_path] = v
     end
 
     opts.separator ''
@@ -107,14 +111,13 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     # write CSV output to campaign_report_to_csv.csv
-    output_file_path = __FILE__.gsub(".rb", ".csv")
 
     # the GoogleAdsClient only accepts customer IDs without `-` characters,
     # so this removes them if the caller of this script copy pasted a customer
     # id directly from the user interface
     sanitized_customer_id = options.fetch(:customer_id).tr("-", "")
 
-    write_campaign_report_csv(sanitized_customer_id, output_file_path)
+    write_campaign_report_csv(sanitized_customer_id, options.fetch(:output_file_path))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
