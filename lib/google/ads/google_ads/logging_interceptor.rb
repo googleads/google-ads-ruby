@@ -36,22 +36,21 @@ module Google
             customer_id = request.resource_name.split('/').last
           end
           summary_message =
-              sprintf("CID: %s, Host: %s, Method: %s",
-                customer_id,
-                call.instance_variable_get('@wrapped').peer,
-                method
-              )
+            sprintf("CID: %s, Host: %s, Method: %s",
+                    customer_id,
+                    call.instance_variable_get('@wrapped').peer,
+                    method
+                   )
 
           # calling #to_json on some protos (specifically those with non-UTF8
           # encodable byte values) causes a segfault, however #inspect works
           # so we check if the proto contains a bytevalue, and if it does
           # we #inspect instead of #to_json
-          ri = request.inspect
-          request_inspect = if /Google::Protobuf::BytesValue/ === ri
-            request.inspect
-          else
-            request.to_json
-          end
+          request_inspect = if use_bytes_inspect?(request)
+                              request.inspect
+                            else
+                              request.to_json
+                            end
           request_message = sprintf(
             "Outgoing request: Headers: %s Payload: %s",
             metadata.to_json,
@@ -61,7 +60,7 @@ module Google
             response = yield
             summary_message += ", IsFault: no"
             response_message = sprintf("Incoming response: Payload: %s",
-                response.to_json)
+                                       response.to_json)
 
             @logger.info(summary_message)
             @logger.debug(request_message)
@@ -77,7 +76,7 @@ module Google
                   Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure)
                 detail.errors.each_with_index do |error, i|
                   response_message +=
-                      sprintf("Error %d: %s\n", i + 1, error.to_json)
+                    sprintf("Error %d: %s\n", i + 1, error.to_json)
                 end
               end
             end
@@ -87,6 +86,21 @@ module Google
             @logger.info(response_message)
             raise
           end
+        end
+
+        private
+
+        def use_bytes_inspect?(request)
+          if contains_bytes_field?(request.class.descriptor)
+            request.inspect
+          else
+            request.to_json
+          end
+        end
+
+        def contains_bytes_field?(descriptor)
+          return false if descriptor.nil?
+          descriptor.map { |x| x.type == :bytes || (x.type == :message && contains_bytes_field?(x.subtype)) }.any?
         end
       end
     end
