@@ -110,8 +110,6 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    # write CSV output to campaign_report_to_csv.csv
-
     # the GoogleAdsClient only accepts customer IDs without `-` characters,
     # so this removes them if the caller of this script copy pasted a customer
     # id directly from the user interface
