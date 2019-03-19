@@ -74,8 +74,7 @@ module Google
         DEFAULT_CONFIG_FILENAME = 'google_ads_config.rb'
 
         attr_reader :logger
-        # the lookup_util can optionaly be set manually:
-        # you may create an instance yourself to build operations before creating the client.
+        # Allow setting the lookup_util manually for users who use it before creating the client.
         attr_writer :lookup_util
 
         def initialize(config_path = nil, &block)
