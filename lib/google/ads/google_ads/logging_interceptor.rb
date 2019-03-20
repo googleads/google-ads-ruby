@@ -91,11 +91,7 @@ module Google
         private
 
         def use_bytes_inspect?(request)
-          if contains_bytes_field?(request.class.descriptor)
-            request.inspect
-          else
-            request.to_json
-          end
+          contains_bytes_field?(request.class.descriptor)
         end
 
         def contains_bytes_field?(descriptor)
