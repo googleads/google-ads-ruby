@@ -125,7 +125,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_hotel_ad_group_bid_modifiers(options[:customer_id],
+    add_hotel_ad_group_bid_modifiers(options.fetch(:customer_id).tr("-", ""),
         options[:ad_group_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

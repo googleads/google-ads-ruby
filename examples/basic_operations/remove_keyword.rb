@@ -80,7 +80,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     remove_keyword(
-        options[:customer_id], options[:ad_group_id], options[:criteria_id])
+        options.fetch(:customer_id).tr("-", ""), options[:ad_group_id], options[:criteria_id])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)

@@ -118,7 +118,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    use_portfolio_bidding_strategy(options[:customer_id])
+    use_portfolio_bidding_strategy(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

@@ -91,7 +91,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    update_ad_group(options[:customer_id], options[:ad_group_id],
+    update_ad_group(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id],
         options[:bid_micro_amount])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|

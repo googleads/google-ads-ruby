@@ -102,7 +102,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_ad_group_bid_modifier(options[:customer_id],
+    add_ad_group_bid_modifier(options.fetch(:customer_id).tr("-", ""),
         options[:ad_group_id], options[:bid_modifier_value])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|

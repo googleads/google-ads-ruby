@@ -102,7 +102,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    get_keywords(options[:customer_id], options[:ad_group_id])
+    get_keywords(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
