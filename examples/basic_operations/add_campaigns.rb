@@ -117,7 +117,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_campaigns(options[:customer_id])
+    add_campaigns(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

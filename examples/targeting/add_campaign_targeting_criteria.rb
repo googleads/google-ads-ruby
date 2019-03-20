@@ -142,7 +142,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    add_campaign_targeting_criteria(options[:customer_id],
+    add_campaign_targeting_criteria(options.fetch(:customer_id).tr("-", ""),
         options[:campaign_id], options[:keyword], options[:location_id])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|

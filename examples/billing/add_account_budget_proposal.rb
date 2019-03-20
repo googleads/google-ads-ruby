@@ -110,7 +110,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_account_budget_proposal(options[:customer_id],
+    add_account_budget_proposal(options.fetch(:customer_id).tr("-", ""),
         options[:billing_setup_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

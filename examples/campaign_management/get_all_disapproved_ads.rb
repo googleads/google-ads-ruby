@@ -121,7 +121,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    get_all_disapproved_ads(options[:customer_id], options[:campaign_id])
+    get_all_disapproved_ads(options.fetch(:customer_id).tr("-", ""), options[:campaign_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

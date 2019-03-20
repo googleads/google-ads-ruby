@@ -92,7 +92,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    update_keyword(options[:customer_id], options[:ad_group_id],
+    update_keyword(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id],
         options[:criteria_id])
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|

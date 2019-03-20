@@ -106,7 +106,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    get_account_budget_proposals(options[:customer_id])
+    get_account_budget_proposals(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

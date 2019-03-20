@@ -131,7 +131,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    find_and_remove_criteria_from_shared_set(options[:customer_id],
+    find_and_remove_criteria_from_shared_set(options.fetch(:customer_id).tr("-", ""),
         options[:campaign_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

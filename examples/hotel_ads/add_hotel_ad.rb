@@ -241,7 +241,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_hotel_ads(options[:customer_id], options[:hotel_center_account_id],
+    add_hotel_ads(options.fetch(:customer_id).tr("-", ""), options[:hotel_center_account_id],
         options[:cpc_bid_ceiling_micro_amount])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

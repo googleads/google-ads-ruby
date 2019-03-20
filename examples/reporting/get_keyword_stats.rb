@@ -115,7 +115,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_keyword_stats(options[:customer_id])
+    get_keyword_stats(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

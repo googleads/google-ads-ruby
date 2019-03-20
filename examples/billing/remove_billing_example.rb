@@ -74,7 +74,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    remove_billing_setups(options[:customer_id], options[:billing_setup_id])
+    remove_billing_setups(options.fetch(:customer_id).tr("-", ""), options[:billing_setup_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

@@ -127,7 +127,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    create_and_attach_shared_keyword_set(options[:customer_id],
+    create_and_attach_shared_keyword_set(options.fetch(:customer_id).tr("-", ""),
         options[:campaign_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
