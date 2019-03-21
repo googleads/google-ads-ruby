@@ -87,7 +87,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   ad = client.resource(:Ad)
   ad.final_urls << client.wrapper.string("http://www.example.com")
   ad.gmail_ad = gmail_ad
-  ad.name = client.wrapper.string("gmail ad")
+  ad.name = client.wrapper.string("Gmail Ad #{(Time.now.to_f * 1000).to_i}")
 
   ad_group_ad = client.resource(:AdGroupAd)
   ad_group_ad.ad = ad
