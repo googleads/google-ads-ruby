@@ -24,6 +24,7 @@ require 'optparse'
 require 'date'
 require 'open-uri'
 require 'google/ads/google_ads'
+require 'google/ads/google_ads/v1/errors/errors_pb'
 
 def content_type_to_symbol(content_type)
   content_type.upcase.gsub("/", "_").to_sym
@@ -47,15 +48,16 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_service = client.service(:MediaFile)
 
   media_file_logo = client.resource(:MediaFile)
+  media_file_logo.type = :IMAGE
   media_file_logo.image = client.resource(:MediaImage)
   media_file_logo.image.data = client.wrapper.bytes(logo_image_bytes)
-  puts logo_image_content_type
   media_file_logo.mime_type = logo_image_content_type.to_sym
 
   media_file_logo_op = client.operation(:MediaFile)
   media_file_logo_op['create'] = media_file_logo
 
   media_file_marketing = client.resource(:MediaFile)
+  media_file_marketing.type = :IMAGE
   media_file_marketing.image = client.resource(:MediaImage)
   media_file_marketing.image.data = client.wrapper.bytes(marketing_image_bytes)
   media_file_marketing.mime_type = marketing_image_content_type.to_sym
@@ -71,42 +73,39 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
     ]
   )
 
-  logo_id, marketing_image_id = response.results.to_a.map(&:value)
+  logo_id, marketing_image_id = response.results.to_a.map(&:resource_name)
 
   gmail_ad = client.resource(:GmailAdInfo)
   gmail_ad.teaser = client.resource(:GmailTeaser)
   gmail_ad.teaser.headline = client.wrapper.string("Dream")
-  gmail_ad.teaser.description = client.wrapper.stirng(
+  gmail_ad.teaser.description = client.wrapper.string(
     "Create your own adventure"
   )
   gmail_ad.teaser.business_name = client.wrapper.string("Interplanetary Ships")
-  gmail_ad.teaser.logo_image = logo_id
+  gmail_ad.teaser.logo_image = client.wrapper.string(logo_id)
 
-  gmail_ad.marketing_image = marketing_image_id
-  gmail_ad.marketing_image_headliner = client.wrapper.string("Travel")
+  gmail_ad.marketing_image = client.wrapper.string(marketing_image_id)
+  gmail_ad.marketing_image_headline = client.wrapper.string("Travel")
   gmail_ad.marketing_image_description = client.wrapper.string("Take to the skies!")
 
   ad = client.resource(:Ad)
   ad.final_urls << client.wrapper.string("http://www.example.com")
   ad.gmail_ad = gmail_ad
+  ad.name = client.wrapper.string("gmail ad")
 
   ad_group_ad = client.resource(:AdGroupAd)
+  ad_group_ad.ad = ad
   ad_group_ad.status = :PAUSED
-  ad_group_ad.ad_group = client.wrapper.string([
-    "customers",
-    customer_id,
-    "campaigns",
-    campaign_id,
-    "ad_groups",
-    ad_group_id,
-  ].join("/"))
+  ad_group_ad.ad_group = client.wrapper.string(
+    client.path.ad_group(customer_id, ad_group_id),
+  )
 
   op = client.operation(:AdGroupAd)
   op['create'] = ad_group_ad
 
   ad_group_ad_service = client.service(:AdGroupAd)
-  response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [o])
-  puts "created gmail ad with id #{response.results.first.value}"
+  response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [op])
+  puts "created gmail ad with id #{response.results.first.resource_name}"
 end
 
 def get_image(url)
