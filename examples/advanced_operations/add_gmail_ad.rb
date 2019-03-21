@@ -26,10 +26,6 @@ require 'open-uri'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/v1/errors/errors_pb'
 
-def content_type_to_symbol(content_type)
-  content_type.upcase.gsub("/", "_").to_sym
-end
-
 def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
@@ -51,7 +47,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_logo.type = :IMAGE
   media_file_logo.image = client.resource(:MediaImage)
   media_file_logo.image.data = client.wrapper.bytes(logo_image_bytes)
-  media_file_logo.mime_type = logo_image_content_type.to_sym
+  media_file_logo.mime_type = logo_image_content_type
 
   media_file_logo_op = client.operation(:MediaFile)
   media_file_logo_op['create'] = media_file_logo
@@ -60,7 +56,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_marketing.type = :IMAGE
   media_file_marketing.image = client.resource(:MediaImage)
   media_file_marketing.image.data = client.wrapper.bytes(marketing_image_bytes)
-  media_file_marketing.mime_type = marketing_image_content_type.to_sym
+  media_file_marketing.mime_type = marketing_image_content_type
 
   media_file_marketing_image_op = client.operation(:MediaFile)
   media_file_marketing_image_op['create'] = media_file_marketing
@@ -105,13 +101,17 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
 
   ad_group_ad_service = client.service(:AdGroupAd)
   response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [op])
-  puts "created gmail ad with id #{response.results.first.resource_name}"
+  puts "Created Gmail Ad with ID #{response.results.first.resource_name}."
 end
 
 def get_image(url)
   open(url) { |f|
     [f.read, f.content_type]
   }
+end
+
+def content_type_to_symbol(content_type)
+  content_type.upcase.gsub("/", "_").to_sym
 end
 
 if __FILE__ == $0
@@ -158,8 +158,8 @@ if __FILE__ == $0
   begin
     add_gmail_ad(
       options.fetch(:customer_id).tr("-", ""),
-      options[:campaign_id],
-      options[:ad_group_id],
+      options.fetch(:campaign_id),
+      options.fetch(:ad_group_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
