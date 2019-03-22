@@ -43,6 +43,11 @@ class TestGoogleAdsClient < Minitest::Test
     double = Google::Ads::GoogleAds::WrapperUtil.double(3.1415)
     assert_instance_of(Google::Protobuf::DoubleValue, double)
     assert_equal(3.1415, double.value)
+
+    bytes = Google::Ads::GoogleAds::WrapperUtil.bytes("a")
+    assert_instance_of(Google::Protobuf::BytesValue, bytes)
+    assert_equal("a", bytes.value)
+    assert_equal(Encoding::ASCII_8BIT, bytes.value.encoding)
   end
 
   def test_from_client()
