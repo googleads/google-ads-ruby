@@ -36,10 +36,13 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
     'http://goo.gl/3b9Wfh'
   )
 
-  logo_image_content_type = content_type_to_symbol(logo_image_content_type)
-  marketing_image_content_type = content_type_to_symbol(
-    marketing_image_content_type
-  )
+  if logo_image_content_type != "image/png"
+    raise "got bad logo image type back"
+  end
+
+  if marketing_image_content_type != "image/jpeg"
+    raise "got bad marketing image type back"
+  end
 
   media_file_service = client.service(:MediaFile)
 
@@ -47,7 +50,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_logo.type = :IMAGE
   media_file_logo.image = client.resource(:MediaImage)
   media_file_logo.image.data = client.wrapper.bytes(logo_image_bytes)
-  media_file_logo.mime_type = logo_image_content_type
+  media_file_logo.mime_type = :IMAGE_PNG
 
   media_file_logo_op = client.operation(:MediaFile)
   media_file_logo_op['create'] = media_file_logo
@@ -56,7 +59,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_marketing.type = :IMAGE
   media_file_marketing.image = client.resource(:MediaImage)
   media_file_marketing.image.data = client.wrapper.bytes(marketing_image_bytes)
-  media_file_marketing.mime_type = marketing_image_content_type
+  media_file_marketing.mime_type = :IMAGE_JPEG
 
   media_file_marketing_image_op = client.operation(:MediaFile)
   media_file_marketing_image_op['create'] = media_file_marketing
@@ -108,10 +111,6 @@ def get_image(url)
   open(url) { |f|
     [f.read, f.content_type]
   }
-end
-
-def content_type_to_symbol(content_type)
-  content_type.upcase.gsub("/", "_").to_sym
 end
 
 if __FILE__ == $0
