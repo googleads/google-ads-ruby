@@ -54,6 +54,9 @@ def get_product_bidding_category_constant(customer_id)
       page_size: PAGE_SIZE,
   )
 
+  # Default the values in the hash to have an Array of children, so that
+  # we can push children in before we've discovered all the data for the
+  # parent category.
   all_categories = Hash.new do |h, k|
     h[k] = {children: []}
   end
@@ -69,10 +72,11 @@ def get_product_bidding_category_constant(customer_id)
 
     all_categories[category.fetch(:id)] = category
 
-    if parent_id = product_bidding_category
+    parent_id = product_bidding_category
       .product_bidding_category_constant_parent
       &.value
 
+    if parent_id
       all_categories[parent_id][:children] << category
     else
       root_categories.add(category)
