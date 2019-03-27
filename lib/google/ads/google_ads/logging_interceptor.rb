@@ -35,19 +35,6 @@ module Google
         end
 
         def request_response(request:, call:, method:, metadata: {})
-          customer_id = "N/A"
-          customer_id = request.customer_id if request.respond_to?(:customer_id)
-          # CustomerService get requests have a different format.
-          if request.respond_to?(:resource_name)
-            customer_id = request.resource_name.split('/').last
-          end
-          summary_message =
-            sprintf("CID: %s, Host: %s, Method: %s",
-                    customer_id,
-                    call.instance_variable_get('@wrapped').peer,
-                    method
-                   )
-
           # calling #to_json on some protos (specifically those with non-UTF8
           # encodable byte values) causes a segfault, however #inspect works
           # so we check if the proto contains a bytevalue, and if it does
@@ -64,16 +51,14 @@ module Google
           )
           begin
             response = yield
-            summary_message += ", IsFault: no"
             response_message = sprintf("Incoming response: Payload: %s",
                                        response.to_json)
 
-            @logger.info(summary_message)
+            @logger.info(build_summary_message(request, call, method, false))
             @logger.debug(request_message)
             @logger.debug(response_message)
             return response
           rescue Exception
-            summary_message += sprintf(", IsFault: yes")
             response_message = "Incoming response (errors): \n"
 
             most_recent_error = Google::Gax::GaxError.new('')
@@ -86,7 +71,7 @@ module Google
               end
             end
 
-            @logger.warn(summary_message)
+            @logger.warn(build_summary_message(request, call, method, true))
             @logger.info(request_message)
             @logger.info(response_message)
             raise
@@ -94,6 +79,28 @@ module Google
         end
 
         private
+
+        def build_summary_message(request, call, method, is_fault)
+          customer_id = "N/A"
+          customer_id = request.customer_id if request.respond_to?(:customer_id)
+          # CustomerService get requests have a different format.
+          if request.respond_to?(:resource_name)
+            customer_id = request.resource_name.split('/').last
+          end
+
+          is_fault_string = if is_fault
+            "yes"
+          else
+            "no"
+          end
+
+          [
+            "CID: #{customer_id}",
+            "Host: #{call.instance_variable_get('@wrapped').peer}",
+            "Method: #{method}",
+            "IsFault: #{is_fault_string}",
+          ].join(", ")
+        end
 
         def add_response_message_from_detail(response_message, detail)
           detail.errors.each_with_index do |error, i|
