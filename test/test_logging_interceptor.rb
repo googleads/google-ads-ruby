@@ -164,6 +164,21 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, "INVALID_CUSTOMER_ID")
   end
 
+  def test_logging_interceptor_logs_error_details_if_partial_failure
+    li.request_response(
+      request: make_small_request,
+      call: make_fake_call,
+      method: :doesnt_matter,
+    ) do
+      make_realistic_response_with_partial_error
+    end
+
+    sio.rewind
+    data = sio.read
+    assert_includes(data, "Partial failure errors: ")
+    assert_includes(data, "required field was not specified")
+  end
+
   def test_logging_interceptor_can_serialize_images
     # this test segfaults the ruby virtual machine before c26ae44
     li.request_response(
@@ -186,6 +201,22 @@ class TestLoggingInterceptor < Minitest::Test
     # this can be literally any protobuf type, because the class's descriptor
     # is the only method we cal
     Google::Protobuf::StringValue.new(value: "bees")
+  end
+
+  def make_realistic_response_with_partial_error
+    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesResponse.new(
+      results: [],
+      partial_failure_error: Google::Rpc::Status.new(
+        code: 13,
+        message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
+        details: [
+          Google::Protobuf::Any.new(
+            type_url: "type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure",
+            value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
+          )
+        ]
+      )
+    )
   end
 
   def make_small_request(customer_id: "123")
