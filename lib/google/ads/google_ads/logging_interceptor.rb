@@ -35,27 +35,13 @@ module Google
         end
 
         def request_response(request:, call:, method:, metadata: {})
-          # calling #to_json on some protos (specifically those with non-UTF8
-          # encodable byte values) causes a segfault, however #inspect works
-          # so we check if the proto contains a bytevalue, and if it does
-          # we #inspect instead of #to_json
-          request_inspect = if use_bytes_inspect?(request)
-                              request.inspect
-                            else
-                              request.to_json
-                            end
-          request_message = sprintf(
-            "Outgoing request: Headers: %s Payload: %s",
-            metadata.to_json,
-            request_inspect,
-          )
           begin
             response = yield
             response_message = sprintf("Incoming response: Payload: %s",
                                        response.to_json)
 
             @logger.info(build_summary_message(request, call, method, false))
-            @logger.debug(request_message)
+            @logger.debug(build_request_message(metadata, request))
             @logger.debug(response_message)
             return response
           rescue Exception
@@ -72,13 +58,26 @@ module Google
             end
 
             @logger.warn(build_summary_message(request, call, method, true))
-            @logger.info(request_message)
+            @logger.info(build_request_message(metadata, request))
             @logger.info(response_message)
             raise
           end
         end
 
         private
+
+        def build_request_message(metadata, request)
+          # calling #to_json on some protos (specifically those with non-UTF8
+          # encodable byte values) causes a segfault, however #inspect works
+          # so we check if the proto contains a bytevalue, and if it does
+          # we #inspect instead of #to_json
+          request_inspect = if use_bytes_inspect?(request)
+                              request.inspect
+                            else
+                              request.to_json
+                            end
+          "Outgoing request: Headers: #{metadata.to_json} Payload: #{request_inspect}"
+        end
 
         def build_summary_message(request, call, method, is_fault)
           customer_id = "N/A"
