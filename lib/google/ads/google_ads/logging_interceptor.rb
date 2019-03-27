@@ -30,7 +30,7 @@ module Google
         }
 
         def initialize(logger)
-          # Don't propogate args, parens are necessary
+          # Don't propagate args, parens are necessary
           super()
           @logger = logger
         end
