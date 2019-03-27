@@ -16,6 +16,7 @@
 #
 # Interceptor to log outgoing requests and incoming responses.
 
+require 'google/ads/google_ads'
 require 'grpc/generic/interceptors'
 require 'json'
 
@@ -23,6 +24,11 @@ module Google
   module Ads
     module GoogleAds
       class LoggingInterceptor < GRPC::ClientInterceptor
+        INTERESTING_ERROR_CLASSES = ::Google::Ads::GoogleAds::KNOWN_API_VERSIONS.map { |v|
+          require "google/ads/google_ads/#{v.downcase}/errors/errors_pb"
+          const_get("Google::Ads::GoogleAds::#{v}::Errors::GoogleAdsFailure")
+        }
+
         def initialize(logger)
           super()
           @logger = logger
@@ -66,18 +72,17 @@ module Google
             @logger.debug(request_message)
             @logger.debug(response_message)
             return response
-          rescue Exception => e
+          rescue Exception
             summary_message += sprintf(", IsFault: yes")
             response_message = "Incoming response (errors): \n"
 
             most_recent_error = Google::Gax::GaxError.new('')
             most_recent_error.status_details && most_recent_error.status_details.each do |detail|
-              if detail.is_a?(
-                  Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure)
-                detail.errors.each_with_index do |error, i|
-                  response_message +=
-                    sprintf("Error %d: %s\n", i + 1, error.to_json)
-                end
+              if INTERESTING_ERROR_CLASSES.include?(detail.class)
+                response_message = add_response_message_from_detail(
+                  response_message,
+                  detail,
+                )
               end
             end
 
@@ -89,6 +94,13 @@ module Google
         end
 
         private
+
+        def add_response_message_from_detail(response_message, detail)
+          detail.errors.each_with_index do |error, i|
+            response_message += sprintf("Error %d: %s\n", i + 1, error.to_json)
+          end
+          response_message
+        end
 
         def use_bytes_inspect?(request)
           contains_bytes_field?(request.class.descriptor)
