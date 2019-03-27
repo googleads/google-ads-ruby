@@ -39,14 +39,14 @@ module Google
           begin
             response = yield
 
-            @logger.info(build_summary_message(request, call, method, false))
-            @logger.debug(build_request_message(metadata, request))
-            @logger.debug(build_success_response_message(response))
+            @logger.info { build_summary_message(request, call, method, false) }
+            @logger.debug { build_request_message(metadata, request) }
+            @logger.debug { build_success_response_message(response) }
             response
           rescue Exception
-            @logger.warn(build_summary_message(request, call, method, true))
-            @logger.info(build_request_message(metadata, request))
-            @logger.info(build_error_response_message)
+            @logger.warn { build_summary_message(request, call, method, true) }
+            @logger.info { build_request_message(metadata, request) }
+            @logger.info { build_error_response_message }
             raise
           end
         end
