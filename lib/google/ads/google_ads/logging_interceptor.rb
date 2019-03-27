@@ -16,7 +16,7 @@
 #
 # Interceptor to log outgoing requests and incoming responses.
 
-require 'google/ads/google_ads'
+require 'google/ads/google_ads/api_versions'
 require 'grpc/generic/interceptors'
 require 'json'
 

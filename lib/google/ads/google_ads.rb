@@ -16,13 +16,11 @@
 #           limitations under the License.
 
 require 'google/ads/google_ads/google_ads_client'
+require 'google/ads/google_ads/api_versions'
 
 module Google
   module Ads
     module GoogleAds
-      KNOWN_API_VERSIONS = [:V0, :V1]
-      DEFAULT_API_VERSION = :V1
-
       def self.valid_version?(version)
         KNOWN_API_VERSIONS.include?(version)
       end
