@@ -62,13 +62,18 @@ module Google
           most_recent_error = Google::Gax::GaxError.new('')
           response_message = "Incoming response (errors): \n"
 
-          return response_message unless most_recent_error.status_details
-
-          formatted_details = most_recent_error.status_details.select { |detail|
-            INTERESTING_ERROR_CLASSES.include?(detail.class)
-          }.map { |detail|
-            response_error_from_detail(detail)
-          }.join("\n")
+          formatted_details = case most_recent_error.status_details
+          when nil
+            ""
+          when String
+            most_recent_errror.status_details
+          when Array
+            most_recent_error.status_details.select { |detail|
+              INTERESTING_ERROR_CLASSES.include?(detail.class)
+            }.map { |detail|
+              response_error_from_detail(detail)
+            }.join("\n")
+          end
 
           response_message += formatted_details
           response_message
