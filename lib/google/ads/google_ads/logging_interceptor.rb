@@ -16,7 +16,7 @@
 #
 # Interceptor to log outgoing requests and incoming responses.
 
-require 'google/ads/google_ads'
+require 'google/ads/google_ads/api_versions'
 require 'grpc/generic/interceptors'
 require 'json'
 
@@ -30,24 +30,60 @@ module Google
         }
 
         def initialize(logger)
+          # Don't propagate args, parens are necessary
           super()
           @logger = logger
         end
 
         def request_response(request:, call:, method:, metadata: {})
-          customer_id = "N/A"
-          customer_id = request.customer_id if request.respond_to?(:customer_id)
-          # CustomerService get requests have a different format.
-          if request.respond_to?(:resource_name)
-            customer_id = request.resource_name.split('/').last
-          end
-          summary_message =
-            sprintf("CID: %s, Host: %s, Method: %s",
-                    customer_id,
-                    call.instance_variable_get('@wrapped').peer,
-                    method
-                   )
+          begin
+            response = yield
 
+            @logger.info(build_summary_message(request, call, method, false))
+            @logger.debug(build_request_message(metadata, request))
+            @logger.debug(build_success_response_message(response))
+            response
+          rescue Exception
+            @logger.warn(build_summary_message(request, call, method, true))
+            @logger.info(build_request_message(metadata, request))
+            @logger.info(build_error_response_message)
+            raise
+          end
+        end
+
+        private
+
+        def build_error_response_message
+          # this looks like "magic", but the Google::Gax::GaxError grabs
+          # the current exception as its cause, and then parses details
+          # out of that exception. So this sets it up so that
+          # most_recent_error.status_details contains useful information about
+          # our failure
+          most_recent_error = Google::Gax::GaxError.new('')
+          response_message = "Incoming response (errors): \n"
+
+          formatted_details = case most_recent_error.status_details
+          when nil
+            ""
+          when String
+            most_recent_errror.status_details
+          when Array
+            most_recent_error.status_details.select { |detail|
+              INTERESTING_ERROR_CLASSES.include?(detail.class)
+            }.map { |detail|
+              response_error_from_detail(detail)
+            }.join("\n")
+          end
+
+          response_message += formatted_details
+          response_message
+        end
+
+        def build_success_response_message(response)
+          "Incoming response: Payload: #{response.to_json}"
+        end
+
+        def build_request_message(metadata, request)
           # calling #to_json on some protos (specifically those with non-UTF8
           # encodable byte values) causes a segfault, however #inspect works
           # so we check if the proto contains a bytevalue, and if it does
@@ -57,49 +93,35 @@ module Google
                             else
                               request.to_json
                             end
-          request_message = sprintf(
-            "Outgoing request: Headers: %s Payload: %s",
-            metadata.to_json,
-            request_inspect,
-          )
-          begin
-            response = yield
-            summary_message += ", IsFault: no"
-            response_message = sprintf("Incoming response: Payload: %s",
-                                       response.to_json)
-
-            @logger.info(summary_message)
-            @logger.debug(request_message)
-            @logger.debug(response_message)
-            return response
-          rescue Exception
-            summary_message += sprintf(", IsFault: yes")
-            response_message = "Incoming response (errors): \n"
-
-            most_recent_error = Google::Gax::GaxError.new('')
-            most_recent_error.status_details && most_recent_error.status_details.each do |detail|
-              if INTERESTING_ERROR_CLASSES.include?(detail.class)
-                response_message = add_response_message_from_detail(
-                  response_message,
-                  detail,
-                )
-              end
-            end
-
-            @logger.warn(summary_message)
-            @logger.info(request_message)
-            @logger.info(response_message)
-            raise
-          end
+          "Outgoing request: Headers: #{metadata.to_json} Payload: #{request_inspect}"
         end
 
-        private
-
-        def add_response_message_from_detail(response_message, detail)
-          detail.errors.each_with_index do |error, i|
-            response_message += sprintf("Error %d: %s\n", i + 1, error.to_json)
+        def build_summary_message(request, call, method, is_fault)
+          customer_id = "N/A"
+          customer_id = request.customer_id if request.respond_to?(:customer_id)
+          # CustomerService get requests have a different format.
+          if request.respond_to?(:resource_name)
+            customer_id = request.resource_name.split('/').last
           end
-          response_message
+
+          is_fault_string = if is_fault
+            "yes"
+          else
+            "no"
+          end
+
+          [
+            "CID: #{customer_id}",
+            "Host: #{call.instance_variable_get('@wrapped').peer}",
+            "Method: #{method}",
+            "IsFault: #{is_fault_string}",
+          ].join(", ")
+        end
+
+        def response_error_from_detail(detail)
+          detail.errors.map.with_index { |error, i|
+            "Error #{i + 1}: #{error.to_json}"
+          }.join("\n")
         end
 
         def use_bytes_inspect?(request)
