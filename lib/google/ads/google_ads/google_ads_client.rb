@@ -251,9 +251,13 @@ module Google
 
         # Create the default logger, useful if the user hasn't defined one.
         def create_default_logger()
-          logger = Logger.new(@config.log_target)
-          logger.level = Logger.const_get(@config.log_level)
-          return logger
+          if @config.logger.nil?
+            logger = Logger.new(@config.log_target)
+            logger.level = Logger.const_get(@config.log_level)
+            logger
+          else
+            @config.logger
+          end
         end
 
         def lookup_util
