@@ -19,7 +19,6 @@
 
 require 'minitest/autorun'
 
-require 'google/ads/google_ads'
 require 'google/ads/google_ads/logging_interceptor'
 require 'google/ads/google_ads/v1/services/media_file_service_services_pb'
 

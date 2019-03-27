@@ -16,8 +16,7 @@
 #
 # Interceptor to log outgoing requests and incoming responses.
 
-require 'google/ads/google_ads/v1/errors/errors_pb'
-require 'google/ads/google_ads/v0/errors/errors_pb'
+require 'google/ads/google_ads'
 require 'grpc/generic/interceptors'
 require 'json'
 
@@ -25,10 +24,10 @@ module Google
   module Ads
     module GoogleAds
       class LoggingInterceptor < GRPC::ClientInterceptor
-        INTERESTING_ERROR_CLASSES = [
-          Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure,
-          Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure,
-        ].freeze
+        INTERESTING_ERROR_CLASSES = ::Google::Ads::GoogleAds::KNOWN_API_VERSIONS.map { |v|
+          require "google/ads/google_ads/#{v.downcase}/errors/errors_pb"
+          const_get("Google::Ads::GoogleAds::#{v}::Errors::GoogleAdsFailure")
+        }
 
         def initialize(logger)
           super()
