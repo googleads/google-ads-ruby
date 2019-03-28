@@ -66,7 +66,7 @@ module Google
           when nil
             ""
           when String
-            most_recent_errror.status_details
+            most_recent_error.status_details
           when Array
             most_recent_error.status_details.select { |detail|
               INTERESTING_ERROR_CLASSES.include?(detail.class)
