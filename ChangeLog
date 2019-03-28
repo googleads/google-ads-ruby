@@ -1,3 +1,11 @@
+1.1.0:
+  - Adding support for Google Ads API v1_1.
+  - Refactored proto and path lookup utils to be accessible before client
+    instantiation.
+  - Numerous fixes to logging, including support for logging large images and
+    partial failure errors.
+  - New partial failure decoder utility.
+
 1.0.0:
   - Adding support for Google Ads API v1.
   - Adding support for versioned path and proto lookup utils.
