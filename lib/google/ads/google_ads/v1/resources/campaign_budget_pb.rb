@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v1/enums/budget_delivery_method_pb'
 require 'google/ads/google_ads/v1/enums/budget_period_pb'
 require 'google/ads/google_ads/v1/enums/budget_status_pb'
+require 'google/ads/google_ads/v1/enums/budget_type_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -26,6 +27,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :recommended_budget_estimated_change_weekly_cost_micros, :message, 15, "google.protobuf.Int64Value"
     optional :recommended_budget_estimated_change_weekly_interactions, :message, 16, "google.protobuf.Int64Value"
     optional :recommended_budget_estimated_change_weekly_views, :message, 17, "google.protobuf.Int64Value"
+    optional :type, :enum, 18, "google.ads.googleads.v1.enums.BudgetTypeEnum.BudgetType"
   end
 end
 

@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INCONSISTENT_FIELD_VALUES, 8
     value :MUTATE_NOT_ALLOWED, 9
     value :RESOURCE_NOT_IN_GOOGLE_ADS, 10
+    value :RESOURCE_ALREADY_EXISTS, 11
   end
 end
 

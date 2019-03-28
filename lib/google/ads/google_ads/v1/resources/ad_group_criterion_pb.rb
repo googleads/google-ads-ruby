@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/common/criteria_pb'
 require 'google/ads/google_ads/v1/common/custom_parameter_pb'
+require 'google/ads/google_ads/v1/enums/ad_group_criterion_approval_status_pb'
 require 'google/ads/google_ads/v1/enums/ad_group_criterion_status_pb'
 require 'google/ads/google_ads/v1/enums/bidding_source_pb'
 require 'google/ads/google_ads/v1/enums/criterion_system_serving_status_pb'
@@ -22,6 +23,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :type, :enum, 25, "google.ads.googleads.v1.enums.CriterionTypeEnum.CriterionType"
     optional :negative, :message, 31, "google.protobuf.BoolValue"
     optional :system_serving_status, :enum, 52, "google.ads.googleads.v1.enums.CriterionSystemServingStatusEnum.CriterionSystemServingStatus"
+    optional :approval_status, :enum, 53, "google.ads.googleads.v1.enums.AdGroupCriterionApprovalStatusEnum.AdGroupCriterionApprovalStatus"
     optional :bid_modifier, :message, 44, "google.protobuf.DoubleValue"
     optional :cpc_bid_micros, :message, 16, "google.protobuf.Int64Value"
     optional :cpm_bid_micros, :message, 17, "google.protobuf.Int64Value"
@@ -45,6 +47,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :keyword, :message, 27, "google.ads.googleads.v1.common.KeywordInfo"
       optional :placement, :message, 28, "google.ads.googleads.v1.common.PlacementInfo"
       optional :mobile_app_category, :message, 29, "google.ads.googleads.v1.common.MobileAppCategoryInfo"
+      optional :mobile_application, :message, 30, "google.ads.googleads.v1.common.MobileApplicationInfo"
       optional :listing_group, :message, 32, "google.ads.googleads.v1.common.ListingGroupInfo"
       optional :age_range, :message, 36, "google.ads.googleads.v1.common.AgeRangeInfo"
       optional :gender, :message, 37, "google.ads.googleads.v1.common.GenderInfo"

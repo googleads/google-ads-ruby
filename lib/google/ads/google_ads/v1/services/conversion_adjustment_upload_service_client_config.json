@@ -1,6 +1,6 @@
 {
   "interfaces": {
-    "google.ads.googleads.v1.services.ConversionUploadService": {
+    "google.ads.googleads.v1.services.ConversionAdjustmentUploadService": {
       "retry_codes": {
         "idempotent": [
           "DEADLINE_EXCEEDED",
@@ -20,12 +20,7 @@
         }
       },
       "methods": {
-        "UploadClickConversions": {
-          "timeout_millis": 60000,
-          "retry_codes_name": "non_idempotent",
-          "retry_params_name": "default"
-        },
-        "UploadCallConversions": {
+        "UploadConversionAdjustments": {
           "timeout_millis": 60000,
           "retry_codes_name": "non_idempotent",
           "retry_params_name": "default"

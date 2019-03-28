@@ -19,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :youtube_channel, :message, 6, "google.ads.googleads.v1.common.YouTubeChannelInfo"
       optional :placement, :message, 7, "google.ads.googleads.v1.common.PlacementInfo"
       optional :mobile_app_category, :message, 8, "google.ads.googleads.v1.common.MobileAppCategoryInfo"
+      optional :mobile_application, :message, 9, "google.ads.googleads.v1.common.MobileApplicationInfo"
     end
   end
 end

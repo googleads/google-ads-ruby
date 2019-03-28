@@ -19,6 +19,7 @@ require 'google/ads/google_ads/v1/resources/ad_group_feed_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_label_pb'
 require 'google/ads/google_ads/v1/resources/ad_schedule_view_pb'
 require 'google/ads/google_ads/v1/resources/age_range_view_pb'
+require 'google/ads/google_ads/v1/resources/asset_pb'
 require 'google/ads/google_ads/v1/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v1/resources/billing_setup_pb'
 require 'google/ads/google_ads/v1/resources/campaign_pb'
@@ -97,6 +98,7 @@ require 'google/ads/google_ads/v1/services/ad_group_feed_service_pb'
 require 'google/ads/google_ads/v1/services/ad_group_label_service_pb'
 require 'google/ads/google_ads/v1/services/ad_group_service_pb'
 require 'google/ads/google_ads/v1/services/ad_parameter_service_pb'
+require 'google/ads/google_ads/v1/services/asset_service_pb'
 require 'google/ads/google_ads/v1/services/bidding_strategy_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_bid_modifier_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_budget_service_pb'
@@ -156,6 +158,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :age_range_view, :message, 48, "google.ads.googleads.v1.resources.AgeRangeView"
     optional :ad_schedule_view, :message, 89, "google.ads.googleads.v1.resources.AdScheduleView"
     optional :domain_category, :message, 91, "google.ads.googleads.v1.resources.DomainCategory"
+    optional :asset, :message, 105, "google.ads.googleads.v1.resources.Asset"
     optional :bidding_strategy, :message, 18, "google.ads.googleads.v1.resources.BiddingStrategy"
     optional :billing_setup, :message, 41, "google.ads.googleads.v1.resources.BillingSetup"
     optional :campaign_budget, :message, 19, "google.ads.googleads.v1.resources.CampaignBudget"
@@ -248,6 +251,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_label_operation, :message, 21, "google.ads.googleads.v1.services.AdGroupLabelOperation"
       optional :ad_group_operation, :message, 5, "google.ads.googleads.v1.services.AdGroupOperation"
       optional :ad_parameter_operation, :message, 22, "google.ads.googleads.v1.services.AdParameterOperation"
+      optional :asset_operation, :message, 23, "google.ads.googleads.v1.services.AssetOperation"
       optional :bidding_strategy_operation, :message, 6, "google.ads.googleads.v1.services.BiddingStrategyOperation"
       optional :campaign_bid_modifier_operation, :message, 7, "google.ads.googleads.v1.services.CampaignBidModifierOperation"
       optional :campaign_budget_operation, :message, 8, "google.ads.googleads.v1.services.CampaignBudgetOperation"
@@ -288,6 +292,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_label_result, :message, 21, "google.ads.googleads.v1.services.MutateAdGroupLabelResult"
       optional :ad_group_result, :message, 5, "google.ads.googleads.v1.services.MutateAdGroupResult"
       optional :ad_parameter_result, :message, 22, "google.ads.googleads.v1.services.MutateAdParameterResult"
+      optional :asset_result, :message, 23, "google.ads.googleads.v1.services.MutateAssetResult"
       optional :bidding_strategy_result, :message, 6, "google.ads.googleads.v1.services.MutateBiddingStrategyResult"
       optional :campaign_bid_modifier_result, :message, 7, "google.ads.googleads.v1.services.MutateCampaignBidModifierResult"
       optional :campaign_budget_result, :message, 8, "google.ads.googleads.v1.services.MutateCampaignBudgetResult"
