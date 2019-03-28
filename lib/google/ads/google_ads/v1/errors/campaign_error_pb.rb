@@ -46,6 +46,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_HOTEL_CUSTOMER_LINK, 38
     value :MISSING_HOTEL_SETTING, 39
     value :CANNOT_USE_SHARED_CAMPAIGN_BUDGET_WHILE_PART_OF_CAMPAIGN_GROUP, 40
+    value :APP_NOT_FOUND, 41
   end
 end
 

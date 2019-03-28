@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v1/common/policy_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_criterion_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
@@ -20,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v1.services.AdGroupCriterionOperation" do
     optional :update_mask, :message, 4, "google.protobuf.FieldMask"
+    repeated :exempt_policy_violation_keys, :message, 5, "google.ads.googleads.v1.common.PolicyViolationKey"
     oneof :operation do
       optional :create, :message, 1, "google.ads.googleads.v1.resources.AdGroupCriterion"
       optional :update, :message, 2, "google.ads.googleads.v1.resources.AdGroupCriterion"

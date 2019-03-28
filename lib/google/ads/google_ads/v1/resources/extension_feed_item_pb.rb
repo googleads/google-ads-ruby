@@ -4,12 +4,14 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/common/extensions_pb'
+require 'google/ads/google_ads/v1/enums/extension_type_pb'
 require 'google/ads/google_ads/v1/enums/feed_item_status_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.resources.ExtensionFeedItem" do
     optional :resource_name, :string, 1
+    optional :extension_type, :enum, 13, "google.ads.googleads.v1.enums.ExtensionTypeEnum.ExtensionType"
     optional :start_date_time, :message, 5, "google.protobuf.StringValue"
     optional :end_date_time, :message, 6, "google.protobuf.StringValue"
     optional :status, :enum, 4, "google.ads.googleads.v1.enums.FeedItemStatusEnum.FeedItemStatus"

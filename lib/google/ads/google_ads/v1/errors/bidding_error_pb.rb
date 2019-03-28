@@ -31,6 +31,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :BID_TOO_MANY_FRACTIONAL_DIGITS, 32
     value :INVALID_DOMAIN_NAME, 33
     value :NOT_COMPATIBLE_WITH_PAYMENT_MODE, 34
+    value :NOT_COMPATIBLE_WITH_BUDGET_TYPE, 35
   end
 end
 

@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :VIDEO_TRUE_VIEW_IN_DISPLAY, 10
     value :VIDEO_NON_SKIPPABLE_IN_STREAM, 11
     value :VIDEO_OUTSTREAM, 12
+    value :SEARCH_DYNAMIC_ADS, 13
   end
 end
 

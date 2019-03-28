@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v1/services/conversion_upload_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v1/services/asset_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/google_ads/v1/services/conversion_upload_service_pb"
+require "google/ads/google_ads/v1/services/asset_service_pb"
 require "google/ads/google_ads/v1/services/credentials"
 
 module Google
@@ -32,12 +32,12 @@ module Google
     module GoogleAds
       module V1
         module Services
-          # Service to upload conversions.
+          # Service to manage assets.
           #
-          # @!attribute [r] conversion_upload_service_stub
-          #   @return [Google::Ads::GoogleAds::V1::Services::ConversionUploadService::Stub]
-          class ConversionUploadServiceClient
-            attr_reader :conversion_upload_service_stub
+          # @!attribute [r] asset_service_stub
+          #   @return [Google::Ads::GoogleAds::V1::Services::AssetService::Stub]
+          class AssetServiceClient
+            attr_reader :asset_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -55,6 +55,23 @@ module Google
             ALL_SCOPES = [
             ].freeze
 
+
+            ASSET_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
+              "customers/{customer}/assets/{asset}"
+            )
+
+            private_constant :ASSET_PATH_TEMPLATE
+
+            # Returns a fully-qualified asset resource name string.
+            # @param customer [String]
+            # @param asset [String]
+            # @return [String]
+            def self.asset_path customer, asset
+              ASSET_PATH_TEMPLATE.render(
+                :"customer" => customer,
+                :"asset" => asset
+              )
+            end
 
             # @param credentials [Google::Auth::Credentials, String, Hash, GRPC::Core::Channel, GRPC::Core::ChannelCredentials, Proc]
             #   Provides the means for authenticating requests made by the client. This parameter can
@@ -98,7 +115,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/google_ads/v1/services/conversion_upload_service_services_pb"
+              require "google/ads/google_ads/v1/services/asset_service_services_pb"
 
               credentials ||= Google::Ads::GoogleAds::V1::Services::Credentials.default
 
@@ -129,11 +146,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "conversion_upload_service_client_config.json"
+                "asset_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v1.services.ConversionUploadService",
+                  "google.ads.googleads.v1.services.AssetService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -147,7 +164,7 @@ module Google
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
               interceptors = self.class::GRPC_INTERCEPTORS
-              @conversion_upload_service_stub = Google::Gax::Grpc.create_stub(
+              @asset_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
@@ -155,117 +172,92 @@ module Google
                 updater_proc: updater_proc,
                 scopes: scopes,
                 interceptors: interceptors,
-                &Google::Ads::GoogleAds::V1::Services::ConversionUploadService::Stub.method(:new)
+                &Google::Ads::GoogleAds::V1::Services::AssetService::Stub.method(:new)
               )
 
-              @upload_click_conversions = Google::Gax.create_api_call(
-                @conversion_upload_service_stub.method(:upload_click_conversions),
-                defaults["upload_click_conversions"],
+              @get_asset = Google::Gax.create_api_call(
+                @asset_service_stub.method(:get_asset),
+                defaults["get_asset"],
                 exception_transformer: exception_transformer
               )
-              @upload_call_conversions = Google::Gax.create_api_call(
-                @conversion_upload_service_stub.method(:upload_call_conversions),
-                defaults["upload_call_conversions"],
+              @mutate_assets = Google::Gax.create_api_call(
+                @asset_service_stub.method(:mutate_assets),
+                defaults["mutate_assets"],
                 exception_transformer: exception_transformer
               )
             end
 
             # Service calls
 
-            # Processes the given click conversions.
+            # Returns the requested asset in full detail.
             #
-            # @param customer_id [String]
-            #   The ID of the customer performing the upload.
-            # @param conversions [Array<Google::Ads::GoogleAds::V1::Services::ClickConversion | Hash>]
-            #   The conversions that are being uploaded.
-            #   A hash of the same form as `Google::Ads::GoogleAds::V1::Services::ClickConversion`
-            #   can also be provided.
-            # @param partial_failure [true, false]
-            #   If true, successful operations will be carried out and invalid
-            #   operations will return errors. If false, all operations will be carried
-            #   out in one transaction if and only if they are all valid.
-            #   This should always be set to true.
+            # @param resource_name [String]
+            #   The resource name of the asset to fetch.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V1::Services::UploadClickConversionsResponse]
+            # @yieldparam result [Google::Ads::GoogleAds::V1::Resources::Asset]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V1::Services::UploadClickConversionsResponse]
+            # @return [Google::Ads::GoogleAds::V1::Resources::Asset]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_upload_service_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
-            #
-            #   # TODO: Initialize `customer_id`:
-            #   customer_id = ''
-            #
-            #   # TODO: Initialize `conversions`:
-            #   conversions = []
-            #   response = conversion_upload_service_client.upload_click_conversions(customer_id, conversions)
+            #   asset_service_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
+            #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AssetServiceClient.asset_path("[CUSTOMER]", "[ASSET]")
+            #   response = asset_service_client.get_asset(formatted_resource_name)
 
-            def upload_click_conversions \
-                customer_id,
-                conversions,
-                partial_failure: nil,
+            def get_asset \
+                resource_name,
                 options: nil,
                 &block
               req = {
-                customer_id: customer_id,
-                conversions: conversions,
-                partial_failure: partial_failure
+                resource_name: resource_name
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadClickConversionsRequest)
-              @upload_click_conversions.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::GetAssetRequest)
+              @get_asset.call(req, options, &block)
             end
 
-            # Processes the given call conversions.
+            # Creates assets. Operation statuses are returned.
             #
             # @param customer_id [String]
-            #   The ID of the customer performing the upload.
-            # @param conversions [Array<Google::Ads::GoogleAds::V1::Services::CallConversion | Hash>]
-            #   The conversions that are being uploaded.
-            #   A hash of the same form as `Google::Ads::GoogleAds::V1::Services::CallConversion`
+            #   The ID of the customer whose assets are being modified.
+            # @param operations [Array<Google::Ads::GoogleAds::V1::Services::AssetOperation | Hash>]
+            #   The list of operations to perform on individual assets.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V1::Services::AssetOperation`
             #   can also be provided.
-            # @param partial_failure [true, false]
-            #   If true, successful operations will be carried out and invalid
-            #   operations will return errors. If false, all operations will be carried
-            #   out in one transaction if and only if they are all valid.
-            #   This should always be set to true.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V1::Services::UploadCallConversionsResponse]
+            # @yieldparam result [Google::Ads::GoogleAds::V1::Services::MutateAssetsResponse]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V1::Services::UploadCallConversionsResponse]
+            # @return [Google::Ads::GoogleAds::V1::Services::MutateAssetsResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_upload_service_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
+            #   asset_service_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize `conversions`:
-            #   conversions = []
-            #   response = conversion_upload_service_client.upload_call_conversions(customer_id, conversions)
+            #   # TODO: Initialize `operations`:
+            #   operations = []
+            #   response = asset_service_client.mutate_assets(customer_id, operations)
 
-            def upload_call_conversions \
+            def mutate_assets \
                 customer_id,
-                conversions,
-                partial_failure: nil,
+                operations,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
-                conversions: conversions,
-                partial_failure: partial_failure
+                operations: operations
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadCallConversionsRequest)
-              @upload_call_conversions.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::MutateAssetsRequest)
+              @mutate_assets.call(req, options, &block)
             end
           end
         end

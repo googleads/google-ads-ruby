@@ -25,6 +25,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :text_ad, :message, 3, "google.ads.googleads.v1.services.ApplyRecommendationOperation.TextAdParameters"
       optional :keyword, :message, 4, "google.ads.googleads.v1.services.ApplyRecommendationOperation.KeywordParameters"
       optional :target_cpa_opt_in, :message, 5, "google.ads.googleads.v1.services.ApplyRecommendationOperation.TargetCpaOptInParameters"
+      optional :move_unused_budget, :message, 9, "google.ads.googleads.v1.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters"
     end
   end
   add_message "google.ads.googleads.v1.services.ApplyRecommendationOperation.CampaignBudgetParameters" do
@@ -41,6 +42,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.ApplyRecommendationOperation.TargetCpaOptInParameters" do
     optional :target_cpa_micros, :message, 1, "google.protobuf.Int64Value"
     optional :new_campaign_budget_amount_micros, :message, 2, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v1.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters" do
+    optional :budget_micros_to_move, :message, 1, "google.protobuf.Int64Value"
   end
   add_message "google.ads.googleads.v1.services.ApplyRecommendationResponse" do
     repeated :results, :message, 1, "google.ads.googleads.v1.services.ApplyRecommendationResult"
@@ -74,6 +78,7 @@ module Google::Ads::GoogleAds::V1::Services
   ApplyRecommendationOperation::TextAdParameters = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationOperation.TextAdParameters").msgclass
   ApplyRecommendationOperation::KeywordParameters = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationOperation.KeywordParameters").msgclass
   ApplyRecommendationOperation::TargetCpaOptInParameters = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationOperation.TargetCpaOptInParameters").msgclass
+  ApplyRecommendationOperation::MoveUnusedBudgetParameters = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters").msgclass
   ApplyRecommendationResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationResponse").msgclass
   ApplyRecommendationResult = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.ApplyRecommendationResult").msgclass
   DismissRecommendationRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.DismissRecommendationRequest").msgclass

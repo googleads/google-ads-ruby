@@ -22,6 +22,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :IMAGE_AD, 14
     value :RESPONSIVE_SEARCH_AD, 15
     value :LEGACY_RESPONSIVE_DISPLAY_AD, 16
+    value :APP_AD, 17
+    value :LEGACY_APP_INSTALL_AD, 18
+    value :RESPONSIVE_DISPLAY_AD, 19
   end
 end
 

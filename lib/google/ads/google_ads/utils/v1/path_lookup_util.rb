@@ -137,6 +137,13 @@ module Google
               )
             end
 
+            def asset(customer_id, asset_id)
+              @proto_lookup_util.service(:Asset).asset_path(
+                customer_id.to_s,
+                asset_id.to_s
+              )
+            end
+
             def bidding_strategy(customer_id, bidding_strategy_id)
               @proto_lookup_util.service(:BiddingStrategy).
                   bidding_strategy_path(
@@ -601,7 +608,10 @@ module Google
             end
 
             def shopping_performance_view(customer_id)
-              sprintf('customers/%s/shoppingPerformanceView', customer_id.to_s)
+              @proto_lookup_util.service(:ShoppingPerformanceView).
+                  shopping_performance_view_path(
+                    customer_id.to_s
+                  )
             end
 
             def topic_constant(vertical_id)

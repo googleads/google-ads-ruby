@@ -74,6 +74,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :product_condition, :message, 10, "google.ads.googleads.v1.common.ProductConditionInfo"
       optional :product_item_id, :message, 11, "google.ads.googleads.v1.common.ProductItemIdInfo"
       optional :product_type, :message, 12, "google.ads.googleads.v1.common.ProductTypeInfo"
+      optional :unknown_listing_dimension, :message, 14, "google.ads.googleads.v1.common.UnknownListingDimensionInfo"
     end
   end
   add_message "google.ads.googleads.v1.common.ListingBrandInfo" do
@@ -118,6 +119,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.common.ProductTypeInfo" do
     optional :value, :message, 1, "google.protobuf.StringValue"
     optional :level, :enum, 2, "google.ads.googleads.v1.enums.ProductTypeLevelEnum.ProductTypeLevel"
+  end
+  add_message "google.ads.googleads.v1.common.UnknownListingDimensionInfo" do
   end
   add_message "google.ads.googleads.v1.common.HotelDateSelectionTypeInfo" do
     optional :type, :enum, 1, "google.ads.googleads.v1.enums.HotelDateSelectionTypeEnum.HotelDateSelectionType"
@@ -252,6 +255,7 @@ module Google::Ads::GoogleAds::V1::Common
   ProductConditionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ProductConditionInfo").msgclass
   ProductItemIdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ProductItemIdInfo").msgclass
   ProductTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ProductTypeInfo").msgclass
+  UnknownListingDimensionInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.UnknownListingDimensionInfo").msgclass
   HotelDateSelectionTypeInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.HotelDateSelectionTypeInfo").msgclass
   HotelAdvanceBookingWindowInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.HotelAdvanceBookingWindowInfo").msgclass
   HotelLengthOfStayInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.HotelLengthOfStayInfo").msgclass

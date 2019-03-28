@@ -38,6 +38,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :day_of_week, :enum, 5, "google.ads.googleads.v1.enums.DayOfWeekEnum.DayOfWeek"
     optional :device, :enum, 1, "google.ads.googleads.v1.enums.DeviceEnum.Device"
     optional :external_conversion_source, :enum, 55, "google.ads.googleads.v1.enums.ExternalConversionSourceEnum.ExternalConversionSource"
+    optional :geo_target_airport, :message, 65, "google.protobuf.StringValue"
     optional :geo_target_city, :message, 62, "google.protobuf.StringValue"
     optional :geo_target_metro, :message, 63, "google.protobuf.StringValue"
     optional :geo_target_region, :message, 64, "google.protobuf.StringValue"
@@ -87,6 +88,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :quarter, :message, 21, "google.protobuf.StringValue"
     optional :search_term_match_type, :enum, 22, "google.ads.googleads.v1.enums.SearchTermMatchTypeEnum.SearchTermMatchType"
     optional :slot, :enum, 23, "google.ads.googleads.v1.enums.SlotEnum.Slot"
+    optional :webpage, :message, 66, "google.protobuf.StringValue"
     optional :week, :message, 24, "google.protobuf.StringValue"
     optional :year, :message, 25, "google.protobuf.Int32Value"
   end

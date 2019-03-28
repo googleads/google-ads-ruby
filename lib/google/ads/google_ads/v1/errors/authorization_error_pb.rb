@@ -18,6 +18,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :ACTION_NOT_PERMITTED, 7
     value :INCOMPLETE_SIGNUP, 8
     value :CUSTOMER_NOT_ENABLED, 24
+    value :MISSING_TOS, 9
+    value :DEVELOPER_TOKEN_NOT_APPROVED, 10
   end
 end
 
