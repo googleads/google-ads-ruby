@@ -206,6 +206,13 @@ module Google
           @logger = logger
         end
 
+        # Decode a partial failure error from a response.
+        # See Google::Ads::GoogleAds::PartialFailureErrorDecoder for full
+        # documentation.
+        def decode_partial_failure_error(pfe)
+          PartialFailureErrorDecoder.decode(pfe)
+        end
+
         private
 
         ERROR_TRANSFORMER = Proc.new do |gax_error|

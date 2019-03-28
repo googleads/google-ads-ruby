@@ -17,6 +17,7 @@
 # Interceptor to log outgoing requests and incoming responses.
 
 require 'google/ads/google_ads/api_versions'
+require 'google/ads/google_ads/partial_failure_error_decoder'
 require 'grpc/generic/interceptors'
 require 'json'
 
@@ -42,6 +43,9 @@ module Google
             @logger.info(build_summary_message(request, call, method, false))
             @logger.debug(build_request_message(metadata, request))
             @logger.debug(build_success_response_message(response))
+            if response.respond_to?(:partial_failure_error) && response.partial_failure_error
+              @logger.warn(build_partial_failure_message(response))
+            end
             response
           rescue Exception
             @logger.warn(build_summary_message(request, call, method, true))
@@ -52,6 +56,16 @@ module Google
         end
 
         private
+
+        def build_partial_failure_message(response)
+          errors = PartialFailureErrorDecoder.decode(
+            response.partial_failure_error
+          )
+          errors.reduce("Partial failure errors: ") do |accum, error|
+            accum += error.to_json + "\n"
+            accum
+          end
+        end
 
         def build_error_response_message
           # this looks like "magic", but the Google::Gax::GaxError grabs
