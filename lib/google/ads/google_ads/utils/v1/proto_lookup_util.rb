@@ -354,7 +354,10 @@ module Google
               TargetCpaOptInParameters: ['services', 'recommendation_service_pb', 'ApplyRecommendationOperation::TargetCpaOptInParameters'],
               MoveUnusedBudgetParameters: ['services', 'recommendation_service_pb', 'ApplyRecommendationOperation::MoveUnusedBudgetParameters'],
               LocationNames: ['services', 'geo_target_constant_service_pb', 'SuggestGeoTargetConstantsRequest::LocationNames'],
-              GeoTargets: ['services', 'geo_target_constant_service_pb', 'SuggestGeoTargetConstantsRequest::GeoTargets']
+              GeoTargets: ['services', 'geo_target_constant_service_pb', 'SuggestGeoTargetConstantsRequest::GeoTargets'],
+              KeywordAndUrlSeed: ['services', 'keyword_plan_idea_service_pb', 'KeywordAndUrlSeed'],
+              KeywordSeed: ['services', 'keyword_plan_idea_service_pb', 'KeywordSeed'],
+              UrlSeed: ['services', 'keyword_plan_idea_service_pb', 'UrlSeed']
             }.freeze
 
             ENUMS = {
