@@ -10,8 +10,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v1.enums.PaymentModeEnum.PaymentMode" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :PAYMENT_MODE_CPC, 2
-    value :PAYMENT_MODE_CPA, 3
+    value :CLICKS, 4
+    value :CONVERSION_VALUE, 5
   end
 end
 
