@@ -128,4 +128,14 @@ class TestGoogleAdsClient < Minitest::Test
     util = client.lookup_util
     assert_instance_of(Google::Ads::GoogleAds::LookupUtil, util)
   end
+
+  def test_logger_beats_log_target
+    logger = Logger.new(StringIO.new)
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.logger = logger
+      config.log_target = STDOUT
+    end
+
+    assert_equal client.logger, logger
+  end
 end

@@ -28,6 +28,7 @@ module Google
 
         attr_accessor :log_level
         attr_accessor :log_target
+        attr_accessor :logger
 
         def initialize(&block)
           @refresh_token = nil
@@ -38,6 +39,7 @@ module Google
 
           @log_level = nil
           @log_target = nil
+          @logger = nil
           yield self if block_given?
         end
 
