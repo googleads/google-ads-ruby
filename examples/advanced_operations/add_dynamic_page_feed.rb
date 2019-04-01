@@ -188,9 +188,9 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
     LIMIT 1000
   EOD
   ga_service = client.service(:GoogleAds)
-  resp = ga_service.search(customer_id, query)
+  response = ga_service.search(customer_id, query)
 
-  campaign = resp.first
+  campaign = response.first
   if campaign.nil?
     raise "Campaign with id #{id} not found"
   end
