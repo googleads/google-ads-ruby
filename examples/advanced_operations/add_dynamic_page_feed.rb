@@ -41,7 +41,7 @@ def add_dynamic_page_feed(customer_id, campaign_id, ad_group_id)
   update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   ad_group_resource_name = client.path.ad_group(customer_id, ad_group_id)
 
-  add_dsa_targetting(
+  add_dsa_targeting(
     client,
     customer_id,
     ad_group_resource_name,
@@ -72,7 +72,7 @@ def create_feed(client, customer_id)
   response = feed_service.mutate_feeds(customer_id, [operation])
   feed_id = response.results.first.resource_name
 
-  # we need to look up the attribute name and IDs for the feed we just created
+  # We need to look up the attribute name and IDs for the feed we just created
   # so that we can give them back to the API for construction of feed mappings
   # in the next function.
   ga_service = client.service(:GoogleAds)
@@ -191,13 +191,14 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   resp = ga_service.search(customer_id, query)
 
   campaign = resp.first
-  if !campaign
+  if campaign.nil?
     raise "Campaign with id #{id} not found"
   end
 
   campaign = campaign.campaign
 
-  if !campaign.dynamic_search_ads_setting.domain_name || campaign.dynamic_search_ads_setting.domain_name.value == ""
+  if !campaign.dynamic_search_ads_setting.domain_name \
+    || campaign.dynamic_search_ads_setting.domain_name.value == ""
     raise "Campaign id #{campaign_id} is not set up for dynamic search ads"
   end
 
@@ -216,7 +217,7 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   puts("Updated campaign #{response.results.first.resource_name}")
 end
 
-def add_dsa_targetting(client, customer_id, ad_group_resource_name, label)
+def add_dsa_targeting(client, customer_id, ad_group_resource_name, label)
   webpage_condition_info = client.resource(:WebpageConditionInfo)
   webpage_condition_info.operand = :CUSTOM_LABEL
   webpage_condition_info.argument = client.wrapper.string(label)
@@ -236,10 +237,10 @@ def add_dsa_targetting(client, customer_id, ad_group_resource_name, label)
   op["create"] = ad_group_criterion
 
   ad_group_criterion_service = client.service(:AdGroupCriterion)
-  resp = ad_group_criterion_service.mutate_ad_group_criteria(customer_id, [op])
+  response = ad_group_criterion_service.mutate_ad_group_criteria(customer_id, [op])
 
   puts(
-    "Created ad group criterion with id: #{resp.results.first.resource_name}"
+    "Created ad group criterion with id: #{response.results.first.resource_name}"
   )
 end
 
