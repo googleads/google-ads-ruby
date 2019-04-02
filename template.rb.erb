@@ -1,0 +1,16 @@
+module Google
+  module Ads
+    module GoogleAds
+      def self.resource
+        @resource ||= Module.new do
+        <% resources.each do |resource, file_path| %>
+          def self.<%= resource.name.split(".").last.underscore %>
+            require "<%= file_path.split("lib/")[-1] %>"
+            <%= resource.name.split(".").map { |x| x.camelize }.join("::").gsub("Googleads", "GoogleAds") %>.new
+          end
+        <% end %>
+        end
+      end
+    end
+  end
+end
