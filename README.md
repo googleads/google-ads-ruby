@@ -49,23 +49,23 @@ See and run the [Authentication example][] to generate your refresh token.
 Once this is generated, you can provide it to the library in a few different
 ways.
 
-The simplest is to copy the [adwords_config.rb][] to your home directory and
+The simplest is to copy the [google_ads_config.rb][] to your home directory and
 simply modify it to include the client ID, client secret, and refresh token.
 The library will automatically read it from the home directory if instantiated
 with no arguments:
 
-    adwords = Google::Ads::GoogleAds::GoogleAdsClient.new
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
 Alternatively, if you prefer to keep the file elsewhere, you can instantiate the
 library by passing the path to where you keep this file:
 
-    adwords = Google::Ads::GoogleAds::GoogleAdsClient.new('path/to/file.rb')
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new('path/to/file.rb')
 
 If you prefer not to store this information in a file at all, and would rather
 pass the information programmatically at runtime, you can accomplish that this
 way:
 
-    adwords = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.client_id = 'INSERT_CLIENT_ID_HERE'
       config.client_secret = 'INSERT_CLIENT_SECRET_HERE'
       config.refresh_token = 'INSERT_REFRESH_TOKEN_HERE'
@@ -73,11 +73,11 @@ way:
     end
 
 You can also modify these properties after instantiation by using the
-`configure` method on the `AdwordsClient`, using the same structure as above.
+`configure` method on the `GoogleAdsClient`, using the same structure as above.
 
 [Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/overview
 [Authentication example]: https://github.com/googleads/google-ads-ruby/blob/master/examples/authentication/authenticate_in_standalone_application.rb
-[adwords_config.rb]: https://github.com/googleads/google-ads-ruby/blob/master/google_ads_config.rb
+[google_ads_config.rb]: https://github.com/googleads/google-ads-ruby/blob/master/google_ads_config.rb
 
 ## Usage
 
@@ -87,8 +87,8 @@ To include the gem in your code:
 
 To fetch a specific service, for example CampaignService:
 
-    adwords = Google::Ads::GoogleAds::GoogleAdsClient.new
-    campaign_service = adwords.service(:Campaign)
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new
+    campaign_service = client.service(:Campaign)
 
 See the provided [examples][] for more detailed demonstrations of how to use the
 library.
@@ -116,3 +116,4 @@ Author:
 Maintainer:
 
  - Michael Cloonan
+ - Sam Phippen
