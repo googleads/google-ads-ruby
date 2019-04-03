@@ -44,7 +44,7 @@ module Google
             @logger.debug(build_request_message(metadata, request))
             @logger.debug(build_success_response_message(response))
             if response.respond_to?(:partial_failure_error) && response.partial_failure_error
-              @logger.warn(build_partial_failure_message(response))
+              @logger.debug(build_partial_failure_message(response))
             end
             response
           rescue Exception
