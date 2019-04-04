@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :SHOPPING, 4
     value :HOTEL, 5
     value :VIDEO, 6
+    value :MULTI_CHANNEL, 7
   end
 end
 

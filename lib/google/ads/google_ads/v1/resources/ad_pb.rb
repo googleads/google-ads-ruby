@@ -38,6 +38,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :video_ad, :message, 24, "google.ads.googleads.v1.common.VideoAdInfo"
       optional :responsive_search_ad, :message, 25, "google.ads.googleads.v1.common.ResponsiveSearchAdInfo"
       optional :legacy_responsive_display_ad, :message, 28, "google.ads.googleads.v1.common.LegacyResponsiveDisplayAdInfo"
+      optional :app_ad, :message, 29, "google.ads.googleads.v1.common.AppAdInfo"
+      optional :legacy_app_install_ad, :message, 30, "google.ads.googleads.v1.common.LegacyAppInstallAdInfo"
+      optional :responsive_display_ad, :message, 31, "google.ads.googleads.v1.common.ResponsiveDisplayAdInfo"
     end
   end
 end

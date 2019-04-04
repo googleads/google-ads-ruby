@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :RESOURCE_NOT_FOUND, 6
     value :INVALID_PAGE_TOKEN, 7
     value :EXPIRED_PAGE_TOKEN, 8
+    value :INVALID_PAGE_SIZE, 22
     value :REQUIRED_FIELD_MISSING, 9
     value :IMMUTABLE_FIELD, 11
     value :TOO_MANY_MUTATE_OPERATIONS, 13

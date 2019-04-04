@@ -33,6 +33,8 @@ module Google::Ads::GoogleAds::V1::Services
 
       # Processes the given click conversions.
       rpc :UploadClickConversions, UploadClickConversionsRequest, UploadClickConversionsResponse
+      # Processes the given call conversions.
+      rpc :UploadCallConversions, UploadCallConversionsRequest, UploadCallConversionsResponse
     end
 
     Stub = Service.rpc_stub_class

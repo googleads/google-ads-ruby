@@ -16,6 +16,7 @@ require 'google/ads/google_ads/v1/errors/ad_group_feed_error_pb'
 require 'google/ads/google_ads/v1/errors/ad_parameter_error_pb'
 require 'google/ads/google_ads/v1/errors/ad_sharing_error_pb'
 require 'google/ads/google_ads/v1/errors/adx_error_pb'
+require 'google/ads/google_ads/v1/errors/asset_error_pb'
 require 'google/ads/google_ads/v1/errors/authentication_error_pb'
 require 'google/ads/google_ads/v1/errors/authorization_error_pb'
 require 'google/ads/google_ads/v1/errors/bidding_error_pb'
@@ -30,6 +31,7 @@ require 'google/ads/google_ads/v1/errors/change_status_error_pb'
 require 'google/ads/google_ads/v1/errors/collection_size_error_pb'
 require 'google/ads/google_ads/v1/errors/context_error_pb'
 require 'google/ads/google_ads/v1/errors/conversion_action_error_pb'
+require 'google/ads/google_ads/v1/errors/conversion_adjustment_upload_error_pb'
 require 'google/ads/google_ads/v1/errors/conversion_upload_error_pb'
 require 'google/ads/google_ads/v1/errors/country_code_error_pb'
 require 'google/ads/google_ads/v1/errors/criterion_error_pb'
@@ -133,6 +135,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_ad_error, :enum, 21, "google.ads.googleads.v1.errors.AdGroupAdErrorEnum.AdGroupAdError"
       optional :ad_sharing_error, :enum, 24, "google.ads.googleads.v1.errors.AdSharingErrorEnum.AdSharingError"
       optional :adx_error, :enum, 25, "google.ads.googleads.v1.errors.AdxErrorEnum.AdxError"
+      optional :asset_error, :enum, 107, "google.ads.googleads.v1.errors.AssetErrorEnum.AssetError"
       optional :bidding_error, :enum, 26, "google.ads.googleads.v1.errors.BiddingErrorEnum.BiddingError"
       optional :campaign_criterion_error, :enum, 29, "google.ads.googleads.v1.errors.CampaignCriterionErrorEnum.CampaignCriterionError"
       optional :collection_size_error, :enum, 31, "google.ads.googleads.v1.errors.CollectionSizeErrorEnum.CollectionSizeError"
@@ -171,6 +174,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :shared_criterion_error, :enum, 63, "google.ads.googleads.v1.errors.SharedCriterionErrorEnum.SharedCriterionError"
       optional :campaign_shared_set_error, :enum, 64, "google.ads.googleads.v1.errors.CampaignSharedSetErrorEnum.CampaignSharedSetError"
       optional :conversion_action_error, :enum, 65, "google.ads.googleads.v1.errors.ConversionActionErrorEnum.ConversionActionError"
+      optional :conversion_adjustment_upload_error, :enum, 115, "google.ads.googleads.v1.errors.ConversionAdjustmentUploadErrorEnum.ConversionAdjustmentUploadError"
       optional :conversion_upload_error, :enum, 111, "google.ads.googleads.v1.errors.ConversionUploadErrorEnum.ConversionUploadError"
       optional :header_error, :enum, 66, "google.ads.googleads.v1.errors.HeaderErrorEnum.HeaderError"
       optional :database_error, :enum, 67, "google.ads.googleads.v1.errors.DatabaseErrorEnum.DatabaseError"

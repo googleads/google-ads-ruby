@@ -206,6 +206,13 @@ module Google
           @logger = logger
         end
 
+        # Decode a partial failure error from a response.
+        # See Google::Ads::GoogleAds::PartialFailureErrorDecoder for full
+        # documentation.
+        def decode_partial_failure_error(pfe)
+          PartialFailureErrorDecoder.decode(pfe)
+        end
+
         private
 
         ERROR_TRANSFORMER = Proc.new do |gax_error|
@@ -251,9 +258,13 @@ module Google
 
         # Create the default logger, useful if the user hasn't defined one.
         def create_default_logger()
-          logger = Logger.new(@config.log_target)
-          logger.level = Logger.const_get(@config.log_level)
-          return logger
+          if @config.logger.nil?
+            logger = Logger.new(@config.log_target)
+            logger.level = Logger.const_get(@config.log_level)
+            logger
+          else
+            @config.logger
+          end
         end
 
         def lookup_util

@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v1.common.PolicyValidationParameter" do
     repeated :ignorable_policy_topics, :message, 1, "google.protobuf.StringValue"
+    repeated :exempt_policy_violation_keys, :message, 2, "google.ads.googleads.v1.common.PolicyViolationKey"
   end
   add_message "google.ads.googleads.v1.common.PolicyTopicEntry" do
     optional :topic, :message, 1, "google.protobuf.StringValue"

@@ -11,8 +11,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :text, :message, 1, "google.protobuf.StringValue"
     optional :pinned_field, :enum, 2, "google.ads.googleads.v1.enums.ServedAssetFieldTypeEnum.ServedAssetFieldType"
   end
+  add_message "google.ads.googleads.v1.common.AdImageAsset" do
+    optional :asset, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v1.common.AdVideoAsset" do
+    optional :asset, :message, 1, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v1.common.AdMediaBundleAsset" do
+    optional :asset, :message, 1, "google.protobuf.StringValue"
+  end
 end
 
 module Google::Ads::GoogleAds::V1::Common
   AdTextAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AdTextAsset").msgclass
+  AdImageAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AdImageAsset").msgclass
+  AdVideoAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AdVideoAsset").msgclass
+  AdMediaBundleAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AdMediaBundleAsset").msgclass
 end

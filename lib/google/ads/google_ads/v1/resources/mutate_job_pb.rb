@@ -18,6 +18,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :creation_date_time, :message, 1, "google.protobuf.StringValue"
     optional :completion_date_time, :message, 2, "google.protobuf.StringValue"
     optional :estimated_completion_ratio, :message, 3, "google.protobuf.DoubleValue"
+    optional :operation_count, :message, 4, "google.protobuf.Int64Value"
+    optional :executed_operation_count, :message, 5, "google.protobuf.Int64Value"
   end
 end
 

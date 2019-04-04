@@ -19,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :keyword, :message, 8, "google.ads.googleads.v1.common.KeywordInfo"
       optional :placement, :message, 9, "google.ads.googleads.v1.common.PlacementInfo"
       optional :mobile_app_category, :message, 10, "google.ads.googleads.v1.common.MobileAppCategoryInfo"
+      optional :mobile_application, :message, 11, "google.ads.googleads.v1.common.MobileApplicationInfo"
       optional :location, :message, 12, "google.ads.googleads.v1.common.LocationInfo"
       optional :device, :message, 13, "google.ads.googleads.v1.common.DeviceInfo"
       optional :ad_schedule, :message, 15, "google.ads.googleads.v1.common.AdScheduleInfo"

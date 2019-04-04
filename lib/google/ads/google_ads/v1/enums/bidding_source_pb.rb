@@ -10,9 +10,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v1.enums.BiddingSourceEnum.BiddingSource" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
-    value :ADGROUP, 2
-    value :CRITERION, 3
     value :CAMPAIGN_BIDDING_STRATEGY, 5
+    value :AD_GROUP, 6
+    value :AD_GROUP_CRITERION, 7
   end
 end
 

@@ -31,4 +31,10 @@ Google::Ads::GoogleAds::Config.new do |c|
   # You can provide a filename as a String, an IO object like STDOUT or STDERR,
   # or an open file.
   c.log_target = STDOUT
+
+  # Instead of specifying logging through level and target, you can also
+  # pass a logger directly (for e.g. passing Rails.logger in a
+  # config/initializer). The passed logger will override log_level and
+  # log_target
+  # c.logger = Logger.new(STDOUT)
 end

@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :VIDEO_OUTSTREAM, 9
     value :VIDEO_ACTION, 10
     value :VIDEO_NON_SKIPPABLE, 11
+    value :APP_CAMPAIGN, 12
   end
 end
 

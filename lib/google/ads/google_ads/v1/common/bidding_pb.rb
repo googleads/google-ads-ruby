@@ -8,6 +8,9 @@ require 'google/ads/google_ads/v1/enums/target_impression_share_location_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
+  add_message "google.ads.googleads.v1.common.Commission" do
+    optional :commission_rate_micros, :message, 1, "google.protobuf.Int64Value"
+  end
   add_message "google.ads.googleads.v1.common.EnhancedCpc" do
   end
   add_message "google.ads.googleads.v1.common.ManualCpc" do
@@ -65,6 +68,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
 end
 
 module Google::Ads::GoogleAds::V1::Common
+  Commission = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.Commission").msgclass
   EnhancedCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.EnhancedCpc").msgclass
   ManualCpc = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ManualCpc").msgclass
   ManualCpm = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ManualCpm").msgclass

@@ -163,6 +163,11 @@ module Google
                 defaults["upload_click_conversions"],
                 exception_transformer: exception_transformer
               )
+              @upload_call_conversions = Google::Gax.create_api_call(
+                @conversion_upload_service_stub.method(:upload_call_conversions),
+                defaults["upload_call_conversions"],
+                exception_transformer: exception_transformer
+              )
             end
 
             # Service calls
@@ -213,6 +218,54 @@ module Google
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadClickConversionsRequest)
               @upload_click_conversions.call(req, options, &block)
+            end
+
+            # Processes the given call conversions.
+            #
+            # @param customer_id [String]
+            #   The ID of the customer performing the upload.
+            # @param conversions [Array<Google::Ads::GoogleAds::V1::Services::CallConversion | Hash>]
+            #   The conversions that are being uploaded.
+            #   A hash of the same form as `Google::Ads::GoogleAds::V1::Services::CallConversion`
+            #   can also be provided.
+            # @param partial_failure [true, false]
+            #   If true, successful operations will be carried out and invalid
+            #   operations will return errors. If false, all operations will be carried
+            #   out in one transaction if and only if they are all valid.
+            #   This should always be set to true.
+            # @param options [Google::Gax::CallOptions]
+            #   Overrides the default settings for this call, e.g, timeout,
+            #   retries, etc.
+            # @yield [result, operation] Access the result along with the RPC operation
+            # @yieldparam result [Google::Ads::GoogleAds::V1::Services::UploadCallConversionsResponse]
+            # @yieldparam operation [GRPC::ActiveCall::Operation]
+            # @return [Google::Ads::GoogleAds::V1::Services::UploadCallConversionsResponse]
+            # @raise [Google::Gax::GaxError] if the RPC is aborted.
+            # @example
+            #   require "google/ads/google_ads"
+            #
+            #   conversion_upload_service_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
+            #
+            #   # TODO: Initialize `customer_id`:
+            #   customer_id = ''
+            #
+            #   # TODO: Initialize `conversions`:
+            #   conversions = []
+            #   response = conversion_upload_service_client.upload_call_conversions(customer_id, conversions)
+
+            def upload_call_conversions \
+                customer_id,
+                conversions,
+                partial_failure: nil,
+                options: nil,
+                &block
+              req = {
+                customer_id: customer_id,
+                conversions: conversions,
+                partial_failure: partial_failure
+              }.delete_if { |_, v| v.nil? }
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadCallConversionsRequest)
+              @upload_call_conversions.call(req, options, &block)
             end
           end
         end
