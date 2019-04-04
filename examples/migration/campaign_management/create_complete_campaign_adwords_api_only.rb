@@ -24,9 +24,6 @@
 # functionality has yet been migrated to the Google Ads API.
 
 
-NUMBER_OF_ADS = 5
-KEYWORDS_TO_ADD = ["mars cruise", "space hotel"]
-API_VERSION = "201809"
 
 require 'adwords_api'
 require 'date'
@@ -53,7 +50,7 @@ def create_budget(adwords)
   budget_srv = adwords.service(:BudgetService, API_VERSION)
   budget = {
     :name => "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}",
-    :amount => {:micro_amount => 50000000},
+    :amount => {:micro_amount => 50_000_000},
     :delivery_method => 'STANDARD'
   }
   budget_operation = {:operator => 'ADD', :operand => budget}
@@ -82,9 +79,8 @@ def create_campaign(adwords, budget_id)
     :budget => {:budget_id => budget_id},
     :advertising_channel_type => 'SEARCH',
     # Optional fields:
-    :start_date =>
-    DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d'),
-      :network_setting => {
+    :start_date => DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d'),
+    :network_setting => {
       :target_google_search => true,
       :target_search_network => true,
       :target_content_network => false,
