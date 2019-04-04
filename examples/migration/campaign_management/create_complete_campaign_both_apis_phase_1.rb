@@ -14,21 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example is the first in a series of code examples that shows how to create
-# a Search campaign using the AdWords API, and then migrate it to Google Ads API one
+# This code example is the second in a series of code examples that shows how to create
+# a Search ad_group using the AdWords API, and then migrate it to the Google Ads API one
 # functionality at a time. See other examples in this directory for code examples in various
 # stages of migration.
 #
-# This code example represents the initial state, where the AdWords API is used to create a
-# campaign budget, a Search campaign, ad groups, keywords and expanded text ads. None of the
-# functionality has yet been migrated to the Google Ads API.
+# In this code example, the functionality to create ad_group budget has been migrated to
+# the Google Ads API. The rest of the functionality - creating a Search ad_group, ad groups,
+# keywords and expanded text ads are done using the AdWords API.
 
+
+require 'optparse'
 require 'google/ads/google_ads'
 require 'adwords_api'
-require 'optparse'
 require 'date'
 
-def add_complete_campaign
+def add_complete_campaign(customer_id)
   # AdwordsApi::Api will read a config file from ENV['HOME']/adwords_api.yml
   # when called without parameters.
   adwords = AdwordsApi::Api.new
@@ -36,8 +37,14 @@ def add_complete_campaign
   # To enable logging of SOAP requests, set the log_level value to 'DEBUG' in
   # the configuration file or provide your own logger:
   # adwords.logger = Logger.new('adwords_xml.log')
-  #
-  budget_id = create_budget(adwords)
+
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
+  # Please note: this client uses the new Google Ads API, and we share both
+  # Ads and AdWwords clients in process
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
+
+  budget_id = create_budget(client, customer_id)
   campaign_id = create_campaign(adwords, budget_id)
   ad_group_id = create_ad_group(adwords, campaign_id)
 
@@ -45,22 +52,29 @@ def add_complete_campaign
   create_keywords(adwords, ad_group_id, KEYWORDS_TO_ADD)
 end
 
-def create_budget(adwords)
+def create_budget(client, customer_id)
   # Create a budget, which can be shared by multiple campaigns.
-  budget_srv = adwords.service(:BudgetService, API_VERSION)
-  budget = {
-    :name => "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}",
-    :amount => {:micro_amount => 50_000_000},
-    :delivery_method => 'STANDARD'
-  }
-  budget_operation = {:operator => 'ADD', :operand => budget}
+  budget = client.resource(:CampaignBudget)
+  budget.name = client.wrapper.string(
+    "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}",
+  )
+  budget.amount_micros = client.wrapper.int64(
+    50_000_000,
+  )
 
-  # Add budget.
-  return_budget = budget_srv.mutate([budget_operation])
-  budget_id = return_budget.fetch(:value).first.fetch(:budget_id)
+  budget.delivery_method = :STANDARD
+  operation = client.operation(:CampaignBudget)
+  operation["create"] = budget
 
-  puts("Created campaign budget with id #{budget_id}")
+  campaign_budget_srv = client.service(:CampaignBudget)
+  response = campaign_budget_srv.mutate_campaign_budgets(customer_id, [operation])
+  budget_resource_name = response.results.first.resource_name
 
+  puts("Created campaign budget with resource name #{budget_resource_name}")
+
+  # IDs are given by the last slash in the resource name, so this converts
+  # us back in to the ID spaace that the AdWords API expects.
+  budget_id = budget_resource_name.split("/").last
   budget_id
 end
 
@@ -206,8 +220,39 @@ if __FILE__ == $0
     "space hotel",
   ]
 
+  options = {}
+  # The following parameter(s) should be provided to run the example. You can
+  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
+  # the command line.
+  #
+  # Parameters passed on the command line will override any parameters set in
+  # code.
+  #
+  # Running the example with -h will print the command line usage.
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+
+  OptionParser.new do |opts|
+    opts.banner = sprintf("Usage: #{File.basename(__FILE__)} [options]")
+
+    opts.separator ''
+    opts.separator 'Options:'
+
+    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
+      options[:customer_id] = v
+    end
+
+    opts.separator ''
+    opts.separator 'Help:'
+
+    opts.on_tail('-h', '--help', 'Show this message') do
+      puts opts
+      exit
+    end
+  end.parse!
+
   begin
-    add_complete_campaign
+    customer_id = options.fetch(:customer_id).tr("-", "")
+    add_complete_campaign(customer_id)
 
   # Authorization error.
   rescue AdsCommon::Errors::OAuth2VerificationRequired => e
