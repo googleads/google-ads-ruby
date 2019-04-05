@@ -678,6 +678,7 @@ module Google
               Customer: ['customer_service_pb', 'CustomerOperation'],
               ConversionAction: ['conversion_action_service_pb', 'ConversionActionOperation'],
               DismissRecommendation: ['recommendation_service_pb', 'DismissRecommendationRequest::DismissRecommendationOperation'],
+              ExtensionFeedItem: ['extension_feed_item_service_pb', 'ExtensionFeedItemOperation'],
               ExtensionFeedItemOperation: ['extension_feed_item_service_pb', 'ExtensionFeedItemOperation'],
               FeedItem: ['feed_item_service_pb', 'FeedItemOperation'],
               FeedItemTarget: ['feed_item_target_service_pb', 'FeedItemTargetOperation'],
