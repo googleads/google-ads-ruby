@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
-
-require 'pry'
 
 def get_account_changes(customer_id)
   # GoogleAdsClient will read a config file from
