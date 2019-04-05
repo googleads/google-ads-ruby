@@ -72,8 +72,6 @@ def create_budget(client, customer_id)
 
   puts("Created campaign budget with resource name #{budget_resource_name}")
 
-  # IDs are given by the last slash in the resource name, so this converts
-  # us back in to the ID spaace that the AdWords API expects.
   budget_id = budget_resource_name.split("/").last
   budget_id
 end
