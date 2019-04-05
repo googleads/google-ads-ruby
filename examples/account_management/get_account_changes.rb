@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright:: Copyright 2018 Google LLC
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,59 +15,65 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets the metadata, such as whether the artifact is selectable,
-# filterable and sortable, of an artifact. The artifact can be either a resource
-# (such as customer, campaign) or a field (such as metrics.impressions,
-# campaign.id). It'll also show the data type and artifacts that are
-# selectable with the artifact.
+# This example gets the changes in the account made in the last 7 days.
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_artifact_metadata(artifact_name)
+require 'pry'
+
+def get_account_changes(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  gaf_service = client.service(:GoogleAdsField)
+  ga_service = client.service(:GoogleAds)
 
-  query = sprintf('SELECT name, category, selectable, filterable, sortable, ' \
-      'selectable_with, data_type, is_repeated WHERE name = %s', artifact_name)
-  response = gaf_service.search_google_ads_fields(query)
+  query = <<~QUERY
+    SELECT
+      change_status.resource_name,
+      change_status.last_change_date_time,
+      change_status.resource_type,
+      change_status.campaign,
+      change_status.ad_group,
+      change_status.resource_status,
+      change_status.ad_group_ad,
+      change_status.ad_group_criterion,
+      change_status.campaign_criterion
+    FROM
+      change_status
+    ORDER BY
+      change_status.last_change_date_time
+  QUERY
 
-  if response.response.results.empty?
-    puts sprintf("The specified artifact '%s' doesn't exist", artifact_name)
-    return
-  end
+  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
 
   response.each do |row|
-    puts sprintf("An artifact named '%s' with category '%s' and data type " \
-        '%s %s selectable, %s filterable, %s sortable and %s repeated.',
-        row.name.value,
-        row.category,
-        row.data_type,
-        is_or_not(row.selectable.value),
-        is_or_not(row.filterable.value),
-        is_or_not(row.sortable.value),
-        is_or_not(row.is_repeated.value)
-    )
-
-    if row.selectable_with.any?
-      puts 'The artifact can be selected with the following artifacts:'
-      puts (row.selectable_with.sort_by { |field| field.value })
+    cs = row.change_status
+    resource_name = case cs.resource_type
+    when :AD_GROUP
+      cs.ad_group
+    when :AD_GROUP_AD
+      cs.ad_group_ad
+    when :AD_GROUP_CRITERION
+      cs.ad_group_criterion
+    when :CAMPAIGN
+      cs.campaign
+    when :CAMPAIGN_CRITERION
+      cs.campaign_criterion
+    else
+      "UNKNOWN"
     end
+    puts "On #{cs.last_change_date_time}, change status #{cs.resource_name} " \
+         "shows a resource type of #{cs.resource_type} " \
+         "with resource name #{resource_name} was #{cs.resource_status}."
   end
-end
-
-# Returns "is" when the specified value is true and "is not" when the
-# specified value is false
-def is_or_not(bool)
-  bool ? 'is' : 'is not'
 end
 
 if __FILE__ == $PROGRAM_NAME
-  options = {}
+  PAGE_SIZE = 1000
 
+  options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
   # the command line.
@@ -76,7 +82,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:artifact_name] = 'campaign'
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -84,10 +90,8 @@ if __FILE__ == $PROGRAM_NAME
     opts.separator ''
     opts.separator 'Options:'
 
-    help_msg = 'Artifact Name (i.e. a resource such as customer, campaign' \
-        ' or a field such as metrics.impressions, campaign.id)'
-    opts.on('-A', '--artifact-name ARTIFACT-NAME', String, help_msg) do |v|
-      options[:artifact_name] = v
+    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
+      options[:customer_id] = v
     end
 
     opts.separator ''
@@ -100,7 +104,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_artifact_metadata(options[:artifact_name])
+    get_account_changes(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
@@ -117,6 +121,6 @@ if __FILE__ == $PROGRAM_NAME
   rescue Google::Gax::RetryError => e
     STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
         "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
+                  e.cause.details, e.cause.metadata['request-id'])
   end
 end
