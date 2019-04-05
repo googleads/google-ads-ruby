@@ -23,9 +23,7 @@
 # campaign budget, a Search campaign, ad groups, keywords and expanded text ads. None of the
 # functionality has yet been migrated to the Google Ads API.
 
-require 'google/ads/google_ads'
 require 'adwords_api'
-require 'optparse'
 require 'date'
 
 def add_complete_campaign
