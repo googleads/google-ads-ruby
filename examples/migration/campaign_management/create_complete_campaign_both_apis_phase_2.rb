@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example is the second in a series of code examples that shows how to create
-# a Search ad_group using the AdWords API, and then migrate it to the Google Ads API one
+# This code example is the third in a series of code examples that shows how to create
+# a Search campaign using the AdWords API, and then migrate it to the Google Ads API one
 # functionality at a time. See other examples in this directory for code examples in various
 # stages of migration.
 #
-# In this code example, the functionality to create ad_group budget has been migrated to
-# the Google Ads API. The rest of the functionality - creating a Search ad_group, ad groups,
+# In this code example, the functionality to create campaign budget and search campaign have
+# been migrated to the Google Ads API. The rest of the functionality - creating ad groups,
 # keywords and expanded text ads are done using the AdWords API.
 
 
