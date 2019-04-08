@@ -7,6 +7,15 @@ Rake::TestTask.new do |t|
 end
 
 def apply_patches
+  clean = system(<<~EOD)
+  if [ -z "$(git status --porcelain)" ]; then
+  else
+    exit 1
+  fi
+  EOD
+
+  raise "Working directory is not clean" unless clean
+
   patches = Dir["patches/*.patch"]
   patches.each do |patch|
     puts "PATCH #{patch}"
