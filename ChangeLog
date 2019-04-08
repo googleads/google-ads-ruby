@@ -1,3 +1,7 @@
+1.1.1:
+  - Add `ExtensionFeedItem` as an operation look up
+  - Fixes various broken resource types
+
 1.1.0:
   - Adding support for Google Ads API v1_1.
   - Refactored proto and path lookup utils to be accessible before client
