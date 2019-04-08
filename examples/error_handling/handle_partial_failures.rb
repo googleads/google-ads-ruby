@@ -53,9 +53,9 @@ def add_keywords(customer_id, ad_group_id)
     partial_failure: true,
   )
 
-  response.results.each do |criterion|
+  response.results.each_with_index do |criterion, i|
     if criterion.resource_name != ""
-      puts("Created ad group criterion with id #{criterion.resource_name}")
+      puts("operations[#{i}] succeeded: Created ad group criterion with id #{criterion.resource_name}")
     end
   end
 
