@@ -26,21 +26,21 @@ class TestErrors < Minitest::Test
 
   def test_error_index
     error = build_error
-    index = Google::Ads::GoogleAds::Errors.error_index(error)
+    index = Google::Ads::GoogleAds::Errors.index(error)
 
     assert_equal(1, index)
   end
 
-  def test_error_message
+  def test_message
     error = build_error
-    message = Google::Ads::GoogleAds::Errors.error_message(error)
+    message = Google::Ads::GoogleAds::Errors.message(error)
 
     assert_equal('amount_micros - Too low.', message)
   end
 
-  def test_error_code
+  def test_code
     error = build_error
-    error_code = Google::Ads::GoogleAds::Errors.error_code(error)
+    error_code = Google::Ads::GoogleAds::Errors.code(error)
 
     assert_equal({
       name: 'range_error',

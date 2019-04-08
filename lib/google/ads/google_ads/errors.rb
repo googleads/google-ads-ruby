@@ -44,7 +44,7 @@ module Google
         #
         # Return nil if not found
         # Return Integer: index of the error
-        def self.error_index(error)
+        def self.index(error)
           path = error.location.field_path_elements.find {|elt| elt.field_name == OPERATIONS }
           if path
             path.index.value
@@ -58,7 +58,7 @@ module Google
         # describing the source of the error
         #
         # Returns a string describing the error
-        def self.error_message(error)
+        def self.message(error)
           error.location.field_path_elements.inject(error.message) do |string, path|
             unless MEANINGLESS_PATHS.include?(path.field_name)
               string = "#{path.field_name} - #{string}"
@@ -71,7 +71,7 @@ module Google
         # and extracts error code in the form of a hash
         #
         # Returns a Hash { name:, value:}
-        def self.error_code(error, version = Google::Ads::GoogleAds.default_api_version)
+        def self.code(error, version = Google::Ads::GoogleAds.default_api_version)
           mapping = ERROR_CODES_MAPPING.fetch(version)
           match = mapping.find do |error_name|
             error.error_code.send(error_name) != :UNSPECIFIED
