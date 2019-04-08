@@ -5,7 +5,15 @@ module Google
   module Ads
     module GoogleAds
       module V1
+        module Common
+        end
+        module Enums
+        end
+        module Errors
+        end
         module Resources
+        end
+        module Services
         end
       end
     end
@@ -30,6 +38,21 @@ end
 trace.enable
 $: << './lib'
 Dir["lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
+  require fn.gsub("lib/", "")
+end
+Dir["lib/google/ads/google_ads/v1/services/*.rb"].each do |fn|
+  require fn.gsub("lib/", "")
+end
+
+Dir["lib/google/ads/google_ads/v1/enums/*.rb"].each do |fn|
+  require fn.gsub("lib/", "")
+end
+
+Dir["lib/google/ads/google_ads/v1/common/*.rb"].each do |fn|
+  require fn.gsub("lib/", "")
+end
+
+Dir["lib/google/ads/google_ads/v1/errors/*.rb"].each do |fn|
   require fn.gsub("lib/", "")
 end
 
