@@ -8,10 +8,7 @@ end
 
 def apply_patches
   clean = system(<<~EOD)
-  if [ -z "$(git status --porcelain)" ]; then
-  else
-    exit 1
-  fi
+  bash -c 'if [ -z "$(git status --porcelain)" ]; then exit 0; else exit 1; fi'
   EOD
 
   raise "Working directory is not clean" unless clean
