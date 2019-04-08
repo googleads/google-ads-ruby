@@ -15,14 +15,14 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 
-require 'google/ads/google_ads/google_ads_client'
 require 'google/ads/google_ads/api_versions'
+require 'google/ads/google_ads/google_ads_client'
 
 module Google
   module Ads
     module GoogleAds
       def self.valid_version?(version)
-        KNOWN_API_VERSIONS.include?(version)
+        known_api_versions.include?(version)
       end
     end
   end

@@ -25,10 +25,6 @@ module Google
   module Ads
     module GoogleAds
       class LoggingInterceptor < GRPC::ClientInterceptor
-        INTERESTING_ERROR_CLASSES = ::Google::Ads::GoogleAds::KNOWN_API_VERSIONS.map { |v|
-          require "google/ads/google_ads/#{v.downcase}/errors/errors_pb"
-          const_get("Google::Ads::GoogleAds::#{v}::Errors::GoogleAdsFailure")
-        }
 
         def initialize(logger)
           # Don't propagate args, parens are necessary
@@ -83,7 +79,7 @@ module Google
             most_recent_error.status_details
           when Array
             most_recent_error.status_details.select { |detail|
-              INTERESTING_ERROR_CLASSES.include?(detail.class)
+              interesting_error_classes.include?(detail.class)
             }.map { |detail|
               response_error_from_detail(detail)
             }.join("\n")
@@ -145,6 +141,12 @@ module Google
         def contains_bytes_field?(descriptor)
           return false if descriptor.nil?
           descriptor.map { |x| x.type == :bytes || (x.type == :message && contains_bytes_field?(x.subtype)) }.any?
+        end
+
+        def interesting_error_classes
+          @interesting_error_classes ||= Google::Ads::GoogleAds::Errors.namespaces.map do |namespace|
+            namespace.const_get(:GoogleAdsFailure)
+          end
         end
       end
     end
