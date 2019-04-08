@@ -16,6 +16,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google::Ads::GoogleAds::V1::Services
+module Google::Ads::GoogleAds::V1::Resources
   GroupPlacementView = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.GroupPlacementView").msgclass
 end

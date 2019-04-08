@@ -1,0 +1,12 @@
+diff --git a/lib/google/ads/google_ads/v1/resources/product_bidding_category_constant_pb.rb b/lib/google/ads/google_ads/v1/resources/product_bidding_category_constant_pb.rb
+index aac640b..2594eb1 100644
+--- a/lib/google/ads/google_ads/v1/resources/product_bidding_category_constant_pb.rb
++++ b/lib/google/ads/google_ads/v1/resources/product_bidding_category_constant_pb.rb
+@@ -20,6 +20,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
+   end
+ end
+ 
+-module Google::Ads::GoogleAds::V1::Enums
++module Google::Ads::GoogleAds::V1::Resources
+   ProductBiddingCategoryConstant = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.ProductBiddingCategoryConstant").msgclass
+ end

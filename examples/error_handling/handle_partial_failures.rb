@@ -1,7 +1,6 @@
-#!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright:: Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,59 +14,75 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets the metadata, such as whether the artifact is selectable,
-# filterable and sortable, of an artifact. The artifact can be either a resource
-# (such as customer, campaign) or a field (such as metrics.impressions,
-# campaign.id). It'll also show the data type and artifacts that are
-# selectable with the artifact.
+# This code example shows how to deal with partial failures
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_artifact_metadata(artifact_name)
+def add_keywords(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  gaf_service = client.service(:GoogleAdsField)
+  criteria = [
+    "mars cruise",
+    "inv@lid cruise",
+    "venus cruise",
+    "b(a)d keyword cruise"
+  ].map { |keyword|
+    criterion = client.resource(:AdGroupCriterion)
+    criterion.ad_group = client.wrapper.string(
+      client.path.ad_group(customer_id, ad_group_id),
+    )
+    criterion.keyword = client.resource(:KeywordInfo)
+    criterion.keyword.text = client.wrapper.string(keyword)
+    criterion.keyword.match_type = :EXACT
+    criterion
+  }
 
-  query = sprintf('SELECT name, category, selectable, filterable, sortable, ' \
-      'selectable_with, data_type, is_repeated WHERE name = %s', artifact_name)
-  response = gaf_service.search_google_ads_fields(query)
+  operations = criteria.map { |criterion|
+    operation = client.operation(:AdGroupCriterion)
+    operation["create"] = criterion
+    operation
+  }
 
-  if response.response.results.empty?
-    puts sprintf("The specified artifact '%s' doesn't exist", artifact_name)
-    return
+  criterion_service = client.service(:AdGroupCriterion)
+  response = criterion_service.mutate_ad_group_criteria(
+    customer_id,
+    operations,
+    partial_failure: true,
+  )
+
+  response.results.each_with_index do |criterion, i|
+    if criterion.resource_name != ""
+      puts("operations[#{i}] succeeded: Created ad group criterion with id #{criterion.resource_name}")
+    end
   end
 
-  response.each do |row|
-    puts sprintf("An artifact named '%s' with category '%s' and data type " \
-        '%s %s selectable, %s filterable, %s sortable and %s repeated.',
-        row.name.value,
-        row.category,
-        row.data_type,
-        is_or_not(row.selectable.value),
-        is_or_not(row.filterable.value),
-        is_or_not(row.sortable.value),
-        is_or_not(row.is_repeated.value)
-    )
+  failures = client.decode_partial_failure_error(response.partial_failure_error)
+  failures.each do |failure|
+    failure.errors.each do |error|
+      human_readable_error_path = error
+        .location
+        .field_path_elements
+        .map { |location_info|
+          if location_info.index
+            "#{location_info.field_name}[#{location_info.index}]"
+          else
+            "#{location_info.field_name}"
+          end
+        }.join(" > ")
 
-    if row.selectable_with.any?
-      puts 'The artifact can be selected with the following artifacts:'
-      puts (row.selectable_with.sort_by { |field| field.value })
+      errmsg =  "error occured creating criterion #{human_readable_error_path}" \
+        " with value: #{error.trigger.string_value}" \
+        " because #{error.message.downcase}"
+      puts errmsg
     end
   end
 end
 
-# Returns "is" when the specified value is true and "is not" when the
-# specified value is false
-def is_or_not(bool)
-  bool ? 'is' : 'is not'
-end
-
 if __FILE__ == $PROGRAM_NAME
   options = {}
-
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
   # the command line.
@@ -76,7 +91,8 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:artifact_name] = 'campaign'
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -84,10 +100,12 @@ if __FILE__ == $PROGRAM_NAME
     opts.separator ''
     opts.separator 'Options:'
 
-    help_msg = 'Artifact Name (i.e. a resource such as customer, campaign' \
-        ' or a field such as metrics.impressions, campaign.id)'
-    opts.on('-A', '--artifact-name ARTIFACT-NAME', String, help_msg) do |v|
-      options[:artifact_name] = v
+    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
+      options[:customer_id] = v
+    end
+
+    opts.on('-A', '--ad-group-id AD-GROUP-ID', String, 'Ad Group ID') do |v|
+      options[:ad_group_id] = v
     end
 
     opts.separator ''
@@ -100,7 +118,10 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_artifact_metadata(options[:artifact_name])
+    add_keywords(
+      options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:ad_group_id),
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

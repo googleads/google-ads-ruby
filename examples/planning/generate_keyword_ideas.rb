@@ -28,7 +28,7 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
 
   # Make sure that keywords and/or page URL were specified. The request must
   # have exactly one of urlSeed, keywordSeed, or keywordAndUrlSeed set.
-  if keywords.reject {|k| k.nil?}.empty? && page_uril.nil?
+  if keywords.reject {|k| k.nil?}.empty? && page_url.nil?
     raise "At least one of keywords or page URL is required."
   end
 
