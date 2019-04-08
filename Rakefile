@@ -26,8 +26,15 @@ def apply_patches
   end
 end
 
+task :validate_protos do
+  res = system("./scripts/validate_protos.rb")
+  if !res
+    raise "Couldn't load all protos"
+  end
+end
+
 task :apply_patches do |t|
   apply_patches
 end
 
-task :build => :apply_patches
+task :build => [:apply_patches, :validate_protos]
