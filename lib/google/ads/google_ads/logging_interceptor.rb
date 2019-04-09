@@ -135,17 +135,36 @@ module Google
         end
 
         def use_bytes_inspect?(request)
+          @cycle_finder = CycleFinder.new
           contains_bytes_field?(request.class.descriptor)
         end
 
         def contains_bytes_field?(descriptor)
           return false if descriptor.nil?
+          return false if @cycle_finder.is_cycle?(descriptor)
+
+          @cycle_finder.add_object(descriptor)
+
           descriptor.map { |x| x.type == :bytes || (x.type == :message && contains_bytes_field?(x.subtype)) }.any?
         end
 
         def interesting_error_classes
           @interesting_error_classes ||= Google::Ads::GoogleAds::Errors.namespaces.map do |namespace|
             namespace.const_get(:GoogleAdsFailure)
+          end
+        end
+
+        class CycleFinder
+          def initialize
+            @objects_seen = Set.new
+          end
+
+          def is_cycle?(object)
+            @objects_seen.include?(object.object_id)
+          end
+
+          def add_object(object)
+            @objects_seen.add(object.object_id)
           end
         end
       end
