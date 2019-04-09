@@ -79,7 +79,7 @@ module Google
           if match
             { name: match, value: error.error_code.send(match) }
           else
-            { name: nil, value: nil }
+            {  }
           end
         end
 

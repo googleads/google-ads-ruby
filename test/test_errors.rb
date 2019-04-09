@@ -48,6 +48,14 @@ class TestErrors < Minitest::Test
     }, error_code)
   end
 
+  def test_blank_code
+    error = build_error
+    error.error_code = Google::Ads::GoogleAds::V1::Errors::ErrorCode.new
+    error_code = Google::Ads::GoogleAds::Errors.code(error)
+
+    assert_equal({}, error_code)
+  end
+
   def build_error
     Google::Ads::GoogleAds::V1::Errors::GoogleAdsError.new.tap do |error|
       location = Google::Ads::GoogleAds::V1::Errors::ErrorLocation.new
