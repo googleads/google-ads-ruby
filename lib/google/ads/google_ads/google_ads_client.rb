@@ -60,7 +60,6 @@ require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
 
 require 'google/ads/google_ads/errors'
-require 'google/ads/google_ads/v0/errors/errors_pb'
 
 require 'google/gax'
 
@@ -272,7 +271,7 @@ module Google
         end
 
         def default_api_version
-          Google::Ads::GoogleAds::DEFAULT_API_VERSION
+          Google::Ads::GoogleAds.default_api_version
         end
       end
     end
