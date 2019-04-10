@@ -1,7 +1,10 @@
-$: << File.dirname(__FILE__)
+DIR = File.dirname(__FILE__)
+GEM_ROOT = File.expand_path("..", DIR)
+$: << DIR
 
 require 'src/tracepoints'
 require 'src/filters'
+require 'src/rendering'
 
 potential_resources = []
 potential_enums = []
@@ -31,7 +34,7 @@ with_tracepoints(
   end
 
   # setup load path to include the directory with lib in it
-  $: << File.dirname(__FILE__) + '../'
+  $: << GEM_ROOT
 
   Dir["lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
     require fn.gsub("lib/", "")
@@ -57,4 +60,11 @@ resources = filter_resources_for_google_ads(potential_resources)
 resources, operations = filter_resources_in_to_resources_and_operations(resources)
 enums = filter_enums_for_google_ads(potential_enums)
 services = filter_services_for_google_ads(potential_services)
-require 'pry'; binding.pry
+
+factories_dir = File.join(GEM_ROOT, "lib", "google", "ads", "googleads", "factories")
+`mkdir -p #{factories_dir}`
+render_template(
+  File.join(DIR, "templates", "resources.rb.erb"),
+  File.join(factories_dir, "resources.rb"),
+  {resources: resources}
+)

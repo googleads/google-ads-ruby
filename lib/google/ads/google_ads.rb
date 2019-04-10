@@ -17,7 +17,6 @@
 
 require 'google/ads/google_ads/api_versions'
 require 'google/ads/google_ads/google_ads_client'
-require 'google/ads/google_ads/resource'
 
 module Google
   module Ads
