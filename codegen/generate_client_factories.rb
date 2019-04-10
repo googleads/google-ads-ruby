@@ -1,0 +1,60 @@
+$: << File.dirname(__FILE__)
+
+require 'src/tracepoints'
+require 'src/filters'
+
+potential_resources = []
+potential_enums = []
+potential_services = []
+with_tracepoints(
+  potential_resources: potential_resources,
+  potential_enums: potential_enums,
+  potential_services: potential_services,
+) do
+  module Google
+    module Ads
+      module GoogleAds
+        module V1
+          module Common
+          end
+          module Enums
+          end
+          module Errors
+          end
+          module Resources
+          end
+          module Services
+          end
+        end
+      end
+    end
+  end
+
+  # setup load path to include the directory with lib in it
+  $: << File.dirname(__FILE__) + '../'
+
+  Dir["lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
+    require fn.gsub("lib/", "")
+  end
+
+  Dir["lib/google/ads/google_ads/v1/services/*.rb"].each do |fn|
+    require fn.gsub("lib/", "")
+  end
+
+  Dir["lib/google/ads/google_ads/v1/enums/*.rb"].each do |fn|
+    require fn.gsub("lib/", "")
+  end
+
+  Dir["lib/google/ads/google_ads/v1/common/*.rb"].each do |fn|
+    require fn.gsub("lib/", "")
+  end
+
+  Dir["lib/google/ads/google_ads/v1/errors/*.rb"].each do |fn|
+    require fn.gsub("lib/", "")
+  end
+end
+resources = filter_resources_for_google_ads(potential_resources)
+resources, operations = filter_resources_in_to_resources_and_operations(resources)
+enums = filter_enums_for_google_ads(potential_enums)
+services = filter_services_for_google_ads(potential_services)
+require 'pry'; binding.pry
