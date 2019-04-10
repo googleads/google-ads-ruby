@@ -48,6 +48,7 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
       elsif Google::Protobuf::Descriptor === ret
         potential_resources << [ret, tp.path]
       else
+        require 'pry'; binding.pry
         raise "Should be impossible, got: #{ret.inspect}"
       end
     end
@@ -69,6 +70,39 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
 
   trace.disable
   trace_services.disable
+end
+
+# the filter_* family of methods takes a list of potential protobuf descriptors
+# that we're in, and turns then in to class/module objects. These should be
+# done after all the protobuf files are required, such that the classes and
+# modules have their name values populated
+def filter_resources_for_google_ads(potential_resources)
+  potential_resources.map { |descriptor, path|
+    [descriptor.msgclass, path]
+  }.reject { |klass, path|
+    # Descriptors ending with "Enum" are the top level namespace containers
+    # for enums, but don't actually contain any data, e.g.:
+    # https://git.io/fjqcs
+    klass.name.end_with?("Enum")
+  }.select { |klass, _|
+    klass.name.start_with?("Google::Ads::GoogleAds::V1")
+  }
+end
+
+def filter_enums_for_google_ads(potential_enums)
+  potential_enums.map { |descriptor, path|
+    [descriptor.enummodule, path]
+  }.select { |mod, _|
+    mod.name.start_with?("Google::Ads::GoogleAds::V1")
+  }
+end
+
+def filter_services_for_google_ads(potential_services)
+  # services are already class objects because the gapic generator wraps
+  # the protobuf descriptors for us.
+  potential_services.select { |service, _|
+    service.name.start_with?("Google::Ads::GoogleAds::V1")
+  }
 end
 
 potential_resources = []
@@ -104,6 +138,10 @@ end
 require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
+resources = filter_resources_for_google_ads(potential_resources)
+enums = filter_enums_for_google_ads(potential_enums)
+services = filter_services_for_google_ads(potential_services)
+
 require 'pry'; binding.pry
 p resources
 p services
