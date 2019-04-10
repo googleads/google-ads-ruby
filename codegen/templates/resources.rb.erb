@@ -4,8 +4,8 @@ module Google
       module Factories
         module Resource
           <% resources.each do |res, path| %>
-          def <%= res.name.split("::").last.underscore %>
-            require "<%= path.split("google-ads-ruby").last %>"
+          def self.<%= res.name.split("::").last.underscore %>
+            require "<%= path.split("google-ads-ruby/lib/").last %>"
             <%= res.name %>.new
           end
           <% end %>

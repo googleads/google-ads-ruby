@@ -46,6 +46,7 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
+require 'google/ads/google_ads/factories/resources.rb'
 
 require 'google/ads/google_ads/errors'
 
@@ -151,8 +152,14 @@ module Google
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name, version = default_api_version)
-          lookup_util.resource(name, version)
+        def resource(*args)
+          if args.empty?
+            Google::Ads::GoogleAds::Factories::Resource
+          else
+            name = args.fetch(0)
+            version = args.fetch(1, default_api_version)
+            lookup_util.resource(name, version)
+          end
         end
 
         # Return an operation for the provided entity type. For example, passing
