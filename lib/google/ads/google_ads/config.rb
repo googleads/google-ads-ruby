@@ -20,6 +20,10 @@ module Google
   module Ads
     module GoogleAds
       class Config
+        class << self
+          attr_accessor :treat_deprecations_as_errors
+        end
+
         attr_accessor :refresh_token
         attr_accessor :client_id
         attr_accessor :client_secret

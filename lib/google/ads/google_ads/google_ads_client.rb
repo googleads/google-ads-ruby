@@ -121,6 +121,7 @@ module Google
         #
         # Raises ArgumentError if no service can be found for the provided type.
         def service(name, version = default_api_version)
+          check_api_version(version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           # We need a local reference to refer to from within the class block
@@ -164,6 +165,7 @@ module Google
         #
         # Raises ArgumentError if no entity can be found for the provided type.
         def resource(name, version = default_api_version)
+          check_api_version(version)
           lookup_util.resource(name, version)
         end
 
@@ -172,6 +174,7 @@ module Google
         #
         # Raises ArgumentError if no entity can be found for the provided type.
         def operation(name, version = default_api_version)
+          check_api_version(version)
           lookup_util.operation(name, version)
         end
 
@@ -181,7 +184,18 @@ module Google
         #
         # Raises ArgumentError if no enum can be found for the provided type.
         def enum(name, version = default_api_version)
+          check_api_version(version)
           lookup_util.enum(name, version)
+        end
+
+        def check_api_version(version)
+          if version == :V0
+            DeprecationManager.instance.deprecated!(
+              "Version 0 resources, services, enums, and paths",
+              "2.0.0",
+              "Version 1 resources (:V1, or no explicit version speciifer)"
+            )
+          end
         end
 
         # Returns a reference to the FieldMaskUtil class for ease of access.
@@ -196,6 +210,7 @@ module Google
 
         # Returns a reference to the PathLookupUtil to generate resource names.
         def path(version = default_api_version)
+          check_api_version(version)
           lookup_util.path(version)
         end
 
