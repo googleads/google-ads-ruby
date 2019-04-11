@@ -70,13 +70,13 @@ secret, refresh token, and developer token to the library.
 1. Copy [google_ads_config.rb][] to your home directory and modify it to include
 the client ID, client secret, and refresh token.
 
-The library will automatically read it from the home directory if instantiated
+The client will automatically read it from the home directory if instantiated
 with no arguments:
 
     client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
 Alternatively, if you prefer to keep the file elsewhere, you can instantiate the
-library by passing the path to where you keep this file:
+client by passing the path to where you keep this file:
 
     client = Google::Ads::GoogleAds::GoogleAdsClient.new('path/to/google_ads_config.rb')
 
