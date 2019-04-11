@@ -9,17 +9,14 @@ easy-to-use client library for the [Google Ads API][].
 # Documentation for Users
 
 **For thorough documentation of all features and utilities, visit our
-[Developers Site ruby guide][].**
+[Developers site Ruby guide][].**
 
-[Developers Site ruby guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/
+[Developers site Ruby guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/
 
 ## Getting started
 
 `google-ads-googleads` will allow you to connect to the
 [Google Ads API][] and access all its methods.
-
-In order to achieve so you need to set up authentication as well as install the
-library locally.
 
 ## Installation
 
