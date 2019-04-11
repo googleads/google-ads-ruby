@@ -58,6 +58,7 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
+require 'google/ads/google_ads/deprecation'
 
 require 'google/ads/google_ads/errors'
 
