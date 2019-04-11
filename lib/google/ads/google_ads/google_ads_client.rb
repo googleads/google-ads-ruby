@@ -152,12 +152,10 @@ module Google
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(*args)
-          if args.empty?
-            Google::Ads::GoogleAds::Factories::Resource
+        def resource(name=nil, version=default_api_Version)
+          if name.nil?
+            Google::Ads::GoogleAds::Factories::Resources
           else
-            name = args.fetch(0)
-            version = args.fetch(1, default_api_version)
             lookup_util.resource(name, version)
           end
         end

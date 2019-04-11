@@ -23,7 +23,6 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
       elsif Google::Protobuf::Descriptor === ret
         potential_resources << [ret, tp.path]
       else
-        require 'pry'; binding.pry
         raise "Should be impossible, got: #{ret.inspect}"
       end
     end

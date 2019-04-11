@@ -36,24 +36,24 @@ with_tracepoints(
   # setup load path to include the directory with lib in it
   $: << GEM_ROOT
 
-  Dir["lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
-    require fn.gsub("lib/", "")
+  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
+    require fn.gsub("#{GEM_ROOT}/lib/", "")
   end
 
-  Dir["lib/google/ads/google_ads/v1/services/*.rb"].each do |fn|
-    require fn.gsub("lib/", "")
+  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/services/*.rb"].each do |fn|
+    require fn.gsub("#{GEM_ROOT}/lib/", "")
   end
 
-  Dir["lib/google/ads/google_ads/v1/enums/*.rb"].each do |fn|
-    require fn.gsub("lib/", "")
+  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/enums/*.rb"].each do |fn|
+    require fn.gsub("#{GEM_ROOT}/lib/", "")
   end
 
-  Dir["lib/google/ads/google_ads/v1/common/*.rb"].each do |fn|
-    require fn.gsub("lib/", "")
+  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/common/*.rb"].each do |fn|
+    require fn.gsub("#{GEM_ROOT}/lib/", "")
   end
 
-  Dir["lib/google/ads/google_ads/v1/errors/*.rb"].each do |fn|
-    require fn.gsub("lib/", "")
+  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/errors/*.rb"].each do |fn|
+    require fn.gsub("#{GEM_ROOT}/lib/", "")
   end
 end
 resources = filter_resources_for_google_ads(potential_resources)
@@ -67,4 +67,10 @@ render_template(
   File.join(DIR, "templates", "resources.rb.erb"),
   File.join(factories_dir, "resources.rb"),
   {resources: resources}
+)
+
+render_template(
+  File.join(DIR, "templates", "services.rb.erb"),
+  File.join(factories_dir, "services.rb"),
+  {services: services}
 )
