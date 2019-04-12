@@ -47,6 +47,8 @@ require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
 require 'google/ads/google_ads/factories/resources.rb'
+require 'google/ads/google_ads/factories/services.rb'
+require 'google/ads/google_ads/factories/enums.rb'
 
 require 'google/ads/google_ads/errors'
 
@@ -173,8 +175,12 @@ module Google
         # CampaignStatusEnum.
         #
         # Raises ArgumentError if no enum can be found for the provided type.
-        def enum(name, version = default_api_version)
-          lookup_util.enum(name, version)
+        def enum(name=nil, version = default_api_version)
+          if name.nil?
+            Google::Ads::GoogleAds::Factories::Enums
+          else
+            lookup_util.enum(name, version)
+          end
         end
 
         # Returns a reference to the FieldMaskUtil class for ease of access.

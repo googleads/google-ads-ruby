@@ -3,10 +3,10 @@ module Google
     module GoogleAds
       module Factories
         module Enums
-          <% Enums.each do |res, path| %>
+          <% enums.each do |res, path| %>
           def self.<%= res.name.split("::").last.underscore %>
             require "<%= path.split("google-ads-ruby/lib/").last %>"
-            <%= res.name %>.new
+            <%= res.name %>.descriptor
           end
           <% end %>
         end
