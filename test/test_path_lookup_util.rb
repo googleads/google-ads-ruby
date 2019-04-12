@@ -103,8 +103,8 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/campaignLabels/567~890'
     assert_equal(expected, util.campaign_label(1234, 567, 890))
 
-    expected = 'customers/1234/campaignSharedSets/5678'
-    assert_equal(expected, util.campaign_shared_set(1234, 5678))
+    expected = 'customers/1234/campaignSharedSets/567~890'
+    assert_equal(expected, util.campaign_shared_set(1234, 567, 890))
 
     expected = 'customers/1234/campaigns/5678'
     assert_equal(expected, util.campaign(1234, 5678))
