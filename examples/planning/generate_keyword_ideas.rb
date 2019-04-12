@@ -73,12 +73,8 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
                        else
                          result.keyword_idea_metrics.avg_monthly_searches
                        end
-    # Note that the competition is an enum value. For example, a value of 2
-    # will be returned when the competition is 'LOW'.
-    # A mapping of enum names to values can be found in:
-    # google/ads/google_ads/vx/enums/keyword_plan_competition_level_pb.rb
     competition = if result.keyword_idea_metrics.nil?
-                    0
+                    :UNSPECIFIED
                   else
                     result.keyword_idea_metrics.competition
                   end
