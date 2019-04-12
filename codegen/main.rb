@@ -74,3 +74,9 @@ render_template(
   File.join(factories_dir, "services.rb"),
   {services: services}
 )
+
+render_template(
+  File.join(DIR, "templates", "enums.rb.erb"),
+  File.join(factories_dir, "enums.rb"),
+  {services: services}
+)

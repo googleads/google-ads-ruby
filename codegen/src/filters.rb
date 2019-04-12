@@ -38,4 +38,3 @@ def filter_resources_in_to_resources_and_operations(resources)
     !klass.name.end_with?("Operation")
   }
 end
-
