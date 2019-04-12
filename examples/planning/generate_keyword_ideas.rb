@@ -144,7 +144,7 @@ if __FILE__ == $0
 
     opts.on('-k', '--keyword-text-2 KEYWORD-TEXT-2', String,
         'Keyword Text 2') do |v|
-      options[:keyword_text_1] = v
+      options[:keyword_text_2] = v
     end
 
     opts.on('-p', '--page-url PAGE-URL', String, 'Page URL') do |v|
