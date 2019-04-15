@@ -10,3 +10,4 @@ gem 'google-adwords-api', '~> 1.5'
 # used for the factories generator
 gem 'activesupport', '~> 5.2'
 gem 'rspec', '~> 3.6'
+gem 'standard'
