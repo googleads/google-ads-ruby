@@ -111,25 +111,12 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name, version = default_api_version)
+        def service(name=nil, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           # We need a local reference to refer to from within the class block
           # below.
           logger = @logger
-
-          class_to_return = lookup_util.raw_service(name, version)
-          class_to_return = Class.new(class_to_return) do
-            unless service_path.nil? || service_path.empty?
-              const_set('SERVICE_ADDRESS', service_path.freeze)
-            end
-
-            if logger
-              logging_interceptor =
-                  Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
-              const_set('GRPC_INTERCEPTORS', [logging_interceptor])
-            end
-          end
 
           headers = {
             :"developer-token" => @config.developer_token
@@ -143,18 +130,43 @@ module Google
             end
             headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
-          return class_to_return.new(
-            credentials: get_credentials,
-            metadata: headers,
-            exception_transformer: ERROR_TRANSFORMER
-          )
+
+          if logger
+            logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+          end
+
+          if name.nil?
+            Factories::Services.new(
+              service_path: service_path,
+              logging_interceptor: logging_interceptor,
+              credentials: get_updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+          else
+            class_to_return = lookup_util.raw_service(name, version)
+            class_to_return = Class.new(class_to_return) do
+              unless service_path.nil? || service_path.empty?
+                const_set('SERVICE_ADDRESS', service_path.freeze)
+              end
+
+
+              const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
+            end
+
+            class_to_return.new(
+              credentials: get_updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+          end
         end
 
         # Return a resource or common entity for the provided entity type. For
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name=nil, version=default_api_Version)
+        def resource(name=nil, version=default_api_version)
           if name.nil?
             Google::Ads::GoogleAds::Factories::Resources
           else
