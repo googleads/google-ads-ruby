@@ -15,23 +15,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example demonstrates how to link two already existing accounts.
+# This example demonstrates how to link an existing Google Ads manager customer
+# to an existing Google Ads client customer.
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def link_accounts(manager_customer_id, client_customer_id)
+def link_manager_to_client(manager_customer_id, client_customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # This example assumes that the same credentials will work for both accounts,
+  # This example assumes that the same credentials will work for both customers,
   # but that may not be the case. If you need to use different credentials
-  # for each account, then you may either update the client configuration or
+  # for each customer, then you may either update the client configuration or
   # instantiate two clients, one for each set of credentials. Always make sure
   # to update the configuration before fetching any services you need to use.
 
-  # Extend an invitation while authenticating as the manager account.
+  # Extend an invitation to the client while authenticating as the manager.
   client.configure do |config|
     config.login_customer_id = manager_customer_id.to_i
   end
@@ -53,8 +54,9 @@ def link_accounts(manager_customer_id, client_customer_id)
   )
 
   client_link_resource_name = response.result.resource_name
-  puts "Extended an invitation from account #{manager_customer_id} to account " \
-      "#{client_customer_id} with resource name #{client_link_resource_name}."
+  puts "Extended an invitation from customer #{manager_customer_id} to " \
+      "customer #{client_customer_id} with client link resource name " \
+      "#{client_link_resource_name}."
 
   # Find the manager_link_id of the link we just created, so we can construct
   # the resource name for the link from the client side.
@@ -99,7 +101,8 @@ def link_accounts(manager_customer_id, client_customer_id)
     [manager_link_operation],
   )
 
-  puts "Accepted invitation with resource name #{response.results.first.resource_name}."
+  puts "Client accepted invitation with resource name " \
+      "#{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0
@@ -140,7 +143,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    link_accounts(
+    link_manager_to_client(
       options.fetch(:manager_customer_id).tr("-", ""),
       options.fetch(:customer_id).tr("-", ""),
     )
