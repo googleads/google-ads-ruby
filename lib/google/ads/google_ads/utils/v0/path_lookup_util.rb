@@ -149,10 +149,12 @@ module Google
               )
             end
 
-            def campaign_shared_set(customer_id, campaign_shared_set_id)
+            def campaign_shared_set(customer_id, campaign_id, shared_set_id)
               @proto_lookup_util.service(:CampaignSharedSet).
-                  campaign_shared_set_path(customer_id.to_s,
-                      campaign_shared_set_id.to_s)
+                  campaign_shared_set_path(
+                    customer_id.to_s,
+                    sprintf('%s_%s', campaign_id.to_s, shared_set_id.to_s)
+                  )
             end
 
             def campaign(customer_id, campaign_id)
