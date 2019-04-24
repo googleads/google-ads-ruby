@@ -6,7 +6,9 @@ module Google
           <% resources.each do |res, path| %>
           def self.<%= res.name.split("::").last.underscore %>
             require "<%= path.split("google-ads-ruby/lib/").last %>"
-            <%= res.name %>.new
+            res = <%= res.name %>.new
+            yield res if block_given?
+            res
           end
           <% end %>
         end

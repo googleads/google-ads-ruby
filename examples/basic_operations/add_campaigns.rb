@@ -25,25 +25,24 @@ def add_campaigns(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  resource = Google::Ads::GoogleAds.resource
   cbudget_service = client.service(:CampaignBudget)
   campaign_service = client.service(:Campaign)
 
   # Create a budget, which can be shared by multiple campaigns.
-  cbudget = resource.campaign_budget
-  cbudget.name = client.wrapper.string(
-      sprintf('Interplanetary Budget %s',(Time.new.to_f * 1000).to_i))
-  cbudget.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
-  cbudget.amount_micros = client.wrapper.int64(500000)
-  cbudget_operation = client.operation(:CampaignBudget)
-  cbudget_operation['create'] = cbudget
+  cbudget_operation = client.operation.create.campaign_budget do |cb|
+    cb.name = client.wrapper.string(
+      sprintf('Interplanetary Budget %s', (Time.new.to_f * 1000).to_i)
+    )
+    cb.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
+    cb.amount_micros = client.wrapper.int64(500000)
+  end
 
   # Add budget.
   return_budget = cbudget_service.mutate_campaign_budgets(
       customer_id, [cbudget_operation])
 
   # Create campaign.
-  campaign = resource.campaign
+  campaign = client.resource.campaign
   campaign.name = client.wrapper.string(
       sprintf('Interplanetary Cruise %s',(Time.new.to_f * 1000).to_i))
   campaign.advertising_channel_type =
@@ -55,12 +54,12 @@ def add_campaigns(customer_id)
   campaign.status = client.enum(:CampaignStatus)::PAUSED
 
   # Set the bidding strategy and budget.
-  campaign.manual_cpc = resource.manual_cpc
+  campaign.manual_cpc = client.resource.manual_cpc
   campaign.campaign_budget = client.wrapper.string(
       return_budget.results.first.resource_name)
 
   # Set the campaign network options.
-  campaign.network_settings = resource.network_settings
+  campaign.network_settings = client.resource.network_settings
   campaign.network_settings.target_google_search = client.wrapper.bool(true)
   campaign.network_settings.target_search_network = client.wrapper.bool(true)
   campaign.network_settings.target_content_network = client.wrapper.bool(false)

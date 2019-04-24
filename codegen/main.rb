@@ -61,6 +61,8 @@ resources, operations = filter_resources_in_to_resources_and_operations(resource
 enums = filter_enums_for_google_ads(potential_enums)
 services = filter_services_for_google_ads(potential_services)
 
+operations = enhance_operations_with_classes(operations)
+
 factories_dir = File.join(GEM_ROOT, "lib", "google", "ads", "google_ads", "factories")
 `mkdir -p #{factories_dir}`
 render_template(
@@ -79,4 +81,10 @@ render_template(
   File.join(DIR, "templates", "enums.rb.erb"),
   File.join(factories_dir, "enums.rb"),
   {enums: enums}
+)
+
+render_template(
+  File.join(DIR, "templates", "operations.rb.erb"),
+  File.join(factories_dir, "operations.rb"),
+  {operations: operations}
 )

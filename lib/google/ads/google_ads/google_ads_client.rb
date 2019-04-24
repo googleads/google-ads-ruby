@@ -46,9 +46,10 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
-require 'google/ads/google_ads/factories/resources.rb'
-require 'google/ads/google_ads/factories/services.rb'
-require 'google/ads/google_ads/factories/enums.rb'
+require 'google/ads/google_ads/factories/resources'
+require 'google/ads/google_ads/factories/services'
+require 'google/ads/google_ads/factories/enums'
+require 'google/ads/google_ads/factories/operations'
 
 require 'google/ads/google_ads/errors'
 
@@ -178,8 +179,12 @@ module Google
         # :Campaign will return an instantiated CampaignOperation.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def operation(name, version = default_api_version)
-          lookup_util.operation(name, version)
+        def operation(name=nil, version = default_api_version)
+          if name.nil?
+            Google::Ads::GoogleAds::Factories::Operations
+          else
+            lookup_util.operation(name, version)
+          end
         end
 
         # Return a reference to the enum class for the provided enum type. For

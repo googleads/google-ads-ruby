@@ -1,0 +1,35 @@
+module Google
+  module Ads
+    module GoogleAds
+      module Factories
+        module Operations
+          <% operations.each do |operation| %>
+          def self.<%= operation.operation.name.split("::").last.underscore %>
+            require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+            <%= operation.operation.name %>.new
+          end
+          <% end %>
+          def self.create
+            Create
+          end
+
+          module Create
+            <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
+            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
+              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+              op = <%= operation.operation.name %>.new
+              if res != nil
+                op["create"] = res
+              elsif !blk.nil?
+                op["create"] = Factories::Resources.<%= operation.create_class.name.split("::").last.underscore %>(&blk)
+              end
+
+              op
+            end
+            <% end %>
+          end
+        end
+      end
+    end
+  end
+end

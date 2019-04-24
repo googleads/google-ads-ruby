@@ -38,3 +38,19 @@ def filter_resources_in_to_resources_and_operations(resources)
     !klass.name.end_with?("Operation")
   }
 end
+
+Operation = Struct.new(
+  :operation,
+  :create_class,
+  :update_class,
+  :path
+)
+
+
+def enhance_operations_with_classes(operations)
+  operations = operations.map { |op, path|
+    create_class = op.descriptor.select { |x| x.name == "create" }.map(&:subtype).first&.msgclass
+    update_class = op.descriptor.select { |x| x.name == "update" }.map(&:subtype).first&.msgclass
+    Operation.new(op, update_class, create_class, path)
+  }
+end
