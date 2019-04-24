@@ -1,6 +1,6 @@
-require 'spec_helper'
-require 'tracepoints'
-require 'google/protobuf'
+require "spec_helper"
+require "tracepoints"
+require "google/protobuf"
 
 RSpec.describe "#with_tracepoints" do
   let(:potential_resources) { [] }
@@ -18,13 +18,13 @@ RSpec.describe "#with_tracepoints" do
         build_proto_resource(resource_name)
       end
     }.to change { potential_resources }.from(be_empty).to([
-        # Check we got the proto descriptor back that we expected
-        [
-          an_instance_of(Google::Protobuf::Descriptor).and(
-            have_attributes(:name => resource_name)
-          ),
-          __FILE__,
-        ]
+      # Check we got the proto descriptor back that we expected
+      [
+        an_instance_of(Google::Protobuf::Descriptor).and(
+          have_attributes(name: resource_name)
+        ),
+        __FILE__,
+      ],
     ])
   end
 
@@ -40,19 +40,18 @@ RSpec.describe "#with_tracepoints" do
         build_proto_enum(enum_name)
       end
     }.to change { potential_enums }.from(be_empty).to([
-        # Check we got the proto descriptor back that we expected
-        [
-          an_instance_of(Google::Protobuf::EnumDescriptor).and(
-            have_attributes(:name => enum_name)
-          ),
-          __FILE__,
-        ]
+      # Check we got the proto descriptor back that we expected
+      [
+        an_instance_of(Google::Protobuf::EnumDescriptor).and(
+          have_attributes(name: enum_name)
+        ),
+        __FILE__,
+      ],
     ])
   end
 
   it "writes client classes to the potential_classes array when they are created" do
     allow_any_instance_of(TracePoint).to receive(:path).and_return("_client.rb")
-
 
     expect {
       with_tracepoints(
@@ -66,7 +65,7 @@ RSpec.describe "#with_tracepoints" do
     }.to change { potential_services }.from(be_empty).to([
       [
         have_attributes(name: "FooClient").and(be_an_instance_of(Class)),
-        "_client.rb"
+        "_client.rb",
       ],
     ])
   end

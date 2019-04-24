@@ -33,7 +33,7 @@ end
 
 def filter_resources_in_to_resources_and_operations(resources)
   resources.reject { |klass, path|
-    klass.name.end_with?("Request") || klass.name.end_with?("Response")
+    klass.name.end_with?("Request", "Response")
   }.partition { |klass, _|
     !klass.name.end_with?("Operation")
   }
@@ -46,11 +46,10 @@ Operation = Struct.new(
   :path
 )
 
-
 def enhance_operations_with_classes(operations)
-  operations = operations.map { |op, path|
-    create_class = op.descriptor.select { |x| x.name == "create" }.map(&:subtype).first&.msgclass
-    update_class = op.descriptor.select { |x| x.name == "update" }.map(&:subtype).first&.msgclass
+  operations.map { |op, path|
+    create_class = op.descriptor.select { |x| x.name == "create" }.map(&:subtype).map(&:msgclass).first
+    update_class = op.descriptor.select { |x| x.name == "update" }.map(&:subtype).map(&:msgclass).first
     Operation.new(op, update_class, create_class, path)
   }
 end

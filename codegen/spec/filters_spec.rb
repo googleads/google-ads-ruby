@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'filters'
+require "spec_helper"
+require "filters"
 
 RSpec.describe "#filter_resources_for_google_ads" do
   let(:resource) { double(:resource, msgclass: msgclass) }

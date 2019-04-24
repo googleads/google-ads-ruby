@@ -15,7 +15,7 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
   #
   # Instead filtering is done in the various filter_ functions defined later
   # in this file
-  trace = TracePoint.new(:c_return) do |tp|
+  trace = TracePoint.new(:c_return) { |tp|
     if tp.method_id == :lookup
       ret = tp.return_value
       if Google::Protobuf::EnumDescriptor === ret
@@ -26,18 +26,18 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
         raise "Should be impossible, got: #{ret.inspect}"
       end
     end
-  end
+  }
   trace.enable
 
   # the above caveat about filtering on class names doesn't apply to this
   # tracepoint because it executes on class definitions, and we filter on
   # the class name ending with "Client" to get exactly gapic client classes
   # out
-  trace_services = TracePoint.new(:class) do |tp|
+  trace_services = TracePoint.new(:class) { |tp|
     if /_client.rb$/ === tp.path && tp.self.name.end_with?("Client")
       potential_services << [tp.self, tp.path]
     end
-  end
+  }
   trace_services.enable
 
   blk.call
