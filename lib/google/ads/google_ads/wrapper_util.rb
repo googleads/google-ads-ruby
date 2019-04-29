@@ -43,6 +43,10 @@ module Google
           Google::Protobuf::DoubleValue.new(value: v)
         end
 
+        def self.float(v)
+          Google::Protobuf::FloatValue.new(value: v)
+        end
+
         def self.bytes(v)
           Google::Protobuf::BytesValue.new(value: v)
         end

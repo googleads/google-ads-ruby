@@ -44,6 +44,10 @@ class TestGoogleAdsClient < Minitest::Test
     assert_instance_of(Google::Protobuf::DoubleValue, double)
     assert_equal(3.1415, double.value)
 
+    float = Google::Ads::GoogleAds::WrapperUtil.float(3.1415)
+    assert_instance_of(Google::Protobuf::FloatValue, float)
+    assert_in_delta(3.1415, float.value, 0.0001)
+
     bytes = Google::Ads::GoogleAds::WrapperUtil.bytes("a")
     assert_instance_of(Google::Protobuf::BytesValue, bytes)
     assert_equal("a", bytes.value)
