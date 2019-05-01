@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupService
+    # Proto file describing the Ad Group service.
+    #
     # Service to manage ad groups.
     class Service
 

@@ -211,11 +211,11 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   merchant_center_link_service_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
+            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
-            #   response = merchant_center_link_service_client.list_merchant_center_links(customer_id)
+            #   response = merchant_center_link_client.list_merchant_center_links(customer_id)
 
             def list_merchant_center_links \
                 customer_id,
@@ -243,9 +243,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   merchant_center_link_service_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
+            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MerchantCenterLinkServiceClient.merchant_center_link_path("[CUSTOMER]", "[MERCHANT_CENTER_LINK]")
-            #   response = merchant_center_link_service_client.get_merchant_center_link(formatted_resource_name)
+            #   response = merchant_center_link_client.get_merchant_center_link(formatted_resource_name)
 
             def get_merchant_center_link \
                 resource_name,
@@ -277,14 +277,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   merchant_center_link_service_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
+            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operation`:
             #   operation = {}
-            #   response = merchant_center_link_service_client.mutate_merchant_center_link(customer_id, operation)
+            #   response = merchant_center_link_client.mutate_merchant_center_link(customer_id, operation)
 
             def mutate_merchant_center_link \
                 customer_id,

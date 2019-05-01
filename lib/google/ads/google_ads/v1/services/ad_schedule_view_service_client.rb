@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   ad_schedule_view_service_client = Google::Ads::GoogleAds::AdScheduleView.new(version: :v1)
+            #   ad_schedule_view_client = Google::Ads::GoogleAds::AdScheduleView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AdScheduleViewServiceClient.ad_schedule_view_path("[CUSTOMER]", "[AD_SCHEDULE_VIEW]")
-            #   response = ad_schedule_view_service_client.get_ad_schedule_view(formatted_resource_name)
+            #   response = ad_schedule_view_client.get_ad_schedule_view(formatted_resource_name)
 
             def get_ad_schedule_view \
                 resource_name,

@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   language_constant_service_client = Google::Ads::GoogleAds::LanguageConstant.new(version: :v1)
+            #   language_constant_client = Google::Ads::GoogleAds::LanguageConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::LanguageConstantServiceClient.language_constant_path("[LANGUAGE_CONSTANT]")
-            #   response = language_constant_service_client.get_language_constant(formatted_resource_name)
+            #   response = language_constant_client.get_language_constant(formatted_resource_name)
 
             def get_language_constant \
                 resource_name,

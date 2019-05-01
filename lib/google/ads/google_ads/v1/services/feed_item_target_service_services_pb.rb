@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/feed_item_target_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module FeedItemTargetService
+    # Proto file describing the FeedItemTarget service.
+    #
     # Service to manage feed item targets.
     class Service
 

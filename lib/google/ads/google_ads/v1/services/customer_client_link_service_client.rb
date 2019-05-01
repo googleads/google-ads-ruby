@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_client_link_service_client = Google::Ads::GoogleAds::CustomerClientLink.new(version: :v1)
+            #   customer_client_link_client = Google::Ads::GoogleAds::CustomerClientLink.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CustomerClientLinkServiceClient.customer_client_link_path("[CUSTOMER]", "[CUSTOMER_CLIENT_LINK]")
-            #   response = customer_client_link_service_client.get_customer_client_link(formatted_resource_name)
+            #   response = customer_client_link_client.get_customer_client_link(formatted_resource_name)
 
             def get_customer_client_link \
                 resource_name,
@@ -238,14 +238,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_client_link_service_client = Google::Ads::GoogleAds::CustomerClientLink.new(version: :v1)
+            #   customer_client_link_client = Google::Ads::GoogleAds::CustomerClientLink.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operation`:
             #   operation = {}
-            #   response = customer_client_link_service_client.mutate_customer_client_link(customer_id, operation)
+            #   response = customer_client_link_client.mutate_customer_client_link(customer_id, operation)
 
             def mutate_customer_client_link \
                 customer_id,

@@ -17,6 +17,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :BAD_LIMIT_VALUE, 15
     value :BAD_NUMBER, 5
     value :BAD_OPERATOR, 3
+    value :BAD_PARAMETER_NAME, 61
+    value :BAD_PARAMETER_VALUE, 62
     value :BAD_RESOURCE_TYPE_IN_FROM_CLAUSE, 45
     value :BAD_SYMBOL, 2
     value :BAD_VALUE, 4

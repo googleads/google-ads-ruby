@@ -185,11 +185,11 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   payments_account_service_client = Google::Ads::GoogleAds::PaymentsAccount.new(version: :v1)
+            #   payments_account_client = Google::Ads::GoogleAds::PaymentsAccount.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
-            #   response = payments_account_service_client.list_payments_accounts(customer_id)
+            #   response = payments_account_client.list_payments_accounts(customer_id)
 
             def list_payments_accounts \
                 customer_id,

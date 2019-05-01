@@ -73,6 +73,7 @@ require 'google/ads/google_ads/v1/errors/language_code_error_pb'
 require 'google/ads/google_ads/v1/errors/list_operation_error_pb'
 require 'google/ads/google_ads/v1/errors/media_bundle_error_pb'
 require 'google/ads/google_ads/v1/errors/media_file_error_pb'
+require 'google/ads/google_ads/v1/errors/media_upload_error_pb'
 require 'google/ads/google_ads/v1/errors/multiplier_error_pb'
 require 'google/ads/google_ads/v1/errors/mutate_error_pb'
 require 'google/ads/google_ads/v1/errors/mutate_job_error_pb'
@@ -96,10 +97,12 @@ require 'google/ads/google_ads/v1/errors/resource_count_limit_exceeded_error_pb'
 require 'google/ads/google_ads/v1/errors/setting_error_pb'
 require 'google/ads/google_ads/v1/errors/shared_criterion_error_pb'
 require 'google/ads/google_ads/v1/errors/shared_set_error_pb'
+require 'google/ads/google_ads/v1/errors/size_limit_error_pb'
 require 'google/ads/google_ads/v1/errors/string_format_error_pb'
 require 'google/ads/google_ads/v1/errors/string_length_error_pb'
 require 'google/ads/google_ads/v1/errors/url_field_error_pb'
 require 'google/ads/google_ads/v1/errors/user_list_error_pb'
+require 'google/ads/google_ads/v1/errors/youtube_video_registration_error_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -152,6 +155,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :image_error, :enum, 40, "google.ads.googleads.v1.errors.ImageErrorEnum.ImageError"
       optional :language_code_error, :enum, 110, "google.ads.googleads.v1.errors.LanguageCodeErrorEnum.LanguageCodeError"
       optional :media_bundle_error, :enum, 42, "google.ads.googleads.v1.errors.MediaBundleErrorEnum.MediaBundleError"
+      optional :media_upload_error, :enum, 116, "google.ads.googleads.v1.errors.MediaUploadErrorEnum.MediaUploadError"
       optional :media_file_error, :enum, 86, "google.ads.googleads.v1.errors.MediaFileErrorEnum.MediaFileError"
       optional :multiplier_error, :enum, 44, "google.ads.googleads.v1.errors.MultiplierErrorEnum.MultiplierError"
       optional :new_resource_creation_error, :enum, 45, "google.ads.googleads.v1.errors.NewResourceCreationErrorEnum.NewResourceCreationError"
@@ -167,6 +171,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :operation_access_denied_error, :enum, 55, "google.ads.googleads.v1.errors.OperationAccessDeniedErrorEnum.OperationAccessDeniedError"
       optional :resource_access_denied_error, :enum, 56, "google.ads.googleads.v1.errors.ResourceAccessDeniedErrorEnum.ResourceAccessDeniedError"
       optional :resource_count_limit_exceeded_error, :enum, 57, "google.ads.googleads.v1.errors.ResourceCountLimitExceededErrorEnum.ResourceCountLimitExceededError"
+      optional :youtube_video_registration_error, :enum, 117, "google.ads.googleads.v1.errors.YoutubeVideoRegistrationErrorEnum.YoutubeVideoRegistrationError"
       optional :ad_group_bid_modifier_error, :enum, 59, "google.ads.googleads.v1.errors.AdGroupBidModifierErrorEnum.AdGroupBidModifierError"
       optional :context_error, :enum, 60, "google.ads.googleads.v1.errors.ContextErrorEnum.ContextError"
       optional :field_error, :enum, 61, "google.ads.googleads.v1.errors.FieldErrorEnum.FieldError"
@@ -210,6 +215,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :mutate_job_error, :enum, 108, "google.ads.googleads.v1.errors.MutateJobErrorEnum.MutateJobError"
       optional :partial_failure_error, :enum, 112, "google.ads.googleads.v1.errors.PartialFailureErrorEnum.PartialFailureError"
       optional :policy_validation_parameter_error, :enum, 114, "google.ads.googleads.v1.errors.PolicyValidationParameterErrorEnum.PolicyValidationParameterError"
+      optional :size_limit_error, :enum, 118, "google.ads.googleads.v1.errors.SizeLimitErrorEnum.SizeLimitError"
     end
   end
   add_message "google.ads.googleads.v1.errors.ErrorLocation" do

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/product_group_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ProductGroupViewService
+    # Proto file describing the ProductGroup View service.
+    #
     # Service to manage product group views.
     class Service
 

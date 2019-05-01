@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/keyword_plan_ad_group_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module KeywordPlanAdGroupService
+    # Proto file describing the keyword plan ad group service.
+    #
     # Service to manage Keyword Plan ad groups.
     class Service
 

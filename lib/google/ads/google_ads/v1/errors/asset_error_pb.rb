@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :DUPLICATE_ASSET, 3
     value :DUPLICATE_ASSET_NAME, 4
     value :ASSET_DATA_IS_MISSING, 5
+    value :CANNOT_MODIFY_ASSET_NAME, 6
   end
 end
 

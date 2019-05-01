@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_label_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignLabelService
+    # Proto file describing the Campaign Label service.
+    #
     # Service to manage labels on campaigns.
     class Service
 

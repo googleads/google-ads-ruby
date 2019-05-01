@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_schedule_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdScheduleViewService
+    # Proto file describing the AdSchedule View service.
+    #
     # Service to fetch ad schedule views.
     class Service
 

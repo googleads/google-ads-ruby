@@ -11,6 +11,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
 end
 
-module Google::Ads::GoogleAds::V1::Enums
+module Google::Ads::GoogleAds::V1::Services
   GetProductBiddingCategoryConstantRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.services.GetProductBiddingCategoryConstantRequest").msgclass
 end

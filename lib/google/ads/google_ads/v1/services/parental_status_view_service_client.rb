@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   parental_status_view_service_client = Google::Ads::GoogleAds::ParentalStatusView.new(version: :v1)
+            #   parental_status_view_client = Google::Ads::GoogleAds::ParentalStatusView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ParentalStatusViewServiceClient.parental_status_view_path("[CUSTOMER]", "[PARENTAL_STATUS_VIEW]")
-            #   response = parental_status_view_service_client.get_parental_status_view(formatted_resource_name)
+            #   response = parental_status_view_client.get_parental_status_view(formatted_resource_name)
 
             def get_parental_status_view \
                 resource_name,

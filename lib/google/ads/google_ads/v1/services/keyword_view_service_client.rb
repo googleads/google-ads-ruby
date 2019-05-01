@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_view_service_client = Google::Ads::GoogleAds::KeywordView.new(version: :v1)
+            #   keyword_view_client = Google::Ads::GoogleAds::KeywordView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::KeywordViewServiceClient.keyword_view_path("[CUSTOMER]", "[KEYWORD_VIEW]")
-            #   response = keyword_view_service_client.get_keyword_view(formatted_resource_name)
+            #   response = keyword_view_client.get_keyword_view(formatted_resource_name)
 
             def get_keyword_view \
                 resource_name,

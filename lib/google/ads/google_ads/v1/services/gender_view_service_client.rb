@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   gender_view_service_client = Google::Ads::GoogleAds::GenderView.new(version: :v1)
+            #   gender_view_client = Google::Ads::GoogleAds::GenderView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::GenderViewServiceClient.gender_view_path("[CUSTOMER]", "[GENDER_VIEW]")
-            #   response = gender_view_service_client.get_gender_view(formatted_resource_name)
+            #   response = gender_view_client.get_gender_view(formatted_resource_name)
 
             def get_gender_view \
                 resource_name,

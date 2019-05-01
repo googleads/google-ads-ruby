@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   feed_placeholder_view_service_client = Google::Ads::GoogleAds::FeedPlaceholderView.new(version: :v1)
+            #   feed_placeholder_view_client = Google::Ads::GoogleAds::FeedPlaceholderView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::FeedPlaceholderViewServiceClient.feed_placeholder_view_path("[CUSTOMER]", "[FEED_PLACEHOLDER_VIEW]")
-            #   response = feed_placeholder_view_service_client.get_feed_placeholder_view(formatted_resource_name)
+            #   response = feed_placeholder_view_client.get_feed_placeholder_view(formatted_resource_name)
 
             def get_feed_placeholder_view \
                 resource_name,

@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   topic_view_service_client = Google::Ads::GoogleAds::TopicView.new(version: :v1)
+            #   topic_view_client = Google::Ads::GoogleAds::TopicView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::TopicViewServiceClient.topic_view_path("[CUSTOMER]", "[TOPIC_VIEW]")
-            #   response = topic_view_service_client.get_topic_view(formatted_resource_name)
+            #   response = topic_view_client.get_topic_view(formatted_resource_name)
 
             def get_topic_view \
                 resource_name,

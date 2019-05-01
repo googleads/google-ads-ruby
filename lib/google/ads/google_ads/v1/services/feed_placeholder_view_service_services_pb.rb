@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/feed_placeholder_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module FeedPlaceholderViewService
+    # Proto file describing the FeedPlaceholderView service.
+    #
     # Service to fetch feed placeholder views.
     class Service
 

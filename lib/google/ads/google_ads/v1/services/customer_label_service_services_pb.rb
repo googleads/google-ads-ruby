@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/customer_label_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomerLabelService
+    # Proto file describing the Customer Label service.
+    #
     # Service to manage labels on customers.
     class Service
 

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/video_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module VideoService
+    # Proto file describing the Video service.
+    #
     # Service to manage videos.
     class Service
 

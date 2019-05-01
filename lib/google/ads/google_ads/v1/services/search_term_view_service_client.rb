@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   search_term_view_service_client = Google::Ads::GoogleAds::SearchTermView.new(version: :v1)
+            #   search_term_view_client = Google::Ads::GoogleAds::SearchTermView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::SearchTermViewServiceClient.search_term_view_path("[CUSTOMER]", "[SEARCH_TERM_VIEW]")
-            #   response = search_term_view_service_client.get_search_term_view(formatted_resource_name)
+            #   response = search_term_view_client.get_search_term_view(formatted_resource_name)
 
             def get_search_term_view \
                 resource_name,

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/bidding_strategy_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module BiddingStrategyService
+    # Proto file describing the Bidding Strategy service.
+    #
     # Service to manage bidding strategies.
     class Service
 

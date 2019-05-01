@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   video_service_client = Google::Ads::GoogleAds::Video.new(version: :v1)
+            #   video_client = Google::Ads::GoogleAds::Video.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::VideoServiceClient.video_path("[CUSTOMER]", "[VIDEO]")
-            #   response = video_service_client.get_video(formatted_resource_name)
+            #   response = video_client.get_video(formatted_resource_name)
 
             def get_video \
                 resource_name,

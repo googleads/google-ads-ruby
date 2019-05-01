@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   product_bidding_category_constant_service_client = Google::Ads::GoogleAds::ProductBiddingCategoryConstant.new(version: :v1)
+            #   product_bidding_category_constant_client = Google::Ads::GoogleAds::ProductBiddingCategoryConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ProductBiddingCategoryConstantServiceClient.product_bidding_category_constant_path("[PRODUCT_BIDDING_CATEGORY_CONSTANT]")
-            #   response = product_bidding_category_constant_service_client.get_product_bidding_category_constant(formatted_resource_name)
+            #   response = product_bidding_category_constant_client.get_product_bidding_category_constant(formatted_resource_name)
 
             def get_product_bidding_category_constant \
                 resource_name,

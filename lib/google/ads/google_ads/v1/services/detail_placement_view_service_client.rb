@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   detail_placement_view_service_client = Google::Ads::GoogleAds::DetailPlacementView.new(version: :v1)
+            #   detail_placement_view_client = Google::Ads::GoogleAds::DetailPlacementView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::DetailPlacementViewServiceClient.detail_placement_view_path("[CUSTOMER]", "[DETAIL_PLACEMENT_VIEW]")
-            #   response = detail_placement_view_service_client.get_detail_placement_view(formatted_resource_name)
+            #   response = detail_placement_view_client.get_detail_placement_view(formatted_resource_name)
 
             def get_detail_placement_view \
                 resource_name,

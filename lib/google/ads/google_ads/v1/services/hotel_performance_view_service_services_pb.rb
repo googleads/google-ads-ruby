@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/hotel_performance_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module HotelPerformanceViewService
+    # Proto file describing the Hotel Performance View Service.
+    #
     # Service to manage Hotel Performance Views.
     class Service
 

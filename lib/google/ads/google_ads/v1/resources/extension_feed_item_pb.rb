@@ -3,9 +3,11 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v1/common/criteria_pb'
 require 'google/ads/google_ads/v1/common/extensions_pb'
 require 'google/ads/google_ads/v1/enums/extension_type_pb'
 require 'google/ads/google_ads/v1/enums/feed_item_status_pb'
+require 'google/ads/google_ads/v1/enums/feed_item_target_device_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -14,6 +16,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :extension_type, :enum, 13, "google.ads.googleads.v1.enums.ExtensionTypeEnum.ExtensionType"
     optional :start_date_time, :message, 5, "google.protobuf.StringValue"
     optional :end_date_time, :message, 6, "google.protobuf.StringValue"
+    repeated :ad_schedules, :message, 16, "google.ads.googleads.v1.common.AdScheduleInfo"
+    optional :device, :enum, 17, "google.ads.googleads.v1.enums.FeedItemTargetDeviceEnum.FeedItemTargetDevice"
     optional :status, :enum, 4, "google.ads.googleads.v1.enums.FeedItemStatusEnum.FeedItemStatus"
     oneof :extension do
       optional :sitelink_feed_item, :message, 2, "google.ads.googleads.v1.common.SitelinkFeedItem"
@@ -24,6 +28,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :text_message_feed_item, :message, 10, "google.ads.googleads.v1.common.TextMessageFeedItem"
       optional :price_feed_item, :message, 11, "google.ads.googleads.v1.common.PriceFeedItem"
       optional :promotion_feed_item, :message, 12, "google.ads.googleads.v1.common.PromotionFeedItem"
+      optional :location_feed_item, :message, 14, "google.ads.googleads.v1.common.LocationFeedItem"
+      optional :affiliate_location_feed_item, :message, 15, "google.ads.googleads.v1.common.AffiliateLocationFeedItem"
     end
   end
 end

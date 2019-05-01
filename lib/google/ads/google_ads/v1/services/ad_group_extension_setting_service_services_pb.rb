@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_extension_setting_service_pb
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupExtensionSettingService
+    # Proto file describing the AdGroupExtensionSetting service.
+    #
     # Service to manage ad group extension settings.
     class Service
 

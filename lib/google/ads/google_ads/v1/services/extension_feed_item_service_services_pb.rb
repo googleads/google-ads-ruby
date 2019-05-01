@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/extension_feed_item_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ExtensionFeedItemService
+    # Proto file describing the ExtensionFeedItem service.
+    #
     # Service to manage extension feed items.
     class Service
 

@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_ad_group_service_client = Google::Ads::GoogleAds::KeywordPlanAdGroup.new(version: :v1)
+            #   keyword_plan_ad_group_client = Google::Ads::GoogleAds::KeywordPlanAdGroup.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::KeywordPlanAdGroupServiceClient.keyword_plan_ad_group_path("[CUSTOMER]", "[KEYWORD_PLAN_AD_GROUP]")
-            #   response = keyword_plan_ad_group_service_client.get_keyword_plan_ad_group(formatted_resource_name)
+            #   response = keyword_plan_ad_group_client.get_keyword_plan_ad_group(formatted_resource_name)
 
             def get_keyword_plan_ad_group \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_ad_group_service_client = Google::Ads::GoogleAds::KeywordPlanAdGroup.new(version: :v1)
+            #   keyword_plan_ad_group_client = Google::Ads::GoogleAds::KeywordPlanAdGroup.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = keyword_plan_ad_group_service_client.mutate_keyword_plan_ad_groups(customer_id, operations)
+            #   response = keyword_plan_ad_group_client.mutate_keyword_plan_ad_groups(customer_id, operations)
 
             def mutate_keyword_plan_ad_groups \
                 customer_id,

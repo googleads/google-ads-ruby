@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_audience_view_service_client = Google::Ads::GoogleAds::CampaignAudienceView.new(version: :v1)
+            #   campaign_audience_view_client = Google::Ads::GoogleAds::CampaignAudienceView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CampaignAudienceViewServiceClient.campaign_audience_view_path("[CUSTOMER]", "[CAMPAIGN_AUDIENCE_VIEW]")
-            #   response = campaign_audience_view_service_client.get_campaign_audience_view(formatted_resource_name)
+            #   response = campaign_audience_view_client.get_campaign_audience_view(formatted_resource_name)
 
             def get_campaign_audience_view \
                 resource_name,

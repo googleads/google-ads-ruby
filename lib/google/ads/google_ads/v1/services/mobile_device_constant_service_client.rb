@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mobile_device_constant_service_client = Google::Ads::GoogleAds::MobileDeviceConstant.new(version: :v1)
+            #   mobile_device_constant_client = Google::Ads::GoogleAds::MobileDeviceConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MobileDeviceConstantServiceClient.mobile_device_constant_path("[MOBILE_DEVICE_CONSTANT]")
-            #   response = mobile_device_constant_service_client.get_mobile_device_constant(formatted_resource_name)
+            #   response = mobile_device_constant_client.get_mobile_device_constant(formatted_resource_name)
 
             def get_mobile_device_constant \
                 resource_name,

@@ -87,6 +87,23 @@ module Google
                   )
             end
 
+            def ad_group_criterion_simulation(customer_id, ad_group_id,
+                criterion_id, type, modification_method, start_date, end_date)
+              @proto_lookup_util.service(:AdGroupCriterionSimulation).
+                  ad_group_criterion_simulation_path(
+                    customer_id.to_s,
+                    sprintf(
+                      '%s~%s~%s~%s~%s~%s',
+                      ad_group_id.to_s,
+                      criterion_id.to_s,
+                      type.to_s,
+                      modification_method.to_s,
+                      start_date.to_s,
+                      end_date.to_s,
+                    )
+                  )
+            end
+
             def ad_group_extension_setting(customer_id, ad_group_id,
                 extension_type)
               @proto_lookup_util.service(:AdGroupExtensionSetting).
@@ -113,6 +130,22 @@ module Google
             def ad_group(customer_id, ad_group_id)
               @proto_lookup_util.service(:AdGroup).ad_group_path(
                   customer_id.to_s, ad_group_id.to_s)
+            end
+
+            def ad_group_simulation(customer_id, ad_group_id, type,
+                modification_method, start_date, end_date)
+              @proto_lookup_util.service(:AdGroupSimulation).
+                ad_group_simulation_path(
+                  customer_id.to_s,
+                  sprintf(
+                    '%s~%s~%s~%s~%s',
+                    ad_group_id.to_s,
+                    type.to_s,
+                    modification_method.to_s,
+                    start_date.to_s,
+                    end_date.to_s,
+                  )
+              )
             end
 
             def ad_parameter(customer_id, ad_group_id, criterion_id,
@@ -182,6 +215,23 @@ module Google
                     customer_id.to_s,
                     sprintf('%s~%s', campaign_id.to_s, criterion_id.to_s)
                   )
+            end
+
+            def campaign_criterion_simulation(customer_id, campaign_id, criterion_id,
+                type, modification_method, start_date, end_date)
+              @proto_lookup_util.service(:CampaignCriterionSimulation).
+                campaign_criterion_simulation_path(
+                  customer_id.to_s,
+                  sprintf(
+                    '%s~%s~%s~%s~%s~%s',
+                    campaign_id.to_s,
+                    criterion_id.to_s,
+                    type.to_s,
+                    modification_method.to_s,
+                    start_date.to_s,
+                    end_date.to_s,
+                  )
+              )
             end
 
             def campaign_extension_setting(customer_id, campaign_id,
@@ -349,6 +399,14 @@ module Google
                       page_url.to_s
                     )
                   )
+            end
+
+            def expanded_landing_page_view(customer_id, expanded_final_url_fingerprint)
+              @proto_lookup_util.service(:ExpandedLandingPageView).
+                expanded_landing_page_view_path(
+                  customer_id.to_s,
+                  expanded_final_url_fingerprint.to_s,
+                )
             end
 
             def extension_feed_item(customer_id, feed_item_id)

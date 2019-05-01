@@ -99,6 +99,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :IMAGE_SIZE_WRONG, 88
     value :EMAIL_DELIVERY_NOT_AVAILABLE_IN_COUNTRY, 89
     value :AUTO_REPLY_NOT_AVAILABLE_IN_COUNTRY, 90
+    value :INVALID_LATITUDE_VALUE, 91
+    value :INVALID_LONGITUDE_VALUE, 92
+    value :TOO_MANY_LABELS, 93
+    value :INVALID_IMAGE_URL, 94
+    value :MISSING_LATITUDE_VALUE, 95
+    value :MISSING_LONGITUDE_VALUE, 96
   end
 end
 

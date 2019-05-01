@@ -214,9 +214,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_service_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
+            #   keyword_plan_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::KeywordPlanServiceClient.keyword_plan_path("[CUSTOMER]", "[KEYWORD_PLAN]")
-            #   response = keyword_plan_service_client.get_keyword_plan(formatted_resource_name)
+            #   response = keyword_plan_client.get_keyword_plan(formatted_resource_name)
 
             def get_keyword_plan \
                 resource_name,
@@ -257,14 +257,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_service_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
+            #   keyword_plan_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = keyword_plan_service_client.mutate_keyword_plans(customer_id, operations)
+            #   response = keyword_plan_client.mutate_keyword_plans(customer_id, operations)
 
             def mutate_keyword_plans \
                 customer_id,
@@ -298,9 +298,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_service_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
+            #   keyword_plan_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
             #   formatted_keyword_plan = Google::Ads::GoogleAds::V1::Services::KeywordPlanServiceClient.keyword_plan_path("[CUSTOMER]", "[KEYWORD_PLAN]")
-            #   response = keyword_plan_service_client.generate_forecast_metrics(formatted_keyword_plan)
+            #   response = keyword_plan_client.generate_forecast_metrics(formatted_keyword_plan)
 
             def generate_forecast_metrics \
                 keyword_plan,
@@ -329,9 +329,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_service_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
+            #   keyword_plan_client = Google::Ads::GoogleAds::KeywordPlan.new(version: :v1)
             #   formatted_keyword_plan = Google::Ads::GoogleAds::V1::Services::KeywordPlanServiceClient.keyword_plan_path("[CUSTOMER]", "[KEYWORD_PLAN]")
-            #   response = keyword_plan_service_client.generate_historical_metrics(formatted_keyword_plan)
+            #   response = keyword_plan_client.generate_historical_metrics(formatted_keyword_plan)
 
             def generate_historical_metrics \
                 keyword_plan,

@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_service_client = Google::Ads::GoogleAds::Campaign.new(version: :v1)
+            #   campaign_client = Google::Ads::GoogleAds::Campaign.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CampaignServiceClient.campaign_path("[CUSTOMER]", "[CAMPAIGN]")
-            #   response = campaign_service_client.get_campaign(formatted_resource_name)
+            #   response = campaign_client.get_campaign(formatted_resource_name)
 
             def get_campaign \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_service_client = Google::Ads::GoogleAds::Campaign.new(version: :v1)
+            #   campaign_client = Google::Ads::GoogleAds::Campaign.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = campaign_service_client.mutate_campaigns(customer_id, operations)
+            #   response = campaign_client.mutate_campaigns(customer_id, operations)
 
             def mutate_campaigns \
                 customer_id,

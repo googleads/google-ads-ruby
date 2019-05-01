@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_action_service_client = Google::Ads::GoogleAds::ConversionAction.new(version: :v1)
+            #   conversion_action_client = Google::Ads::GoogleAds::ConversionAction.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ConversionActionServiceClient.conversion_action_path("[CUSTOMER]", "[CONVERSION_ACTION]")
-            #   response = conversion_action_service_client.get_conversion_action(formatted_resource_name)
+            #   response = conversion_action_client.get_conversion_action(formatted_resource_name)
 
             def get_conversion_action \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_action_service_client = Google::Ads::GoogleAds::ConversionAction.new(version: :v1)
+            #   conversion_action_client = Google::Ads::GoogleAds::ConversionAction.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = conversion_action_service_client.mutate_conversion_actions(customer_id, operations)
+            #   response = conversion_action_client.mutate_conversion_actions(customer_id, operations)
 
             def mutate_conversion_actions \
                 customer_id,

@@ -24,6 +24,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :width_pixels, :message, 2, "google.protobuf.Int64Value"
     optional :url, :message, 3, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v1.common.TextAsset" do
+    optional :text, :message, 1, "google.protobuf.StringValue"
+  end
 end
 
 module Google::Ads::GoogleAds::V1::Common
@@ -31,4 +34,5 @@ module Google::Ads::GoogleAds::V1::Common
   MediaBundleAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.MediaBundleAsset").msgclass
   ImageAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ImageAsset").msgclass
   ImageDimension = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ImageDimension").msgclass
+  TextAsset = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.TextAsset").msgclass
 end

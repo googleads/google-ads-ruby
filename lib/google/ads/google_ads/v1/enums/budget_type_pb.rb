@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :STANDARD, 2
     value :HOTEL_ADS_COMMISSION, 3
+    value :FIXED_CPA, 4
   end
 end
 

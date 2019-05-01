@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/mobile_device_constant_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module MobileDeviceConstantService
+    # Proto file describing the mobile device constant service.
+    #
     # Service to fetch mobile device constants.
     class Service
 

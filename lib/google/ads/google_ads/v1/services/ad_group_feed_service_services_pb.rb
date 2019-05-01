@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_feed_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupFeedService
+    # Proto file describing the AdGroupFeed service.
+    #
     # Service to manage ad group feeds.
     class Service
 

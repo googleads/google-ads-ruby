@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/change_status_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ChangeStatusService
+    # Proto file describing the Change Status service.
+    #
     # Service to fetch change statuses.
     class Service
 

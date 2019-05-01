@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/operating_system_version_constant_ser
 
 module Google::Ads::GoogleAds::V1::Services
   module OperatingSystemVersionConstantService
+    # Proto file describing the OS version constant service
+    #
     # Service to fetch Operating System Version constants.
     class Service
 

@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_label_service_client = Google::Ads::GoogleAds::CustomerLabel.new(version: :v1)
+            #   customer_label_client = Google::Ads::GoogleAds::CustomerLabel.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CustomerLabelServiceClient.customer_label_path("[CUSTOMER]", "[CUSTOMER_LABEL]")
-            #   response = customer_label_service_client.get_customer_label(formatted_resource_name)
+            #   response = customer_label_client.get_customer_label(formatted_resource_name)
 
             def get_customer_label \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_label_service_client = Google::Ads::GoogleAds::CustomerLabel.new(version: :v1)
+            #   customer_label_client = Google::Ads::GoogleAds::CustomerLabel.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = customer_label_service_client.mutate_customer_labels(customer_id, operations)
+            #   response = customer_label_client.mutate_customer_labels(customer_id, operations)
 
             def mutate_customer_labels \
                 customer_id,

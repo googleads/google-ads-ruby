@@ -39,6 +39,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MOBILE_DEVICE, 28
     value :CUSTOM_AFFINITY, 29
     value :CUSTOM_INTENT, 30
+    value :LOCATION_GROUP, 31
   end
 end
 

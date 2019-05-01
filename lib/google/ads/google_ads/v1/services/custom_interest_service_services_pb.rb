@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/custom_interest_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomInterestService
+    # Proto file describing the Custom Interest service.
+    #
     # Service to manage custom interests.
     class Service
 

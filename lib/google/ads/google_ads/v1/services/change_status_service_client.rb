@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   change_status_service_client = Google::Ads::GoogleAds::ChangeStatus.new(version: :v1)
+            #   change_status_client = Google::Ads::GoogleAds::ChangeStatus.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ChangeStatusServiceClient.change_status_path("[CUSTOMER]", "[CHANGE_STATUS]")
-            #   response = change_status_service_client.get_change_status(formatted_resource_name)
+            #   response = change_status_client.get_change_status(formatted_resource_name)
 
             def get_change_status \
                 resource_name,

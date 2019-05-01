@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   user_interest_service_client = Google::Ads::GoogleAds::UserInterest.new(version: :v1)
+            #   user_interest_client = Google::Ads::GoogleAds::UserInterest.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::UserInterestServiceClient.user_interest_path("[CUSTOMER]", "[USER_INTEREST]")
-            #   response = user_interest_service_client.get_user_interest(formatted_resource_name)
+            #   response = user_interest_client.get_user_interest(formatted_resource_name)
 
             def get_user_interest \
                 resource_name,

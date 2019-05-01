@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/google_ads_field_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module GoogleAdsFieldService
+    # Proto file describing the GoogleAdsFieldService
+    #
     # Service to fetch Google Ads API fields.
     class Service
 

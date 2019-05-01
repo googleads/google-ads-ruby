@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/customer_feed_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomerFeedService
+    # Proto file describing the CustomerFeed service.
+    #
     # Service to manage customer feeds.
     class Service
 

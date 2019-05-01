@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_shared_set_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignSharedSetService
+    # Proto file describing the Campaign Shared Set service.
+    #
     # Service to manage campaign shared sets.
     class Service
 

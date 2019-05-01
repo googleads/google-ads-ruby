@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/geo_target_constant_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module GeoTargetConstantService
+    # Proto file describing the Geo target constant service.
+    #
     # Service to fetch geo target constants.
     class Service
 

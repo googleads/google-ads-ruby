@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_negative_criterion_service_client = Google::Ads::GoogleAds::CustomerNegativeCriterion.new(version: :v1)
+            #   customer_negative_criterion_client = Google::Ads::GoogleAds::CustomerNegativeCriterion.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CustomerNegativeCriterionServiceClient.customer_negative_criteria_path("[CUSTOMER]", "[CUSTOMER_NEGATIVE_CRITERIA]")
-            #   response = customer_negative_criterion_service_client.get_customer_negative_criterion(formatted_resource_name)
+            #   response = customer_negative_criterion_client.get_customer_negative_criterion(formatted_resource_name)
 
             def get_customer_negative_criterion \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_negative_criterion_service_client = Google::Ads::GoogleAds::CustomerNegativeCriterion.new(version: :v1)
+            #   customer_negative_criterion_client = Google::Ads::GoogleAds::CustomerNegativeCriterion.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = customer_negative_criterion_service_client.mutate_customer_negative_criteria(customer_id, operations)
+            #   response = customer_negative_criterion_client.mutate_customer_negative_criteria(customer_id, operations)
 
             def mutate_customer_negative_criteria \
                 customer_id,

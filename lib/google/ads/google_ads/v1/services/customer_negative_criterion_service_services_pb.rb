@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/customer_negative_criterion_service_p
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomerNegativeCriterionService
+    # Proto file describing the Customer Negative Criterion service.
+    #
     # Service to manage customer negative criteria.
     class Service
 
