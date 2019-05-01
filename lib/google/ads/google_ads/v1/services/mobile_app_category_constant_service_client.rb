@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mobile_app_category_constant_service_client = Google::Ads::GoogleAds::MobileAppCategoryConstant.new(version: :v1)
+            #   mobile_app_category_constant_client = Google::Ads::GoogleAds::MobileAppCategoryConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MobileAppCategoryConstantServiceClient.mobile_app_category_constant_path("[MOBILE_APP_CATEGORY_CONSTANT]")
-            #   response = mobile_app_category_constant_service_client.get_mobile_app_category_constant(formatted_resource_name)
+            #   response = mobile_app_category_constant_client.get_mobile_app_category_constant(formatted_resource_name)
 
             def get_mobile_app_category_constant \
                 resource_name,

@@ -13,10 +13,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :YOUTUBE_VIDEO, 2
     value :MEDIA_BUNDLE, 3
     value :IMAGE, 4
+    value :TEXT, 5
   end
 end
 
-module Google::Ads::GoogleAds::V1::Common
+module Google::Ads::GoogleAds::V1::Enums
   AssetTypeEnum = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.enums.AssetTypeEnum").msgclass
   AssetTypeEnum::AssetType = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.enums.AssetTypeEnum.AssetType").enummodule
 end

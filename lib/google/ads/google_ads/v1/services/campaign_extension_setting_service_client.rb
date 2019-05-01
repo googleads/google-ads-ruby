@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_extension_setting_service_client = Google::Ads::GoogleAds::CampaignExtensionSetting.new(version: :v1)
+            #   campaign_extension_setting_client = Google::Ads::GoogleAds::CampaignExtensionSetting.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CampaignExtensionSettingServiceClient.campaign_extension_setting_path("[CUSTOMER]", "[CAMPAIGN_EXTENSION_SETTING]")
-            #   response = campaign_extension_setting_service_client.get_campaign_extension_setting(formatted_resource_name)
+            #   response = campaign_extension_setting_client.get_campaign_extension_setting(formatted_resource_name)
 
             def get_campaign_extension_setting \
                 resource_name,
@@ -249,14 +249,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_extension_setting_service_client = Google::Ads::GoogleAds::CampaignExtensionSetting.new(version: :v1)
+            #   campaign_extension_setting_client = Google::Ads::GoogleAds::CampaignExtensionSetting.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = campaign_extension_setting_service_client.mutate_campaign_extension_settings(customer_id, operations)
+            #   response = campaign_extension_setting_client.mutate_campaign_extension_settings(customer_id, operations)
 
             def mutate_campaign_extension_settings \
                 customer_id,

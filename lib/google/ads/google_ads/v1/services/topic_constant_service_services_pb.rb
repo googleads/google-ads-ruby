@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/topic_constant_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module TopicConstantService
+    # Proto file describing the Topic constant service
+    #
     # Service to fetch topic constants.
     class Service
 

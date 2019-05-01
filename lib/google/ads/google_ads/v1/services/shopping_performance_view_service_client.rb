@@ -62,26 +62,11 @@ module Google
 
             private_constant :SHOPPING_PERFORMANCE_VIEW_PATH_TEMPLATE
 
-            CUSTOMER_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}"
-            )
-
-            private_constant :CUSTOMER_PATH_TEMPLATE
-
             # Returns a fully-qualified shopping_performance_view resource name string.
             # @param customer [String]
             # @return [String]
             def self.shopping_performance_view_path customer
               SHOPPING_PERFORMANCE_VIEW_PATH_TEMPLATE.render(
-                :"customer" => customer
-              )
-            end
-
-            # Returns a fully-qualified customer resource name string.
-            # @param customer [String]
-            # @return [String]
-            def self.customer_path customer
-              CUSTOMER_PATH_TEMPLATE.render(
                 :"customer" => customer
               )
             end
@@ -212,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   shopping_performance_view_service_client = Google::Ads::GoogleAds::ShoppingPerformanceView.new(version: :v1)
-            #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ShoppingPerformanceViewServiceClient.customer_path("[CUSTOMER]")
-            #   response = shopping_performance_view_service_client.get_shopping_performance_view(formatted_resource_name)
+            #   shopping_performance_view_client = Google::Ads::GoogleAds::ShoppingPerformanceView.new(version: :v1)
+            #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ShoppingPerformanceViewServiceClient.shopping_performance_view_path("[CUSTOMER]")
+            #   response = shopping_performance_view_client.get_shopping_performance_view(formatted_resource_name)
 
             def get_shopping_performance_view \
                 resource_name,

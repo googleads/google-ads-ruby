@@ -209,9 +209,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   recommendation_service_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
+            #   recommendation_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::RecommendationServiceClient.recommendation_path("[CUSTOMER]", "[RECOMMENDATION]")
-            #   response = recommendation_service_client.get_recommendation(formatted_resource_name)
+            #   response = recommendation_client.get_recommendation(formatted_resource_name)
 
             def get_recommendation \
                 resource_name,
@@ -250,14 +250,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   recommendation_service_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
+            #   recommendation_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = recommendation_service_client.apply_recommendation(customer_id, operations)
+            #   response = recommendation_client.apply_recommendation(customer_id, operations)
 
             def apply_recommendation \
                 customer_id,
@@ -300,14 +300,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   recommendation_service_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
+            #   recommendation_client = Google::Ads::GoogleAds::Recommendation.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = recommendation_service_client.dismiss_recommendation(customer_id, operations)
+            #   response = recommendation_client.dismiss_recommendation(customer_id, operations)
 
             def dismiss_recommendation \
                 customer_id,

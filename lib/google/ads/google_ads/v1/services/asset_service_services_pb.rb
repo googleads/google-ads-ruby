@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/asset_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AssetService
+    # Proto file describing the Asset service.
+    #
     # Service to manage assets.
     class Service
 

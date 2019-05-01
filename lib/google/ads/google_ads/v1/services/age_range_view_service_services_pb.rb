@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/age_range_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AgeRangeViewService
+    # Proto file describing the Age Range View service.
+    #
     # Service to manage age range views.
     class Service
 

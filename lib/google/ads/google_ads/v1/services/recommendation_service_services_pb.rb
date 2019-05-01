@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/recommendation_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module RecommendationService
+    # Proto file describing the Recommendation service.
+    #
     # Service to manage recommendations.
     class Service
 

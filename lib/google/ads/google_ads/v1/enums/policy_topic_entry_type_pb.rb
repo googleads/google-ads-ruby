@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :PROHIBITED, 2
     value :LIMITED, 4
+    value :FULLY_LIMITED, 8
     value :DESCRIPTIVE, 5
     value :BROADENING, 6
     value :AREA_OF_INTEREST_ONLY, 7

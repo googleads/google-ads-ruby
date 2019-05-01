@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/geographic_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module GeographicViewService
+    # Proto file describing the GeographicViewService.
+    #
     # Service to manage geographic views.
     class Service
 

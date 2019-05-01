@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   topic_constant_service_client = Google::Ads::GoogleAds::TopicConstant.new(version: :v1)
+            #   topic_constant_client = Google::Ads::GoogleAds::TopicConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::TopicConstantServiceClient.topic_constant_path("[TOPIC_CONSTANT]")
-            #   response = topic_constant_service_client.get_topic_constant(formatted_resource_name)
+            #   response = topic_constant_client.get_topic_constant(formatted_resource_name)
 
             def get_topic_constant \
                 resource_name,

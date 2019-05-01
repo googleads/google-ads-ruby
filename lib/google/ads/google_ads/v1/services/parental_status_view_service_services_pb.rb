@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/parental_status_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ParentalStatusViewService
+    # Proto file describing the Parental Status View service.
+    #
     # Service to manage parental status views.
     class Service
 

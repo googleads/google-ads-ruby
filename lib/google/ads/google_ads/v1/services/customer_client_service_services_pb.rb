@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/customer_client_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomerClientService
+    # Proto file describing the Customer Client service.
+    #
     # Service to get clients in a customer's hierarchy.
     class Service
 

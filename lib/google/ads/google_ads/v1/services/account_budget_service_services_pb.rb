@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/account_budget_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AccountBudgetService
+    # Proto file describing the AccountBudget service.
+    #
     # A service for fetching an account-level budget.
     #
     # Account-level budgets are mutated by creating proposal resources.

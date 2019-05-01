@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   age_range_view_service_client = Google::Ads::GoogleAds::AgeRangeView.new(version: :v1)
+            #   age_range_view_client = Google::Ads::GoogleAds::AgeRangeView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AgeRangeViewServiceClient.age_range_view_path("[CUSTOMER]", "[AGE_RANGE_VIEW]")
-            #   response = age_range_view_service_client.get_age_range_view(formatted_resource_name)
+            #   response = age_range_view_client.get_age_range_view(formatted_resource_name)
 
             def get_age_range_view \
                 resource_name,

@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   domain_category_service_client = Google::Ads::GoogleAds::DomainCategory.new(version: :v1)
+            #   domain_category_client = Google::Ads::GoogleAds::DomainCategory.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::DomainCategoryServiceClient.domain_category_path("[CUSTOMER]", "[DOMAIN_CATEGORY]")
-            #   response = domain_category_service_client.get_domain_category(formatted_resource_name)
+            #   response = domain_category_client.get_domain_category(formatted_resource_name)
 
             def get_domain_category \
                 resource_name,

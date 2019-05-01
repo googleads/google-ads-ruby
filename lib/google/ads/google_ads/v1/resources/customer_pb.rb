@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v1/enums/customer_pay_per_conversion_eligibility_failure_reason_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -21,6 +22,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :call_reporting_setting, :message, 10, "google.ads.googleads.v1.resources.CallReportingSetting"
     optional :conversion_tracking_setting, :message, 14, "google.ads.googleads.v1.resources.ConversionTrackingSetting"
     optional :remarketing_setting, :message, 15, "google.ads.googleads.v1.resources.RemarketingSetting"
+    repeated :pay_per_conversion_eligibility_failure_reasons, :enum, 16, "google.ads.googleads.v1.enums.CustomerPayPerConversionEligibilityFailureReasonEnum.CustomerPayPerConversionEligibilityFailureReason"
   end
   add_message "google.ads.googleads.v1.resources.CallReportingSetting" do
     optional :call_reporting_enabled, :message, 1, "google.protobuf.BoolValue"

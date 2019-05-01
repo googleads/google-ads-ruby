@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/shared_criterion_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module SharedCriterionService
+    # Proto file describing the Shared Criterion service.
+    #
     # Service to manage shared criteria.
     class Service
 

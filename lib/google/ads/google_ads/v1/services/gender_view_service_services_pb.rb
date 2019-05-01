@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/gender_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module GenderViewService
+    # Proto file describing the Gender View service.
+    #
     # Service to manage gender views.
     class Service
 

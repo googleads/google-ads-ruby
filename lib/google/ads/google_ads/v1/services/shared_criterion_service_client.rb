@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   shared_criterion_service_client = Google::Ads::GoogleAds::SharedCriterion.new(version: :v1)
+            #   shared_criterion_client = Google::Ads::GoogleAds::SharedCriterion.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::SharedCriterionServiceClient.shared_criteria_path("[CUSTOMER]", "[SHARED_CRITERIA]")
-            #   response = shared_criterion_service_client.get_shared_criterion(formatted_resource_name)
+            #   response = shared_criterion_client.get_shared_criterion(formatted_resource_name)
 
             def get_shared_criterion \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   shared_criterion_service_client = Google::Ads::GoogleAds::SharedCriterion.new(version: :v1)
+            #   shared_criterion_client = Google::Ads::GoogleAds::SharedCriterion.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = shared_criterion_service_client.mutate_shared_criteria(customer_id, operations)
+            #   response = shared_criterion_client.mutate_shared_criteria(customer_id, operations)
 
             def mutate_shared_criteria \
                 customer_id,

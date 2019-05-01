@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/location_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module LocationViewService
+    # Proto file describing the Location View service.
+    #
     # Service to fetch location views.
     class Service
 

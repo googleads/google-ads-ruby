@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_feed_service_client = Google::Ads::GoogleAds::CampaignFeed.new(version: :v1)
+            #   campaign_feed_client = Google::Ads::GoogleAds::CampaignFeed.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CampaignFeedServiceClient.campaign_feed_path("[CUSTOMER]", "[CAMPAIGN_FEED]")
-            #   response = campaign_feed_service_client.get_campaign_feed(formatted_resource_name)
+            #   response = campaign_feed_client.get_campaign_feed(formatted_resource_name)
 
             def get_campaign_feed \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_feed_service_client = Google::Ads::GoogleAds::CampaignFeed.new(version: :v1)
+            #   campaign_feed_client = Google::Ads::GoogleAds::CampaignFeed.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = campaign_feed_service_client.mutate_campaign_feeds(customer_id, operations)
+            #   response = campaign_feed_client.mutate_campaign_feeds(customer_id, operations)
 
             def mutate_campaign_feeds \
                 customer_id,

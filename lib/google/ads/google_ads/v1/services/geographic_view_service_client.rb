@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   geographic_view_service_client = Google::Ads::GoogleAds::GeographicView.new(version: :v1)
+            #   geographic_view_client = Google::Ads::GoogleAds::GeographicView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::GeographicViewServiceClient.geographic_view_path("[CUSTOMER]", "[GEOGRAPHIC_VIEW]")
-            #   response = geographic_view_service_client.get_geographic_view(formatted_resource_name)
+            #   response = geographic_view_client.get_geographic_view(formatted_resource_name)
 
             def get_geographic_view \
                 resource_name,

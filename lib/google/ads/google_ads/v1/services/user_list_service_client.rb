@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   user_list_service_client = Google::Ads::GoogleAds::UserList.new(version: :v1)
+            #   user_list_client = Google::Ads::GoogleAds::UserList.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::UserListServiceClient.user_list_path("[CUSTOMER]", "[USER_LIST]")
-            #   response = user_list_service_client.get_user_list(formatted_resource_name)
+            #   response = user_list_client.get_user_list(formatted_resource_name)
 
             def get_user_list \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   user_list_service_client = Google::Ads::GoogleAds::UserList.new(version: :v1)
+            #   user_list_client = Google::Ads::GoogleAds::UserList.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = user_list_service_client.mutate_user_lists(customer_id, operations)
+            #   response = user_list_client.mutate_user_lists(customer_id, operations)
 
             def mutate_user_lists \
                 customer_id,

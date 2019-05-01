@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_client_service_client = Google::Ads::GoogleAds::CustomerClient.new(version: :v1)
+            #   customer_client_client = Google::Ads::GoogleAds::CustomerClient.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CustomerClientServiceClient.customer_client_path("[CUSTOMER]", "[CUSTOMER_CLIENT]")
-            #   response = customer_client_service_client.get_customer_client(formatted_resource_name)
+            #   response = customer_client_client.get_customer_client(formatted_resource_name)
 
             def get_customer_client \
                 resource_name,

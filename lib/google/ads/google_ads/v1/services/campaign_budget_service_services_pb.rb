@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_budget_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignBudgetService
+    # Proto file describing the Campaign Budget service.
+    #
     # Service to manage campaign budgets.
     class Service
 

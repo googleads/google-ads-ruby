@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/user_list_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module UserListService
+    # Proto file describing the User List service.
+    #
     # Service to manage user lists.
     class Service
 

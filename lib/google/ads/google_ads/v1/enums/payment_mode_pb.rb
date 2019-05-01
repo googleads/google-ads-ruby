@@ -12,6 +12,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :UNKNOWN, 1
     value :CLICKS, 4
     value :CONVERSION_VALUE, 5
+    value :CONVERSIONS, 6
   end
 end
 

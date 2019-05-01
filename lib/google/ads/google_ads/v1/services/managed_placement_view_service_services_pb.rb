@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/managed_placement_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ManagedPlacementViewService
+    # Proto file describing the Managed Placement View service.
+    #
     # Service to manage Managed Placement views.
     class Service
 

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/hotel_group_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module HotelGroupViewService
+    # Proto file describing the Hotel Group View Service.
+    #
     # Service to manage Hotel Group Views.
     class Service
 

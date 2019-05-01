@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/merchant_center_link_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module MerchantCenterLinkService
+    # Proto file describing the MerchantCenterLink service.
+    #
     # This service allows management of links between Google Ads and Google
     # Merchant Center.
     class Service

@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   extension_feed_item_service_client = Google::Ads::GoogleAds::ExtensionFeedItem.new(version: :v1)
+            #   extension_feed_item_client = Google::Ads::GoogleAds::ExtensionFeedItem.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ExtensionFeedItemServiceClient.extension_feed_item_path("[CUSTOMER]", "[EXTENSION_FEED_ITEM]")
-            #   response = extension_feed_item_service_client.get_extension_feed_item(formatted_resource_name)
+            #   response = extension_feed_item_client.get_extension_feed_item(formatted_resource_name)
 
             def get_extension_feed_item \
                 resource_name,
@@ -243,14 +243,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   extension_feed_item_service_client = Google::Ads::GoogleAds::ExtensionFeedItem.new(version: :v1)
+            #   extension_feed_item_client = Google::Ads::GoogleAds::ExtensionFeedItem.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = extension_feed_item_service_client.mutate_extension_feed_items(customer_id, operations)
+            #   response = extension_feed_item_client.mutate_extension_feed_items(customer_id, operations)
 
             def mutate_extension_feed_items \
                 customer_id,

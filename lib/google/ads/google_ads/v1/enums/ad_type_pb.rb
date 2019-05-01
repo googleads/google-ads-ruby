@@ -25,6 +25,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :APP_AD, 17
     value :LEGACY_APP_INSTALL_AD, 18
     value :RESPONSIVE_DISPLAY_AD, 19
+    value :HTML5_UPLOAD_AD, 21
+    value :DYNAMIC_HTML5_AD, 22
+    value :APP_ENGAGEMENT_AD, 23
   end
 end
 

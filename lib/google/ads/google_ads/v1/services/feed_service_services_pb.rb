@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/feed_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module FeedService
+    # Proto file describing the Feed service.
+    #
     # Service to manage feeds.
     class Service
 

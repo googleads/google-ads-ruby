@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_feed_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignFeedService
+    # Proto file describing the CampaignFeed service.
+    #
     # Service to manage campaign feeds.
     class Service
 

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/carrier_constant_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CarrierConstantService
+    # Proto file describing the carrier constant service.
+    #
     # Service to fetch carrier constants.
     class Service
 

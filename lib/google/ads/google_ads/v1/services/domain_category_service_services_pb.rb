@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/domain_category_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module DomainCategoryService
+    # Proto file describing the DomainCategory Service.
+    #
     # Service to fetch domain categories.
     class Service
 

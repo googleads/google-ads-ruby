@@ -14,9 +14,12 @@ require 'google/ads/google_ads/v1/resources/ad_group_audience_view_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_criterion_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_criterion_label_pb'
+require 'google/ads/google_ads/v1/resources/ad_group_criterion_simulation_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_extension_setting_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_feed_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_label_pb'
+require 'google/ads/google_ads/v1/resources/ad_group_simulation_pb'
+require 'google/ads/google_ads/v1/resources/ad_parameter_pb'
 require 'google/ads/google_ads/v1/resources/ad_schedule_view_pb'
 require 'google/ads/google_ads/v1/resources/age_range_view_pb'
 require 'google/ads/google_ads/v1/resources/asset_pb'
@@ -27,6 +30,7 @@ require 'google/ads/google_ads/v1/resources/campaign_audience_view_pb'
 require 'google/ads/google_ads/v1/resources/campaign_bid_modifier_pb'
 require 'google/ads/google_ads/v1/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v1/resources/campaign_criterion_pb'
+require 'google/ads/google_ads/v1/resources/campaign_criterion_simulation_pb'
 require 'google/ads/google_ads/v1/resources/campaign_extension_setting_pb'
 require 'google/ads/google_ads/v1/resources/campaign_feed_pb'
 require 'google/ads/google_ads/v1/resources/campaign_label_pb'
@@ -48,6 +52,7 @@ require 'google/ads/google_ads/v1/resources/detail_placement_view_pb'
 require 'google/ads/google_ads/v1/resources/display_keyword_view_pb'
 require 'google/ads/google_ads/v1/resources/domain_category_pb'
 require 'google/ads/google_ads/v1/resources/dynamic_search_ads_search_term_view_pb'
+require 'google/ads/google_ads/v1/resources/expanded_landing_page_view_pb'
 require 'google/ads/google_ads/v1/resources/extension_feed_item_pb'
 require 'google/ads/google_ads/v1/resources/feed_pb'
 require 'google/ads/google_ads/v1/resources/feed_item_pb'
@@ -67,13 +72,16 @@ require 'google/ads/google_ads/v1/resources/keyword_plan_keyword_pb'
 require 'google/ads/google_ads/v1/resources/keyword_plan_negative_keyword_pb'
 require 'google/ads/google_ads/v1/resources/keyword_view_pb'
 require 'google/ads/google_ads/v1/resources/label_pb'
+require 'google/ads/google_ads/v1/resources/landing_page_view_pb'
 require 'google/ads/google_ads/v1/resources/language_constant_pb'
 require 'google/ads/google_ads/v1/resources/location_view_pb'
 require 'google/ads/google_ads/v1/resources/managed_placement_view_pb'
 require 'google/ads/google_ads/v1/resources/media_file_pb'
 require 'google/ads/google_ads/v1/resources/mobile_app_category_constant_pb'
 require 'google/ads/google_ads/v1/resources/mobile_device_constant_pb'
+require 'google/ads/google_ads/v1/resources/mutate_job_pb'
 require 'google/ads/google_ads/v1/resources/operating_system_version_constant_pb'
+require 'google/ads/google_ads/v1/resources/paid_organic_search_term_view_pb'
 require 'google/ads/google_ads/v1/resources/parental_status_view_pb'
 require 'google/ads/google_ads/v1/resources/product_bidding_category_constant_pb'
 require 'google/ads/google_ads/v1/resources/product_group_view_pb'
@@ -152,9 +160,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :ad_group_bid_modifier, :message, 24, "google.ads.googleads.v1.resources.AdGroupBidModifier"
     optional :ad_group_criterion, :message, 17, "google.ads.googleads.v1.resources.AdGroupCriterion"
     optional :ad_group_criterion_label, :message, 121, "google.ads.googleads.v1.resources.AdGroupCriterionLabel"
+    optional :ad_group_criterion_simulation, :message, 110, "google.ads.googleads.v1.resources.AdGroupCriterionSimulation"
     optional :ad_group_extension_setting, :message, 112, "google.ads.googleads.v1.resources.AdGroupExtensionSetting"
     optional :ad_group_feed, :message, 67, "google.ads.googleads.v1.resources.AdGroupFeed"
     optional :ad_group_label, :message, 115, "google.ads.googleads.v1.resources.AdGroupLabel"
+    optional :ad_group_simulation, :message, 107, "google.ads.googleads.v1.resources.AdGroupSimulation"
+    optional :ad_parameter, :message, 130, "google.ads.googleads.v1.resources.AdParameter"
     optional :age_range_view, :message, 48, "google.ads.googleads.v1.resources.AgeRangeView"
     optional :ad_schedule_view, :message, 89, "google.ads.googleads.v1.resources.AdScheduleView"
     optional :domain_category, :message, 91, "google.ads.googleads.v1.resources.DomainCategory"
@@ -166,6 +177,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_audience_view, :message, 69, "google.ads.googleads.v1.resources.CampaignAudienceView"
     optional :campaign_bid_modifier, :message, 26, "google.ads.googleads.v1.resources.CampaignBidModifier"
     optional :campaign_criterion, :message, 20, "google.ads.googleads.v1.resources.CampaignCriterion"
+    optional :campaign_criterion_simulation, :message, 111, "google.ads.googleads.v1.resources.CampaignCriterionSimulation"
     optional :campaign_extension_setting, :message, 113, "google.ads.googleads.v1.resources.CampaignExtensionSetting"
     optional :campaign_feed, :message, 63, "google.ads.googleads.v1.resources.CampaignFeed"
     optional :campaign_label, :message, 108, "google.ads.googleads.v1.resources.CampaignLabel"
@@ -186,6 +198,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :detail_placement_view, :message, 118, "google.ads.googleads.v1.resources.DetailPlacementView"
     optional :display_keyword_view, :message, 47, "google.ads.googleads.v1.resources.DisplayKeywordView"
     optional :dynamic_search_ads_search_term_view, :message, 106, "google.ads.googleads.v1.resources.DynamicSearchAdsSearchTermView"
+    optional :expanded_landing_page_view, :message, 128, "google.ads.googleads.v1.resources.ExpandedLandingPageView"
     optional :extension_feed_item, :message, 85, "google.ads.googleads.v1.resources.ExtensionFeedItem"
     optional :feed, :message, 46, "google.ads.googleads.v1.resources.Feed"
     optional :feed_item, :message, 50, "google.ads.googleads.v1.resources.FeedItem"
@@ -205,13 +218,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :keyword_plan_ad_group, :message, 35, "google.ads.googleads.v1.resources.KeywordPlanAdGroup"
     optional :keyword_plan_keyword, :message, 36, "google.ads.googleads.v1.resources.KeywordPlanKeyword"
     optional :label, :message, 52, "google.ads.googleads.v1.resources.Label"
+    optional :landing_page_view, :message, 126, "google.ads.googleads.v1.resources.LandingPageView"
     optional :language_constant, :message, 55, "google.ads.googleads.v1.resources.LanguageConstant"
     optional :location_view, :message, 123, "google.ads.googleads.v1.resources.LocationView"
     optional :managed_placement_view, :message, 53, "google.ads.googleads.v1.resources.ManagedPlacementView"
     optional :media_file, :message, 90, "google.ads.googleads.v1.resources.MediaFile"
     optional :mobile_app_category_constant, :message, 87, "google.ads.googleads.v1.resources.MobileAppCategoryConstant"
     optional :mobile_device_constant, :message, 98, "google.ads.googleads.v1.resources.MobileDeviceConstant"
+    optional :mutate_job, :message, 127, "google.ads.googleads.v1.resources.MutateJob"
     optional :operating_system_version_constant, :message, 86, "google.ads.googleads.v1.resources.OperatingSystemVersionConstant"
+    optional :paid_organic_search_term_view, :message, 129, "google.ads.googleads.v1.resources.PaidOrganicSearchTermView"
     optional :parental_status_view, :message, 45, "google.ads.googleads.v1.resources.ParentalStatusView"
     optional :product_bidding_category_constant, :message, 109, "google.ads.googleads.v1.resources.ProductBiddingCategoryConstant"
     optional :product_group_view, :message, 54, "google.ads.googleads.v1.resources.ProductGroupView"

@@ -52,6 +52,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/adGroupCriteria/567~890'
     assert_equal(expected, util.ad_group_criterion(1234, 567, 890))
 
+    expected = 'customers/1234/adGroupCriterionSimulations/5~6~7~8~9~0'
+    assert_equal(expected, util.ad_group_criterion_simulation(1234, 5, 6, 7, 8, 9, 0))
+
     expected = 'customers/1234/adGroupExtensionSettings/567~890'
     assert_equal(expected, util.ad_group_extension_setting(1234, 567, 890))
 
@@ -63,6 +66,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/adGroups/5678'
     assert_equal(expected, util.ad_group(1234, 5678))
+
+    expected = 'customers/1234/adGroupSimulations/5~6~7~8~9'
+    assert_equal(expected, util.ad_group_simulation(1234, 5, 6, 7, 8, 9))
 
     expected = 'customers/1234/adParameters/56~78~90'
     assert_equal(expected, util.ad_parameter(1234, 56, 78, 90))
@@ -93,6 +99,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/campaignCriteria/567~890'
     assert_equal(expected, util.campaign_criterion(1234, 567, 890))
+
+    expected = 'customers/1234/campaignCriterionSimulations/5~6~7~8~9~0'
+    assert_equal(expected, util.campaign_criterion_simulation(1234, 5, 6, 7, 8, 9, 0))
 
     expected = 'customers/1234/campaignExtensionSettings/567~890'
     assert_equal(expected, util.campaign_extension_setting(1234, 567, 890))
@@ -160,6 +169,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/dynamicSearchAdsSearchTermViews/5~6~7~8~9'
     assert_equal(expected, util.dynamic_search_ads_search_term_view(1234, 5, 6,
         7, 8, 9))
+
+    expected = 'customers/1234/expandedLandingPageViews/5678'
+    assert_equal(expected, util.expanded_landing_page_view(1234, 5678))
 
     expected = 'customers/1234/extensionFeedItems/5678'
     assert_equal(expected, util.extension_feed_item(1234, 5678))

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_audience_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupAudienceViewService
+    # Proto file describing the AdGroup Audience View service.
+    #
     # Service to manage ad group audience views.
     class Service
 

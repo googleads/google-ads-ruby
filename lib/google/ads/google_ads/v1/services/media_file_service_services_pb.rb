@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/media_file_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module MediaFileService
+    # Proto file describing the Media File service.
+    #
     # Service to manage media files.
     class Service
 

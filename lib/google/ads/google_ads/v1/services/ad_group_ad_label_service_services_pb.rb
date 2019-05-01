@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_ad_label_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupAdLabelService
+    # Proto file describing the Ad Group Ad Label service.
+    #
     # Service to manage labels on ad group ads.
     class Service
 

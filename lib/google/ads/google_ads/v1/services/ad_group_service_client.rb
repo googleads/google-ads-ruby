@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   ad_group_service_client = Google::Ads::GoogleAds::AdGroup.new(version: :v1)
+            #   ad_group_client = Google::Ads::GoogleAds::AdGroup.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AdGroupServiceClient.ad_group_path("[CUSTOMER]", "[AD_GROUP]")
-            #   response = ad_group_service_client.get_ad_group(formatted_resource_name)
+            #   response = ad_group_client.get_ad_group(formatted_resource_name)
 
             def get_ad_group \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   ad_group_service_client = Google::Ads::GoogleAds::AdGroup.new(version: :v1)
+            #   ad_group_client = Google::Ads::GoogleAds::AdGroup.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = ad_group_service_client.mutate_ad_groups(customer_id, operations)
+            #   response = ad_group_client.mutate_ad_groups(customer_id, operations)
 
             def mutate_ad_groups \
                 customer_id,

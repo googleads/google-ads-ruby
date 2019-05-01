@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/account_budget_proposal_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AccountBudgetProposalService
+    # Proto file describing the AccountBudgetProposal service.
+    #
     # A service for managing account-level budgets via proposals.
     #
     # A proposal is a request to create a new budget or make changes to an

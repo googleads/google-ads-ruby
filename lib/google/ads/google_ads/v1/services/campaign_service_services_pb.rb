@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignService
+    # Proto file describing the Campaign service.
+    #
     # Service to manage campaigns.
     class Service
 

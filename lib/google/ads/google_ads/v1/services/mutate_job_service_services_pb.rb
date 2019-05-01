@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/mutate_job_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module MutateJobService
+    # Proto file describing the MutateJobService.
+    #
     # Service to manage mutate jobs.
     class Service
 

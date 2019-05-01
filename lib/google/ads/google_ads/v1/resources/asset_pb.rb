@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :youtube_video_asset, :message, 5, "google.ads.googleads.v1.common.YoutubeVideoAsset"
       optional :media_bundle_asset, :message, 6, "google.ads.googleads.v1.common.MediaBundleAsset"
       optional :image_asset, :message, 7, "google.ads.googleads.v1.common.ImageAsset"
+      optional :text_asset, :message, 8, "google.ads.googleads.v1.common.TextAsset"
     end
   end
 end

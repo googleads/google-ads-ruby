@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   bidding_strategy_service_client = Google::Ads::GoogleAds::BiddingStrategy.new(version: :v1)
+            #   bidding_strategy_client = Google::Ads::GoogleAds::BiddingStrategy.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::BiddingStrategyServiceClient.bidding_strategy_path("[CUSTOMER]", "[BIDDING_STRATEGY]")
-            #   response = bidding_strategy_service_client.get_bidding_strategy(formatted_resource_name)
+            #   response = bidding_strategy_client.get_bidding_strategy(formatted_resource_name)
 
             def get_bidding_strategy \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   bidding_strategy_service_client = Google::Ads::GoogleAds::BiddingStrategy.new(version: :v1)
+            #   bidding_strategy_client = Google::Ads::GoogleAds::BiddingStrategy.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = bidding_strategy_service_client.mutate_bidding_strategies(customer_id, operations)
+            #   response = bidding_strategy_client.mutate_bidding_strategies(customer_id, operations)
 
             def mutate_bidding_strategies \
                 customer_id,

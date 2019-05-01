@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v1/common/ad_asset_pb'
 require 'google/ads/google_ads/v1/enums/call_conversion_reporting_state_pb'
 require 'google/ads/google_ads/v1/enums/display_ad_format_setting_pb'
+require 'google/ads/google_ads/v1/enums/display_upload_product_type_pb'
 require 'google/ads/google_ads/v1/enums/legacy_app_install_ad_app_store_pb'
 require 'google/ads/google_ads/v1/enums/mime_type_pb'
 require 'google/protobuf/wrappers_pb'
@@ -99,6 +100,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.common.VideoTrueViewInStreamAdInfo" do
     optional :action_button_label, :message, 1, "google.protobuf.StringValue"
     optional :action_headline, :message, 2, "google.protobuf.StringValue"
+    optional :companion_banner, :message, 3, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v1.common.VideoOutstreamAdInfo" do
     optional :headline, :message, 1, "google.protobuf.StringValue"
@@ -144,6 +146,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     repeated :youtube_videos, :message, 5, "google.ads.googleads.v1.common.AdVideoAsset"
     repeated :html5_media_bundles, :message, 6, "google.ads.googleads.v1.common.AdMediaBundleAsset"
   end
+  add_message "google.ads.googleads.v1.common.AppEngagementAdInfo" do
+    repeated :headlines, :message, 1, "google.ads.googleads.v1.common.AdTextAsset"
+    repeated :descriptions, :message, 2, "google.ads.googleads.v1.common.AdTextAsset"
+    repeated :images, :message, 3, "google.ads.googleads.v1.common.AdImageAsset"
+    repeated :videos, :message, 4, "google.ads.googleads.v1.common.AdVideoAsset"
+  end
   add_message "google.ads.googleads.v1.common.LegacyAppInstallAdInfo" do
     optional :app_id, :message, 1, "google.protobuf.StringValue"
     optional :app_store, :enum, 2, "google.ads.googleads.v1.enums.LegacyAppInstallAdAppStoreEnum.LegacyAppInstallAdAppStore"
@@ -169,6 +177,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :promo_text, :message, 15, "google.protobuf.StringValue"
     optional :format_setting, :enum, 16, "google.ads.googleads.v1.enums.DisplayAdFormatSettingEnum.DisplayAdFormatSetting"
   end
+  add_message "google.ads.googleads.v1.common.DisplayUploadAdInfo" do
+    optional :display_upload_product_type, :enum, 1, "google.ads.googleads.v1.enums.DisplayUploadProductTypeEnum.DisplayUploadProductType"
+    oneof :media_asset do
+      optional :media_bundle, :message, 2, "google.ads.googleads.v1.common.AdMediaBundleAsset"
+    end
+  end
 end
 
 module Google::Ads::GoogleAds::V1::Common
@@ -193,6 +207,8 @@ module Google::Ads::GoogleAds::V1::Common
   ResponsiveSearchAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ResponsiveSearchAdInfo").msgclass
   LegacyResponsiveDisplayAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.LegacyResponsiveDisplayAdInfo").msgclass
   AppAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AppAdInfo").msgclass
+  AppEngagementAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AppEngagementAdInfo").msgclass
   LegacyAppInstallAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.LegacyAppInstallAdInfo").msgclass
   ResponsiveDisplayAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ResponsiveDisplayAdInfo").msgclass
+  DisplayUploadAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.DisplayUploadAdInfo").msgclass
 end

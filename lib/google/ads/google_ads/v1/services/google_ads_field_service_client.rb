@@ -212,9 +212,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   google_ads_field_service_client = Google::Ads::GoogleAds::GoogleAdsField.new(version: :v1)
+            #   google_ads_field_client = Google::Ads::GoogleAds::GoogleAdsField.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::GoogleAdsFieldServiceClient.google_ads_field_path("[GOOGLE_ADS_FIELD]")
-            #   response = google_ads_field_service_client.get_google_ads_field(formatted_resource_name)
+            #   response = google_ads_field_client.get_google_ads_field(formatted_resource_name)
 
             def get_google_ads_field \
                 resource_name,
@@ -252,18 +252,18 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   google_ads_field_service_client = Google::Ads::GoogleAds::GoogleAdsField.new(version: :v1)
+            #   google_ads_field_client = Google::Ads::GoogleAds::GoogleAdsField.new(version: :v1)
             #
             #   # TODO: Initialize `query`:
             #   query = ''
             #
             #   # Iterate over all results.
-            #   google_ads_field_service_client.search_google_ads_fields(query).each do |element|
+            #   google_ads_field_client.search_google_ads_fields(query).each do |element|
             #     # Process element.
             #   end
             #
             #   # Or iterate over results one page at a time.
-            #   google_ads_field_service_client.search_google_ads_fields(query).each_page do |page|
+            #   google_ads_field_client.search_google_ads_fields(query).each_page do |page|
             #     # Process each page at a time.
             #     page.each do |element|
             #       # Process element.

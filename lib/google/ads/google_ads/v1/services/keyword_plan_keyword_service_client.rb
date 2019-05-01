@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_keyword_service_client = Google::Ads::GoogleAds::KeywordPlanKeyword.new(version: :v1)
+            #   keyword_plan_keyword_client = Google::Ads::GoogleAds::KeywordPlanKeyword.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::KeywordPlanKeywordServiceClient.keyword_plan_keyword_path("[CUSTOMER]", "[KEYWORD_PLAN_KEYWORD]")
-            #   response = keyword_plan_keyword_service_client.get_keyword_plan_keyword(formatted_resource_name)
+            #   response = keyword_plan_keyword_client.get_keyword_plan_keyword(formatted_resource_name)
 
             def get_keyword_plan_keyword \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_keyword_service_client = Google::Ads::GoogleAds::KeywordPlanKeyword.new(version: :v1)
+            #   keyword_plan_keyword_client = Google::Ads::GoogleAds::KeywordPlanKeyword.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = keyword_plan_keyword_service_client.mutate_keyword_plan_keywords(customer_id, operations)
+            #   response = keyword_plan_keyword_client.mutate_keyword_plan_keywords(customer_id, operations)
 
             def mutate_keyword_plan_keywords \
                 customer_id,

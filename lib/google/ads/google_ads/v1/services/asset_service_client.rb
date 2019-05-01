@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   asset_service_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
+            #   asset_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AssetServiceClient.asset_path("[CUSTOMER]", "[ASSET]")
-            #   response = asset_service_client.get_asset(formatted_resource_name)
+            #   response = asset_client.get_asset(formatted_resource_name)
 
             def get_asset \
                 resource_name,
@@ -238,14 +238,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   asset_service_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
+            #   asset_client = Google::Ads::GoogleAds::Asset.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = asset_service_client.mutate_assets(customer_id, operations)
+            #   response = asset_client.mutate_assets(customer_id, operations)
 
             def mutate_assets \
                 customer_id,

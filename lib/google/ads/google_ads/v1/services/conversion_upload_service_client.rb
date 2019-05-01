@@ -196,14 +196,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_upload_service_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
+            #   conversion_upload_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `conversions`:
             #   conversions = []
-            #   response = conversion_upload_service_client.upload_click_conversions(customer_id, conversions)
+            #   response = conversion_upload_client.upload_click_conversions(customer_id, conversions)
 
             def upload_click_conversions \
                 customer_id,
@@ -244,14 +244,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_upload_service_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
+            #   conversion_upload_client = Google::Ads::GoogleAds::ConversionUpload.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `conversions`:
             #   conversions = []
-            #   response = conversion_upload_service_client.upload_call_conversions(customer_id, conversions)
+            #   response = conversion_upload_client.upload_call_conversions(customer_id, conversions)
 
             def upload_call_conversions \
                 customer_id,

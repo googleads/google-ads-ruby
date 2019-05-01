@@ -216,9 +216,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   account_budget_proposal_service_client = Google::Ads::GoogleAds::AccountBudgetProposal.new(version: :v1)
+            #   account_budget_proposal_client = Google::Ads::GoogleAds::AccountBudgetProposal.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AccountBudgetProposalServiceClient.account_budget_proposal_path("[CUSTOMER]", "[ACCOUNT_BUDGET_PROPOSAL]")
-            #   response = account_budget_proposal_service_client.get_account_budget_proposal(formatted_resource_name)
+            #   response = account_budget_proposal_client.get_account_budget_proposal(formatted_resource_name)
 
             def get_account_budget_proposal \
                 resource_name,
@@ -254,14 +254,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   account_budget_proposal_service_client = Google::Ads::GoogleAds::AccountBudgetProposal.new(version: :v1)
+            #   account_budget_proposal_client = Google::Ads::GoogleAds::AccountBudgetProposal.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operation`:
             #   operation = {}
-            #   response = account_budget_proposal_service_client.mutate_account_budget_proposal(customer_id, operation)
+            #   response = account_budget_proposal_client.mutate_account_budget_proposal(customer_id, operation)
 
             def mutate_account_budget_proposal \
                 customer_id,

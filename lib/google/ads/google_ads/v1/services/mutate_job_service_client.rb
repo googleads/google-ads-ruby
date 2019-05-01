@@ -244,11 +244,11 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mutate_job_service_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
+            #   mutate_job_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
-            #   response = mutate_job_service_client.create_mutate_job(customer_id)
+            #   response = mutate_job_client.create_mutate_job(customer_id)
 
             def create_mutate_job \
                 customer_id,
@@ -276,9 +276,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mutate_job_service_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
+            #   mutate_job_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MutateJobServiceClient.mutate_job_path("[CUSTOMER]", "[MUTATE_JOB]")
-            #   response = mutate_job_service_client.get_mutate_job(formatted_resource_name)
+            #   response = mutate_job_client.get_mutate_job(formatted_resource_name)
 
             def get_mutate_job \
                 resource_name,
@@ -317,16 +317,16 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mutate_job_service_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
+            #   mutate_job_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MutateJobServiceClient.mutate_job_path("[CUSTOMER]", "[MUTATE_JOB]")
             #
             #   # Iterate over all results.
-            #   mutate_job_service_client.list_mutate_job_results(formatted_resource_name).each do |element|
+            #   mutate_job_client.list_mutate_job_results(formatted_resource_name).each do |element|
             #     # Process element.
             #   end
             #
             #   # Or iterate over results one page at a time.
-            #   mutate_job_service_client.list_mutate_job_results(formatted_resource_name).each_page do |page|
+            #   mutate_job_client.list_mutate_job_results(formatted_resource_name).each_page do |page|
             #     # Process each page at a time.
             #     page.each do |element|
             #       # Process element.
@@ -362,11 +362,11 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mutate_job_service_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
+            #   mutate_job_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MutateJobServiceClient.mutate_job_path("[CUSTOMER]", "[MUTATE_JOB]")
             #
             #   # Register a callback during the method call.
-            #   operation = mutate_job_service_client.run_mutate_job(formatted_resource_name) do |op|
+            #   operation = mutate_job_client.run_mutate_job(formatted_resource_name) do |op|
             #     raise op.results.message if op.error?
             #     op_results = op.results
             #     # Process the results.
@@ -444,7 +444,7 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   mutate_job_service_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
+            #   mutate_job_client = Google::Ads::GoogleAds::MutateJob.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MutateJobServiceClient.mutate_job_path("[CUSTOMER]", "[MUTATE_JOB]")
             #
             #   # TODO: Initialize `sequence_token`:
@@ -452,7 +452,7 @@ module Google
             #
             #   # TODO: Initialize `mutate_operations`:
             #   mutate_operations = []
-            #   response = mutate_job_service_client.add_mutate_job_operations(formatted_resource_name, sequence_token, mutate_operations)
+            #   response = mutate_job_client.add_mutate_job_operations(formatted_resource_name, sequence_token, mutate_operations)
 
             def add_mutate_job_operations \
                 resource_name,
