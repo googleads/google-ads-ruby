@@ -138,19 +138,6 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, JSON.dump("some data"))
   end
 
-  def test_logging_interceptor_logs_some_error_details_if_v0_error
-    li.request_response(
-      request: make_small_request,
-      call: make_fake_call,
-      method: :doesnt_matter,
-    ) do
-      raise make_realistic_error("v0")
-    end
-  rescue GRPC::InvalidArgument
-    sio.rewind
-    assert_includes(sio.read, "INVALID_CUSTOMER_ID")
-  end
-
   def test_logging_interceptor_logs_some_error_details_if_v1_error
     li.request_response(
       request: make_small_request,

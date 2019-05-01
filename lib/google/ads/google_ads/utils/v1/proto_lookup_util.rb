@@ -555,7 +555,7 @@ module Google
               Slot: ['slot_pb', 'Slot'],
               SpendingLimitType: ['spending_limit_type_pb', 'SpendingLimitType'],
               StructuredSnippetPlaceholderField: ['structured_snippet_placeholder_field_pb', 'StructuredSnippetPlaceholderField'],
-              SystemManagedEntitySource: ['system_managed_entity_source_pb', 'SystemManagedEntitySource'],
+              SystemManagedResourceSource: ['system_managed_entity_source_pb', 'SystemManagedResourceSource'],
               TargetCpaOptInRecommendationGoal: ['target_cpa_opt_in_recommendation_goal_pb', 'TargetCpaOptInRecommendationGoal'],
               TargetImpressionShareLocation: ['target_impression_share_location_pb', 'TargetImpressionShareLocation'],
               TargetingDimension: ['targeting_dimension_pb', 'TargetingDimension'],

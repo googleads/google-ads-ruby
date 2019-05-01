@@ -39,7 +39,7 @@ def add_keyword(customer_id, ad_group_id, keyword)
 
   # Optional field
   # All fields can be referenced from the protos directly.
-  # The protos are located in lib/google/ads/google_ads/v0 folders
+  # The protos are located in lib/google/ads/google_ads/v1 folders
   # criterion.negative = Google::Protobuf::BoolValue.new(value: true)
 
   # Optional repeated field

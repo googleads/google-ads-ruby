@@ -22,12 +22,12 @@ require 'minitest/autorun'
 require 'google/protobuf/wrappers_pb'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/field_mask_util'
-require 'google/ads/google_ads/v0/resources/campaign_pb'
-require 'google/ads/google_ads/v0/resources/ad_pb'
+require 'google/ads/google_ads/v1/resources/campaign_pb'
+require 'google/ads/google_ads/v1/resources/ad_pb'
 
 class TestFieldMaskUtil < Minitest::Test
   def test_change_from_previous_value()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
     test_object.id = Google::Protobuf::Int64Value.new(value: 1234)
 
@@ -45,7 +45,7 @@ class TestFieldMaskUtil < Minitest::Test
       # No setup.
     end
 
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
     test_object.id = Google::Protobuf::Int64Value.new(value: 1234)
 
@@ -59,7 +59,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_change_from_no_value()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
       test_object.name = Google::Protobuf::StringValue.new(value: 'new string')
@@ -71,7 +71,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_change_to_null_value()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
 
     test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
 
@@ -83,7 +83,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_no_change_to_value()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
 
     test_name = 'test name'
     test_object.name = Google::Protobuf::StringValue.new(value: test_name)
@@ -96,7 +96,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_repeated_field_addition()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Ad.new
 
     test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
 
@@ -109,7 +109,7 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_repeated_field_removal()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Ad.new
 
     test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
 
@@ -121,14 +121,14 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_changed()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Ad.new
 
-    text_ad = Google::Ads::GoogleAds::V0::Common::TextAdInfo.new
+    text_ad = Google::Ads::GoogleAds::V1::Common::TextAdInfo.new
     text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')
     test_object.text_ad = text_ad
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      new_text_ad = Google::Ads::GoogleAds::V0::Common::TextAdInfo.new
+      new_text_ad = Google::Ads::GoogleAds::V1::Common::TextAdInfo.new
       new_text_ad.headline =
           Google::Protobuf::StringValue.new(value: 'new headline')
       test_object.text_ad = new_text_ad
@@ -138,14 +138,14 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_unchanged()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Ad.new
 
-    text_ad = Google::Ads::GoogleAds::V0::Common::TextAdInfo.new
+    text_ad = Google::Ads::GoogleAds::V1::Common::TextAdInfo.new
     text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')
     test_object.text_ad = text_ad
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      new_text_ad = Google::Ads::GoogleAds::V0::Common::TextAdInfo.new
+      new_text_ad = Google::Ads::GoogleAds::V1::Common::TextAdInfo.new
       new_text_ad.headline =
           Google::Protobuf::StringValue.new(value: 'headline')
       test_object.text_ad = new_text_ad
@@ -155,11 +155,11 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_fields_for_update_from_nil()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     test_object.name = Google::Protobuf::StringValue.new(value: 'Name')
 
     nested_object =
-        Google::Ads::GoogleAds::V0::Resources::Campaign::NetworkSettings.new
+        Google::Ads::GoogleAds::V1::Resources::Campaign::NetworkSettings.new
     nested_object.target_search_network =
         Google::Protobuf::BoolValue.new(value: true)
     test_object.network_settings = nested_object
@@ -173,13 +173,13 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_fields_for_update()
-    test_object = Google::Ads::GoogleAds::V0::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V1::Resources::Campaign.new
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
       test_object.name = Google::Protobuf::StringValue.new(value: 'Name')
 
       nested_object =
-          Google::Ads::GoogleAds::V0::Resources::Campaign::NetworkSettings.new
+          Google::Ads::GoogleAds::V1::Resources::Campaign::NetworkSettings.new
       nested_object.target_search_network =
           Google::Protobuf::BoolValue.new(value: true)
       test_object.network_settings = nested_object
