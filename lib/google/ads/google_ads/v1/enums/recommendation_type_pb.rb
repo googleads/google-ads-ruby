@@ -19,6 +19,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :SEARCH_PARTNERS_OPT_IN, 8
     value :MAXIMIZE_CLICKS_OPT_IN, 9
     value :OPTIMIZE_AD_ROTATION, 10
+    value :CALLOUT_EXTENSION, 11
+    value :SITELINK_EXTENSION, 12
+    value :CALL_EXTENSION, 13
     value :KEYWORD_MATCH_TYPE, 14
     value :MOVE_UNUSED_BUDGET, 15
   end

@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   shared_set_service_client = Google::Ads::GoogleAds::SharedSet.new(version: :v1)
+            #   shared_set_client = Google::Ads::GoogleAds::SharedSet.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::SharedSetServiceClient.shared_set_path("[CUSTOMER]", "[SHARED_SET]")
-            #   response = shared_set_service_client.get_shared_set(formatted_resource_name)
+            #   response = shared_set_client.get_shared_set(formatted_resource_name)
 
             def get_shared_set \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   shared_set_service_client = Google::Ads::GoogleAds::SharedSet.new(version: :v1)
+            #   shared_set_client = Google::Ads::GoogleAds::SharedSet.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = shared_set_service_client.mutate_shared_sets(customer_id, operations)
+            #   response = shared_set_client.mutate_shared_sets(customer_id, operations)
 
             def mutate_shared_sets \
                 customer_id,

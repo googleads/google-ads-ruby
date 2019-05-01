@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_criterion_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignCriterionService
+    # Proto file describing the Campaign Criterion service.
+    #
     # Service to manage campaign criteria.
     class Service
 

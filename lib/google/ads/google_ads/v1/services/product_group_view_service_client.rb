@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   product_group_view_service_client = Google::Ads::GoogleAds::ProductGroupView.new(version: :v1)
+            #   product_group_view_client = Google::Ads::GoogleAds::ProductGroupView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ProductGroupViewServiceClient.product_group_view_path("[CUSTOMER]", "[PRODUCT_GROUP_VIEW]")
-            #   response = product_group_view_service_client.get_product_group_view(formatted_resource_name)
+            #   response = product_group_view_client.get_product_group_view(formatted_resource_name)
 
             def get_product_group_view \
                 resource_name,

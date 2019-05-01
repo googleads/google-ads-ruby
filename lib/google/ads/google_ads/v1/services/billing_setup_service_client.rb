@@ -212,9 +212,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   billing_setup_service_client = Google::Ads::GoogleAds::BillingSetup.new(version: :v1)
+            #   billing_setup_client = Google::Ads::GoogleAds::BillingSetup.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::BillingSetupServiceClient.billing_setup_path("[CUSTOMER]", "[BILLING_SETUP]")
-            #   response = billing_setup_service_client.get_billing_setup(formatted_resource_name)
+            #   response = billing_setup_client.get_billing_setup(formatted_resource_name)
 
             def get_billing_setup \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   billing_setup_service_client = Google::Ads::GoogleAds::BillingSetup.new(version: :v1)
+            #   billing_setup_client = Google::Ads::GoogleAds::BillingSetup.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operation`:
             #   operation = {}
-            #   response = billing_setup_service_client.mutate_billing_setup(customer_id, operation)
+            #   response = billing_setup_client.mutate_billing_setup(customer_id, operation)
 
             def mutate_billing_setup \
                 customer_id,

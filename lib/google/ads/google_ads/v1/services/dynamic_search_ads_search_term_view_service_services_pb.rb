@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/dynamic_search_ads_search_term_view_s
 
 module Google::Ads::GoogleAds::V1::Services
   module DynamicSearchAdsSearchTermViewService
+    # Proto file describing the Dynamic Search Ads Search Term View service.
+    #
     # Service to fetch dynamic search ads views.
     class Service
 

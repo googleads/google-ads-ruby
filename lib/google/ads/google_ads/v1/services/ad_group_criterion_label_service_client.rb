@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   ad_group_criterion_label_service_client = Google::Ads::GoogleAds::AdGroupCriterionLabel.new(version: :v1)
+            #   ad_group_criterion_label_client = Google::Ads::GoogleAds::AdGroupCriterionLabel.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AdGroupCriterionLabelServiceClient.ad_group_criterion_label_path("[CUSTOMER]", "[AD_GROUP_CRITERION_LABEL]")
-            #   response = ad_group_criterion_label_service_client.get_ad_group_criterion_label(formatted_resource_name)
+            #   response = ad_group_criterion_label_client.get_ad_group_criterion_label(formatted_resource_name)
 
             def get_ad_group_criterion_label \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   ad_group_criterion_label_service_client = Google::Ads::GoogleAds::AdGroupCriterionLabel.new(version: :v1)
+            #   ad_group_criterion_label_client = Google::Ads::GoogleAds::AdGroupCriterionLabel.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = ad_group_criterion_label_service_client.mutate_ad_group_criterion_labels(customer_id, operations)
+            #   response = ad_group_criterion_label_client.mutate_ad_group_criterion_labels(customer_id, operations)
 
             def mutate_ad_group_criterion_labels \
                 customer_id,

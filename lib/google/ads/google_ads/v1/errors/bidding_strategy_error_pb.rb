@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CANNOT_CHANGE_BIDDING_STRATEGY_TYPE, 3
     value :CANNOT_REMOVE_ASSOCIATED_STRATEGY, 4
     value :BIDDING_STRATEGY_NOT_SUPPORTED, 5
+    value :INCOMPATIBLE_BIDDING_STRATEGY_AND_BIDDING_STRATEGY_GOAL_TYPE, 6
   end
 end
 

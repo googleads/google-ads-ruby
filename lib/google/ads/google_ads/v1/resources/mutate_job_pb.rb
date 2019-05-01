@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :next_add_sequence_token, :message, 3, "google.protobuf.StringValue"
     optional :metadata, :message, 4, "google.ads.googleads.v1.resources.MutateJob.MutateJobMetadata"
     optional :status, :enum, 5, "google.ads.googleads.v1.enums.MutateJobStatusEnum.MutateJobStatus"
+    optional :long_running_operation, :message, 6, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v1.resources.MutateJob.MutateJobMetadata" do
     optional :creation_date_time, :message, 1, "google.protobuf.StringValue"

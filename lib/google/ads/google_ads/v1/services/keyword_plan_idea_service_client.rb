@@ -207,7 +207,7 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   keyword_plan_idea_service_client = Google::Ads::GoogleAds::KeywordPlanIdea.new(version: :v1)
+            #   keyword_plan_idea_client = Google::Ads::GoogleAds::KeywordPlanIdea.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
@@ -220,7 +220,7 @@ module Google
             #
             #   # TODO: Initialize `keyword_plan_network`:
             #   keyword_plan_network = :UNSPECIFIED
-            #   response = keyword_plan_idea_service_client.generate_keyword_ideas(customer_id, language, geo_target_constants, keyword_plan_network)
+            #   response = keyword_plan_idea_client.generate_keyword_ideas(customer_id, language, geo_target_constants, keyword_plan_network)
 
             def generate_keyword_ideas \
                 customer_id,

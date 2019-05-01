@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/shared_set_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module SharedSetService
+    # Proto file describing the Shared Set service.
+    #
     # Service to manage shared sets.
     class Service
 

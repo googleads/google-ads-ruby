@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/keyword_plan_negative_keyword_service
 
 module Google::Ads::GoogleAds::V1::Services
   module KeywordPlanNegativeKeywordService
+    # Proto file describing the keyword plan negative keyword service.
+    #
     # Service to manage Keyword Plan negative keywords.
     class Service
 

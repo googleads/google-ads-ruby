@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   location_view_service_client = Google::Ads::GoogleAds::LocationView.new(version: :v1)
+            #   location_view_client = Google::Ads::GoogleAds::LocationView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::LocationViewServiceClient.location_view_path("[CUSTOMER]", "[LOCATION_VIEW]")
-            #   response = location_view_service_client.get_location_view(formatted_resource_name)
+            #   response = location_view_client.get_location_view(formatted_resource_name)
 
             def get_location_view \
                 resource_name,

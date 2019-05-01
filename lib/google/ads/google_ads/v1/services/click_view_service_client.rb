@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   click_view_service_client = Google::Ads::GoogleAds::ClickView.new(version: :v1)
+            #   click_view_client = Google::Ads::GoogleAds::ClickView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::ClickViewServiceClient.click_view_path("[CUSTOMER]", "[CLICK_VIEW]")
-            #   response = click_view_service_client.get_click_view(formatted_resource_name)
+            #   response = click_view_client.get_click_view(formatted_resource_name)
 
             def get_click_view \
                 resource_name,

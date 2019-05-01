@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   operating_system_version_constant_service_client = Google::Ads::GoogleAds::OperatingSystemVersionConstant.new(version: :v1)
+            #   operating_system_version_constant_client = Google::Ads::GoogleAds::OperatingSystemVersionConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::OperatingSystemVersionConstantServiceClient.operating_system_version_constant_path("[OPERATING_SYSTEM_VERSION_CONSTANT]")
-            #   response = operating_system_version_constant_service_client.get_operating_system_version_constant(formatted_resource_name)
+            #   response = operating_system_version_constant_client.get_operating_system_version_constant(formatted_resource_name)
 
             def get_operating_system_version_constant \
                 resource_name,

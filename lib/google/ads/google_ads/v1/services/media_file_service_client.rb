@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   media_file_service_client = Google::Ads::GoogleAds::MediaFile.new(version: :v1)
+            #   media_file_client = Google::Ads::GoogleAds::MediaFile.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::MediaFileServiceClient.media_file_path("[CUSTOMER]", "[MEDIA_FILE]")
-            #   response = media_file_service_client.get_media_file(formatted_resource_name)
+            #   response = media_file_client.get_media_file(formatted_resource_name)
 
             def get_media_file \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   media_file_service_client = Google::Ads::GoogleAds::MediaFile.new(version: :v1)
+            #   media_file_client = Google::Ads::GoogleAds::MediaFile.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = media_file_service_client.mutate_media_files(customer_id, operations)
+            #   response = media_file_client.mutate_media_files(customer_id, operations)
 
             def mutate_media_files \
                 customer_id,

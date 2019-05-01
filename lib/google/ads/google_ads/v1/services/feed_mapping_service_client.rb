@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   feed_mapping_service_client = Google::Ads::GoogleAds::FeedMapping.new(version: :v1)
+            #   feed_mapping_client = Google::Ads::GoogleAds::FeedMapping.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::FeedMappingServiceClient.feed_mapping_path("[CUSTOMER]", "[FEED_MAPPING]")
-            #   response = feed_mapping_service_client.get_feed_mapping(formatted_resource_name)
+            #   response = feed_mapping_client.get_feed_mapping(formatted_resource_name)
 
             def get_feed_mapping \
                 resource_name,
@@ -247,14 +247,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   feed_mapping_service_client = Google::Ads::GoogleAds::FeedMapping.new(version: :v1)
+            #   feed_mapping_client = Google::Ads::GoogleAds::FeedMapping.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = feed_mapping_service_client.mutate_feed_mappings(customer_id, operations)
+            #   response = feed_mapping_client.mutate_feed_mappings(customer_id, operations)
 
             def mutate_feed_mappings \
                 customer_id,

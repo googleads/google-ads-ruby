@@ -197,9 +197,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   carrier_constant_service_client = Google::Ads::GoogleAds::CarrierConstant.new(version: :v1)
+            #   carrier_constant_client = Google::Ads::GoogleAds::CarrierConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CarrierConstantServiceClient.carrier_constant_path("[CARRIER_CONSTANT]")
-            #   response = carrier_constant_service_client.get_carrier_constant(formatted_resource_name)
+            #   response = carrier_constant_client.get_carrier_constant(formatted_resource_name)
 
             def get_carrier_constant \
                 resource_name,

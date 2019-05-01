@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_criterion_service_client = Google::Ads::GoogleAds::CampaignCriterion.new(version: :v1)
+            #   campaign_criterion_client = Google::Ads::GoogleAds::CampaignCriterion.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CampaignCriterionServiceClient.campaign_criteria_path("[CUSTOMER]", "[CAMPAIGN_CRITERIA]")
-            #   response = campaign_criterion_service_client.get_campaign_criterion(formatted_resource_name)
+            #   response = campaign_criterion_client.get_campaign_criterion(formatted_resource_name)
 
             def get_campaign_criterion \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   campaign_criterion_service_client = Google::Ads::GoogleAds::CampaignCriterion.new(version: :v1)
+            #   campaign_criterion_client = Google::Ads::GoogleAds::CampaignCriterion.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = campaign_criterion_service_client.mutate_campaign_criteria(customer_id, operations)
+            #   response = campaign_criterion_client.mutate_campaign_criteria(customer_id, operations)
 
             def mutate_campaign_criteria \
                 customer_id,

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/topic_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module TopicViewService
+    # Proto file describing the Topic View service.
+    #
     # Service to manage topic views.
     class Service
 

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/detail_placement_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module DetailPlacementViewService
+    # Proto file describing the Detail Placement View service.
+    #
     # Service to fetch Detail Placement views.
     class Service
 

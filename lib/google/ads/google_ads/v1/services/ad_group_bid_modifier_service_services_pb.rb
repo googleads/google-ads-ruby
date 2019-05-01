@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_bid_modifier_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupBidModifierService
+    # Proto file describing the Ad Group Bid Modifier service.
+    #
     # Service to manage ad group bid modifiers.
     class Service
 

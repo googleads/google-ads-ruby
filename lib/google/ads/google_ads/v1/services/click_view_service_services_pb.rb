@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/click_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ClickViewService
+    # Proto file describing the ClickView service.
+    #
     # Service to fetch click views.
     class Service
 

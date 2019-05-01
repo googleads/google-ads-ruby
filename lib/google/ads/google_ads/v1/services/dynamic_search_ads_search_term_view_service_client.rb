@@ -199,9 +199,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   dynamic_search_ads_search_term_view_service_client = Google::Ads::GoogleAds::DynamicSearchAdsSearchTermView.new(version: :v1)
+            #   dynamic_search_ads_search_term_view_client = Google::Ads::GoogleAds::DynamicSearchAdsSearchTermView.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::DynamicSearchAdsSearchTermViewServiceClient.dynamic_search_ads_search_term_view_path("[CUSTOMER]", "[DYNAMIC_SEARCH_ADS_SEARCH_TERM_VIEW]")
-            #   response = dynamic_search_ads_search_term_view_service_client.get_dynamic_search_ads_search_term_view(formatted_resource_name)
+            #   response = dynamic_search_ads_search_term_view_client.get_dynamic_search_ads_search_term_view(formatted_resource_name)
 
             def get_dynamic_search_ads_search_term_view \
                 resource_name,

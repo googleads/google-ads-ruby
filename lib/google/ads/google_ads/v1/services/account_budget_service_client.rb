@@ -201,9 +201,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   account_budget_service_client = Google::Ads::GoogleAds::AccountBudget.new(version: :v1)
+            #   account_budget_client = Google::Ads::GoogleAds::AccountBudget.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::AccountBudgetServiceClient.account_budget_path("[CUSTOMER]", "[ACCOUNT_BUDGET]")
-            #   response = account_budget_service_client.get_account_budget(formatted_resource_name)
+            #   response = account_budget_client.get_account_budget(formatted_resource_name)
 
             def get_account_budget \
                 resource_name,

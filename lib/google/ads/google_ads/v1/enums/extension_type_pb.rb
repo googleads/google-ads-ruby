@@ -20,6 +20,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :REVIEW, 9
     value :SITELINK, 10
     value :STRUCTURED_SNIPPET, 11
+    value :LOCATION, 12
+    value :AFFILIATE_LOCATION, 13
   end
 end
 

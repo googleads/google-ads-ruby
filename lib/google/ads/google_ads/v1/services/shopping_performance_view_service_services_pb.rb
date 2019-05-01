@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/shopping_performance_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module ShoppingPerformanceViewService
+    # Proto file describing the ShoppingPerformanceView service.
+    #
     # Service to fetch Shopping performance views.
     class Service
 

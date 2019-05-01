@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/remarketing_action_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module RemarketingActionService
+    # Proto file describing the Remarketing Action service.
+    #
     # Service to manage remarketing actions.
     class Service
 

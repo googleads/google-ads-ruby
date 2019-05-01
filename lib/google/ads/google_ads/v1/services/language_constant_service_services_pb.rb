@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/language_constant_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module LanguageConstantService
+    # Proto file describing the language constant service.
+    #
     # Service to fetch language constants.
     class Service
 

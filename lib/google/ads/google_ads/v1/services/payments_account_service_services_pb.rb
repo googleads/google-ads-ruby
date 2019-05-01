@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/payments_account_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module PaymentsAccountService
+    # Proto file describing the Payments account service.
+    #
     # Service to provide Payments accounts that can be used to set up consolidated
     # billing.
     class Service

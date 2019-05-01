@@ -204,9 +204,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   remarketing_action_service_client = Google::Ads::GoogleAds::RemarketingAction.new(version: :v1)
+            #   remarketing_action_client = Google::Ads::GoogleAds::RemarketingAction.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::RemarketingActionServiceClient.remarketing_action_path("[CUSTOMER]", "[REMARKETING_ACTION]")
-            #   response = remarketing_action_service_client.get_remarketing_action(formatted_resource_name)
+            #   response = remarketing_action_client.get_remarketing_action(formatted_resource_name)
 
             def get_remarketing_action \
                 resource_name,
@@ -246,14 +246,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   remarketing_action_service_client = Google::Ads::GoogleAds::RemarketingAction.new(version: :v1)
+            #   remarketing_action_client = Google::Ads::GoogleAds::RemarketingAction.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operations`:
             #   operations = []
-            #   response = remarketing_action_service_client.mutate_remarketing_actions(customer_id, operations)
+            #   response = remarketing_action_client.mutate_remarketing_actions(customer_id, operations)
 
             def mutate_remarketing_actions \
                 customer_id,

@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/group_placement_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module GroupPlacementViewService
+    # Proto file describing the Group Placement View service.
+    #
     # Service to fetch Group Placement views.
     class Service
 

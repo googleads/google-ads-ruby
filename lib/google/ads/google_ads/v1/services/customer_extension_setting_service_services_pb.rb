@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/customer_extension_setting_service_pb
 
 module Google::Ads::GoogleAds::V1::Services
   module CustomerExtensionSettingService
+    # Proto file describing the CustomerExtensionSetting service.
+    #
     # Service to manage customer extension settings.
     class Service
 

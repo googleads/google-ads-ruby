@@ -191,14 +191,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   conversion_adjustment_upload_service_client = Google::Ads::GoogleAds::ConversionAdjustmentUpload.new(version: :v1)
+            #   conversion_adjustment_upload_client = Google::Ads::GoogleAds::ConversionAdjustmentUpload.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `conversion_adjustments`:
             #   conversion_adjustments = []
-            #   response = conversion_adjustment_upload_service_client.upload_conversion_adjustments(customer_id, conversion_adjustments)
+            #   response = conversion_adjustment_upload_client.upload_conversion_adjustments(customer_id, conversion_adjustments)
 
             def upload_conversion_adjustments \
                 customer_id,

@@ -36,6 +36,28 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.common.CalloutFeedItem" do
     optional :callout_text, :message, 1, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v1.common.LocationFeedItem" do
+    optional :business_name, :message, 1, "google.protobuf.StringValue"
+    optional :address_line_1, :message, 2, "google.protobuf.StringValue"
+    optional :address_line_2, :message, 3, "google.protobuf.StringValue"
+    optional :city, :message, 4, "google.protobuf.StringValue"
+    optional :province, :message, 5, "google.protobuf.StringValue"
+    optional :postal_code, :message, 6, "google.protobuf.StringValue"
+    optional :country_code, :message, 7, "google.protobuf.StringValue"
+    optional :phone_number, :message, 8, "google.protobuf.StringValue"
+  end
+  add_message "google.ads.googleads.v1.common.AffiliateLocationFeedItem" do
+    optional :business_name, :message, 1, "google.protobuf.StringValue"
+    optional :address_line_1, :message, 2, "google.protobuf.StringValue"
+    optional :address_line_2, :message, 3, "google.protobuf.StringValue"
+    optional :city, :message, 4, "google.protobuf.StringValue"
+    optional :province, :message, 5, "google.protobuf.StringValue"
+    optional :postal_code, :message, 6, "google.protobuf.StringValue"
+    optional :country_code, :message, 7, "google.protobuf.StringValue"
+    optional :phone_number, :message, 8, "google.protobuf.StringValue"
+    optional :chain_id, :message, 9, "google.protobuf.Int64Value"
+    optional :chain_name, :message, 10, "google.protobuf.StringValue"
+  end
   add_message "google.ads.googleads.v1.common.TextMessageFeedItem" do
     optional :business_name, :message, 1, "google.protobuf.StringValue"
     optional :country_code, :message, 2, "google.protobuf.StringValue"
@@ -100,6 +122,8 @@ module Google::Ads::GoogleAds::V1::Common
   AppFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AppFeedItem").msgclass
   CallFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CallFeedItem").msgclass
   CalloutFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CalloutFeedItem").msgclass
+  LocationFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.LocationFeedItem").msgclass
+  AffiliateLocationFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.AffiliateLocationFeedItem").msgclass
   TextMessageFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.TextMessageFeedItem").msgclass
   PriceFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PriceFeedItem").msgclass
   PriceOffer = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PriceOffer").msgclass

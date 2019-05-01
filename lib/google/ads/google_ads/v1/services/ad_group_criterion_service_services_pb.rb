@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/ad_group_criterion_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module AdGroupCriterionService
+    # Proto file describing the Ad Group Criterion service.
+    #
     # Service to manage ad group criteria.
     class Service
 

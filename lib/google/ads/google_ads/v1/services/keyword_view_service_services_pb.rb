@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/keyword_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module KeywordViewService
+    # Proto file describing the Keyword View service.
+    #
     # Service to manage keyword views.
     class Service
 

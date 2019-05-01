@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/search_term_view_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module SearchTermViewService
+    # Proto file describing the Search Term View service.
+    #
     # Service to manage search term views.
     class Service
 

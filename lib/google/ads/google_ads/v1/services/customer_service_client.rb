@@ -212,9 +212,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
+            #   customer_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::CustomerServiceClient.customer_path("[CUSTOMER]")
-            #   response = customer_service_client.get_customer(formatted_resource_name)
+            #   response = customer_client.get_customer(formatted_resource_name)
 
             def get_customer \
                 resource_name,
@@ -249,14 +249,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
+            #   customer_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `operation`:
             #   operation = {}
-            #   response = customer_service_client.mutate_customer(customer_id, operation)
+            #   response = customer_client.mutate_customer(customer_id, operation)
 
             def mutate_customer \
                 customer_id,
@@ -287,8 +287,8 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
-            #   response = customer_service_client.list_accessible_customers
+            #   customer_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
+            #   response = customer_client.list_accessible_customers
 
             def list_accessible_customers options: nil, &block
               req = Google::Ads::GoogleAds::V1::Services::ListAccessibleCustomersRequest.new
@@ -315,14 +315,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   customer_service_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
+            #   customer_client = Google::Ads::GoogleAds::Customer.new(version: :v1)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
             #   # TODO: Initialize `customer_client`:
             #   customer_client = {}
-            #   response = customer_service_client.create_customer_client(customer_id, customer_client)
+            #   response = customer_client.create_customer_client(customer_id, customer_client)
 
             def create_customer_client \
                 customer_id,

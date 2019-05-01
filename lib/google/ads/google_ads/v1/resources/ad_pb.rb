@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/common/ad_type_infos_pb'
 require 'google/ads/google_ads/v1/common/custom_parameter_pb'
+require 'google/ads/google_ads/v1/common/final_app_url_pb'
 require 'google/ads/google_ads/v1/common/url_collection_pb'
 require 'google/ads/google_ads/v1/enums/ad_type_pb'
 require 'google/ads/google_ads/v1/enums/device_pb'
@@ -15,6 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.resources.Ad" do
     optional :id, :message, 1, "google.protobuf.Int64Value"
     repeated :final_urls, :message, 2, "google.protobuf.StringValue"
+    repeated :final_app_urls, :message, 35, "google.ads.googleads.v1.common.FinalAppUrl"
     repeated :final_mobile_urls, :message, 16, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 12, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 10, "google.ads.googleads.v1.common.CustomParameter"
@@ -41,6 +43,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :app_ad, :message, 29, "google.ads.googleads.v1.common.AppAdInfo"
       optional :legacy_app_install_ad, :message, 30, "google.ads.googleads.v1.common.LegacyAppInstallAdInfo"
       optional :responsive_display_ad, :message, 31, "google.ads.googleads.v1.common.ResponsiveDisplayAdInfo"
+      optional :display_upload_ad, :message, 33, "google.ads.googleads.v1.common.DisplayUploadAdInfo"
+      optional :app_engagement_ad, :message, 34, "google.ads.googleads.v1.common.AppEngagementAdInfo"
     end
   end
 end

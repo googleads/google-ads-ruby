@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_bid_modifier_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignBidModifierService
+    # Proto file describing the Campaign Bid Modifier service.
+    #
     # Service to manage campaign bid modifiers.
     class Service
 

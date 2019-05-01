@@ -19,6 +19,7 @@ require 'google/ads/google_ads/v1/enums/placeholder_type_pb'
 require 'google/ads/google_ads/v1/enums/product_channel_pb'
 require 'google/ads/google_ads/v1/enums/product_channel_exclusivity_pb'
 require 'google/ads/google_ads/v1/enums/product_condition_pb'
+require 'google/ads/google_ads/v1/enums/search_engine_results_page_type_pb'
 require 'google/ads/google_ads/v1/enums/search_term_match_type_pb'
 require 'google/ads/google_ads/v1/enums/slot_pb'
 require 'google/protobuf/wrappers_pb'
@@ -40,8 +41,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :external_conversion_source, :enum, 55, "google.ads.googleads.v1.enums.ExternalConversionSourceEnum.ExternalConversionSource"
     optional :geo_target_airport, :message, 65, "google.protobuf.StringValue"
     optional :geo_target_city, :message, 62, "google.protobuf.StringValue"
+    optional :geo_target_county, :message, 68, "google.protobuf.StringValue"
+    optional :geo_target_district, :message, 69, "google.protobuf.StringValue"
     optional :geo_target_metro, :message, 63, "google.protobuf.StringValue"
+    optional :geo_target_most_specific_location, :message, 72, "google.protobuf.StringValue"
+    optional :geo_target_postal_code, :message, 71, "google.protobuf.StringValue"
     optional :geo_target_region, :message, 64, "google.protobuf.StringValue"
+    optional :geo_target_state, :message, 67, "google.protobuf.StringValue"
     optional :hotel_booking_window_days, :message, 6, "google.protobuf.Int64Value"
     optional :hotel_center_id, :message, 7, "google.protobuf.Int64Value"
     optional :hotel_check_in_date, :message, 8, "google.protobuf.StringValue"
@@ -86,6 +92,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :product_type_l4, :message, 47, "google.protobuf.StringValue"
     optional :product_type_l5, :message, 48, "google.protobuf.StringValue"
     optional :quarter, :message, 21, "google.protobuf.StringValue"
+    optional :search_engine_results_page_type, :enum, 70, "google.ads.googleads.v1.enums.SearchEngineResultsPageTypeEnum.SearchEngineResultsPageType"
     optional :search_term_match_type, :enum, 22, "google.ads.googleads.v1.enums.SearchTermMatchTypeEnum.SearchTermMatchType"
     optional :slot, :enum, 23, "google.ads.googleads.v1.enums.SlotEnum.Slot"
     optional :webpage, :message, 66, "google.protobuf.StringValue"

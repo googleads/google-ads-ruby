@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/feed_mapping_service_pb'
 
 module Google::Ads::GoogleAds::V1::Services
   module FeedMappingService
+    # Proto file describing the FeedMapping service.
+    #
     # Service to manage feed mappings.
     class Service
 

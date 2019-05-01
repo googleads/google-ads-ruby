@@ -22,6 +22,8 @@ require 'google/ads/google_ads/v1/services/campaign_extension_setting_service_pb
 
 module Google::Ads::GoogleAds::V1::Services
   module CampaignExtensionSettingService
+    # Proto file describing the CampaignExtensionSetting service.
+    #
     # Service to manage campaign extension settings.
     class Service
 

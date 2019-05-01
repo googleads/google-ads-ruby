@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/enums/policy_topic_entry_type_pb'
 require 'google/ads/google_ads/v1/enums/policy_topic_evidence_destination_mismatch_url_type_pb'
+require 'google/ads/google_ads/v1/enums/policy_topic_evidence_destination_not_working_device_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -30,6 +31,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :language_code, :message, 5, "google.protobuf.StringValue"
       optional :destination_text_list, :message, 6, "google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationTextList"
       optional :destination_mismatch, :message, 7, "google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationMismatch"
+      optional :destination_not_working, :message, 8, "google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationNotWorking"
     end
   end
   add_message "google.ads.googleads.v1.common.PolicyTopicEvidence.TextList" do
@@ -43,6 +45,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationMismatch" do
     repeated :url_types, :enum, 1, "google.ads.googleads.v1.enums.PolicyTopicEvidenceDestinationMismatchUrlTypeEnum.PolicyTopicEvidenceDestinationMismatchUrlType"
+  end
+  add_message "google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationNotWorking" do
+    optional :expanded_url, :message, 3, "google.protobuf.StringValue"
+    optional :device, :enum, 4, "google.ads.googleads.v1.enums.PolicyTopicEvidenceDestinationNotWorkingDeviceEnum.PolicyTopicEvidenceDestinationNotWorkingDevice"
+    optional :last_checked_date_time, :message, 5, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v1.common.PolicyTopicConstraint" do
     oneof :value do
@@ -72,6 +79,7 @@ module Google::Ads::GoogleAds::V1::Common
   PolicyTopicEvidence::WebsiteList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicEvidence.WebsiteList").msgclass
   PolicyTopicEvidence::DestinationTextList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationTextList").msgclass
   PolicyTopicEvidence::DestinationMismatch = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationMismatch").msgclass
+  PolicyTopicEvidence::DestinationNotWorking = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicEvidence.DestinationNotWorking").msgclass
   PolicyTopicConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicConstraint").msgclass
   PolicyTopicConstraint::CountryConstraintList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicConstraint.CountryConstraintList").msgclass
   PolicyTopicConstraint::ResellerConstraint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.PolicyTopicConstraint.ResellerConstraint").msgclass

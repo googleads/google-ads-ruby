@@ -202,9 +202,9 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   geo_target_constant_service_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v1)
+            #   geo_target_constant_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v1)
             #   formatted_resource_name = Google::Ads::GoogleAds::V1::Services::GeoTargetConstantServiceClient.geo_target_constant_path("[GEO_TARGET_CONSTANT]")
-            #   response = geo_target_constant_service_client.get_geo_target_constant(formatted_resource_name)
+            #   response = geo_target_constant_client.get_geo_target_constant(formatted_resource_name)
 
             def get_geo_target_constant \
                 resource_name,
@@ -248,14 +248,14 @@ module Google
             # @example
             #   require "google/ads/google_ads"
             #
-            #   geo_target_constant_service_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v1)
+            #   geo_target_constant_client = Google::Ads::GoogleAds::GeoTargetConstant.new(version: :v1)
             #
             #   # TODO: Initialize `locale`:
             #   locale = {}
             #
             #   # TODO: Initialize `country_code`:
             #   country_code = {}
-            #   response = geo_target_constant_service_client.suggest_geo_target_constants(locale, country_code)
+            #   response = geo_target_constant_client.suggest_geo_target_constants(locale, country_code)
 
             def suggest_geo_target_constants \
                 locale,

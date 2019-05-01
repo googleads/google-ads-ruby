@@ -15,6 +15,7 @@ require 'google/ads/google_ads/v1/enums/interaction_type_pb'
 require 'google/ads/google_ads/v1/enums/keyword_match_type_pb'
 require 'google/ads/google_ads/v1/enums/listing_custom_attribute_index_pb'
 require 'google/ads/google_ads/v1/enums/listing_group_type_pb'
+require 'google/ads/google_ads/v1/enums/location_group_radius_units_pb'
 require 'google/ads/google_ads/v1/enums/minute_of_hour_pb'
 require 'google/ads/google_ads/v1/enums/parental_status_type_pb'
 require 'google/ads/google_ads/v1/enums/preferred_content_type_pb'
@@ -41,6 +42,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v1.common.MobileApplicationInfo" do
     optional :app_id, :message, 2, "google.protobuf.StringValue"
+    optional :name, :message, 3, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v1.common.LocationInfo" do
     optional :geo_target_constant, :message, 1, "google.protobuf.StringValue"
@@ -229,6 +231,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.common.CustomIntentInfo" do
     optional :custom_intent, :message, 1, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v1.common.LocationGroupInfo" do
+    optional :feed, :message, 1, "google.protobuf.StringValue"
+    repeated :geo_target_constants, :message, 2, "google.protobuf.StringValue"
+    optional :radius, :message, 3, "google.protobuf.Int64Value"
+    optional :radius_units, :enum, 4, "google.ads.googleads.v1.enums.LocationGroupRadiusUnitsEnum.LocationGroupRadiusUnits"
+  end
 end
 
 module Google::Ads::GoogleAds::V1::Common
@@ -285,4 +293,5 @@ module Google::Ads::GoogleAds::V1::Common
   MobileDeviceInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.MobileDeviceInfo").msgclass
   CustomAffinityInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CustomAffinityInfo").msgclass
   CustomIntentInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CustomIntentInfo").msgclass
+  LocationGroupInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.LocationGroupInfo").msgclass
 end
