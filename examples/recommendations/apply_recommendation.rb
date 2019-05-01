@@ -35,7 +35,7 @@ def apply_recommendation(customer_id, recommendation_id)
   # values. This is an example to override a recommended ad when a
   # TextAdRecommendation is applied.
   # For details, please read
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v0.services#google.ads.google_ads.v0.services.ApplyRecommendationOperation
+  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v1.services#google.ads.google_ads.v1.services.ApplyRecommendationOperation
   #
   # overriding_ad = client.resource(:Ad)
   # overriding_ad.id = client.wrapper.int64('INSERT_AD_ID_AS_INTEGER_HERE')

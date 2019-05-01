@@ -20,7 +20,7 @@
 require 'minitest/autorun'
 
 require 'google/ads/google_ads/google_ads_client'
-require 'google/ads/google_ads/v0/services/campaign_service_client'
+require 'google/ads/google_ads/v1/services/campaign_service_client'
 
 module Google
   module Ads

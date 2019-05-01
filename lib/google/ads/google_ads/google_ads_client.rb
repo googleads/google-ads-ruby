@@ -22,18 +22,6 @@
 module Google
   module Ads
     module GoogleAds
-      module V0
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
       module V1
         module Common
         end
@@ -219,7 +207,7 @@ module Google
             gax_error.status_details.each do |detail|
               # If there is an underlying GoogleAdsFailure, throw that one.
               if detail.is_a?(
-                  Google::Ads::GoogleAds::V0::Errors::GoogleAdsFailure)
+                  Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure)
                 raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
                     detail)
               end
