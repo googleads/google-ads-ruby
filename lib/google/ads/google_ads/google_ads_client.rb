@@ -141,7 +141,7 @@ module Google
             headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
           return class_to_return.new(
-            credentials: get_updater_proc(),
+            credentials: get_credentials(),
             metadata: headers,
             exception_transformer: ERROR_TRANSFORMER
           )
@@ -229,6 +229,14 @@ module Google
           # If we don't find an error of the correct type, or if we run into an
           # error while processing, just throw the original.
           raise gax_error
+        end
+
+        def get_credentials()
+          if @config.authentication
+            @config.authentication
+          else
+            get_updater_proc()
+          end
         end
 
         # Provides the service a method by which to obtain an access token to

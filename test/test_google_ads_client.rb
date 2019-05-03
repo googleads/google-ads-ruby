@@ -29,6 +29,7 @@ module Google
         attr_reader :config
 
         public :lookup_util
+        public :get_credentials
       end
     end
   end
@@ -161,6 +162,29 @@ class TestGoogleAdsClient < Minitest::Test
       config.log_target = STDOUT
     end
 
-    assert_equal client.logger, logger
+    assert_equal(client.logger, logger)
+  end
+
+  def test_default_to_updater_proc
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.client_id = 'client_id'
+      config.client_secret = 'client_secret'
+      config.refresh_token = 'refresh_token'
+    end
+
+    credentials = client.get_credentials()
+    assert_instance_of(Proc, credentials)
+  end
+
+  def test_authentication_overrides_updater_proc
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.client_id = 'client_id'
+      config.client_secret = 'client_secret'
+      config.refresh_token = 'refresh_token'
+      config.authentication = 'path/to/file'
+    end
+
+    credentials = client.get_credentials()
+    assert_equal('path/to/file', credentials)
   end
 end
