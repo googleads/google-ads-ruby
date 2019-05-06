@@ -17,8 +17,10 @@
 #
 # This exapmle sets ad parameters for an ad group criterion.
 # To get ad group criteria, run get_keywords.rb
+
 require 'optparse'
 require 'google/ads/google_ads'
+
 def add_ad_parameters(customer_id, ad_group_id, criterion_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
