@@ -73,7 +73,7 @@ if __FILE__ == $0
     end
 
     opts.on('-c', '--campaign-ids CAMPAIGN-IDS', String, 'Comma separated list of campaign ids') do |v|
-      options[:campaign_ids] = v.split(",").map(&:strip)
+      options[:campaign_ids] = v
     end
 
     opts.on('-L', '--label-id LABEL-ID', String, 'Label ID') do |v|
@@ -93,7 +93,7 @@ if __FILE__ == $0
     add_campaign_label(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:label_id),
-      options.fetch(:campaign_ids),
+      options.fetch(:campaign_ids).split(",").map(&:strip),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
