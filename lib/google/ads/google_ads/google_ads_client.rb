@@ -141,7 +141,7 @@ module Google
             headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
           return class_to_return.new(
-            credentials: get_credentials(),
+            credentials: get_credentials,
             metadata: headers,
             exception_transformer: ERROR_TRANSFORMER
           )
@@ -235,7 +235,7 @@ module Google
           if @config.authentication
             @config.authentication
           else
-            get_updater_proc()
+            get_updater_proc
           end
         end
 

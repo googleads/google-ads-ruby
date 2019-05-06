@@ -37,7 +37,7 @@ end
 
 class TestGoogleAdsClient < Minitest::Test
   def test_initialize()
-    Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
   end
@@ -63,7 +63,7 @@ class TestGoogleAdsClient < Minitest::Test
       )
     )
 
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
 
@@ -78,7 +78,7 @@ class TestGoogleAdsClient < Minitest::Test
     client_id_value_1 = 'client id'
     client_secret_value_1 = 'client secret'
 
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.refresh_token = refresh_token_value_1
       config.client_id = client_id_value_1
       config.client_secret = client_secret_value_1
@@ -104,7 +104,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_service()
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
 
@@ -116,7 +116,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_service_with_login_customer_id_set()
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.login_customer_id = 1234567890
     end
 
@@ -128,7 +128,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_service_with_invalid_login_customer_id_set()
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.login_customer_id = 'abcd'
     end
 
@@ -138,7 +138,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_resource_lookup()
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
 
@@ -147,7 +147,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_lookup_instantiation()
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
 
@@ -155,9 +155,9 @@ class TestGoogleAdsClient < Minitest::Test
     assert_instance_of(Google::Ads::GoogleAds::LookupUtil, util)
   end
 
-  def test_logger_beats_log_target
+  def test_logger_beats_log_target()
     logger = Logger.new(StringIO.new)
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.logger = logger
       config.log_target = STDOUT
     end
@@ -165,8 +165,8 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(client.logger, logger)
   end
 
-  def test_default_to_updater_proc
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+  def test_default_to_updater_proc()
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.client_id = 'client_id'
       config.client_secret = 'client_secret'
       config.refresh_token = 'refresh_token'
