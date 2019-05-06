@@ -26,10 +26,10 @@ def get_all_videos_and_images(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  query = <<~EOD
+  query = <<~EOQUERY
     SELECT media_file.id, media_file.name, media_file.type
     FROM media_file ORDER BY media_file.id
-  EOD
+  EOQUERY
 
   ga_service = client.service(:GoogleAds)
   response = ga_service.search(customer_id, query)
