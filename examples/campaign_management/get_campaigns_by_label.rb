@@ -37,8 +37,7 @@ def get_campaigns_by_label(customer_id, label_id)
       page_size: PAGE_SIZE)
 
   response.each do |row|
-    puts sprintf("Campaign with ID %d and name '%s' was found.",
-        row.campaign.id, row.campaign.name)
+    puts "Campaign with ID #{row.campaign.id} and name '#{row.campaign.name}' was found."
   end
 end
 
