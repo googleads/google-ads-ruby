@@ -25,10 +25,10 @@ def get_campaigns_by_label(customer_id, label_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  query = <<~EOD
+  query = <<~EOQUERY
     SELECT campaign.id, campaign.name, label.id, label.name
     FROM campaign_label WHERE label.id = '#{label_id}' ORDER BY campaign.id
-  EOD
+  EOQUERY
 
   ga_service = client.service(:GoogleAds)
   response = ga_service.search(
