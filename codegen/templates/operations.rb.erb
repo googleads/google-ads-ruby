@@ -54,7 +54,7 @@ module Google
               end
 
               op = <%= operation.operation.name %>.new
-              op["update_mask"] = FieldMaskutil.with(res, &blk)
+              op["update_mask"] = Google::Ads::GoogleAds::FieldMaskUtil.with(res, &blk)
               op["update"] = res
               op
             end

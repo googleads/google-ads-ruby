@@ -85,7 +85,7 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
     manager_link_id,
   )
 
-  update_op = clien.operations.update_resource(path) do
+  update_op = client.operation.update_resource.customer_manager_link(path) do |manager_link|
     manager_link.status = :ACTIVE
   end
 
