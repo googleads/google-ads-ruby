@@ -9,11 +9,15 @@ module Google
             <%= operation.operation.name %>.new
           end
           <% end %>
-          def self.create
-            Create
+          def self.create_resource
+            CreateResource
           end
 
-          module Create
+          def self.update_resource
+            UpdateResource
+          end
+
+          module CreateResource
             <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
               require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
@@ -24,6 +28,34 @@ module Google
                 op["create"] = Factories::Resources.<%= operation.create_class.name.split("::").last.underscore %>(&blk)
               end
 
+              op
+            end
+            <% end %>
+          end
+
+          module UpdateResource
+            <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
+            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource_or_path, &blk)
+              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+              res = case resource_or_path
+              when <%= operation.create_class.to_s %>
+                resource_or_path
+              # got a resource path
+              when String
+                obj = <%= operation.create_class.to_s %>.new
+                obj.resource_name = resource_or_path
+                obj
+              else
+                raise ArgumentError.new(
+                  "Called #{__method__} with instance of wrong type:"\
+                  " #{res.class} want #{operation.create_class.to_s}"\
+                  " or String representing resource name"
+                ) unless <%= operation.create_class.to_s %> === res
+              end
+
+              op = <%= operation.operation.name %>.new
+              op["update_mask"] = FieldMaskutil.with(res, &blk)
+              op["update"] = res
               op
             end
             <% end %>

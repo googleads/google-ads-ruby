@@ -28,14 +28,19 @@ def add_campaigns(customer_id)
   cbudget_service = client.service(:CampaignBudget)
   campaign_service = client.service(:Campaign)
 
-  # Create a budget, which can be shared by multiple campaigns.
-  cbudget_operation = client.operation.create.campaign_budget do |cb|
+  cbudget = client.resource.campaign_budget do |cb|
     cb.name = client.wrapper.string(
       sprintf('Interplanetary Budget %s', (Time.new.to_f * 1000).to_i)
     )
     cb.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
     cb.amount_micros = client.wrapper.int64(500000)
   end
+
+  # Create a budget, which can be shared by multiple campaigns.
+  cbudget_operation = client.operation.create.campaign_budget(cbudget)
+
+  cbudget_operation = client.operation.campaign_budget
+  cbudget_operation["create"] = cbudget
 
   # Add budget.
   return_budget = cbudget_service.mutate_campaign_budgets(

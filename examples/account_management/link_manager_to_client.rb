@@ -79,26 +79,20 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
     config.login_customer_id = client_customer_id.to_i
   end
 
-  manager_link_service = client.service(:CustomerManagerLink)
-
-  manager_link = client.resource(:CustomerManagerLink)
-  manager_link.resource_name = client.path.customer_manager_link(
+  path = client.path.customer_manager_link(
     client_customer_id,
     manager_customer_id,
     manager_link_id,
   )
 
-  mask = client.field_mask.with manager_link do
+  update_op = clien.operations.update_resource(path) do
     manager_link.status = :ACTIVE
   end
 
-  manager_link_operation = client.operation(:CustomerManagerLink)
-  manager_link_operation['update'] = manager_link
-  manager_link_operation['update_mask'] = mask
-
+  manager_link_service = client.service(:CustomerManagerLink)
   response = manager_link_service.mutate_customer_manager_link(
     client_customer_id,
-    [manager_link_operation],
+    [update_op],
   )
 
   puts "Client accepted invitation with resource name " \
