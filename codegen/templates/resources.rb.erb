@@ -4,6 +4,12 @@ module Google
       module Factories
         module Resources
           <% resources.each do |res, path| %>
+          # Returns a new instance of <%= res.name.split("::").last %>, optionally
+          # yielding it to a passed block so that attributes can be set on it.
+          #
+          # @yield [<%= res.name %>] the new instance that is returned so attributes
+          #  can be set
+          # @return [<%= res.name %>] the created resource
           def self.<%= res.name.split("::").last.underscore %>
             require "<%= path.split("google-ads-ruby/lib/").last %>"
             res = <%= res.name %>.new

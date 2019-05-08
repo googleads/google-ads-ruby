@@ -4,25 +4,55 @@ module Google
       module Factories
         module Operations
           <% operations.each do |operation| %>
+          # Create a new <%= operation.operation.name.split("::").last %>
+          #
+          # @return [<%= operation.operation.name %>] the operation
           def self.<%= operation.operation.name.split("::").last.underscore %>
             require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
             <%= operation.operation.name %>.new
           end
           <% end %>
+
+          # Get a reference module containing convenience methods for creating
+          # resources
+          #
+          # @return [Google::Ads::GoogleAds::Factories::Operations::CreateResource]
           def self.create_resource
             CreateResource
           end
 
+          # Get a reference module containing convenience methods for updating
+          # resources
+          #
+          # @return [Google::Ads::GoogleAds::Factories::Operations::UpdateResource]
           def self.update_resource
             UpdateResource
           end
 
+          # Get a reference module containing convenience methods for removing
+          # resources
+          #
+          # @return [Google::Ads::GoogleAds::Factories::Operations::RemoveResource]
           def self.remove_resource
             RemoveResource
           end
 
           module CreateResource
             <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
+            # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
+            # it's "create" field prepopulated with an <%= operation.create_class.name.split("::").last %> instance.
+            #
+            # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
+            #   creates an operation instance, yielding a newly fabricated <%= operation.create_class.name.split("::").last %>
+            #   which can be used for setting attributes on the newly created resource
+            # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res)
+            #   creates an operation instance, with the resource to be created
+            #   set to the passed value (res)
+            #   @param res [<%= operation.create_class.name %>]
+            #     a resource instance to be used for creation in this operation.
+            #
+            # @return [<%= operation.operation.name %>] instance that will create
+            #   an <%= operation.operation.name.split("::").last %>.
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
               require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
               op = <%= operation.operation.name %>.new
