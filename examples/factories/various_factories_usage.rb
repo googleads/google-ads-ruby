@@ -93,6 +93,10 @@ def add_campaigns(customer_id)
 
   campaign_service.mutate_campaigns(customer_id, [update_operation])
 
+  # Finally remove the campaign
+  remove_op = client.operation.remove_resource.campaign(campaign_resource_name)
+  campaign_service.mutate_campaigns(customer_id, [remove_op])
+
   # updates also work with only a resource name, so let's pull one out and
   # then update it
   ga_service = client.service.google_ads
