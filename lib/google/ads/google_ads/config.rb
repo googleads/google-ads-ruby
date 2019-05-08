@@ -23,6 +23,8 @@ module Google
         attr_accessor :refresh_token
         attr_accessor :client_id
         attr_accessor :client_secret
+        attr_accessor :authentication
+
         attr_accessor :developer_token
         attr_accessor :login_customer_id
 
@@ -34,12 +36,15 @@ module Google
           @refresh_token = nil
           @client_id = nil
           @client_secret = nil
+          @authentication = nil
+
           @developer_token = nil
           @login_customer_id = nil
 
           @log_level = nil
           @log_target = nil
           @logger = nil
+
           yield self if block_given?
         end
 
