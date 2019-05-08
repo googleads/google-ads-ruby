@@ -60,12 +60,12 @@ def add_campaigns(customer_id)
     campaign_budget_resource_name,
   )
 
-  campaign.network_settings = client.resource.network_settings
-  campaign.network_settings.target_google_search = client.wrapper.bool(true)
-  campaign.network_settings.target_search_network = client.wrapper.bool(true)
-  campaign.network_settings.target_content_network = client.wrapper.bool(false)
-  campaign.network_settings.target_partner_search_network =
-    client.wrapper.bool(false)
+  campaign.network_settings = client.resource.network_settings do |ns|
+    ns.target_google_search = client.wrapper.bool(true)
+    ns.target_search_network = client.wrapper.bool(true)
+    ns.target_content_network = client.wrapper.bool(false)
+    ns.target_partner_search_network = client.wrapper.bool(false)
+  end
 
   # Alternate non-block style, where we pass the campaign object we built
   # up
