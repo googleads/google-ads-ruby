@@ -92,7 +92,7 @@ RSpec.describe "#filter_services_for_google_ads" do
   end
 end
 
-RSpec.describe "#filter_resources_in_to_resources_and_operations" do
+RSpec.describe "#filter_resources_into_resources_and_operations" do
   let(:resource) { double(:resource, name: name) }
   let(:path) { __FILE__ }
 
@@ -100,7 +100,7 @@ RSpec.describe "#filter_resources_in_to_resources_and_operations" do
     let(:name) { "FooRequest" }
     it "throws out the resource" do
       expect(
-        filter_resources_in_to_resources_and_operations([[resource, path]])
+        filter_resources_into_resources_and_operations([[resource, path]])
       ).to eq([[], []])
     end
   end
@@ -109,7 +109,7 @@ RSpec.describe "#filter_resources_in_to_resources_and_operations" do
     let(:name) { "FooResponse" }
     it "throws out the resource" do
       expect(
-        filter_resources_in_to_resources_and_operations([[resource, path]])
+        filter_resources_into_resources_and_operations([[resource, path]])
       ).to eq([[], []])
     end
   end
@@ -118,7 +118,7 @@ RSpec.describe "#filter_resources_in_to_resources_and_operations" do
     let(:name) { "FooOperation" }
     it "filters in to the operations list" do
       expect(
-        filter_resources_in_to_resources_and_operations([[resource, path]])
+        filter_resources_into_resources_and_operations([[resource, path]])
       ).to eq([[], [[resource, path]]])
     end
   end
@@ -128,7 +128,7 @@ RSpec.describe "#filter_resources_in_to_resources_and_operations" do
 
     it "filters in to the resources list" do
       expect(
-        filter_resources_in_to_resources_and_operations([[resource, path]])
+        filter_resources_into_resources_and_operations([[resource, path]])
       ).to eq([[[resource, path]], []])
     end
   end

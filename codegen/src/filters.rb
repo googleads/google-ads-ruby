@@ -31,7 +31,7 @@ def filter_services_for_google_ads(potential_services)
   }
 end
 
-def filter_resources_in_to_resources_and_operations(resources)
+def filter_resources_into_resources_and_operations(resources)
   resources.reject { |klass, path|
     klass.name.end_with?("Request", "Response")
   }.partition { |klass, _|

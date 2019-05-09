@@ -57,7 +57,7 @@ with_tracepoints(
   end
 end
 resources = filter_resources_for_google_ads(potential_resources)
-resources, operations = filter_resources_in_to_resources_and_operations(resources)
+resources, operations = filter_resources_into_resources_and_operations(resources)
 enums = filter_enums_for_google_ads(potential_enums)
 services = filter_services_for_google_ads(potential_services)
 
