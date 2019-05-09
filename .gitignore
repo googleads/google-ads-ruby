@@ -2,4 +2,4 @@ pkg
 Gemfile.lock
 lib/google/ads/google_ads/factories
 doc
-.yarddoc
+.yardoc
