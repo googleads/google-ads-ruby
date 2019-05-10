@@ -100,9 +100,10 @@ def add_campaigns(customer_id)
   # updates also work with only a resource name, so let's pull one out and
   # then update it
   ga_service = client.service.google_ads
-  res = ga_service.search(customer_id, <<~EOQUERY)
-  select campaign.resource_name, campaign.name from campaign limit 1
-  EOQUERY
+  res = ga_service.search(
+    customer_id,
+    "select campaign.resource_name, campaign.name from campaign limit 1",
+  )
 
   campaign_resource_name = res.first.campaign.resource_name
 
