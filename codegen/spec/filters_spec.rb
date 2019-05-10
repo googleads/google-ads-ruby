@@ -11,7 +11,7 @@ RSpec.describe "#filter_resources_for_google_ads" do
     }
 
     it "keeps the message class" do
-      expect(filter_resources_for_google_ads(:v1, [[resource, path]])).to eq(
+      expect(filter_resources_for_google_ads(:V1, [[resource, path]])).to eq(
         [[msgclass, path]]
       )
     end
