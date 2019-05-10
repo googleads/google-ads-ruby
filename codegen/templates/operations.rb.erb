@@ -40,7 +40,7 @@ module Google
           module CreateResource
             <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
             # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
-            # it's "create" field prepopulated with an <%= operation.create_class.name.split("::").last %> instance.
+            # its "create" field prepopulated with an <%= operation.create_class.name.split("::").last %> instance.
             #
             # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
             #   creates an operation instance, yielding a newly fabricated <%= operation.create_class.name.split("::").last %>
@@ -69,8 +69,8 @@ module Google
           module UpdateResource
             <% operations.reject { |x| x.update_class.nil? }.each do |operation| %>
             # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
-            # it's "update" field prepopulated with an <%= operation.update_class.name.split("::").last %> instance, and
-            # it's "update_mask" field populated as needed to send the updates to the API.
+            # its "update" field prepopulated with an <%= operation.update_class.name.split("::").last %> instance, and
+            # its "update_mask" field populated as needed to send the updates to the API.
             #
             # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path, &blk)
             #   @param path [String] a resource path for the resource to update
