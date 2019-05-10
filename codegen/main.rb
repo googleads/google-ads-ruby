@@ -11,23 +11,23 @@ require 'google/ads/google_ads/api_versions'
 module Google
   module Ads
     module GoogleAds
-      module V1
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
     end
   end
 end
-
 Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
+  Google::Ads::GoogleAds.const_set("#{version.to_s.upcase}", Module.new do
+    module Common
+    end
+    module Enums
+    end
+    module Errors
+    end
+    module Resources
+    end
+    module Services
+    end
+  end)
+
   potential_resources = []
   potential_enums = []
   potential_services = []
