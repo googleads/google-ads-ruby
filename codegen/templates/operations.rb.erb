@@ -51,8 +51,7 @@ module Google
             #   @param res [<%= operation.create_class.name %>]
             #     a resource instance to be used for creation in this operation.
             #
-            # @return [<%= operation.operation.name %>] instance that will create
-            #   an <%= operation.operation.name.split("::").last %>.
+            # @return [<%= operation.operation.name %>] instance that will create the resource
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
               require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
               op = <%= operation.operation.name %>.new
@@ -69,6 +68,19 @@ module Google
 
           module UpdateResource
             <% operations.reject { |x| x.update_class.nil? }.each do |operation| %>
+            # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
+            # it's "update" field prepopulated with an <%= operation.update_class.name.split("::").last %> instance, and
+            # it's "update_mask" field populated as needed to send the updates to the API.
+            #
+            # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path, &blk)
+            #   @param path [String] a resource path for the resource to update
+            #   @yield [<%= operation.update_class.name %>] a new instance of the resource for this update operation, on
+            #     which fields can be set to update
+            #
+            # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource, &blk)
+            #   @param resource [<%= operation.update_class.name %>] a resource instance to update
+            #   @yield the passed block is called and updates against `resource` are recordered in the update mask
+            # @return [<%= operation.operation.name %>] the operation instance to update the resource
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource_or_path, &blk)
               require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
               res = case resource_or_path
