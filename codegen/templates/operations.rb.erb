@@ -109,11 +109,15 @@ module Google
 
           module RemoveResource
             <% operations.each do |operation| %>
-              def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path)
-                op = <%= operation.operation.name %>.new
-                op["remove"] = path
-                op
-              end
+            # A convenience method for creationg an <%= operation.operation.name.split("::").last %> instance with
+            # its "remove" field preopulated with a resource path corresponding to the resource to be removed.
+            #
+            # @param path [String] the resource name of the resource to delete.
+            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path)
+              op = <%= operation.operation.name %>.new
+              op["remove"] = path
+              op
+            end
             <% end %>
           end
         end
