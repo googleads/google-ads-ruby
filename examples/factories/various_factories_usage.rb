@@ -108,7 +108,9 @@ def add_campaigns(customer_id)
   campaign_resource_name = res.first.campaign.resource_name
 
   # note here, we have to pass the campaign (`camp`) as a block arg, because
-  # we only have a resource name.
+  # we only have a resource name. The field mask for the object is created
+  # and applied automatically to the new campaign instance based on what's set
+  # in the block.
   update_operation = client.operation.update_resource.campaign(campaign_resource_name) do |camp|
     camp.name = client.wrapper.string(
       "A different interplanetary Cruise #{(Time.new.to_f * 1000).to_i}",
