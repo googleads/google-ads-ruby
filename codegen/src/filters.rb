@@ -2,7 +2,7 @@
 # that we're in, and turns then in to class/module objects. These should be
 # done after all the protobuf files are required, such that the classes and
 # modules have their name values populated
-def filter_resources_for_google_ads(potential_resources)
+def filter_resources_for_google_ads(version, potential_resources)
   potential_resources.map { |descriptor, path|
     [descriptor.msgclass, path]
   }.reject { |klass, path|
@@ -11,23 +11,23 @@ def filter_resources_for_google_ads(potential_resources)
     # https://git.io/fjqcs
     klass.name.end_with?("Enum")
   }.select { |klass, _|
-    klass.name.start_with?("Google::Ads::GoogleAds::V1")
+    klass.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}")
   }
 end
 
-def filter_enums_for_google_ads(potential_enums)
+def filter_enums_for_google_ads(version, potential_enums)
   potential_enums.map { |descriptor, path|
     [descriptor.enummodule, path]
   }.select { |mod, _|
-    mod.name.start_with?("Google::Ads::GoogleAds::V1")
+    mod.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}")
   }
 end
 
-def filter_services_for_google_ads(potential_services)
+def filter_services_for_google_ads(version, potential_services)
   # services are already class objects because the gapic generator wraps
   # the protobuf descriptors for us.
   potential_services.select { |service, _|
-    service.name.start_with?("Google::Ads::GoogleAds::V1")
+    service.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}")
   }
 end
 

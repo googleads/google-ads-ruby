@@ -6,85 +6,97 @@ require 'src/tracepoints'
 require 'src/filters'
 require 'src/rendering'
 
-potential_resources = []
-potential_enums = []
-potential_services = []
-with_tracepoints(
-  potential_resources: potential_resources,
-  potential_enums: potential_enums,
-  potential_services: potential_services,
-) do
-  module Google
-    module Ads
-      module GoogleAds
-        module V1
-          module Common
-          end
-          module Enums
-          end
-          module Errors
-          end
-          module Resources
-          end
-          module Services
-          end
+require 'google/ads/google_ads/api_versions'
+
+module Google
+  module Ads
+    module GoogleAds
+      module V1
+        module Common
+        end
+        module Enums
+        end
+        module Errors
+        end
+        module Resources
+        end
+        module Services
         end
       end
     end
   end
-
-  # setup load path to include the directory with lib in it
-  $: << GEM_ROOT
-
-  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/resources/*.rb"].each do |fn|
-    require fn.gsub("#{GEM_ROOT}/lib/", "")
-  end
-
-  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/services/*.rb"].each do |fn|
-    require fn.gsub("#{GEM_ROOT}/lib/", "")
-  end
-
-  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/enums/*.rb"].each do |fn|
-    require fn.gsub("#{GEM_ROOT}/lib/", "")
-  end
-
-  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/common/*.rb"].each do |fn|
-    require fn.gsub("#{GEM_ROOT}/lib/", "")
-  end
-
-  Dir["#{GEM_ROOT}/lib/google/ads/google_ads/v1/errors/*.rb"].each do |fn|
-    require fn.gsub("#{GEM_ROOT}/lib/", "")
-  end
 end
-resources = filter_resources_for_google_ads(potential_resources)
-resources, operations = filter_resources_into_resources_and_operations(resources)
-enums = filter_enums_for_google_ads(potential_enums)
-services = filter_services_for_google_ads(potential_services)
 
-operations = enhance_operations_with_classes(operations)
+Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
+  potential_resources = []
+  potential_enums = []
+  potential_services = []
+  with_tracepoints(
+    potential_resources: potential_resources,
+    potential_enums: potential_enums,
+    potential_services: potential_services,
+  ) do
 
-factories_dir = File.join(GEM_ROOT, "lib", "google", "ads", "google_ads", "factories")
-`mkdir -p #{factories_dir}`
+    # setup load path to include the directory with lib in it
+    $: << GEM_ROOT
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/resources/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/services/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/enums/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/common/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/errors/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+  end
+  resources = filter_resources_for_google_ads(version, potential_resources)
+  resources, operations = filter_resources_into_resources_and_operations(resources)
+  enums = filter_enums_for_google_ads(version, potential_enums)
+  services = filter_services_for_google_ads(version, potential_services)
+
+  operations = enhance_operations_with_classes(operations)
+
+  factories_dir = File.join(GEM_ROOT, "lib", "google", "ads", "google_ads", "factories", version.to_s.downcase)
+  `mkdir -p #{factories_dir}`
+  render_template(
+    File.join(DIR, "templates", "resources.rb.erb"),
+    File.join(factories_dir, "resources.rb"),
+    {resources: resources, version: version}
+  )
+
+  render_template(
+    File.join(DIR, "templates", "services.rb.erb"),
+    File.join(factories_dir, "services.rb"),
+    {services: services, version: version}
+  )
+
+  render_template(
+    File.join(DIR, "templates", "enums.rb.erb"),
+    File.join(factories_dir, "enums.rb"),
+    {enums: enums, version: version}
+  )
+
+  render_template(
+    File.join(DIR, "templates", "operations.rb.erb"),
+    File.join(factories_dir, "operations.rb"),
+    {operations: operations, version: version}
+ )
+end
+
+gads_dir = File.join(GEM_ROOT, "lib", "google", "ads", "google_ads")
 render_template(
-  File.join(DIR, "templates", "resources.rb.erb"),
-  File.join(factories_dir, "resources.rb"),
-  {resources: resources}
-)
-
-render_template(
-  File.join(DIR, "templates", "services.rb.erb"),
-  File.join(factories_dir, "services.rb"),
-  {services: services}
-)
-
-render_template(
-  File.join(DIR, "templates", "enums.rb.erb"),
-  File.join(factories_dir, "enums.rb"),
-  {enums: enums}
-)
-
-render_template(
-  File.join(DIR, "templates", "operations.rb.erb"),
-  File.join(factories_dir, "operations.rb"),
-  {operations: operations}
+    File.join(DIR, "templates", "factories.rb.erb"),
+    File.join(gads_dir, "factories.rb"),
+    {versions: Google::Ads::GoogleAds::KNOWN_API_VERSIONS}
 )

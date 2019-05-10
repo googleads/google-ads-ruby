@@ -46,11 +46,7 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
-require 'google/ads/google_ads/factories/resources'
-require 'google/ads/google_ads/factories/services'
-require 'google/ads/google_ads/factories/enums'
-require 'google/ads/google_ads/factories/operations'
-
+require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 
 require 'google/gax'
@@ -137,7 +133,7 @@ module Google
           end
 
           if name.nil?
-            Factories::Services.new(
+            Factories.at_version(version).services.new(
               service_path: service_path,
               logging_interceptor: logging_interceptor,
               credentials: get_updater_proc,
@@ -169,7 +165,7 @@ module Google
         # Raises ArgumentError if no entity can be found for the provided type.
         def resource(name=nil, version=default_api_version)
           if name.nil?
-            Google::Ads::GoogleAds::Factories::Resources
+            Factories.at_version(version).resources
           else
             lookup_util.resource(name, version)
           end
@@ -181,7 +177,7 @@ module Google
         # Raises ArgumentError if no entity can be found for the provided type.
         def operation(name=nil, version = default_api_version)
           if name.nil?
-            Google::Ads::GoogleAds::Factories::Operations
+            Factories.at_version(version).operations
           else
             lookup_util.operation(name, version)
           end
@@ -194,7 +190,7 @@ module Google
         # Raises ArgumentError if no enum can be found for the provided type.
         def enum(name=nil, version = default_api_version)
           if name.nil?
-            Google::Ads::GoogleAds::Factories::Enums
+            Factories.at_version(version).enums
           else
             lookup_util.enum(name, version)
           end

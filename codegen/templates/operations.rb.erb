@@ -2,123 +2,125 @@ module Google
   module Ads
     module GoogleAds
       module Factories
-        module Operations
-          <% operations.each do |operation| %>
-          # Create a new <%= operation.operation.name.split("::").last %>
-          #
-          # @return [<%= operation.operation.name %>] the operation
-          def self.<%= operation.operation.name.split("::").last.underscore %>
-            require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
-            <%= operation.operation.name %>.new
-          end
-          <% end %>
-
-          # Get a reference module containing convenience methods for creating
-          # resources
-          #
-          # @return [Google::Ads::GoogleAds::Factories::Operations::CreateResource]
-          def self.create_resource
-            CreateResource
-          end
-
-          # Get a reference module containing convenience methods for updating
-          # resources
-          #
-          # @return [Google::Ads::GoogleAds::Factories::Operations::UpdateResource]
-          def self.update_resource
-            UpdateResource
-          end
-
-          # Get a reference module containing convenience methods for removing
-          # resources
-          #
-          # @return [Google::Ads::GoogleAds::Factories::Operations::RemoveResource]
-          def self.remove_resource
-            RemoveResource
-          end
-
-          module CreateResource
-            <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
-            # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
-            # its "create" field prepopulated with an <%= operation.create_class.name.split("::").last %> instance.
-            #
-            # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
-            #   creates an operation instance, yielding a newly fabricated <%= operation.create_class.name.split("::").last %>
-            #   which can be used for setting attributes on the newly created resource
-            # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res)
-            #   creates an operation instance, with the resource to be created
-            #   set to the passed value (res)
-            #   @param res [<%= operation.create_class.name %>]
-            #     a resource instance to be used for creation in this operation.
-            #
-            # @return [<%= operation.operation.name %>] instance that will create the resource
-            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
-              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
-              op = <%= operation.operation.name %>.new
-              if res != nil
-                op["create"] = res
-              elsif !blk.nil?
-                op["create"] = Factories::Resources.<%= operation.create_class.name.split("::").last.underscore %>(&blk)
-              end
-
-              op
-            end
-            <% end %>
-          end
-
-          module UpdateResource
-            <% operations.reject { |x| x.update_class.nil? }.each do |operation| %>
-            # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
-            # its "update" field prepopulated with an <%= operation.update_class.name.split("::").last %> instance, and
-            # its "update_mask" field populated as needed to send the updates to the API.
-            #
-            # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path, &blk)
-            #   @param path [String] a resource path for the resource to update
-            #   @yield [<%= operation.update_class.name %>] a new instance of the resource for this update operation, on
-            #     which fields can be set to update
-            #
-            # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource, &blk)
-            #   @param resource [<%= operation.update_class.name %>] a resource instance to update
-            #   @yield the passed block is called and updates against `resource` are recordered in the update mask
-            # @return [<%= operation.operation.name %>] the operation instance to update the resource
-            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource_or_path, &blk)
-              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
-              res = case resource_or_path
-              when <%= operation.update_class.to_s %>
-                resource_or_path
-              # got a resource path
-              when String
-                obj = <%= operation.update_class.to_s %>.new
-                obj.resource_name = resource_or_path
-                obj
-              else
-                raise ArgumentError.new(
-                  "Called #{__method__} with instance of wrong type:"\
-                  " #{res.class} want #{operation.update_class.to_s}"\
-                  " or String representing resource name"
-                ) unless <%= operation.update_class.to_s %> === res
-              end
-
-              op = <%= operation.operation.name %>.new
-              op["update_mask"] = Google::Ads::GoogleAds::FieldMaskUtil.with(res, &blk)
-              op["update"] = res
-              op
-            end
-            <% end %>
-          end
-
-          module RemoveResource
+        module <%= version.to_s.camelize %>
+          module Operations
             <% operations.each do |operation| %>
-            # A convenience method for creationg an <%= operation.operation.name.split("::").last %> instance with
-            # its "remove" field preopulated with a resource path corresponding to the resource to be removed.
+            # Create a new <%= operation.operation.name.split("::").last %>
             #
-            # @param path [String] the resource name of the resource to delete.
-            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path)
-              op = <%= operation.operation.name %>.new
-              op["remove"] = path
-              op
+            # @return [<%= operation.operation.name %>] the operation
+            def self.<%= operation.operation.name.split("::").last.underscore %>
+              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+              <%= operation.operation.name %>.new
             end
             <% end %>
+
+            # Get a reference module containing convenience methods for creating
+            # resources
+            #
+            # @return [Google::Ads::GoogleAds::Factories::<%= version.to_s.camelize %>::Operations::CreateResource]
+            def self.create_resource
+              CreateResource
+            end
+
+            # Get a reference module containing convenience methods for updating
+            # resources
+            #
+            # @return [Google::Ads::GoogleAds::Factories::<%= version.to_s.camelize %>::Operations::UpdateResource]
+            def self.update_resource
+              UpdateResource
+            end
+
+            # Get a reference module containing convenience methods for removing
+            # resources
+            #
+            # @return [Google::Ads::GoogleAds::Factories::<%= version.to_s.camelize %>::Operations::RemoveResource]
+            def self.remove_resource
+              RemoveResource
+            end
+
+            module CreateResource
+              <% operations.reject { |x| x.create_class.nil? }.each do |operation| %>
+              # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
+              # its "create" field prepopulated with an <%= operation.create_class.name.split("::").last %> instance.
+              #
+              # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
+              #   creates an operation instance, yielding a newly fabricated <%= operation.create_class.name.split("::").last %>
+              #   which can be used for setting attributes on the newly created resource
+              # @overload <%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res)
+              #   creates an operation instance, with the resource to be created
+              #   set to the passed value (res)
+              #   @param res [<%= operation.create_class.name %>]
+              #     a resource instance to be used for creation in this operation.
+              #
+              # @return [<%= operation.operation.name %>] instance that will create the resource
+              def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
+                require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+                op = <%= operation.operation.name %>.new
+                if res != nil
+                  op["create"] = res
+                elsif !blk.nil?
+                  op["create"] = Factories::<%= version.to_s.camelize %>::Resources.<%= operation.create_class.name.split("::").last.underscore %>(&blk)
+                end
+
+                op
+              end
+              <% end %>
+            end
+
+            module UpdateResource
+              <% operations.reject { |x| x.update_class.nil? }.each do |operation| %>
+              # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
+              # its "update" field prepopulated with an <%= operation.update_class.name.split("::").last %> instance, and
+              # its "update_mask" field populated as needed to send the updates to the API.
+              #
+              # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path, &blk)
+              #   @param path [String] a resource path for the resource to update
+              #   @yield [<%= operation.update_class.name %>] a new instance of the resource for this update operation, on
+              #     which fields can be set to update
+              #
+              # @overload #<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource, &blk)
+              #   @param resource [<%= operation.update_class.name %>] a resource instance to update
+              #   @yield the passed block is called and updates against `resource` are recordered in the update mask
+              # @return [<%= operation.operation.name %>] the operation instance to update the resource
+              def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource_or_path, &blk)
+                require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+                res = case resource_or_path
+                when <%= operation.update_class.to_s %>
+                  resource_or_path
+                # got a resource path
+                when String
+                  obj = <%= operation.update_class.to_s %>.new
+                  obj.resource_name = resource_or_path
+                  obj
+                else
+                  raise ArgumentError.new(
+                    "Called #{__method__} with instance of wrong type:"\
+                    " #{res.class} want #{operation.update_class.to_s}"\
+                    " or String representing resource name"
+                  ) unless <%= operation.update_class.to_s %> === res
+                end
+
+                op = <%= operation.operation.name %>.new
+                op["update_mask"] = Google::Ads::GoogleAds::FieldMaskUtil.with(res, &blk)
+                op["update"] = res
+                op
+              end
+              <% end %>
+            end
+
+            module RemoveResource
+              <% operations.each do |operation| %>
+              # A convenience method for creationg an <%= operation.operation.name.split("::").last %> instance with
+              # its "remove" field preopulated with a resource path corresponding to the resource to be removed.
+              #
+              # @param path [String] the resource name of the resource to delete.
+              def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path)
+                op = <%= operation.operation.name %>.new
+                op["remove"] = path
+                op
+              end
+              <% end %>
+            end
           end
         end
       end

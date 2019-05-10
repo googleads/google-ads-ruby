@@ -11,7 +11,7 @@ RSpec.describe "#filter_resources_for_google_ads" do
     }
 
     it "keeps the message class" do
-      expect(filter_resources_for_google_ads([[resource, path]])).to eq(
+      expect(filter_resources_for_google_ads(:v1, [[resource, path]])).to eq(
         [[msgclass, path]]
       )
     end
@@ -23,7 +23,7 @@ RSpec.describe "#filter_resources_for_google_ads" do
     }
 
     it "doesn't keep the message class" do
-      expect(filter_resources_for_google_ads([[resource, path]])).to eq([])
+      expect(filter_resources_for_google_ads(:V1, [[resource, path]])).to eq([])
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe "#filter_resources_for_google_ads" do
     }
 
     it "doesn't keep the message class" do
-      expect(filter_resources_for_google_ads([[resource, path]])).to eq([])
+      expect(filter_resources_for_google_ads(:V1, [[resource, path]])).to eq([])
     end
   end
 end
@@ -48,7 +48,7 @@ RSpec.describe "#filter_enums_for_google_ads" do
     }
 
     it "keeps the enum module" do
-      expect(filter_enums_for_google_ads([[enum_descriptor, path]])).to eq(
+      expect(filter_enums_for_google_ads(:V1, [[enum_descriptor, path]])).to eq(
         [[enum_module, path]]
       )
     end
@@ -60,7 +60,7 @@ RSpec.describe "#filter_enums_for_google_ads" do
     }
 
     it "doesn't keep the enum module" do
-      expect(filter_enums_for_google_ads([[enum_descriptor, path]])).to eq(
+      expect(filter_enums_for_google_ads(:V1, [[enum_descriptor, path]])).to eq(
         []
       )
     end
@@ -75,7 +75,7 @@ RSpec.describe "#filter_services_for_google_ads" do
     let(:name) { "Google::Ads::GoogleAds::V1::BeesService" }
 
     it "keeps the service class" do
-      expect(filter_services_for_google_ads([[service_class, path]])).to eq(
+      expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
         [[service_class, path]]
       )
     end
@@ -85,7 +85,7 @@ RSpec.describe "#filter_services_for_google_ads" do
     let(:name) { "RSpec::Core::ExampleGroup" }
 
     it "doesn't keep the service class" do
-      expect(filter_services_for_google_ads([[service_class, path]])).to eq(
+      expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
         []
       )
     end

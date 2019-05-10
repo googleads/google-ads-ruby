@@ -2,16 +2,18 @@ module Google
   module Ads
     module GoogleAds
       module Factories
-        module Enums
-          <% enums.each do |res, path| %>
-          # Returns the descriptor for the <%= res.name.split("::").last %> enum
-          #
-          # @return [Google::Protobuf::EnumDescriptor] for the <%= res.name.split("::").last %> enum
-          def self.<%= res.name.split("::").last.underscore %>
-            require "<%= path.split("google-ads-ruby/lib/").last %>"
-            <%= res.name %>.descriptor
+        module <%= version.to_s.camelize %>
+          module Enums
+            <% enums.each do |res, path| %>
+            # Returns the descriptor for the <%= res.name.split("::").last %> enum
+            #
+            # @return [Google::Protobuf::EnumDescriptor] for the <%= res.name.split("::").last %> enum
+            def self.<%= res.name.split("::").last.underscore %>
+              require "<%= path.split("google-ads-ruby/lib/").last %>"
+              <%= res.name %>.descriptor
+            end
+            <% end %>
           end
-          <% end %>
         end
       end
     end

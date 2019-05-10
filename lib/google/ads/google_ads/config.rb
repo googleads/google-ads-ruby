@@ -27,6 +27,7 @@ module Google
 
         attr_accessor :developer_token
         attr_accessor :login_customer_id
+        attr_accessor :api_version
 
         attr_accessor :log_level
         attr_accessor :log_target
