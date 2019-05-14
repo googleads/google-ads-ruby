@@ -8,7 +8,7 @@ module Google
             # Create a new <%= operation.operation.name.split("::").last %>
             #
             # @return [<%= operation.operation.name %>] the operation
-            def self.<%= operation.operation.name.split("::").last.underscore %>
+            def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
               require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
               <%= operation.operation.name %>.new
             end
