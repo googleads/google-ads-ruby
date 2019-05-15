@@ -9,7 +9,7 @@ module Google
             #
             # @return [Google::Protobuf::EnumDescriptor] for the <%= res.name.split("::").last %> enum
             def self.<%= res.name.split("::").last.underscore %>
-              require "<%= path.split("google-ads-ruby/lib/").last %>"
+              require "<%= path %>"
               <%= res.name %>.descriptor
             end
             <% end %>

@@ -12,7 +12,7 @@ module Google
             #  can be set
             # @return [<%= res.name %>] the created resource
             def self.<%= res.name.split("::").last.underscore %>
-              require "<%= path.split("google-ads-ruby/lib/").last %>"
+              require "<%= path %>"
               res = <%= res.name %>.new
               yield res if block_given?
               res

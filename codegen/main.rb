@@ -61,9 +61,14 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
     end
   end
   resources = filter_resources_for_google_ads(version, potential_resources)
+  resources = cleanup_paths(resources)
   resources, operations = filter_resources_into_resources_and_operations(resources)
+
   enums = filter_enums_for_google_ads(version, potential_enums)
+  enums = cleanup_paths(enums)
+
   services = filter_services_for_google_ads(version, potential_services)
+  services = cleanup_paths(services)
 
   operations = enhance_operations_with_classes(operations)
 

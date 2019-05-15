@@ -27,7 +27,7 @@ module Google
 
             <% services.each do |service, path| %>
             def <%= service.name.split("::").last.underscore.gsub("_service_client", "") %>
-              require "<%= path.split("google-ads-ruby/lib/").last %>"
+              require "<%= path %>"
               cls = Class.new(<%= service.name %>)
               if have_service_path?
                 cls.const_set("SERVICE_PATH", @service_path)

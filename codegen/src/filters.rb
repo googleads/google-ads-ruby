@@ -53,3 +53,10 @@ def enhance_operations_with_classes(operations)
     Operation.new(op, update_class, create_class, path)
   }
 end
+
+def cleanup_paths(collection)
+  collection.map { |(item, path)|
+    new_path = path.split(/google-ads-ruby.*\/lib\//).last
+    [item, new_path]
+  }
+end

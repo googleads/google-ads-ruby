@@ -9,7 +9,7 @@ module Google
             #
             # @return [<%= operation.operation.name %>] the operation
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
-              require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+              require "<%= operation.path %>"
               <%= operation.operation.name %>.new
             end
             <% end %>
@@ -54,7 +54,7 @@ module Google
               #
               # @return [<%= operation.operation.name %>] instance that will create the resource
               def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(res=nil, &blk)
-                require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+                require "<%= operation.path %>"
                 op = <%= operation.operation.name %>.new
                 if res != nil
                   op["create"] = res
@@ -83,7 +83,7 @@ module Google
               #   @yield the passed block is called and updates against `resource` are recordered in the update mask
               # @return [<%= operation.operation.name %>] the operation instance to update the resource
               def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(resource_or_path, &blk)
-                require "<%= operation.path.split("google-ads-ruby/lib/").last %>"
+                require "<%= operation.path %>"
                 res = case resource_or_path
                 when <%= operation.update_class.to_s %>
                   resource_or_path
