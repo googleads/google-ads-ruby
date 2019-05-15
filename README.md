@@ -113,7 +113,12 @@ To fetch a specific service, for example CampaignService:
 See the provided [examples][] for more detailed demonstrations of how to use the
 library.
 
+Once you're familiar with the [examples][], we also recommend familiarizing
+yourself with [factories][], which provides a set of high level convenience
+methods for working with the Google Ads API
+
 [examples]: https://github.com/googleads/google-ads-ruby/blob/master/examples
+[factories]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/factories
 
 ## Logging
 
