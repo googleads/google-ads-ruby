@@ -133,3 +133,27 @@ RSpec.describe "#filter_resources_into_resources_and_operations" do
     end
   end
 end
+
+RSpec.describe "#cleanup_paths" do
+  context "normal path" do
+    let(:path) { "/Users/samphippen/dev/goog/google-ads-ruby/lib/google/ads/google_ads/v1/services/campaign_service_client.rb" }
+    it "cleans up" do
+      expect(cleanup_paths([
+        [nil, path]
+      ])).to eq([
+        [nil, "google/ads/google_ads/v1/services/campaign_service_client.rb"]
+      ])
+    end
+  end
+
+  context "blaze path" do
+    let(:path) { "/tmp/google-ads-ruby_zMomHhci2T/lib/google/ads/google_ads/v1/services/campaign_service_client.rb" }
+    it "cleans up" do
+      expect(cleanup_paths([
+        [nil, path]
+      ])).to eq([
+        [nil, "google/ads/google_ads/v1/services/campaign_service_client.rb"]
+      ])
+    end
+  end
+end
