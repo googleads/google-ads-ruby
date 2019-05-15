@@ -42,3 +42,4 @@ task :codegen do |t|
 end
 
 task :build => [:apply_patches, :codegen, :validate_protos]
+task :test => [:codegen]
