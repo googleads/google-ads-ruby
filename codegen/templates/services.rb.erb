@@ -1,0 +1,52 @@
+module Google
+  module Ads
+    module GoogleAds
+      module Factories
+        module <%= version.to_s.camelize %>
+          class Services
+            def initialize(
+              service_path:,
+              logging_interceptor:,
+              credentials:,
+              metadata:,
+              exception_transformer:)
+              @service_path = service_path
+              @logging_interceptor = logging_interceptor
+              @credentials = credentials
+              @metadata = metadata
+              @exception_transformer = exception_transformer
+            end
+
+            def have_service_path?
+              @service_path != nil && !@service_path.empty?
+            end
+
+            def have_logging_interceptor?
+              @logging_interceptor != nil
+            end
+
+            <% services.each do |service, path| %>
+            def <%= service.name.split("::").last.underscore.gsub("_service_client", "") %>
+              require "<%= path.split("google-ads-ruby/lib/").last %>"
+              cls = Class.new(<%= service.name %>)
+              if have_service_path?
+                cls.const_set("SERVICE_PATH", @service_path)
+              end
+
+              if have_logging_interceptor?
+                cls.const_set("GRPC_INTERCEPTORS", [@logging_interceptor])
+              end
+
+              cls.new(
+                credentials: @credentials,
+                metadata: @metadata,
+                exception_transformer: @exception_transformer,
+              )
+            end
+            <% end %>
+          end
+        end
+      end
+    end
+  end
+end

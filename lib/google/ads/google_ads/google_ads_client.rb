@@ -46,7 +46,7 @@ require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
-
+require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 
 require 'google/gax'
@@ -108,25 +108,12 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name, version = default_api_version)
+        def service(name=nil, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           # We need a local reference to refer to from within the class block
           # below.
           logger = @logger
-
-          class_to_return = lookup_util.raw_service(name, version)
-          class_to_return = Class.new(class_to_return) do
-            unless service_path.nil? || service_path.empty?
-              const_set('SERVICE_ADDRESS', service_path.freeze)
-            end
-
-            if logger
-              logging_interceptor =
-                  Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
-              const_set('GRPC_INTERCEPTORS', [logging_interceptor])
-            end
-          end
 
           headers = {
             :"developer-token" => @config.developer_token
@@ -140,27 +127,60 @@ module Google
             end
             headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
-          return class_to_return.new(
-            credentials: get_credentials,
-            metadata: headers,
-            exception_transformer: ERROR_TRANSFORMER
-          )
+
+          if logger
+            logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+          end
+
+          if name.nil?
+            Factories.at_version(version).services.new(
+              service_path: service_path,
+              logging_interceptor: logging_interceptor,
+              credentials: get_updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+          else
+            class_to_return = lookup_util.raw_service(name, version)
+            class_to_return = Class.new(class_to_return) do
+              unless service_path.nil? || service_path.empty?
+                const_set('SERVICE_ADDRESS', service_path.freeze)
+              end
+
+
+              const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
+            end
+
+            class_to_return.new(
+              credentials: get_updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+          end
         end
 
         # Return a resource or common entity for the provided entity type. For
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name, version = default_api_version)
-          lookup_util.resource(name, version)
+        def resource(name=nil, version=default_api_version)
+          if name.nil?
+            Factories.at_version(version).resources
+          else
+            lookup_util.resource(name, version)
+          end
         end
 
         # Return an operation for the provided entity type. For example, passing
         # :Campaign will return an instantiated CampaignOperation.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def operation(name, version = default_api_version)
-          lookup_util.operation(name, version)
+        def operation(name=nil, version = default_api_version)
+          if name.nil?
+            Factories.at_version(version).operations
+          else
+            lookup_util.operation(name, version)
+          end
         end
 
         # Return a reference to the enum class for the provided enum type. For
@@ -168,8 +188,12 @@ module Google
         # CampaignStatusEnum.
         #
         # Raises ArgumentError if no enum can be found for the provided type.
-        def enum(name, version = default_api_version)
-          lookup_util.enum(name, version)
+        def enum(name=nil, version = default_api_version)
+          if name.nil?
+            Factories.at_version(version).enums
+          else
+            lookup_util.enum(name, version)
+          end
         end
 
         # Returns a reference to the FieldMaskUtil class for ease of access.

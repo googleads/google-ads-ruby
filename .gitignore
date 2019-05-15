@@ -1,2 +1,6 @@
 pkg
 Gemfile.lock
+lib/google/ads/google_ads/factories
+lib/google/ads/google_ads/factories.rb
+doc
+.yardoc

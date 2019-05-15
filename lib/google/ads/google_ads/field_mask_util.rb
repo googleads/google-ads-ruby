@@ -47,7 +47,7 @@ module Google
         def self.with(obj)
           raise 'nil cannot be compared' if obj.nil?
           original = obj.class.decode(obj.class.encode(obj))
-          yield
+          yield obj
           compare original, obj
         end
 

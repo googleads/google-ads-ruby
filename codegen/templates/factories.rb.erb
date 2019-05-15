@@ -1,0 +1,35 @@
+<% versions.each do |version| %>
+require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/resources'
+require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/services'
+require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/enums'
+require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/operations'
+<% end %>
+module Google
+  module Ads
+    module GoogleAds
+      module Factories
+        Factory = Struct.new(:resources, :services, :enums, :operations)
+
+        <% versions.each do |version| %>
+        FACTORY_<%= version.to_s.camelize %> = Factory.new(
+          <%= version.to_s.camelize %>::Resources,
+          <%= version.to_s.camelize %>::Services,
+          <%= version.to_s.camelize %>::Enums,
+          <%= version.to_s.camelize %>::Operations,
+        ).freeze
+        <% end %>
+
+        def self.at_version(version)
+          case version
+          <% versions.each do |version| %>
+          when :<%= version.to_s %>
+            FACTORY_<%= version.to_s.camelize %>
+          <% end %>
+          else
+            raise ArgumentError.new("Got unkown version: #{version}")
+          end
+        end
+      end
+    end
+  end
+end

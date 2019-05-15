@@ -37,4 +37,8 @@ task :apply_patches do |t|
   apply_patches
 end
 
-task :build => [:apply_patches, :validate_protos]
+task :codegen do |t|
+  `./scripts/codegen.sh`
+end
+
+task :build => [:apply_patches, :codegen, :validate_protos]
