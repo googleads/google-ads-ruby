@@ -119,11 +119,18 @@ module Google
             :"developer-token" => @config.developer_token
           }
           if @config.login_customer_id
-            login_customer_id = @config.login_customer_id
-            if !login_customer_id.is_a?(Integer) || login_customer_id <= 0 ||
-                login_customer_id > 9_999_999_999
-              raise sprintf('Invalid login_customer_id. Must be an integer ' \
-                  '0 < x <= 9,999,999,999. Got %s', login_customer_id)
+            begin
+              login_customer_id = Integer(@config.login_customer_id)
+            rescue ArgumentError => e
+              if e.message.start_with?("invalid value for Integer")
+                raise ArgumentError.new("Invalid value for login_customer_id, must be integer")
+              end
+            end
+            if login_customer_id <= 0 || login_customer_id > 9_999_999_999
+              raise ArgumentError.new(
+                "Invalid login_customer_id. Must be an integer " \
+                "0 < x <= 9,999,999,999. Got #{login_customer_id}"
+              )
             end
             headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
           end
