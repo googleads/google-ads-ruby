@@ -49,6 +49,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v1.common.ShoppingProductAdInfo" do
   end
+  add_message "google.ads.googleads.v1.common.ShoppingComparisonListingAdInfo" do
+    optional :headline, :message, 1, "google.protobuf.StringValue"
+  end
   add_message "google.ads.googleads.v1.common.GmailAdInfo" do
     optional :teaser, :message, 1, "google.ads.googleads.v1.common.GmailTeaser"
     optional :header_image, :message, 2, "google.protobuf.StringValue"
@@ -193,6 +196,7 @@ module Google::Ads::GoogleAds::V1::Common
   HotelAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.HotelAdInfo").msgclass
   ShoppingSmartAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ShoppingSmartAdInfo").msgclass
   ShoppingProductAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ShoppingProductAdInfo").msgclass
+  ShoppingComparisonListingAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.ShoppingComparisonListingAdInfo").msgclass
   GmailAdInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.GmailAdInfo").msgclass
   GmailTeaser = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.GmailTeaser").msgclass
   DisplayCallToAction = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.DisplayCallToAction").msgclass

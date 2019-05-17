@@ -24,7 +24,9 @@ require 'google/ads/google_ads/v1/errors/bidding_strategy_error_pb'
 require 'google/ads/google_ads/v1/errors/billing_setup_error_pb'
 require 'google/ads/google_ads/v1/errors/campaign_budget_error_pb'
 require 'google/ads/google_ads/v1/errors/campaign_criterion_error_pb'
+require 'google/ads/google_ads/v1/errors/campaign_draft_error_pb'
 require 'google/ads/google_ads/v1/errors/campaign_error_pb'
+require 'google/ads/google_ads/v1/errors/campaign_experiment_error_pb'
 require 'google/ads/google_ads/v1/errors/campaign_feed_error_pb'
 require 'google/ads/google_ads/v1/errors/campaign_shared_set_error_pb'
 require 'google/ads/google_ads/v1/errors/change_status_error_pb'
@@ -71,6 +73,7 @@ require 'google/ads/google_ads/v1/errors/keyword_plan_negative_keyword_error_pb'
 require 'google/ads/google_ads/v1/errors/label_error_pb'
 require 'google/ads/google_ads/v1/errors/language_code_error_pb'
 require 'google/ads/google_ads/v1/errors/list_operation_error_pb'
+require 'google/ads/google_ads/v1/errors/manager_link_error_pb'
 require 'google/ads/google_ads/v1/errors/media_bundle_error_pb'
 require 'google/ads/google_ads/v1/errors/media_file_error_pb'
 require 'google/ads/google_ads/v1/errors/media_upload_error_pb'
@@ -79,6 +82,7 @@ require 'google/ads/google_ads/v1/errors/mutate_error_pb'
 require 'google/ads/google_ads/v1/errors/mutate_job_error_pb'
 require 'google/ads/google_ads/v1/errors/new_resource_creation_error_pb'
 require 'google/ads/google_ads/v1/errors/not_empty_error_pb'
+require 'google/ads/google_ads/v1/errors/not_whitelisted_error_pb'
 require 'google/ads/google_ads/v1/errors/null_error_pb'
 require 'google/ads/google_ads/v1/errors/operation_access_denied_error_pb'
 require 'google/ads/google_ads/v1/errors/operator_error_pb'
@@ -196,6 +200,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :change_status_error, :enum, 79, "google.ads.googleads.v1.errors.ChangeStatusErrorEnum.ChangeStatusError"
       optional :feed_error, :enum, 80, "google.ads.googleads.v1.errors.FeedErrorEnum.FeedError"
       optional :geo_target_constant_suggestion_error, :enum, 81, "google.ads.googleads.v1.errors.GeoTargetConstantSuggestionErrorEnum.GeoTargetConstantSuggestionError"
+      optional :campaign_draft_error, :enum, 82, "google.ads.googleads.v1.errors.CampaignDraftErrorEnum.CampaignDraftError"
       optional :feed_item_error, :enum, 83, "google.ads.googleads.v1.errors.FeedItemErrorEnum.FeedItemError"
       optional :label_error, :enum, 84, "google.ads.googleads.v1.errors.LabelErrorEnum.LabelError"
       optional :billing_setup_error, :enum, 87, "google.ads.googleads.v1.errors.BillingSetupErrorEnum.BillingSetupError"
@@ -206,6 +211,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_feed_error, :enum, 94, "google.ads.googleads.v1.errors.AdGroupFeedErrorEnum.AdGroupFeedError"
       optional :campaign_feed_error, :enum, 96, "google.ads.googleads.v1.errors.CampaignFeedErrorEnum.CampaignFeedError"
       optional :custom_interest_error, :enum, 97, "google.ads.googleads.v1.errors.CustomInterestErrorEnum.CustomInterestError"
+      optional :campaign_experiment_error, :enum, 98, "google.ads.googleads.v1.errors.CampaignExperimentErrorEnum.CampaignExperimentError"
       optional :extension_feed_item_error, :enum, 100, "google.ads.googleads.v1.errors.ExtensionFeedItemErrorEnum.ExtensionFeedItemError"
       optional :ad_parameter_error, :enum, 101, "google.ads.googleads.v1.errors.AdParameterErrorEnum.AdParameterError"
       optional :feed_item_validation_error, :enum, 102, "google.ads.googleads.v1.errors.FeedItemValidationErrorEnum.FeedItemValidationError"
@@ -216,6 +222,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :partial_failure_error, :enum, 112, "google.ads.googleads.v1.errors.PartialFailureErrorEnum.PartialFailureError"
       optional :policy_validation_parameter_error, :enum, 114, "google.ads.googleads.v1.errors.PolicyValidationParameterErrorEnum.PolicyValidationParameterError"
       optional :size_limit_error, :enum, 118, "google.ads.googleads.v1.errors.SizeLimitErrorEnum.SizeLimitError"
+      optional :not_whitelisted_error, :enum, 120, "google.ads.googleads.v1.errors.NotWhitelistedErrorEnum.NotWhitelistedError"
+      optional :manager_link_error, :enum, 121, "google.ads.googleads.v1.errors.ManagerLinkErrorEnum.ManagerLinkError"
     end
   end
   add_message "google.ads.googleads.v1.errors.ErrorLocation" do

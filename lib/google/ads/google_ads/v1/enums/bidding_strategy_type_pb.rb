@@ -10,6 +10,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_enum "google.ads.googleads.v1.enums.BiddingStrategyTypeEnum.BiddingStrategyType" do
     value :UNSPECIFIED, 0
     value :UNKNOWN, 1
+    value :COMMISSION, 16
     value :ENHANCED_CPC, 2
     value :MANUAL_CPC, 3
     value :MANUAL_CPM, 4

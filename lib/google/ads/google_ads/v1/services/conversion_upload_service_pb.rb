@@ -11,6 +11,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :customer_id, :string, 1
     repeated :conversions, :message, 2, "google.ads.googleads.v1.services.ClickConversion"
     optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v1.services.UploadClickConversionsResponse" do
     optional :partial_failure_error, :message, 1, "google.rpc.Status"
@@ -20,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :customer_id, :string, 1
     repeated :conversions, :message, 2, "google.ads.googleads.v1.services.CallConversion"
     optional :partial_failure, :bool, 3
+    optional :validate_only, :bool, 4
   end
   add_message "google.ads.googleads.v1.services.UploadCallConversionsResponse" do
     optional :partial_failure_error, :message, 1, "google.rpc.Status"

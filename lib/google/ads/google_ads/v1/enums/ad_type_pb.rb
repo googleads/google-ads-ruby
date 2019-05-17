@@ -28,6 +28,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HTML5_UPLOAD_AD, 21
     value :DYNAMIC_HTML5_AD, 22
     value :APP_ENGAGEMENT_AD, 23
+    value :SHOPPING_COMPARISON_LISTING_AD, 24
   end
 end
 

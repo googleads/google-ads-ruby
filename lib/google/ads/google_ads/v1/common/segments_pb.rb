@@ -14,6 +14,7 @@ require 'google/ads/google_ads/v1/enums/day_of_week_pb'
 require 'google/ads/google_ads/v1/enums/device_pb'
 require 'google/ads/google_ads/v1/enums/external_conversion_source_pb'
 require 'google/ads/google_ads/v1/enums/hotel_date_selection_type_pb'
+require 'google/ads/google_ads/v1/enums/hotel_rate_type_pb'
 require 'google/ads/google_ads/v1/enums/month_of_year_pb'
 require 'google/ads/google_ads/v1/enums/placeholder_type_pb'
 require 'google/ads/google_ads/v1/enums/product_channel_pb'
@@ -46,6 +47,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :geo_target_metro, :message, 63, "google.protobuf.StringValue"
     optional :geo_target_most_specific_location, :message, 72, "google.protobuf.StringValue"
     optional :geo_target_postal_code, :message, 71, "google.protobuf.StringValue"
+    optional :geo_target_province, :message, 75, "google.protobuf.StringValue"
     optional :geo_target_region, :message, 64, "google.protobuf.StringValue"
     optional :geo_target_state, :message, 67, "google.protobuf.StringValue"
     optional :hotel_booking_window_days, :message, 6, "google.protobuf.Int64Value"
@@ -57,6 +59,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :hotel_country, :message, 12, "google.protobuf.StringValue"
     optional :hotel_date_selection_type, :enum, 13, "google.ads.googleads.v1.enums.HotelDateSelectionTypeEnum.HotelDateSelectionType"
     optional :hotel_length_of_stay, :message, 14, "google.protobuf.Int32Value"
+    optional :hotel_rate_rule_id, :message, 73, "google.protobuf.StringValue"
+    optional :hotel_rate_type, :enum, 74, "google.ads.googleads.v1.enums.HotelRateTypeEnum.HotelRateType"
     optional :hotel_state, :message, 15, "google.protobuf.StringValue"
     optional :hour, :message, 16, "google.protobuf.Int32Value"
     optional :interaction_on_this_extension, :message, 49, "google.protobuf.BoolValue"

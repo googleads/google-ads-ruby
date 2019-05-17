@@ -62,6 +62,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :HOTEL_PRICE, 53
     value :PRICE_EXTENSION, 54
     value :HOTEL_BOOK_ON_GOOGLE_ROOM_SELECTION, 55
+    value :SHOPPING_COMPARISON_LISTING, 56
   end
 end
 

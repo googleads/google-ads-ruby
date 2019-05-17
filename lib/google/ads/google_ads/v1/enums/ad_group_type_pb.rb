@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :VIDEO_NON_SKIPPABLE_IN_STREAM, 11
     value :VIDEO_OUTSTREAM, 12
     value :SEARCH_DYNAMIC_ADS, 13
+    value :SHOPPING_COMPARISON_LISTING_ADS, 14
   end
 end
 

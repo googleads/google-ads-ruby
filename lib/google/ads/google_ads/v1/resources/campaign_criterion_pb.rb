@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/common/criteria_pb'
+require 'google/ads/google_ads/v1/enums/campaign_criterion_status_pb'
 require 'google/ads/google_ads/v1/enums/criterion_type_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
@@ -15,6 +16,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :bid_modifier, :message, 14, "google.protobuf.FloatValue"
     optional :negative, :message, 7, "google.protobuf.BoolValue"
     optional :type, :enum, 6, "google.ads.googleads.v1.enums.CriterionTypeEnum.CriterionType"
+    optional :status, :enum, 35, "google.ads.googleads.v1.enums.CampaignCriterionStatusEnum.CampaignCriterionStatus"
     oneof :criterion do
       optional :keyword, :message, 8, "google.ads.googleads.v1.common.KeywordInfo"
       optional :placement, :message, 9, "google.ads.googleads.v1.common.PlacementInfo"

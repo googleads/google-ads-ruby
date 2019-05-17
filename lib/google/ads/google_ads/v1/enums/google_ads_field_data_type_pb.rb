@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MESSAGE, 9
     value :RESOURCE_NAME, 10
     value :STRING, 11
+    value :UINT64, 12
   end
 end
 
