@@ -24,7 +24,9 @@ module Google::Ads::GoogleAds::V1::Services
   module AssetService
     # Proto file describing the Asset service.
     #
-    # Service to manage assets.
+    # Service to manage assets. Asset types can be created with AssetService are
+    # YoutubeVideoAsset, MediaBundleAsset and ImageAsset. TextAsset should be
+    # created with Ad inline.
     class Service
 
       include GRPC::GenericService

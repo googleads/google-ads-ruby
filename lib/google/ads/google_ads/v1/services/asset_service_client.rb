@@ -32,7 +32,9 @@ module Google
     module GoogleAds
       module V1
         module Services
-          # Service to manage assets.
+          # Service to manage assets. Asset types can be created with AssetService are
+          # YoutubeVideoAsset, MediaBundleAsset and ImageAsset. TextAsset should be
+          # created with Ad inline.
           #
           # @!attribute [r] asset_service_stub
           #   @return [Google::Ads::GoogleAds::V1::Services::AssetService::Stub]

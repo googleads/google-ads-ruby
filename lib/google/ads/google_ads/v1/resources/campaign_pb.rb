@@ -84,9 +84,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.resources.Campaign.HotelSettingInfo" do
     optional :hotel_center_id, :message, 1, "google.protobuf.Int64Value"
   end
-  add_message "google.ads.googleads.v1.resources.Campaign.GeoTargetTypeSetting" do
-    optional :positive_geo_target_type, :enum, 1, "google.ads.googleads.v1.enums.PositiveGeoTargetTypeEnum.PositiveGeoTargetType"
-    optional :negative_geo_target_type, :enum, 2, "google.ads.googleads.v1.enums.NegativeGeoTargetTypeEnum.NegativeGeoTargetType"
+  add_message "google.ads.googleads.v1.resources.Campaign.VanityPharma" do
+    optional :vanity_pharma_display_url_mode, :enum, 1, "google.ads.googleads.v1.enums.VanityPharmaDisplayUrlModeEnum.VanityPharmaDisplayUrlMode"
+    optional :vanity_pharma_text, :enum, 2, "google.ads.googleads.v1.enums.VanityPharmaTextEnum.VanityPharmaText"
   end
   add_message "google.ads.googleads.v1.resources.Campaign.DynamicSearchAdsSetting" do
     optional :domain_name, :message, 1, "google.protobuf.StringValue"
@@ -103,17 +103,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.resources.Campaign.TrackingSetting" do
     optional :tracking_url, :message, 1, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v1.resources.Campaign.SelectiveOptimization" do
+    repeated :conversion_actions, :message, 1, "google.protobuf.StringValue"
+  end
   add_message "google.ads.googleads.v1.resources.Campaign.AppCampaignSetting" do
     optional :bidding_strategy_goal_type, :enum, 1, "google.ads.googleads.v1.enums.AppCampaignBiddingStrategyGoalTypeEnum.AppCampaignBiddingStrategyGoalType"
     optional :app_id, :message, 2, "google.protobuf.StringValue"
     optional :app_store, :enum, 3, "google.ads.googleads.v1.enums.AppCampaignAppStoreEnum.AppCampaignAppStore"
   end
-  add_message "google.ads.googleads.v1.resources.Campaign.VanityPharma" do
-    optional :vanity_pharma_display_url_mode, :enum, 1, "google.ads.googleads.v1.enums.VanityPharmaDisplayUrlModeEnum.VanityPharmaDisplayUrlMode"
-    optional :vanity_pharma_text, :enum, 2, "google.ads.googleads.v1.enums.VanityPharmaTextEnum.VanityPharmaText"
-  end
-  add_message "google.ads.googleads.v1.resources.Campaign.SelectiveOptimization" do
-    repeated :conversion_actions, :message, 1, "google.protobuf.StringValue"
+  add_message "google.ads.googleads.v1.resources.Campaign.GeoTargetTypeSetting" do
+    optional :positive_geo_target_type, :enum, 1, "google.ads.googleads.v1.enums.PositiveGeoTargetTypeEnum.PositiveGeoTargetType"
+    optional :negative_geo_target_type, :enum, 2, "google.ads.googleads.v1.enums.NegativeGeoTargetTypeEnum.NegativeGeoTargetType"
   end
 end
 
@@ -121,11 +121,11 @@ module Google::Ads::GoogleAds::V1::Resources
   Campaign = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign").msgclass
   Campaign::NetworkSettings = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.NetworkSettings").msgclass
   Campaign::HotelSettingInfo = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.HotelSettingInfo").msgclass
-  Campaign::GeoTargetTypeSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.GeoTargetTypeSetting").msgclass
+  Campaign::VanityPharma = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.VanityPharma").msgclass
   Campaign::DynamicSearchAdsSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.DynamicSearchAdsSetting").msgclass
   Campaign::ShoppingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.ShoppingSetting").msgclass
   Campaign::TrackingSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.TrackingSetting").msgclass
-  Campaign::AppCampaignSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.AppCampaignSetting").msgclass
-  Campaign::VanityPharma = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.VanityPharma").msgclass
   Campaign::SelectiveOptimization = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.SelectiveOptimization").msgclass
+  Campaign::AppCampaignSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.AppCampaignSetting").msgclass
+  Campaign::GeoTargetTypeSetting = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.resources.Campaign.GeoTargetTypeSetting").msgclass
 end
