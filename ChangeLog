@@ -1,3 +1,5 @@
+2.2.0:
+  - Adding support for Google Ads API v1_3.
 2.1.1:
   - Fix "factories" implementation for Google's build system.
 
