@@ -31,6 +31,8 @@ require 'google/ads/google_ads/v1/resources/campaign_bid_modifier_pb'
 require 'google/ads/google_ads/v1/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v1/resources/campaign_criterion_pb'
 require 'google/ads/google_ads/v1/resources/campaign_criterion_simulation_pb'
+require 'google/ads/google_ads/v1/resources/campaign_draft_pb'
+require 'google/ads/google_ads/v1/resources/campaign_experiment_pb'
 require 'google/ads/google_ads/v1/resources/campaign_extension_setting_pb'
 require 'google/ads/google_ads/v1/resources/campaign_feed_pb'
 require 'google/ads/google_ads/v1/resources/campaign_label_pb'
@@ -111,6 +113,8 @@ require 'google/ads/google_ads/v1/services/bidding_strategy_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_bid_modifier_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_budget_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_criterion_service_pb'
+require 'google/ads/google_ads/v1/services/campaign_draft_service_pb'
+require 'google/ads/google_ads/v1/services/campaign_experiment_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_extension_setting_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_feed_service_pb'
 require 'google/ads/google_ads/v1/services/campaign_label_service_pb'
@@ -178,6 +182,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :campaign_bid_modifier, :message, 26, "google.ads.googleads.v1.resources.CampaignBidModifier"
     optional :campaign_criterion, :message, 20, "google.ads.googleads.v1.resources.CampaignCriterion"
     optional :campaign_criterion_simulation, :message, 111, "google.ads.googleads.v1.resources.CampaignCriterionSimulation"
+    optional :campaign_draft, :message, 49, "google.ads.googleads.v1.resources.CampaignDraft"
+    optional :campaign_experiment, :message, 84, "google.ads.googleads.v1.resources.CampaignExperiment"
     optional :campaign_extension_setting, :message, 113, "google.ads.googleads.v1.resources.CampaignExtensionSetting"
     optional :campaign_feed, :message, 63, "google.ads.googleads.v1.resources.CampaignFeed"
     optional :campaign_label, :message, 108, "google.ads.googleads.v1.resources.CampaignLabel"
@@ -272,6 +278,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_bid_modifier_operation, :message, 7, "google.ads.googleads.v1.services.CampaignBidModifierOperation"
       optional :campaign_budget_operation, :message, 8, "google.ads.googleads.v1.services.CampaignBudgetOperation"
       optional :campaign_criterion_operation, :message, 13, "google.ads.googleads.v1.services.CampaignCriterionOperation"
+      optional :campaign_draft_operation, :message, 24, "google.ads.googleads.v1.services.CampaignDraftOperation"
+      optional :campaign_experiment_operation, :message, 25, "google.ads.googleads.v1.services.CampaignExperimentOperation"
       optional :campaign_extension_setting_operation, :message, 26, "google.ads.googleads.v1.services.CampaignExtensionSettingOperation"
       optional :campaign_feed_operation, :message, 27, "google.ads.googleads.v1.services.CampaignFeedOperation"
       optional :campaign_label_operation, :message, 28, "google.ads.googleads.v1.services.CampaignLabelOperation"
@@ -313,6 +321,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_bid_modifier_result, :message, 7, "google.ads.googleads.v1.services.MutateCampaignBidModifierResult"
       optional :campaign_budget_result, :message, 8, "google.ads.googleads.v1.services.MutateCampaignBudgetResult"
       optional :campaign_criterion_result, :message, 13, "google.ads.googleads.v1.services.MutateCampaignCriterionResult"
+      optional :campaign_draft_result, :message, 24, "google.ads.googleads.v1.services.MutateCampaignDraftResult"
+      optional :campaign_experiment_result, :message, 25, "google.ads.googleads.v1.services.MutateCampaignExperimentResult"
       optional :campaign_extension_setting_result, :message, 26, "google.ads.googleads.v1.services.MutateCampaignExtensionSettingResult"
       optional :campaign_feed_result, :message, 27, "google.ads.googleads.v1.services.MutateCampaignFeedResult"
       optional :campaign_label_result, :message, 28, "google.ads.googleads.v1.services.MutateCampaignLabelResult"

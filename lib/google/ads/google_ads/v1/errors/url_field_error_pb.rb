@@ -61,6 +61,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MALFORMED_TOP_LEVEL_DOMAIN, 54
     value :MALFORMED_URL, 55
     value :MISSING_HOST, 56
+    value :NULL_CUSTOM_PARAMETER_VALUE, 57
   end
 end
 

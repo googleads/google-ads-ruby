@@ -29,6 +29,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_BUSINESS_ACCOUNT, 18
     value :BUSINESS_ACCOUNT_CANNOT_ACCESS_LOCATION_ACCOUNT, 19
     value :INVALID_AFFILIATE_CHAIN_ID, 20
+    value :DUPLICATE_SYSTEM_FEED, 21
   end
 end
 

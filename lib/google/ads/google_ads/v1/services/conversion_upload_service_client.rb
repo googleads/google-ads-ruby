@@ -185,6 +185,9 @@ module Google
             #   operations will return errors. If false, all operations will be carried
             #   out in one transaction if and only if they are all valid.
             #   This should always be set to true.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed. Only errors are
+            #   returned, not results.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -209,12 +212,14 @@ module Google
                 customer_id,
                 conversions,
                 partial_failure: nil,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
                 conversions: conversions,
-                partial_failure: partial_failure
+                partial_failure: partial_failure,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadClickConversionsRequest)
               @upload_click_conversions.call(req, options, &block)
@@ -233,6 +238,9 @@ module Google
             #   operations will return errors. If false, all operations will be carried
             #   out in one transaction if and only if they are all valid.
             #   This should always be set to true.
+            # @param validate_only [true, false]
+            #   If true, the request is validated but not executed. Only errors are
+            #   returned, not results.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
@@ -257,12 +265,14 @@ module Google
                 customer_id,
                 conversions,
                 partial_failure: nil,
+                validate_only: nil,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
                 conversions: conversions,
-                partial_failure: partial_failure
+                partial_failure: partial_failure,
+                validate_only: validate_only
               }.delete_if { |_, v| v.nil? }
               req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V1::Services::UploadCallConversionsRequest)
               @upload_call_conversions.call(req, options, &block)

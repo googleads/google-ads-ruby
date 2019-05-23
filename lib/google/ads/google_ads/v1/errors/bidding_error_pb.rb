@@ -32,6 +32,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_DOMAIN_NAME, 33
     value :NOT_COMPATIBLE_WITH_PAYMENT_MODE, 34
     value :NOT_COMPATIBLE_WITH_BUDGET_TYPE, 35
+    value :NOT_COMPATIBLE_WITH_BIDDING_STRATEGY_TYPE, 36
   end
 end
 

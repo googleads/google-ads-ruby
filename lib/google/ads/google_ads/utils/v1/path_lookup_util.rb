@@ -234,6 +234,20 @@ module Google
               )
             end
 
+            def campaign_draft(customer_id, campaign_id, draft_id)
+              @proto_lookup_util.service(:CampaignDraft).campaign_draft_path(
+                customer_id.to_s,
+                "#{campaign_id}~#{draft_id}"
+              )
+            end
+
+            def campaign_experiment(customer_id, experiment_id)
+              @proto_lookup_util.service(:CampaignExperiment).campaign_experiment_path(
+                customer_id.to_s,
+                experiment_id.to_s,
+              )
+            end
+
             def campaign_extension_setting(customer_id, campaign_id,
                 extension_type)
               @proto_lookup_util.service(:CampaignExtensionSetting).

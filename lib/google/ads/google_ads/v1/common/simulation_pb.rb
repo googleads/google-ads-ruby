@@ -12,6 +12,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.common.CpcBidSimulationPointList" do
     repeated :points, :message, 1, "google.ads.googleads.v1.common.CpcBidSimulationPoint"
   end
+  add_message "google.ads.googleads.v1.common.CpvBidSimulationPointList" do
+    repeated :points, :message, 1, "google.ads.googleads.v1.common.CpvBidSimulationPoint"
+  end
   add_message "google.ads.googleads.v1.common.TargetCpaSimulationPointList" do
     repeated :points, :message, 1, "google.ads.googleads.v1.common.TargetCpaSimulationPoint"
   end
@@ -23,6 +26,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :cost_micros, :message, 5, "google.protobuf.Int64Value"
     optional :impressions, :message, 6, "google.protobuf.Int64Value"
     optional :top_slot_impressions, :message, 7, "google.protobuf.Int64Value"
+    optional :parent_biddable_conversions, :message, 8, "google.protobuf.DoubleValue"
+    optional :parent_biddable_conversions_value, :message, 9, "google.protobuf.DoubleValue"
+    optional :parent_clicks, :message, 10, "google.protobuf.Int64Value"
+    optional :parent_cost_micros, :message, 11, "google.protobuf.Int64Value"
+    optional :parent_impressions, :message, 12, "google.protobuf.Int64Value"
+    optional :parent_top_slot_impressions, :message, 13, "google.protobuf.Int64Value"
   end
   add_message "google.ads.googleads.v1.common.CpcBidSimulationPoint" do
     optional :cpc_bid_micros, :message, 1, "google.protobuf.Int64Value"
@@ -32,6 +41,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :cost_micros, :message, 5, "google.protobuf.Int64Value"
     optional :impressions, :message, 6, "google.protobuf.Int64Value"
     optional :top_slot_impressions, :message, 7, "google.protobuf.Int64Value"
+  end
+  add_message "google.ads.googleads.v1.common.CpvBidSimulationPoint" do
+    optional :cpv_bid_micros, :message, 1, "google.protobuf.Int64Value"
+    optional :cost_micros, :message, 2, "google.protobuf.Int64Value"
+    optional :impressions, :message, 3, "google.protobuf.Int64Value"
   end
   add_message "google.ads.googleads.v1.common.TargetCpaSimulationPoint" do
     optional :target_cpa_micros, :message, 1, "google.protobuf.Int64Value"
@@ -47,8 +61,10 @@ end
 module Google::Ads::GoogleAds::V1::Common
   BidModifierSimulationPointList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.BidModifierSimulationPointList").msgclass
   CpcBidSimulationPointList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CpcBidSimulationPointList").msgclass
+  CpvBidSimulationPointList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CpvBidSimulationPointList").msgclass
   TargetCpaSimulationPointList = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.TargetCpaSimulationPointList").msgclass
   BidModifierSimulationPoint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.BidModifierSimulationPoint").msgclass
   CpcBidSimulationPoint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CpcBidSimulationPoint").msgclass
+  CpvBidSimulationPoint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.CpvBidSimulationPoint").msgclass
   TargetCpaSimulationPoint = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v1.common.TargetCpaSimulationPoint").msgclass
 end

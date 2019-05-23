@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :status, :enum, 5, "google.ads.googleads.v1.enums.AdGroupStatusEnum.AdGroupStatus"
     optional :type, :enum, 12, "google.ads.googleads.v1.enums.AdGroupTypeEnum.AdGroupType"
     optional :ad_rotation_mode, :enum, 22, "google.ads.googleads.v1.enums.AdGroupAdRotationModeEnum.AdGroupAdRotationMode"
+    optional :base_ad_group, :message, 18, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 13, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 6, "google.ads.googleads.v1.common.CustomParameter"
     optional :campaign, :message, 10, "google.protobuf.StringValue"

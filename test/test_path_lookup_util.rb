@@ -91,8 +91,14 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/campaignAudienceViews/567~890'
     assert_equal(expected, util.campaign_audience_view(1234, 567, 890))
 
+    expected = 'customers/1234/campaignDrafts/567~890'
+    assert_equal(expected, util.campaign_draft(1234, 567, 890))
+
     expected = 'customers/1234/campaignBidModifiers/5678'
     assert_equal(expected, util.campaign_bid_modifier(1234, 5678))
+
+    expected = 'customers/1234/campaignExperiments/5678'
+    assert_equal(expected, util.campaign_experiment(1234, 5678))
 
     expected = 'customers/1234/campaignBudgets/5678'
     assert_equal(expected, util.campaign_budget(1234, 5678))

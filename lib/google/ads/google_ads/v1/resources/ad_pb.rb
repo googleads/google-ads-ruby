@@ -45,6 +45,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :responsive_display_ad, :message, 31, "google.ads.googleads.v1.common.ResponsiveDisplayAdInfo"
       optional :display_upload_ad, :message, 33, "google.ads.googleads.v1.common.DisplayUploadAdInfo"
       optional :app_engagement_ad, :message, 34, "google.ads.googleads.v1.common.AppEngagementAdInfo"
+      optional :shopping_comparison_listing_ad, :message, 36, "google.ads.googleads.v1.common.ShoppingComparisonListingAdInfo"
     end
   end
 end

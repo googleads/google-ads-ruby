@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :end_date, :message, 6, "google.protobuf.StringValue"
     oneof :point_list do
       optional :cpc_bid_point_list, :message, 8, "google.ads.googleads.v1.common.CpcBidSimulationPointList"
+      optional :cpv_bid_point_list, :message, 10, "google.ads.googleads.v1.common.CpvBidSimulationPointList"
       optional :target_cpa_point_list, :message, 9, "google.ads.googleads.v1.common.TargetCpaSimulationPointList"
     end
   end

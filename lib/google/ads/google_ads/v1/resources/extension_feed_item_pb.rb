@@ -18,6 +18,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :end_date_time, :message, 6, "google.protobuf.StringValue"
     repeated :ad_schedules, :message, 16, "google.ads.googleads.v1.common.AdScheduleInfo"
     optional :device, :enum, 17, "google.ads.googleads.v1.enums.FeedItemTargetDeviceEnum.FeedItemTargetDevice"
+    optional :targeted_geo_target_constant, :message, 20, "google.protobuf.StringValue"
     optional :status, :enum, 4, "google.ads.googleads.v1.enums.FeedItemStatusEnum.FeedItemStatus"
     oneof :extension do
       optional :sitelink_feed_item, :message, 2, "google.ads.googleads.v1.common.SitelinkFeedItem"
@@ -30,6 +31,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :promotion_feed_item, :message, 12, "google.ads.googleads.v1.common.PromotionFeedItem"
       optional :location_feed_item, :message, 14, "google.ads.googleads.v1.common.LocationFeedItem"
       optional :affiliate_location_feed_item, :message, 15, "google.ads.googleads.v1.common.AffiliateLocationFeedItem"
+    end
+    oneof :serving_resource_targeting do
+      optional :targeted_campaign, :message, 18, "google.protobuf.StringValue"
+      optional :targeted_ad_group, :message, 19, "google.protobuf.StringValue"
     end
   end
 end
