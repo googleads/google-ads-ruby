@@ -41,5 +41,9 @@ task :codegen do |t|
   `./scripts/codegen.sh`
 end
 
-task :build => [:apply_patches, :codegen, :validate_protos]
-task :test => [:codegen]
+task :copy_third_party_code do |t|
+  `cp third_party/rspec/caller_filter.rb lib/google/ads/google_ads/deprecation.rb`
+end
+
+task :build => [:apply_patches, :copy_third_party_code, :codegen, :validate_protos]
+task :test => [:copy_third_party_code, :codegen]

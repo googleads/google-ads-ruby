@@ -3,6 +3,17 @@
 # Copy it to your home directory and fill in all the required values.
 
 Google::Ads::GoogleAds::Config.new do |c|
+  # Treat deprecation warnings as errors will cause all deprecation warnings
+  # to raise instead of calling `Warning#warn`. This lets you run your tests
+  # against google-ads-googleads to make sure that you are not calling any
+  # deprecated code
+  c.treat_deprecation_warnings_as_errors = false
+
+  # Warn on all deprecations. Setting this to `true` will cause the library to
+  # warn every time a piece of deprecated code is called. The `false` (default)
+  # behaviour is to only issue a warning once for each call site in your code.
+  c.warn_on_all_deprecations = false
+
   # The developer token is required to authenticate that you are allowed to
   # make API calls.
   c.developer_token = 'INSERT_DEVELOPER_TOKEN_HERE'
