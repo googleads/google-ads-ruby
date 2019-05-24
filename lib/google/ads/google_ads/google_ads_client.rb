@@ -53,6 +53,7 @@ require 'google/ads/google_ads/logging_interceptor'
 require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 require 'google/ads/google_ads/service_lookup'
+require 'google/ads/google_ads/deprecation'
 
 require 'google/gax'
 
@@ -143,6 +144,7 @@ module Google
           if name.nil?
             Factories.at_version(version).resources
           else
+            deprecate("Calling `google_ads_client.resource(<ResourceType>)` is deprecated, please use `google_ads_client.service.<resource_type>` instead")
             lookup_util.resource(name, version)
           end
         end
@@ -155,6 +157,7 @@ module Google
           if name.nil?
             Factories.at_version(version).operations
           else
+            deprecate("Calling `google_ads_client.resource(<OperationType>)` is deprecated, please use `google_ads_client.service.<operation_type>` instead")
             lookup_util.operation(name, version)
           end
         end
@@ -168,6 +171,7 @@ module Google
           if name.nil?
             Factories.at_version(version).enums
           else
+            deprecate("Calling `google_ads_client.resource(<EnumType>)` is deprecated, please use `google_ads_client.service.<enum_type>` instead")
             lookup_util.enum(name, version)
           end
         end
@@ -288,6 +292,14 @@ module Google
 
         def default_api_version
           Google::Ads::GoogleAds.default_api_version
+        end
+
+        def deprecate(deprecation)
+          @deprecation ||= Google::Ads::GoogleAds::Deprecation.new(
+            @config.treat_deprecation_warnings_as_errors,
+            @config.warn_on_all_deprecations,
+          )
+          @deprecation.deprecate(deprecation)
         end
       end
     end

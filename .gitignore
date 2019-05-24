@@ -4,3 +4,4 @@ lib/google/ads/google_ads/factories
 lib/google/ads/google_ads/factories.rb
 doc
 .yardoc
+lib/google/ads/google_ads/deprecation.rb
