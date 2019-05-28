@@ -255,9 +255,7 @@ module Google
                 Google::Gax.instance_eval do
                   undef construct_settings
 
-                  define_singleton_method(:construct_settings) do |*a, &b|
-                    orig_construct_settings.call(*a, &b)
-                  end
+                  define_singleton_method(:construct_settings, &orig_construct_settings)
                 end
               end
             end
