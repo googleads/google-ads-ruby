@@ -26,7 +26,7 @@ module Google
             end
 
             <% services.each do |service, path| %>
-            def <%= service.name.split("::").last.underscore.gsub("_service_client", "") %>
+            def <%= service.name.split("::").last.underscore.gsub("_service_client", "") %>(&blk)
               require "<%= path %>"
               cls = Class.new(<%= service.name %>)
               if have_service_path?
@@ -36,6 +36,8 @@ module Google
               if have_logging_interceptor?
                 cls.const_set("GRPC_INTERCEPTORS", [@logging_interceptor])
               end
+
+              blk.call(cls) unless blk.nil?
 
               cls.new(
                 credentials: @credentials,
