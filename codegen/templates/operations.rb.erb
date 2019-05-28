@@ -115,6 +115,7 @@ module Google
               #
               # @param path [String] the resource name of the resource to delete.
               def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>(path)
+                require "<%= operation.path %>"
                 op = <%= operation.operation.name %>.new
                 op["remove"] = path
                 op
