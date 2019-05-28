@@ -188,6 +188,7 @@ module Google
         end
 
         def infect_lro_headers(class_to_return, headers)
+          return unless defined?(class_to_return::OperationsClient)
           opclient = class_to_return::OperationsClient
 
           # This instance evaluates in OperationsClient class object
