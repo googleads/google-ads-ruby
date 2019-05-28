@@ -149,11 +149,11 @@ module Google
               exception_transformer: ERROR_TRANSFORMER
             )
 
-            patchion_delegator = Class.new do
-              def initialize(services, headers, patchion_callable)
+            patch_delegator = Class.new do
+              def initialize(services, headers, patch_callable)
                 @services = services
                 @headers = headers
-                @patchion_callable = patchion_callable
+                @patch_callable = patch_callable
               end
 
               def respond_to_missing?(sym, include_private=false)
@@ -162,12 +162,12 @@ module Google
 
               def method_missing(name, *args)
                 @services.public_send(name, *args) do |cls|
-                  @patchion_callable.call(cls, @headers)
+                  @patch_callable.call(cls, @headers)
                   cls
                 end
               end
             end
-            patchion_delegator.new(services, headers, method(:patch_lro_headers))
+            patch_delegator.new(services, headers, method(:patch_lro_headers))
           else
             class_to_return = lookup_util.raw_service(name, version)
             class_to_return = Class.new(class_to_return) do
