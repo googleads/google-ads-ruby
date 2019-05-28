@@ -48,7 +48,7 @@ require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
 require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
-require 'google/ads/google_ads/infect_lro_headers'
+require 'google/ads/google_ads/patch_lro_headers'
 
 require 'google/gax'
 
@@ -149,11 +149,11 @@ module Google
               exception_transformer: ERROR_TRANSFORMER
             )
 
-            infection_delegator = Class.new do
-              def initialize(services, headers, infection_callable)
+            patchion_delegator = Class.new do
+              def initialize(services, headers, patchion_callable)
                 @services = services
                 @headers = headers
-                @infection_callable = infection_callable
+                @patchion_callable = patchion_callable
               end
 
               def respond_to_missing?(sym, include_private=false)
@@ -162,12 +162,12 @@ module Google
 
               def method_missing(name, *args)
                 @services.public_send(name, *args) do |cls|
-                  @infection_callable.call(cls, @headers)
+                  @patchion_callable.call(cls, @headers)
                   cls
                 end
               end
             end
-            infection_delegator.new(services, headers, method(:infect_lro_headers))
+            patchion_delegator.new(services, headers, method(:patch_lro_headers))
           else
             class_to_return = lookup_util.raw_service(name, version)
             class_to_return = Class.new(class_to_return) do
@@ -178,7 +178,7 @@ module Google
               const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
             end
 
-            infect_lro_headers(class_to_return, headers)
+            patch_lro_headers(class_to_return, headers)
 
             class_to_return.new(
               credentials: get_updater_proc,
@@ -188,8 +188,8 @@ module Google
           end
         end
 
-        def infect_lro_headers(class_to_return, headers)
-          InfectLROHeaders.new(class_to_return, headers).call
+        def patch_lro_headers(class_to_return, headers)
+          PatchLROHeaders.new(class_to_return, headers).call
         end
 
         # Return a resource or common entity for the provided entity type. For
