@@ -48,11 +48,26 @@ def create_campaign_experiment(customer_id, campaign_draft_resource_name)
       "#{operation.metadata.campaign_experiment}"
 
   puts "Waiting until operation completes."
+
+  # The wait_until_done! method implements a default backoff policy for
+  # retrying.
   operation.wait_until_done! do |op|
     raise op.results.message if operation.error?
-    require 'pry'
-    binding.pry
   end
+
+  # You can also use operation.refresh! to make a call to the API to check
+  # whether the LRO is finished, and operation.done? after refreshing to check
+  # the status, if you'd rather implement your own backoff logic.
+
+  query = <<~EOQUERY
+    SELECT campaign_experiment.experiment_campaign
+    FROM campaign_experiment
+    WHERE campaign_experiment.resource_name = "#{operation.metadata.campaign_experiment}"
+  EOQUERY
+
+  response = client.service.google_ads.search(customer_id, query)
+  puts "Experiment campaign #{response.first.campaign_experiment.experiment_campaign}" \
+      " finished creating."
 end
 
 if __FILE__ == $0
