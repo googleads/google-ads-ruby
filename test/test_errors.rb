@@ -26,6 +26,7 @@ class TestErrors < Minitest::Test
 
   def test_error_index
     error = build_error
+    raise "omg"
     index = Google::Ads::GoogleAds::Errors.index(error)
 
     assert_equal(1, index)
