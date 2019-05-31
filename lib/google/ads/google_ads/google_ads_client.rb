@@ -38,6 +38,10 @@ module Google
   end
 end
 
+# this require needs to always come first to patch protobufs to have "magic
+# fields"
+require 'google/ads/google_ads/magic_fields'
+
 require 'googleauth'
 
 require 'google/ads/google_ads/patches'
