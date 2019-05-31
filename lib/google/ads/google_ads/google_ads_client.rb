@@ -38,9 +38,9 @@ module Google
   end
 end
 
-# this require needs to always come first to patch protobufs to have "magic
+# this require needs to always come first to patch protobufs to have "autoboxing
 # fields"
-require 'google/ads/google_ads/magic_fields'
+require 'google/ads/google_ads/autoboxing_fields'
 
 require 'googleauth'
 

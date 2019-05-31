@@ -3,7 +3,7 @@ require 'google/protobuf/wrappers_pb'
 module Google
   module Ads
     module GoogleAds
-      module MagicFields
+      module AutoboxingFields
         MAPPINGS = {
           Google::Protobuf::Int32Value => lambda { |x| Integer(x) },
           Google::Protobuf::Int64Value => lambda { |x| Integer(x) },
@@ -23,13 +23,13 @@ module Google
         }
 
         def self.patch_class(klass)
-          return if klass.instance_variable_get(:@_patched_for_magic_fields)
-          self.instance_variable_set(:@_patched_for_magic_fields, true)
+          return if klass.instance_variable_get(:@_patched_for_autoboxing_fields)
+          klass.instance_variable_set(:@_patched_for_autoboxing_fields, true)
 
           klass.instance_eval do
             descriptor.each do |field|
-              if field.type == :message && MagicFields.is_value_field?(field.subtype.msgclass)
-                MagicFields.patch_field_for_magic(field, self)
+              if field.type == :message && AutoboxingFields.is_value_field?(field.subtype.msgclass)
+                AutoboxingFields.patch_field_for_autoboxing(field, self)
               end
             end
           end
@@ -39,7 +39,7 @@ module Google
           MAPPINGS.keys.include?(class_name)
         end
 
-        def self.patch_field_for_magic(field, klass_to_patch)
+        def self.patch_field_for_autoboxing(field, klass_to_patch)
           name = field.name
           field_klass = field.subtype.msgclass
           mapping = MAPPINGS.fetch(field_klass)
@@ -66,7 +66,7 @@ module Google::Protobuf
     module ClassMethods
       def new(*args, &blk)
         if self.name.start_with?("Google::Ads::GoogleAds")
-          Google::Ads::GoogleAds::MagicFields.patch_class(self)
+          Google::Ads::GoogleAds::AutoboxingFields.patch_class(self)
         end
 
         super

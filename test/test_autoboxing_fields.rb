@@ -20,7 +20,7 @@ require 'minitest/autorun'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/v1/resources/campaign_pb'
 
-class TestConfig < Minitest::Test
+class TestAutoboxing < Minitest::Test
   def test_initialize
     c = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     c.name = "hi"
