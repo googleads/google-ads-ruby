@@ -28,9 +28,7 @@ def add_campaigns(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   campaign_budget_operation = client.operation.create_resource.campaign_budget do |cb|
-    cb.name = client.wrapper.string(
-      "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}",
-    )
+    cb.name = "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}"
 
     cb.delivery_method = :STANDARD
     cb.amount_micros = client.wrapper.int64(500000)
