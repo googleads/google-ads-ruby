@@ -1,3 +1,6 @@
+2.3.0:
+  - Add autoboxing fields that set value wrappers from primitives
+
 2.2.1:
   - Fix support for long running operations.
 
