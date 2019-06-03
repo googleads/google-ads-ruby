@@ -22,6 +22,10 @@ require 'google/ads/google_ads/v1/resources/campaign_pb'
 
 class TestAutoboxing < Minitest::Test
   def test_initialize
+    Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: "hi")
+  end
+
+  def test_assign
     c = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     c.name = "hi"
     c.id = 3
