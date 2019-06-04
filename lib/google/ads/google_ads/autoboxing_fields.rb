@@ -50,7 +50,11 @@ module Google
               new_kwargs = Hash[kwargs.map { |name, value|
                 field = fields.select { |x| x.name == name.to_s }.first
                 actual_value = if field
-                                 field.subtype.msgclass.new(value: MAPPINGS.fetch(field.subtype.msgclass).call(value))
+                                 if field.subtype.msgclass === value
+                                   value
+                                 else
+                                   field.subtype.msgclass.new(value: MAPPINGS.fetch(field.subtype.msgclass).call(value))
+                                 end
                                else
                                  value
                                end
