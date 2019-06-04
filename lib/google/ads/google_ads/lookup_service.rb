@@ -15,39 +15,39 @@ module Google
         end
 
         def call
-          # We need a local reference to refer to from within the class block
-          # below.
-          logger = @logger
-          service_path = @service_path
-
           if logger
             logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
           end
 
           if name.nil?
-            services = Factories.at_version(version).services.new(
+            services = Factories.at_version(version).services.new(**{
               service_path: service_path,
               logging_interceptor: logging_interceptor,
-              credentials: updater_proc,
-              metadata: headers,
-              exception_transformer: ERROR_TRANSFORMER
-            )
+            }.merge(gax_service_params))
             apply_patch_delegator(services)
           else
             class_to_return = lookup_util.raw_service(name, version)
-
+            setup_service_class(class_to_return)
             class_to_return.new(
-              credentials: updater_proc,
-              metadata: headers,
-              exception_transformer: ERROR_TRANSFORMER
+              **gax_service_params
             )
           end
         end
 
         private
 
+        def gax_service_params
+          {
+            credentials: updater_proc,
+            metadata: headers,
+            exception_transformer: ERROR_TRANSFORMER
+          }
+        end
+
         def setup_service_class(service_class)
-          class_to_return = Class.new(class_to_return) do
+          service_path = @service_path
+          logging_interceptor = @logging_interceptor
+          class_to_return = Class.new(service_class) do
             unless service_path.nil? || service_path.empty?
               const_set('SERVICE_ADDRESS', service_path.freeze)
             end

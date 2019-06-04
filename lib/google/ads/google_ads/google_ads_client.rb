@@ -116,16 +116,15 @@ module Google
         def service(name=nil, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
-
           LookupService.new(
             name,
- version,
- lookup_util,
- service_path,
- @logger,
- @config,
- get_updater_proc
-                           ).call
+            version,
+            lookup_util,
+            service_path,
+            @logger,
+            @config,
+            get_updater_proc
+          ).call
         end
 
         def patch_lro_headers(class_to_return, headers)
