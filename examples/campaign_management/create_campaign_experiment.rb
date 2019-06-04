@@ -28,11 +28,9 @@ def create_campaign_experiment(customer_id, campaign_draft_resource_name)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   experiment = client.resource.campaign_experiment do |ce|
-    ce.campaign_draft = client.wrapper.string(campaign_draft_resource_name)
-    ce.name = client.wrapper.string(
-      "Campaign Experiment ##{(Time.new.to_f * 1000).to_i}"
-    )
-    ce.traffic_split_percent = client.wrapper.int64(50)
+    ce.campaign_draft = campaign_draft_resource_name
+    ce.name = "Campaign Experiment ##{(Time.new.to_f * 1000).to_i}"
+    ce.traffic_split_percent = 50
     ce.traffic_split_type = :RANDOM_QUERY
   end
 
