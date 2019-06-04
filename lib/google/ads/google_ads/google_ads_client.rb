@@ -62,10 +62,6 @@ require 'json'
 require 'openssl'
 require 'signet/oauth_2/client'
 
-require 'json'
-require 'openssl'
-require 'signet/oauth_2/client'
-
 module Google
   module Ads
     module GoogleAds
