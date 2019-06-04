@@ -28,12 +28,8 @@ def add_campaign_draft(customer_id, campaign_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   draft_operation = client.operation.create_resource.campaign_draft do |draft|
-    draft.base_campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id)
-    )
-    draft.name = client.wrapper.string(
-      "Campaign Draft ##{(Time.new.to_f * 1000).to_i}"
-    )
+    draft.base_campaign = client.path.campaign(customer_id, campaign_id)
+    draft.name = "Campaign Draft ##{(Time.new.to_f * 1000).to_i}"
   end
 
   draft_response = client.service.campaign_draft.mutate_campaign_drafts(
@@ -58,9 +54,7 @@ def add_campaign_draft(customer_id, campaign_id)
   criterion_operation = client.operation.create_resource.campaign_criterion do |cc|
     cc.campaign = draft_campaign_resource_name
     cc.language = client.resource.language_info do |li|
-      li.language_constant = client.wrapper.string(
-        client.path.language_constant(1003) # Spanish
-      )
+      li.language_constant = client.path.language_constant(1003) # Spanish
     end
   end
 
