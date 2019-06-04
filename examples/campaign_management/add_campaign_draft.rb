@@ -83,8 +83,8 @@ if __FILE__ == $0
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = '2055652758'
-  options[:campaign_id] = '1953534236'
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: add_campaigns.rb [options]')
