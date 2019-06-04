@@ -30,10 +30,8 @@ def graduate_campaign_experiment(customer_id, experiment_resource_name)
   # for the base campaign has explicitly_shared set to false, it cannot be
   # shared with the campaign after it is made independent by graduation.
   budget_operation = client.operation.create_resource.campaign_budget do |b|
-    b.name = client.wrapper.string(
-      "Budget ##{(Time.new.to_f * 1000).to_i}"
-    )
-    b.amount_micros = client.wrapper.int64(50_000_000)
+    b.name = "Budget ##{(Time.new.to_f * 1000).to_i}"
+    b.amount_micros = 50_000_000
     b.delivery_method = :STANDARD
   end
 
