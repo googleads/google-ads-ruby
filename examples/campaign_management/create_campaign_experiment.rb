@@ -44,20 +44,19 @@ def create_campaign_experiment(customer_id, campaign_draft_resource_name)
     experiment
   )
 
-  puts "Created campaign experiment with resource name " +
-      "#{operation.metadata.campaign_experiment}"
+  puts "Asynchronous request to create campaign experiment with " +
+    "resource name #{operation.metadata.campaign_experiment} started."
 
   puts "Waiting until operation completes."
 
   # The wait_until_done! method implements a default backoff policy for
   # retrying.
-  operation.wait_until_done! do |op|
-    raise op.results.message if operation.error?
-  end
-
   # You can also use operation.refresh! to make a call to the API to check
   # whether the LRO is finished, and operation.done? after refreshing to check
   # the status, if you'd rather implement your own backoff logic.
+  operation.wait_until_done! do |op|
+    raise op.results.message if operation.error?
+  end
 
   query = <<~EOQUERY
     SELECT campaign_experiment.experiment_campaign
@@ -96,7 +95,7 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-d', '--draft-resource_name DRAFT-RESOURCE_NAME', String, 'Draft ID') do |v|
+    opts.on('-d', '--draft-resource_name DRAFT-RESOURCE-NAME', String, 'Draft ID') do |v|
       options[:draft_resource_name] = v
     end
 
