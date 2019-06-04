@@ -33,7 +33,26 @@ module Google
       end
     end
   end
+
+  # We don't actually want to run any auth code, just test the setup.
+  module Auth
+    class Credentials
+      def initialize(k)
+      end
+    end
+  end
 end
+
+# We don't actually want to run any auth code, just test the setup.
+module OpenSSL
+  module PKey
+    class RSA
+      def initialize(k)
+      end
+    end
+  end
+end
+
 
 class TestGoogleAdsClient < Minitest::Test
   def test_initialize
