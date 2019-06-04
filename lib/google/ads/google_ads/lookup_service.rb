@@ -32,36 +32,9 @@ module Google
               metadata: headers,
               exception_transformer: ERROR_TRANSFORMER
             )
-
-            patch_delegator = Class.new do
-              def initialize(services, patch_callable)
-                @services = services
-                @patch_callable = patch_callable
-              end
-
-              def respond_to_missing?(sym, include_private=false)
-                @services.respond_to?(sym, include_private)
-              end
-
-              def method_missing(name, *args)
-                @services.public_send(name, *args) do |cls|
-                  @patch_callable.call(cls)
-                  cls
-                end
-              end
-            end
-            patch_delegator.new(services, method(:patch_lro_headers))
+            apply_patch_delegator(services)
           else
             class_to_return = lookup_util.raw_service(name, version)
-            class_to_return = Class.new(class_to_return) do
-              unless service_path.nil? || service_path.empty?
-                const_set('SERVICE_ADDRESS', service_path.freeze)
-              end
-
-              const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
-            end
-
-            patch_lro_headers(class_to_return)
 
             class_to_return.new(
               credentials: updater_proc,
@@ -72,6 +45,39 @@ module Google
         end
 
         private
+
+        def setup_service_class(service_class)
+          class_to_return = Class.new(class_to_return) do
+            unless service_path.nil? || service_path.empty?
+              const_set('SERVICE_ADDRESS', service_path.freeze)
+            end
+
+            const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
+          end
+
+          patch_lro_headers(class_to_return)
+        end
+
+        def apply_patch_delegator(services)
+          patch_delegator = Class.new do
+            def initialize(services, patch_callable)
+              @services = services
+              @patch_callable = patch_callable
+            end
+
+            def respond_to_missing?(sym, include_private=false)
+              @services.respond_to?(sym, include_private)
+            end
+
+            def method_missing(name, *args)
+              @services.public_send(name, *args) do |cls|
+                @patch_callable.call(cls)
+                cls
+              end
+            end
+          end
+          patch_delegator.new(services, method(:patch_lro_headers))
+        end
 
         def headers
           headers = {
