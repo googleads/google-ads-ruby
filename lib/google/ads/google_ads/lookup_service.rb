@@ -1,0 +1,141 @@
+require 'google/ads/google_ads/patch_lro_headers'
+
+module Google
+  module Ads
+    module GoogleAds
+      class LookupService
+        def initialize(name, version, lookup_util, service_path, logger, config, updater_proc)
+          @name = name
+          @version = version
+          @service_path = service_path
+          @logger = logger
+          @config = config
+          @updater_proc = updater_proc
+          @lookup_util = lookup_util
+        end
+
+        def call
+          # We need a local reference to refer to from within the class block
+          # below.
+          logger = @logger
+          service_path = @service_path
+
+          headers = {
+            :"developer-token" => @config.developer_token
+          }
+          if @config.login_customer_id
+            begin
+              login_customer_id = Integer(@config.login_customer_id)
+            rescue ArgumentError => e
+              if e.message.start_with?("invalid value for Integer")
+                raise ArgumentError.new("Invalid value for login_customer_id, must be integer")
+              end
+            end
+            if login_customer_id <= 0 || login_customer_id > 9_999_999_999
+              raise ArgumentError.new(
+                "Invalid login_customer_id. Must be an integer " \
+                "0 < x <= 9,999,999,999. Got #{login_customer_id}"
+              )
+            end
+            headers[:"login-customer-id"] = login_customer_id.to_s  # header values must be strings
+          end
+
+          if logger
+            logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+          end
+
+          if name.nil?
+            services = Factories.at_version(version).services.new(
+              service_path: service_path,
+              logging_interceptor: logging_interceptor,
+              credentials: updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+
+            patch_delegator = Class.new do
+              def initialize(services, headers, patch_callable)
+                @services = services
+                @headers = headers
+                @patch_callable = patch_callable
+              end
+
+              def respond_to_missing?(sym, include_private=false)
+                @services.respond_to?(sym, include_private)
+              end
+
+              def method_missing(name, *args)
+                @services.public_send(name, *args) do |cls|
+                  @patch_callable.call(cls, @headers)
+                  cls
+                end
+              end
+            end
+            patch_delegator.new(services, headers, method(:patch_lro_headers))
+          else
+            class_to_return = lookup_util.raw_service(name, version)
+            class_to_return = Class.new(class_to_return) do
+              unless service_path.nil? || service_path.empty?
+                const_set('SERVICE_ADDRESS', service_path.freeze)
+              end
+
+              const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
+            end
+
+            patch_lro_headers(class_to_return, headers)
+
+            class_to_return.new(
+              credentials: updater_proc,
+              metadata: headers,
+              exception_transformer: ERROR_TRANSFORMER
+            )
+          end
+        end
+
+        private
+
+        def patch_lro_headers(class_to_return, headers)
+          PatchLROHeaders.new(class_to_return, headers).call
+        end
+
+        ERROR_TRANSFORMER = Proc.new do |gax_error|
+          begin
+            gax_error.status_details.each do |detail|
+              # If there is an underlying GoogleAdsFailure, throw that one.
+              if detail.is_a?(
+                  Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure)
+                raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
+                    detail)
+              end
+              if detail.is_a?(Google::Protobuf::Any)
+                type = Google::Protobuf::DescriptorPool.generated_pool.lookup(
+                    detail.type_name).msgclass
+                failure = detail.unpack(type)
+                raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
+                    failure)
+              end
+            end
+          rescue Google::Ads::GoogleAds::Errors::GoogleAdsError
+            # If we raised this, bubble it out.
+            raise
+          rescue NoMethodError
+            # Sometimes status_details is just a String; in that case, we should
+            # just raise the original exception.
+          end
+          # If we don't find an error of the correct type, or if we run into an
+          # error while processing, just throw the original.
+          raise gax_error
+        end
+
+
+        attr_reader :name
+        attr_reader :version
+        attr_reader :service_path
+        attr_reader :logger
+        attr_reader :config
+        attr_reader :updater_proc
+        attr_reader :lookup_util
+      end
+    end
+  end
+end
