@@ -20,14 +20,6 @@ module Google
           logger = @logger
           service_path = @service_path
 
-          headers = {
-            :"developer-token" => @config.developer_token
-          }
-          if config.login_customer_id
-            validate_login_customer_id
-            headers[:"login-customer-id"] = config.login_customer_id.to_s  # header values must be strings
-          end
-
           if logger
             logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
           end
@@ -42,9 +34,8 @@ module Google
             )
 
             patch_delegator = Class.new do
-              def initialize(services, headers, patch_callable)
+              def initialize(services, patch_callable)
                 @services = services
-                @headers = headers
                 @patch_callable = patch_callable
               end
 
@@ -54,12 +45,12 @@ module Google
 
               def method_missing(name, *args)
                 @services.public_send(name, *args) do |cls|
-                  @patch_callable.call(cls, @headers)
+                  @patch_callable.call(cls)
                   cls
                 end
               end
             end
-            patch_delegator.new(services, headers, method(:patch_lro_headers))
+            patch_delegator.new(services, method(:patch_lro_headers))
           else
             class_to_return = lookup_util.raw_service(name, version)
             class_to_return = Class.new(class_to_return) do
@@ -70,7 +61,7 @@ module Google
               const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
             end
 
-            patch_lro_headers(class_to_return, headers)
+            patch_lro_headers(class_to_return)
 
             class_to_return.new(
               credentials: updater_proc,
@@ -82,7 +73,20 @@ module Google
 
         private
 
-        def patch_lro_headers(class_to_return, headers)
+        def headers
+          headers = {
+            :"developer-token" => config.developer_token
+          }
+
+          if config.login_customer_id
+            validate_login_customer_id
+            headers[:"login-customer-id"] = config.login_customer_id.to_s  # header values must be strings
+          end
+
+          headers
+        end
+
+        def patch_lro_headers(class_to_return)
           PatchLROHeaders.new(class_to_return, headers).call
         end
 
