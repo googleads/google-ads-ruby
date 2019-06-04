@@ -33,7 +33,26 @@ module Google
       end
     end
   end
+
+  # We don't actually want to run any auth code, just test the setup.
+  module Auth
+    class Credentials
+      def initialize(k)
+      end
+    end
+  end
 end
+
+# We don't actually want to run any auth code, just test the setup.
+module OpenSSL
+  module PKey
+    class RSA
+      def initialize(k)
+      end
+    end
+  end
+end
+
 
 class TestGoogleAdsClient < Minitest::Test
   def test_initialize()
@@ -172,19 +191,43 @@ class TestGoogleAdsClient < Minitest::Test
       config.refresh_token = 'refresh_token'
     end
 
-    credentials = client.get_credentials()
+    credentials = client.get_credentials
     assert_instance_of(Proc, credentials)
   end
 
-  def test_authentication_overrides_updater_proc
+  def test_keyfile_overrides_updater_proc
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.client_id = 'client_id'
+      config.client_secret = 'client_secret'
+      config.refresh_token = 'refresh_token'
+      config.keyfile = 'test/fixtures/keyfile.json'
+      config.impersonate = 'impersonate'
+    end
+
+    credentials = client.get_credentials
+    assert_instance_of(Google::Auth::Credentials, credentials)
+  end
+
+  def test_keyfile_without_impersonate_raises
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+      config.keyfile = 'keyfile'
+    end
+
+    assert_raises do
+      client.get_credentials
+    end
+  end
+
+  def test_authentication_overrides_updater_proc_and_keyfile
     client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
       config.client_id = 'client_id'
       config.client_secret = 'client_secret'
       config.refresh_token = 'refresh_token'
       config.authentication = 'path/to/file'
+      config.keyfile = 'keyfile'
     end
 
-    credentials = client.get_credentials()
+    credentials = client.get_credentials
     assert_equal('path/to/file', credentials)
   end
 end

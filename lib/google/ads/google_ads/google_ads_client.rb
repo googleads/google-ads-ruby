@@ -58,6 +58,10 @@ require 'google/gax'
 
 require 'logger'
 
+require 'json'
+require 'openssl'
+require 'signet/oauth_2/client'
+
 module Google
   module Ads
     module GoogleAds
@@ -123,7 +127,7 @@ module Google
             service_path,
             @logger,
             @config,
-            get_updater_proc
+            get_credentials,
           ).call
         end
 
@@ -230,6 +234,8 @@ module Google
         def get_credentials()
           if @config.authentication
             @config.authentication
+          elsif @config.keyfile
+            get_service_account_credentials
           else
             get_updater_proc
           end
@@ -239,12 +245,30 @@ module Google
         # authenticate API requests.
         def get_updater_proc()
           return Signet::OAuth2::Client.new(
-            token_credential_uri: 'https://www.googleapis.com/oauth2/v3/token',
+            token_credential_uri: "https://www.googleapis.com/oauth2/v3/token",
             client_id: @config.client_id,
             client_secret: @config.client_secret,
             refresh_token: @config.refresh_token,
-            scope: ['https://www.googleapis.com/auth/adwords']
+            scope: ["https://www.googleapis.com/auth/adwords"]
           ).updater_proc
+        end
+
+        # Provides a Google::Auth::Credentials initialized with a keyfile
+        # specified in the config.
+        def get_service_account_credentials()
+          raise 'config.impersonate required if keyfile specified' unless @config.impersonate
+          keyfile = File.read(@config.keyfile)
+          keyfile = JSON.parse(keyfile, symbolize_names: true)
+          Google::Auth::Credentials.new(
+            Signet::OAuth2::Client.new(
+              token_credential_uri: "https://accounts.google.com/o/oauth2/token",
+              audience: "https://accounts.google.com/o/oauth2/token",
+              issuer: keyfile[:client_email],
+              signing_key: OpenSSL::PKey::RSA.new(keyfile[:private_key]),
+              person: @config.impersonate,
+              scope: ["https://www.googleapis.com/auth/adwords"],
+            )
+          )
         end
 
         # Create the default logger, useful if the user hasn't defined one.

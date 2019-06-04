@@ -23,6 +23,8 @@ module Google
         attr_accessor :refresh_token
         attr_accessor :client_id
         attr_accessor :client_secret
+        attr_accessor :keyfile
+        attr_accessor :impersonate
         attr_accessor :authentication
 
         attr_accessor :developer_token
@@ -36,6 +38,8 @@ module Google
           @refresh_token = nil
           @client_id = nil
           @client_secret = nil
+          @keyfile = nil
+          @impersonate = nil
           @authentication = nil
 
           @developer_token = nil
