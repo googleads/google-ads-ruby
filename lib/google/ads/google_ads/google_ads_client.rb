@@ -54,6 +54,7 @@ require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 require 'google/ads/google_ads/service_lookup'
 require 'google/ads/google_ads/deprecation'
+require 'google/ads/google_ads/v1/services/google_ads_service_client'
 
 require 'google/gax'
 
@@ -128,8 +129,31 @@ module Google
             service_path,
             @logger,
             @config,
-            get_credentials,
+            make_channel,
           ).call
+        end
+
+        def make_channel
+          # this fetch in to GoogleAdsServiceClient is pretty arbitrary, our
+          # protos all point at the same domain and port combo, so this just
+          # constructs it by pulling the values out of that client.
+          #
+          # V1 should also be pretty arbitrary here (that is we probably don't
+          # need to change this even with V2 protos present because the target
+          # doesn't change)
+          default_target = [
+            Google::Ads::GoogleAds::V1::Services::GoogleAdsServiceClient::SERVICE_ADDRESS,
+            Google::Ads::GoogleAds::V1::Services::GoogleAdsServiceClient::DEFAULT_SERVICE_PORT,
+          ].join(":")
+          target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
+
+          channel_args = {
+            GRPC::Core::Channel::MAX_MESSAGE_LENGTH => 64*1000*1000
+          }
+
+          call_creds = GRPC::Core::CallCredentials.new(get_credentials)
+          chan_creds = GRPC::Core::ChannelCredentials.new.compose(call_creds)
+          GRPC::Core::Channel.new(target, channel_args, chan_creds)
         end
 
         def patch_lro_headers(class_to_return, headers)
