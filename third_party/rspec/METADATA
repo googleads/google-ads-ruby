@@ -1,0 +1,18 @@
+name: "RSpec"
+description:
+    "Behaviour Driven Development for Ruby"
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://rspec.info/"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/rspec/rspec-support"
+  }
+  version: "3.8.0"
+  last_upgrade_date { year: 2019 month: 6 day: 5 }
+  license_type: NOTICE
+  local_modifications: "Replaced RSpec specific paths with ads relative paths"
+}
