@@ -15,6 +15,14 @@ Google::Ads::GoogleAds::Config.new do |c|
   c.client_secret = 'INSERT_CLIENT_SECRET_HERE'
   c.refresh_token = 'INSERT_REFRESH_TOKEN_HERE'
 
+  # You can also authenticate using a service account. If "keyfile" is
+  # specified below, then service account authentication will be assumed and
+  # the above authentication fields ignored. Read more about service account
+  # authentication here:
+  # https://developers.google.com/google-ads/api/docs/oauth/service-accounts
+  # c.keyfile = 'path/to/keyfile.json'
+  # c.impersonate = 'INSERT_EMAIL_ADDRESS_TO_IMPERSONATE_HERE'
+
   # Alternatively, you may specify your own custom authentication, which can be:
   # A `Google::Auth::Credentials` uses a the properties of its represented
   # keyfile for authenticating requests made by this client.
