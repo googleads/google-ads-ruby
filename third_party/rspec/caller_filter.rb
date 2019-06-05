@@ -1,83 +1,99 @@
-# typed: false
-RSpec::Support.require_rspec_support "ruby_features"
+module Google
+  module Ads
+    module GoogleAds
+      class Deprecation
+        Error = Class.new(StandardError)
+        def initialize(
+          treat_deprecation_warnings_as_errors,
+          warn_on_all_deprecations
+        )
+          @treat_deprecation_warnings_as_errors = treat_deprecation_warnings_as_errors
+          @warn_on_all_deprecations = warn_on_all_deprecations
+          @silenced_sites = {}
+        end
 
-module RSpec
-  # Consistent implementation for "cleaning" the caller method to strip out
-  # non-rspec lines. This enables errors to be reported at the call site in
-  # the code using the library, which is far more useful than the particular
-  # internal method that raised an error.
-  class CallerFilter
-    RSPEC_LIBS = %w[
-      core
-      mocks
-      expectations
-      support
-      matchers
-      rails
-    ]
+        def deprecate(deprecation)
+          return unless should_warn?
+          if @treat_deprecation_warnings_as_errors
+            raise Error, deprecation
+          else
+            Warning.warn("#{deprecation}. Called from: #{CallerFilter.first_non_google_ads_line}")
+          end
+        end
 
-    ADDITIONAL_TOP_LEVEL_FILES = %w[ autorun ]
+        private
 
-    LIB_REGEX = %r{/lib/rspec/(#{(RSPEC_LIBS + ADDITIONAL_TOP_LEVEL_FILES).join('|')})(\.rb|/)}
+        # Determines if we should issue a deprecation warning, silencing
+        # on each user call site after the first warning.
+        def should_warn?
+          return true if @warn_on_all_deprecations
 
-    # rubygems/core_ext/kernel_require.rb isn't actually part of rspec (obviously) but we want
-    # it ignored when we are looking for the first meaningful line of the backtrace outside
-    # of RSpec. It can show up in the backtrace as the immediate first caller
-    # when `CallerFilter.first_non_rspec_line` is called from the top level of a required
-    # file, but it depends on if rubygems is loaded or not. We don't want to have to deal
-    # with this complexity in our `RSpec.deprecate` calls, so we ignore it here.
-    IGNORE_REGEX = Regexp.union(LIB_REGEX, "rubygems/core_ext/kernel_require.rb")
-
-    if RSpec::Support::RubyFeatures.caller_locations_supported?
-      # This supports args because it's more efficient when the caller specifies
-      # these. It allows us to skip frames the caller knows are part of RSpec,
-      # and to decrease the increment size if the caller is confident the line will
-      # be found in a small number of stack frames from `skip_frames`.
-      #
-      # Note that there is a risk to passing a `skip_frames` value that is too high:
-      # If it skippped the first non-rspec line, then this method would return the
-      # 2nd or 3rd (or whatever) non-rspec line. Thus, you generally shouldn't pass
-      # values for these parameters, particularly since most places that use this are
-      # not hot spots (generally it gets used for deprecation warnings). However,
-      # if you do have a hot spot that calls this, passing `skip_frames` can make
-      # a significant difference. Just make sure that that particular use is tested
-      # so that if the provided `skip_frames` changes to no longer be accurate in
-      # such a way that would return the wrong stack frame, a test will fail to tell you.
-      #
-      # See benchmarks/skip_frames_for_caller_filter.rb for measurements.
-      def self.first_non_rspec_line(skip_frames=3, increment=5)
-        # Why a default `skip_frames` of 3?
-        # By the time `caller_locations` is called below, the first 3 frames are:
-        #   lib/rspec/support/caller_filter.rb:63:in `block in first_non_rspec_line'
-        #   lib/rspec/support/caller_filter.rb:62:in `loop'
-        #   lib/rspec/support/caller_filter.rb:62:in `first_non_rspec_line'
-
-        # `caller` is an expensive method that scales linearly with the size of
-        # the stack. The performance hit for fetching it in chunks is small,
-        # and since the target line is probably near the top of the stack, the
-        # overall improvement of a chunked search like this is significant.
-        #
-        # See benchmarks/caller.rb for measurements.
-
-        # The default increment of 5 for this method are mostly arbitrary, but
-        # is chosen to give good performance on the common case of creating a double.
-
-        loop do
-          stack = caller_locations(skip_frames, increment)
-          raise "No non-lib lines in stack" unless stack
-
-          line = stack.find { |l| l.path !~ IGNORE_REGEX }
-          return line.to_s if line
-
-          skip_frames += increment
-          increment   *= 2 # The choice of two here is arbitrary.
+          if !@silenced_sites.include?(CallerFilter.first_non_google_ads_line)
+            @silenced_sites[CallerFilter.first_non_google_ads_line] ||= true
+            true
+          else
+            false
+          end
         end
       end
-    else
-      # Earlier rubies do not support the two argument form of `caller`. This
-      # fallback is logically the same, but slower.
-      def self.first_non_rspec_line(*)
-        caller.find { |line| line !~ IGNORE_REGEX }
+
+      # @api private
+      # Portions of this implementation were copied from RSpec, under the
+      # MIT license: https://git.io/fjR7i
+      class CallerFilter
+        LIB_REGEX = /lib\/google\/ads\/google_ads/
+        IGNORE_REGEX = Regexp.union(LIB_REGEX, "rubygems/core_ext/kernel_require.rb")
+
+        # This method finds the first line from the current stack trace that
+        # doesn't originate from lib/google/ads/google_ads. It does this by
+        # running backwards through the current stack trace in chunks. The
+        # reason for this is that pulling the entire stack trace is O(n) on
+        # the depth of the stack (which is in practice very expensive in Rails
+        # applications, because rails ads a lot stack frames on to every
+        # request).
+        #
+        # The chunking algorithm works by skipping a certain number of frames,
+        # and then pulling a static number, consider a stack trace as folows,
+        # where frame 17 is the one we're interested in, and we're actually,
+        # thousands of frames deep.
+        #                                          *
+        # 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+        #
+        # the first iteration of this will skip frames 0-2 and pull frames
+        # 3-7 (skip_frames = 3, increment = 5, 3 + 5 -1 = 7). Skipping is free,
+        # and pulling chunks is O(n) on the size of the chunk.
+        #
+        #                                           *
+        # 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+        #       ^_______^
+        #
+        # if the relevant stack frame isn't found, skip is incremented, to
+        # point at frame 8, and the increment is doubled, doubling the size
+        # of the search window, causing it to point at frame 17
+        #                                           *
+        # 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+        #                 ^________________________^
+        #
+        # here, we've performed 15 lookup operations to find the item we're
+        # looking for, instead of 1000. The reason we use this chunk and doubling
+        # strategy is that pulling stack frames has some fixed overhead, and so
+        # in practice, doing a linear scan from frame 0 to the one we're interested
+        # in is also slower than this methodology, even though the doubling
+        # strategy may result in strictly more lookups thn necessary.
+        def self.first_non_google_ads_line
+          skip_frames = 3
+          increment = 5
+          loop do
+            stack = caller_locations(skip_frames, increment)
+            raise "No non-lib lines in stack" unless stack
+
+            line = stack.find { |l| l.path !~ IGNORE_REGEX }
+            return line.to_s if line
+
+            skip_frames += increment
+            increment   *= 2 # The choice of two here is arbitrary.
+          end
+        end
       end
     end
   end
