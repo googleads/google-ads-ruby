@@ -33,35 +33,16 @@ module Google
       end
     end
   end
-
-  # We don't actually want to run any auth code, just test the setup.
-  module Auth
-    class Credentials
-      def initialize(k)
-      end
-    end
-  end
 end
-
-# We don't actually want to run any auth code, just test the setup.
-module OpenSSL
-  module PKey
-    class RSA
-      def initialize(k)
-      end
-    end
-  end
-end
-
 
 class TestGoogleAdsClient < Minitest::Test
-  def test_initialize()
+  def test_initialize
     Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
   end
 
-  def test_initialize_no_config()
+  def test_initialize_no_config
     assert_raises(ArgumentError) do
       Google::Ads::GoogleAds::GoogleAdsClient.new('/not/a/file.rb')
     end
@@ -92,7 +73,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal errors[0].class, Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure
   end
 
-  def test_config()
+  def test_config
     refresh_token_value_1 = 'refresh token'
     client_id_value_1 = 'client id'
     client_secret_value_1 = 'client secret'
@@ -122,7 +103,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(client_secret_value_2, client.config.client_secret)
   end
 
-  def test_service()
+  def test_service
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
@@ -134,7 +115,7 @@ class TestGoogleAdsClient < Minitest::Test
         Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
   end
 
-  def test_service_with_login_customer_id_set()
+  def test_service_with_login_customer_id_set
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.login_customer_id = 1234567890
     end
@@ -146,7 +127,7 @@ class TestGoogleAdsClient < Minitest::Test
         Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
   end
 
-  def test_service_with_invalid_login_customer_id_set()
+  def test_service_with_invalid_login_customer_id_set
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.login_customer_id = 'abcd'
     end
@@ -156,7 +137,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
   end
 
-  def test_resource_lookup()
+  def test_resource_lookup
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
@@ -165,7 +146,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(expected, client.path.campaign(1234, 5678))
   end
 
-  def test_lookup_instantiation()
+  def test_lookup_instantiation
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No setup.
     end
@@ -174,7 +155,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_instance_of(Google::Ads::GoogleAds::LookupUtil, util)
   end
 
-  def test_logger_beats_log_target()
+  def test_logger_beats_log_target
     logger = Logger.new(StringIO.new)
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.logger = logger
@@ -184,7 +165,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(client.logger, logger)
   end
 
-  def test_default_to_updater_proc()
+  def test_default_to_updater_proc
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.client_id = 'client_id'
       config.client_secret = 'client_secret'
@@ -196,7 +177,16 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_keyfile_overrides_updater_proc
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    old_credentials_init = Google::Auth::Credentials.method(:initialize)
+    Google::Auth::Credentials.instance_eval do
+      define_method(:initialize) do |k| end
+    end
+    old_rsa_init = OpenSSL::PKey::RSA.method(:initialize)
+    OpenSSL::PKey::RSA.instance_eval do
+      define_method(:initialize) do |k| end
+    end
+
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.client_id = 'client_id'
       config.client_secret = 'client_secret'
       config.refresh_token = 'refresh_token'
@@ -206,10 +196,19 @@ class TestGoogleAdsClient < Minitest::Test
 
     credentials = client.get_credentials
     assert_instance_of(Google::Auth::Credentials, credentials)
+  ensure
+    Google::Auth::Credentials.instance_eval do
+      undef initialize
+      define_method(:initialize, &old_credentials_init)
+    end
+    OpenSSL::PKey::RSA.instance_eval do
+      undef initialize
+      define_method(:initialize, &old_rsa_init)
+    end
   end
 
   def test_keyfile_without_impersonate_raises
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.keyfile = 'keyfile'
     end
 
@@ -219,7 +218,7 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_authentication_overrides_updater_proc_and_keyfile
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new() do |config|
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       config.client_id = 'client_id'
       config.client_secret = 'client_secret'
       config.refresh_token = 'refresh_token'
