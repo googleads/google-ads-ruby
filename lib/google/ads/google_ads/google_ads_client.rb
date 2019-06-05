@@ -52,7 +52,7 @@ require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/logging_interceptor'
 require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
-require 'google/ads/google_ads/lookup_service'
+require 'google/ads/google_ads/service_lookup'
 
 require 'google/gax'
 
@@ -116,7 +116,7 @@ module Google
         def service(name=nil, version = default_api_version)
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
-          LookupService.new(
+          ServiceLookup.new(
             name,
             version,
             lookup_util,

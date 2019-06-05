@@ -3,15 +3,15 @@ require 'google/ads/google_ads/patch_lro_headers'
 module Google
   module Ads
     module GoogleAds
-      class LookupService
+      class ServiceLookup
         def initialize(name, version, lookup_util, service_path, logger, config, updater_proc)
           @name = name
           @version = version
+          @lookup_util = lookup_util
           @service_path = service_path
           @logger = logger
           @config = config
           @updater_proc = updater_proc
-          @lookup_util = lookup_util
         end
 
         def call
