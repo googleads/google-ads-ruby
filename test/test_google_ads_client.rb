@@ -177,13 +177,15 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_keyfile_overrides_updater_proc
-    old_credentials_init = Google::Auth::Credentials.method(:initialize)
+    orig_credentials_init = Google::Auth::Credentials.method(:initialize)
     Google::Auth::Credentials.instance_eval do
-      define_method(:initialize) do |k| end
+      define_method(:initialize) do |k|
+      end
     end
-    old_rsa_init = OpenSSL::PKey::RSA.method(:initialize)
+    orig_rsa_init = OpenSSL::PKey::RSA.method(:initialize)
     OpenSSL::PKey::RSA.instance_eval do
-      define_method(:initialize) do |k| end
+      define_method(:initialize) do |k|
+      end
     end
 
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
@@ -199,11 +201,11 @@ class TestGoogleAdsClient < Minitest::Test
   ensure
     Google::Auth::Credentials.instance_eval do
       undef initialize
-      define_method(:initialize, &old_credentials_init)
+      define_method(:initialize, &orig_credentials_init)
     end
     OpenSSL::PKey::RSA.instance_eval do
       undef initialize
-      define_method(:initialize, &old_rsa_init)
+      define_method(:initialize, &orig_rsa_init)
     end
   end
 
