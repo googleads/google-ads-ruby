@@ -4,14 +4,14 @@ module Google
   module Ads
     module GoogleAds
       class ServiceLookup
-        def initialize(name, version, lookup_util, service_path, logger, config, updater_proc)
+        def initialize(name, version, lookup_util, service_path, logger, config, credentials_or_channel)
           @name = name
           @version = version
           @lookup_util = lookup_util
           @service_path = service_path
           @logger = logger
           @config = config
-          @updater_proc = updater_proc
+          @credentials_or_channel = credentials_or_channel
         end
 
         def call
@@ -38,7 +38,7 @@ module Google
 
         def gax_service_params
           {
-            credentials: updater_proc,
+            credentials: credentials_or_channel,
             metadata: headers,
             exception_transformer: ERROR_TRANSFORMER
           }
@@ -146,7 +146,7 @@ module Google
         attr_reader :service_path
         attr_reader :logger
         attr_reader :config
-        attr_reader :updater_proc
+        attr_reader :credentials_or_channel
         attr_reader :lookup_util
       end
     end

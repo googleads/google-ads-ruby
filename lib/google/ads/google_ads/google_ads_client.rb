@@ -134,17 +134,7 @@ module Google
         end
 
         def make_channel
-          # this fetch in to GoogleAdsServiceClient is pretty arbitrary, our
-          # protos all point at the same domain and port combo, so this just
-          # constructs it by pulling the values out of that client.
-          #
-          # V1 should also be pretty arbitrary here (that is we probably don't
-          # need to change this even with V2 protos present because the target
-          # doesn't change)
-          default_target = [
-            Google::Ads::GoogleAds::V1::Services::GoogleAdsServiceClient::SERVICE_ADDRESS,
-            Google::Ads::GoogleAds::V1::Services::GoogleAdsServiceClient::DEFAULT_SERVICE_PORT,
-          ].join(":")
+          default_target = "googleads.googleapis.com:443"
           target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
 
           channel_args = {
