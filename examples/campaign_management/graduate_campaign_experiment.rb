@@ -27,8 +27,8 @@ def graduate_campaign_experiment(customer_id, experiment_resource_name)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Graduating a campaign experiment requires a new budget. Since the budget
-  # for the base campaign has explicitly_shared set to false, it cannot be
-  # shared with the campaign after it is made independent by graduation.
+  # for the base campaign has explicitly_shared set to false, the budget cannot
+  # be shared with the campaign after it is made independent by graduation.
   budget_operation = client.operation.create_resource.campaign_budget do |b|
     b.name = "Budget ##{(Time.new.to_f * 1000).to_i}"
     b.amount_micros = 50_000_000
@@ -43,6 +43,7 @@ def graduate_campaign_experiment(customer_id, experiment_resource_name)
 
   puts "Created new budget #{budget_resource_name} to add to experiment during graudation."
 
+  # Graduate the campaign using the budget created above.
   response = client.service.campaign_experiment.graduate_campaign_experiment(
     experiment_resource_name,
     budget_resource_name
