@@ -1,6 +1,6 @@
 2.4.0:
   - Added config keys to support service accounts for authentication.
-	- Added deprecation framework and deprecation warnings for old-style
+  - Added deprecation framework and deprecation warnings for old-style
 	  lookup util usage.
   - Updated default timeouts for all services to values that should
 	  result in fewer DEADLINE_EXCEEDED exceptions.
