@@ -37,8 +37,32 @@ task :apply_patches do |t|
   apply_patches
 end
 
+def proto_files
+  Dir["lib/google/ads/google_ads/v1/**/*.rb"]
+end
+
+def newest_of(files)
+  files.map { |fn| File.mtime(fn) }.max
+end
+
+def newest_proto_file
+  newest_of(proto_files)
+end
+
+def factory_files
+  ["lib/google/ads/google_ads/factories.rb"] + Dir["lib/google/ads/google_ads/factories/**/*.rb"]
+end
+
+def newest_factory_file
+  newest_of(factory_files)
+end
+
+def factories_are_recent?
+  newest_factory_file > newest_proto_file
+end
+
 task :codegen do |t|
-  `./scripts/codegen.sh`
+  `./scripts/codegen.sh` unless factories_are_recent?
 end
 
 task :copy_third_party_code do |t|
