@@ -141,8 +141,8 @@ module Google
           target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
 
           channel_args = {
-            MAX_MESSAGE_LENGTH => 64*1000*1000,
-            MAX_METADATA_SIZE => 16*1000*1000,
+            MAX_MESSAGE_LENGTH => 64*1024*1024,
+            MAX_METADATA_SIZE => 16*1024*1024,
           }
 
           call_creds = GRPC::Core::CallCredentials.new(get_credentials)
