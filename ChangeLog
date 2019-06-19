@@ -1,3 +1,7 @@
+2.4.1:
+  - Updated default inbound metadata size to allow for larger metadata
+    server responses.
+
 2.4.0:
   - Added config keys to support service accounts for authentication.
   - Added deprecation framework and deprecation warnings for old-style
