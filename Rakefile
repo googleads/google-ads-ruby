@@ -58,6 +58,7 @@ def newest_factory_file
 end
 
 def factories_are_recent?
+  return false unless File.exist?(factory_files.first)
   newest_factory_file > newest_proto_file
 end
 
