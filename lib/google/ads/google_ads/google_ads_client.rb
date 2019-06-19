@@ -71,6 +71,9 @@ module Google
         DEFAULT_CONFIG_FILENAME = "google_ads_config.rb".freeze
         SCOPE = "https://www.googleapis.com/auth/adwords".freeze
 
+        MAX_MESSAGE_LENGTH = "grpc.max_receive_message_length".freeze
+        MAX_METADATA_SIZE = "grpc.max_metadata_size".freeze
+
         attr_reader :logger
         # Allow setting the lookup_util manually for users who use it before creating the client.
         attr_writer :lookup_util
@@ -138,7 +141,8 @@ module Google
           target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
 
           channel_args = {
-            GRPC::Core::Channel::MAX_MESSAGE_LENGTH => 64*1000*1000
+            MAX_MESSAGE_LENGTH => 64*1024*1024,
+            MAX_METADATA_SIZE => 16*1024*1024,
           }
 
           call_creds = GRPC::Core::CallCredentials.new(get_credentials)
