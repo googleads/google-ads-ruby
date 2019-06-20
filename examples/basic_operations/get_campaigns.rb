@@ -25,15 +25,13 @@ def get_campaigns(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
-  response = ga_service.search(
+  response = client.service.google_ads.search(
       customer_id,
       'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id',
       page_size: PAGE_SIZE)
 
   response.each do |row|
-    puts sprintf("Campaign with ID %d and name '%s' was found.",
-        row.campaign.id, row.campaign.name)
+    puts "Campaign with ID #{row.campaign.id} and name '#{row.campaign.name}' was found."
   end
 end
 

@@ -25,64 +25,57 @@ def add_campaigns(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  cbudget_service = client.service(:CampaignBudget)
-  campaign_service = client.service(:Campaign)
 
   # Create a budget, which can be shared by multiple campaigns.
-  cbudget = client.resource(:CampaignBudget)
-  cbudget.name = client.wrapper.string(
-      sprintf('Interplanetary Budget %s',(Time.new.to_f * 1000).to_i))
-  cbudget.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
-  cbudget.amount_micros = client.wrapper.int64(500000)
-  cbudget_operation = client.operation(:CampaignBudget)
-  cbudget_operation['create'] = cbudget
+  campaign_budget = client.resource.campaign_budget do |cb|
+    cb.name = "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}"
+    cb.delivery_method = :STANDARD
+    cb.amount_micros = 500000
+  end
+
+  operation = client.operation.create_resource.campaign_budget(campaign_budget)
 
   # Add budget.
-  return_budget = cbudget_service.mutate_campaign_budgets(
-      customer_id, [cbudget_operation])
+  return_budget = client.service.campaign_budget.mutate_campaign_budgets(
+      customer_id, [operation])
 
   # Create campaign.
-  campaign = client.resource(:Campaign)
-  campaign.name = client.wrapper.string(
-      sprintf('Interplanetary Cruise %s',(Time.new.to_f * 1000).to_i))
-  campaign.advertising_channel_type =
-      client.enum(:AdvertisingChannelType)::SEARCH
+  campaign = client.resource.campaign do |c|
+    c.name = "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
+    c.advertising_channel_type = :SEARCH
 
-  # Recommendation: Set the campaign to PAUSED when creating it to prevent
-  # the ads from immediately serving. Set to ENABLED once you've added
-  # targeting and the ads are ready to serve.
-  campaign.status = client.enum(:CampaignStatus)::PAUSED
+    # Recommendation: Set the campaign to PAUSED when creating it to prevent
+    # the ads from immediately serving. Set to ENABLED once you've added
+    # targeting and the ads are ready to serve.
+    c.status = :PAUSED
 
-  # Set the bidding strategy and budget.
-  campaign.manual_cpc = client.resource(:ManualCpc)
-  campaign.campaign_budget = client.wrapper.string(
-      return_budget.results.first.resource_name)
+    # Set the bidding strategy and budget.
+    c.manual_cpc = client.resource.manual_cpc
+    c.campaign_budget = return_budget.results.first.resource_name
 
-  # Set the campaign network options.
-  campaign.network_settings = client.resource(:NetworkSettings)
-  campaign.network_settings.target_google_search = client.wrapper.bool(true)
-  campaign.network_settings.target_search_network = client.wrapper.bool(true)
-  campaign.network_settings.target_content_network = client.wrapper.bool(false)
-  campaign.network_settings.target_partner_search_network =
-      client.wrapper.bool(false)
+    # Set the campaign network options.
+    c.network_settings = client.resource.network_settings do |ns|
+      ns.target_google_search = true
+      ns.target_search_network = true
+      ns.target_content_network = false
+      ns.target_partner_search_network = false
+    end
 
-  # Optional: Set the start date.
-  campaign.start_date = client.wrapper.string(
-      DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d'))
+    # Optional: Set the start date.
+    c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
 
-  # Optional: Set the end date.
-  campaign.end_date = client.wrapper.string(
-      DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d'))
+    # Optional: Set the end date.
+    c.end_date = DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d')
+  end
 
   # Create the operation.
-  campaign_operation = client.operation(:Campaign)
-  campaign_operation['create'] = campaign
+  campaign_operation = client.operation.create_resource.campaign(campaign)
 
   # Add the campaign.
-  response = campaign_service.mutate_campaigns(
+  response = client.service.campaign.mutate_campaigns(
       customer_id, [campaign_operation])
 
-  puts sprintf("Created campaign %s.", response.results.first.resource_name)
+  puts "Created campaign #{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0

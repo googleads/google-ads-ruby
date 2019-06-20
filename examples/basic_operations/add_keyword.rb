@@ -25,17 +25,15 @@ def add_keyword(customer_id, ad_group_id, keyword)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  agc_service = client.service(:AdGroupCriterion)
-  ag_service = client.service(:AdGroup)
-
   # Create a keyword
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.ad_group = client.wrapper.string(
-      client.path.ad_group(customer_id, ad_group_id))
-  criterion.status = client.enum(:AdGroupCriterionStatus)::ENABLED
-  criterion.keyword = client.resource(:KeywordInfo)
-  criterion.keyword.text = client.wrapper.string(keyword)
-  criterion.keyword.match_type = client.enum(:KeywordMatchType)::EXACT
+  criterion = client.resource.ad_group_criterion do |agc|
+    agc.ad_group = client.path.ad_group(customer_id, ad_group_id)
+    agc.status = :ENABLED
+    agc.keyword = client.resource.keyword_info do |k|
+      k.text = keyword
+      k.match_type = :EXACT
+    end
+  end
 
   # Optional field
   # All fields can be referenced from the protos directly.
@@ -43,14 +41,14 @@ def add_keyword(customer_id, ad_group_id, keyword)
   # criterion.negative = Google::Protobuf::BoolValue.new(value: true)
 
   # Optional repeated field
-  # criterion.final_urls << Google::Protobuf::StringValue.new(
-  #     value: 'https://www.example.com')
+  # criterion.final_urls << client.wrapper.string("https://www.example.com")
 
   # Add keyword
-  operation = {create: criterion}
-  response = agc_service.mutate_ad_group_criteria(customer_id, [operation])
+  operation = client.operation.create_resource.ad_group_criterion(criterion)
 
-  puts sprintf("Created keyword %s", response.results.first.resource_name)
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [operation])
+
+  puts "Created keyword #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME

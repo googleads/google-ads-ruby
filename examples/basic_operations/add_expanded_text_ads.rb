@@ -26,37 +26,33 @@ def add_expanded_text_ads(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  ad_group_ad_service = client.service(:AdGroupAd)
 
   # Create an ad group ad.
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.ad_group = client.wrapper.string(
-      client.path.ad_group(customer_id, ad_group_id))
-  ad_group_ad.status = client.enum(:AdGroupAdStatus)::PAUSED
-  ad_group_ad.ad = client.resource(:Ad)
-  ad_group_ad.ad.final_urls << client.wrapper.string('http://www.example.com')
+  ad_group_ad = client.resource.ad_group_ad do |aga|
+    aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
+    aga.status = :PAUSED
+    aga.ad = client.resource.ad do |ad|
+      ad.final_urls << client.wrapper.string("http://www.example.com")
 
-  # Set expanded text ad info
-  ad_group_ad.ad.expanded_text_ad = client.resource(:ExpandedTextAdInfo)
-  eta = ad_group_ad.ad.expanded_text_ad
-  eta.description = client.wrapper.string('Buy your tickets now!')
-  eta.headline_part1 = client.wrapper.string(
-      sprintf('Cruise to Mars %s',(Time.new.to_f * 100).to_i))
-  eta.headline_part2 = client.wrapper.string(
-      'Best Space Cruise Line')
-  eta.path1 = client.wrapper.string('all-inclusive')
-  eta.path2 = client.wrapper.string('deals')
+      # Set expanded text ad info
+      ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
+        eta.description = "Buy your tickets now!"
+        eta.headline_part1 = "Cruise to Mars #{(Time.new.to_f * 100).to_i}"
+        eta.headline_part2 = "Best Space Cruise Line"
+        eta.path1 = "all-inclusive"
+        eta.path2 = "deals"
+      end
+    end
+  end
 
   # Create the operation.
-  ad_group_ad_operation = client.operation(:AdGroupAd)
-  ad_group_ad_operation['create'] = ad_group_ad
+  ad_group_ad_operation = client.operation.create_resource.ad_group_ad(ad_group_ad)
 
   # Add the ad group ad.
-  response = ad_group_ad_service.mutate_ad_group_ads(
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
       customer_id, [ad_group_ad_operation])
 
-  puts sprintf('Created expanded text ad %s.',
-      response.results.first.resource_name)
+  puts "Created expanded text ad #{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0
