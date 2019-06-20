@@ -50,32 +50,31 @@ def add_dynamic_page_feed(customer_id, campaign_id, ad_group_id)
 end
 
 def create_feed(client, customer_id)
-  feed_attribute_url = client.resource(:FeedAttribute)
-  feed_attribute_url.type = :URL_LIST
-  feed_attribute_url.name = client.wrapper.string("Page URL")
+  feed_attribute_url = client.resource.feed_attribute do |a|
+    a.type = :URL_LIST
+    a.name = "Page URL"
+  end
 
-  feed_attribute_label = client.resource(:FeedAttribute)
-  feed_attribute_label.type = :STRING_LIST
-  feed_attribute_label.name = client.wrapper.string("Label")
+  feed_attribute_label = client.resource.feed_attribute do |a|
+    a.type = :STRING_LIST
+    a.name = "Label"
+  end
 
-  feed = client.resource(:Feed)
-  feed.name = client.wrapper.string("DSA Feed #{(Time.now.to_f * 1000).to_i}")
-  feed.attributes << feed_attribute_url
-  feed.attributes << feed_attribute_label
-  feed.origin = :USER
+  feed = client.resource.feed do |f|
+    f.name = "DSA Feed #{(Time.now.to_f * 1000).to_i}"
+    f.attributes << feed_attribute_url
+    f.attributes << feed_attribute_label
+    f.origin = :USER
+  end
 
-  operation = client.operation(:Feed)
-  operation["create"] = feed
+  operation = client.operation.create_resource.feed(feed)
 
-  feed_service = client.service(:Feed)
-
-  response = feed_service.mutate_feeds(customer_id, [operation])
+  response = client.service.feed.mutate_feeds(customer_id, [operation])
   feed_id = response.results.first.resource_name
 
   # We need to look up the attribute name and IDs for the feed we just created
   # so that we can give them back to the API for construction of feed mappings
   # in the next function.
-  ga_service = client.service(:GoogleAds)
   query = <<~EOD
   SELECT
     feed.attributes
@@ -86,7 +85,7 @@ def create_feed(client, customer_id)
   LIMIT
     100
   EOD
-  response = ga_service.search(customer_id, query)
+  response = client.service.google_ads.search(customer_id, query)
 
   # Hash.[] takes an aray of pairs and turns them in to a hash with keys
   # equal to the first item, and values equal to the second item, we get two
@@ -109,30 +108,28 @@ def create_feed(client, customer_id)
 end
 
 def create_feed_mapping(client, customer_id, feed_details)
-  url_field_mapping = client.resource(:AttributeFieldMapping)
-  url_field_mapping.feed_attribute_id = client.wrapper.int64(
-    feed_details.url_attribute_id
-  )
-  url_field_mapping.dsa_page_feed_field = :PAGE_URL
+  url_field_mapping = client.resource.attribute_field_mapping do |mapping|
+    mapping.feed_attribute_id = feed_details.url_attribute_id
+    mapping.dsa_page_feed_field = :PAGE_URL
+  end
 
-  label_field_mapping = client.resource(:AttributeFieldMapping)
-  label_field_mapping.feed_attribute_id = client.wrapper.int64(
-    feed_details.label_attribute_id
-  )
-  label_field_mapping.dsa_page_feed_field = :LABEL
+  label_field_mapping = client.resource.attribute_field_mapping do |mapping|
+    mapping.feed_attribute_id = feed_details.label_attribute_id
+    mapping.dsa_page_feed_field = :LABEL
+  end
 
-  feed_mapping = client.resource(:FeedMapping)
-  feed_mapping.criterion_type = :DSA_PAGE_FEED
-  feed_mapping.feed = client.wrapper.string(feed_details.resource_name)
-  feed_mapping.attribute_field_mappings << url_field_mapping
-  feed_mapping.attribute_field_mappings << label_field_mapping
+  feed_mapping = client.resource.feed_mapping do |mapping|
+    mapping.criterion_type = :DSA_PAGE_FEED
+    mapping.feed = feed_details.resource_name
+    mapping.attribute_field_mappings << url_field_mapping
+    mapping.attribute_field_mappings << label_field_mapping
+  end
 
-  operation = client.operation(:FeedMapping)
-  operation['create'] = feed_mapping
+  operation = client.operation.feed_mapping
+  operation["create"] = feed_mapping
 
-  feed_mapping_service = client.service(:FeedMapping)
-  response = feed_mapping_service.mutate_feed_mappings(customer_id, [operation])
-  puts("Feed mapping created with id #{response.results.first.resource_name}")
+  response = client.service.feed_mapping.mutate_feed_mappings(customer_id, [operation])
+  puts "Feed mapping created with id #{response.results.first.resource_name}"
 end
 
 def create_feed_items(client, customer_id, feed_details, label)
@@ -143,37 +140,28 @@ def create_feed_items(client, customer_id, feed_details, label)
   ]
 
   feed_items = urls.map { |url|
-    feed_item = client.resource(:FeedItem)
+    client.resource.feed_item do |fi|
+      fi.feed = feed_details.resource_name
+      fi.attribute_values << client.resource.feed_item_attribute_value do |val|
+        val.feed_attribute_id = feed_details.url_attribute_id
+        val.string_values << client.wrapper.string(url)
+      end
 
-    url_attribute_value = client.resource(:FeedItemAttributeValue)
-    url_attribute_value.feed_attribute_id = client.wrapper.int64(
-      feed_details.url_attribute_id
-    )
-    url_attribute_value.string_values << client.wrapper.string(url)
-
-    label_attribute_value = client.resource(:FeedItemAttributeValue)
-    label_attribute_value.feed_attribute_id = client.wrapper.int64(
-      feed_details.label_attribute_id
-    )
-    label_attribute_value.string_values << client.wrapper.string(label)
-
-    feed_item.feed = client.wrapper.string(feed_details.resource_name)
-    feed_item.attribute_values << url_attribute_value
-    feed_item.attribute_values << label_attribute_value
-    feed_item
+      fi.attribute_values << client.resource.feed_item_attribute_value do |val|
+        val.feed_attribute_id = feed_details.label_attribute_id
+        val.string_values << client.wrapper.string(label)
+      end
+    end
   }
 
   ops = feed_items.map { |fi|
-    op = client.operation(:FeedItem)
-    op["create"] = fi
-    op
+    client.operation.create_resource.feed_item(fi)
   }
 
-  feed_item_service = client.service(:FeedItem)
-  response = feed_item_service.mutate_feed_items(customer_id, ops)
+  response = client.service.feed_item.mutate_feed_items(customer_id, ops)
 
   response.results.each do |result|
-    puts("Created feed item with id #{result.resource_name}")
+    puts "Created feed item with id #{result.resource_name}"
   end
 end
 
@@ -187,61 +175,50 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
       campaign.id = #{campaign_id}
     LIMIT 1000
   EOD
-  ga_service = client.service(:GoogleAds)
-  response = ga_service.search(customer_id, query)
+  response = client.service.google_ads.search(customer_id, query)
 
-  campaign = response.first
-  if campaign.nil?
+  result = response.first
+  if result.nil?
     raise "Campaign with id #{id} not found"
   end
 
-  campaign = campaign.campaign
+  campaign = result.campaign
 
-  if !campaign.dynamic_search_ads_setting.domain_name \
+  if !campaign.dynamic_search_ads_setting || !campaign.dynamic_search_ads_setting.domain_name \
     || campaign.dynamic_search_ads_setting.domain_name.value == ""
     raise "Campaign id #{campaign_id} is not set up for dynamic search ads"
   end
 
-  mask = client.field_mask.with campaign do
-    campaign.dynamic_search_ads_setting.feeds << client.wrapper.string(
-      feed_details.resource_name
-    )
+  op = client.operation.update_resource.campaign(campaign) do
+    campaign.dynamic_search_ads_setting.feeds << client.wrapper.string(feed_details.resource_name)
   end
 
-  op = client.operation(:Campaign)
-  op["update"] = campaign
-  op["update_mask"] = mask
-
-  campaign_service = client.service(:Campaign)
-  response = campaign_service.mutate_campaigns(customer_id, [op])
-  puts("Updated campaign #{response.results.first.resource_name}")
+  response = client.service.campaign.mutate_campaigns(customer_id, [op])
+  puts "Updated campaign #{response.results.first.resource_name}"
 end
 
 def add_dsa_targeting(client, customer_id, ad_group_resource_name, label)
-  webpage_condition_info = client.resource(:WebpageConditionInfo)
-  webpage_condition_info.operand = :CUSTOM_LABEL
-  webpage_condition_info.argument = client.wrapper.string(label)
+  webpage_condition_info = client.resource.webpage_condition_info do |wci|
+    wci.operand = :CUSTOM_LABEL
+    wci.argument = label
+  end
 
-  webpage_criterion = client.resource(:WebpageInfo)
-  webpage_criterion.criterion_name = client.wrapper.string(
-    "Test criterion"
-  )
-  webpage_criterion.conditions << webpage_condition_info
+  webpage_criterion = client.resource.webpage_info do |wi|
+    wi.criterion_name = "Test criterion"
+    wi.conditions << webpage_condition_info
+  end
 
-  ad_group_criterion = client.resource(:AdGroupCriterion)
-  ad_group_criterion.ad_group = client.wrapper.string(ad_group_resource_name)
-  ad_group_criterion.webpage = webpage_criterion
-  ad_group_criterion.cpc_bid_micros = client.wrapper.int64(1_500_000)
+  ad_group_criterion = client.resource.ad_group_criterion do |agc|
+    agc.ad_group = ad_group_resource_name
+    agc.webpage = webpage_criterion
+    agc.cpc_bid_micros = 1_500_000
+  end
 
-  op = client.operation(:AdGroupCriterion)
-  op["create"] = ad_group_criterion
+  op = client.operation.create_resource.ad_group_criterion(ad_group_criterion)
 
-  ad_group_criterion_service = client.service(:AdGroupCriterion)
-  response = ad_group_criterion_service.mutate_ad_group_criteria(customer_id, [op])
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [op])
 
-  puts(
-    "Created ad group criterion with id: #{response.results.first.resource_name}"
-  )
+  puts "Created ad group criterion with id: #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $0

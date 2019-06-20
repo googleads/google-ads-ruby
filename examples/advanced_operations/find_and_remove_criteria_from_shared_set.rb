@@ -26,9 +26,7 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
 
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-
-  ga_service = client.service(:GoogleAds)
-  shared_criterion_service = client.service(:SharedCriterion)
+  ga_service = client.service.google_ads
 
   shared_set_ids = []
   criterion_ids = []
@@ -44,8 +42,7 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
 
   response.each do |row|
     shared_set = row.shared_set
-    puts sprintf("Campaign shared set ID %d and name '%s' was found.",
-        shared_set.id, shared_set.name)
+    puts "Campaign shared set ID #{shared_set.id} and name '#{shared_set.name}' was found."
 
     shared_set_ids << shared_set.id
   end
@@ -61,34 +58,28 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
   response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
 
   response.each do |row|
-    shared_criterion = row.shared_criterion
-    if shared_criterion.type == :KEYWORD
-      puts sprintf(
-          "Shared criterion with resource name '%s' for negative keyword " +
-          "with text '%s' and match type '%s' was found.",
-          shared_criterion.resource_name,
-          shared_criterion.keyword.text,
-          shared_criterion.keyword.match_type)
+    sc = row.shared_criterion
+    if sc.type == :KEYWORD
+      puts "Shared criterion with resource name '#{sc.resource_name}' for negative keyword " +
+          "with text '#{sc.keyword.text}' and match type '#{sc.keyword.match_type}' was found."
     else
-      puts sprintf("Shared criterion with resource name '%s' was found.",
-          shared_criterion.resource_name)
+      puts "Shared criterion with resource name '#{sc.resource_name}' was found."
     end
 
-    criterion_ids << shared_criterion.resource_name
+    criterion_ids << sc.resource_name
   end
 
   # Finally, remove the criteria.
   operations = criterion_ids.map do |criterion|
-    operation = client.operation(:SharedCriterion)
-    operation.remove = criterion
+    operation = client.operation.shared_criterion
+    operation["remove"] = criterion
 
     operation
   end
 
-  response = shared_criterion_service.mutate_shared_criteria(customer_id,
-      operations)
+  response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)
   response.results.each do |result|
-    puts sprintf("Removed shared criterion %s", result.resource_name)
+    puts "Removed shared criterion #{result.resource_name}"
   end
 end
 

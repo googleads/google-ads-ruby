@@ -17,15 +17,13 @@
 #
 # This example gets ad group bid modifiers.
 
-require 'optparse'
-require 'google/ads/google_ads'
+require "optparse"
+require "google/ads/google_ads"
 
 def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-
-  ga_service = client.service(:GoogleAds)
 
   search_query = <<~QUERY
     SELECT  ad_group.id,
@@ -37,10 +35,10 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
   QUERY
 
   if ad_group_id
-    search_query << sprintf('WHERE ad_group.id = %s', ad_group_id)
+    search_query << "WHERE ad_group.id = #{ad_group_id}"
   end
 
-  response = ga_service.search(
+  response = client.service.google_ads.search(
     customer_id,
     search_query,
     page_size: PAGE_SIZE
@@ -51,20 +49,19 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
     ad_group = row.ad_group
     campaign = row.campaign
     bid_modifier = '"nil"'
+    device_type = if ad_group_bid_modifier.device.nil?
+      "unspecified"
+    else
+      ad_group_bid_modifier.device.type
+    end
 
     if ad_group_bid_modifier.bid_modifier
       bid_modifier = sprintf("%.2f", ad_group_bid_modifier.bid_modifier)
     end
 
-    puts sprintf('Ad group bid modifier with criterion ID %s, bid ' \
-        'modifier value %s, device type %s was found in ad group ' \
-        'ID %s of campaign ID %s.',
-        ad_group_bid_modifier.criterion_id,
-        bid_modifier,
-        ad_group_bid_modifier.device.type,
-        ad_group.id,
-        campaign.id
-    )
+    puts "Ad group bid modifier with criterion ID #{ad_group_bid_modifier.criterion_id}, bid " \
+        "modifier value #{bid_modifier}, device type #{device_type} was " \
+        "found in ad group ID #{ad_group.id} of campaign ID #{campaign.id}."
   end
 end
 

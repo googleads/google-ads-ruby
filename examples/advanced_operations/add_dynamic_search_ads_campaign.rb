@@ -45,20 +45,15 @@ def add_dynamic_search_ads_campaign(customer_id)
 end
 
 def create_budget(client, customer_id)
-  campaign_budget = client.resource(:CampaignBudget)
-  campaign_budget.name = client.wrapper.string(
-    "Interplanetary Cruise #{(Time.now.to_f * 1000).to_i}"
-  )
-  campaign_budget.amount_micros = client.wrapper.int64(
-    50_000_000
-  )
-  campaign_budget.delivery_method = :STANDARD
+  campaign_budget = client.resource.campaign_budget do |b|
+    b.name = "Interplanetary Cruise #{(Time.now.to_f * 1000).to_i}"
+    b.amount_micros =  50_000_000
+    b.delivery_method = :STANDARD
+  end
 
-  operation = client.operation(:CampaignBudget)
-  operation["create"] = campaign_budget
+  operation = client.operation.create_resource.campaign_budget(campaign_budget)
 
-  campaign_budget_service = client.service(:CampaignBudget)
-  response = campaign_budget_service.mutate_campaign_budgets(
+  response = client.service.campaign_budget.mutate_campaign_budgets(
     customer_id,
     [operation],
   )
@@ -68,120 +63,100 @@ def create_budget(client, customer_id)
 end
 
 def create_campaign(client, customer_id, budget_resource_name)
-  campaign = client.resource(:Campaign)
-  campaign.name = client.wrapper.string(
-    "Interplanetary Cruise #{(Time.now.to_f * 1000).to_i}",
-  )
-  campaign.advertising_channel_type = :SEARCH
-  campaign.status = :PAUSED
-  campaign.manual_cpc = client.resource(:ManualCpc)
-  campaign.campaign_budget = client.wrapper.string(
-    budget_resource_name,
-  )
+  campaign = client.resource.campaign do |c|
+    c.name = "Interplanetary Cruise #{(Time.now.to_f * 1000).to_i}"
 
-  campaign.dynamic_search_ads_setting = client.resource(
-    :DynamicSearchAdsSetting,
-  )
-  campaign.dynamic_search_ads_setting.domain_name = client.wrapper.string(
-    "example.com",
-  )
-  campaign.dynamic_search_ads_setting.language_code = client.wrapper.string(
-    "en",
-  )
+    c.advertising_channel_type = :SEARCH
+    c.status = :PAUSED
+    c.manual_cpc = client.resource.manual_cpc
+    c.campaign_budget = budget_resource_name
 
-  campaign.start_date = client.wrapper.string(
-    DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d'),
-  )
 
-  campaign.end_date = client.wrapper.string(
-    DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d'),
-  )
+    c.dynamic_search_ads_setting = client.resource.dynamic_search_ads_setting do |s|
+      s.domain_name =  "example.com"
+      s.language_code =  "en"
+    end
 
-  operation = client.operation(:Campaign)
-  operation["create"] = campaign
+    c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
 
-  campaign_service = client.service(:Campaign)
-  response = campaign_service.mutate_campaigns(customer_id, [operation])
+
+    c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
+
+  end
+
+  operation = client.operation.create_resource.campaign(campaign)
+
+  response = client.service.campaign.mutate_campaigns(customer_id, [operation])
   puts("Created campaign with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
 end
 
 def create_ad_group(client, customer_id, campaign_resource_name)
-  ad_group = client.resource(:AdGroup)
-  ad_group.type = :SEARCH_DYNAMIC_ADS
-  ad_group.name = client.wrapper.string(
-    "Earth to Mars Cruises #{(Time.now.to_f * 1000).to_i}",
-  )
-  ad_group.campaign = client.wrapper.string(
-    campaign_resource_name,
-  )
+  ad_group = client.resource.ad_group do |ag|
+    ag.type = :SEARCH_DYNAMIC_ADS
+    ag.name = "Earth to Mars Cruises #{(Time.now.to_f * 1000).to_i}"
 
-  ad_group.status = :PAUSED
-  ad_group.tracking_url_template = client.wrapper.string(
-    "http://tracker.example.com/traveltracker/{escapedlpurl}",
-  )
-  ad_group.cpc_bid_micros = client.wrapper.int64(3_000_000)
+    ag.campaign =  campaign_resource_name
 
-  operation = client.operation(:AdGroup)
-  operation["create"] = ad_group
+    ag.status = :PAUSED
+    ag.tracking_url_template = "http://tracker.example.com/traveltracker/{escapedlpurl}"
 
-  ad_group_service = client.service(:AdGroup)
-  response = ad_group_service.mutate_ad_groups(customer_id, [operation])
+    ag.cpc_bid_micros = 3_000_000
+  end
+
+  operation = client.operation.create_resource.ad_group(ad_group)
+
+  response = client.service.ad_group.mutate_ad_groups(customer_id, [operation])
 
   puts("Created ad group with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
 end
 
 def create_expanded_dsa(client, customer_id, ad_group_resource_name)
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.status = :PAUSED
-  ad_group_ad.ad = client.resource(:Ad)
-  ad_group_ad.ad.expanded_dynamic_search_ad = client.resource(
-    :ExpandedDynamicSearchAdInfo,
-  )
-  ad_group_ad.ad.expanded_dynamic_search_ad.description = client.wrapper.string(
-    "Buy tickets now!",
-  )
-  ad_group_ad.ad_group = client.wrapper.string(
-    ad_group_resource_name,
-  )
+  ad_group_ad = client.resource.ad_group_ad do |aga|
+    aga.status = :PAUSED
+    aga.ad = client.resource.ad do |ad|
+      ad.expanded_dynamic_search_ad = client.resource.expanded_dynamic_search_ad_info do |info|
+        info.description = "Buy tickets now!"
+      end
+    end
 
-  operation = client.operation(:AdGroupAd)
-  operation["create"] = ad_group_ad
+    aga.ad_group = ad_group_resource_name
+  end
 
-  ad_group_ad_service = client.service(:AdGroupAd)
-  response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [operation])
+  operation = client.operation.create_resource.ad_group_ad(ad_group_ad)
+
+  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [operation])
   puts("Created ad group ad with ID: #{response.results.first.resource_name}")
 end
 
 def add_web_page_criteria(client, customer_id, ad_group_resource_name)
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.ad_group = client.wrapper.string(ad_group_resource_name)
-  criterion.cpc_bid_micros = client.wrapper.int64(
-    10_000_000,
-  )
-  criterion.status = :PAUSED
-  criterion.webpage = client.resource(:WebpageInfo)
-  criterion.webpage.criterion_name = client.wrapper.string(
-    "Special Offers"
-  )
+  criterion = client.resource.ad_group_criterion do |agc|
+    agc.ad_group = ad_group_resource_name
+    agc.cpc_bid_micros = 10_000_000
 
-  webpage_info_url = client.resource(:WebpageConditionInfo)
-  webpage_info_url.operand = :URL
-  webpage_info_url.argument = client.wrapper.string("/specialoffers")
+    agc.status = :PAUSED
+    agc.webpage = client.resource.webpage_info do |wi|
+      wi.criterion_name = "Special Offers"
+    end
+  end
 
-  webpage_info_page_title = client.resource(:WebpageConditionInfo)
-  webpage_info_page_title.operand = :PAGE_TITLE
-  webpage_info_page_title.argument = client.wrapper.string("Special Offer")
+  webpage_info_url = client.resource.webpage_condition_info do |wci|
+    wci.operand = :URL
+    wci.argument = "/specialoffers"
+  end
+
+  webpage_info_page_title = client.resource.webpage_condition_info do |wci|
+    wci.operand = :PAGE_TITLE
+    wci.argument = "Special Offer"
+  end
 
   criterion.webpage.conditions << webpage_info_url
   criterion.webpage.conditions << webpage_info_page_title
 
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = criterion
+  operation = client.operation.create_resource.ad_group_criterion(criterion)
 
-  ad_group_criterion_service = client.service(:AdGroupCriterion)
-  response = ad_group_criterion_service.mutate_ad_group_criteria(
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(
     customer_id,
     [operation],
   )
