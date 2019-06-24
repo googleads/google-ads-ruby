@@ -23,11 +23,30 @@ require 'google/ads/google_ads/v1/resources/campaign_pb'
 class TestAutoboxing < Minitest::Test
   def test_initialize
     Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: "hi")
+
+    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: "hi")
+    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+
+    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: Google::Protobuf::StringValue.new(value: "hi"))
+    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+
+    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: nil)
+    assert_nil nil, c.name
   end
 
   def test_assign
     c = Google::Ads::GoogleAds::V1::Resources::Campaign.new
     c.name = "hi"
     c.id = 3
+
+    c.name = nil
+    assert_nil c.name
+
+    c.name = Google::Protobuf::StringValue.new(value: "hi")
+    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+
+    c.name = "hi"
+    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+
   end
 end
