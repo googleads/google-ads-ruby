@@ -60,13 +60,13 @@ module Google
 
           if repeated
             klass_to_patch.instance_eval do
+              @@patched_repeated_fields ||= {}
               define_method(name.to_sym) do
-                @patched_repeated_fields ||= {}
-                @patched_repeated_fields[name] ||= RepeatedFieldProxy.new(
+                @@patched_repeated_fields[name] ||= RepeatedFieldProxy.new(
                   send(:method_missing, name.to_sym),
                   mapping,
                 )
-                @patched_repeated_fields[name]
+                @@patched_repeated_fields[name]
               end
             end
           else
