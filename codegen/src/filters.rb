@@ -41,8 +41,8 @@ end
 
 Operation = Struct.new(
   :operation,
-  :create_class,
   :update_class,
+  :create_class,
   :path
 )
 
