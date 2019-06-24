@@ -157,3 +157,29 @@ RSpec.describe "#cleanup_paths" do
     end
   end
 end
+
+RSpec.describe "#enhance_operations_with_classes" do
+  let(:create_class) { spy(:create_class) }
+  let(:update_class) { spy(:update_class) }
+  let(:operation) {
+    double(
+      :operation,
+      descriptor: [
+        double(:create_class, name: "create", subtype: create_class),
+        double(:update_class, name: "update", subtype: update_class),
+      ]
+    )
+  }
+  let(:path) { __FILE__ }
+
+  it "correctly sets all the attributes" do
+    op = enhance_operations_with_classes([[operation, path]]).first
+
+    expect(op).to have_attributes(
+      operation: operation,
+      update_class: update_class,
+      create_class: create_class,
+      path: path,
+    )
+  end
+end
