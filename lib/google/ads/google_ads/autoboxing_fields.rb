@@ -1,27 +1,9 @@
-require 'google/protobuf/message_exts'
-require 'google/protobuf/wrappers_pb'
+require 'google/ads/google_ads/autoboxing_mappings'
+
 module Google
   module Ads
     module GoogleAds
       module AutoboxingFields
-        MAPPINGS = {
-          Google::Protobuf::Int32Value => lambda { |x| Integer(x) },
-          Google::Protobuf::Int64Value => lambda { |x| Integer(x) },
-          Google::Protobuf::StringValue => lambda { |x| String(x) },
-          Google::Protobuf::BoolValue => lambda { |x|
-            case x
-            when TrueClass, true, "true", "TRUE", "True", "1", 1
-              true
-            when FalseClass, false, "false", "FALSE", "False", "0", 0
-              false
-            else
-              raise ArgumentError.new("Value #{x} is not boolish")
-            end
-          },
-          Google::Protobuf::DoubleValue => lambda { |x| Float(x) },
-          Google::Protobuf::BytesValue => lambda { |x| x.force_encoding("ASCII-8BIT") },
-        }
-
         def self.patch_class(klass)
           return if klass.instance_variable_get(:@_patched_for_autoboxing_fields)
           klass.instance_variable_set(:@_patched_for_autoboxing_fields, true)
@@ -40,7 +22,7 @@ module Google
         end
 
         def self.is_value_field?(class_name)
-          MAPPINGS.keys.include?(class_name)
+          AutoboxingMappings.has_type?(class_name)
         end
 
         def self.patch_constructor_for_autoboxing(fields, klass_to_patch)
@@ -49,15 +31,7 @@ module Google
             define_method(:initialize) do |**kwargs|
               new_kwargs = Hash[kwargs.map { |name, value|
                 field = fields.select { |x| x.name == name.to_s }.first
-                actual_value = if field
-                                 if field.subtype.msgclass === value
-                                   value
-                                 else
-                                   field.subtype.msgclass.new(value: MAPPINGS.fetch(field.subtype.msgclass).call(value))
-                                 end
-                               else
-                                 value
-                               end
+                actual_value = AutoboxingMappings.wrapped_mapping(field.subtype.msgclass).call(value)
                 [name, actual_value]
               }]
               orig_initialize.bind(self).call(**new_kwargs)
@@ -67,18 +41,11 @@ module Google
 
         def self.patch_field_for_autoboxing(field, klass_to_patch)
           name = field.name
-          field_klass = field.subtype.msgclass
-          mapping = MAPPINGS.fetch(field_klass)
+          mapping = AutoboxingMappings.wrapped_mapping(field.subtype.msgclass)
 
           klass_to_patch.instance_eval do
             define_method("#{name}=".to_sym) do |value|
-              if value.nil?
-                send(:method_missing, :"#{name}=", value)
-              elsif field_klass === value
-                send(:method_missing, :"#{name}=", value)
-              else
-                send(:method_missing, :"#{name}=", field_klass.new(value: mapping.call(value)))
-              end
+              send(:method_missing, :"#{name}=", mapping.call(value))
             end
           end
         end
