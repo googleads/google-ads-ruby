@@ -49,4 +49,11 @@ class TestAutoboxing < Minitest::Test
     assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
 
   end
+
+  def test_repeated_fields
+    ad = Google::Ads::GoogleAds::V1::Resources::Ad.new
+    ad.final_urls << "hi"
+
+    ad = Google::Ads::GoogleAds::V1::Resources::Ad.new(final_urls: ["hi"])
+  end
 end
