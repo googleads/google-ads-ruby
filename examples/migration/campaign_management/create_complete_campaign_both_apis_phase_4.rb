@@ -64,19 +64,14 @@ end
 
 def create_budget(client, customer_id)
   # Create a budget, which can be shared by multiple campaigns.
-  budget = client.resource(:CampaignBudget)
-  budget.name = client.wrapper.string(
-    "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}",
-  )
-  budget.amount_micros = client.wrapper.int64(
-    50_000_000,
-  )
+  operation = client.operation.create_resource.campaign_budget do |budget|
+    budget.name = "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}"
+    budget.amount_micros = 50_000_000
 
-  budget.delivery_method = :STANDARD
-  operation = client.operation(:CampaignBudget)
-  operation["create"] = budget
+    budget.delivery_method = :STANDARD
+  end
 
-  campaign_budget_srv = client.service(:CampaignBudget)
+  campaign_budget_srv = client.service.campaign_budget
   response = campaign_budget_srv.mutate_campaign_budgets(customer_id, [operation])
   budget_resource_name = response.results.first.resource_name
 
@@ -86,55 +81,44 @@ def create_budget(client, customer_id)
 end
 
 def create_campaign(client, customer_id, budget_resource_name)
-  campaign = client.resource(:Campaign)
-  campaign.name = client.wrapper.string(
-    "Interplanetary Cruise ##{(Time.new.to_f * 1000).to_i}"
-  )
-  # Recommendation: Set the campaign to PAUSED when creating it to stop the
-  # ads from immediately serving. Set to ENABLED once you've added
-  # targeting and the ads are ready to serve.
-  campaign.status = :PAUSED
-  campaign.manual_cpc = client.resource(:ManualCpc)
-  campaign.campaign_budget = client.wrapper.string(
-    budget_resource_name
-  )
-  campaign.advertising_channel_type = :SEARCH
-  # Optional fields:
-  campaign.start_date = client.wrapper.string(
-    DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
-  )
-  campaign.network_settings = client.resource(:NetworkSettings)
-  campaign.network_settings.target_google_search = client.wrapper.bool(true)
-  campaign.network_settings.target_search_network = client.wrapper.bool(true)
-  campaign.network_settings.target_content_network = client.wrapper.bool(false)
-  campaign.network_settings.target_partner_search_network = client.wrapper.bool(false)
+  operation = client.operation.create_resource.campaign do |campaign|
+    campaign.name = "Interplanetary Cruise ##{(Time.new.to_f * 1000).to_i}"
 
-  operation = client.operation(:Campaign)
-  operation["create"] = campaign
+    # Recommendation: Set the campaign to PAUSED when creating it to stop the
+    # ads from immediately serving. Set to ENABLED once you've added
+    # targeting and the ads are ready to serve.
+    campaign.status = :PAUSED
+    campaign.manual_cpc = client.resource.manual_cpc
+    campaign.campaign_budget = budget_resource_name
+    campaign.advertising_channel_type = :SEARCH
+    # Optional fields:
+    campaign.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
+    campaign.network_settings = client.resource.network_settings do |network_settings|
+      network_settings.target_google_search = true
+      network_settings.target_search_network = true
+      network_settings.target_content_network = false
+      network_settings.target_partner_search_network = false
+    end
+  end
 
-  campaign_service = client.service(:Campaign)
+  campaign_service = client.service.campaign
   response = campaign_service.mutate_campaigns(customer_id, [operation])
   campaign_resource_name = response.results.first.resource_name
 
   puts("Created campaign with id #{campaign_resource_name}")
-
   campaign_resource_name
 end
 
 def create_ad_group(client, customer_id, campaign_resource_name)
-  ad_group = client.resource(:AdGroup)
-  ad_group.name = client.wrapper.string(
-    "Earth to Mars Cruises ##{(Time.new.to_f * 1000).to_i}"
-  )
-  ad_group.status = :ENABLED
-  ad_group.campaign = client.wrapper.string(campaign_resource_name)
-  ad_group.cpc_bid_micros = client.wrapper.int64(10_000_000)
-  ad_group.ad_rotation_mode = :OPTIMIZE
+  operation = client.operation.create_resource.ad_group do |ad_group|
+    ad_group.name = "Earth to Mars Cruises ##{(Time.new.to_f * 1000).to_i}"
+    ad_group.status = :ENABLED
+    ad_group.campaign = campaign_resource_name
+    ad_group.cpc_bid_micros = 10_000_000
+    ad_group.ad_rotation_mode = :OPTIMIZE
+  end
 
-  operation = client.operation(:AdGroup)
-  operation["create"] = ad_group
-
-  ad_group_service = client.service(:AdGroup)
+  ad_group_service = client.service.ad_group
   response = ad_group_service.mutate_ad_groups(customer_id, [operation])
   ad_group_resource_name = response.results.first.resource_name
 
@@ -145,32 +129,30 @@ end
 
 def create_text_ads(client, customer_id, ad_group_resource_name)
   ad_group_ads = NUMBER_OF_ADS.times.map { |i|
-    expanded_text_ad = client.resource(:ExpandedTextAdInfo)
-    expanded_text_ad.headline_part1 = client.wrapper.string("Cruise to Mars ##{(Time.new.to_f * 1000).to_i}")
-    expanded_text_ad.headline_part2 = client.wrapper.string("Best Space Cruise Line")
-    expanded_text_ad.headline_part3 = client.wrapper.string("For Your Loved Ones")
-    expanded_text_ad.description = client.wrapper.string("Buy your tickets now!")
-    expanded_text_ad.description2 = client.wrapper.string("Discount ends soon")
-    expanded_text_ad.path1 = client.wrapper.string("all-inclusive")
-    expanded_text_ad.path2 = client.wrapper.string("deals")
+    client.resource.ad_group_ad do |ad_group_ad|
+      ad_group_ad.ad_group = ad_group_resource_name
+      ad_group_ad.status = :PAUSED
 
-    ad_group_ad = client.resource(:AdGroupAd)
-    ad_group_ad.ad_group = client.wrapper.string(ad_group_resource_name)
-    ad_group_ad.status = :PAUSED
-
-    ad_group_ad.ad = client.resource(:Ad)
-    ad_group_ad.ad.final_urls << client.wrapper.string("http://www.example.com/#{i}")
-    ad_group_ad.ad.expanded_text_ad = expanded_text_ad
-    ad_group_ad
+      ad_group_ad.ad = client.resource.ad do |ad|
+        ad.final_urls << client.wrapper.string("http://www.example.com/#{i}")
+        ad.expanded_text_ad = client.resource.expanded_text_ad_info do |expanded_text_ad|
+          expanded_text_ad.headline_part1 = "Cruise to Mars ##{(Time.new.to_f * 1000).to_i}"
+          expanded_text_ad.headline_part2 = "Best Space Cruise Line"
+          expanded_text_ad.headline_part3 = "For Your Loved Ones"
+          expanded_text_ad.description = "Buy your tickets now!"
+          expanded_text_ad.description2 = "Discount ends soon"
+          expanded_text_ad.path1 = "all-inclusive"
+          expanded_text_ad.path2 = "deals"
+        end
+      end
+    end
   }
 
   operations = ad_group_ads.map { |ad_group_ad|
-    operation =client.operation(:AdGroupAd)
-    operation["create"] = ad_group_ad
-    operation
+    client.operation.create_resource.ad_group_ad(ad_group_ad)
   }
 
-  ad_group_ad_service = client.service(:AdGroupAd)
+  ad_group_ad_service = client.service.ad_group_ad
   response = ad_group_ad_service.mutate_ad_group_ads(
     customer_id,
     operations
