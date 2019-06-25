@@ -54,19 +54,13 @@ end
 
 def create_budget(client, customer_id)
   # Create a budget, which can be shared by multiple campaigns.
-  budget = client.resource(:CampaignBudget)
-  budget.name = client.wrapper.string(
-    "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}",
-  )
-  budget.amount_micros = client.wrapper.int64(
-    50_000_000,
-  )
+  operation = client.operation.create_resource.campaign_budget do |budget|
+    budget.name = "Interplanetary cruise budget ##{(Time.new.to_f * 1000).to_i}"
+    budget.amount_micros = 50_000_000
+    budget.delivery_method = :STANDARD
+  end
 
-  budget.delivery_method = :STANDARD
-  operation = client.operation(:CampaignBudget)
-  operation["create"] = budget
-
-  campaign_budget_srv = client.service(:CampaignBudget)
+  campaign_budget_srv = client.service.campaign_budget
   response = campaign_budget_srv.mutate_campaign_budgets(customer_id, [operation])
   budget_resource_name = response.results.first.resource_name
 
