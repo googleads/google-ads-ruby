@@ -4,9 +4,7 @@ module Google
   module Ads
     module GoogleAds
       class ServiceLookup
-        def initialize(name, version, lookup_util, service_path, logger, config, credentials_or_channel)
-          @name = name
-          @version = version
+        def initialize(lookup_util, service_path, logger, config, credentials_or_channel)
           @lookup_util = lookup_util
           @service_path = service_path
           @logger = logger
@@ -19,22 +17,25 @@ module Google
             logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
           end
 
-          if name.nil?
-            services = Factories.at_version(version).services.new(**{
-              service_path: service_path,
-              logging_interceptor: logging_interceptor,
-            }.merge(gax_service_params))
-            apply_patch_delegator(services)
-          else
-            class_to_return = lookup_util.raw_service(name, version)
-            setup_service_class(class_to_return)
-            class_to_return.new(
-              **gax_service_params
-            )
+          vas = {}
+          Factories::VERSIONS.each do |v|
+            vas[v] = patched_factory_at_version(v, logging_interceptor)
           end
+
+          highest_factory = patched_factory_at_version(Factories::HIGHEST_VERSION,  logging_interceptor)
+          VersionAlternate.new(highest_factory, vas)
         end
 
         private
+
+        def patched_factory_at_version(version, logging_interceptor)
+          factory = Factories.at_version(version).services.new(**{
+            service_path: service_path,
+            logging_interceptor: logging_interceptor,
+          }.merge(gax_service_params))
+
+          apply_patch_delegator(factory)
+        end
 
         def gax_service_params
           {

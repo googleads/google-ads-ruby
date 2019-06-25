@@ -108,7 +108,7 @@ class TestGoogleAdsClient < Minitest::Test
       # No setup.
     end
 
-    service = client.service(:Campaign)
+    service = client.service.v1.campaign
     # We can't use assert_instance_of because we may have technically gotten
     # back a sub-class of the service.
     assert(service.is_a?(
@@ -120,7 +120,7 @@ class TestGoogleAdsClient < Minitest::Test
       config.login_customer_id = 1234567890
     end
 
-    service = client.service(:Campaign)
+    service = client.service.v1.campaign
     # We can't use assert_instance_of because we may have technically gotten
     # back a sub-class of the service.
     assert(service.is_a?(
@@ -133,7 +133,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     assert_raises do
-      service = client.service(:Campaign)
+      service = client.service.v1.campaign
     end
   end
 

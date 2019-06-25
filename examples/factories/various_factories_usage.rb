@@ -31,10 +31,10 @@ def add_campaigns(customer_id)
     cb.name = "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}"
 
     cb.delivery_method = :STANDARD
-    cb.amount_micros = client.wrapper.int64(500000)
+    cb.amount_micros = 500000
   end
 
-  return_budget = client.service.campaign_budget.mutate_campaign_budgets(
+  return_budget = client.service.v1.campaign_budget.mutate_campaign_budgets(
     customer_id,
     [campaign_budget_operation]
   )
@@ -43,9 +43,7 @@ def add_campaigns(customer_id)
 
   # Create campaign.
   campaign = client.resource.campaign
-  campaign.name = client.wrapper.string(
-    "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i}",
-  )
+  campaign.name = "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
   campaign.advertising_channel_type = :SEARCH
 
   # Recommendation: Set the campaign to PAUSED when creating it to prevent
@@ -54,20 +52,18 @@ def add_campaigns(customer_id)
   campaign.status = :PAUSED
 
   campaign.manual_cpc = client.resource.manual_cpc
-  campaign.campaign_budget = client.wrapper.string(
-    campaign_budget_resource_name,
-  )
+  campaign.campaign_budget = campaign_budget_resource_name
 
   campaign.network_settings = client.resource.network_settings do |ns|
-    ns.target_google_search = client.wrapper.bool(true)
-    ns.target_search_network = client.wrapper.bool(true)
-    ns.target_content_network = client.wrapper.bool(false)
-    ns.target_partner_search_network = client.wrapper.bool(false)
+    ns.target_google_search = true
+    ns.target_search_network = true
+    ns.target_content_network = false
+    ns.target_partner_search_network = false
   end
 
   # Alternate non-block style, where we pass the campaign object we built
   # up
-  campaign_operation = client.operation.create_resource.campaign(campaign)
+  campaign_operation = client.operation.v1.create_resource.campaign(campaign)
   campaign_service = client.service.campaign
 
   # Add the campaign.
