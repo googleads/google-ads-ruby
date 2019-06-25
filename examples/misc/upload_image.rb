@@ -28,15 +28,15 @@ def upload_image(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  media_file = client.resource(:MediaFile)
+  media_file = client.resource.media_file
   media_file.type = :IMAGE
-  media_file.image = client.resource(:MediaImage)
+  media_file.image = client.resource.media_image
   media_file.image.data = client.wrapper.bytes(image_data)
 
-  op = client.operation(:MediaFile)
+  op = client.operation.media_file
   op["create"] = media_file
 
-  media_file_service = client.service(:MediaFile)
+  media_file_service = client.service.media_file
   response = media_file_service.mutate_media_files(customer_id, [op])
 
   puts("Uploaded media file with id: #{response.results.first.resource_name}")

@@ -31,7 +31,7 @@ def get_all_videos_and_images(customer_id)
     FROM media_file ORDER BY media_file.id
   EOQUERY
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
   response = ga_service.search(customer_id, query)
 
   response.each do |row|
