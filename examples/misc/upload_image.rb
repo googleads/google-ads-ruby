@@ -30,8 +30,9 @@ def upload_image(customer_id)
 
   op = client.operation.create_resource.media_file do |media_file|
     media_file.type = :IMAGE
-    media_file.image = client.resource.media_image
-    media_file.image.data = client.wrapper.bytes(image_data)
+    media_file.image = client.resource.media_image do |media_image|
+      media_image.data = image_data
+    end
   end
 
   media_file_service = client.service.media_file
