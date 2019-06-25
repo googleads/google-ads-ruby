@@ -71,33 +71,27 @@ def create_budget(client, customer_id)
 end
 
 def create_campaign(client, customer_id, budget_resource_name)
-  campaign = client.resource(:Campaign)
-  campaign.name = client.wrapper.string(
-    "Interplanetary Cruise ##{(Time.new.to_f * 1000).to_i}"
-  )
-  # Recommendation: Set the campaign to PAUSED when creating it to stop the
-  # ads from immediately serving. Set to ENABLED once you've added
-  # targeting and the ads are ready to serve.
-  campaign.status = :PAUSED
-  campaign.manual_cpc = client.resource(:ManualCpc)
-  campaign.campaign_budget = client.wrapper.string(
-    budget_resource_name
-  )
-  campaign.advertising_channel_type = :SEARCH
-  # Optional fields:
-  campaign.start_date = client.wrapper.string(
-    DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
-  )
-  campaign.network_settings = client.resource(:NetworkSettings)
-  campaign.network_settings.target_google_search = client.wrapper.bool(true)
-  campaign.network_settings.target_search_network = client.wrapper.bool(true)
-  campaign.network_settings.target_content_network = client.wrapper.bool(false)
-  campaign.network_settings.target_partner_search_network = client.wrapper.bool(false)
+  operation = client.operation.create_resource.campaign do |campaign|
+    campaign.name = "Interplanetary Cruise ##{(Time.new.to_f * 1000).to_i}"
 
-  operation = client.operation(:Campaign)
-  operation["create"] = campaign
+    # Recommendation: Set the campaign to PAUSED when creating it to stop the
+    # ads from immediately serving. Set to ENABLED once you've added
+    # targeting and the ads are ready to serve.
+    campaign.status = :PAUSED
+    campaign.manual_cpc = client.resource.manual_cpc
+    campaign.campaign_budget = budget_resource_name
+    campaign.advertising_channel_type = :SEARCH
+    # Optional fields:
+    campaign.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
+    campaign.network_settings = client.resource.network_settings do |network_settings|
+      network_settings.target_google_search = true
+      network_settings.target_search_network = true
+      network_settings.target_content_network = false
+      network_settings.target_partner_search_network = false
+    end
+  end
 
-  campaign_service = client.service(:Campaign)
+  campaign_service = client.service.campaign
   response = campaign_service.mutate_campaigns(customer_id, [operation])
   campaign_resource_name = response.results.first.resource_name
 
