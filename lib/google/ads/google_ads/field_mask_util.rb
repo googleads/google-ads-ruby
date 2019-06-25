@@ -94,7 +94,7 @@ module Google
             original_value = original[field.name]
             modified_value = modified[field.name]
 
-            if is_repeated?(original_value) || is_repeated?(modified_value)
+            if is_repeated?(field)
               # repeated fields - must match exactly or add the field
               mask.paths << field_path unless original_value == modified_value
             else
@@ -147,8 +147,8 @@ module Google
         end
 
         # Checks if the object is a repeated field
-        def self.is_repeated?(obj)
-          obj.is_a?(Google::Protobuf::RepeatedField)
+        def self.is_repeated?(field)
+          field.label == :repeated
         end
 
         private_class_method :compare_obj, :get_path, :is_wrapper?,
