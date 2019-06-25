@@ -26,20 +26,21 @@ def get_geo_target_constant_by_names()
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  gtc_service = client.service(:GeoTargetConstant)
+  gtc_service = client.service.geo_target_constant
 
-  location_names = client.resource(:LocationNames)
-  ['Paris', 'Quebec', 'Spain', 'Deutschland'].each do |name|
-    location_names.names << client.wrapper.string(name)
+  location_names = client.resource.location_names do |ln|
+    ['Paris', 'Quebec', 'Spain', 'Deutschland'].each do |name|
+      ln.names << name
+    end
   end
 
   # Locale is using ISO 639-1 format. If an invalid locale is given,
   # 'en' is used by default.
-  locale = client.wrapper.string('en')
+  locale = 'en'
 
   # A list of country codes can be referenced here:
   # https://developers.google.com/adwords/api/docs/appendix/geotargeting
-  country_code = client.wrapper.string('FR')
+  country_code = 'FR'
 
   response = gtc_service.suggest_geo_target_constants(locale, country_code,
       location_names: location_names)
