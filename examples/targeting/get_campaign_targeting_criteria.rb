@@ -26,7 +26,7 @@ def get_campaign_targeting_criteria(customer_id, campaign_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   query = <<~QUERY
       SELECT campaign.id,
