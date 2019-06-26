@@ -47,7 +47,7 @@ def get_product_bidding_category_constant(customer_id)
       product_bidding_category_constant.country_code IN ('US')
   EOD
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
   response = ga_service.search(
       customer_id,
       query,
