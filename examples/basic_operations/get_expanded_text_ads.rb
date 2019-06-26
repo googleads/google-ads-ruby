@@ -26,7 +26,6 @@ def get_expanded_text_ads(customer_id, ad_group_id = nil)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
 
   search_query = <<~QUERY
     SELECT ad_group.id,
@@ -39,10 +38,10 @@ def get_expanded_text_ads(customer_id, ad_group_id = nil)
   QUERY
 
   if ad_group_id
-    search_query << sprintf(' AND ad_group.id = %s', ad_group_id)
+    search_query << " AND ad_group.id = #{ad_group_id}"
   end
 
-  response = ga_service.search(
+  response = client.service.google_ads.search(
     customer_id,
     search_query,
     page_size: PAGE_SIZE
@@ -51,16 +50,11 @@ def get_expanded_text_ads(customer_id, ad_group_id = nil)
   response.each do |row|
     ad = row.ad_group_ad.ad
     if ad.expanded_text_ad
-      expanded_text_ad_info = ad.expanded_text_ad
+      eta = ad.expanded_text_ad
 
-      puts sprintf('Expanded text ad with ID %s, status %s, '\
-          "and headline '%s - %s' was found in ad group with ID %s.",
-          ad.id,
-          row.ad_group_ad.status,
-          expanded_text_ad_info.headline_part1,
-          expanded_text_ad_info.headline_part2,
-          row.ad_group.id
-      )
+      puts "Expanded text ad with ID #{ad.id}, status #{row.ad_group_ad.status}, " \
+          "and headline '#{eta.headline_part1} - #{eta.headline_part2}' was found in ad group " \
+          "with ID #{row.ad_group.id}."
     end
   end
 end

@@ -25,16 +25,13 @@ def remove_campaign(customer_id, campaign_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  campaign_service = client.service(:Campaign)
-  campaign_resource = client.path.campaign(customer_id, campaign_id)
+  resource = client.path.campaign(customer_id, campaign_id)
 
-  operation = {remove: campaign_resource}
-  response = campaign_service.mutate_campaigns(customer_id, [operation])
+  operation = client.operation.remove_resource.campaign(resource)
 
-  response.results.each do |removed_campaign|
-    puts sprintf("Campaign with resource ID = '%s' was removed.",
-        removed_campaign.resource_name)
-  end
+  response = client.service.campaign.mutate_campaigns(customer_id, [operation])
+
+  puts "Campaign with resource name = '#{response.results.first.resource_name}' was removed."
 end
 
 if __FILE__ == $0

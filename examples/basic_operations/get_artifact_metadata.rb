@@ -29,8 +29,6 @@ def get_artifact_metadata(artifact_name)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  gaf_service = client.service(:GoogleAdsField)
-
   query = <<~QUERY
     SELECT
       name,
@@ -41,31 +39,24 @@ def get_artifact_metadata(artifact_name)
       selectable_with,
       data_type,
       is_repeated
+    WHERE name = '#{artifact_name}'
   QUERY
 
-  query << sprintf("WHERE name = '%s'", artifact_name)
-
-  response = gaf_service.search_google_ads_fields(query)
+  response = client.service.google_ads_field.search_google_ads_fields(query)
 
   if response.response.results.empty?
-    puts sprintf("The specified artifact '%s' doesn't exist", artifact_name)
+    puts "The specified artifact '#{artifact_name}' doesn't exist"
     return
   end
 
   response.each do |row|
-    puts sprintf("An artifact named '%s' with category '%s' and data type " \
-        '%s %s selectable, %s filterable, %s sortable and %s repeated.',
-        row.name.value,
-        row.category,
-        row.data_type,
-        is_or_not(row.selectable.value),
-        is_or_not(row.filterable.value),
-        is_or_not(row.sortable.value),
-        is_or_not(row.is_repeated.value)
-    )
+    puts "An artifact named '#{row.name}' with category '#{row.category}' and data type " \
+        "#{row.data_type} #{is_or_not(row.selectable.value)} selectable, " \
+        "#{is_or_not(row.filterable.value)} filterable, #{is_or_not(row.sortable.value)} " \
+        "sortable, and #{is_or_not(row.is_repeated.value)} repeated."
 
-    unless row.selectable_with.empty?
-      puts 'The artifact can be selected with the following artifacts:'
+    if !row.selectable_with.empty?
+      puts "The artifact can be selected with the following artifacts:"
       puts (row.selectable_with.sort_by { |field| field.value })
     end
   end

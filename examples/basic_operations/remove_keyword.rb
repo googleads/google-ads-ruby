@@ -25,15 +25,13 @@ def remove_keyword(customer_id, ad_group_id, criteria_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  agc_service = client.service(:AdGroupCriterion)
-
+  resource = client.path.ad_group_criterion(customer_id, ad_group_id, criteria_id)
   # Remove keyword
-  operation = {
-    remove: client.path.ad_group_criterion(customer_id, ad_group_id,criteria_id)
-  }
-  response = agc_service.mutate_ad_group_criteria(customer_id, [operation])
+  operation = client.operation.remove_resource.ad_group_criterion(resource)
 
-  puts sprintf("Removed keyword %s", response.results.first.resource_name)
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [operation])
+
+  puts "Removed keyword #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME

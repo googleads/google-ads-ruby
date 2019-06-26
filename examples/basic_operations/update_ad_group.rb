@@ -25,27 +25,16 @@ def update_ad_group(customer_id, ad_group_id, bid_micro_amount)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ad_group_service = client.service(:AdGroup)
+  resource_name = client.path.ad_group(customer_id, ad_group_id)
 
-  ad_group = client.resource(:AdGroup)
-  ad_group.resource_name = client.path.ad_group(customer_id, ad_group_id)
-
-  mask = client.field_mask.with ad_group do
-    ad_group.status = client.enum(:AdGroupStatus)::PAUSED
-    ad_group.cpc_bid_micros = client.wrapper.int64(bid_micro_amount)
+  operation = client.operation.update_resource.ad_group(resource_name) do |ag|
+    ag.status = :PAUSED
+    ag.cpc_bid_micros = bid_micro_amount
   end
 
-  operation = {
-    update: ad_group,
-    update_mask: mask
-  }
+  response = client.service.ad_group.mutate_ad_groups(customer_id, [operation])
 
-  response = ad_group_service.mutate_ad_groups(customer_id, [operation])
-
-  response.results.each do |updated_ad_group|
-    puts sprintf("Ad group with resource ID = '%s' was updated.",
-        updated_ad_group.resource_name)
-  end
+  puts "Ad group with resource name = '#{response.results.first.resource_name}' was updated."
 end
 
 if __FILE__ == $0

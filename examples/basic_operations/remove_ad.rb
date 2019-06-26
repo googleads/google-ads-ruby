@@ -25,13 +25,13 @@ def remove_ad(customer_id, ad_group_id, ad_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  aga_service = client.service(:AdGroupAd)
-
   resource =  client.path.ad_group_ad(customer_id, ad_group_id, ad_id)
 
-  response = aga_service.mutate_ad_group_ads(customer_id, [{remove: resource}])
+  operation = client.operation.remove_resource.ad_group_ad(resource)
 
-  puts sprintf("Removed ad %s", response.results.first.resource_name)
+  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [operation])
+
+  puts "Removed ad #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME

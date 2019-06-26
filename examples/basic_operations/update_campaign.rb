@@ -25,27 +25,19 @@ def update_campaign(customer_id, campaign_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  campaign_service = client.service(:Campaign)
 
-  campaign = client.resource(:Campaign)
-  campaign.resource_name = client.path.campaign(customer_id, campaign_id)
+  resource_name = client.path.campaign(customer_id, campaign_id)
 
-  mask = client.field_mask.with campaign do
-    campaign.status = client.enum(:CampaignStatus)::PAUSED
-    campaign.network_settings = client.resource(:NetworkSettings)
-    campaign.network_settings.target_search_network = client.wrapper.bool(false)
+  operation = client.operation.update_resource.campaign(resource_name) do |c|
+    c.status = :PAUSED
+    c.network_settings = client.resource.network_settings do |ns|
+      ns.target_search_network = false
+    end
   end
 
-  operation = {
-    update: campaign,
-    update_mask: mask
-  }
-  response = campaign_service.mutate_campaigns(customer_id, [operation])
+  response = client.service.campaign.mutate_campaigns(customer_id, [operation])
 
-  response.results.each do |updated_campaign|
-    puts sprintf("Campaign with resource ID = '%s' was updated.",
-        updated_campaign.resource_name)
-  end
+  puts "Campaign with resource name = '#{response.results.first.resource_name}' was updated."
 end
 
 if __FILE__ == $0

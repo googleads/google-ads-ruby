@@ -17,36 +17,32 @@
 #
 # Example demonstrating how to update a keyword in an ad group
 
-require 'optparse'
-require 'google/ads/google_ads'
+require "optparse"
+require "google/ads/google_ads"
 
 def update_keyword(customer_id, ad_group_id, criteria_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  agc_service = client.service(:AdGroupCriterion)
+  resource_name = client.path.ad_group_criterion(customer_id, ad_group_id, criteria_id)
 
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.resource_name =
-      client.path.ad_group_criterion(customer_id, ad_group_id, criteria_id)
-
-  # All attribute updates should be inside FieldMaskUtil.with block
-  mask = client.field_mask.with criterion do
-    criterion.status = client.enum(:AdGroupCriterionStatus)::ENABLED
+  operation = client.operation.update_resource.ad_group_criterion(resource_name) do |agc|
+    agc.status = :ENABLED
 
     # final_urls is an optional repeated field. Since we're starting with a
     # blank criterion, all existing final_urls will be replaced.
-    criterion.final_urls << client.wrapper.string('https://www.example.com')
+    # You could alternatively fetch the existing criterion from the server
+    # first, then pass that to the update_resource.ad_group_criterion call
+    # above, in which case this code would rather append a new value to the
+    # repeated field.
+    agc.final_urls << "https://www.example.com"
   end
 
   # Update keyword
-  response = agc_service.mutate_ad_group_criteria(customer_id, [{
-    update: criterion,
-    update_mask: mask
-  }])
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [operation])
 
-  puts sprintf("Updated keyword %s", response.results.first.resource_name)
+  puts "Updated keyword #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -59,9 +55,9 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
-  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
-  options[:criteria_id] = 'INSERT_CRITERIA_ID_HERE'
+  options[:customer_id] = "INSERT_ADWORDS_CUSTOMER_ID_HERE"
+  options[:ad_group_id] = "INSERT_AD_GROUP_ID_HERE"
+  options[:criteria_id] = "INSERT_CRITERIA_ID_HERE"
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))

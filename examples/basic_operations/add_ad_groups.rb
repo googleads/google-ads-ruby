@@ -25,28 +25,24 @@ def add_ad_groups(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  ad_group_service = client.service(:AdGroup)
 
   # Create an ad group, setting an optional CPC value.
-  ad_group = client.resource(:AdGroup)
-  ad_group.name = client.wrapper.string(
-      sprintf('Earth to Mars Cruises %s',(Time.new.to_f * 1000).to_i))
-  ad_group.status = client.enum(:AdGroupStatus)::ENABLED
-  ad_group.campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id))
-  ad_group.type = client.enum(:AdGroupType)::SEARCH_STANDARD
-  ad_group.cpc_bid_micros = client.wrapper.int64(10_000_000)
+  ad_group = client.resource.ad_group do |ag|
+    ag.name = "Earth to Mars Cruises #{(Time.new.to_f * 1000).to_i}"
+    ag.status = :ENABLED
+    ag.campaign = client.path.campaign(customer_id, campaign_id)
+    ag.type = :SEARCH_STANDARD
+    ag.cpc_bid_micros = 10_000_000
+  end
 
   # Create the operation
-  ad_group_operation = client.operation(:AdGroup)
-  ad_group_operation['create'] = ad_group
+  ad_group_operation = client.operation.create_resource.ad_group(ad_group)
 
   # Add the ad group.
-  response = ad_group_service.mutate_ad_groups(
+  response = client.service.ad_group.mutate_ad_groups(
       customer_id, [ad_group_operation])
 
-  puts sprintf('Created ad group %s.', response.results.first.resource_name)
-
+  puts "Created ad group #{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0

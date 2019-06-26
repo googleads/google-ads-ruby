@@ -25,27 +25,17 @@ def get_ad_groups(customer_id, campaign_id = nil)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
-
-  search_query = 'SELECT campaign.id, ad_group.id, ad_group.name FROM ad_group'
+  search_query = "SELECT campaign.id, ad_group.id, ad_group.name FROM ad_group"
 
   if campaign_id
-    search_query << sprintf(' WHERE campaign.id = %s', campaign_id)
+    search_query << " WHERE campaign.id = #{campaign_id}"
   end
 
-  response = ga_service.search(
-    customer_id,
-    search_query,
-    page_size: PAGE_SIZE
-  )
+  response = client.service.google_ads.search(customer_id, search_query, page_size: PAGE_SIZE)
 
   response.each do |row|
-    puts sprintf(
-      'AdGroup with ID %s and name %s was found in campaign with ID %s.',
-      row.ad_group.id,
-      row.ad_group.name,
-      row.campaign.id
-    )
+    puts "AdGroup with ID #{row.ad_group.id} and name '#{row.ad_group.name}' was found in " \
+        "campaign with ID #{row.campaign.id}."
   end
 end
 

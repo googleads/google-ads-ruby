@@ -25,8 +25,6 @@ def get_keywords(customer_id, ad_group_id=nil)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
-
   search_query = <<~QUERY
     SELECT ad_group.id,
            ad_group_criterion.type,
@@ -38,10 +36,10 @@ def get_keywords(customer_id, ad_group_id=nil)
   QUERY
 
   if ad_group_id
-    search_query << sprintf(' AND ad_group.id = %s', ad_group_id)
+    search_query << " AND ad_group.id = #{ad_group_id}"
   end
 
-  response = ga_service.search(
+  response = client.service.google_ads.search(
     customer_id,
     search_query,
     page_size: PAGE_SIZE
@@ -52,14 +50,9 @@ def get_keywords(customer_id, ad_group_id=nil)
       ad_group_criterion = row.ad_group_criterion
       keyword_info = ad_group_criterion.keyword
 
-      puts sprintf('Keyword with text %s, match type %s, criteria type %s,'\
-          ' and ID %s was found in ad group with ID %s.',
-          keyword_info.text,
-          keyword_info.match_type,
-          ad_group_criterion.type,
-          ad_group_criterion.criterion_id,
-          ad_group.id
-      )
+      puts "Keyword with text '#{keyword_info.text}', match type #{keyword_info.match_type}, " \
+          "criteria type #{ad_group_criterion.type}, and ID #{ad_group_criterion.criterion_id} " \
+          "was found in ad group with ID #{ad_group.id}."
   end
 end
 

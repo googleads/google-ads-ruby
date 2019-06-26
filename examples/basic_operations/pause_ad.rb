@@ -25,22 +25,15 @@ def pause_ad(customer_id, ad_group_id, ad_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ad_group_ad_service = client.service(:AdGroupAd)
+  aga_resource_name = client.path.ad_group_ad(customer_id, ad_group_id, ad_id)
 
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.resource_name =
-      client.path.ad_group_ad(customer_id, ad_group_id, ad_id)
-
-  mask = client.field_mask.with ad_group_ad do
-    ad_group_ad.status = client.enum(:AdGroupAdStatus)::PAUSED
+  operation = client.operation.update_resource.ad_group_ad(aga_resource_name) do |aga|
+    aga.status = :PAUSED
   end
 
-  response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [{
-    update: ad_group_ad,
-    update_mask: mask
-  }])
+  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [operation])
 
-  puts sprintf("Paused ad %s", response.results.first.resource_name)
+  puts "Paused ad #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME
