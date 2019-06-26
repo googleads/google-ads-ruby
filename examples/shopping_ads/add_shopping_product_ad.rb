@@ -58,18 +58,14 @@ def add_shopping_product_ad(
 end
 
 def add_campaign_budget(client, customer_id)
-  service = client.service(:CampaignBudget)
 
-  budget = client.resource(:CampaignBudget)
-  budget.name = client.wrapper.string(
-    "Interplanetary Budget ##{(Time.new.to_f * 1000).to_i}"
-  )
-  budget.delivery_method = :STANDARD
-  budget.amount_micros = client.wrapper.int64(500_000)
+  operation = client.operation.create_resource.campaign_budget do |budget|
+    budget.name = "Interplanetary Budget ##{(Time.new.to_f * 1000).to_i}"
+    budget.delivery_method = :STANDARD
+    budget.amount_micros = 500_000
+  end
 
-  operation = client.operation(:CampaignBudget)
-  operation["create"] = budget
-
+  service = client.service.campaign_budget
   response = service.mutate_campaign_budgets(customer_id, [operation])
 
   budget_name = response.results.first.resource_name
@@ -81,35 +77,30 @@ end
 
 def add_standard_shopping_campaign(
     client, customer_id, budget_name, merchant_center_id)
-  service = client.service(:Campaign)
 
-  campaign = client.resource(:Campaign)
-  campaign.name = client.wrapper.string(
-    "Interplanetary Cruise Campaign ##{(Time.new.to_f * 1000).to_i}"
-  )
+  operation = client.operation.create_resource.campaign do |campaign|
+    campaign.name = "Interplanetary Cruise Campaign ##{(Time.new.to_f * 1000).to_i}"
 
-  # Shopping campaign specific settings
-  campaign.advertising_channel_type = :SHOPPING
+    # Shopping campaign specific settings
+    campaign.advertising_channel_type = :SHOPPING
 
-  shopping_setting = client.resource(:ShoppingSetting)
-  shopping_setting.merchant_id = client.wrapper.int64(merchant_center_id)
-  shopping_setting.sales_country = client.wrapper.string("US")
-  shopping_setting.campaign_priority = client.wrapper.int32(0)
-  shopping_setting.enable_local = client.wrapper.bool(true)
+    campaign.shopping_setting = client.resource.shopping_setting do |shopping_setting|
+      shopping_setting.merchant_id = merchant_center_id
+      shopping_setting.sales_country = "US"
+      shopping_setting.campaign_priority = 0
+      shopping_setting.enable_local = true
+    end
 
-  campaign.shopping_setting = shopping_setting
+    campaign.status = :PAUSED
 
-  campaign.status = :PAUSED
+    campaign.manual_cpc = client.resource.manual_cpc do |manual_cpc|
+      manual_cpc.enhanced_cpc_enabled = true
+    end
 
-  manual_cpc = client.resource(:ManualCpc)
-  manual_cpc.enhanced_cpc_enabled = client.wrapper.bool(true)
-  campaign.manual_cpc = manual_cpc
+    campaign.campaign_budget = budget_name
+  end
 
-  campaign.campaign_budget = client.wrapper.string(budget_name)
-
-  operation = client.operation(:Campaign)
-  operation["create"] = campaign
-
+  service = client.service.campaign
   response = service.mutate_campaigns(customer_id, [operation])
 
   campaign_name = response.results.first.resource_name
@@ -120,21 +111,15 @@ def add_standard_shopping_campaign(
 end
 
 def add_shopping_product_ad_group(client, customer_id, campaign_name)
-  service = client.service(:AdGroup)
+  operation = client.operation.create_resource.ad_group do |ad_group|
+    ad_group.name = "Earth to Mars cruise ##{(Time.new.to_f * 1000).to_i}"
+    ad_group.status = :ENABLED
+    ad_group.campaign = campaign_name
+    ad_group.type = :SHOPPING_PRODUCT_ADS
+    ad_group.cpc_bid_micros = 10_000_000
+  end
 
-  ad_group = client.resource(:AdGroup)
-
-  ad_group.name = client.wrapper.string(
-    "Earth to Mars cruise ##{(Time.new.to_f * 1000).to_i}"
-  )
-  ad_group.status = :ENABLED
-  ad_group.campaign = client.wrapper.string(campaign_name)
-  ad_group.type = :SHOPPING_PRODUCT_ADS
-  ad_group.cpc_bid_micros = client.wrapper.int64(10_000_000)
-
-  operation = client.operation(:AdGroup)
-  operation["create"] = ad_group
-
+  service = client.service.ad_group
   response = service.mutate_ad_groups(customer_id, [operation])
 
   ad_group_name = response.results.first.resource_name
@@ -145,17 +130,16 @@ def add_shopping_product_ad_group(client, customer_id, campaign_name)
 end
 
 def add_shopping_product_ad_group_ad(client, customer_id, ad_group_name)
-  service = client.service(:AdGroupAd)
 
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.ad_group = client.wrapper.string(ad_group_name)
-  ad_group_ad.status = :PAUSED
-  ad_group_ad.ad = client.resource(:Ad)
-  ad_group_ad.ad.shopping_product_ad = client.resource(:ShoppingProductAdInfo)
+  operation = client.operation.create_resource.ad_group_ad do |ad_group_ad|
+    ad_group_ad.ad_group = ad_group_name
+    ad_group_ad.status = :PAUSED
+    ad_group_ad.ad = client.resource.ad do |ad|
+      ad.shopping_product_ad = client.resource.shopping_product_ad_info
+    end
+  end
 
-  operation = client.operation(:AdGroupAd)
-  operation["create"] = ad_group_ad
-
+  service = client.service.ad_group_ad
   response = service.mutate_ad_group_ads(customer_id, [operation])
 
   puts "Created shopping product ad group ad " \
@@ -163,18 +147,18 @@ def add_shopping_product_ad_group_ad(client, customer_id, ad_group_name)
 end
 
 def add_default_shopping_listing_group(client, customer_id, ad_group_name)
-  service = client.service(:AdGroupCriterion)
 
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.ad_group = client.wrapper.string(ad_group_name)
-  criterion.status = :ENABLED
-  criterion.listing_group = client.resource(:ListingGroupInfo)
-  criterion.listing_group.type = :UNIT
-  criterion.cpc_bid_micros = client.wrapper.int64(500_000)
+  operation = client.operation.create_resource.ad_group_criterion do |criterion|
+    criterion.ad_group = ad_group_name
+    criterion.status = :ENABLED
+    criterion.listing_group = client.resource.listing_group_info do |lgi|
+      lgi.type = :UNIT
+    end
 
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = criterion
+    criterion.cpc_bid_micros = 500_000
+  end
 
+  service = client.service.ad_group_criterion
   response = service.mutate_ad_group_criteria(customer_id, [operation])
 
   puts "Added an ad group criterion containing a listing group with resource " \
