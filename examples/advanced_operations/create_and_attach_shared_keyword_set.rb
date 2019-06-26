@@ -55,9 +55,7 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
   end
 
   operations = shared_criteria.map do |criterion|
-    op = client.operation.shared_criterion
-    op["create"] = criterion
-    op
+    client.operation.create_resource.shared_criterion(criterion)
   end
 
   response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)
@@ -71,8 +69,7 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
     css.shared_set = shared_set_resource_name
   end
 
-  operation = client.operation.campaign_shared_set
-  operation["create"] = campaign_set
+  operation = client.operation.create_resource.campaign_shared_set(campaign_set)
 
   response = client.service.campaign_shared_set.mutate_campaign_shared_sets(
       customer_id, [operation])

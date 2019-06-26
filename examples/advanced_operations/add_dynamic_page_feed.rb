@@ -125,8 +125,7 @@ def create_feed_mapping(client, customer_id, feed_details)
     mapping.attribute_field_mappings << label_field_mapping
   end
 
-  operation = client.operation.feed_mapping
-  operation["create"] = feed_mapping
+  operation = client.operation.create_resource.feed_mapping(feed_mapping)
 
   response = client.service.feed_mapping.mutate_feed_mappings(customer_id, [operation])
   puts "Feed mapping created with id #{response.results.first.resource_name}"
@@ -144,12 +143,12 @@ def create_feed_items(client, customer_id, feed_details, label)
       fi.feed = feed_details.resource_name
       fi.attribute_values << client.resource.feed_item_attribute_value do |val|
         val.feed_attribute_id = feed_details.url_attribute_id
-        val.string_values << client.wrapper.string(url)
+        val.string_values << url
       end
 
       fi.attribute_values << client.resource.feed_item_attribute_value do |val|
         val.feed_attribute_id = feed_details.label_attribute_id
-        val.string_values << client.wrapper.string(label)
+        val.string_values << label
       end
     end
   }
@@ -190,7 +189,7 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   end
 
   op = client.operation.update_resource.campaign(campaign) do
-    campaign.dynamic_search_ads_setting.feeds << client.wrapper.string(feed_details.resource_name)
+    campaign.dynamic_search_ads_setting.feeds << feed_details.resource_name
   end
 
   response = client.service.campaign.mutate_campaigns(customer_id, [op])

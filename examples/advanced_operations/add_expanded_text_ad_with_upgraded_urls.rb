@@ -31,8 +31,8 @@ def add_expanded_text_ad_with_upgraded_urls(customer_id, ad_group_id)
     aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
     aga.status = :PAUSED
     aga.ad = client.resource.ad do |ad|
-      ad.final_urls << client.wrapper.string("http://www.example.com/cruise/space/")
-      ad.final_urls << client.wrapper.string("http://www.example.com/locations/mars/")
+      ad.final_urls << "http://www.example.com/cruise/space/"
+      ad.final_urls << "http://www.example.com/locations/mars/"
 
       # Set expanded text ad info
       ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
@@ -62,8 +62,8 @@ def add_expanded_text_ad_with_upgraded_urls(customer_id, ad_group_id)
       # Specify a list of final mobile URLs. This field cannot be set if URL field
       # is set, or finalUrls is unset. This may be specified at ad, criterion and
       # feed item levels.
-      ad.final_mobile_urls << client.wrapper.string("http://mobile.example.com/cruise/space/")
-      ad.final_mobile_urls << client.wrapper.string("http://mobile.example.com/locations/mars/")
+      ad.final_mobile_urls << "http://mobile.example.com/cruise/space/"
+      ad.final_mobile_urls << "http://mobile.example.com/locations/mars/"
     end
   end
 

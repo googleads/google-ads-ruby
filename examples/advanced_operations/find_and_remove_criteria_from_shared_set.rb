@@ -71,10 +71,7 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
 
   # Finally, remove the criteria.
   operations = criterion_ids.map do |criterion|
-    operation = client.operation.shared_criterion
-    operation["remove"] = criterion
-
-    operation
+    client.operation.remove_resource.shared_criterion(criterion)
   end
 
   response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)

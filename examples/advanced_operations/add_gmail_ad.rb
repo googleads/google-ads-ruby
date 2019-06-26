@@ -52,8 +52,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
     mf.mime_type = :IMAGE_PNG
   end
 
-  media_file_logo_op = client.operation.media_file
-  media_file_logo_op["create"] = media_file_logo
+  media_file_logo_op = client.operation.create_resource.media_file(media_file_logo)
 
   media_file_marketing = client.resource.media_file do |mf|
     mf.type = :IMAGE
@@ -63,8 +62,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
     mf.mime_type = :IMAGE_JPEG
   end
 
-  media_file_marketing_image_op = client.operation.media_file
-  media_file_marketing_image_op["create"] = media_file_marketing
+  media_file_marketing_image_op = client.operation.create_resource.media_file(media_file_marketing)
 
   response = client.service.media_file.mutate_media_files(
     customer_id,
@@ -91,7 +89,7 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   end
 
   ad = client.resource.ad do |ad|
-    ad.final_urls << client.wrapper.string("http://www.example.com")
+    ad.final_urls << "http://www.example.com"
     ad.gmail_ad = gmail_ad
     ad.name = "Gmail Ad #{(Time.now.to_f * 1000).to_i}"
   end
