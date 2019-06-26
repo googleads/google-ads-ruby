@@ -28,11 +28,11 @@ def dismiss_recommendation(customer_id, recommendation_id)
 
   recommendation_resource =
       client.path.recommendation(customer_id, recommendation_id)
-  dismiss_recommendation_operation = client.operation(:DismissRecommendation)
+  dismiss_recommendation_operation = client.operation.dismiss_recommendation
   dismiss_recommendation_operation.resource_name = recommendation_resource
 
   # Issues a mutate request to dismiss the recommendation.
-  recommendation_service = client.service(:Recommendation)
+  recommendation_service = client.service.recommendation
   response = recommendation_service.dismiss_recommendation(
     customer_id,
     [dismiss_recommendation_operation]
