@@ -41,7 +41,7 @@ def add_keyword(customer_id, ad_group_id, keyword)
   # criterion.negative = Google::Protobuf::BoolValue.new(value: true)
 
   # Optional repeated field
-  # criterion.final_urls << client.wrapper.string("https://www.example.com")
+  # criterion.final_urls << "https://www.example.com"
 
   # Add keyword
   operation = client.operation.create_resource.ad_group_criterion(criterion)

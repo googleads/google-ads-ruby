@@ -32,7 +32,7 @@ def add_expanded_text_ads(customer_id, ad_group_id)
     aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
     aga.status = :PAUSED
     aga.ad = client.resource.ad do |ad|
-      ad.final_urls << client.wrapper.string("http://www.example.com")
+      ad.final_urls << "http://www.example.com"
 
       # Set expanded text ad info
       ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|

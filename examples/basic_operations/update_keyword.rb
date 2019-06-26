@@ -17,8 +17,8 @@
 #
 # Example demonstrating how to update a keyword in an ad group
 
-require 'optparse'
-require 'google/ads/google_ads'
+require "optparse"
+require "google/ads/google_ads"
 
 def update_keyword(customer_id, ad_group_id, criteria_id)
   # GoogleAdsClient will read a config file from
@@ -36,7 +36,7 @@ def update_keyword(customer_id, ad_group_id, criteria_id)
     # first, then pass that to the update_resource.ad_group_criterion call
     # above, in which case this code would rather append a new value to the
     # repeated field.
-    agc.final_urls << client.wrapper.string('https://www.example.com')
+    agc.final_urls << "https://www.example.com"
   end
 
   # Update keyword
@@ -55,9 +55,9 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
-  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
-  options[:criteria_id] = 'INSERT_CRITERIA_ID_HERE'
+  options[:customer_id] = "INSERT_ADWORDS_CUSTOMER_ID_HERE"
+  options[:ad_group_id] = "INSERT_AD_GROUP_ID_HERE"
+  options[:criteria_id] = "INSERT_CRITERIA_ID_HERE"
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
