@@ -25,8 +25,6 @@ def get_account_changes(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
-
   query = <<~QUERY
     SELECT
       change_status.resource_name,
@@ -44,7 +42,7 @@ def get_account_changes(customer_id)
       change_status.last_change_date_time
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = client.service.google_ads.search(customer_id, query, page_size: PAGE_SIZE)
 
   response.each do |row|
     cs = row.change_status

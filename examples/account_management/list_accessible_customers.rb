@@ -30,9 +30,7 @@ def list_accessible_customers()
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  customer_service = client.service(:Customer)
-  accessible_customers =
-      customer_service.list_accessible_customers().resource_names
+  accessible_customers = client.service.customer.list_accessible_customers().resource_names
 
   accessible_customers.each do |resource_name|
     puts "Customer resource name: #{resource_name}"

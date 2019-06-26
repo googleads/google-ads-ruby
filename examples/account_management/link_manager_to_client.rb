@@ -37,18 +37,14 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
     config.login_customer_id = manager_customer_id.to_i
   end
 
-  client_link_service = client.service(:CustomerClientLink)
+  client_link = client.resource.customer_client_link do |link|
+    link.client_customer = client.path.customer(client_customer_id)
+    link.status = :PENDING
+  end
 
-  client_link = client.resource(:CustomerClientLink)
-  client_link.client_customer = client.wrapper.string(
-    client.path.customer(client_customer_id),
-  )
-  client_link.status = :PENDING
+  client_link_operation = client.operation.create_resource.customer_client_link(client_link)
 
-  client_link_operation = client.operation(:CustomerClientLink)
-  client_link_operation['create'] = client_link
-
-  response = client_link_service.mutate_customer_client_link(
+  response = client.service.customer_client_link.mutate_customer_client_link(
     manager_customer_id,
     client_link_operation,
   )
@@ -60,8 +56,6 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
 
   # Find the manager_link_id of the link we just created, so we can construct
   # the resource name for the link from the client side.
-  ga_service = client.service(:GoogleAds)
-
   query = <<~QUERY
     SELECT
       customer_client_link.manager_link_id
@@ -71,7 +65,7 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
       customer_client_link.resource_name = '#{client_link_resource_name}'
   QUERY
 
-  response = ga_service.search(manager_customer_id, query)
+  response = client.service.google_ads.search(manager_customer_id, query)
   manager_link_id = response.first.customer_client_link.manager_link_id
 
   # Accept the link using the client account.
@@ -79,24 +73,18 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
     config.login_customer_id = client_customer_id.to_i
   end
 
-  manager_link_service = client.service(:CustomerManagerLink)
-
-  manager_link = client.resource(:CustomerManagerLink)
-  manager_link.resource_name = client.path.customer_manager_link(
+  manager_link_resource_name = client.path.customer_manager_link(
     client_customer_id,
     manager_customer_id,
     manager_link_id,
   )
 
-  mask = client.field_mask.with manager_link do
-    manager_link.status = :ACTIVE
+  manager_link_operation =
+      client.operation.update_resource.customer_manager_link(manager_link_resource_name) do |link|
+    link.status = :ACTIVE
   end
 
-  manager_link_operation = client.operation(:CustomerManagerLink)
-  manager_link_operation['update'] = manager_link
-  manager_link_operation['update_mask'] = mask
-
-  response = manager_link_service.mutate_customer_manager_link(
+  response = client.service.customer_manager_link.mutate_customer_manager_link(
     client_customer_id,
     [manager_link_operation],
   )

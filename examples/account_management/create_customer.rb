@@ -31,29 +31,23 @@ def create_customer(manager_customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  customer = client.resource(:Customer)
-  customer.descriptive_name = client.wrapper.string(
-    "Account created with CustomerService on #{(Time.new.to_f * 1000).to_i}"
-  )
-  # For a list of valid currency codes and time zones, see this documentation:
-  # https://developers.google.com/adwords/api/docs/appendix/codes-formats
-  customer.currency_code = client.wrapper.string("USD")
-  customer.time_zone = client.wrapper.string("America/New_York")
-  # The below values are optional. For more information about URL options, see:
-  # https://support.google.com/google-ads/answer/6305348
-  customer.tracking_url_template = client.wrapper.string(
-    "{lpurl}?device={device}"
-  )
-  customer.final_url_suffix = client.wrapper.string(
-    "keyword={keyword}&matchtype={matchtype}&adgroupid={adgroupid}"
-  )
-  customer.has_partners_badge = client.wrapper.bool(false)
+  customer = client.resource.customer do |c|
+    c.descriptive_name = "Account created with CustomerService on #{(Time.new.to_f * 1000).to_i}"
 
-  customer_service = client.service(:Customer)
-  response = customer_service.create_customer_client(
-    manager_customer_id,
-    customer
-  )
+    # For a list of valid currency codes and time zones, see this documentation:
+    # https://developers.google.com/adwords/api/docs/appendix/codes-formats
+    c.currency_code = "USD"
+    c.time_zone = "America/New_York"
+
+    # The below values are optional. For more information about URL options, see:
+    # https://support.google.com/google-ads/answer/6305348
+    c.tracking_url_template = "{lpurl}?device={device}"
+    c.final_url_suffix = "keyword={keyword}&matchtype={matchtype}&adgroupid={adgroupid}"
+
+    c.has_partners_badge = false
+  end
+
+  response = client.service.customer.create_customer_client(manager_customer_id, customer)
 
   puts "Created a customer with resource name #{response.resource_name} under" +
       " the manager account with customer ID #{manager_customer_id}."

@@ -26,22 +26,15 @@ def get_account_information(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  customer_service = client.service(:Customer)
   resource_name = client.path.customer(customer_id)
-  customer = customer_service.get_customer(resource_name)
+  customer = client.service.customer.get_customer(resource_name)
 
-  puts sprintf("Customer ID %d\n"\
-      "\tdescriptive_name: %s\n"\
-      "\tcurrency_code: %s\n"\
-      "\ttime_zone: %s\n"\
-      "\ttracking_url_template: %s\n"\
-      "\tauto_tagging_enabled: %s",
-      customer.id,
-      customer.descriptive_name,
-      customer.currency_code,
-      customer.time_zone,
-      customer.tracking_url_template,
-      customer.auto_tagging_enabled.value)
+  puts "Customer ID #{customer.id}\n"\
+      "\tdescriptive_name: #{customer.descriptive_name}\n"\
+      "\tcurrency_code: #{customer.currency_code}\n"\
+      "\ttime_zone: #{customer.time_zone}\n"\
+      "\ttracking_url_template: #{customer.tracking_url_template}\n"\
+      "\tauto_tagging_enabled: #{customer.auto_tagging_enabled.value}"
 end
 
 if __FILE__ == $PROGRAM_NAME
