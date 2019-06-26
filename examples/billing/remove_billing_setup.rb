@@ -26,12 +26,15 @@ def remove_billing_setup(customer_id, billing_setup_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  billing_setup_service = client.service(:BillingSetup)
+  billing_setup_service = client.service.billing_setup
 
   resource =  client.path.billing_setup(customer_id, billing_setup_id)
+  op = client.operation.remove_resource.billing_setup(resource)
 
-  response = billing_setup_service.mutate_billing_setups(customer_id,
-      [{remove: resource}])
+  response = billing_setup_service.mutate_billing_setup(
+    customer_id,
+    op,
+  )
 
   puts sprintf("Removed billing_setup %s", response.results.first.resource_name)
 end
