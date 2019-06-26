@@ -30,7 +30,7 @@ def get_campaigns_by_label(customer_id, label_id)
     FROM campaign_label WHERE label.id = '#{label_id}' ORDER BY campaign.id
   EOQUERY
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
   response = ga_service.search(
       customer_id,
       query,
