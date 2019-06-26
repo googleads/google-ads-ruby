@@ -25,33 +25,31 @@ def add_conversion_action(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  conversion_action_service = client.service(:ConversionAction)
 
-  # Create a value settings object.
-  value_settings = client.resource(:ValueSettings)
-  value_settings.default_value = client.wrapper.double(15)
-  value_settings.always_use_default_value = client.wrapper.bool(true)
 
   # Add a conversion action.
-  conversion_action = client.resource(:ConversionAction)
-  conversion_action.name = client.wrapper.string(
-      sprintf('Earth to Mars Cruises Conversion %s',(Time.new.to_f * 100).to_i))
-  conversion_action.type = client.enum(:ConversionActionType)::UPLOAD_CLICKS
-  conversion_action.category = client.enum(:ConversionActionCategory)::DEFAULT
-  conversion_action.status = client.enum(:ConversionActionStatus)::ENABLED
-  conversion_action.view_through_lookback_window_days = client.wrapper.int64(15)
-  conversion_action.value_settings = value_settings
+  conversion_action = client.resource.conversion_action do |ca|
+    ca.name = "Earth to Mars Cruises Conversion #{(Time.new.to_f * 100).to_i}"
+    ca.type = :UPLOAD_CLICKS
+    ca.category = :DEFAULT
+    ca.status = :ENABLED
+    ca.view_through_lookback_window_days = 15
+
+    # Create a value settings object.
+    ca.value_settings = client.resource.value_settings do |vs|
+      vs.default_value = 15
+      vs.always_use_default_value = true
+    end
+  end
 
   # Create the operation.
-  conversion_action_operation = client.operation(:ConversionAction)
-  conversion_action_operation['create'] = conversion_action
+  conversion_action_operation = client.operation.create_resource.conversion_action(conversion_action)
 
   # Add the ad group ad.
-  response = conversion_action_service.mutate_conversion_actions(
+  response = client.service.conversion_action.mutate_conversion_actions(
       customer_id, [conversion_action_operation])
 
-  puts sprintf('New conversion action with resource name = %s.',
-      response.results.first.resource_name)
+  puts "New conversion action with resource name = #{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0
