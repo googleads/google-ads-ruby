@@ -26,32 +26,26 @@ def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  operation = client.operation.create_resource.campaign_bid_modifier do |campaign_bid_modifier|
+    # Sets the campaign.
+    campaign_resource = client.path.campaign(customer_id, campaign_id)
+    campaign_bid_modifier.campaign = campaign_resource
+
+    # Sets the Bid Modifier.
+    campaign_bid_modifier.bid_modifier = bid_modifier
+
+    # Sets the Interaction Type.
+    campaign_bid_modifier.interaction_type = client.resource.interaction_type_info
+    campaign_bid_modifier.interaction_type.type = :CALLS
+  end
+
   # Create campaign Bid Modifier Service
-  campaign_bid_modifier_service = client.service(:CampaignBidModifier)
-
-  # Creates a campaign bid modifier for mobile devices with the specified
-  # campaign ID and bid modifier value.
-  campaign_bid_modifier = client.resource(:CampaignBidModifier)
-
-  # Sets the campaign.
-  campaign_resource = client.path.campaign(customer_id, campaign_id)
-  campaign_bid_modifier.campaign = client.wrapper.string(campaign_resource)
-
-  # Sets the Bid Modifier.
-  campaign_bid_modifier.bid_modifier = client.wrapper.double(bid_modifier)
-
-  # Sets the Interaction Type.
-  campaign_bid_modifier.interaction_type = client.resource(:InteractionTypeInfo)
-  campaign_bid_modifier.interaction_type.type =
-      client.enum(:InteractionType)::CALLS
-
-  # Create the operation.
-  operation = client.operation(:CampaignBidModifier)
-  operation['create'] = campaign_bid_modifier
-
+  campaign_bid_modifier_service = client.service.campaign_bid_modifier
   # Add the Campaign Bid Modifier
   response = campaign_bid_modifier_service.mutate_campaign_bid_modifiers(
-      customer_id, [operation])
+    customer_id,
+    [operation]
+  )
 
   puts sprintf('Added %d campaign bid modifiers:', response.results.size)
   response.results.each do |added_campaign_bid_modifier|
