@@ -32,29 +32,32 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
     raise "At least one of keywords or page URL is required."
   end
 
-  kp_idea_service = client.service(:KeywordPlanIdea)
+  kp_idea_service = client.service.keyword_plan_idea
 
   options_hash = if keywords.empty?
-                   seed = client.resource(:UrlSeed)
-                   seed.url = client.wrapper.string(page_url)
+                   seed = client.resource.url_seed do |seed|
+                     seed.url = page_url
+                   end
                    {url_seed: seed}
                  elsif page_url.nil?
-                   seed = client.resource(:KeywordSeed)
-                   keywords.each do |keyword|
-                     seed.keywords << client.wrapper.string(keyword)
+                   seed = client.resource.keyword_seed do |seed|
+                     keywords.each do |keyword|
+                       seed.keywords << keyword
+                     end
                    end
                    {keyword_seed: seed}
                  else
-                   seed = client.resource(:KeywordAndUrlSeed)
-                   seed.url = client.wrapper.string(page_url)
-                   keywords.each do |keyword|
-                     seed.keywords << client.wrapper.string(keyword)
+                   seed = client.resource.keyword_and_url_seed do |seed|
+                     seed.url = page_url
+                     keywords.each do |keyword|
+                       seed.keywords << client.wrapper.string(keyword)
+                     end
                    end
                    {keyword_and_url_seed: seed}
                  end
 
   geo_target_constants = location_ids.map do |location_id|
-    client.wrapper.string(client.path.geo_target_constant(location_id))
+    client.path.geo_target_constant(location_id)
   end
 
   response = kp_idea_service.generate_keyword_ideas(
@@ -62,8 +65,8 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
     client.wrapper.string(client.path.language_constant(language_id)),
     geo_target_constants,
     # To restrict to only Google Search, change the parameter below to
-    # ::GOOGLE_SEARCH
-    client.enum(:KeywordPlanNetwork)::GOOGLE_SEARCH_AND_PARTNERS,
+    # :GOOGLE_SEARCH
+    :GOOGLE_SEARCH_AND_PARTNERS,
     **options_hash
   )
 

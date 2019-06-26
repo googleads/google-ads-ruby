@@ -43,18 +43,14 @@ def add_keyword_plan(customer_id)
 end
 
 def create_keyword_plan(client, customer_id)
-  keyword_plan = client.resource(:KeywordPlan)
-  keyword_plan.name = client.wrapper.string(
-    "Keyword plan for traffic estimate ##{(Time.new.to_f * 1000).to_i}",
-  )
-  forecast_period = client.resource(:KeywordPlanForecastPeriod)
-  forecast_period.date_interval = :NEXT_QUARTER
-  keyword_plan.forecast_period = forecast_period
+  operation = client.operation.create_resource.keyword_plan do |kp|
+    kp.name = "Keyword plan for traffic estimate ##{(Time.new.to_f * 1000).to_i}"
+    kp.forecast_period = client.resource.keyword_plan_forecast_period do |fp|
+      fp.date_interval = :NEXT_QUARTER
+    end
+  end
 
-  operation = client.operation(:KeywordPlan)
-  operation['create'] = keyword_plan
-
-  keyword_plan_service = client.service(:KeywordPlan)
+  keyword_plan_service = client.service.keyword_plan
   response = keyword_plan_service.mutate_keyword_plans(customer_id, [operation])
 
   resource_name = response.results.first.resource_name
@@ -64,28 +60,20 @@ def create_keyword_plan(client, customer_id)
 end
 
 def create_keyword_plan_campaign(client, customer_id, keyword_plan)
-  kp_campaign = client.resource(:KeywordPlanCampaign)
-  kp_campaign.name = client.wrapper.string(
-    "Keyword plan campaign ##{(Time.new.to_f * 1000).to_i}",
-  )
-  kp_campaign.cpc_bid_micros = client.wrapper.int64(1_000_000)
-  kp_campaign.keyword_plan_network = :GOOGLE_SEARCH
-  kp_campaign.keyword_plan = client.wrapper.string(keyword_plan)
+  operation = client.operation.create_resource.keyword_plan_campaign do |kpc|
+    kpc.name = "Keyword plan campaign ##{(Time.new.to_f * 1000).to_i}"
+    kpc.cpc_bid_micros = 1_000_000
+    kpc.keyword_plan_network = :GOOGLE_SEARCH
+    kpc.keyword_plan = keyword_plan
 
-  geo_target = client.resource(:KeywordPlanGeoTarget)
-  geo_target.geo_target_constant = client.wrapper.string(
-    client.path.geo_target_constant(2840), # US
-  )
-  kp_campaign.geo_targets << geo_target
+    kpc.geo_targets << client.resource.keyword_plan_geo_target do |gt|
+      gt.geo_target_constant = client.path.geo_target_constant(2840) # US
+    end
 
-  kp_campaign.language_constants << client.wrapper.string(
-    client.path.language_constant(1000), # English
-  )
+    kpc.language_constants << client.path.language_constant(1000) # English
+  end
 
-  operation = client.operation(:KeywordPlanCampaign)
-  operation['create'] = kp_campaign
-
-  kp_campaign_service_client = client.service(:KeywordPlanCampaign)
+  kp_campaign_service_client = client.service.keyword_plan_campaign
   response = kp_campaign_service_client.mutate_keyword_plan_campaigns(
     customer_id,
     [operation],
@@ -98,17 +86,13 @@ def create_keyword_plan_campaign(client, customer_id, keyword_plan)
 end
 
 def create_keyword_plan_ad_group(client, customer_id, plan_campaign)
-  kp_ad_group = client.resource(:KeywordPlanAdGroup)
-  kp_ad_group.name = client.wrapper.string(
-    "Keyword plan ad group ##{(Time.new.to_f * 1000).to_i}",
-  )
-  kp_ad_group.cpc_bid_micros = client.wrapper.int64(2_500_000)
-  kp_ad_group.keyword_plan_campaign = client.wrapper.string(plan_campaign)
+  operation = client.operation.create_resource.keyword_plan_ad_group do |kpag|
+    kpag.name = "Keyword plan ad group ##{(Time.new.to_f * 1000).to_i}"
+    kpag.cpc_bid_micros = 2_500_000
+    kpag.keyword_plan_campaign = plan_campaign
+  end
 
-  operation = client.operation(:KeywordPlanAdGroup)
-  operation['create'] = kp_ad_group
-
-  kp_ad_group_service = client.service(:KeywordPlanAdGroup)
+  kp_ad_group_service = client.service.keyword_plan_ad_group
   response = kp_ad_group_service.mutate_keyword_plan_ad_groups(
     customer_id,
     [operation],
@@ -121,31 +105,32 @@ def create_keyword_plan_ad_group(client, customer_id, plan_campaign)
 end
 
 def create_keyword_plan_keywords(client, customer_id, plan_ad_group)
-  kp_keyword1 = client.resource(:KeywordPlanKeyword)
-  kp_keyword1.text = client.wrapper.string('mars cruise')
-  kp_keyword1.cpc_bid_micros = client.wrapper.int64(2_000_000)
-  kp_keyword1.match_type = :BROAD
-  kp_keyword1.keyword_plan_ad_group = client.wrapper.string(plan_ad_group)
-
-  kp_keyword2 = client.resource(:KeywordPlanKeyword)
-  kp_keyword2.text = client.wrapper.string('cheap cruise')
-  kp_keyword2.cpc_bid_micros = client.wrapper.int64(1_500_000)
-  kp_keyword2.match_type = :PHRASE
-  kp_keyword2.keyword_plan_ad_group = client.wrapper.string(plan_ad_group)
-
-  kp_keyword3 = client.resource(:KeywordPlanKeyword)
-  kp_keyword3.text = client.wrapper.string('jupiter cruise')
-  kp_keyword3.cpc_bid_micros = client.wrapper.int64(1_990_000)
-  kp_keyword3.match_type = :EXACT
-  kp_keyword3.keyword_plan_ad_group = client.wrapper.string(plan_ad_group)
-
-  operations = [kp_keyword1, kp_keyword2, kp_keyword3].map do |keyword|
-    operation = client.operation(:KeywordPlanKeyword)
-    operation['create'] = keyword
-    operation
+  kp_keyword1 = client.resource.keyword_plan_keyword do |kpk|
+    kpk.text = "mars cruise"
+    kpk.cpc_bid_micros = 2_000_000
+    kpk.match_type = :BROAD
+    kpk.keyword_plan_ad_group = plan_ad_group
   end
 
-  kp_keyword_service = client.service(:KeywordPlanKeyword)
+  kp_keyword2 = client.resource.keyword_plan_keyword do |kpk|
+    kpk.text = "cheap cruise"
+    kpk.cpc_bid_micros = 1_500_000
+    kpk.match_type = :PHRASE
+    kpk.keyword_plan_ad_group = plan_ad_group
+  end
+
+  kp_keyword3 = client.resource.keyword_plan_keyword do |kpk|
+    kpk.text = "jupiter cruise"
+    kpk.cpc_bid_micros = 1_990_000
+    kpk.match_type = :EXACT
+    kpk.keyword_plan_ad_group = plan_ad_group
+  end
+
+  operations = [kp_keyword1, kp_keyword2, kp_keyword3].map do |keyword|
+    client.operation.create_resource.keyword_plan_keyword(keyword)
+  end
+
+  kp_keyword_service = client.service.keyword_plan_keyword
   response = kp_keyword_service.mutate_keyword_plan_keywords(
     customer_id,
     operations,
@@ -157,16 +142,13 @@ def create_keyword_plan_keywords(client, customer_id, plan_ad_group)
 end
 
 def create_keyword_plan_negative_keywords(client, customer_id, plan_campaign)
-  kp_negative_keyword = client.resource(:KeywordPlanNegativeKeyword)
-  kp_negative_keyword.text = client.wrapper.string('moon walk')
-  kp_negative_keyword.match_type = :BROAD
-  kp_negative_keyword.keyword_plan_campaign =
-      client.wrapper.string(plan_campaign)
+  operation = client.operation.create_resource.keyword_plan_negative_keyword do |kpnk|
+    kpnk.text = "moon walk"
+    kpnk.match_type = :BROAD
+    kpnk.keyword_plan_campaign = plan_campaign
+  end
 
-  operation = client.operation(:KeywordPlanNegativeKeyword)
-  operation['create'] = kp_negative_keyword
-
-  kp_negative_keyword_service = client.service(:KeywordPlanNegativeKeyword)
+  kp_negative_keyword_service = client.service.keyword_plan_negative_keyword
   response = kp_negative_keyword_service.mutate_keyword_plan_negative_keywords(
     customer_id,
     [operation],
