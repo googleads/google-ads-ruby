@@ -27,7 +27,7 @@ def get_billing_setup(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   search_query = <<~QUERY
     SELECT billing_setup.id,
