@@ -25,65 +25,57 @@ def add_expanded_text_ad_with_upgraded_urls(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
-  ad_group_ad_service = client.service(:AdGroupAd)
 
   # Create an ad group ad.
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.ad_group = client.wrapper.string(
-      sprintf('customers/%s/adGroups/%s', customer_id, ad_group_id))
-  ad_group_ad.status = client.enum(:AdGroupAdStatus)::PAUSED
-  ad_group_ad.ad = client.resource(:Ad)
-  ad_group_ad.ad.final_urls << client.wrapper.string(
-      'http://www.example.com/cruise/space/')
-  ad_group_ad.ad.final_urls << client.wrapper.string(
-      'http://www.example.com/locations/mars/')
+  ad_group_ad = client.resource.ad_group_ad do |aga|
+    aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
+    aga.status = :PAUSED
+    aga.ad = client.resource.ad do |ad|
+      ad.final_urls << "http://www.example.com/cruise/space/"
+      ad.final_urls << "http://www.example.com/locations/mars/"
 
-  # Set expanded text ad info
-  eta = client.resource(:ExpandedTextAdInfo)
-  eta.description = client.wrapper.string('Low-gravity fun for everyone!')
-  eta.headline_part1 = client.wrapper.string(
-      'Luxury Cruise to Mars')
-  eta.headline_part2 = client.wrapper.string(
-      'Visit the Red Planet in Style.')
-  ad_group_ad.ad.expanded_text_ad = eta
+      # Set expanded text ad info
+      ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
+        eta.description = "Low-gravity fun for everyone!"
+        eta.headline_part1 = "Luxury Cruise to Mars"
+        eta.headline_part2 = "Visit the Red Planet in Style."
+      end
 
-  # Specify a tracking URL for 3rd party tracking provider. You may specify
-  # one at customer, campaign, ad group, ad, criterion or feed item levels.
-  ad_group_ad.ad.tracking_url_template = client.wrapper.string(
-      'http://tracker.example.com/?season={_season}&promocode={_promocode}&'\
-      'u={lpurl}')
+      # Specify a tracking URL for 3rd party tracking provider. You may specify
+      # one at customer, campaign, ad group, ad, criterion or feed item levels.
+      ad.tracking_url_template =
+          "http://tracker.example.com/?season={_season}&promocode={_promocode}&u={lpurl}"
 
-  # Since your tracking URL has two custom parameters, provide their
-  # values too. This can be provided at campaign, ad group, ad, criterion
-  # or feed item levels.
-  param_1 = client.resource(:CustomParameter)
-  param_1.key = client.wrapper.string('season')
-  param_1.value = client.wrapper.string('easter123')
-  ad_group_ad.ad.url_custom_parameters << param_1
+      # Since your tracking URL has two custom parameters, provide their
+      # values too. This can be provided at campaign, ad group, ad, criterion
+      # or feed item levels.
+      ad.url_custom_parameters << client.resource.custom_parameter do |param|
+        param.key = "season"
+        param.value = "easter123"
+      end
 
-  param_2 = client.resource(:CustomParameter)
-  param_2.key = client.wrapper.string('promocode')
-  param_2.value = client.wrapper.string('nj123')
-  ad_group_ad.ad.url_custom_parameters << param_2
+      ad.url_custom_parameters << client.resource.custom_parameter do |param|
+        param.key = "promocode"
+        param.value = "nj123"
+      end
 
-  # Specify a list of final mobile URLs. This field cannot be set if URL field
-  # is set, or finalUrls is unset. This may be specified at ad, criterion and
-  # feed item levels.
-  ad_group_ad.ad.final_mobile_urls << client.wrapper.string(
-      'http://mobile.example.com/cruise/space/')
-  ad_group_ad.ad.final_mobile_urls << client.wrapper.string(
-      'http://mobile.example.com/locations/mars/')
+      # Specify a list of final mobile URLs. This field cannot be set if URL field
+      # is set, or finalUrls is unset. This may be specified at ad, criterion and
+      # feed item levels.
+      ad.final_mobile_urls << "http://mobile.example.com/cruise/space/"
+      ad.final_mobile_urls << "http://mobile.example.com/locations/mars/"
+    end
+  end
+
 
   # Create the operation.
-  ad_group_ad_operation = client.operation(:AdGroupAd)
-  ad_group_ad_operation['create'] = ad_group_ad
+  ad_group_ad_operation = client.operation.create_resource.ad_group_ad(ad_group_ad)
 
   # Add the ad group ad.
-  response = ad_group_ad_service.mutate_ad_group_ads(
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
       customer_id, [ad_group_ad_operation])
 
-  puts sprintf('Created expanded text ad %s.',
-      response.results.first.resource_name)
+  puts "Created expanded text ad #{response.results.first.resource_name}."
 end
 
 if __FILE__ == $0

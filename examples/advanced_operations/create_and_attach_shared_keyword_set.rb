@@ -18,9 +18,9 @@
 # This example creates a shared list of negative broad match keywords. It then
 # attaches them to a campaign.
 
-require 'optparse'
-require 'google/ads/google_ads'
-require 'date'
+require "optparse"
+require "google/ads/google_ads"
+require "date"
 
 def create_and_attach_shared_keyword_set(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
@@ -28,66 +28,53 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
 
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  shared_set_service = client.service(:SharedSet)
-  shared_criterion_service = client.service(:SharedCriterion)
-  campaign_shared_set_service = client.service(:CampaignSharedSet)
-
   # Keywords to create a shared set of.
-  keywords = ['mars cruise', 'mars hotels']
+  keywords = ["mars cruise", "mars hotels"]
 
   # Create shared negative keyword set.
-  shared_set = client.resource(:SharedSet)
-  shared_set.name = client.wrapper.string(
-      sprintf('API Negative keyword list - %s', (Time.new.to_f * 1000).to_i))
-  shared_set.type = client.enum(:SharedSetType)::NEGATIVE_KEYWORDS
+  shared_set = client.resource.shared_set do |ss|
+    ss.name = "API Negative keyword list - #{(Time.new.to_f * 1000).to_i}"
+    ss.type = :NEGATIVE_KEYWORDS
+  end
 
-  operation = client.operation(:SharedSet)
-  operation.create = shared_set
+  operation = client.operation.create_resource.shared_set(shared_set)
 
-  response = shared_set_service.mutate_shared_sets(customer_id, [operation])
+  response = client.service.shared_set.mutate_shared_sets(customer_id, [operation])
 
   shared_set_resource_name = response.results.first.resource_name
-  puts sprintf('Created shared set %s', shared_set_resource_name)
+  puts "Created shared set #{shared_set_resource_name}"
 
   shared_criteria = keywords.map do |keyword|
-    shared_criterion = client.resource(:SharedCriterion)
-    keyword_info = client.resource(:KeywordInfo)
-    keyword_info.text = client.wrapper.string(keyword)
-    keyword_info.match_type = client.enum(:KeywordMatchType)::BROAD
-    shared_criterion.keyword = keyword_info
-    shared_criterion.shared_set =
-        client.wrapper.string(shared_set_resource_name)
-
-    shared_criterion
+    client.resource.shared_criterion do |sc|
+      sc.keyword = client.resource.keyword_info do |kw|
+        kw.text = keyword
+        kw.match_type = :BROAD
+      end
+      sc.shared_set = shared_set_resource_name
+    end
   end
 
   operations = shared_criteria.map do |criterion|
-    operation = client.operation(:SharedCriterion)
-    operation.create = criterion
-
-    operation
+    client.operation.create_resource.shared_criterion(criterion)
   end
 
-  response = shared_criterion_service.mutate_shared_criteria(customer_id,
-      operations)
+  response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)
 
   response.results.each do |result|
-    puts sprintf('Created shared criterion %s', result.resource_name)
+    puts "Created shared criterion #{result.resource_name}"
   end
 
-  campaign_set = client.resource(:CampaignSharedSet)
-  campaign_set.campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id))
-  campaign_set.shared_set = client.wrapper.string(shared_set_resource_name)
+  campaign_set = client.resource.campaign_shared_set do |css|
+    css.campaign = client.path.campaign(customer_id, campaign_id)
+    css.shared_set = shared_set_resource_name
+  end
 
-  operation = client.operation(:CampaignSharedSet)
-  operation.create = campaign_set
+  operation = client.operation.create_resource.campaign_shared_set(campaign_set)
 
-  response = campaign_shared_set_service.mutate_campaign_shared_sets(
+  response = client.service.campaign_shared_set.mutate_campaign_shared_sets(
       customer_id, [operation])
 
-  puts sprintf('Created campaign shared set %s',
-      response.results.first.resource_name)
+  puts "Created campaign shared set #{response.results.first.resource_name}"
 end
 
 if __FILE__ == $PROGRAM_NAME

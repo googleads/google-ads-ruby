@@ -18,8 +18,8 @@
 # This example adds a Portfolio Bidding Strategy and uses it to construct a
 # campaign.
 
-require 'optparse'
-require 'google/ads/google_ads'
+require "optparse"
+require "google/ads/google_ads"
 
 def use_portfolio_bidding_strategy(customer_id)
   # GoogleAdsClient will read a config file from
@@ -27,62 +27,60 @@ def use_portfolio_bidding_strategy(customer_id)
 
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  budget_service = client.service(:CampaignBudget)
-  bidding_service = client.service(:BiddingStrategy)
-  campaign_service = client.service(:Campaign)
-
   # Create a budget, which can be shared by multiple campaigns.
-
-  budget = client.resource(:CampaignBudget)
-  budget.name = client.wrapper.string(sprintf(
-      'Interplanetary budget #%d', (Time.new.to_f * 1000).to_i))
-  budget.amount_micros = client.wrapper.int64(50_000_000)
-  budget.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
-  budget.explicitly_shared = client.wrapper.bool(true)
-
-  response = budget_service.mutate_campaign_budgets(
-      customer_id, [{create: budget}])
-  budget_id = response.results.first.resource_name
-
-  puts sprintf("Budget %s was created", budget_id)
-
-  # Create a portfolio bidding strategy.
-  bidding_strategy = client.resource(:BiddingStrategy)
-  bidding_strategy.name = client.wrapper.string(sprintf(
-      'Enhanced CPC #%d', (Time.new.to_f * 1000).to_i))
-  bidding_strategy.enhanced_cpc = client.resource(:EnhancedCpc)
-
-  response = bidding_service.mutate_bidding_strategies(
-      customer_id, [{create: bidding_strategy}])
-  bidding_id = response.results.first.resource_name
-
-  puts sprintf("Portfolio bidding strategy %s was created", bidding_id)
-
-  # Create campaigns.
-  campaigns = (1..2).map do |i|
-    campaign = client.resource(:Campaign)
-    campaign.name = client.wrapper.string(sprintf(
-        "Interplanetary Cruise #%d", (Time.new.to_f * 1000).to_i + i))
-    campaign.status = client.enum(:CampaignStatus)::PAUSED
-    campaign.bidding_strategy = client.wrapper.string(bidding_id)
-    campaign.campaign_budget = client.wrapper.string(budget_id)
-    campaign.advertising_channel_type =
-        client.enum(:AdvertisingChannelType)::SEARCH
-    network_settings = client.resource(:NetworkSettings)
-    network_settings.target_google_search = client.wrapper.bool(true)
-    network_settings.target_search_network = client.wrapper.bool(true)
-    network_settings.target_content_network = client.wrapper.bool(false)
-    network_settings.target_partner_search_network = client.wrapper.bool(false)
-    campaign.network_settings = network_settings
-
-    campaign
+  budget = client.resource.campaign_budget do |cb|
+    cb.name = "Interplanetary budget ##{(Time.new.to_f * 1000).to_i}"
+    cb.amount_micros = 50_000_000
+    cb.delivery_method = :STANDARD
+    cb.explicitly_shared = true
   end
 
-  campaign_operations = campaigns.map {|c| {create: c}}
-  response = campaign_service.mutate_campaigns(
+  operation = client.operation.create_resource.campaign_budget(budget)
+
+  response = client.service.campaign_budget.mutate_campaign_budgets(
+      customer_id, [operation])
+  budget_id = response.results.first.resource_name
+
+  puts "Budget #{budget_id} was created"
+
+  # Create a portfolio bidding strategy.
+  bidding_strategy = client.resource.bidding_strategy do |bs|
+    bs.name = "Enhanced CPC ##{(Time.new.to_f * 1000).to_i}"
+    bs.enhanced_cpc = client.resource.enhanced_cpc
+  end
+
+  operation = client.operation.create_resource.bidding_strategy(bidding_strategy)
+
+  response = client.service.bidding_strategy.mutate_bidding_strategies(
+      customer_id, [operation])
+  bidding_id = response.results.first.resource_name
+
+  puts "Portfolio bidding strategy #{bidding_id} was created"
+
+  # Create campaigns.
+  campaigns = 2.times.map do |i|
+    client.resource.campaign do |c|
+      c.name = "Interplanetary Cruise ##{(Time.new.to_f * 1000).to_i + i}"
+      c.status = :PAUSED
+      c.bidding_strategy = bidding_id
+      c.campaign_budget = budget_id
+      c.advertising_channel_type = :SEARCH
+      c.network_settings = client.resource.network_settings do |ns|
+        ns.target_google_search = true
+        ns.target_search_network = true
+        ns.target_content_network = false
+        ns.target_partner_search_network = false
+      end
+    end
+  end
+
+  campaign_operations = campaigns.map {|c|
+    client.operation.create_resource.campaign(c)
+  }
+  response = client.service.campaign.mutate_campaigns(
     customer_id, campaign_operations)
   response.results.each do |c|
-    puts sprintf("Campaign %s was created", c.resource_name)
+    puts "Campaign #{c.resource_name} was created"
   end
 end
 

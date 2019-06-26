@@ -30,10 +30,10 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   logo_image_bytes, logo_image_content_type = get_image(
-    'https://goo.gl/mtt54n'
+    "https://goo.gl/mtt54n"
   )
   marketing_image_bytes, marketing_image_content_type = get_image(
-    'http://goo.gl/3b9Wfh'
+    "http://goo.gl/3b9Wfh"
   )
 
   if logo_image_content_type != "image/png"
@@ -44,27 +44,27 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
     raise "got bad marketing image type back"
   end
 
-  media_file_service = client.service(:MediaFile)
+  media_file_logo = client.resource.media_file do |mf|
+    mf.type = :IMAGE
+    mf.image = client.resource.media_image do |mi|
+      mi.data = logo_image_bytes
+    end
+    mf.mime_type = :IMAGE_PNG
+  end
 
-  media_file_logo = client.resource(:MediaFile)
-  media_file_logo.type = :IMAGE
-  media_file_logo.image = client.resource(:MediaImage)
-  media_file_logo.image.data = client.wrapper.bytes(logo_image_bytes)
-  media_file_logo.mime_type = :IMAGE_PNG
+  media_file_logo_op = client.operation.create_resource.media_file(media_file_logo)
 
-  media_file_logo_op = client.operation(:MediaFile)
-  media_file_logo_op['create'] = media_file_logo
+  media_file_marketing = client.resource.media_file do |mf|
+    mf.type = :IMAGE
+    mf.image = client.resource.media_image do |mi|
+    mi.data = marketing_image_bytes
+    end
+    mf.mime_type = :IMAGE_JPEG
+  end
 
-  media_file_marketing = client.resource(:MediaFile)
-  media_file_marketing.type = :IMAGE
-  media_file_marketing.image = client.resource(:MediaImage)
-  media_file_marketing.image.data = client.wrapper.bytes(marketing_image_bytes)
-  media_file_marketing.mime_type = :IMAGE_JPEG
+  media_file_marketing_image_op = client.operation.create_resource.media_file(media_file_marketing)
 
-  media_file_marketing_image_op = client.operation(:MediaFile)
-  media_file_marketing_image_op['create'] = media_file_marketing
-
-  response = media_file_service.mutate_media_files(
+  response = client.service.media_file.mutate_media_files(
     customer_id,
     [
       media_file_logo_op,
@@ -74,36 +74,36 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
 
   logo_id, marketing_image_id = response.results.to_a.map(&:resource_name)
 
-  gmail_ad = client.resource(:GmailAdInfo)
-  gmail_ad.teaser = client.resource(:GmailTeaser)
-  gmail_ad.teaser.headline = client.wrapper.string("Dream")
-  gmail_ad.teaser.description = client.wrapper.string(
-    "Create your own adventure"
-  )
-  gmail_ad.teaser.business_name = client.wrapper.string("Interplanetary Ships")
-  gmail_ad.teaser.logo_image = client.wrapper.string(logo_id)
+  gmail_ad = client.resource.gmail_ad_info do |gmail_ad|
+    gmail_ad.teaser = client.resource.gmail_teaser do |teaser|
+      teaser.headline = "Dream"
+      teaser.description = "Create your own adventure"
 
-  gmail_ad.marketing_image = client.wrapper.string(marketing_image_id)
-  gmail_ad.marketing_image_headline = client.wrapper.string("Travel")
-  gmail_ad.marketing_image_description = client.wrapper.string("Take to the skies!")
+      teaser.business_name = "Interplanetary Ships"
+      teaser.logo_image = logo_id
+    end
 
-  ad = client.resource(:Ad)
-  ad.final_urls << client.wrapper.string("http://www.example.com")
-  ad.gmail_ad = gmail_ad
-  ad.name = client.wrapper.string("Gmail Ad #{(Time.now.to_f * 1000).to_i}")
+    gmail_ad.marketing_image = marketing_image_id
+    gmail_ad.marketing_image_headline = "Travel"
+    gmail_ad.marketing_image_description = "Take to the skies!"
+  end
 
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.ad = ad
-  ad_group_ad.status = :PAUSED
-  ad_group_ad.ad_group = client.wrapper.string(
-    client.path.ad_group(customer_id, ad_group_id),
-  )
+  ad = client.resource.ad do |ad|
+    ad.final_urls << "http://www.example.com"
+    ad.gmail_ad = gmail_ad
+    ad.name = "Gmail Ad #{(Time.now.to_f * 1000).to_i}"
+  end
 
-  op = client.operation(:AdGroupAd)
-  op['create'] = ad_group_ad
+  ad_group_ad = client.resource.ad_group_ad do |aga|
+    aga.ad = ad
+    aga.status = :PAUSED
+    aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
 
-  ad_group_ad_service = client.service(:AdGroupAd)
-  response = ad_group_ad_service.mutate_ad_group_ads(customer_id, [op])
+  end
+
+  op = client.operation.create_resource.ad_group_ad(ad_group_ad)
+
+  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [op])
   puts "Created Gmail Ad with ID #{response.results.first.resource_name}."
 end
 
@@ -141,7 +141,7 @@ if __FILE__ == $0
       options[:campaign_id] = v
     end
 
-    opts.on('-g', '--ad-group-id AD-GROUP-ID', String, 'Ad Group ID') do |v|
+    opts.on('-A', '--ad-group-id AD-GROUP-ID', String, 'Ad Group ID') do |v|
       options[:ad_group_id] = v
     end
 

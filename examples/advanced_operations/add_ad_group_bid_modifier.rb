@@ -27,35 +27,31 @@ def add_ad_group_bid_modifier(customer_id, ad_group_id, bid_modifier_value)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # Create Ad Group Bid Modifier Service
-  ad_group_bid_modifier_service = client.service(:AdGroupBidModifier)
-
   # Creates an ad group bid modifier for mobile devices with the specified
   # ad group ID and bid modifier value.
-  ad_group_bid_modifier = client.resource(:AdGroupBidModifier)
+  ad_group_bid_modifier = client.resource.ad_group_bid_modifier do |mod|
+    # Sets the ad group.
+    mod.ad_group = client.path.ad_group(customer_id, ad_group_id)
 
-  # Sets the ad group.
-  ad_group_resource = client.path.ad_group(customer_id, ad_group_id)
-  ad_group_bid_modifier.ad_group = client.wrapper.string(ad_group_resource)
+    # Sets the Bid Modifier.
+    mod.bid_modifier = bid_modifier_value
 
-  # Sets the Bid Modifier.
-  ad_group_bid_modifier.bid_modifier = client.wrapper.double(bid_modifier_value)
-
-  # Sets the Device.
-  ad_group_bid_modifier.device = client.resource(:DeviceInfo)
-  ad_group_bid_modifier.device.type = client.enum(:Device)::MOBILE
+    # Sets the Device.
+    mod.device = client.resource.device_info do |device|
+      device.type = :MOBILE
+    end
+  end
 
   # Create the operation.
-  operation = client.operation(:AdGroupBidModifier)
-  operation['create'] = ad_group_bid_modifier
+  operation = client.operation.create_resource.ad_group_bid_modifier(ad_group_bid_modifier)
 
   # Add the ad group ad.
-  response = ad_group_bid_modifier_service.mutate_ad_group_bid_modifiers(
+  response = client.service.ad_group_bid_modifier.mutate_ad_group_bid_modifiers(
       customer_id, [operation])
 
-  puts sprintf('Added %d ad group bid modifiers:', response.results.size)
+  puts "Added #{response.results.size} ad group bid modifiers:"
   response.results.each do |added_ad_group_bid_modifier|
-    puts sprintf("\t%s", added_ad_group_bid_modifier.resource_name)
+    puts "\t#{added_ad_group_bid_modifier.resource_name}"
   end
 end
 
