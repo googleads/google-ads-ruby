@@ -79,16 +79,10 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
     manager_link_id,
   )
 
-  manager_link = client.resource.customer_manager_link
-  manager_link.resource_name = manager_link_resource_name
-
-  mask = client.field_mask.with manager_link do
-    manager_link.status = :ACTIVE
+  manager_link_operation =
+      client.operation.update_resource.customer_manager_link(manager_link_resource_name) do |link|
+    link.status = :ACTIVE
   end
-
-  manager_link_operation = client.operation.customer_manager_link
-  manager_link_operation["update"] = manager_link
-  manager_link_operation["update_mask"] = mask
 
   response = client.service.customer_manager_link.mutate_customer_manager_link(
     client_customer_id,
