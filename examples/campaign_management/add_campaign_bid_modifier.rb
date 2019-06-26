@@ -28,8 +28,7 @@ def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
 
   operation = client.operation.create_resource.campaign_bid_modifier do |campaign_bid_modifier|
     # Sets the campaign.
-    campaign_resource = client.path.campaign(customer_id, campaign_id)
-    campaign_bid_modifier.campaign = campaign_resource
+    campaign_bid_modifier.campaign = client.path.campaign(customer_id, campaign_id)
 
     # Sets the Bid Modifier.
     campaign_bid_modifier.bid_modifier = bid_modifier
