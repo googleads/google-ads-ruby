@@ -28,7 +28,7 @@ def apply_recommendation(customer_id, recommendation_id)
 
   recommendation_resource =
       client.path.recommendation(customer_id, recommendation_id)
-  apply_recommendation_operation = client.operation(:ApplyRecommendation)
+  apply_recommendation_operation = client.operation.apply_recommendation
   apply_recommendation_operation.resource_name = recommendation_resource
 
   # Each recommendation type has optional parameters to override the recommended
@@ -37,20 +37,20 @@ def apply_recommendation(customer_id, recommendation_id)
   # For details, please read
   # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v1.services#google.ads.google_ads.v1.services.ApplyRecommendationOperation
   #
-  # overriding_ad = client.resource(:Ad)
-  # overriding_ad.id = client.wrapper.int64('INSERT_AD_ID_AS_INTEGER_HERE')
-  # text_ad_parameters = client.resource(:TextAdParameters)
-  # text_ad_parameters.ad = overriding_ad
+  # text_ad_parameters = client.resource.text_ad_parameters do |tap|
+  #   tap.ad = client.resource.ad do |ad|
+  #     ad.id = "INSERT_AD_ID_AS_INTEGER_HERE"
+  #   end
+  # end
   # apply_recommendation_operation.text_ad = text_ad_parameters
 
   # Issues a mutate request to apply the recommendation.
-  recommendation_service = client.service(:Recommendation)
+  recommendation_service = client.service.recommendation
   response = recommendation_service.apply_recommendation(customer_id,
       [apply_recommendation_operation])
   applied_recommendation = response.results.first
 
-  puts sprintf('Applied recommendation with resource name: "%s".',
-      applied_recommendation.resource_name)
+  puts "Applied recommendation with resource name: '#{applied_recommendation.resource_name}'."
 end
 
 if __FILE__ == $0

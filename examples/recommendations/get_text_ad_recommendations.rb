@@ -25,7 +25,7 @@ def get_text_ad_recommendations(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   query = <<~QUERY
     SELECT recommendation.type, recommendation.campaign,
@@ -40,22 +40,21 @@ def get_text_ad_recommendations(customer_id)
     recommendation = row.recommendation
     recommended_ad = recommendation.text_ad_recommendation.ad
 
-    puts sprintf('Recommendation ("%s") was found for campaign "%s".',
-        recommendation.resource_name, recommendation.campaign)
+    puts "Recommendation ('#{recommendation.resource_name}') was found for "\
+        "campaign '#{recommendation.campaign}'."
     if recommended_ad.expanded_text_ad
       eta = recommended_ad.expanded_text_ad
-      puts sprintf("\tHeadline 1 = '%s'\n\tHeadline2 = '%s'\n" +
-          "\tDescription = '%s'", eta.headline_part1, eta.headline_part2,
-          eta.description)
+      puts "\tHeadline 1 = '#{eta.headline_part1}'\n\tHeadline2 = '#{eta.headline_part2}'\n" +
+          "\tDescription = '#{eta.description}'"
     end
     if recommended_ad.display_url
-      puts sprintf("\tDisplay URL = '%s'", recommended_ad.display_url)
+      puts "\tDisplay URL = '#{recommended_ad.display_url}'"
     end
     recommended_ad.final_urls.each do |url|
-      puts sprintf("\tFinal Url = '%s'", url)
+      puts "\tFinal Url = '#{url}'"
     end
     recommended_ad.final_mobile_urls.each do |url|
-      puts sprintf("\tFinal Mobile Url = '%s'", url)
+      puts "\tFinal Mobile Url = '#{url}'"
     end
   end
 end
