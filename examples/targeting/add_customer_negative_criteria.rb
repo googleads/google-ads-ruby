@@ -27,24 +27,26 @@ def add_customer_negative_criteria(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  tragedy_criterion = client.resource(:CustomerNegativeCriterion)
-  tragedy_criterion.content_label = client.resource(:ContentLabelInfo)
-  tragedy_criterion.content_label.type = :TRAGEDY
+  tragedy_operation = client.operation.create_resource.customer_negative_criterion do |tragedy_criterion|
+    tragedy_criterion.content_label = client.resource.content_label_info do |cl|
+      cl.type = :TRAGEDY
+    end
+  end
 
-  placement_criterion = client.resource(:CustomerNegativeCriterion)
-  placement_criterion.placement = client.resource(:PlacementInfo)
-  placement_criterion.placement.url = client.wrapper.string("http://example.com")
+  placement_operation = client.operation.create_resource.customer_negative_criterion do |placement_criterion|
+    placement_criterion.placement = client.resource.placement_info do |pl|
+      pl.url = "http://example.com"
+    end
+  end
 
-  ops = [
-    {create: tragedy_criterion},
-    {create: placement_criterion},
-  ]
+  ops = [tragedy_operation, placement_operation]
 
-  customer_negative_criterion_service = client.service(
-    :CustomerNegativeCriterion
+  customer_negative_criterion_service = client.service.customer_negative_criterion
+
+  response = customer_negative_criterion_service.mutate_customer_negative_criteria(
+    customer_id,
+    ops,
   )
-
-  response = customer_negative_criterion_service.mutate_customer_negative_criteria(customer_id, ops)
 
   # Display the results.
   response.results.each do |negative_criterion|
@@ -84,7 +86,9 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_customer_negative_criteria(options.fetch(:customer_id))
+    add_customer_negative_criteria(
+      options.fetch(:customer_id).tr("-", ""),
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

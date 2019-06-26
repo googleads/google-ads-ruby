@@ -20,24 +20,18 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def add_campaign_targeting_criteria(
-    customer_id, campaign_id, keyword, location_id)
+def add_campaign_targeting_criteria(customer_id, campaign_id, keyword, location_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  criteria_service = client.service(:CampaignCriterion)
+  criteria_service = client.service.campaign_criterion
 
-  negative_keyword = create_negative_keyword(client, customer_id,
-      campaign_id, keyword)
+  negative_keyword = create_negative_keyword(client, customer_id, campaign_id, keyword)
   location = create_location(client, customer_id, campaign_id, location_id)
   proximity = create_proximity(client, customer_id, campaign_id)
 
-  operations = [
-    {create: negative_keyword},
-    {create: location},
-    {create: proximity}
-  ]
+  operations = [negative_keyword, location, proximity]
 
   response = criteria_service.mutate_campaign_criteria(customer_id, operations)
   response.results.each do |resource|
@@ -46,50 +40,46 @@ def add_campaign_targeting_criteria(
 end
 
 def create_proximity(client, customer_id, campaign_id)
-  criterion = client.resource(:CampaignCriterion)
-  criterion.campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id))
+  client.operation.create_resource.campaign_criterion do |criterion|
+    criterion.campaign = client.path.campaign(customer_id, campaign_id)
 
-  criterion.proximity = client.resource(:ProximityInfo)
-  criterion.proximity.address = client.resource(:AddressInfo)
-  criterion.proximity.address.street_address =
-      client.wrapper.string("38 avenue de l'Opéra")
-  criterion.proximity.address.city_name = client.wrapper.string("Paris")
-  criterion.proximity.address.postal_code = client.wrapper.string("75002")
-  criterion.proximity.address.country_code = client.wrapper.string("FR")
-  criterion.proximity.radius = client.wrapper.double(10)
-  # Default is kilometers.
-  criterion.proximity.radius_units = client.enum(:ProximityRadiusUnits)::MILES
+    criterion.proximity = client.resource.proximity_info do |proximity|
+      proximity.address = client.resource.address_info do |address|
+        address.street_address = "38 avenue de l'Opéra"
+        address.city_name = "Paris"
+        address.postal_code = "75002"
+        address.country_code = "FR"
+      end
 
-  return criterion
+      proximity.radius = 10
+      proximity.radius_units = :MILES
+    end
+  end
 end
 
 def create_location(client, customer_id, campaign_id, location_id)
-  criterion = client.resource(:CampaignCriterion)
-  criterion.campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id))
+  client.operation.create_resource.campaign_criterion do |criterion|
+    criterion.campaign = client.path.campaign(customer_id, campaign_id)
 
-  criterion.location = client.resource(:LocationInfo)
-  # Besides using location_id, you can also search by location names from
-  # GeoTargetConstantService.suggest_geo_target_constants() and directly
-  # apply GeoTargetConstant.resource_name here. An example can be found
-  # in get_geo_target_constant_by_names.rb.
-  criterion.location.geo_target_constant = client.wrapper.string(
-      client.path.geo_target_constant(location_id))
-
-  return criterion
+    criterion.location = client.resource.location_info do  |li|
+      # Besides using location_id, you can also search by location names from
+      # GeoTargetConstantService.suggest_geo_target_constants() and directly
+      # apply GeoTargetConstant.resource_name here. An example can be found
+      # in get_geo_target_constant_by_names.rb.
+      li.geo_target_constant = client.path.geo_target_constant(location_id)
+    end
+  end
 end
 
 def create_negative_keyword(client, customer_id, campaign_id, keyword)
-  criterion = client.resource(:CampaignCriterion)
-  criterion.campaign = client.wrapper.string(
-      client.path.campaign(customer_id, campaign_id))
-  criterion.negative = client.wrapper.bool(true)
-  criterion.keyword = client.resource(:KeywordInfo)
-  criterion.keyword.text = client.wrapper.string(keyword)
-  criterion.keyword.match_type = client.enum(:KeywordMatchType)::BROAD
-
-  return criterion
+  client.operation.create_resource.campaign_criterion do |criterion|
+    criterion.campaign = client.path.campaign(customer_id, campaign_id)
+    criterion.negative = true
+    criterion.keyword = client.resource.keyword_info do |ki|
+      ki.text = client.wrapper.string(keyword)
+      ki.match_type = :BROAD
+    end
+  end
 end
 
 if __FILE__ == $PROGRAM_NAME
