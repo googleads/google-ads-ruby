@@ -27,46 +27,41 @@ def add_account_budget_proposal(customer_id, billing_setup_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  account_budget_proposal_service = client.service(:AccountBudgetProposal)
 
-  proposal = client.resource(:AccountBudgetProposal)
-  proposal.billing_setup = client.wrapper.string(
-      client.path.billing_setup(customer_id, billing_setup_id))
-  proposal.proposal_type = client.enum(:AccountBudgetProposalType)::CREATE
-  proposal.proposed_name = client.wrapper.string('Account Budget (example)')
+  operation = client.operation.create_resource.account_budget_proposal do |proposal|
+    proposal.billing_setup = client.path.billing_setup(customer_id, billing_setup_id)
+    proposal.proposal_type = :CREATE
+    proposal.proposed_name = 'Account Budget (example)'
 
-  # Specify the account budget starts immediately
-  proposal.proposed_start_time_type = client.enum(:TimeType)::NOW
-  # Alternatively you can specify a specific start time. Refer to the
-  # AccountBudgetProposal resource documentation for allowed formats.
-  #
-  # proposal.proposed_start_date_time = client.wrapper
-  #     .string('2020-01-02 03:04:05')
+    # Specify the account budget starts immediately
+    proposal.proposed_start_time_type = :NOW
+    # Alternatively you can specify a specific start time. Refer to the
+    # AccountBudgetProposal resource documentation for allowed formats.
+    #
+    # proposal.proposed_start_date_time = '2020-01-02 03:04:05'
 
-  # Specify that the budget runs forever.
-  proposal.proposed_end_time_type = client.enum(:TimeType)::FOREVER
-  # Alternatively you can specify a specific end time. Allowed formats are as
-  # above.
-  #
-  # proposal.proposed_end_date_time = client.wrapper
-  #     .string('2021-01-02 03:04:05')
+    # Specify that the budget runs forever.
+    proposal.proposed_end_time_type = :FOREVER
+    # Alternatively you can specify a specific end time. Allowed formats are as
+    # above.
+    #
+    # proposal.proposed_end_date_time = '2021-01-02 03:04:05'
 
-  # Optional: set notes for the budget. These are free text and do not effect
-  # budget delivery.
-  #
-  # proposal.proposed_notes = client.wrapper
-  #     .string('Received prepayment of $0.01')
+    # Optional: set notes for the budget. These are free text and do not effect
+    # budget delivery.
+    #
+    # proposal.proposed_notes = 'Received prepayment of $0.01'
 
-  # Set the spending limit to 0.01, measured in the Google Ads account currency.
-  proposal.proposed_spending_limit_micros = client.wrapper.int64(10_000)
+    # Set the spending limit to 0.01, measured in the Google Ads account currency.
+    proposal.proposed_spending_limit_micros = 10_000
+  end
 
-  # Create an operation which will add the new AccountBudgetProposal
-  account_budget_proposal_operation = client.operation(:AccountBudgetProposal)
-  account_budget_proposal_operation['create'] = proposal
-
+  account_budget_proposal_service = client.service.account_budget_proposal
   # Add budget proposal.
   response = account_budget_proposal_service.mutate_account_budget_proposal(
-      customer_id, account_budget_proposal_operation)
+    customer_id,
+    operation,
+  )
 
   puts sprintf("Created budget proposal %s.",
       response.results.first.resource_name)
