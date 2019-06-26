@@ -47,7 +47,7 @@ def add_account_budget_proposal(customer_id, billing_setup_id)
     #
     # proposal.proposed_end_date_time = '2021-01-02 03:04:05'
 
-    # Optional: set notes for the budget. These are free text and do not effect
+    # Optional: set notes for the budget. These are free text and do not affect
     # budget delivery.
     #
     # proposal.proposed_notes = 'Received prepayment of $0.01'

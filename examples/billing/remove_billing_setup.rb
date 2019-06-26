@@ -29,8 +29,7 @@ def remove_billing_setup(customer_id, billing_setup_id)
   billing_setup_service = client.service.billing_setup
 
   resource =  client.path.billing_setup(customer_id, billing_setup_id)
-  op = client.operation.billing_setup
-  op["remove"] = resource
+  op = client.operation.remove_resource.billing_setup(resource)
 
   response = billing_setup_service.mutate_billing_setup(
     customer_id,
