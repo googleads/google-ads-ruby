@@ -26,7 +26,7 @@ def generate_forecast_metrics(customer_id, keyword_plan_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  kp_service = client.service(:KeywordPlan)
+  kp_service = client.service.keyword_plan
   response = kp_service.generate_forecast_metrics(
     client.path.keyword_plan(customer_id, keyword_plan_id)
   )
