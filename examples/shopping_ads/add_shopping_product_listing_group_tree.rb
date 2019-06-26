@@ -31,7 +31,10 @@ require 'google/ads/google_ads'
 require 'date'
 
 def add_shopping_product_listing_group_tree(
-    customer_id, ad_group_id, should_replace_existing_tree)
+  customer_id,
+  ad_group_id,
+  should_replace_existing_tree
+)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -53,19 +56,19 @@ def add_shopping_product_listing_group_tree(
   # This resource has not been created yet and will include the temporary ID as
   # part of the criterion ID.
   ad_group_criterion_root_resource_name = ad_group_criterion_root.resource_name
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_root
-  operations = [operation]
+  operations = [client.operation.create_resource.ad_group_criterion(ad_group_criterion_root)]
 
   # 3) Construct the listing group unit nodes for NEW, USED, and other.
 
   # Biddable Unit node: (Condition NEW node)
   # * Product Condition: NEW
   # * CPC bid: $0.20
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  product_condition_info = client.resource(:ProductConditionInfo)
-  product_condition_info.condition = :NEW
-  listing_dimension_info.product_condition = product_condition_info
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    ldi.product_condition = client.resource.product_condition_info do |pci|
+      pci.condition = :NEW
+    end
+  end
+
   ad_group_criterion_condition_new = create_listing_group_unit_biddable(
     client,
     customer_id,
@@ -74,17 +77,19 @@ def add_shopping_product_listing_group_tree(
     listing_dimension_info,
     200_000,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_condition_new
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_condition_new
+  )
   operations << operation
 
   # Biddable Unit node: (Condition USED node)
   # * Product Condition: USED
   # * CPC bid: $0.10
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  product_condition_info = client.resource(:ProductConditionInfo)
-  product_condition_info.condition = :USED
-  listing_dimension_info.product_condition = product_condition_info
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    ldi.product_condition = client.resource.product_condition_info do |pci|
+      pci.condition = :USED
+    end
+  end
   ad_group_criterion_condition_used = create_listing_group_unit_biddable(
     client,
     customer_id,
@@ -93,15 +98,16 @@ def add_shopping_product_listing_group_tree(
     listing_dimension_info,
     100_000,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_condition_used
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_condition_used
+  )
   operations << operation
 
   # Sub-division node: (Condition "other" node)
   # * Product Condition: (not specified)
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  listing_dimension_info.product_condition =
-      client.resource(:ProductConditionInfo)
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    ldi.product_condition = client.resource.product_condition_info
+  end
   ad_group_criterion_condition_other = create_listing_group_subdivision(
     client,
     customer_id,
@@ -109,12 +115,13 @@ def add_shopping_product_listing_group_tree(
     ad_group_criterion_root_resource_name,
     listing_dimension_info,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_condition_other
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_condition_other
+  )
   operations << operation
 
   ad_group_criterion_condition_other_resource_name =
-      ad_group_criterion_condition_other.resource_name
+    ad_group_criterion_condition_other.resource_name
 
   # 4) Construct the listing group unit nodes for CoolBrand, CheapBrand, and
   # other.
@@ -122,10 +129,12 @@ def add_shopping_product_listing_group_tree(
   # Biddable Unit node: (Brand CoolBrand node)
   # * Brand: CoolBrand
   # * CPC bid: $0.90
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  listing_brand_info = client.resource(:ListingBrandInfo)
-  listing_brand_info.value = client.wrapper.string("CoolBrand")
-  listing_dimension_info.listing_brand = listing_brand_info
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    listing_dimension_info.listing_brand = client.resource.listing_brand_info do |listing_brand_info|
+      listing_brand_info.value = client.wrapper.string("CoolBrand")
+    end
+  end
+
   ad_group_criterion_brand_cool_brand = create_listing_group_unit_biddable(
     client,
     customer_id,
@@ -134,17 +143,19 @@ def add_shopping_product_listing_group_tree(
     listing_dimension_info,
     900_000,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_brand_cool_brand
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_brand_cool_brand
+  )
   operations << operation
 
   # Biddable Unit node: (Brand CheapBrand node)
   # * Brand: CheapBrand
   # * CPC bid: $0.01
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  listing_brand_info = client.resource(:ListingBrandInfo)
-  listing_brand_info.value = client.wrapper.string("CheapBrand")
-  listing_dimension_info.listing_brand = listing_brand_info
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    listing_dimension_info.listing_brand = client.resource.listing_brand_info do |listing_brand_info|
+      listing_brand_info.value = client.wrapper.string("CheapBrand")
+    end
+  end
   ad_group_criterion_brand_cheap_brand = create_listing_group_unit_biddable(
     client,
     customer_id,
@@ -153,14 +164,16 @@ def add_shopping_product_listing_group_tree(
     listing_dimension_info,
     10_000,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_brand_cheap_brand
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_brand_cheap_brand
+  )
   operations << operation
 
   # Biddable Unit node: (Brand other node)
   # * CPC bid: $0.05
-  listing_dimension_info = client.resource(:ListingDimensionInfo)
-  listing_dimension_info.listing_brand = client.resource(:ListingBrandInfo)
+  listing_dimension_info = client.resource.listing_dimension_info do |ldi|
+    listing_dimension_info.listing_brand = client.resource.listing_brand_info
+  end
   ad_group_criterion_brand_other_brand = create_listing_group_unit_biddable(
     client,
     customer_id,
@@ -169,12 +182,13 @@ def add_shopping_product_listing_group_tree(
     listing_dimension_info,
     50_000,
   )
-  operation = client.operation(:AdGroupCriterion)
-  operation["create"] = ad_group_criterion_brand_other_brand
+  operation = client.operation.create_resource.ad_group_criterion(
+    ad_group_criterion_brand_other_brand
+  )
   operations << operation
 
   # Issue the mutate request.
-  agc_service = client.service(:AdGroupCriterion)
+  agc_service = client.service.ad_group_criterion
   response = agc_service.mutate_ad_group_criteria(customer_id, operations)
 
   total_count = 0
@@ -186,7 +200,7 @@ def add_shopping_product_listing_group_tree(
 end
 
 def remove_listing_group_tree(client, customer_id, ad_group_id)
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   query = <<~QUERY
     SELECT
@@ -207,13 +221,11 @@ def remove_listing_group_tree(client, customer_id, ad_group_id)
     criterion = row.ad_group_criterion
     puts "Found an ad group criterion with resource name: #{criterion.resource_name}"
 
-    operation = client.operation(:AdGroupCriterion)
-    operation["remove"] = criterion.resource_name
-    operation
+    client.operation.remove_resource.ad_group_criterion(criterion.resource_name)
   end
 
   if operations.any?
-    agc_service = client.service(:AdGroupCriterion)
+    agc_service = client.service.ad_group_criterion
     response = agc_service.mutate_ad_group_criteria(customer_id, operations)
     puts "Removed #{response.results.count} ad group criteria."
   end
@@ -227,32 +239,34 @@ def next_id
   @id -= 1
 end
 
-def create_listing_group_subdivision(client, customer_id, ad_group_id,
-    parent_ad_group_criterion_name = nil, listing_dimension_info = nil)
-  listing_group_info = client.resource(:ListingGroupInfo)
-  listing_group_info.type = :SUBDIVISION
-
-  if parent_ad_group_criterion_name && listing_dimension_info
-    listing_group_info.parent_ad_group_criterion = client.wrapper.string(
-      parent_ad_group_criterion_name
+def create_listing_group_subdivision(
+  client,
+  customer_id,
+  ad_group_id,
+  parent_ad_group_criterion_name = nil,
+  listing_dimension_info = nil
+)
+  client.resource.ad_group_criterion do |criterion|
+    criterion.resource_name = client.path.ad_group_criterion(
+      customer_id,
+      ad_group_id,
+      next_id,
     )
-    listing_group_info.case_value = listing_dimension_info
+
+    criterion.status = :ENABLED
+    criterion.listing_group = client.resource.listing_group_info do |listing_group_info|
+      listing_group_info.type = :SUBDIVISION
+
+      if parent_ad_group_criterion_name && listing_dimension_info
+        listing_group_info.parent_ad_group_criterion = parent_ad_group_criterion_name
+        listing_group_info.case_value = listing_dimension_info
+      end
+    end
   end
-
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.resource_name = client.path.ad_group_criterion(
-    customer_id,
-    ad_group_id,
-    next_id,
-  )
-  criterion.status = :ENABLED
-  criterion.listing_group = listing_group_info
-
-  criterion
 end
 
 def create_listing_group_unit_biddable(client, customer_id, ad_group_id,
-    parent_ad_group_criterion_name, listing_dimension_info, cpc_bid_micros)
+                                       parent_ad_group_criterion_name, listing_dimension_info, cpc_bid_micros)
   # Note: There are two approaches for creating new unit nodes:
   # (1) Set the ad group resource name on the criterion (no temporary ID
   # required).
@@ -261,24 +275,18 @@ def create_listing_group_unit_biddable(client, customer_id, ad_group_id,
   # In both cases you must set the parent ad group criterion's resource name on
   # the listing group for non-root nodes.
   # This example demonstrates method (1).
-  criterion = client.resource(:AdGroupCriterion)
-  criterion.ad_group = client.wrapper.string(client.path.ad_group(
-    customer_id,
-    ad_group_id,
-  ))
-  criterion.status = :ENABLED
-  criterion.cpc_bid_micros = client.wrapper.int64(cpc_bid_micros)
+  client.resource.ad_group_criterion do |criterion|
+    criterion.ad_group = client.path.ad_group(customer_id, ad_group_id)
+    criterion.status = :ENABLED
+    criterion.cpc_bid_micros = cpc_bid_micros
 
-  listing_group = client.resource(:ListingGroupInfo)
-  # The type UNIT allows the group to be biddable.
-  listing_group.type = :UNIT
-  listing_group.parent_ad_group_criterion = client.wrapper.string(
-    parent_ad_group_criterion_name
-  )
-  listing_group.case_value = listing_dimension_info
-  criterion.listing_group = listing_group
-
-  criterion
+    criterion.listing_group = client.resource.listing_group_info do |listing_group|
+      # The type UNIT allows the group to be biddable.
+      listing_group.type = :UNIT
+      listing_group.parent_ad_group_criterion = parent_ad_group_criterion_name
+      listing_group.case_value = listing_dimension_info
+    end
+  end
 end
 
 if __FILE__ == $0
@@ -314,7 +322,7 @@ if __FILE__ == $0
     end
 
     opts.on('-r', '--should-replace-existing-tree SHOULD-REPLACE-EXISTING-TREE',
-        String, 'Create Default Listing Group') do |v|
+            String, 'Create Default Listing Group') do |v|
       options[:should_replace_existing_tree] = true if v
     end
 
@@ -348,7 +356,7 @@ if __FILE__ == $0
     end
   rescue Google::Gax::RetryError => e
     STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
+                  "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
                   e.cause.details, e.cause.metadata['request-id'])
   end
 end
