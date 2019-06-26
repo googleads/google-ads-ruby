@@ -28,20 +28,18 @@ def add_campaign_label(customer_id, label_id, campaign_ids)
   label_resource_name = client.path.label(customer_id, label_id)
 
   labels = campaign_ids.map { |campaign_id|
-    label = client.resource(:CampaignLabel)
-    campaign_resource_name = client.path.campaign(customer_id, campaign_id)
-    label.campaign = client.wrapper.string(campaign_resource_name)
-    label.label = client.wrapper.string(label_resource_name)
-    label
+    client.resource.campaign_label do |label|
+      campaign_resource_name = client.path.campaign(customer_id, campaign_id)
+      label.campaign = campaign_resource_name
+      label.label = label_resource_name
+    end
   }
 
   ops = labels.map { |label|
-    op = client.operation(:CampaignLabel)
-    op["create"] = label
-    op
+    client.operation.create_resource.campaign_label(label)
   }
 
-  campaign_label_service = client.service(:CampaignLabel)
+  campaign_label_service = client.service.campaign_label
   response = campaign_label_service.mutate_campaign_labels(customer_id, ops)
   response.results.each do |result|
     puts("Created campaign label with id: #{result.resource_name}")
