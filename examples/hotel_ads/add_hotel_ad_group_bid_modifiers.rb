@@ -27,63 +27,46 @@ def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
   operations = []
+  ad_group_resource = client.path.ad_group(customer_id, ad_group_id)
 
   # 1) Creates an ad group bid modifier based on the hotel check-in day.
-  check_in_day_ad_group_bid_modifier = client.resource(:AdGroupBidModifier)
+  operations << client.operation.create_resource.ad_group_bid_modifier do |bm|
+    # Sets the ad group.
+    bm.ad_group = ad_group_resource
 
-  # Sets the ad group.
-  ad_group_resource = client.path.ad_group(customer_id, ad_group_id)
-  check_in_day_ad_group_bid_modifier.ad_group =
-      client.wrapper.string(ad_group_resource)
+    # Sets the check-in day to Monday.
+    bm.hotel_check_in_day = client.resource.hotel_check_in_day_info do |info|
+      info.day_of_week = :MONDAY
+    end
 
-  # Sets the check-in day to Monday.
-  hotel_check_in_day = client.resource(:HotelCheckInDayInfo)
-  hotel_check_in_day.day_of_week = client.enum(:DayOfWeek)::MONDAY
-  check_in_day_ad_group_bid_modifier.hotel_check_in_day = hotel_check_in_day
-
-  # Sets the bid modifier value to 150%.
-  check_in_day_ad_group_bid_modifier.bid_modifier = client.wrapper.double(1.5)
-
-  # Creates an ad group bid modifier operation.
-  check_in_day_ad_group_bid_modifier_operation =
-      client.operation(:AdGroupBidModifier)
-  check_in_day_ad_group_bid_modifier_operation['create'] =
-      check_in_day_ad_group_bid_modifier
-  operations << check_in_day_ad_group_bid_modifier_operation
+    # Sets the bid modifier value to 150%.
+    bm.bid_modifier = 1.5
+  end
 
   # 2) Creates an ad group bid modifier based on the hotel length of stay.
-  length_of_stay_ad_group_bid_modifier = client.resource(:AdGroupBidModifier)
+  operations << client.operation.create_resource.ad_group_bid_modifier do |bm|
+    # Sets the ad group.
+    bm.ad_group = ad_group_resource
 
-  # Sets the ad group.
-  length_of_stay_ad_group_bid_modifier.ad_group =
-      client.wrapper.string(ad_group_resource)
+    # Creates the hotel length of stay info.
+    bm.hotel_length_of_stay = client.resource.hotel_length_of_stay_info do |info|
+      info.min_nights = 3
+      info.max_nights = 7
+    end
 
-  # Creates the hotel length of stay info.
-  length_of_stay_info = client.resource(:HotelLengthOfStayInfo)
-  length_of_stay_info.min_nights = client.wrapper.int64(3)
-  length_of_stay_info.max_nights = client.wrapper.int64(7)
-  length_of_stay_ad_group_bid_modifier.hotel_length_of_stay =
-      length_of_stay_info
-
-  # Sets the bid modifier value to 170%.
-  length_of_stay_ad_group_bid_modifier.bid_modifier = client.wrapper.double(1.7)
-
-  # Creates an ad group bid modifier operation.
-  length_of_stay_ad_group_bid_modifier_operation =
-      client.operation(:AdGroupBidModifier)
-  length_of_stay_ad_group_bid_modifier_operation['create'] =
-      length_of_stay_ad_group_bid_modifier
-  operations << length_of_stay_ad_group_bid_modifier_operation
+    # Sets the bid modifier value to 170%.
+    bm.bid_modifier = 1.7
+  end
 
   # 3) Issues a mutate request to add an ad group bid modifiers.
-  ad_group_bid_modifier_service = client.service(:AdGroupBidModifier)
+  ad_group_bid_modifier_service = client.service.ad_group_bid_modifier
   response = ad_group_bid_modifier_service.mutate_ad_group_bid_modifiers(
       customer_id, operations)
 
   # Print out resource names of the added ad group bid modifiers.
-  puts sprintf("Added %d hotel ad group bid modifiers:", response.results.size)
+  puts "Added #{response.results.size} hotel ad group bid modifiers:"
   response.results.each do |added_ad_group_bid_modifier|
-    puts sprintf("\t%s", added_ad_group_bid_modifier.resource_name)
+    puts "\t#{added_ad_group_bid_modifier.resource_name}"
   end
 end
 
