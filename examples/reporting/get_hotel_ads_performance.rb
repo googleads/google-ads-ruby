@@ -26,7 +26,7 @@ def get_hotel_ads_performance(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   # Limits to the 50 keywords with the most impressions in the date range.
   # If you wish to exclude entries with zero impressions, include a
@@ -61,15 +61,11 @@ def get_hotel_ads_performance(customer_id)
     metrics = row.metrics
     segments = row.segments
 
-    puts sprintf("Ad Group ID %d in campaign ID %d with hotel check-in on %s "\
-        "and %d day(s) of stay had %d impression(s) and %d average lead value "\
-        "(in micros) during the last 7 days.",
-        ad_group.id,
-        campaign.id,
-        segments.hotel_check_in_day_of_week,
-        segments.hotel_length_of_stay,
-        metrics.impressions,
-        metrics.hotel_average_lead_value_micros)
+    puts "Ad Group ID #{ad_group.id} in campaign ID #{campaign.id} with hotel "\
+      "check-in on #{segments.hotel_check_in_day_of_week} and "\
+      "#{segments.hotel_length_of_stay} day(s) of stay had #{metrics.impressions} "\
+      "impression(s) and #{metrics.hotel_average_lead_value_micros} average lead value "\
+      "(in micros) during the last 7 days."
   end
 end
 

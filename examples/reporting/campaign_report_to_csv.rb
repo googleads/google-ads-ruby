@@ -41,7 +41,7 @@ def write_campaign_report_csv(customer_id, target_filepath)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   query = <<~QUERY
       SELECT campaign.id,
@@ -59,6 +59,11 @@ def write_campaign_report_csv(customer_id, target_filepath)
   response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
   # convert the Google Ads response rows in to CSV ready hash objects
   csv_rows = response.map { |row| result_row_as_csv_hash(row) }
+
+  if csv_rows.empty?
+    puts "No results found."
+    return
+  end
 
   CSV.open(target_filepath, "wb") do |csv|
     # use the keys of the first csv_row as a header row

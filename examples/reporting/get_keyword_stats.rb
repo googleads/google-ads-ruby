@@ -26,7 +26,7 @@ def get_keyword_stats(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  ga_service = client.service(:GoogleAds)
+  ga_service = client.service.google_ads
 
   # Limits to the 50 keywords with the most impressions in the date range.
   # If you wish to exclude entries with zero impressions, include a
@@ -54,7 +54,7 @@ def get_keyword_stats(customer_id)
   response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
 
   if response.response.results.empty?
-    puts sprintf("The given query returned no entries:\n %s", query)
+    puts "The given query returned no entries:\n #{query}"
     return
   end
 
@@ -64,19 +64,12 @@ def get_keyword_stats(customer_id)
     criterion = row.ad_group_criterion
     metrics = row.metrics
 
-    puts sprintf("Keyword text '%s' with match type '%s' and ID %d in ad group"\
-        " '%s' with ID %d in campaign '%s' with ID %d had %d impression(s), "\
-        "%d click(s), and %d cost (in micros) during the last 7 days.",
-        criterion.keyword.text,
-        criterion.keyword.match_type,
-        criterion.criterion_id,
-        ad_group.name,
-        ad_group.id,
-        campaign.name,
-        campaign.id,
-        metrics.impressions,
-        metrics.clicks,
-        metrics.cost_micros)
+    puts "Keyword text '#{criterion.keyword.text}' with match type "\
+      "'#{criterion.keyword.match_type}' and ID #{criterion.criterion_id} in "\
+      "ad group '#{ad_group.name}' with ID #{ad_group.id} in campaign "\
+      "'#{campaign.name}' with ID #{campaign.id} had #{metrics.impressions} "\
+      "impression(s), #{metrics.clicks} click(s), and #{metrics.cost_micros} "\
+      "cost (in micros) during the last 7 days."
   end
 end
 
