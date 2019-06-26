@@ -50,153 +50,130 @@ end
 # Creates a new campaign budget in the specified client account.
 def add_campaign_budget(client, customer_id)
   # Create the budget and set relevant fields.
-  budget = client.resource(:CampaignBudget)
-  budget.name = generate_random_name_field(client,
-      'Interplanetary Cruise Budget')
-  budget.delivery_method = client.enum(:BudgetDeliveryMethod)::STANDARD
-  budget.amount_micros = client.wrapper.int64(50_000_000)
-
-  # Create the budget operation.
-  campaign_budget_operation = client.operation(:CampaignBudget)
-  campaign_budget_operation['create'] = budget
+  campaign_budget_operation = client.operation.create_resource.campaign_budget do |cb|
+    cb.name = generate_random_name_field("Interplanetary Cruise Budget")
+    cb.delivery_method = :STANDARD
+    cb.amount_micros = 50_000_000
+  end
 
   # Issue a mutate request.
-  campaign_budget_service = client.service(:CampaignBudget)
+  campaign_budget_service = client.service.campaign_budget
   response = campaign_budget_service.mutate_campaign_budgets(customer_id,
       [campaign_budget_operation])
 
   # Fetch the new budget's resource name.
   budget_resource = response.results.first.resource_name
 
-  puts sprintf('Added budget with resource name "%s".', budget_resource)
+  puts "Added budget with resource name '#{budget_resource}'."
 
-  return budget_resource
+  budget_resource
 end
 
 # Creates a new campaign in the specified client account.
 def add_hotel_campaign(client, customer_id, budget_resource,
     hotel_center_account_id, cpc_bid_ceiling_micro_amount)
   # Create a campaign.
-  campaign = client.resource(:Campaign)
-  campaign.name = generate_random_name_field(client,
-      'Interplanetary Cruise Campaign')
+  campaign_operation = client.operation.create_resource.campaign do |c|
+    c.name = generate_random_name_field("Interplanetary Cruise Campaign")
 
-  # Configure settings related to hotel campaigns.
-  campaign.advertising_channel_type =
-      client.enum(:AdvertisingChannelType)::HOTEL
-  hotel_setting_info = client.resource(:HotelSettingInfo)
-  hotel_setting_info.hotel_center_id =
-      client.wrapper.int64(hotel_center_account_id)
-  campaign.hotel_setting = hotel_setting_info
+    # Configure settings related to hotel campaigns.
+    c.advertising_channel_type = :HOTEL
+    c.hotel_setting = client.resource.hotel_setting_info do |hsi|
+      hsi.hotel_center_id = hotel_center_account_id
+    end
 
-  # Recommendation: Set the campaign to PAUSED when creating it to prevent the
-  # ads from immediately serving. Set to ENABLED once you've added targeting and
-  # the ads are ready to serve.
-  campaign.status = client.enum(:CampaignStatus)::PAUSED
+    # Recommendation: Set the campaign to PAUSED when creating it to prevent the
+    # ads from immediately serving. Set to ENABLED once you've added targeting and
+    # the ads are ready to serve.
+    c.status = :PAUSED
 
-  # Set the bidding strategy to PercentCpc. Only Manual CPC and Percent CPC can
-  # be used for hotel campaigns.
-  campaign.percent_cpc = client.resource(:PercentCpc)
-  campaign.percent_cpc.cpc_bid_ceiling_micros =
-      client.wrapper.int64(cpc_bid_ceiling_micro_amount)
+    # Set the bidding strategy to PercentCpc. Only Manual CPC and Percent CPC can
+    # be used for hotel campaigns.
+    c.percent_cpc = client.resource.percent_cpc do |pcpc|
+      pcpc.cpc_bid_ceiling_micros = cpc_bid_ceiling_micro_amount
+    end
 
-  # Set the budget.
-  campaign.campaign_budget = client.wrapper.string(budget_resource)
+    # Set the budget.
+    c.campaign_budget = budget_resource
 
-  # Configures the campaign network options. Only Google Search is allowed for
-  # hotel campaigns.
-  network_settings = client.resource(:NetworkSettings)
-  network_settings.target_google_search = client.wrapper.bool(true)
-  campaign.network_settings = network_settings
-
-  # Create a campaign operation.
-  campaign_operation = client.operation(:Campaign)
-  campaign_operation['create'] = campaign
+    # Configures the campaign network options. Only Google Search is allowed for
+    # hotel campaigns.
+    c.network_settings = client.resource.network_settings do |ns|
+      ns.target_google_search = true
+    end
+  end
 
   # Issue a mutate request to add the campaign.
-  campaign_service = client.service(:Campaign)
+  campaign_service = client.service.campaign
   response = campaign_service.mutate_campaigns(customer_id,
       [campaign_operation])
 
   # Fetch the new campaign's resource name.
   campaign_resource = response.results.first.resource_name
 
-  puts sprintf('Added hotel campaign with resource name "%s".',
-      campaign_resource)
+  puts "Added hotel campaign with resource name '#{campaign_resource}'."
 
-  return campaign_resource
+  campaign_resource
 end
 
 # Creates a new hotel ad group in the specified campaign.
 def add_hotel_ad_group(client, customer_id, campaign_resource)
   # Create an ad group.
-  ad_group = client.resource(:AdGroup)
-  ad_group.name = generate_random_name_field(client,
-      'Earth to Mars Cruise')
+  ad_group_operation = client.operation.create_resource.ad_group do |ag|
+    ag.name = generate_random_name_field("Earth to Mars Cruise")
 
-  # Set the campaign.
-  ad_group.campaign = client.wrapper.string(campaign_resource)
+    # Set the campaign.
+    ag.campaign = campaign_resource
 
-  # Optional: Set the ad group type to HOTEL_ADS.
-  # This cannot be set to other types.
-  ad_group.type = client.enum(:AdGroupType)::HOTEL_ADS
-  ad_group.cpc_bid_micros = client.wrapper.int64(10_000_000)
-  ad_group.status = client.enum(:AdGroupStatus)::ENABLED
-
-  # Create an ad group operation.
-  ad_group_operation = client.operation(:AdGroup)
-  ad_group_operation['create'] = ad_group
+    # Optional: Set the ad group type to HOTEL_ADS.
+    # This cannot be set to other types.
+    ag.type = :HOTEL_ADS
+    ag.cpc_bid_micros = 10_000_000
+    ag.status = :ENABLED
+  end
 
   # Issue a mutate request to add the ad group.
-  ad_group_service = client.service(:AdGroup)
+  ad_group_service = client.service.ad_group
   response = ad_group_service.mutate_ad_groups(customer_id,
       [ad_group_operation])
 
   # Fetch the new ad group's resource name.
   ad_group_resource = response.results.first.resource_name
 
-  puts sprintf('Added hotel ad group with resource name "%s".',
-      ad_group_resource)
+  puts "Added hotel ad group with resource name '#{ad_group_resource}'."
 
-  return ad_group_resource
+  ad_group_resource
 end
 
 # Creates a new hotel ad group ad in the specified ad group.
 def add_hotel_ad_group_ad(client, customer_id, ad_group_resource)
   # Create a new hotel ad.
-  ad = client.resource(:Ad)
-  ad.hotel_ad = client.resource(:HotelAdInfo)
+  ad_group_ad_operation = client.operation.create_resource.ad_group_ad do |aga|
+    # Create a new ad group ad and sets the hotel ad to it.
+    aga.ad = client.resource.ad do |ad|
+      ad.hotel_ad = client.resource.hotel_ad_info
+    end
+    aga.status = :PAUSED
 
-  # Create a new ad group ad and sets the hotel ad to it.
-  ad_group_ad = client.resource(:AdGroupAd)
-  ad_group_ad.ad = ad
-  ad_group_ad.status = client.enum(:AdGroupAdStatus)::PAUSED
-
-  # Set the ad group.
-  ad_group_ad.ad_group = client.wrapper.string(ad_group_resource)
-
-  # Create an ad group ad operation.
-  ad_group_ad_operation = client.operation(:AdGroupAd)
-  ad_group_ad_operation['create'] = ad_group_ad
+    # Set the ad group.
+    aga.ad_group = ad_group_resource
+  end
 
   # Issue a mutate request to add the ad group ad.
-  ad_group_ad_service = client.service(:AdGroupAd)
+  ad_group_ad_service = client.service.ad_group_ad
   response = ad_group_ad_service.mutate_ad_group_ads(customer_id,
       [ad_group_ad_operation])
 
   # Fetch the new ad group ad's resource name.
   ad_group_ad_resource = response.results.first.resource_name
 
-  puts sprintf('Added hotel ad group ad with resource name "%s".',
-      ad_group_ad_resource)
+  puts "Added hotel ad group ad with resource name '#{ad_group_ad_resource}'."
 end
 
 # Appends a random number to the provided description text and returns it as a
 # string-wrapped value
-def generate_random_name_field(client, text)
-  random_number = (Time.new.to_f * 100).to_i
-  formatted_name = sprintf('%s #%s', text, random_number)
-  client.wrapper.string(formatted_name)
+def generate_random_name_field(text)
+  "#{text} ##{(Time.new.to_f * 100).to_i}"
 end
 
 if __FILE__ == $0
