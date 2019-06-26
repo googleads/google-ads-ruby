@@ -30,23 +30,20 @@ def add_keywords(customer_id, ad_group_id)
     "venus cruise",
     "b(a)d keyword cruise"
   ].map { |keyword|
-    criterion = client.resource(:AdGroupCriterion)
-    criterion.ad_group = client.wrapper.string(
-      client.path.ad_group(customer_id, ad_group_id),
-    )
-    criterion.keyword = client.resource(:KeywordInfo)
-    criterion.keyword.text = client.wrapper.string(keyword)
-    criterion.keyword.match_type = :EXACT
-    criterion
+    client.resource.ad_group_criterion do |agc|
+      agc.ad_group = client.path.ad_group(customer_id, ad_group_id)
+      agc.keyword = client.resource.keyword_info do |ki|
+        ki.text = keyword
+        ki.match_type = :EXACT
+      end
+    end
   }
 
   operations = criteria.map { |criterion|
-    operation = client.operation(:AdGroupCriterion)
-    operation["create"] = criterion
-    operation
+    client.operation.create_resource.ad_group_criterion(criterion)
   }
 
-  criterion_service = client.service(:AdGroupCriterion)
+  criterion_service = client.service.ad_group_criterion
   response = criterion_service.mutate_ad_group_criteria(
     customer_id,
     operations,
