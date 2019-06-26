@@ -31,37 +31,27 @@ def add_ad_parameters(customer_id, ad_group_id, criterion_id)
     ad_group_id,
     criterion_id,
   )
+  op_1 = client.operation.create_resource.ad_parameter do |parameter|
+    parameter.ad_group_criterion = ad_group_criterion_resource_name
+    parameter.parameter_index = 1
 
-  ad_parameter_1 = client.resource(:AdParameter)
-  ad_parameter_1.ad_group_criterion = client.wrapper.string(
-    ad_group_criterion_resource_name
-  )
-  ad_parameter_1.parameter_index = client.wrapper.int64(1)
+    # String containing a numeric value to insert into the ad text.
+    # The following restrictions apply: (a) can use comma or period as a separator,
+    # with an optional period or comma (respectively) for fractional values,
+    # (b) can be prepended or appended with a currency code, (c) can use plus or minus,
+    # (d) can use '/' between two numbers.
+    parameter.insertion_text = "100"
+  end
 
-  # String containing a numeric value to insert into the ad text.
-  # The following restrictions apply: (a) can use comma or period as a separator,
-  # with an optional period or comma (respectively) for fractional values,
-  # (b) can be prepended or appended with a currency code, (c) can use plus or minus,
-  # (d) can use '/' between two numbers.
-  ad_parameter_1.insertion_text = client.wrapper.string("100")
-
-  ad_parameter_2 = client.resource(:AdParameter)
-  ad_parameter_2.ad_group_criterion = client.wrapper.string(
-    ad_group_criterion_resource_name
-  )
-
-  ad_parameter_2.parameter_index = client.wrapper.int64(2)
-  ad_parameter_2.insertion_text = client.wrapper.string("$40")
-
-  op_1 = client.operation(:AdParameter)
-  op_1["create"] = ad_parameter_1
-
-  op_2 = client.operation(:AdParameter)
-  op_2["create"] = ad_parameter_2
+  op_2 = client.operation.create_resource.ad_parameter do |parameter|
+    parameter.ad_group_criterion = ad_group_criterion_resource_name
+    parameter.parameter_index = 2
+    parameter.insertion_text = "$40"
+  end
 
   operations = [op_1, op_2]
 
-  ad_parameter_service = client.service(:AdParameter)
+  ad_parameter_service = client.service.ad_parameter
   response = ad_parameter_service.mutate_ad_parameters(customer_id, operations)
 
   response.results.each do |result|
