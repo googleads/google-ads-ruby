@@ -3,13 +3,19 @@
  - Removed the symbol based lookup util, favoring a method based one:
    ```ruby
    # instead of
-   client.service(:CampaignService)
+   client.service(:Campaign)
    client.resource(:Campaign)
    client.operation(:Campaign)
    # we now use
    client.service.campaign
    client.resource.campaign
    client.operation.campaign
+   ```
+
+   however, path method helpers still use a symbol based lookup:
+   ```ruby
+   client.path(:V1).campaign(...)
+   client.path(:V2).campaign(...)
    ```
 
    see https://developers.google.com/google-ads/api/docs/client-libs/ruby/factories
