@@ -357,6 +357,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/adScheduleViews/567~890'
     assert_equal(expected, util.ad_schedule_view(1234, 567, 890))
 
+    expected = 'customers/1234/ads/5678'
+    assert_equal(expected, util.ad(1234, 5678))
+
     expected = 'customers/1234/ageRangeViews/567~890'
     assert_equal(expected, util.age_range_view(1234, 567, 890))
 
