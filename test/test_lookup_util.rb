@@ -25,23 +25,13 @@ module Google
   module Ads
     module GoogleAds
       class LookupUtil
-        public :proto_lookup_util, :path_lookup_util
+        public :path_lookup_util
       end
     end
   end
 end
 
 class TestLookupUtil < Minitest::Test
-  def test_proto_instantiation()
-    lookup_util = Google::Ads::GoogleAds::LookupUtil.new
-
-    util = lookup_util.proto_lookup_util(:V1)
-    assert_instance_of(Google::Ads::GoogleAds::Utils::V1::ProtoLookupUtil, util)
-    assert_raises do
-      util = client.proto_lookup_util(:ABCD)
-    end
-  end
-
   def test_path_instantiation()
     lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
