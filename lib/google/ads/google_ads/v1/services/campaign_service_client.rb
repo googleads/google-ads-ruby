@@ -116,6 +116,7 @@ module Google
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
               require "google/ads/google_ads/v1/services/campaign_service_services_pb"
+              p @metadata
 
               credentials ||= Google::Ads::GoogleAds::V1::Services::Credentials.default
 

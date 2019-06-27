@@ -117,6 +117,7 @@ module Google
               require "google/gax/grpc"
               require "google/ads/google_ads/v1/services/campaign_budget_service_services_pb"
 
+              p metadata
               credentials ||= Google::Ads::GoogleAds::V1::Services::Credentials.default
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)

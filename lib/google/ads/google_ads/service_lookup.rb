@@ -1,5 +1,3 @@
-require 'google/ads/google_ads/patch_lro_headers'
-
 module Google
   module Ads
     module GoogleAds
@@ -17,24 +15,27 @@ module Google
             logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
           end
 
-          vas = {}
+          version_alternates = {}
           Factories::VERSIONS.each do |v|
-            vas[v] = patched_factory_at_version(v, logging_interceptor)
+            version_alternates[v] = factory_at_version(v, logging_interceptor)
           end
 
-          highest_factory = patched_factory_at_version(Factories::HIGHEST_VERSION,  logging_interceptor)
-          VersionAlternate.new(highest_factory, vas)
+          highest_factory = factory_at_version(
+            Factories::HIGHEST_VERSION,
+            logging_interceptor,
+          )
+          VersionAlternate.new(highest_factory, version_alternates)
         end
 
         private
 
-        def patched_factory_at_version(version, logging_interceptor)
+        def factory_at_version(version, logging_interceptor)
           factory = Factories.at_version(version).services.new(**{
             service_path: service_path,
             logging_interceptor: logging_interceptor,
           }.merge(gax_service_params))
 
-          apply_patch_delegator(factory)
+          factory
         end
 
         def gax_service_params
@@ -45,41 +46,6 @@ module Google
           }
         end
 
-        def setup_service_class(service_class)
-          service_path = @service_path
-          logging_interceptor = @logging_interceptor
-          class_to_return = Class.new(service_class) do
-            unless service_path.nil? || service_path.empty?
-              const_set('SERVICE_ADDRESS', service_path.freeze)
-            end
-
-            const_set('GRPC_INTERCEPTORS', [logging_interceptor].compact)
-          end
-
-          patch_lro_headers(class_to_return)
-        end
-
-        def apply_patch_delegator(services)
-          patch_delegator = Class.new do
-            def initialize(services, patch_callable)
-              @services = services
-              @patch_callable = patch_callable
-            end
-
-            def respond_to_missing?(sym, include_private=false)
-              @services.respond_to?(sym, include_private)
-            end
-
-            def method_missing(name, *args)
-              @services.public_send(name, *args) do |cls|
-                @patch_callable.call(cls)
-                cls
-              end
-            end
-          end
-          patch_delegator.new(services, method(:patch_lro_headers))
-        end
-
         def headers
           headers = {
             :"developer-token" => config.developer_token
@@ -87,14 +53,11 @@ module Google
 
           if config.login_customer_id
             validate_login_customer_id
-            headers[:"login-customer-id"] = config.login_customer_id.to_s  # header values must be strings
+            # header values must be strings
+            headers[:"login-customer-id"] = config.login_customer_id.to_s
           end
 
           headers
-        end
-
-        def patch_lro_headers(class_to_return)
-          PatchLROHeaders.new(class_to_return, headers).call
         end
 
         def validate_login_customer_id

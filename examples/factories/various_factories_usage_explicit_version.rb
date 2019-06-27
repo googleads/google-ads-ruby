@@ -27,14 +27,14 @@ def add_campaigns(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  campaign_budget_operation = client.operation.create_resource.campaign_budget do |cb|
+  campaign_budget_operation = client.operation.v1.create_resource.campaign_budget do |cb|
     cb.name = "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}"
 
     cb.delivery_method = :STANDARD
     cb.amount_micros = 500000
   end
 
-  return_budget = client.service.campaign_budget.mutate_campaign_budgets(
+  return_budget = client.service.v1.campaign_budget.mutate_campaign_budgets(
     customer_id,
     [campaign_budget_operation]
   )
@@ -42,7 +42,7 @@ def add_campaigns(customer_id)
   campaign_budget_resource_name = return_budget.results.first.resource_name
 
   # Create campaign.
-  campaign = client.resource.campaign
+  campaign = client.resource.v1.campaign
   campaign.name = "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
   campaign.advertising_channel_type = :SEARCH
 
@@ -51,10 +51,10 @@ def add_campaigns(customer_id)
   # targeting and the ads are ready to serve.
   campaign.status = :PAUSED
 
-  campaign.manual_cpc = client.resource.manual_cpc
+  campaign.manual_cpc = client.resource.v1.manual_cpc
   campaign.campaign_budget = campaign_budget_resource_name
 
-  campaign.network_settings = client.resource.network_settings do |ns|
+  campaign.network_settings = client.resource.v1.network_settings do |ns|
     ns.target_google_search = true
     ns.target_search_network = true
     ns.target_content_network = false
@@ -63,8 +63,8 @@ def add_campaigns(customer_id)
 
   # Alternate non-block style, where we pass the campaign object we built
   # up
-  campaign_operation = client.operation.create_resource.campaign(campaign)
-  campaign_service = client.service.campaign
+  campaign_operation = client.operation.v1.create_resource.campaign(campaign)
+  campaign_service = client.service.v1.campaign
 
   # Add the campaign.
   response = campaign_service.mutate_campaigns(
@@ -79,16 +79,14 @@ def add_campaigns(customer_id)
   # let us work with the campaign we just created as an updatable campaign
   campaign.resource_name = campaign_resource_name
 
-  update_operation = client.operation.update_resource.campaign(campaign) do
-    campaign.name = client.wrapper.string(
-      "A different interplanetary Cruise #{(Time.new.to_f * 1000).to_i}",
-    )
+  update_operation = client.operation.v1.update_resource.campaign(campaign) do
+    campaign.name = "A different interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
   end
 
   campaign_service.mutate_campaigns(customer_id, [update_operation])
 
   # Finally remove the campaign
-  remove_op = client.operation.remove_resource.campaign(campaign_resource_name)
+  remove_op = client.operation.v1.remove_resource.campaign(campaign_resource_name)
   campaign_service.mutate_campaigns(customer_id, [remove_op])
 
   # updates also work with only a resource name, so let's pull one out and
@@ -105,10 +103,8 @@ def add_campaigns(customer_id)
   # we only have a resource name. The field mask for the object is created
   # and applied automatically to the new campaign instance based on what's set
   # in the block.
-  update_operation = client.operation.update_resource.campaign(campaign_resource_name) do |camp|
-    camp.name = client.wrapper.string(
-      "A different interplanetary Cruise #{(Time.new.to_f * 1000).to_i}",
-    )
+  update_operation = client.operation.v1.update_resource.campaign(campaign_resource_name) do |camp|
+    camp.name = "A different interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
   end
 
   campaign_service.mutate_campaigns(customer_id, [update_operation])
