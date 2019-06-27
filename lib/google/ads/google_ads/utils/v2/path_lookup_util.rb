@@ -22,7 +22,7 @@ module Google
       module Utils
         module V2
           class PathLookupUtil
-            include Google::Ads::GoogleAds::V1::Services
+            include Google::Ads::GoogleAds::V2::Services
 
             def account_budget_proposal(customer_id, account_budget_proposal_id)
               require 'google/ads/google_ads/v2/services/account_budget_proposal_service_client'
