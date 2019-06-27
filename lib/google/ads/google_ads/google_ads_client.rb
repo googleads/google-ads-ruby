@@ -34,6 +34,18 @@ module Google
         module Services
         end
       end
+      module V2
+        module Common
+        end
+        module Enums
+        end
+        module Errors
+        end
+        module Resources
+        end
+        module Services
+        end
+      end
     end
   end
 end
