@@ -178,7 +178,10 @@ module Google
               @get_display_keyword_view = Google::Gax.create_api_call(
                 @display_keyword_view_service_stub.method(:get_display_keyword_view),
                 defaults["get_display_keyword_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

@@ -186,7 +186,10 @@ module Google
               @get_google_ads_field = Google::Gax.create_api_call(
                 @google_ads_field_service_stub.method(:get_google_ads_field),
                 defaults["get_google_ads_field"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @search_google_ads_fields = Google::Gax.create_api_call(
                 @google_ads_field_service_stub.method(:search_google_ads_fields),

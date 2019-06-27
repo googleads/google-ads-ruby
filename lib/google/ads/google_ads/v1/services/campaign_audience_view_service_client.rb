@@ -178,7 +178,10 @@ module Google
               @get_campaign_audience_view = Google::Gax.create_api_call(
                 @campaign_audience_view_service_stub.method(:get_campaign_audience_view),
                 defaults["get_campaign_audience_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

@@ -178,7 +178,10 @@ module Google
               @get_feed_placeholder_view = Google::Gax.create_api_call(
                 @feed_placeholder_view_service_stub.method(:get_feed_placeholder_view),
                 defaults["get_feed_placeholder_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

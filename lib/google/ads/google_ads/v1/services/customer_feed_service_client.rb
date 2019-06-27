@@ -178,12 +178,18 @@ module Google
               @get_customer_feed = Google::Gax.create_api_call(
                 @customer_feed_service_stub.method(:get_customer_feed),
                 defaults["get_customer_feed"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_customer_feeds = Google::Gax.create_api_call(
                 @customer_feed_service_stub.method(:mutate_customer_feeds),
                 defaults["mutate_customer_feeds"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

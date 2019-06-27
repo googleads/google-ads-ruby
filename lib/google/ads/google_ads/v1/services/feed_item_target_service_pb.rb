@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/resources/feed_item_target_pb'
 require 'google/api/annotations_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.GetFeedItemTargetRequest" do
     optional :resource_name, :string, 1

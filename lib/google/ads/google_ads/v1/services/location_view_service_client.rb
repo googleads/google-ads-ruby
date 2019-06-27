@@ -178,7 +178,10 @@ module Google
               @get_location_view = Google::Gax.create_api_call(
                 @location_view_service_stub.method(:get_location_view),
                 defaults["get_location_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

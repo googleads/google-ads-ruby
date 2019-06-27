@@ -178,12 +178,18 @@ module Google
               @get_campaign_criterion = Google::Gax.create_api_call(
                 @campaign_criterion_service_stub.method(:get_campaign_criterion),
                 defaults["get_campaign_criterion"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaign_criteria = Google::Gax.create_api_call(
                 @campaign_criterion_service_stub.method(:mutate_campaign_criteria),
                 defaults["mutate_campaign_criteria"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

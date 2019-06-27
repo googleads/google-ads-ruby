@@ -178,7 +178,10 @@ module Google
               @get_click_view = Google::Gax.create_api_call(
                 @click_view_service_stub.method(:get_click_view),
                 defaults["get_click_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

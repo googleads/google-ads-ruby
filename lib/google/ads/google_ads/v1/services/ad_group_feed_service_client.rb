@@ -178,12 +178,18 @@ module Google
               @get_ad_group_feed = Google::Gax.create_api_call(
                 @ad_group_feed_service_stub.method(:get_ad_group_feed),
                 defaults["get_ad_group_feed"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_ad_group_feeds = Google::Gax.create_api_call(
                 @ad_group_feed_service_stub.method(:mutate_ad_group_feeds),
                 defaults["mutate_ad_group_feeds"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

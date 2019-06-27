@@ -178,7 +178,10 @@ module Google
               @get_video = Google::Gax.create_api_call(
                 @video_service_stub.method(:get_video),
                 defaults["get_video"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

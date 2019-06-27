@@ -178,12 +178,18 @@ module Google
               @get_campaign_feed = Google::Gax.create_api_call(
                 @campaign_feed_service_stub.method(:get_campaign_feed),
                 defaults["get_campaign_feed"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaign_feeds = Google::Gax.create_api_call(
                 @campaign_feed_service_stub.method(:mutate_campaign_feeds),
                 defaults["mutate_campaign_feeds"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

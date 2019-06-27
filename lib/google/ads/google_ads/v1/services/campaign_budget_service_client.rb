@@ -178,12 +178,18 @@ module Google
               @get_campaign_budget = Google::Gax.create_api_call(
                 @campaign_budget_service_stub.method(:get_campaign_budget),
                 defaults["get_campaign_budget"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaign_budgets = Google::Gax.create_api_call(
                 @campaign_budget_service_stub.method(:mutate_campaign_budgets),
                 defaults["mutate_campaign_budgets"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

@@ -180,12 +180,18 @@ module Google
               @get_asset = Google::Gax.create_api_call(
                 @asset_service_stub.method(:get_asset),
                 defaults["get_asset"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_assets = Google::Gax.create_api_call(
                 @asset_service_stub.method(:mutate_assets),
                 defaults["mutate_assets"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

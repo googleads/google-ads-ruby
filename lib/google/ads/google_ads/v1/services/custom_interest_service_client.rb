@@ -178,12 +178,18 @@ module Google
               @get_custom_interest = Google::Gax.create_api_call(
                 @custom_interest_service_stub.method(:get_custom_interest),
                 defaults["get_custom_interest"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_custom_interests = Google::Gax.create_api_call(
                 @custom_interest_service_stub.method(:mutate_custom_interests),
                 defaults["mutate_custom_interests"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

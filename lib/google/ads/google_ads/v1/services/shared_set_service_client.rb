@@ -178,12 +178,18 @@ module Google
               @get_shared_set = Google::Gax.create_api_call(
                 @shared_set_service_stub.method(:get_shared_set),
                 defaults["get_shared_set"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_shared_sets = Google::Gax.create_api_call(
                 @shared_set_service_stub.method(:mutate_shared_sets),
                 defaults["mutate_shared_sets"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

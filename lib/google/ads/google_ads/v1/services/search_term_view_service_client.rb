@@ -178,7 +178,10 @@ module Google
               @get_search_term_view = Google::Gax.create_api_call(
                 @search_term_view_service_stub.method(:get_search_term_view),
                 defaults["get_search_term_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

@@ -178,7 +178,10 @@ module Google
               @get_gender_view = Google::Gax.create_api_call(
                 @gender_view_service_stub.method(:get_gender_view),
                 defaults["get_gender_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

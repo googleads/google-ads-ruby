@@ -176,7 +176,10 @@ module Google
               @get_hotel_performance_view = Google::Gax.create_api_call(
                 @hotel_performance_view_service_stub.method(:get_hotel_performance_view),
                 defaults["get_hotel_performance_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

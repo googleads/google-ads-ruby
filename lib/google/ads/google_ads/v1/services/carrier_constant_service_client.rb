@@ -176,7 +176,10 @@ module Google
               @get_carrier_constant = Google::Gax.create_api_call(
                 @carrier_constant_service_stub.method(:get_carrier_constant),
                 defaults["get_carrier_constant"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

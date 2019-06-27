@@ -178,12 +178,18 @@ module Google
               @get_conversion_action = Google::Gax.create_api_call(
                 @conversion_action_service_stub.method(:get_conversion_action),
                 defaults["get_conversion_action"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_conversion_actions = Google::Gax.create_api_call(
                 @conversion_action_service_stub.method(:mutate_conversion_actions),
                 defaults["mutate_conversion_actions"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

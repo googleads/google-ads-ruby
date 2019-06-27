@@ -178,7 +178,10 @@ module Google
               @get_product_group_view = Google::Gax.create_api_call(
                 @product_group_view_service_stub.method(:get_product_group_view),
                 defaults["get_product_group_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

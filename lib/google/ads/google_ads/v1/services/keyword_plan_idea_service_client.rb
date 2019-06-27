@@ -161,7 +161,10 @@ module Google
               @generate_keyword_ideas = Google::Gax.create_api_call(
                 @keyword_plan_idea_service_stub.method(:generate_keyword_ideas),
                 defaults["generate_keyword_ideas"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

@@ -178,12 +178,18 @@ module Google
               @get_remarketing_action = Google::Gax.create_api_call(
                 @remarketing_action_service_stub.method(:get_remarketing_action),
                 defaults["get_remarketing_action"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_remarketing_actions = Google::Gax.create_api_call(
                 @remarketing_action_service_stub.method(:mutate_remarketing_actions),
                 defaults["mutate_remarketing_actions"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

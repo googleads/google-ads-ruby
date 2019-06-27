@@ -178,12 +178,18 @@ module Google
               @get_customer_label = Google::Gax.create_api_call(
                 @customer_label_service_stub.method(:get_customer_label),
                 defaults["get_customer_label"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_customer_labels = Google::Gax.create_api_call(
                 @customer_label_service_stub.method(:mutate_customer_labels),
                 defaults["mutate_customer_labels"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

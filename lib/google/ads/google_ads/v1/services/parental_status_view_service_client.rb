@@ -178,7 +178,10 @@ module Google
               @get_parental_status_view = Google::Gax.create_api_call(
                 @parental_status_view_service_stub.method(:get_parental_status_view),
                 defaults["get_parental_status_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

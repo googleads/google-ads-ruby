@@ -178,12 +178,18 @@ module Google
               @get_media_file = Google::Gax.create_api_call(
                 @media_file_service_stub.method(:get_media_file),
                 defaults["get_media_file"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_media_files = Google::Gax.create_api_call(
                 @media_file_service_stub.method(:mutate_media_files),
                 defaults["mutate_media_files"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

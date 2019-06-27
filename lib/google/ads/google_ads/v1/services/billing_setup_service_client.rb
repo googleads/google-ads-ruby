@@ -186,12 +186,18 @@ module Google
               @get_billing_setup = Google::Gax.create_api_call(
                 @billing_setup_service_stub.method(:get_billing_setup),
                 defaults["get_billing_setup"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_billing_setup = Google::Gax.create_api_call(
                 @billing_setup_service_stub.method(:mutate_billing_setup),
                 defaults["mutate_billing_setup"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

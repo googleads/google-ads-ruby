@@ -178,12 +178,18 @@ module Google
               @get_feed_item = Google::Gax.create_api_call(
                 @feed_item_service_stub.method(:get_feed_item),
                 defaults["get_feed_item"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_feed_items = Google::Gax.create_api_call(
                 @feed_item_service_stub.method(:mutate_feed_items),
                 defaults["mutate_feed_items"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

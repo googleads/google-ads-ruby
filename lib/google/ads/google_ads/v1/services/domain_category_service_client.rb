@@ -178,7 +178,10 @@ module Google
               @get_domain_category = Google::Gax.create_api_call(
                 @domain_category_service_stub.method(:get_domain_category),
                 defaults["get_domain_category"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

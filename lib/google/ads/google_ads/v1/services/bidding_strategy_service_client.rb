@@ -178,12 +178,18 @@ module Google
               @get_bidding_strategy = Google::Gax.create_api_call(
                 @bidding_strategy_service_stub.method(:get_bidding_strategy),
                 defaults["get_bidding_strategy"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_bidding_strategies = Google::Gax.create_api_call(
                 @bidding_strategy_service_stub.method(:mutate_bidding_strategies),
                 defaults["mutate_bidding_strategies"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

@@ -178,7 +178,10 @@ module Google
               @get_change_status = Google::Gax.create_api_call(
                 @change_status_service_stub.method(:get_change_status),
                 defaults["get_change_status"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

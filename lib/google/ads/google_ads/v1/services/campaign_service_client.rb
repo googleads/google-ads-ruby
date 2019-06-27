@@ -178,12 +178,18 @@ module Google
               @get_campaign = Google::Gax.create_api_call(
                 @campaign_service_stub.method(:get_campaign),
                 defaults["get_campaign"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaigns = Google::Gax.create_api_call(
                 @campaign_service_stub.method(:mutate_campaigns),
                 defaults["mutate_campaigns"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

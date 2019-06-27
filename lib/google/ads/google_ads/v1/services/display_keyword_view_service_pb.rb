@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v1/resources/display_keyword_view_pb'
 require 'google/api/annotations_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.GetDisplayKeywordViewRequest" do
     optional :resource_name, :string, 1

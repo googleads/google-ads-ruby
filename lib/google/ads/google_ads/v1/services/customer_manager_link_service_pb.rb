@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v1/resources/customer_manager_link_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.GetCustomerManagerLinkRequest" do
     optional :resource_name, :string, 1

@@ -150,6 +150,7 @@ module Google
                 timeout: timeout,
                 lib_name: lib_name,
                 lib_version: lib_version,
+                metadata: metadata,
               )
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)
@@ -212,37 +213,58 @@ module Google
               @get_campaign_experiment = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:get_campaign_experiment),
                 defaults["get_campaign_experiment"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @create_campaign_experiment = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:create_campaign_experiment),
                 defaults["create_campaign_experiment"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @mutate_campaign_experiments = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:mutate_campaign_experiments),
                 defaults["mutate_campaign_experiments"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @graduate_campaign_experiment = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:graduate_campaign_experiment),
                 defaults["graduate_campaign_experiment"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'campaign_experiment' => request.campaign_experiment}
+                end
               )
               @promote_campaign_experiment = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:promote_campaign_experiment),
                 defaults["promote_campaign_experiment"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'campaign_experiment' => request.campaign_experiment}
+                end
               )
               @end_campaign_experiment = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:end_campaign_experiment),
                 defaults["end_campaign_experiment"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'campaign_experiment' => request.campaign_experiment}
+                end
               )
               @list_campaign_experiment_async_errors = Google::Gax.create_api_call(
                 @campaign_experiment_service_stub.method(:list_campaign_experiment_async_errors),
                 defaults["list_campaign_experiment_async_errors"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

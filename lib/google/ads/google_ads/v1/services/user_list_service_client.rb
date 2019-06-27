@@ -178,12 +178,18 @@ module Google
               @get_user_list = Google::Gax.create_api_call(
                 @user_list_service_stub.method(:get_user_list),
                 defaults["get_user_list"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_user_lists = Google::Gax.create_api_call(
                 @user_list_service_stub.method(:mutate_user_lists),
                 defaults["mutate_user_lists"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

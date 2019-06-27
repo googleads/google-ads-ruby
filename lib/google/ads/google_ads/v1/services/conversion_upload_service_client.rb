@@ -161,12 +161,18 @@ module Google
               @upload_click_conversions = Google::Gax.create_api_call(
                 @conversion_upload_service_stub.method(:upload_click_conversions),
                 defaults["upload_click_conversions"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @upload_call_conversions = Google::Gax.create_api_call(
                 @conversion_upload_service_stub.method(:upload_call_conversions),
                 defaults["upload_call_conversions"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 
