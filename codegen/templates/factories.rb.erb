@@ -42,7 +42,7 @@ module Google
             FACTORY_<%= highest_version.to_s.camelize %>.public_send(type),
             {
               <% versions.each do |version| %>
-                <%= version.to_s %>: FACTORY_<%= highest_version.to_s.camelize %>.public_send(type),
+                <%= version.to_s %>: FACTORY_<%= version.to_s.camelize %>.public_send(type),
               <% end %>
             }
           )
