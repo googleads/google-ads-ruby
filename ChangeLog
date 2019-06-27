@@ -1,3 +1,32 @@
+3.0.0:
+ - Compatability with v2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed the symbol based lookup util, favoring a method based one:
+   ```ruby
+   # instead of
+   client.service(:Campaign)
+   client.resource(:Campaign)
+   client.operation(:Campaign)
+   # we now use
+   client.service.campaign
+   client.resource.campaign
+   client.operation.campaign
+   ```
+
+   however, path method helpers still use a symbol based lookup:
+   ```ruby
+   client.path(:V1).campaign(...)
+   client.path(:V2).campaign(...)
+   ```
+
+   see https://developers.google.com/google-ads/api/docs/client-libs/ruby/factories
+   for full documentation
+ - Moved default version of the API to v2, to continue using v1, apply
+   the version number to your factories calls:
+   ```ruby
+   client.service.v1.campaign
+   client.operation.v1.campaign
+   ```
+
 2.4.1:
   - Updated default inbound metadata size to allow for larger metadata
     server responses.
