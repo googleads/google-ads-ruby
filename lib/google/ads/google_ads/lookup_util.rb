@@ -83,8 +83,7 @@ module Google
               'Google::Ads::GoogleAds::Utils::%s::PathLookupUtil',
               version
             )
-            path_lookup_utils[version] = class_for_path(class_path).new(
-                proto_lookup_util(version))
+            path_lookup_utils[version] = class_for_path(class_path).new
           end
           path_lookup_utils[version]
         end

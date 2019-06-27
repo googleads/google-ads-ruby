@@ -19,14 +19,13 @@
 
 require 'minitest/autorun'
 
+require 'google/ads/google_ads'
 require 'google/ads/google_ads/utils/v1/proto_lookup_util'
 require 'google/ads/google_ads/utils/v1/path_lookup_util'
 
-
 class TestPathLookupUtil < Minitest::Test
   def test_path_generation()
-    util = Google::Ads::GoogleAds::Utils::V1::PathLookupUtil.new(
-        Google::Ads::GoogleAds::Utils::V1::ProtoLookupUtil.new())
+    util = Google::Ads::GoogleAds::Utils::V1::PathLookupUtil.new
 
     expected = 'customers/1234/accountBudgetProposals/5678'
     assert_equal(expected, util.account_budget_proposal(1234, 5678))
