@@ -16,6 +16,8 @@
 #
 # Configuration setup for and storage for the API.
 
+require 'uri'
+
 module Google
   module Ads
     module GoogleAds
@@ -61,6 +63,19 @@ module Google
 
         def configure(&block)
           yield self
+        end
+
+        def http_proxy=(uri)
+          u = URI.parse(uri)
+          if u.scheme != "http" && u.scheme != "https"
+            raise ArgumentError, "#{uri} has invalid scheme #{u.scheme}, should be http or https"
+          end
+
+          ENV["http_proxy"] = uri
+        end
+
+        def http_proxy
+          ENV["http_proxy"]
         end
       end
     end

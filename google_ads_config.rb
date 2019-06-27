@@ -78,4 +78,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # logger directly (e.g. passing Rails.logger in a config/initializer). The
   # passed logger will override log_level and log_target.
   # c.logger = Logger.new(STDOUT)
+
+  # If you need to use a HTTP proxy you can set one with this config attribute
+  # c.http_proxy = "http://example.com:8080"
 end
