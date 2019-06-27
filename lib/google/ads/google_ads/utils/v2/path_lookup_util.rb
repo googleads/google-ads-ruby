@@ -187,6 +187,14 @@ module Google
               )
             end
 
+            def ad(customer_id, ad_id)
+              require 'google/ads/google_ads/v2/services/ad_service_client'
+              AdServiceClient.ad_path(
+                customer_id.to_s,
+                ad_id.to_s,
+              )
+            end
+
             def age_range_view(customer_id, ad_group_id, criterion_id)
               require 'google/ads/google_ads/v2/services/age_range_view_service_client'
               AgeRangeViewServiceClient
