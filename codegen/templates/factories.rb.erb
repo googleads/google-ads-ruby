@@ -1,3 +1,9 @@
+require 'google/ads/google_ads/version_alternate'
+
+<%
+highest_version = :"V#{versions.map(&:to_s).map(&:downcase).map { |x| x.gsub("v", "") }.map { |x| Integer(x) }.max }"
+%>
+
 <% versions.each do |version| %>
 require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/resources'
 require 'google/ads/google_ads/factories/<%= version.to_s.downcase %>/services'
@@ -18,6 +24,32 @@ module Google
           <%= version.to_s.camelize %>::Operations,
         ).freeze
         <% end %>
+
+        VERSIONS = [
+          <% versions.each do |version| %>
+            :<%= version.to_s %>,
+          <% end %>
+        ]
+
+        HIGHEST_VERSION = :<%= highest_version %>
+
+        def self.version_alternate_for(type)
+          raise ArgumentError.new(
+            "Dont have version alternate for #{type}, valid values are :resources, :services, :enums, :operations,  got #{type}"
+          ) unless [:resources, :services, :enums, :operations].include?(type)
+
+          VersionAlternate.new(
+            FACTORY_<%= highest_version.to_s.camelize %>.public_send(type),
+            {
+              <% versions.each do |version| %>
+                <%= version.to_s %>: FACTORY_<%= version.to_s.camelize %>.public_send(type),
+              <% end %>
+            }
+          )
+        end
+
+        def self.versions
+        end
 
         def self.at_version(version)
           case version

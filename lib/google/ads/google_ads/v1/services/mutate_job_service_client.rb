@@ -141,6 +141,7 @@ module Google
                 timeout: timeout,
                 lib_name: lib_name,
                 lib_version: lib_version,
+                metadata: metadata,
               )
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)
@@ -203,27 +204,42 @@ module Google
               @create_mutate_job = Google::Gax.create_api_call(
                 @mutate_job_service_stub.method(:create_mutate_job),
                 defaults["create_mutate_job"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @get_mutate_job = Google::Gax.create_api_call(
                 @mutate_job_service_stub.method(:get_mutate_job),
                 defaults["get_mutate_job"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @list_mutate_job_results = Google::Gax.create_api_call(
                 @mutate_job_service_stub.method(:list_mutate_job_results),
                 defaults["list_mutate_job_results"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @run_mutate_job = Google::Gax.create_api_call(
                 @mutate_job_service_stub.method(:run_mutate_job),
                 defaults["run_mutate_job"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @add_mutate_job_operations = Google::Gax.create_api_call(
                 @mutate_job_service_stub.method(:add_mutate_job_operations),
                 defaults["add_mutate_job_operations"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

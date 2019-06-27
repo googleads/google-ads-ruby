@@ -178,7 +178,10 @@ module Google
               @get_geographic_view = Google::Gax.create_api_call(
                 @geographic_view_service_stub.method(:get_geographic_view),
                 defaults["get_geographic_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

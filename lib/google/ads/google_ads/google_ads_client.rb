@@ -34,6 +34,18 @@ module Google
         module Services
         end
       end
+      module V2
+        module Common
+        end
+        module Enums
+        end
+        module Errors
+        end
+        module Resources
+        end
+        module Services
+        end
+      end
     end
   end
 end
@@ -122,12 +134,10 @@ module Google
         # :Campaign will return an instantiated CampaignServiceClient.
         #
         # Raises ArgumentError if no service can be found for the provided type.
-        def service(name=nil, version = default_api_version)
+        def service
           service_path = ENV['GOOGLEADS_SERVICE_PATH']
 
           ServiceLookup.new(
-            name,
-            version,
             lookup_util,
             service_path,
             @logger,
@@ -158,40 +168,16 @@ module Google
         # example, passing :Campaign will return an instantiated Campaign.
         #
         # Raises ArgumentError if no entity can be found for the provided type.
-        def resource(name=nil, version=default_api_version)
-          if name.nil?
-            Factories.at_version(version).resources
-          else
-            deprecate("Calling `google_ads_client.resource(<ResourceType>)` is deprecated, please use `google_ads_client.service.<resource_type>` instead")
-            lookup_util.resource(name, version)
-          end
+        def resource
+          Factories.version_alternate_for(:resources)
         end
 
-        # Return an operation for the provided entity type. For example, passing
-        # :Campaign will return an instantiated CampaignOperation.
-        #
-        # Raises ArgumentError if no entity can be found for the provided type.
-        def operation(name=nil, version = default_api_version)
-          if name.nil?
-            Factories.at_version(version).operations
-          else
-            deprecate("Calling `google_ads_client.resource(<OperationType>)` is deprecated, please use `google_ads_client.service.<operation_type>` instead")
-            lookup_util.operation(name, version)
-          end
+        def operation
+          Factories.version_alternate_for(:operations)
         end
 
-        # Return a reference to the enum class for the provided enum type. For
-        # example, passing :CampaignStatus will return a reference to the
-        # CampaignStatusEnum.
-        #
-        # Raises ArgumentError if no enum can be found for the provided type.
-        def enum(name=nil, version = default_api_version)
-          if name.nil?
-            Factories.at_version(version).enums
-          else
-            deprecate("Calling `google_ads_client.resource(<EnumType>)` is deprecated, please use `google_ads_client.service.<enum_type>` instead")
-            lookup_util.enum(name, version)
-          end
+        def enum
+          Factories.version_alternate_for(:enums)
         end
 
         # Returns a reference to the FieldMaskUtil class for ease of access.

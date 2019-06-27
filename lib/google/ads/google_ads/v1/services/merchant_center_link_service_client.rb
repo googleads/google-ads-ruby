@@ -179,17 +179,26 @@ module Google
               @list_merchant_center_links = Google::Gax.create_api_call(
                 @merchant_center_link_service_stub.method(:list_merchant_center_links),
                 defaults["list_merchant_center_links"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @get_merchant_center_link = Google::Gax.create_api_call(
                 @merchant_center_link_service_stub.method(:get_merchant_center_link),
                 defaults["get_merchant_center_link"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_merchant_center_link = Google::Gax.create_api_call(
                 @merchant_center_link_service_stub.method(:mutate_merchant_center_link),
                 defaults["mutate_merchant_center_link"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

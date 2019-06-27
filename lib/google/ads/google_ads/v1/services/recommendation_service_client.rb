@@ -178,17 +178,26 @@ module Google
               @get_recommendation = Google::Gax.create_api_call(
                 @recommendation_service_stub.method(:get_recommendation),
                 defaults["get_recommendation"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @apply_recommendation = Google::Gax.create_api_call(
                 @recommendation_service_stub.method(:apply_recommendation),
                 defaults["apply_recommendation"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @dismiss_recommendation = Google::Gax.create_api_call(
                 @recommendation_service_stub.method(:dismiss_recommendation),
                 defaults["dismiss_recommendation"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

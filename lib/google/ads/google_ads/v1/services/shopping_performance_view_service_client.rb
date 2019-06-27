@@ -176,7 +176,10 @@ module Google
               @get_shopping_performance_view = Google::Gax.create_api_call(
                 @shopping_performance_view_service_stub.method(:get_shopping_performance_view),
                 defaults["get_shopping_performance_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

@@ -178,12 +178,18 @@ module Google
               @get_customer_manager_link = Google::Gax.create_api_call(
                 @customer_manager_link_service_stub.method(:get_customer_manager_link),
                 defaults["get_customer_manager_link"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_customer_manager_link = Google::Gax.create_api_call(
                 @customer_manager_link_service_stub.method(:mutate_customer_manager_link),
                 defaults["mutate_customer_manager_link"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

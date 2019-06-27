@@ -38,7 +38,8 @@ module Google
           # existing one.
           #
           # Reads for account-level budgets managed by these proposals will be
-          # supported in a future version.  Please use BudgetOrderService until then:
+          # supported in a future version. Until then, please use the
+          # BudgetOrderService from the AdWords API. Learn more at
           # https://developers.google.com/adwords/api/docs/guides/budget-order
           #
           # Mutates:
@@ -190,12 +191,18 @@ module Google
               @get_account_budget_proposal = Google::Gax.create_api_call(
                 @account_budget_proposal_service_stub.method(:get_account_budget_proposal),
                 defaults["get_account_budget_proposal"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_account_budget_proposal = Google::Gax.create_api_call(
                 @account_budget_proposal_service_stub.method(:mutate_account_budget_proposal),
                 defaults["mutate_account_budget_proposal"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

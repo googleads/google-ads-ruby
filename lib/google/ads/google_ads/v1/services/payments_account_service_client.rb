@@ -162,7 +162,10 @@ module Google
               @list_payments_accounts = Google::Gax.create_api_call(
                 @payments_account_service_stub.method(:list_payments_accounts),
                 defaults["list_payments_accounts"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

@@ -141,6 +141,7 @@ module Google
                 timeout: timeout,
                 lib_name: lib_name,
                 lib_version: lib_version,
+                metadata: metadata,
               )
 
               if credentials.is_a?(String) || credentials.is_a?(Hash)
@@ -203,22 +204,34 @@ module Google
               @get_campaign_draft = Google::Gax.create_api_call(
                 @campaign_draft_service_stub.method(:get_campaign_draft),
                 defaults["get_campaign_draft"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaign_drafts = Google::Gax.create_api_call(
                 @campaign_draft_service_stub.method(:mutate_campaign_drafts),
                 defaults["mutate_campaign_drafts"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @promote_campaign_draft = Google::Gax.create_api_call(
                 @campaign_draft_service_stub.method(:promote_campaign_draft),
                 defaults["promote_campaign_draft"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'campaign_draft' => request.campaign_draft}
+                end
               )
               @list_campaign_draft_async_errors = Google::Gax.create_api_call(
                 @campaign_draft_service_stub.method(:list_campaign_draft_async_errors),
                 defaults["list_campaign_draft_async_errors"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

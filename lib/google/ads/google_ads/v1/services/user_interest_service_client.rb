@@ -178,7 +178,10 @@ module Google
               @get_user_interest = Google::Gax.create_api_call(
                 @user_interest_service_stub.method(:get_user_interest),
                 defaults["get_user_interest"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

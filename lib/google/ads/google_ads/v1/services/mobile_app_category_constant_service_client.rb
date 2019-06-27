@@ -176,7 +176,10 @@ module Google
               @get_mobile_app_category_constant = Google::Gax.create_api_call(
                 @mobile_app_category_constant_service_stub.method(:get_mobile_app_category_constant),
                 defaults["get_mobile_app_category_constant"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

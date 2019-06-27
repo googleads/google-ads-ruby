@@ -178,12 +178,18 @@ module Google
               @get_feed_mapping = Google::Gax.create_api_call(
                 @feed_mapping_service_stub.method(:get_feed_mapping),
                 defaults["get_feed_mapping"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_feed_mappings = Google::Gax.create_api_call(
                 @feed_mapping_service_stub.method(:mutate_feed_mappings),
                 defaults["mutate_feed_mappings"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

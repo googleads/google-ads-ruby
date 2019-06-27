@@ -7,8 +7,8 @@ require 'google/ads/google_ads/v1/common/policy_pb'
 require 'google/ads/google_ads/v1/resources/ad_group_criterion_pb'
 require 'google/api/annotations_pb'
 require 'google/protobuf/field_mask_pb'
-require 'google/protobuf/wrappers_pb'
 require 'google/rpc/status_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.GetAdGroupCriterionRequest" do
     optional :resource_name, :string, 1

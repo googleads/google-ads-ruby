@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/api/annotations_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/rpc/status_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.UploadClickConversionsRequest" do
     optional :customer_id, :string, 1

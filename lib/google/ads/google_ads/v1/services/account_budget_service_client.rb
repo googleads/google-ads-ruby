@@ -180,7 +180,10 @@ module Google
               @get_account_budget = Google::Gax.create_api_call(
                 @account_budget_service_stub.method(:get_account_budget),
                 defaults["get_account_budget"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

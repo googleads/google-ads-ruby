@@ -178,12 +178,18 @@ module Google
               @get_shared_criterion = Google::Gax.create_api_call(
                 @shared_criterion_service_stub.method(:get_shared_criterion),
                 defaults["get_shared_criterion"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_shared_criteria = Google::Gax.create_api_call(
                 @shared_criterion_service_stub.method(:mutate_shared_criteria),
                 defaults["mutate_shared_criteria"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

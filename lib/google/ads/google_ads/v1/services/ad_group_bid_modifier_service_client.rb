@@ -178,12 +178,18 @@ module Google
               @get_ad_group_bid_modifier = Google::Gax.create_api_call(
                 @ad_group_bid_modifier_service_stub.method(:get_ad_group_bid_modifier),
                 defaults["get_ad_group_bid_modifier"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_ad_group_bid_modifiers = Google::Gax.create_api_call(
                 @ad_group_bid_modifier_service_stub.method(:mutate_ad_group_bid_modifiers),
                 defaults["mutate_ad_group_bid_modifiers"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

@@ -178,7 +178,10 @@ module Google
               @get_ad_group_criterion_simulation = Google::Gax.create_api_call(
                 @ad_group_criterion_simulation_service_stub.method(:get_ad_group_criterion_simulation),
                 defaults["get_ad_group_criterion_simulation"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

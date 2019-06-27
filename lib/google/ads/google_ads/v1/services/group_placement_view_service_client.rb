@@ -178,7 +178,10 @@ module Google
               @get_group_placement_view = Google::Gax.create_api_call(
                 @group_placement_view_service_stub.method(:get_group_placement_view),
                 defaults["get_group_placement_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

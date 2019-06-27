@@ -8,6 +8,7 @@ require 'google/ads/google_ads/v1/services/google_ads_service_pb'
 require 'google/api/annotations_pb'
 require 'google/longrunning/operations_pb'
 require 'google/rpc/status_pb'
+require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v1.services.CreateMutateJobRequest" do
     optional :customer_id, :string, 1

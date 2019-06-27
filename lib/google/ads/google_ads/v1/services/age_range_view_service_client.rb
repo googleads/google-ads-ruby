@@ -178,7 +178,10 @@ module Google
               @get_age_range_view = Google::Gax.create_api_call(
                 @age_range_view_service_stub.method(:get_age_range_view),
                 defaults["get_age_range_view"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

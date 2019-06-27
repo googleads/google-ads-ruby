@@ -178,7 +178,10 @@ module Google
               @get_customer_client = Google::Gax.create_api_call(
                 @customer_client_service_stub.method(:get_customer_client),
                 defaults["get_customer_client"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

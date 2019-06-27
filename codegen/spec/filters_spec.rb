@@ -79,6 +79,16 @@ RSpec.describe "#filter_services_for_google_ads" do
         [[service_class, path]]
       )
     end
+
+    context "an operations client" do
+      let(:name) { "Google::Ads::GoogleAds::V1::BeesService::OperationsClient" }
+
+      it "doesn't keep the service class" do
+        expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
+          []
+        )
+      end
+    end
   end
 
   context "a non google ads service" do

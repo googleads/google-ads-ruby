@@ -116,6 +116,7 @@ module Google
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
               require "google/ads/google_ads/v1/services/campaign_service_services_pb"
+              p @metadata
 
               credentials ||= Google::Ads::GoogleAds::V1::Services::Credentials.default
 
@@ -178,12 +179,18 @@ module Google
               @get_campaign = Google::Gax.create_api_call(
                 @campaign_service_stub.method(:get_campaign),
                 defaults["get_campaign"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaigns = Google::Gax.create_api_call(
                 @campaign_service_stub.method(:mutate_campaigns),
                 defaults["mutate_campaigns"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

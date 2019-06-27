@@ -161,7 +161,10 @@ module Google
               @upload_conversion_adjustments = Google::Gax.create_api_call(
                 @conversion_adjustment_upload_service_stub.method(:upload_conversion_adjustments),
                 defaults["upload_conversion_adjustments"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

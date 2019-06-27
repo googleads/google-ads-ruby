@@ -176,7 +176,10 @@ module Google
               @get_language_constant = Google::Gax.create_api_call(
                 @language_constant_service_stub.method(:get_language_constant),
                 defaults["get_language_constant"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
             end
 

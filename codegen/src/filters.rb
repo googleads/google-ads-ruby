@@ -27,7 +27,10 @@ def filter_services_for_google_ads(version, potential_services)
   # services are already class objects because the gapic generator wraps
   # the protobuf descriptors for us.
   potential_services.select { |service, _|
-    service.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}")
+    [
+      service.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}"),
+      !service.name.include?("OperationsClient"),
+    ].all?
   }
 end
 

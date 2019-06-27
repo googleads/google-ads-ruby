@@ -176,12 +176,18 @@ module Google
               @get_customer = Google::Gax.create_api_call(
                 @customer_service_stub.method(:get_customer),
                 defaults["get_customer"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_customer = Google::Gax.create_api_call(
                 @customer_service_stub.method(:mutate_customer),
                 defaults["mutate_customer"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @list_accessible_customers = Google::Gax.create_api_call(
                 @customer_service_stub.method(:list_accessible_customers),
@@ -191,7 +197,10 @@ module Google
               @create_customer_client = Google::Gax.create_api_call(
                 @customer_service_stub.method(:create_customer_client),
                 defaults["create_customer_client"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

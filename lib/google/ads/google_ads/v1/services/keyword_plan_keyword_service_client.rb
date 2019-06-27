@@ -178,12 +178,18 @@ module Google
               @get_keyword_plan_keyword = Google::Gax.create_api_call(
                 @keyword_plan_keyword_service_stub.method(:get_keyword_plan_keyword),
                 defaults["get_keyword_plan_keyword"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_keyword_plan_keywords = Google::Gax.create_api_call(
                 @keyword_plan_keyword_service_stub.method(:mutate_keyword_plan_keywords),
                 defaults["mutate_keyword_plan_keywords"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 

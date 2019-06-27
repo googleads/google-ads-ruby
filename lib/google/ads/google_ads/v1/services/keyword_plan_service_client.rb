@@ -178,22 +178,34 @@ module Google
               @get_keyword_plan = Google::Gax.create_api_call(
                 @keyword_plan_service_stub.method(:get_keyword_plan),
                 defaults["get_keyword_plan"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_keyword_plans = Google::Gax.create_api_call(
                 @keyword_plan_service_stub.method(:mutate_keyword_plans),
                 defaults["mutate_keyword_plans"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
               @generate_forecast_metrics = Google::Gax.create_api_call(
                 @keyword_plan_service_stub.method(:generate_forecast_metrics),
                 defaults["generate_forecast_metrics"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'keyword_plan' => request.keyword_plan}
+                end
               )
               @generate_historical_metrics = Google::Gax.create_api_call(
                 @keyword_plan_service_stub.method(:generate_historical_metrics),
                 defaults["generate_historical_metrics"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'keyword_plan' => request.keyword_plan}
+                end
               )
             end
 

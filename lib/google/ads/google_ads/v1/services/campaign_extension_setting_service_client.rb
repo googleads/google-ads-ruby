@@ -178,12 +178,18 @@ module Google
               @get_campaign_extension_setting = Google::Gax.create_api_call(
                 @campaign_extension_setting_service_stub.method(:get_campaign_extension_setting),
                 defaults["get_campaign_extension_setting"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'resource_name' => request.resource_name}
+                end
               )
               @mutate_campaign_extension_settings = Google::Gax.create_api_call(
                 @campaign_extension_setting_service_stub.method(:mutate_campaign_extension_settings),
                 defaults["mutate_campaign_extension_settings"],
-                exception_transformer: exception_transformer
+                exception_transformer: exception_transformer,
+                params_extractor: proc do |request|
+                  {'customer_id' => request.customer_id}
+                end
               )
             end
 
