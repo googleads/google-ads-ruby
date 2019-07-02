@@ -80,17 +80,22 @@ module Google
           begin
             gax_error.status_details.each do |detail|
               # If there is an underlying GoogleAdsFailure, throw that one.
-              if detail.is_a?(
-                  Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure)
+              if [
+                Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure === detail,
+                Google::Ads::GoogleAds::V2::Errors::GoogleAdsFailure === detail,
+              ]
                 raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
-                    detail)
-              end
-              if detail.is_a?(Google::Protobuf::Any)
+                    detail
+                )
+              elsif detail.is_a?(Google::Protobuf::Any)
                 type = Google::Protobuf::DescriptorPool.generated_pool.lookup(
-                    detail.type_name).msgclass
+                  detail.type_name
+                ).msgclass
                 failure = detail.unpack(type)
+
                 raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
-                    failure)
+                  failure
+                )
               end
             end
           rescue Google::Ads::GoogleAds::Errors::GoogleAdsError
