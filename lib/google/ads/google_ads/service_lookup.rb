@@ -80,10 +80,8 @@ module Google
           begin
             gax_error.status_details.each do |detail|
               # If there is an underlying GoogleAdsFailure, throw that one.
-              if [
-                Google::Ads::GoogleAds::V1::Errors::GoogleAdsFailure === detail,
-                Google::Ads::GoogleAds::V2::Errors::GoogleAdsFailure === detail,
-              ]
+              if detail.class.name.start_with?("Google::Ads::GoogleAds") &&
+                  detail.class.name.end_with?("GoogleAdsFailure")
                 raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
                     detail
                 )
