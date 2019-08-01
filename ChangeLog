@@ -1,3 +1,5 @@
+3.0.1:
+ - Add an insecure channel config flag
 3.0.0:
  - Compatability with v2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Removed the symbol based lookup util, favoring a method based one:

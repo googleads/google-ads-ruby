@@ -155,9 +155,13 @@ module Google
             MAX_METADATA_SIZE => 16*1024*1024,
           }
 
-          call_creds = GRPC::Core::CallCredentials.new(get_credentials)
-          chan_creds = GRPC::Core::ChannelCredentials.new.compose(call_creds)
-          GRPC::Core::Channel.new(target, channel_args, chan_creds)
+          if !@config.use_insecure_channel
+            call_creds = GRPC::Core::CallCredentials.new(get_credentials)
+            chan_creds = GRPC::Core::ChannelCredentials.new.compose(call_creds)
+            GRPC::Core::Channel.new(target, channel_args, chan_creds)
+          else
+            GRPC::Core::Channel.new(target, channel_args, :this_channel_is_insecure)
+          end
         end
 
         def patch_lro_headers(class_to_return, headers)
