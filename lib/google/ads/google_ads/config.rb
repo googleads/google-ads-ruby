@@ -39,6 +39,8 @@ module Google
         attr_accessor :treat_deprecation_warnings_as_errors
         attr_accessor :warn_on_all_deprecations
 
+        attr_accessor :use_insecure_channel
+
         def initialize(&block)
           @refresh_token = nil
           @client_id = nil
@@ -57,6 +59,8 @@ module Google
 
           @treat_deprecation_warnings_as_errors = false
           @warn_on_all_deprecations = false
+
+          @use_insecure_channel = false
 
           yield self if block_given?
         end
