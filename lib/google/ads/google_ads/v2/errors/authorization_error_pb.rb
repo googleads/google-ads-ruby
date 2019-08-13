@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CUSTOMER_NOT_ENABLED, 24
     value :MISSING_TOS, 9
     value :DEVELOPER_TOKEN_NOT_APPROVED, 10
+    value :INVALID_LOGIN_CUSTOMER_ID_SERVING_CUSTOMER_ID_COMBINATION, 11
   end
 end
 

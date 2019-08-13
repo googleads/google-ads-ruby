@@ -67,6 +67,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :engagement_rate, :message, 31, "google.protobuf.DoubleValue"
     optional :engagements, :message, 32, "google.protobuf.Int64Value"
     optional :hotel_average_lead_value_micros, :message, 75, "google.protobuf.DoubleValue"
+    optional :hotel_price_difference_percentage, :message, 129, "google.protobuf.DoubleValue"
     optional :historical_creative_quality_score, :enum, 80, "google.ads.googleads.v2.enums.QualityScoreBucketEnum.QualityScoreBucket"
     optional :historical_landing_page_quality_score, :enum, 81, "google.ads.googleads.v2.enums.QualityScoreBucketEnum.QualityScoreBucket"
     optional :historical_quality_score, :message, 82, "google.protobuf.Int64Value"

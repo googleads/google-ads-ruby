@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :REVIEW_IN_PROGRESS, 2
     value :REVIEWED, 3
     value :UNDER_APPEAL, 4
+    value :ELIGIBLE_MAY_SERVE, 5
   end
 end
 

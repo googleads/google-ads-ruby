@@ -32,7 +32,7 @@ module Google
     module GoogleAds
       module V2
         module Services
-          # Service to provide Payments accounts that can be used to set up consolidated
+          # Service to provide payments accounts that can be used to set up consolidated
           # billing.
           #
           # @!attribute [r] payments_account_service_stub
@@ -171,7 +171,7 @@ module Google
 
             # Service calls
 
-            # Returns all Payments accounts associated with all managers
+            # Returns all payments accounts associated with all managers
             # between the login customer ID and specified serving customer in the
             # hierarchy, inclusive.
             #
