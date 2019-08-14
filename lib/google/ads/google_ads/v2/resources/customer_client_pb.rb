@@ -11,6 +11,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :client_customer, :message, 3, "google.protobuf.StringValue"
     optional :hidden, :message, 4, "google.protobuf.BoolValue"
     optional :level, :message, 5, "google.protobuf.Int64Value"
+    optional :time_zone, :message, 6, "google.protobuf.StringValue"
+    optional :test_account, :message, 7, "google.protobuf.BoolValue"
+    optional :manager, :message, 8, "google.protobuf.BoolValue"
+    optional :descriptive_name, :message, 9, "google.protobuf.StringValue"
+    optional :currency_code, :message, 10, "google.protobuf.StringValue"
+    optional :id, :message, 11, "google.protobuf.Int64Value"
   end
 end
 

@@ -25,6 +25,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :PAYMENTS_ACCOUNT_NOT_FOUND, 14
     value :PAYMENTS_PROFILE_INELIGIBLE, 15
     value :PAYMENTS_ACCOUNT_INELIGIBLE, 16
+    value :CUSTOMER_NEEDS_INTERNAL_APPROVAL, 17
   end
 end
 

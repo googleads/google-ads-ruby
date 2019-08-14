@@ -95,6 +95,7 @@ require 'google/ads/google_ads/v2/errors/policy_violation_error_pb'
 require 'google/ads/google_ads/v2/errors/query_error_pb'
 require 'google/ads/google_ads/v2/errors/quota_error_pb'
 require 'google/ads/google_ads/v2/errors/range_error_pb'
+require 'google/ads/google_ads/v2/errors/reach_plan_error_pb'
 require 'google/ads/google_ads/v2/errors/recommendation_error_pb'
 require 'google/ads/google_ads/v2/errors/region_code_error_pb'
 require 'google/ads/google_ads/v2/errors/request_error_pb'
@@ -228,6 +229,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :manager_link_error, :enum, 121, "google.ads.googleads.v2.errors.ManagerLinkErrorEnum.ManagerLinkError"
       optional :currency_code_error, :enum, 122, "google.ads.googleads.v2.errors.CurrencyCodeErrorEnum.CurrencyCodeError"
       optional :access_invitation_error, :enum, 124, "google.ads.googleads.v2.errors.AccessInvitationErrorEnum.AccessInvitationError"
+      optional :reach_plan_error, :enum, 125, "google.ads.googleads.v2.errors.ReachPlanErrorEnum.ReachPlanError"
     end
   end
   add_message "google.ads.googleads.v2.errors.ErrorLocation" do

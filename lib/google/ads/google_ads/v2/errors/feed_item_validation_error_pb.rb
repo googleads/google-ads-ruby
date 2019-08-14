@@ -105,6 +105,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :INVALID_IMAGE_URL, 94
     value :MISSING_LATITUDE_VALUE, 95
     value :MISSING_LONGITUDE_VALUE, 96
+    value :ADDRESS_NOT_FOUND, 97
+    value :ADDRESS_NOT_TARGETABLE, 98
   end
 end
 

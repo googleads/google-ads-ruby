@@ -44,6 +44,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :operating_system_version, :message, 32, "google.ads.googleads.v2.common.OperatingSystemVersionInfo"
       optional :mobile_device, :message, 33, "google.ads.googleads.v2.common.MobileDeviceInfo"
       optional :location_group, :message, 34, "google.ads.googleads.v2.common.LocationGroupInfo"
+      optional :custom_affinity, :message, 36, "google.ads.googleads.v2.common.CustomAffinityInfo"
     end
   end
 end

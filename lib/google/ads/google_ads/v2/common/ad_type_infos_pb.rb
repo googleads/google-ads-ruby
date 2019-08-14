@@ -42,6 +42,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   end
   add_message "google.ads.googleads.v2.common.ExpandedDynamicSearchAdInfo" do
     optional :description, :message, 1, "google.protobuf.StringValue"
+    optional :description2, :message, 2, "google.protobuf.StringValue"
   end
   add_message "google.ads.googleads.v2.common.HotelAdInfo" do
   end
