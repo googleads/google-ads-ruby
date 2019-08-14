@@ -1,3 +1,6 @@
+3.1.0:
+ - Adding support for Google Ads API v2_1.
+
 3.0.1:
  - Add an insecure channel config flag
 3.0.0:
