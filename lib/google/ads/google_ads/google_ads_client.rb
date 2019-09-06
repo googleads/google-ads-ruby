@@ -74,6 +74,7 @@ require 'logger'
 require 'json'
 require 'openssl'
 require 'signet/oauth_2/client'
+require 'delegate'
 
 module Google
   module Ads
