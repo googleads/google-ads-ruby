@@ -38,7 +38,7 @@ task :apply_patches do |t|
 end
 
 def proto_files
-  Dir["lib/google/ads/google_ads/v1/**/*.rb"]
+  Dir["lib/google/ads/google_ads/v*/**/*.rb"]
 end
 
 def newest_of(files)
