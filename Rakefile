@@ -62,7 +62,7 @@ def factories_are_recent?
   newest_factory_file > newest_proto_file
 end
 
-task :codegen do |t|
+task :codegen => [:apply_patches, :copy_third_party_code] do |t|
   `./scripts/codegen.sh` unless factories_are_recent?
 end
 
@@ -70,5 +70,5 @@ task :copy_third_party_code do |t|
   `cp third_party/rspec/caller_filter.rb lib/google/ads/google_ads/deprecation.rb`
 end
 
-task :build => [:apply_patches, :copy_third_party_code, :codegen, :validate_protos]
+task :build => [:codegen, :validate_protos]
 task :test => [:copy_third_party_code, :codegen]
