@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :STRUCTURED_SNIPPET, 11
     value :LOCATION, 12
     value :AFFILIATE_LOCATION, 13
+    value :HOTEL_CALLOUT, 15
   end
 end
 

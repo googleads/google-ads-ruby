@@ -37,7 +37,7 @@ module Google::Ads::GoogleAds::V2::Services
       self.unmarshal_class_method = :decode
       self.service_name = 'google.ads.googleads.v2.services.ReachPlanService'
 
-      # Returns the list of plannable locations (e.g. countries, DMAs).
+      # Returns the list of plannable locations (for example, countries & DMAs).
       rpc :ListPlannableLocations, ListPlannableLocationsRequest, ListPlannableLocationsResponse
       # Returns the list of per-location plannable YouTube ad formats with allowed
       # targeting.

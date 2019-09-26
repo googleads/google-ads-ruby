@@ -116,6 +116,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     repeated :url_custom_parameters, :message, 7, "google.ads.googleads.v2.common.CustomParameter"
     optional :final_url_suffix, :message, 8, "google.protobuf.StringValue"
   end
+  add_message "google.ads.googleads.v2.common.HotelCalloutFeedItem" do
+    optional :text, :message, 1, "google.protobuf.StringValue"
+    optional :language_code, :message, 2, "google.protobuf.StringValue"
+  end
 end
 
 module Google::Ads::GoogleAds::V2::Common
@@ -130,4 +134,5 @@ module Google::Ads::GoogleAds::V2::Common
   PromotionFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v2.common.PromotionFeedItem").msgclass
   StructuredSnippetFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v2.common.StructuredSnippetFeedItem").msgclass
   SitelinkFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v2.common.SitelinkFeedItem").msgclass
+  HotelCalloutFeedItem = Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v2.common.HotelCalloutFeedItem").msgclass
 end

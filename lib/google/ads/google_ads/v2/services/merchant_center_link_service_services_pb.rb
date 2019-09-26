@@ -34,7 +34,7 @@ module Google::Ads::GoogleAds::V2::Services
       self.unmarshal_class_method = :decode
       self.service_name = 'google.ads.googleads.v2.services.MerchantCenterLinkService'
 
-      # Returns Merchant Center links available tor this customer.
+      # Returns Merchant Center links available for this customer.
       rpc :ListMerchantCenterLinks, ListMerchantCenterLinksRequest, ListMerchantCenterLinksResponse
       # Returns the Merchant Center link in full detail.
       rpc :GetMerchantCenterLink, GetMerchantCenterLinkRequest, Google::Ads::GoogleAds::V2::Resources::MerchantCenterLink

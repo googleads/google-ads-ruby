@@ -13,6 +13,7 @@ require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v2.resources.ExtensionFeedItem" do
     optional :resource_name, :string, 1
+    optional :id, :message, 24, "google.protobuf.Int64Value"
     optional :extension_type, :enum, 13, "google.ads.googleads.v2.enums.ExtensionTypeEnum.ExtensionType"
     optional :start_date_time, :message, 5, "google.protobuf.StringValue"
     optional :end_date_time, :message, 6, "google.protobuf.StringValue"
@@ -32,6 +33,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :promotion_feed_item, :message, 12, "google.ads.googleads.v2.common.PromotionFeedItem"
       optional :location_feed_item, :message, 14, "google.ads.googleads.v2.common.LocationFeedItem"
       optional :affiliate_location_feed_item, :message, 15, "google.ads.googleads.v2.common.AffiliateLocationFeedItem"
+      optional :hotel_callout_feed_item, :message, 23, "google.ads.googleads.v2.common.HotelCalloutFeedItem"
     end
     oneof :serving_resource_targeting do
       optional :targeted_campaign, :message, 18, "google.protobuf.StringValue"
