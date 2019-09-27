@@ -192,7 +192,7 @@ module Google
 
             # Service calls
 
-            # Returns the list of plannable locations (e.g. countries, DMAs).
+            # Returns the list of plannable locations (for example, countries & DMAs).
             #
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,

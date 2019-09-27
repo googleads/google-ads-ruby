@@ -66,6 +66,7 @@ require 'google/ads/google_ads/v2/errors/header_error_pb'
 require 'google/ads/google_ads/v2/errors/id_error_pb'
 require 'google/ads/google_ads/v2/errors/image_error_pb'
 require 'google/ads/google_ads/v2/errors/internal_error_pb'
+require 'google/ads/google_ads/v2/errors/invoice_error_pb'
 require 'google/ads/google_ads/v2/errors/keyword_plan_ad_group_error_pb'
 require 'google/ads/google_ads/v2/errors/keyword_plan_campaign_error_pb'
 require 'google/ads/google_ads/v2/errors/keyword_plan_error_pb'
@@ -230,6 +231,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :currency_code_error, :enum, 122, "google.ads.googleads.v2.errors.CurrencyCodeErrorEnum.CurrencyCodeError"
       optional :access_invitation_error, :enum, 124, "google.ads.googleads.v2.errors.AccessInvitationErrorEnum.AccessInvitationError"
       optional :reach_plan_error, :enum, 125, "google.ads.googleads.v2.errors.ReachPlanErrorEnum.ReachPlanError"
+      optional :invoice_error, :enum, 126, "google.ads.googleads.v2.errors.InvoiceErrorEnum.InvoiceError"
     end
   end
   add_message "google.ads.googleads.v2.errors.ErrorLocation" do

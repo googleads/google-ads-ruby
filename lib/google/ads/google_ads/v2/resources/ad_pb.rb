@@ -20,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     repeated :final_app_urls, :message, 35, "google.ads.googleads.v2.common.FinalAppUrl"
     repeated :final_mobile_urls, :message, 16, "google.protobuf.StringValue"
     optional :tracking_url_template, :message, 12, "google.protobuf.StringValue"
+    optional :final_url_suffix, :message, 38, "google.protobuf.StringValue"
     repeated :url_custom_parameters, :message, 10, "google.ads.googleads.v2.common.CustomParameter"
     optional :display_url, :message, 4, "google.protobuf.StringValue"
     optional :type, :enum, 5, "google.ads.googleads.v2.enums.AdTypeEnum.AdType"

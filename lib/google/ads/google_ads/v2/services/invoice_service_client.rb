@@ -14,7 +14,7 @@
 #
 # EDITING INSTRUCTIONS
 # This file was generated from the file
-# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v2/services/merchant_center_link_service.proto,
+# https://github.com/googleapis/googleapis/blob/master/google/ads/google_ads/v2/services/invoice_service.proto,
 # and updates to that file get reflected here through a refresh process.
 # For the short term, the refresh process will only be runnable by Google
 # engineers.
@@ -24,7 +24,7 @@ require "pathname"
 
 require "google/gax"
 
-require "google/ads/google_ads/v2/services/merchant_center_link_service_pb"
+require "google/ads/google_ads/v2/services/invoice_service_pb"
 require "google/ads/google_ads/v2/services/credentials"
 
 module Google
@@ -32,13 +32,12 @@ module Google
     module GoogleAds
       module V2
         module Services
-          # This service allows management of links between Google Ads and Google
-          # Merchant Center.
+          # A service to fetch invoices issued for a billing setup during a given month.
           #
-          # @!attribute [r] merchant_center_link_service_stub
-          #   @return [Google::Ads::GoogleAds::V2::Services::MerchantCenterLinkService::Stub]
-          class MerchantCenterLinkServiceClient
-            attr_reader :merchant_center_link_service_stub
+          # @!attribute [r] invoice_service_stub
+          #   @return [Google::Ads::GoogleAds::V2::Services::InvoiceService::Stub]
+          class InvoiceServiceClient
+            attr_reader :invoice_service_stub
 
             # The default address of the service.
             SERVICE_ADDRESS = "googleads.googleapis.com".freeze
@@ -56,23 +55,6 @@ module Google
             ALL_SCOPES = [
             ].freeze
 
-
-            MERCHANT_CENTER_LINK_PATH_TEMPLATE = Google::Gax::PathTemplate.new(
-              "customers/{customer}/merchantCenterLinks/{merchant_center_link}"
-            )
-
-            private_constant :MERCHANT_CENTER_LINK_PATH_TEMPLATE
-
-            # Returns a fully-qualified merchant_center_link resource name string.
-            # @param customer [String]
-            # @param merchant_center_link [String]
-            # @return [String]
-            def self.merchant_center_link_path customer, merchant_center_link
-              MERCHANT_CENTER_LINK_PATH_TEMPLATE.render(
-                :"customer" => customer,
-                :"merchant_center_link" => merchant_center_link
-              )
-            end
 
             # @param credentials [Google::Auth::Credentials, String, Hash, GRPC::Core::Channel, GRPC::Core::ChannelCredentials, Proc]
             #   Provides the means for authenticating requests made by the client. This parameter can
@@ -116,7 +98,7 @@ module Google
               # the gRPC module only when it's required.
               # See https://github.com/googleapis/toolkit/issues/446
               require "google/gax/grpc"
-              require "google/ads/google_ads/v2/services/merchant_center_link_service_services_pb"
+              require "google/ads/google_ads/v2/services/invoice_service_services_pb"
 
               credentials ||= Google::Ads::GoogleAds::V2::Services::Credentials.default
 
@@ -147,11 +129,11 @@ module Google
               headers = { :"x-goog-api-client" => google_api_client }
               headers.merge!(metadata) unless metadata.nil?
               client_config_file = Pathname.new(__dir__).join(
-                "merchant_center_link_service_client_config.json"
+                "invoice_service_client_config.json"
               )
               defaults = client_config_file.open do |f|
                 Google::Gax.construct_settings(
-                  "google.ads.googleads.v2.services.MerchantCenterLinkService",
+                  "google.ads.googleads.v2.services.InvoiceService",
                   JSON.parse(f.read),
                   client_config,
                   Google::Gax::Grpc::STATUS_CODE_NAMES,
@@ -165,7 +147,7 @@ module Google
               service_path = self.class::SERVICE_ADDRESS
               port = self.class::DEFAULT_SERVICE_PORT
               interceptors = self.class::GRPC_INTERCEPTORS
-              @merchant_center_link_service_stub = Google::Gax::Grpc.create_stub(
+              @invoice_service_stub = Google::Gax::Grpc.create_stub(
                 service_path,
                 port,
                 chan_creds: chan_creds,
@@ -173,28 +155,12 @@ module Google
                 updater_proc: updater_proc,
                 scopes: scopes,
                 interceptors: interceptors,
-                &Google::Ads::GoogleAds::V2::Services::MerchantCenterLinkService::Stub.method(:new)
+                &Google::Ads::GoogleAds::V2::Services::InvoiceService::Stub.method(:new)
               )
 
-              @list_merchant_center_links = Google::Gax.create_api_call(
-                @merchant_center_link_service_stub.method(:list_merchant_center_links),
-                defaults["list_merchant_center_links"],
-                exception_transformer: exception_transformer,
-                params_extractor: proc do |request|
-                  {'customer_id' => request.customer_id}
-                end
-              )
-              @get_merchant_center_link = Google::Gax.create_api_call(
-                @merchant_center_link_service_stub.method(:get_merchant_center_link),
-                defaults["get_merchant_center_link"],
-                exception_transformer: exception_transformer,
-                params_extractor: proc do |request|
-                  {'resource_name' => request.resource_name}
-                end
-              )
-              @mutate_merchant_center_link = Google::Gax.create_api_call(
-                @merchant_center_link_service_stub.method(:mutate_merchant_center_link),
-                defaults["mutate_merchant_center_link"],
+              @list_invoices = Google::Gax.create_api_call(
+                @invoice_service_stub.method(:list_invoices),
+                defaults["list_invoices"],
                 exception_transformer: exception_transformer,
                 params_extractor: proc do |request|
                   {'customer_id' => request.customer_id}
@@ -204,108 +170,60 @@ module Google
 
             # Service calls
 
-            # Returns Merchant Center links available for this customer.
+            # Returns all invoices associated with a billing setup, for a given month.
             #
             # @param customer_id [String]
-            #   The ID of the customer onto which to apply the Merchant Center link list
-            #   operation.
+            #   The ID of the customer to fetch invoices for.
+            # @param billing_setup [String]
+            #   Required. The billing setup resource name of the requested invoices.
+            #
+            #   `customers/{customer_id}/billingSetups/{billing_setup_id}`
+            # @param issue_year [String]
+            #   Required. The issue year to retrieve invoices, in yyyy format. Only
+            #   invoices issued in 2019 or later can be retrieved.
+            # @param issue_month [Google::Ads::GoogleAds::V2::Enums::MonthOfYearEnum::MonthOfYear]
+            #   Required. The issue month to retrieve invoices.
             # @param options [Google::Gax::CallOptions]
             #   Overrides the default settings for this call, e.g, timeout,
             #   retries, etc.
             # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V2::Services::ListMerchantCenterLinksResponse]
+            # @yieldparam result [Google::Ads::GoogleAds::V2::Services::ListInvoicesResponse]
             # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V2::Services::ListMerchantCenterLinksResponse]
+            # @return [Google::Ads::GoogleAds::V2::Services::ListInvoicesResponse]
             # @raise [Google::Gax::GaxError] if the RPC is aborted.
             # @example
             #   require "google/ads/google_ads"
             #
-            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v2)
-            #
-            #   # TODO: Initialize `customer_id`:
-            #   customer_id = ''
-            #   response = merchant_center_link_client.list_merchant_center_links(customer_id)
-
-            def list_merchant_center_links \
-                customer_id,
-                options: nil,
-                &block
-              req = {
-                customer_id: customer_id
-              }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V2::Services::ListMerchantCenterLinksRequest)
-              @list_merchant_center_links.call(req, options, &block)
-            end
-
-            # Returns the Merchant Center link in full detail.
-            #
-            # @param resource_name [String]
-            #   Resource name of the Merchant Center link.
-            # @param options [Google::Gax::CallOptions]
-            #   Overrides the default settings for this call, e.g, timeout,
-            #   retries, etc.
-            # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V2::Resources::MerchantCenterLink]
-            # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V2::Resources::MerchantCenterLink]
-            # @raise [Google::Gax::GaxError] if the RPC is aborted.
-            # @example
-            #   require "google/ads/google_ads"
-            #
-            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v2)
-            #   formatted_resource_name = Google::Ads::GoogleAds::V2::Services::MerchantCenterLinkServiceClient.merchant_center_link_path("[CUSTOMER]", "[MERCHANT_CENTER_LINK]")
-            #   response = merchant_center_link_client.get_merchant_center_link(formatted_resource_name)
-
-            def get_merchant_center_link \
-                resource_name,
-                options: nil,
-                &block
-              req = {
-                resource_name: resource_name
-              }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V2::Services::GetMerchantCenterLinkRequest)
-              @get_merchant_center_link.call(req, options, &block)
-            end
-
-            # Updates status or removes a Merchant Center link.
-            #
-            # @param customer_id [String]
-            #   The ID of the customer being modified.
-            # @param operation [Google::Ads::GoogleAds::V2::Services::MerchantCenterLinkOperation | Hash]
-            #   The operation to perform on the link
-            #   A hash of the same form as `Google::Ads::GoogleAds::V2::Services::MerchantCenterLinkOperation`
-            #   can also be provided.
-            # @param options [Google::Gax::CallOptions]
-            #   Overrides the default settings for this call, e.g, timeout,
-            #   retries, etc.
-            # @yield [result, operation] Access the result along with the RPC operation
-            # @yieldparam result [Google::Ads::GoogleAds::V2::Services::MutateMerchantCenterLinkResponse]
-            # @yieldparam operation [GRPC::ActiveCall::Operation]
-            # @return [Google::Ads::GoogleAds::V2::Services::MutateMerchantCenterLinkResponse]
-            # @raise [Google::Gax::GaxError] if the RPC is aborted.
-            # @example
-            #   require "google/ads/google_ads"
-            #
-            #   merchant_center_link_client = Google::Ads::GoogleAds::MerchantCenterLink.new(version: :v2)
+            #   invoice_client = Google::Ads::GoogleAds::Invoice.new(version: :v2)
             #
             #   # TODO: Initialize `customer_id`:
             #   customer_id = ''
             #
-            #   # TODO: Initialize `operation`:
-            #   operation = {}
-            #   response = merchant_center_link_client.mutate_merchant_center_link(customer_id, operation)
+            #   # TODO: Initialize `billing_setup`:
+            #   billing_setup = ''
+            #
+            #   # TODO: Initialize `issue_year`:
+            #   issue_year = ''
+            #
+            #   # TODO: Initialize `issue_month`:
+            #   issue_month = :UNSPECIFIED
+            #   response = invoice_client.list_invoices(customer_id, billing_setup, issue_year, issue_month)
 
-            def mutate_merchant_center_link \
+            def list_invoices \
                 customer_id,
-                operation,
+                billing_setup,
+                issue_year,
+                issue_month,
                 options: nil,
                 &block
               req = {
                 customer_id: customer_id,
-                operation: operation
+                billing_setup: billing_setup,
+                issue_year: issue_year,
+                issue_month: issue_month
               }.delete_if { |_, v| v.nil? }
-              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V2::Services::MutateMerchantCenterLinkRequest)
-              @mutate_merchant_center_link.call(req, options, &block)
+              req = Google::Gax::to_proto(req, Google::Ads::GoogleAds::V2::Services::ListInvoicesRequest)
+              @list_invoices.call(req, options, &block)
             end
           end
         end
