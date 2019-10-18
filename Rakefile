@@ -71,4 +71,4 @@ task :copy_third_party_code do |t|
 end
 
 task :build => [:codegen, :validate_protos]
-task :test => [:copy_third_party_code, :codegen]
+task :test

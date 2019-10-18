@@ -33,6 +33,10 @@ module Google
           def initialize(failure)
             @failure = failure
           end
+
+          def inspect
+            "#<#{self.class.name}: #{object_id} #{failure.inspect}>"
+          end
         end
 
         def self.namespaces
