@@ -56,6 +56,14 @@ class TestErrors < Minitest::Test
     assert_equal({}, error_code)
   end
 
+  def test_inspect
+    error = build_error
+    error_code = Google::Ads::GoogleAds::Errors::GoogleAdsError.new(error)
+
+    expected = "#<#{error_code.class.name}: #{error_code.object_id} #{error.inspect}>"
+    assert_equal(expected, error_code.inspect)
+  end
+
   def build_error
     Google::Ads::GoogleAds::V2::Errors::GoogleAdsError.new.tap do |error|
       location = Google::Ads::GoogleAds::V2::Errors::ErrorLocation.new
