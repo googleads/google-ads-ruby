@@ -153,7 +153,7 @@ def add_hotel_ad_group_ad(client, customer_id, ad_group_resource)
     aga.ad = client.resource.ad do |ad|
       ad.hotel_ad = client.resource.hotel_ad_info
     end
-    aga.status = :PAUSED
+    aga.status = :ENABLED
 
     # Set the ad group.
     aga.ad_group = ad_group_resource
