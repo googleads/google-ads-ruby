@@ -55,7 +55,6 @@ module Google
           @log_level = nil
           @log_target = nil
           @logger = nil
-          @treat_deprecation_warnings_as_errors = false
 
           @treat_deprecation_warnings_as_errors = false
           @warn_on_all_deprecations = false
