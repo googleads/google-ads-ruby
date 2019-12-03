@@ -108,7 +108,7 @@ To include the gem in your code:
 To fetch a specific service, for example CampaignService:
 
     client = Google::Ads::GoogleAds::GoogleAdsClient.new
-    campaign_service = client.service(:Campaign)
+    campaign_service = client.service.campaign
 
 See the provided [examples][] for more detailed demonstrations of how to use the
 library.
