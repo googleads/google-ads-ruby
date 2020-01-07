@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.license = 'Apache-2.0'
   s.platform = Gem::Platform::RUBY
   s.require_paths = ['lib']
-  s.required_ruby_version = '>= 2.1.0'
+  s.required_ruby_version = '>= 2.5.0'
   s.summary = 'Google client library for the Google Ads API'
 
   # Pinned to exact version to ensure monkey patches are stable. Please ping
