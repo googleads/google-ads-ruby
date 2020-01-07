@@ -126,6 +126,13 @@ See the [Logging guide][].
 
 [Logging guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/logging
 
+## Ruby versions
+
+The client library supports versions 2.5 and up of Ruby. We plan to support 3
+Ruby releases at any one time. As Ruby releases once a year on December 25th,
+that means towards the end of 2020 we will look at dropping 2.5 and adding
+support for the next version of ruby
+
 # Authors
 
 Author:
@@ -136,4 +143,4 @@ Author:
 Maintainer:
 
  - Michael Cloonan
- - Sam Phippen
+ - Penelope Phippen

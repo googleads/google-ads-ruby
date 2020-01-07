@@ -1,3 +1,5 @@
+4.0.0:
+ - Change supported Ruby versions (>= 2.5)
 3.2.0:
  - Adding support for Google Ads API v2_2.
 
