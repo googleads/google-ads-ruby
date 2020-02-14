@@ -51,25 +51,22 @@ def get_keyword_stats(customer_id)
     LIMIT 50
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  responses = ga_service.search_stream(customer_id, query)
 
-  if response.response.results.empty?
-    puts "The given query returned no entries:\n #{query}"
-    return
-  end
+  responses.each do |response|
+    response.results.each do |row|
+      campaign = row.campaign
+      ad_group = row.ad_group
+      criterion = row.ad_group_criterion
+      metrics = row.metrics
 
-  response.each do |row|
-    campaign = row.campaign
-    ad_group = row.ad_group
-    criterion = row.ad_group_criterion
-    metrics = row.metrics
-
-    puts "Keyword text '#{criterion.keyword.text}' with match type "\
-      "'#{criterion.keyword.match_type}' and ID #{criterion.criterion_id} in "\
-      "ad group '#{ad_group.name}' with ID #{ad_group.id} in campaign "\
-      "'#{campaign.name}' with ID #{campaign.id} had #{metrics.impressions} "\
-      "impression(s), #{metrics.clicks} click(s), and #{metrics.cost_micros} "\
-      "cost (in micros) during the last 7 days."
+      puts "Keyword text '#{criterion.keyword.text}' with match type "\
+        "'#{criterion.keyword.match_type}' and ID #{criterion.criterion_id} in "\
+        "ad group '#{ad_group.name}' with ID #{ad_group.id} in campaign "\
+        "'#{campaign.name}' with ID #{campaign.id} had #{metrics.impressions} "\
+        "impression(s), #{metrics.clicks} click(s), and #{metrics.cost_micros} "\
+        "cost (in micros) during the last 7 days."
+    end
   end
 end
 

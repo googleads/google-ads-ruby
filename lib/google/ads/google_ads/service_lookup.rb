@@ -1,3 +1,6 @@
+require 'google/ads/google_ads/error_transformer'
+require 'google/ads/google_ads/search_stream_intercepting_factory'
+
 module Google
   module Ads
     module GoogleAds
@@ -24,6 +27,15 @@ module Google
             Factories::HIGHEST_VERSION,
             logging_interceptor,
           )
+
+          highest_factory = if Factories::HIGHEST_VERSION == :V3
+            GoogleAds::SearchStreamInterceptingFactory.new(
+              GoogleAds::ERROR_TRANSFORMER,
+              highest_factory,
+            )
+          else
+            highest_factory
+          end
           VersionAlternate.new(highest_factory, version_alternates)
         end
 
@@ -42,7 +54,7 @@ module Google
           {
             credentials: credentials_or_channel,
             metadata: headers,
-            exception_transformer: ERROR_TRANSFORMER
+            exception_transformer: GoogleAds::ERROR_TRANSFORMER
           }
         end
 
@@ -74,38 +86,6 @@ module Google
               "0 < x <= 9,999,999,999. Got #{login_customer_id}"
             )
           end
-        end
-
-        ERROR_TRANSFORMER = Proc.new do |gax_error|
-          begin
-            gax_error.status_details.each do |detail|
-              # If there is an underlying GoogleAdsFailure, throw that one.
-              if detail.class.name.start_with?("Google::Ads::GoogleAds") &&
-                  detail.class.name.end_with?("GoogleAdsFailure")
-                raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
-                    detail
-                )
-              elsif detail.is_a?(Google::Protobuf::Any)
-                type = Google::Protobuf::DescriptorPool.generated_pool.lookup(
-                  detail.type_name
-                ).msgclass
-                failure = detail.unpack(type)
-
-                raise Google::Ads::GoogleAds::Errors::GoogleAdsError.new(
-                  failure
-                )
-              end
-            end
-          rescue Google::Ads::GoogleAds::Errors::GoogleAdsError
-            # If we raised this, bubble it out.
-            raise
-          rescue NoMethodError
-            # Sometimes status_details is just a String; in that case, we should
-            # just raise the original exception.
-          end
-          # If we don't find an error of the correct type, or if we run into an
-          # error while processing, just throw the original.
-          raise gax_error
         end
 
         attr_reader :name
