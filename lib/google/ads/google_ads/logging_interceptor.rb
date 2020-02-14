@@ -51,6 +51,32 @@ module Google
           end
         end
 
+        def server_streamer(request:, call:, method:, metadata: {})
+          begin
+            @logger.info { build_summary_message(request, call, method, false) }
+            responses = yield
+            Enumerator.new do |y|
+              responses.each { |response|
+                @logger.debug { build_request_message(metadata, request) }
+                @logger.debug { build_success_response_message(response) }
+                if response.respond_to?(:partial_failure_error) && response.partial_failure_error
+                  @logger.debug { build_partial_failure_message(response) }
+                end
+                y << response
+              }
+              @logger.debug {
+                "Request ID for preceding streaming request: " \
+                "#{call.instance_variable_get(:@wrapped).instance_variable_get(:@call).trailing_metadata["request-id"]}"
+              }
+            end
+          rescue Exception
+            @logger.warn { build_summary_message(request, call, method, true) }
+            @logger.info { build_request_message(metadata, request) }
+            @logger.info { build_error_response_message }
+            raise
+          end
+        end
+
         private
 
         def build_partial_failure_message(response)

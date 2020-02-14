@@ -130,8 +130,8 @@ def add_shopping_product_listing_group_tree(
   # * Brand: CoolBrand
   # * CPC bid: $0.90
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.listing_brand = client.resource.listing_brand_info do |listing_brand_info|
-      listing_brand_info.value = client.wrapper.string("CoolBrand")
+    listing_dimension_info.product_brand = client.resource.product_brand_info do |product_brand_info|
+      product_brand_info.value = client.wrapper.string("CoolBrand")
     end
   end
 
@@ -152,8 +152,8 @@ def add_shopping_product_listing_group_tree(
   # * Brand: CheapBrand
   # * CPC bid: $0.01
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.listing_brand = client.resource.listing_brand_info do |listing_brand_info|
-      listing_brand_info.value = client.wrapper.string("CheapBrand")
+    listing_dimension_info.product_brand = client.resource.product_brand_info do |product_brand_info|
+      product_brand_info.value = client.wrapper.string("CheapBrand")
     end
   end
   ad_group_criterion_brand_cheap_brand = create_listing_group_unit_biddable(
@@ -172,7 +172,7 @@ def add_shopping_product_listing_group_tree(
   # Biddable Unit node: (Brand other node)
   # * CPC bid: $0.05
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.listing_brand = client.resource.listing_brand_info
+    listing_dimension_info.product_brand = client.resource.product_brand_info
   end
   ad_group_criterion_brand_other_brand = create_listing_group_unit_biddable(
     client,
