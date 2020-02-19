@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 #
-# This example retrieves expanded text ads.
+# This example retrieves responsive search ads.
 
 require 'optparse'
 require 'google/ads/google_ads'
