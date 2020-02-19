@@ -16,6 +16,7 @@
 # limitations under the License.
 #
 # This example adds a responsive search ad to an ad group.
+
 require 'optparse'
 require 'google/ads/google_ads'
 
