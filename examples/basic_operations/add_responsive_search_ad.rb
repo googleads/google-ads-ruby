@@ -15,16 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a Gmail ad to a given ad group. The ad group's campaign
-# needs to have an AdvertisingChannelType of DISPLAY and
-# AdvertisingChannelSubType of DISPLAY_GMAIL_AD. To get ad groups, run
-# get_ad_groups.rb.
-
+# This example adds a responsive search ad to an ad group.
 require 'optparse'
-require 'date'
-require 'open-uri'
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/v1/errors/errors_pb'
 
 def add_responsive_search_ad(customer_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
