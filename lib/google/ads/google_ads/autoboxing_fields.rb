@@ -1,3 +1,4 @@
+require 'delegate'
 require 'google/ads/google_ads/autoboxing_mappings'
 
 module Google
