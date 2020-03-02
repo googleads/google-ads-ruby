@@ -1,3 +1,5 @@
+5.0.0:
+ - Compatability with v3 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 4.0.0:
  - Change supported Ruby versions (>= 2.5)
 3.2.0:
