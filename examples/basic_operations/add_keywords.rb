@@ -20,7 +20,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def add_keyword(customer_id, ad_group_id, keyword)
+def add_keywords(customer_id, ad_group_id, keyword)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -93,7 +93,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    add_keyword(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id], options[:keyword])
+    add_keywords(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id], options[:keyword])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
