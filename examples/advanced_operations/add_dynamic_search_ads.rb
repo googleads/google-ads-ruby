@@ -22,7 +22,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def add_dynamic_search_ads_campaign(customer_id)
+def add_dynamic_search_ads(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -195,7 +195,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_dynamic_search_ads_campaign(options.fetch(:customer_id).tr("-", ""))
+    add_dynamic_search_ads(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
