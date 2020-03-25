@@ -21,7 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_geo_target_constants_by_names()
+def get_geo_target_constants_by_names
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -75,7 +75,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_geo_target_constants_by_names()
+    get_geo_target_constants_by_names
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|
         STDERR.printf("Error with message: %s\n", error.message)
