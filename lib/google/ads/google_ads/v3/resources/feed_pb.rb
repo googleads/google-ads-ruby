@@ -7,6 +7,7 @@ require 'google/ads/google_ads/v3/enums/affiliate_location_feed_relationship_typ
 require 'google/ads/google_ads/v3/enums/feed_attribute_type_pb'
 require 'google/ads/google_ads/v3/enums/feed_origin_pb'
 require 'google/ads/google_ads/v3/enums/feed_status_pb'
+require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'

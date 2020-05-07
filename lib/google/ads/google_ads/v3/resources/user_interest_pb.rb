@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v3/common/criterion_category_availability_pb'
 require 'google/ads/google_ads/v3/enums/user_interest_taxonomy_type_pb'
+require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'

@@ -5,6 +5,7 @@ require 'google/protobuf'
 
 require 'google/ads/google_ads/v3/common/dates_pb'
 require 'google/ads/google_ads/v3/enums/keyword_plan_forecast_interval_pb'
+require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'

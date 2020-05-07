@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v3/common/keyword_plan_common_pb'
 require 'google/ads/google_ads/v3/enums/keyword_plan_network_pb'
 require 'google/api/annotations_pb'
+require 'google/api/field_behavior_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/client_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do

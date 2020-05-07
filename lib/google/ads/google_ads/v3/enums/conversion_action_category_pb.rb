@@ -16,6 +16,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :SIGNUP, 5
     value :LEAD, 6
     value :DOWNLOAD, 7
+    value :ADD_TO_CART, 8
+    value :BEGIN_CHECKOUT, 9
+    value :SUBSCRIBE_PAID, 10
+    value :PHONE_CALL_LEAD, 11
+    value :IMPORTED_LEAD, 12
+    value :SUBMIT_LEAD_FORM, 13
+    value :BOOK_APPOINTMENT, 14
+    value :REQUEST_QUOTE, 15
+    value :GET_DIRECTIONS, 16
+    value :OUTBOUND_CLICK, 17
+    value :CONTACT, 18
+    value :ENGAGEMENT, 19
+    value :STORE_VISIT, 20
+    value :STORE_SALE, 21
   end
 end
 

@@ -25,6 +25,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MONEY_AMOUNT_TOO_LARGE, 14
     value :NEGATIVE_MONEY_AMOUNT, 15
     value :NON_MULTIPLE_OF_MINIMUM_CURRENCY_UNIT, 16
+    value :TOTAL_BUDGET_AMOUNT_MUST_BE_UNSET_FOR_BUDGET_PERIOD_DAILY, 18
   end
 end
 

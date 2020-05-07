@@ -175,7 +175,7 @@ module Google
             # @param customer_id [String]
             #   The ID of the customer with the recommendation.
             # @param language [Google::Protobuf::StringValue | Hash]
-            #   The resource name of the language to target.
+            #   Required. The resource name of the language to target.
             #   Required
             #   A hash of the same form as `Google::Protobuf::StringValue`
             #   can also be provided.
