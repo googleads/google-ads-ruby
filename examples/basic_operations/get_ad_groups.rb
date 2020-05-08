@@ -60,7 +60,7 @@ if __FILE__ == $0
     opts.separator ''
     opts.separator 'Options:'
 
-    opts.on('-C', '--customerid CUSTOMER-ID', String, 'Customer ID') do |v|
+    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
     end
 
