@@ -18,6 +18,7 @@ require 'google/ads/google_ads/v3/errors/ad_parameter_error_pb'
 require 'google/ads/google_ads/v3/errors/ad_sharing_error_pb'
 require 'google/ads/google_ads/v3/errors/adx_error_pb'
 require 'google/ads/google_ads/v3/errors/asset_error_pb'
+require 'google/ads/google_ads/v3/errors/asset_link_error_pb'
 require 'google/ads/google_ads/v3/errors/authentication_error_pb'
 require 'google/ads/google_ads/v3/errors/authorization_error_pb'
 require 'google/ads/google_ads/v3/errors/bidding_error_pb'
@@ -87,6 +88,7 @@ require 'google/ads/google_ads/v3/errors/new_resource_creation_error_pb'
 require 'google/ads/google_ads/v3/errors/not_empty_error_pb'
 require 'google/ads/google_ads/v3/errors/not_whitelisted_error_pb'
 require 'google/ads/google_ads/v3/errors/null_error_pb'
+require 'google/ads/google_ads/v3/errors/offline_user_data_job_error_pb'
 require 'google/ads/google_ads/v3/errors/operation_access_denied_error_pb'
 require 'google/ads/google_ads/v3/errors/operator_error_pb'
 require 'google/ads/google_ads/v3/errors/partial_failure_error_pb'
@@ -111,6 +113,7 @@ require 'google/ads/google_ads/v3/errors/string_format_error_pb'
 require 'google/ads/google_ads/v3/errors/string_length_error_pb'
 require 'google/ads/google_ads/v3/errors/time_zone_error_pb'
 require 'google/ads/google_ads/v3/errors/url_field_error_pb'
+require 'google/ads/google_ads/v3/errors/user_data_error_pb'
 require 'google/ads/google_ads/v3/errors/user_list_error_pb'
 require 'google/ads/google_ads/v3/errors/youtube_video_registration_error_pb'
 require 'google/protobuf/wrappers_pb'
@@ -228,6 +231,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :partial_failure_error, :enum, 112, "google.ads.googleads.v3.errors.PartialFailureErrorEnum.PartialFailureError"
       optional :policy_validation_parameter_error, :enum, 114, "google.ads.googleads.v3.errors.PolicyValidationParameterErrorEnum.PolicyValidationParameterError"
       optional :size_limit_error, :enum, 118, "google.ads.googleads.v3.errors.SizeLimitErrorEnum.SizeLimitError"
+      optional :offline_user_data_job_error, :enum, 119, "google.ads.googleads.v3.errors.OfflineUserDataJobErrorEnum.OfflineUserDataJobError"
       optional :not_whitelisted_error, :enum, 120, "google.ads.googleads.v3.errors.NotWhitelistedErrorEnum.NotWhitelistedError"
       optional :manager_link_error, :enum, 121, "google.ads.googleads.v3.errors.ManagerLinkErrorEnum.ManagerLinkError"
       optional :currency_code_error, :enum, 122, "google.ads.googleads.v3.errors.CurrencyCodeErrorEnum.CurrencyCodeError"
@@ -236,6 +240,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :invoice_error, :enum, 126, "google.ads.googleads.v3.errors.InvoiceErrorEnum.InvoiceError"
       optional :payments_account_error, :enum, 127, "google.ads.googleads.v3.errors.PaymentsAccountErrorEnum.PaymentsAccountError"
       optional :time_zone_error, :enum, 128, "google.ads.googleads.v3.errors.TimeZoneErrorEnum.TimeZoneError"
+      optional :asset_link_error, :enum, 129, "google.ads.googleads.v3.errors.AssetLinkErrorEnum.AssetLinkError"
+      optional :user_data_error, :enum, 130, "google.ads.googleads.v3.errors.UserDataErrorEnum.UserDataError"
     end
   end
   add_message "google.ads.googleads.v3.errors.ErrorLocation" do

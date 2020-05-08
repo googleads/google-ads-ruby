@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :CLIENT_HAS_TOO_MANY_INVITATIONS, 6
     value :CANNOT_HIDE_OR_UNHIDE_MANAGER_ACCOUNTS, 7
     value :CUSTOMER_HAS_TOO_MANY_ACCOUNTS_AT_MANAGER, 8
+    value :CLIENT_HAS_TOO_MANY_MANAGERS, 9
   end
 end
 

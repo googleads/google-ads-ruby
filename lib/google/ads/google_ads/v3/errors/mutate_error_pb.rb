@@ -16,6 +16,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :MUTATE_NOT_ALLOWED, 9
     value :RESOURCE_NOT_IN_GOOGLE_ADS, 10
     value :RESOURCE_ALREADY_EXISTS, 11
+    value :RESOURCE_DOES_NOT_SUPPORT_VALIDATE_ONLY, 12
+    value :RESOURCE_READ_ONLY, 13
   end
 end
 

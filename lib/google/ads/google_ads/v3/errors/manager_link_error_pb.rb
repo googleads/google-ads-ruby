@@ -25,6 +25,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :NON_OWNER_USER_CANNOT_MODIFY_LINK, 14
     value :SUSPENDED_ACCOUNT_CANNOT_ADD_CLIENTS, 15
     value :CLIENT_OUTSIDE_TREE, 16
+    value :INVALID_STATUS_CHANGE, 17
+    value :INVALID_CHANGE, 18
   end
 end
 

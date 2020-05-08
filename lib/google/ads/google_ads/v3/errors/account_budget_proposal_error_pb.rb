@@ -32,6 +32,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :BUDGET_DATE_RANGE_INCOMPATIBLE_WITH_BILLING_SETUP, 21
     value :NOT_AUTHORIZED, 22
     value :INVALID_BILLING_SETUP, 23
+    value :OVERLAPS_EXISTING_BUDGET, 24
   end
 end
 

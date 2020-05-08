@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/api/annotations_pb'
@@ -14,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :currency_code, :message, 4, "google.protobuf.StringValue"
     optional :payments_profile_id, :message, 5, "google.protobuf.StringValue"
     optional :secondary_payments_profile_id, :message, 6, "google.protobuf.StringValue"
+    optional :paying_manager_customer, :message, 7, "google.protobuf.StringValue"
   end
 end
 

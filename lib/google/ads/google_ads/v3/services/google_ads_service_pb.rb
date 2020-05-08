@@ -86,6 +86,7 @@ require 'google/ads/google_ads/v3/resources/media_file_pb'
 require 'google/ads/google_ads/v3/resources/mobile_app_category_constant_pb'
 require 'google/ads/google_ads/v3/resources/mobile_device_constant_pb'
 require 'google/ads/google_ads/v3/resources/mutate_job_pb'
+require 'google/ads/google_ads/v3/resources/offline_user_data_job_pb'
 require 'google/ads/google_ads/v3/resources/operating_system_version_constant_pb'
 require 'google/ads/google_ads/v3/resources/paid_organic_search_term_view_pb'
 require 'google/ads/google_ads/v3/resources/parental_status_view_pb'
@@ -113,6 +114,7 @@ require 'google/ads/google_ads/v3/services/ad_group_feed_service_pb'
 require 'google/ads/google_ads/v3/services/ad_group_label_service_pb'
 require 'google/ads/google_ads/v3/services/ad_group_service_pb'
 require 'google/ads/google_ads/v3/services/ad_parameter_service_pb'
+require 'google/ads/google_ads/v3/services/ad_service_pb'
 require 'google/ads/google_ads/v3/services/asset_service_pb'
 require 'google/ads/google_ads/v3/services/bidding_strategy_service_pb'
 require 'google/ads/google_ads/v3/services/campaign_bid_modifier_service_pb'
@@ -255,6 +257,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :mobile_app_category_constant, :message, 87, "google.ads.googleads.v3.resources.MobileAppCategoryConstant"
     optional :mobile_device_constant, :message, 98, "google.ads.googleads.v3.resources.MobileDeviceConstant"
     optional :mutate_job, :message, 127, "google.ads.googleads.v3.resources.MutateJob"
+    optional :offline_user_data_job, :message, 137, "google.ads.googleads.v3.resources.OfflineUserDataJob"
     optional :operating_system_version_constant, :message, 86, "google.ads.googleads.v3.resources.OperatingSystemVersionConstant"
     optional :paid_organic_search_term_view, :message, 129, "google.ads.googleads.v3.resources.PaidOrganicSearchTermView"
     optional :parental_status_view, :message, 45, "google.ads.googleads.v3.resources.ParentalStatusView"
@@ -296,6 +299,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_feed_operation, :message, 20, "google.ads.googleads.v3.services.AdGroupFeedOperation"
       optional :ad_group_label_operation, :message, 21, "google.ads.googleads.v3.services.AdGroupLabelOperation"
       optional :ad_group_operation, :message, 5, "google.ads.googleads.v3.services.AdGroupOperation"
+      optional :ad_operation, :message, 49, "google.ads.googleads.v3.services.AdOperation"
       optional :ad_parameter_operation, :message, 22, "google.ads.googleads.v3.services.AdParameterOperation"
       optional :asset_operation, :message, 23, "google.ads.googleads.v3.services.AssetOperation"
       optional :bidding_strategy_operation, :message, 6, "google.ads.googleads.v3.services.BiddingStrategyOperation"
@@ -340,6 +344,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group_label_result, :message, 21, "google.ads.googleads.v3.services.MutateAdGroupLabelResult"
       optional :ad_group_result, :message, 5, "google.ads.googleads.v3.services.MutateAdGroupResult"
       optional :ad_parameter_result, :message, 22, "google.ads.googleads.v3.services.MutateAdParameterResult"
+      optional :ad_result, :message, 49, "google.ads.googleads.v3.services.MutateAdResult"
       optional :asset_result, :message, 23, "google.ads.googleads.v3.services.MutateAssetResult"
       optional :bidding_strategy_result, :message, 6, "google.ads.googleads.v3.services.MutateBiddingStrategyResult"
       optional :campaign_bid_modifier_result, :message, 7, "google.ads.googleads.v3.services.MutateCampaignBidModifierResult"
