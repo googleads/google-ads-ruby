@@ -214,10 +214,12 @@ if __FILE__ == $0
         "to retrieve and store OAuth2 tokens."
     puts "See this wiki page for more details:\n\n  " +
         'https://github.com/googleads/google-api-ads-ruby/wiki/OAuth2'
+    raise
 
   # HTTP errors.
   rescue AdsCommon::Errors::HttpError => e
     puts "HTTP Error: %s" % e
+    raise
 
   # API errors.
   rescue AdwordsApi::Errors::ApiException => e
@@ -229,5 +231,6 @@ if __FILE__ == $0
         puts "\t\t%s: %s" % [field, value]
       end
     end
+    raise
   end
 end
