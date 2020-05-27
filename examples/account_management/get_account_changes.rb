@@ -42,7 +42,11 @@ def get_account_changes(customer_id)
       change_status.last_change_date_time
   QUERY
 
-  response = client.service.google_ads.search(customer_id, query, page_size: PAGE_SIZE)
+  response = client.service.google_ads.search(
+    customer_id: customer_id,
+    query: query,
+    page_size: PAGE_SIZE
+  )
 
   response.each do |row|
     cs = row.change_status
@@ -114,11 +118,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

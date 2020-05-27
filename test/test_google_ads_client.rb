@@ -20,7 +20,6 @@
 require 'minitest/autorun'
 
 require 'google/ads/google_ads/google_ads_client'
-require 'google/ads/google_ads/v1/services/campaign_service_client'
 
 module Google
   module Ads
@@ -109,10 +108,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     service = client.service.v1.campaign
-    # We can't use assert_instance_of because we may have technically gotten
-    # back a sub-class of the service.
-    assert(service.is_a?(
-        Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
+    assert(service.respond_to?(:mutate_campaigns))
   end
 
   def test_service_with_login_customer_id_set
@@ -121,10 +117,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     service = client.service.v1.campaign
-    # We can't use assert_instance_of because we may have technically gotten
-    # back a sub-class of the service.
-    assert(service.is_a?(
-        Google::Ads::GoogleAds::V1::Services::CampaignServiceClient))
+    assert(service.respond_to?(:mutate_campaigns))
   end
 
   def test_service_with_invalid_login_customer_id_set

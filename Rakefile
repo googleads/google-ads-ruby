@@ -46,10 +46,6 @@ task :copy_third_party_code do |t|
   `cp third_party/rspec/caller_filter.rb lib/google/ads/google_ads/deprecation.rb`
 end
 
-task :copy_timeout_overrides do |t|
-  `cp patches/v3/google_ads_service_client_config.json lib/google/ads/google_ads/v3/services/`
-end
-
-task :copy_code => [:copy_third_party_code, :copy_timeout_overrides]
+task :copy_code => [:copy_third_party_code]
 task :build => [:copy_code, :codegen, :validate_protos]
 task :test => [:copy_code, :codegen]

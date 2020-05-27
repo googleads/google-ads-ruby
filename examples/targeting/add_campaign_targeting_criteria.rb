@@ -33,7 +33,10 @@ def add_campaign_targeting_criteria(customer_id, campaign_id, keyword, location_
 
   operations = [negative_keyword, location, proximity]
 
-  response = criteria_service.mutate_campaign_criteria(customer_id, operations)
+  response = criteria_service.mutate_campaign_criteria(
+    customer_id: customer_id,
+    operations: operations
+  )
   response.results.each do |resource|
     puts sprintf("Added campaign criterion %s", resource.resource_name)
   end
@@ -93,7 +96,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
+  options[:customer_id] = 'INSERT_GOOGLE_ADS_CUSTOMER_ID_HERE'
   options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
   options[:keyword] = 'jupiter cruise'
   # For more information on determining location_id value, see:
@@ -147,11 +150,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

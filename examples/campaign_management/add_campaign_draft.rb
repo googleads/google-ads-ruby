@@ -33,8 +33,8 @@ def add_campaign_draft(customer_id, campaign_id)
   end
 
   draft_response = client.service.campaign_draft.mutate_campaign_drafts(
-    customer_id,
-    [draft_operation],
+    customer_id: customer_id,
+    operations: [draft_operation],
   )
 
   draft_resource_name = draft_response.results.first.resource_name
@@ -48,7 +48,7 @@ def add_campaign_draft(customer_id, campaign_id)
     FROM campaign_draft
     WHERE campaign_draft.resource_name = "#{draft_resource_name}"
   EOQUERY
-  search_response = client.service.google_ads.search(customer_id, query)
+  search_response = client.service.google_ads.search(customer_id: customer_id, query: query)
   draft_campaign_resource_name = search_response.first.campaign_draft.draft_campaign
 
   criterion_operation = client.operation.create_resource.campaign_criterion do |cc|
@@ -59,8 +59,8 @@ def add_campaign_draft(customer_id, campaign_id)
   end
 
   criterion_response = client.service.campaign_criterion.mutate_campaign_criteria(
-    customer_id,
-    [criterion_operation]
+    customer_id: customer_id,
+    operations: [criterion_operation],
   )
 
   puts "Campaign Criterion #{criterion_response.results.first.resource_name}" \
@@ -121,11 +121,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

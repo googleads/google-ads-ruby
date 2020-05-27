@@ -1,5 +1,5 @@
 require "spec_helper"
-require "tracepoints"
+require "src/tracepoints"
 require "google/protobuf"
 
 RSpec.describe "#with_tracepoints" do
@@ -51,7 +51,7 @@ RSpec.describe "#with_tracepoints" do
   end
 
   it "writes client classes to the potential_classes array when they are created" do
-    allow_any_instance_of(TracePoint).to receive(:path).and_return("_client.rb")
+    allow_any_instance_of(TracePoint).to receive(:path).and_return("foo/client.rb")
 
     expect {
       with_tracepoints(
@@ -59,15 +59,15 @@ RSpec.describe "#with_tracepoints" do
         potential_services: potential_services,
         potential_enums: potential_enums,
       ) do
-        class FooClient
+        module Foo
+          class Client
+          end
         end
       end
-    }.to change { potential_services }.from(be_empty).to([
-      [
-        have_attributes(name: "FooClient").and(be_an_instance_of(Class)),
-        "_client.rb",
-      ],
-    ])
+    }.to change { potential_services }.from(be_empty).to([have_attributes(
+      name: "Foo::Client",
+      path: "foo/client.rb",
+    )])
   end
 
   def build_proto_resource(resource_name)

@@ -31,7 +31,11 @@ def get_ad_groups(customer_id, campaign_id = nil)
     search_query << " WHERE campaign.id = #{campaign_id}"
   end
 
-  response = client.service.google_ads.search(customer_id, search_query, page_size: PAGE_SIZE)
+  response = client.service.google_ads.search(
+    customer_id: customer_id,
+    query: search_query,
+    page_size: PAGE_SIZE,
+  )
 
   response.each do |row|
     puts "AdGroup with ID #{row.ad_group.id} and name '#{row.ad_group.name}' was found in " \
@@ -93,11 +97,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

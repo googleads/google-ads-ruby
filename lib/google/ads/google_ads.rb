@@ -17,13 +17,3 @@
 
 require 'google/ads/google_ads/api_versions'
 require 'google/ads/google_ads/google_ads_client'
-
-module Google
-  module Ads
-    module GoogleAds
-      def self.valid_version?(version)
-        known_api_versions.include?(version)
-      end
-    end
-  end
-end

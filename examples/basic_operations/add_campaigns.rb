@@ -37,7 +37,9 @@ def add_campaigns(customer_id)
 
   # Add budget.
   return_budget = client.service.campaign_budget.mutate_campaign_budgets(
-      customer_id, [operation])
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   # Create campaign.
   campaign = client.resource.campaign do |c|
@@ -73,7 +75,9 @@ def add_campaigns(customer_id)
 
   # Add the campaign.
   response = client.service.campaign.mutate_campaigns(
-      customer_id, [campaign_operation])
+    customer_id: customer_id,
+    operations: [campaign_operation],
+  )
 
   puts "Created campaign #{response.results.first.resource_name}."
 end
@@ -124,11 +128,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

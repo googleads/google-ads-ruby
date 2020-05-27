@@ -61,7 +61,10 @@ def create_budget(client, customer_id)
   end
 
   campaign_budget_srv = client.service.campaign_budget
-  response = campaign_budget_srv.mutate_campaign_budgets(customer_id, [operation])
+  response = campaign_budget_srv.mutate_campaign_budgets(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   budget_resource_name = response.results.first.resource_name
 
   puts("Created campaign budget with resource name #{budget_resource_name}")
@@ -284,11 +287,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

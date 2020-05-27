@@ -34,12 +34,11 @@ def create_campaign_experiment(customer_id, campaign_draft_resource_name)
     ce.traffic_split_type = :RANDOM_QUERY
   end
 
-  # A Google::Longrunning::Operation (LRO) is returned from this asynchronous
-  # request by the API, and is converted into a Google::Gax::Operation
-  # automatically.
+  # A Gapic::Operation is returned from this asynchronous request by the API,
+  # and is converted into a Google::Gax::Operation automatically.
   operation = client.service.campaign_experiment.create_campaign_experiment(
-    customer_id,
-    experiment
+    customer_id: customer_id,
+    campaign_experiment: experiment,
   )
 
   puts "Asynchronous request to create campaign experiment with " +
@@ -62,7 +61,7 @@ def create_campaign_experiment(customer_id, campaign_draft_resource_name)
     WHERE campaign_experiment.resource_name = "#{operation.metadata.campaign_experiment}"
   EOQUERY
 
-  response = client.service.google_ads.search(customer_id, query)
+  response = client.service.google_ads.search(customer_id: customer_id, query: query)
   puts "Experiment campaign #{response.first.campaign_experiment.experiment_campaign}" \
       " finished creating."
 end
@@ -125,11 +124,5 @@ if __FILE__ == $0
       end
     end
     raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
-    raise
   end
 end
-

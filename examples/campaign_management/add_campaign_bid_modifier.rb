@@ -42,8 +42,8 @@ def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
   campaign_bid_modifier_service = client.service.campaign_bid_modifier
   # Add the Campaign Bid Modifier
   response = campaign_bid_modifier_service.mutate_campaign_bid_modifiers(
-    customer_id,
-    [operation]
+    customer_id: customer_id,
+    operations: [operation],
   )
 
   puts sprintf('Added %d campaign bid modifiers:', response.results.size)
@@ -76,7 +76,7 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-A', '--campaign-id CAMPAIGN-ID', String, 'Campaign ID') do |v|
+    opts.on('-c', '--campaign-id CAMPAIGN-ID', String, 'Campaign ID') do |v|
       options[:campaign_id] = v
     end
 
@@ -110,11 +110,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

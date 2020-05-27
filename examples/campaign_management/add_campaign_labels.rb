@@ -39,8 +39,10 @@ def add_campaign_label(customer_id, label_id, campaign_ids)
     client.operation.create_resource.campaign_label(label)
   }
 
-  campaign_label_service = client.service.campaign_label
-  response = campaign_label_service.mutate_campaign_labels(customer_id, ops)
+  response = client.service.campaign_label.mutate_campaign_labels(
+    customer_id: customer_id,
+    operations: ops,
+  )
   response.results.each do |result|
     puts("Created campaign label with id: #{result.resource_name}")
   end
@@ -106,11 +108,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

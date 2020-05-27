@@ -877,10 +877,10 @@ class TestPathLookupUtil < Minitest::Test
     assert_equal(expected, util.video(1234, 5678))
   end
 
-  def test_malformed_path_input()
+  def test_malformed_path_input
     util = Google::Ads::GoogleAds::Utils::V1::PathLookupUtil.new
 
-    assert_raises RuntimeError do
+    assert_raises ArgumentError do
       util.campaign(nil, nil)
     end
   end

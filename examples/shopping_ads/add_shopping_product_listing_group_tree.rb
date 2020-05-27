@@ -130,8 +130,8 @@ def add_shopping_product_listing_group_tree(
   # * Brand: CoolBrand
   # * CPC bid: $0.90
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.product_brand = client.resource.product_brand_info do |product_brand_info|
-      product_brand_info.value = client.wrapper.string("CoolBrand")
+    ldi.product_brand = client.resource.product_brand_info do |pbi|
+      pbi.value = client.wrapper.string("CoolBrand")
     end
   end
 
@@ -152,8 +152,8 @@ def add_shopping_product_listing_group_tree(
   # * Brand: CheapBrand
   # * CPC bid: $0.01
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.product_brand = client.resource.product_brand_info do |product_brand_info|
-      product_brand_info.value = client.wrapper.string("CheapBrand")
+    ldi.product_brand = client.resource.product_brand_info do |pbi|
+      pbi.value = client.wrapper.string("CheapBrand")
     end
   end
   ad_group_criterion_brand_cheap_brand = create_listing_group_unit_biddable(
@@ -172,7 +172,7 @@ def add_shopping_product_listing_group_tree(
   # Biddable Unit node: (Brand other node)
   # * CPC bid: $0.05
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
-    listing_dimension_info.product_brand = client.resource.product_brand_info
+    ldi.product_brand = client.resource.product_brand_info
   end
   ad_group_criterion_brand_other_brand = create_listing_group_unit_biddable(
     client,
@@ -188,8 +188,10 @@ def add_shopping_product_listing_group_tree(
   operations << operation
 
   # Issue the mutate request.
-  agc_service = client.service.ad_group_criterion
-  response = agc_service.mutate_ad_group_criteria(customer_id, operations)
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(
+    customer_id: customer_id,
+    operations: operations,
+  )
 
   total_count = 0
   response.results.each do |added_criterion|
@@ -215,7 +217,7 @@ def remove_listing_group_tree(client, customer_id, ad_group_id)
       ad_group.id = #{ad_group_id}
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = ga_service.search(customer_id: customer_id, query: query, page_size: PAGE_SIZE)
 
   operations = response.map do |row|
     criterion = row.ad_group_criterion
@@ -225,8 +227,10 @@ def remove_listing_group_tree(client, customer_id, ad_group_id)
   end
 
   if operations.any?
-    agc_service = client.service.ad_group_criterion
-    response = agc_service.mutate_ad_group_criteria(customer_id, operations)
+    response = client.service.ad_group_criterion.mutate_ad_group_criteria(
+      customer_id: customer_id,
+      operations: operations,
+    )
     puts "Removed #{response.results.count} ad group criteria."
   end
 end
@@ -354,11 +358,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-                  "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

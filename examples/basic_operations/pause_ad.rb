@@ -31,7 +31,10 @@ def pause_ad(customer_id, ad_group_id, ad_id)
     aga.status = :PAUSED
   end
 
-  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [operation])
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Paused ad #{response.results.first.resource_name}"
 end
@@ -92,11 +95,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

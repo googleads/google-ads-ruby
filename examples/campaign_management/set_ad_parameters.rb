@@ -52,7 +52,10 @@ def add_ad_parameters(customer_id, ad_group_id, criterion_id)
   operations = [op_1, op_2]
 
   ad_parameter_service = client.service.ad_parameter
-  response = ad_parameter_service.mutate_ad_parameters(customer_id, operations)
+  response = ad_parameter_service.mutate_ad_parameters(
+    customer_id: customer_id,
+    operations: operations,
+  )
 
   response.results.each do |result|
     puts("Created ad parameter with id #{result.resource_name}")
@@ -83,12 +86,11 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-A', '--ad-group-id AD-GROUP-ID', String,
-        '(Optional) AdGroup ID') do |v|
+    opts.on('-A', '--ad-group-id AD-GROUP-ID', String, 'AdGroup ID') do |v|
       options[:ad_group_id] = v
     end
 
-    opts.on('-c', '--criterion-id CRITERION-ID', String, 'Criterion ID') do |v|
+    opts.on('-r', '--criterion-id CRITERION-ID', String, 'Criterion ID') do |v|
       options[:criterion_id] = v
     end
 
@@ -120,11 +122,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

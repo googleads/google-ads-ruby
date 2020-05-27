@@ -19,7 +19,7 @@
 
 require 'minitest/autorun'
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/logging_interceptor'
+require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/v1/services/media_file_service_services_pb'
 
 class TestLoggingInterceptor < Minitest::Test
@@ -30,7 +30,7 @@ class TestLoggingInterceptor < Minitest::Test
   def setup
     @sio = StringIO.new
     @logger = Logger.new(sio)
-    @li = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+    @li = Google::Ads::GoogleAds::Interceptors::LoggingInterceptor.new(logger)
   end
 
   def test_logging_interceptor_logs_na_customer_id_with_missing_customer_id
@@ -148,7 +148,7 @@ class TestLoggingInterceptor < Minitest::Test
     end
   rescue GRPC::InvalidArgument
     sio.rewind
-    assert_includes(sio.read, "INVALID_CUSTOMER_ID")
+    assert_includes(sio.read, "InvalidArgument(3:bees)")
   end
 
   def test_logging_interceptor_logs_error_details_if_partial_failure
@@ -233,7 +233,6 @@ class TestLoggingInterceptor < Minitest::Test
   def make_error_metadata(version)
     {
       "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
-      "grpc-status-details-bin" => "\b\x03\x12%Request contains an invalid argument.\x1A}\nCtype.googleapis.com/google.ads.googleads.#{version}.errors.GoogleAdsFailure\x126\n4\n\x02\b\x10\x12.Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'.\x1A\xD9\x02\n(type.googleapis.com/google.rpc.DebugInfo\x12\xAC\x02\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
       "request-id" =>"btwmoTYjaQE1UwVZnDCGAA",
     }
   end

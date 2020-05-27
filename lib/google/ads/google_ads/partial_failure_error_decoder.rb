@@ -1,3 +1,5 @@
+require 'google/protobuf/well_known_types'
+
 module Google
   module Ads
     module GoogleAds

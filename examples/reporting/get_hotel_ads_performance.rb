@@ -48,7 +48,7 @@ def get_hotel_ads_performance(customer_id)
     LIMIT 50
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = ga_service.search(customer_id: customer_id, query: query, page_size: PAGE_SIZE)
 
   if response.response.results.empty?
     puts sprintf("The given query returned no entries:\n %s", query)
@@ -118,11 +118,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

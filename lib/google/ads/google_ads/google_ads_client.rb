@@ -73,14 +73,13 @@ require 'google/ads/google_ads/config'
 require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
 require 'google/ads/google_ads/wrapper_util'
-require 'google/ads/google_ads/logging_interceptor'
+require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 require 'google/ads/google_ads/service_lookup'
 require 'google/ads/google_ads/deprecation'
-require 'google/ads/google_ads/v1/services/google_ads_service_client'
 
-require 'google/gax'
+require 'grpc'
 
 require 'logger'
 require 'json'
@@ -148,21 +147,26 @@ module Google
         #
         # Raises ArgumentError if no service can be found for the provided type.
         def service
-          service_path = ENV['GOOGLEADS_SERVICE_PATH']
-
           ServiceLookup.new(
             lookup_util,
-            service_path,
             @logger,
             @config,
             make_channel,
+            endpoint,
+            deprecator,
           ).call
         end
 
-        def make_channel
+        def endpoint
+          target.split(":443").first
+        end
+
+        def target
           default_target = "googleads.googleapis.com:443"
           target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
+        end
 
+        def make_channel
           channel_args = {
             MAX_MESSAGE_LENGTH => 64*1024*1024,
             MAX_METADATA_SIZE => 16*1024*1024,
@@ -287,11 +291,14 @@ module Google
         end
 
         def deprecate(deprecation)
-          @deprecation ||= Google::Ads::GoogleAds::Deprecation.new(
+          deprecator.deprecate(deprecation)
+        end
+
+        def deprecator
+          Google::Ads::GoogleAds::Deprecation.new(
             @config.treat_deprecation_warnings_as_errors,
             @config.warn_on_all_deprecations,
           )
-          @deprecation.deprecate(deprecation)
         end
       end
     end

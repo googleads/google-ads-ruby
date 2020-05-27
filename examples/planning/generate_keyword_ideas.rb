@@ -61,12 +61,12 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
   end
 
   response = kp_idea_service.generate_keyword_ideas(
-    customer_id,
-    client.wrapper.string(client.path.language_constant(language_id)),
-    geo_target_constants,
+    customer_id: customer_id,
+    language: client.wrapper.string(client.path.language_constant(language_id)),
+    geo_target_constants: geo_target_constants,
     # To restrict to only Google Search, change the parameter below to
     # :GOOGLE_SEARCH
-    :GOOGLE_SEARCH_AND_PARTNERS,
+    keyword_plan_network: :GOOGLE_SEARCH_AND_PARTNERS,
     **options_hash
   )
 
@@ -180,11 +180,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

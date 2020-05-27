@@ -46,8 +46,10 @@ def apply_recommendation(customer_id, recommendation_id)
 
   # Issues a mutate request to apply the recommendation.
   recommendation_service = client.service.recommendation
-  response = recommendation_service.apply_recommendation(customer_id,
-      [apply_recommendation_operation])
+  response = recommendation_service.apply_recommendation(
+    customer_id: customer_id,
+    operations: [apply_recommendation_operation],
+  )
   applied_recommendation = response.results.first
 
   puts "Applied recommendation with resource name: '#{applied_recommendation.resource_name}'."
@@ -111,11 +113,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

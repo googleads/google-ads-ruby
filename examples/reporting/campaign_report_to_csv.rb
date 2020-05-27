@@ -56,7 +56,7 @@ def write_campaign_report_csv(customer_id, target_filepath)
       ORDER BY segments.date DESC
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = ga_service.search(customer_id: customer_id, query: query, page_size: PAGE_SIZE)
   # convert the Google Ads response rows in to CSV ready hash objects
   csv_rows = response.map { |row| result_row_as_csv_hash(row) }
 
@@ -89,7 +89,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
+  options[:customer_id] = 'INSERT_GOOGLE_ADS_CUSTOMER_ID_HERE'
   options[:output_file_path] = __FILE__.gsub(".rb", ".csv")
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -134,11 +134,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

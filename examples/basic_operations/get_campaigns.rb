@@ -26,8 +26,9 @@ def get_campaigns(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   responses = client.service.google_ads.search_stream(
-      customer_id,
-      'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id')
+    customer_id: customer_id,
+    query: 'SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id',
+  )
 
   responses.each do |response|
     response.results.each do |row|
@@ -85,10 +86,5 @@ if __FILE__ == $0
       end
     end
     raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
-  	raise
   end
 end

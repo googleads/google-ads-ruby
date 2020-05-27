@@ -66,7 +66,10 @@ def add_campaign_budget(client, customer_id)
   end
 
   service = client.service.campaign_budget
-  response = service.mutate_campaign_budgets(customer_id, [operation])
+  response = service.mutate_campaign_budgets(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   budget_name = response.results.first.resource_name
 
@@ -101,7 +104,10 @@ def add_standard_shopping_campaign(
   end
 
   service = client.service.campaign
-  response = service.mutate_campaigns(customer_id, [operation])
+  response = service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   campaign_name = response.results.first.resource_name
 
@@ -120,7 +126,10 @@ def add_shopping_product_ad_group(client, customer_id, campaign_name)
   end
 
   service = client.service.ad_group
-  response = service.mutate_ad_groups(customer_id, [operation])
+  response = service.mutate_ad_groups(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   ad_group_name = response.results.first.resource_name
 
@@ -140,7 +149,10 @@ def add_shopping_product_ad_group_ad(client, customer_id, ad_group_name)
   end
 
   service = client.service.ad_group_ad
-  response = service.mutate_ad_group_ads(customer_id, [operation])
+  response = service.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Created shopping product ad group ad " \
        "#{response.results.first.resource_name}"
@@ -229,11 +241,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

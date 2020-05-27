@@ -58,8 +58,10 @@ def add_campaign_budget(client, customer_id)
 
   # Issue a mutate request.
   campaign_budget_service = client.service.campaign_budget
-  response = campaign_budget_service.mutate_campaign_budgets(customer_id,
-      [campaign_budget_operation])
+  response = campaign_budget_service.mutate_campaign_budgets(
+    customer_id: customer_id,
+    operations: [campaign_budget_operation],
+  )
 
   # Fetch the new budget's resource name.
   budget_resource = response.results.first.resource_name
@@ -105,8 +107,10 @@ def add_hotel_campaign(client, customer_id, budget_resource,
 
   # Issue a mutate request to add the campaign.
   campaign_service = client.service.campaign
-  response = campaign_service.mutate_campaigns(customer_id,
-      [campaign_operation])
+  response = campaign_service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [campaign_operation],
+  )
 
   # Fetch the new campaign's resource name.
   campaign_resource = response.results.first.resource_name
@@ -134,8 +138,10 @@ def add_hotel_ad_group(client, customer_id, campaign_resource)
 
   # Issue a mutate request to add the ad group.
   ad_group_service = client.service.ad_group
-  response = ad_group_service.mutate_ad_groups(customer_id,
-      [ad_group_operation])
+  response = ad_group_service.mutate_ad_groups(
+    customer_id: customer_id,
+    operations: [ad_group_operation]
+  )
 
   # Fetch the new ad group's resource name.
   ad_group_resource = response.results.first.resource_name
@@ -164,8 +170,10 @@ def add_hotel_ad_group_ad(client, customer_id, ad_group_resource)
 
   # Issue a mutate request to add the ad group ad.
   ad_group_ad_service = client.service.ad_group_ad
-  response = ad_group_ad_service.mutate_ad_group_ads(customer_id,
-      [ad_group_ad_operation])
+  response = ad_group_ad_service.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [ad_group_ad_operation],
+  )
 
   # Fetch the new ad group ad's resource name.
   ad_group_ad_resource = response.results.first.resource_name
@@ -236,11 +244,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

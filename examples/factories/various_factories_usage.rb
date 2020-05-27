@@ -35,8 +35,8 @@ def add_campaigns(customer_id)
   end
 
   return_budget = client.service.campaign_budget.mutate_campaign_budgets(
-    customer_id,
-    [campaign_budget_operation]
+    customer_id: customer_id,
+    operations: [campaign_budget_operation],
   )
 
   campaign_budget_resource_name = return_budget.results.first.resource_name
@@ -68,8 +68,8 @@ def add_campaigns(customer_id)
 
   # Add the campaign.
   response = campaign_service.mutate_campaigns(
-    customer_id,
-    [campaign_operation],
+    customer_id: customer_id,
+    operations: [campaign_operation],
   )
   campaign_resource_name = response.results.first.resource_name
   puts "Created campaign #{campaign_resource_name}"
@@ -85,18 +85,24 @@ def add_campaigns(customer_id)
     )
   end
 
-  campaign_service.mutate_campaigns(customer_id, [update_operation])
+  campaign_service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [update_operation],
+  )
 
   # Finally remove the campaign
   remove_op = client.operation.remove_resource.campaign(campaign_resource_name)
-  campaign_service.mutate_campaigns(customer_id, [remove_op])
+  campaign_service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [remove_op],
+  )
 
   # updates also work with only a resource name, so let's pull one out and
   # then update it
   ga_service = client.service.google_ads
   res = ga_service.search(
-    customer_id,
-    "select campaign.resource_name, campaign.name from campaign limit 1",
+    customer_id: customer_id,
+    query: "select campaign.resource_name, campaign.name from campaign limit 1",
   )
 
   campaign_resource_name = res.first.campaign.resource_name
@@ -111,7 +117,10 @@ def add_campaigns(customer_id)
     )
   end
 
-  campaign_service.mutate_campaigns(customer_id, [update_operation])
+  campaign_service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [update_operation],
+  )
 end
 
 if __FILE__ == $0
@@ -160,11 +169,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-                  "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

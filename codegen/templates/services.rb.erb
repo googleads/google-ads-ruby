@@ -1,3 +1,4 @@
+require 'google/ads/google_ads/service_wrapper'
 module Google
   module Ads
     module GoogleAds
@@ -5,44 +6,43 @@ module Google
         module <%= version.to_s.camelize %>
           class Services
             def initialize(
-              service_path:,
               logging_interceptor:,
               credentials:,
               metadata:,
-              exception_transformer:)
-              @service_path = service_path
-              @logging_interceptor = logging_interceptor
+              endpoint:,
+              exception_transformer:,
+              deprecation:
+            )
+              @interceptors = [
+                logging_interceptor,
+              ].compact
               @credentials = credentials
-              @metadata = metadata
               @exception_transformer = exception_transformer
-            end
-
-            def have_service_path?
-              @service_path != nil && !@service_path.empty?
+              @metadata = metadata
+              @endpoint = endpoint
+              @deprecation = deprecation
             end
 
             def have_logging_interceptor?
               @logging_interceptor != nil
             end
 
-            <% services.each do |service, path| %>
-            def <%= service.name.split("::").last.underscore.gsub("_service_client", "") %>(&blk)
-              require "<%= path %>"
-              cls = Class.new(<%= service.name %>)
-              if have_service_path?
-                cls.const_set("SERVICE_PATH", @service_path)
-              end
-
-              if have_logging_interceptor?
-                cls.const_set("GRPC_INTERCEPTORS", [@logging_interceptor])
-              end
-
-              blk.call(cls) unless blk.nil?
-
-              cls.new(
-                credentials: @credentials,
-                metadata: @metadata,
-                exception_transformer: @exception_transformer,
+            <% services.each do |service| %>
+            def <%= service.factory_method_name %>(&blk)
+              require "<%= service.path %>"
+              svc = ServiceWrapper.new(
+                service: <%= service.name %>.new do |config|
+                  config.credentials = @credentials
+                  config.interceptors = @interceptors
+                  config.metadata = @metadata
+                  config.endpoint = @endpoint
+                end,
+                rpc_inputs: {
+                  <% service.rpc_names.each do |rpc_name| %>
+                    <%= rpc_name %>: <%= service.rpc_request_type_for(rpc_name) %>,
+                  <% end %>
+                },
+                deprecation: @deprecation
               )
             end
             <% end %>

@@ -38,9 +38,9 @@ def get_all_disapproved_ads(customer_id, campaign_id)
 
   # Issue the search request.
   response = ga_service.search(
-    customer_id,
-    search_query,
-    page_size: PAGE_SIZE
+    customer_id: customer_id,
+    query: search_query,
+    page_size: PAGE_SIZE,
   )
 
   disapproved_ads_count = 0;
@@ -107,7 +107,7 @@ if __FILE__ == $0
     end
 
     opts.on('-c', '--campaign-id CAMPAIGN-ID', String,
-        '(Optional) Campaign ID') do |v|
+        'Campaign ID') do |v|
       options[:campaign_id] = v
     end
 
@@ -135,11 +135,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

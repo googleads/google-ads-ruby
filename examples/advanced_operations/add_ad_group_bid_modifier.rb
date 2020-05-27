@@ -47,7 +47,9 @@ def add_ad_group_bid_modifier(customer_id, ad_group_id, bid_modifier_value)
 
   # Add the ad group ad.
   response = client.service.ad_group_bid_modifier.mutate_ad_group_bid_modifiers(
-      customer_id, [operation])
+    customer_id: customer_id,
+    operations: [operation]
+  )
 
   puts "Added #{response.results.size} ad group bid modifiers:"
   response.results.each do |added_ad_group_bid_modifier|
@@ -113,11 +115,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

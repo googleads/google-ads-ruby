@@ -37,11 +37,14 @@ def get_campaign_targeting_criteria(customer_id, campaign_id)
              campaign_criterion.keyword.text,
              campaign_criterion.keyword.match_type
       FROM campaign_criterion
-      WHERE campaign.id = %s
+      WHERE campaign.id = #{campaign_id}
   QUERY
 
-  response = ga_service.search(customer_id, sprintf(query, campaign_id),
-      page_size: PAGE_SIZE)
+  response = ga_service.search(
+    customer_id: customer_id,
+    query: query,
+    page_size: PAGE_SIZE
+  )
 
   response.each do |row|
     criterion = row.campaign_criterion
@@ -72,7 +75,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
+  options[:customer_id] = 'INSERT_GOOGLE_ADS_CUSTOMER_ID_HERE'
   options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
 
   OptionParser.new do |opts|
@@ -114,11 +117,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

@@ -38,7 +38,11 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
     WHERE campaign.id = #{campaign_id}
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = ga_service.search(
+    customer_id: customer_id,
+    query: query,
+    page_size: PAGE_SIZE,
+  )
 
   response.each do |row|
     shared_set = row.shared_set
@@ -55,7 +59,11 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
     WHERE shared_set.id IN (#{shared_set_ids.join(',')})
   QUERY
 
-  response = ga_service.search(customer_id, query, page_size: PAGE_SIZE)
+  response = ga_service.search(
+    customer_id: customer_id,
+    query: query,
+    page_size: PAGE_SIZE,
+  )
 
   response.each do |row|
     sc = row.shared_criterion
@@ -74,7 +82,10 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
     client.operation.remove_resource.shared_criterion(criterion)
   end
 
-  response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)
+  response = client.service.shared_criterion.mutate_shared_criteria(
+    customer_id: customer_id,
+    operations: operations,
+  )
   response.results.each do |result|
     puts "Removed shared criterion #{result.resource_name}"
   end
@@ -134,11 +145,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

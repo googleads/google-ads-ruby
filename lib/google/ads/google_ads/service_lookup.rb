@@ -1,21 +1,30 @@
 require 'google/ads/google_ads/error_transformer'
 require 'google/ads/google_ads/search_stream_intercepting_factory'
+require 'google/ads/google_ads/interceptors/logging_interceptor'
 
 module Google
   module Ads
     module GoogleAds
       class ServiceLookup
-        def initialize(lookup_util, service_path, logger, config, credentials_or_channel)
+        def initialize(
+          lookup_util,
+          logger,
+          config,
+          credentials_or_channel,
+          endpoint,
+          deprecator
+        )
           @lookup_util = lookup_util
-          @service_path = service_path
           @logger = logger
           @config = config
           @credentials_or_channel = credentials_or_channel
+          @endpoint = endpoint
+          @deprecator = deprecator
         end
 
         def call
           if logger
-            logging_interceptor = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+            logging_interceptor = Google::Ads::GoogleAds::Interceptors::LoggingInterceptor.new(logger)
           end
 
           version_alternates = {}
@@ -43,8 +52,8 @@ module Google
 
         def factory_at_version(version, logging_interceptor)
           factory = Factories.at_version(version).services.new(**{
-            service_path: service_path,
             logging_interceptor: logging_interceptor,
+            deprecation: deprecator
           }.merge(gax_service_params))
 
           factory
@@ -54,7 +63,8 @@ module Google
           {
             credentials: credentials_or_channel,
             metadata: headers,
-            exception_transformer: GoogleAds::ERROR_TRANSFORMER
+            exception_transformer: GoogleAds::ERROR_TRANSFORMER,
+            endpoint: endpoint
           }
         end
 
@@ -90,11 +100,12 @@ module Google
 
         attr_reader :name
         attr_reader :version
-        attr_reader :service_path
         attr_reader :logger
         attr_reader :config
         attr_reader :credentials_or_channel
         attr_reader :lookup_util
+        attr_reader :endpoint
+        attr_reader :deprecator
       end
     end
   end

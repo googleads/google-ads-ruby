@@ -32,7 +32,7 @@ module Google
 end
 
 class TestLookupUtil < Minitest::Test
-  def test_path_instantiation()
+  def test_path_instantiation
     lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
     util = lookup_util.path_lookup_util(:V1)

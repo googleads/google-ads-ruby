@@ -19,6 +19,8 @@ require 'minitest/autorun'
 
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/v1/resources/campaign_pb'
+require 'google/ads/google_ads/v1/resources/ad_pb'
+require 'google/ads/google_ads/v3/resources/campaign_pb'
 
 class TestAutoboxing < Minitest::Test
   def test_initialize
@@ -55,5 +57,13 @@ class TestAutoboxing < Minitest::Test
     ad.final_urls << "hi"
 
     ad = Google::Ads::GoogleAds::V1::Resources::Ad.new(final_urls: ["hi"])
+  end
+
+  def test_nested_decoded_fields
+    campaign = Google::Ads::GoogleAds::V1::Resources::Campaign.new
+    campaign.dynamic_search_ads_setting = Google::Ads::GoogleAds::V1::Resources::Campaign::DynamicSearchAdsSetting.new
+    encoded = campaign.class.encode(campaign)
+    campaign = campaign.class.decode(encoded)
+    campaign.dynamic_search_ads_setting.feeds << "bees"
   end
 end

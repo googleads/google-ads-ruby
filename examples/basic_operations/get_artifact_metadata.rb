@@ -42,7 +42,7 @@ def get_artifact_metadata(artifact_name)
     WHERE name = '#{artifact_name}'
   QUERY
 
-  response = client.service.google_ads_field.search_google_ads_fields(query)
+  response = client.service.google_ads_field.search_google_ads_fields(query: query)
 
   if response.response.results.empty?
     puts "The specified artifact '#{artifact_name}' doesn't exist"
@@ -112,11 +112,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("Error: %s\nDetails: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

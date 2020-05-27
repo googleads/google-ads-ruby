@@ -51,7 +51,7 @@ def get_keyword_stats(customer_id)
     LIMIT 50
   QUERY
 
-  responses = ga_service.search_stream(customer_id, query)
+  responses = ga_service.search_stream(customer_id: customer_id, query: query)
 
   responses.each do |response|
     response.results.each do |row|
@@ -83,7 +83,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_ADWORDS_CUSTOMER_ID_HERE'
+  options[:customer_id] = 'INSERT_GOOGLE_ADS_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -119,11 +119,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end
