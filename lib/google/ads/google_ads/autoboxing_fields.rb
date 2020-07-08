@@ -37,17 +37,19 @@ module Google
         def self.patch_constructor_for_autoboxing(fields, repeated_fields, klass_to_patch)
           orig_initialize = klass_to_patch.instance_method(:initialize)
           klass_to_patch.instance_eval do
+            fields_map = fields.map { |field| [field.name.to_sym, field] }.to_h
+            repeated_fields_map = repeated_fields.map { |field| [field.name.to_sym, field] }.to_h
             define_method(:initialize) do |**kwargs|
               new_kwargs = kwargs.dup
-              fields.select { |x| new_kwargs.include?(x.name.to_sym) }.each do |field|
-                value = new_kwargs.fetch(field.name.to_sym)
-                new_kwargs[field.name.to_sym] = AutoboxingMappings.wrapped_mapping(field.subtype.msgclass).call(value)
-              end
-
-              repeated_fields.select { |x| new_kwargs.include?(x.name.to_sym) }.each do |field|
-                value = new_kwargs.fetch(field.name.to_sym)
-                mapping = AutoboxingMappings.wrapped_mapping(field.subtype.msgclass)
-                new_kwargs[field.name.to_sym] = value.map { |x| mapping.call(x) }
+              if !kwargs.empty?
+                kwargs.each do |kwarg, value|
+                  if fields_map.include?(kwarg)
+                    new_kwargs[kwarg] = AutoboxingMappings.wrapped_mapping(fields_map[kwarg].subtype.msgclass).call(value)
+                  elsif repeated_fields_map.include?(kwarg)
+                    mapping = AutoboxingMappings.wrapped_mapping(repeated_fields_map[kwarg].subtype.msgclass)
+                    new_kwargs[kwarg] = value.map { |x| mapping.call(x) }
+                  end
+                end
               end
 
               orig_initialize.bind(self).call(**new_kwargs)
