@@ -1,3 +1,6 @@
+6.0.0:
+ - Compatability with v4 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 5.1.0:
  - Adding support for Google Ads API v3_1.
 
