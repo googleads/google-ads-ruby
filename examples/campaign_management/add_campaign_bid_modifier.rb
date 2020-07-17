@@ -80,7 +80,7 @@ if __FILE__ == $0
       options[:campaign_id] = v
     end
 
-    opts.on('-B', '--bid-modifier BID-MODIFIER', String,
+    opts.on('-B', '--bid-modifier-value BID-MODIFIER-VALUE', String,
         'Bid Modifier') do |v|
       options[:bid_modifier] = v.to_f
     end

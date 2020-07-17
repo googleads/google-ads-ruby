@@ -90,7 +90,7 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-c', '--campaign-id CAMPAIGN-ID', String, 'Campaign ID') do |v|
+    opts.on('-c', '--base-campaign-id BASE-CAMPAIGN-ID', String, 'Campaign ID') do |v|
       options[:campaign_id] = v
     end
 
