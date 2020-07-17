@@ -100,14 +100,12 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
-  options[:location_id_1] = 'INSERT_LOCATION_ID_1_HERE'
-  options[:location_id_2] = 'INSERT_LOCATION_ID_2_HERE'
+  options[:location_ids] = ['INSERT_LOCATION_ID_1_HERE', 'INSERT_LOCATION_ID_2_HERE']
 
   options[:language_id] = 'INSERT_LANGUAGE_ID_HERE'
 
   # Optional but recommended
-  options[:keyword_text_1] = 'INSERT_KEYWORD_TEXT_1_HERE'
-  options[:keyword_text_2] = 'INSERT_KEYWORD_TEXT_2_HERE'
+  options[:keyword_texts] = ['INSERT_KEYWORD_TEXT_1_HERE', 'INSERT_KEYWORD_TEXT_2_HERE']
 
   # Optional: Specify a URL string related to your business to generate ideas.
   options[:page_url] = nil
@@ -122,28 +120,18 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-L', '--location-id-1 LOCATION-ID-1', String,
-        'Location ID 1') do |v|
-      options[:location_id_1] = v
-    end
-
-    opts.on('-l', '--location-id-2 LOCATION-ID-2', String,
-        'Location ID 2') do |v|
-      options[:location_id_2] = v
+    opts.on('-L', '--location-ids LOCATION-IDS', String,
+        'Location IDs (comma separated)') do |v|
+      options[:location_ids] = v.split(',')
     end
 
     opts.on('-a', '--language-id LANGUAGE-ID', String, 'Language ID') do |v|
       options[:language_id] = v
     end
 
-    opts.on('-K', '--keyword-text-1 KEYWORD-TEXT-1', String,
-        'Keyword Text 1') do |v|
-      options[:keyword_text_1] = v
-    end
-
-    opts.on('-k', '--keyword-text-2 KEYWORD-TEXT-2', String,
-        'Keyword Text 2') do |v|
-      options[:keyword_text_2] = v
+    opts.on('-K', '--keyword-texts KEYWORD-TEXTS', String,
+        'Keyword Texts (comma separated)') do |v|
+      options[:keyword_texts] = v.split(',')
     end
 
     opts.on('-p', '--page-url PAGE-URL', String, 'Page URL') do |v|
@@ -162,9 +150,9 @@ if __FILE__ == $0
   begin
     generate_keyword_ideas(
       options.fetch(:customer_id).tr("-", ""),
-      [options.fetch(:location_id_1), options.fetch(:location_id_2)],
+      options.fetch(:location_ids),
       options.fetch(:language_id),
-      [options[:keyword_text_1], options[:keyword_text_2]],
+      options.fetch(:keyword_texts),
       options[:page_url]
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e

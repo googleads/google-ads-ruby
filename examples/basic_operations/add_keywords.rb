@@ -79,7 +79,7 @@ if __FILE__ == $PROGRAM_NAME
       options[:ad_group_id] = v
     end
 
-    opts.on('-k', '--keyword KEYWORD', String, '(Optional) Keyword') do |v|
+    opts.on('-k', '--keyword-text KEYWORD-TEXT', String, '(Optional) Keyword') do |v|
       options[:keyword] = v
     end
 

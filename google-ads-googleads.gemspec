@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
   s.summary = 'Google client library for the Google Ads API'
 
   s.add_dependency 'google-gax', '~> 1.6'
+  s.add_dependency 'google-protobuf', '3.11.4'
 
   s.add_development_dependency 'bundler', ["> 1.9", "< 3"]
   s.add_development_dependency 'rake', '~> 11.3'

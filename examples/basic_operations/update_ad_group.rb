@@ -65,7 +65,7 @@ if __FILE__ == $0
       options[:ad_group_id] = v
     end
 
-    opts.on('-b', '--bid-micro-amount BID-MICRO-AMOUNT', Integer,
+    opts.on('-b', '--cpd-bid-micro-amount CPC-BID-MICRO-AMOUNT', Integer,
         'Bid Micro Amount') do |v|
       options[:bid_micro_amount] = v
     end
