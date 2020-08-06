@@ -23,6 +23,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     value :SEARCH_DYNAMIC_ADS, 13
     value :SHOPPING_COMPARISON_LISTING_ADS, 14
     value :PROMOTED_HOTEL_ADS, 15
+    value :VIDEO_RESPONSIVE, 16
   end
 end
 

@@ -18,41 +18,43 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
+require 'date'
 
-def add_keywords(customer_id, ad_group_id)
+def add_ad_groups(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  criteria = [
-    "mars cruise",
-    "inv@lid cruise",
-    "venus cruise",
-    "b(a)d keyword cruise"
-  ].map { |keyword|
-    client.resource.ad_group_criterion do |agc|
-      agc.ad_group = client.path.ad_group(customer_id, ad_group_id)
-      agc.keyword = client.resource.keyword_info do |ki|
-        ki.text = keyword
-        ki.match_type = :EXACT
-      end
-    end
-  }
+  ad_groups = []
+  # This ad group should be created successfully.
+  ad_groups << client.resource.ad_group do |ag|
+    ag.campaign = client.path.campaign(customer_id, campaign_id)
+    ag.name = "Valid ad group: #{(Time.new.to_f * 1000).to_i}"
+  end
+  # This ad group should fail to create because it references an invalid campaign.
+  ad_groups << client.resource.ad_group do |ag|
+    ag.campaign = client.path.campaign(customer_id, 0)
+    ag.name = "Invalid ad group: #{(Time.new.to_f * 1000).to_i}"
+  end
+  # This ad group should fail to create because it duplicates the name from the first one.
+  ad_groups << client.resource.ad_group do |ag|
+    ag.campaign = client.path.campaign(customer_id, campaign_id)
+    ag.name = ad_groups.first.name
+  end
 
-  operations = criteria.map { |criterion|
-    client.operation.create_resource.ad_group_criterion(criterion)
-  }
+  operations = ad_groups.map do |ag|
+    client.operation.create_resource.ad_group(ag)
+  end
 
-  criterion_service = client.service.ad_group_criterion
-  response = criterion_service.mutate_ad_group_criteria(
+  response = client.service.ad_group.mutate_ad_groups(
     customer_id,
     operations,
     partial_failure: true,
   )
 
-  response.results.each_with_index do |criterion, i|
-    if criterion.resource_name != ""
-      puts("operations[#{i}] succeeded: Created ad group criterion with id #{criterion.resource_name}")
+  response.results.each_with_index do |ad_group, i|
+    if ad_group.resource_name != ""
+      puts("operations[#{i}] succeeded: Created ad group with id #{ad_group.resource_name}")
     end
   end
 
@@ -70,7 +72,7 @@ def add_keywords(customer_id, ad_group_id)
           end
         }.join(" > ")
 
-      errmsg =  "error occured creating criterion #{human_readable_error_path}" \
+      errmsg =  "error occured creating ad group #{human_readable_error_path}" \
         " with value: #{error.trigger.string_value}" \
         " because #{error.message.downcase}"
       puts errmsg
@@ -89,7 +91,7 @@ if __FILE__ == $PROGRAM_NAME
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
+  options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -101,8 +103,8 @@ if __FILE__ == $PROGRAM_NAME
       options[:customer_id] = v
     end
 
-    opts.on('-A', '--ad-group-id AD-GROUP-ID', String, 'Ad Group ID') do |v|
-      options[:ad_group_id] = v
+    opts.on('-c', '--campaign-id CAMPAIGN-ID', String, 'Ad Group ID') do |v|
+      options[:campaign_id] = v
     end
 
     opts.separator ''
@@ -115,9 +117,9 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    add_keywords(
+    add_ad_groups(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:ad_group_id),
+      options.fetch(:campaign_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

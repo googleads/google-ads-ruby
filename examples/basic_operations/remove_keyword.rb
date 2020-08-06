@@ -62,7 +62,7 @@ if __FILE__ == $PROGRAM_NAME
       options[:ad_group_id] = v
     end
 
-    opts.on('-r', '--criteria-id CRITERIA-ID', String,
+    opts.on('-r', '--criterion-id CRITERION-ID', String,
         'Criteria ID (aka Keyword ID)') do |v|
       options[:criteria_id] = v
     end

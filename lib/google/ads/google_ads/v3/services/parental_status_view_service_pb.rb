@@ -7,6 +7,7 @@ require 'google/ads/google_ads/v3/resources/parental_status_view_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
 require 'google/api/field_behavior_pb'
+require 'google/api/resource_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "google.ads.googleads.v3.services.GetParentalStatusViewRequest" do
     optional :resource_name, :string, 1

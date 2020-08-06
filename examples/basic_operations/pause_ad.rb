@@ -64,7 +64,7 @@ if __FILE__ == $PROGRAM_NAME
       options[:ad_group_id] = v
     end
 
-    opts.on('-a', '--ad-d AD-ID', String, 'Ad ID') do |v|
+    opts.on('-a', '--ad-id AD-ID', String, 'Ad ID') do |v|
       options[:ad_id] = v
     end
 

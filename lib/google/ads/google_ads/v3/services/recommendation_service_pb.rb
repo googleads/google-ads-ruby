@@ -10,6 +10,7 @@ require 'google/ads/google_ads/v3/resources/recommendation_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
 require 'google/api/field_behavior_pb'
+require 'google/api/resource_pb'
 require 'google/protobuf/wrappers_pb'
 require 'google/rpc/status_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
