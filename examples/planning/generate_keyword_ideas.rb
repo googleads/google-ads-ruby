@@ -60,17 +60,20 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
     client.path.geo_target_constant(location_id)
   end
 
+  include_adult_keywords = true
+
   response = kp_idea_service.generate_keyword_ideas(
     customer_id,
     client.wrapper.string(client.path.language_constant(language_id)),
     geo_target_constants,
+    include_adult_keywords,
     # To restrict to only Google Search, change the parameter below to
     # :GOOGLE_SEARCH
     :GOOGLE_SEARCH_AND_PARTNERS,
     **options_hash
   )
 
-  response.results.each do |result|
+  response.each do |result|
     monthly_searches = if result.keyword_idea_metrics.nil?
                          0
                        else
