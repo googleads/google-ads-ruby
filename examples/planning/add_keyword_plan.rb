@@ -38,8 +38,8 @@ def add_keyword_plan(customer_id)
     customer_id,
     plan_campaign,
   )
-  create_keyword_plan_keywords(client, customer_id, plan_ad_group)
-  create_keyword_plan_negative_keywords(client, customer_id, plan_campaign)
+  create_keyword_plan_ad_group_keywords(client, customer_id, plan_ad_group)
+  create_keyword_plan_negative_campaign_keywords(client, customer_id, plan_campaign)
 end
 
 def create_keyword_plan(client, customer_id)
@@ -104,57 +104,58 @@ def create_keyword_plan_ad_group(client, customer_id, plan_campaign)
   resource_name
 end
 
-def create_keyword_plan_keywords(client, customer_id, plan_ad_group)
-  kp_keyword1 = client.resource.keyword_plan_keyword do |kpk|
-    kpk.text = "mars cruise"
-    kpk.cpc_bid_micros = 2_000_000
-    kpk.match_type = :BROAD
-    kpk.keyword_plan_ad_group = plan_ad_group
+def create_keyword_plan_ad_group_keywords(client, customer_id, plan_ad_group)
+  kpa_keyword1 = client.resource.keyword_plan_ad_group_keyword do |kpak|
+    kpak.text = "mars cruise"
+    kpak.cpc_bid_micros = 2_000_000
+    kpak.match_type = :BROAD
+    kpak.keyword_plan_ad_group = plan_ad_group
   end
 
-  kp_keyword2 = client.resource.keyword_plan_keyword do |kpk|
-    kpk.text = "cheap cruise"
-    kpk.cpc_bid_micros = 1_500_000
-    kpk.match_type = :PHRASE
-    kpk.keyword_plan_ad_group = plan_ad_group
+  kpa_keyword2 = client.resource.keyword_plan_ad_group_keyword do |kpak|
+    kpak.text = "cheap cruise"
+    kpak.cpc_bid_micros = 1_500_000
+    kpak.match_type = :PHRASE
+    kpak.keyword_plan_ad_group = plan_ad_group
   end
 
-  kp_keyword3 = client.resource.keyword_plan_keyword do |kpk|
-    kpk.text = "jupiter cruise"
-    kpk.cpc_bid_micros = 1_990_000
-    kpk.match_type = :EXACT
-    kpk.keyword_plan_ad_group = plan_ad_group
+  kpa_keyword3 = client.resource.keyword_plan_ad_group_keyword do |kpak|
+    kpak.text = "jupiter cruise"
+    kpak.cpc_bid_micros = 1_990_000
+    kpak.match_type = :EXACT
+    kpak.keyword_plan_ad_group = plan_ad_group
   end
 
-  operations = [kp_keyword1, kp_keyword2, kp_keyword3].map do |keyword|
-    client.operation.create_resource.keyword_plan_keyword(keyword)
+  operations = [kpa_keyword1, kpa_keyword2, kpa_keyword3].map do |keyword|
+    client.operation.create_resource.keyword_plan_ad_group_keyword(keyword)
   end
 
-  kp_keyword_service = client.service.keyword_plan_keyword
-  response = kp_keyword_service.mutate_keyword_plan_keywords(
+  kpa_keyword_service = client.service.keyword_plan_ad_group_keyword
+  response = kpa_keyword_service.mutate_keyword_plan_ad_group_keywords(
     customer_id,
     operations,
   )
 
   response.results.each do |result|
-    puts "Created keyword for keyword plan: #{result.resource_name}"
+    puts "Created ad group keyword for keyword plan: #{result.resource_name}"
   end
 end
 
-def create_keyword_plan_negative_keywords(client, customer_id, plan_campaign)
-  operation = client.operation.create_resource.keyword_plan_negative_keyword do |kpnk|
-    kpnk.text = "moon walk"
-    kpnk.match_type = :BROAD
-    kpnk.keyword_plan_campaign = plan_campaign
+def create_keyword_plan_negative_campaign_keywords(client, customer_id, plan_campaign)
+  operation = client.operation.create_resource.keyword_plan_campaign_keyword do |kpck|
+    kpck.text = "moon walk"
+    kpck.match_type = :BROAD
+    kpck.keyword_plan_campaign = plan_campaign
+    kpck.negative = true
   end
 
-  kp_negative_keyword_service = client.service.keyword_plan_negative_keyword
-  response = kp_negative_keyword_service.mutate_keyword_plan_negative_keywords(
+  kp_campaign_keyword_service = client.service.keyword_plan_campaign_keyword
+  response = kp_campaign_keyword_service.mutate_keyword_plan_campaign_keywords(
     customer_id,
     [operation],
   )
 
-  puts "Created negative keyword for keyword plan: " +
+  puts "Created negative campaign keyword for keyword plan: " +
       "#{response.results.first.resource_name}"
 end
 
