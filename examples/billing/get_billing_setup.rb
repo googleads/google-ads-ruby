@@ -42,9 +42,9 @@ def get_billing_setup(customer_id)
   QUERY
 
   response = ga_service.search(
-    customer_id,
-    search_query,
-    page_size: PAGE_SIZE
+    customer_id: customer_id,
+    query: search_query,
+    page_size: PAGE_SIZE,
   )
 
   response.each do |row|
@@ -58,11 +58,11 @@ def get_billing_setup(customer_id)
         billing_setup.id,
         billing_setup.status,
         billing_setup.payments_account,
-        payments_account_info.payments_account_id,
-        payments_account_info.payments_account_name,
-        payments_account_info.payments_profile_id,
-        payments_account_info.payments_profile_name,
-        payments_account_info.secondary_payments_profile_id
+        payments_account_info ? payments_account_info.payments_account_id : "N/A",
+        payments_account_info ? payments_account_info.payments_account_name : "N/A",
+        payments_account_info ? payments_account_info.payments_profile_id : "N/A",
+        payments_account_info ? payments_account_info.payments_profile_name : "N/A",
+        payments_account_info ? payments_account_info.secondary_payments_profile_id : "N/A"
     )
   end
 end
@@ -115,11 +115,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

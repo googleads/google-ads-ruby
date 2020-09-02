@@ -23,7 +23,6 @@ require 'google/ads/google_ads'
 require 'google/ads/google_ads/errors'
 
 class TestErrors < Minitest::Test
-
   def test_error_index
     error = build_error
     index = Google::Ads::GoogleAds::Errors.index(error)
@@ -46,6 +45,13 @@ class TestErrors < Minitest::Test
       name: 'range_error',
       value: :TOO_LOW
     }, error_code)
+  end
+
+  def test_code_version_validation
+    error = build_error
+    assert_raises {
+      Google::Ads::GoogleAds::Errors.code(error, :V2)
+    }
   end
 
   def test_blank_code

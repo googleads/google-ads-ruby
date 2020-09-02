@@ -1,9 +1,11 @@
+require 'src/template_service'
+
 def with_tracepoints(potential_resources:, potential_services:, potential_enums:, &blk)
   # this function invokes the passed block with tracepoints needed to introspect
   # protobuf class definitions enabled. The block should contain a set of requires
   # that load either direct Google::Protobuf::* modules
   # (e.g. Google::Ads::GoogleAds::V1::Resources::*), or generated gapic service
-  # clients e.g. Google::Ads::GoogleAds::V1::Services::FeedServiceClient).
+  # clients e.g. Google::Ads::GoogleAds::V1::Services::FeedService::Client).
   # These tracepoints are generic to all protobufs, and gapic clients, and not
   # just google ads, we filter to ads specific objects in further functions.
 
@@ -34,8 +36,10 @@ def with_tracepoints(potential_resources:, potential_services:, potential_enums:
   # the class name ending with "Client" to get exactly gapic client classes
   # out
   trace_services = TracePoint.new(:class) { |tp|
-    if /_client.rb$/ === tp.path && tp.self.name.end_with?("Client")
-      potential_services << [tp.self, tp.path]
+    if /\/client.rb$/ === tp.path && tp.self.name.end_with?("Client")
+      potential_services << TemplateService.new(
+        tp.self, tp.path
+      )
     end
   }
   trace_services.enable

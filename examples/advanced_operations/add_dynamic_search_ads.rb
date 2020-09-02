@@ -54,8 +54,8 @@ def create_budget(client, customer_id)
   operation = client.operation.create_resource.campaign_budget(campaign_budget)
 
   response = client.service.campaign_budget.mutate_campaign_budgets(
-    customer_id,
-    [operation],
+    customer_id: customer_id,
+    operations: [operation],
   )
 
   puts("Created campaign budget with ID: #{response.results.first.resource_name}")
@@ -71,22 +71,22 @@ def create_campaign(client, customer_id, budget_resource_name)
     c.manual_cpc = client.resource.manual_cpc
     c.campaign_budget = budget_resource_name
 
-
     c.dynamic_search_ads_setting = client.resource.dynamic_search_ads_setting do |s|
       s.domain_name =  "example.com"
       s.language_code =  "en"
     end
 
     c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
-
-
     c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
-
   end
 
   operation = client.operation.create_resource.campaign(campaign)
+  require 'pry'; binding.pry
 
-  response = client.service.campaign.mutate_campaigns(customer_id, [operation])
+  response = client.service.campaign.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   puts("Created campaign with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
 end
@@ -106,7 +106,10 @@ def create_ad_group(client, customer_id, campaign_resource_name)
 
   operation = client.operation.create_resource.ad_group(ad_group)
 
-  response = client.service.ad_group.mutate_ad_groups(customer_id, [operation])
+  response = client.service.ad_group.mutate_ad_groups(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts("Created ad group with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
@@ -126,7 +129,10 @@ def create_expanded_dsa(client, customer_id, ad_group_resource_name)
 
   operation = client.operation.create_resource.ad_group_ad(ad_group_ad)
 
-  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [operation])
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   puts("Created ad group ad with ID: #{response.results.first.resource_name}")
 end
 
@@ -157,8 +163,8 @@ def add_web_page_criteria(client, customer_id, ad_group_resource_name)
   operation = client.operation.create_resource.ad_group_criterion(criterion)
 
   response = client.service.ad_group_criterion.mutate_ad_group_criteria(
-    customer_id,
-    [operation],
+    customer_id: customer_id,
+    operations: [operation],
   )
   puts("Created ad group criterion with ID: #{response.results.first.resource_name}")
 end
@@ -209,11 +215,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

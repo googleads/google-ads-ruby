@@ -27,14 +27,14 @@ def get_account_information(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   resource_name = client.path.customer(customer_id)
-  customer = client.service.customer.get_customer(resource_name)
+  customer = client.service.customer.get_customer(resource_name: resource_name)
 
   puts "Customer ID #{customer.id}\n"\
       "\tdescriptive_name: #{customer.descriptive_name}\n"\
       "\tcurrency_code: #{customer.currency_code}\n"\
       "\ttime_zone: #{customer.time_zone}\n"\
       "\ttracking_url_template: #{customer.tracking_url_template}\n"\
-      "\tauto_tagging_enabled: #{customer.auto_tagging_enabled.value}"
+      "\tauto_tagging_enabled: #{customer.auto_tagging_enabled}"
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -83,11 +83,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

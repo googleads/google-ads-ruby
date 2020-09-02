@@ -24,7 +24,6 @@ require 'optparse'
 require 'date'
 require 'open-uri'
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/v1/errors/errors_pb'
 
 def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -65,8 +64,8 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
   media_file_marketing_image_op = client.operation.create_resource.media_file(media_file_marketing)
 
   response = client.service.media_file.mutate_media_files(
-    customer_id,
-    [
+    customer_id: customer_id,
+    operations: [
       media_file_logo_op,
       media_file_marketing_image_op,
     ]
@@ -103,7 +102,10 @@ def add_gmail_ad(customer_id, campaign_id, ad_group_id)
 
   op = client.operation.create_resource.ad_group_ad(ad_group_ad)
 
-  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [op])
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [op]
+  )
   puts "Created Gmail Ad with ID #{response.results.first.resource_name}."
 end
 
@@ -173,11 +175,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

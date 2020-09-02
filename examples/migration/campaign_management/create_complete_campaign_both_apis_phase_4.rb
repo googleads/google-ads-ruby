@@ -72,7 +72,10 @@ def create_budget(client, customer_id)
   end
 
   campaign_budget_srv = client.service.campaign_budget
-  response = campaign_budget_srv.mutate_campaign_budgets(customer_id, [operation])
+  response = campaign_budget_srv.mutate_campaign_budgets(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   budget_resource_name = response.results.first.resource_name
 
   puts("Created campaign budget with resource name #{budget_resource_name}")
@@ -102,7 +105,10 @@ def create_campaign(client, customer_id, budget_resource_name)
   end
 
   campaign_service = client.service.campaign
-  response = campaign_service.mutate_campaigns(customer_id, [operation])
+  response = campaign_service.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   campaign_resource_name = response.results.first.resource_name
 
   puts("Created campaign with id #{campaign_resource_name}")
@@ -119,7 +125,10 @@ def create_ad_group(client, customer_id, campaign_resource_name)
   end
 
   ad_group_service = client.service.ad_group
-  response = ad_group_service.mutate_ad_groups(customer_id, [operation])
+  response = ad_group_service.mutate_ad_groups(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   ad_group_resource_name = response.results.first.resource_name
 
   puts("Created ad_group with id #{ad_group_resource_name}")
@@ -154,8 +163,8 @@ def create_text_ads(client, customer_id, ad_group_resource_name)
 
   ad_group_ad_service = client.service.ad_group_ad
   response = ad_group_ad_service.mutate_ad_group_ads(
-    customer_id,
-    operations
+    customer_id: customer_id,
+    operations: operations,
   )
 
   ad_group_ad_resource_names = response.results.map(&:resource_name)
@@ -279,11 +288,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

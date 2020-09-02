@@ -39,7 +39,10 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
 
   operation = client.operation.create_resource.shared_set(shared_set)
 
-  response = client.service.shared_set.mutate_shared_sets(customer_id, [operation])
+  response = client.service.shared_set.mutate_shared_sets(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   shared_set_resource_name = response.results.first.resource_name
   puts "Created shared set #{shared_set_resource_name}"
@@ -58,7 +61,10 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
     client.operation.create_resource.shared_criterion(criterion)
   end
 
-  response = client.service.shared_criterion.mutate_shared_criteria(customer_id, operations)
+  response = client.service.shared_criterion.mutate_shared_criteria(
+    customer_id: customer_id,
+    operations: operations,
+  )
 
   response.results.each do |result|
     puts "Created shared criterion #{result.resource_name}"
@@ -72,7 +78,9 @@ def create_and_attach_shared_keyword_set(customer_id, campaign_id)
   operation = client.operation.create_resource.campaign_shared_set(campaign_set)
 
   response = client.service.campaign_shared_set.mutate_campaign_shared_sets(
-      customer_id, [operation])
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Created campaign shared set #{response.results.first.resource_name}"
 end
@@ -129,11 +137,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

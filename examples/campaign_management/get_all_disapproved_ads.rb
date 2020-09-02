@@ -31,16 +31,18 @@ def get_all_disapproved_ads(customer_id, campaign_id)
     SELECT
         ad_group_ad.ad.id,
         ad_group_ad.ad.type,
-        ad_group_ad.policy_summary
+        ad_group_ad.policy_summary.approval_status,
+        ad_group_ad.policy_summary.policy_topic_entries
     FROM ad_group_ad
     WHERE campaign.id = #{campaign_id}
+    AND ad_group_ad.policy_summary.approval_status = DISAPPROVED
   QUERY
 
   # Issue the search request.
   response = ga_service.search(
-    customer_id,
-    search_query,
-    page_size: PAGE_SIZE
+    customer_id: customer_id,
+    query: search_query,
+    page_size: PAGE_SIZE,
   )
 
   disapproved_ads_count = 0;
@@ -49,11 +51,6 @@ def get_all_disapproved_ads(customer_id, campaign_id)
   response.each do |row|
     ad_group_ad = row.ad_group_ad
     ad = ad_group_ad.ad
-    policy_summary = ad_group_ad.policy_summary
-
-    if policy_summary.approval_status.to_s != 'DISAPPROVED'
-      next
-    end
 
     disapproved_ads_count += 1
 
@@ -107,7 +104,7 @@ if __FILE__ == $0
     end
 
     opts.on('-c', '--campaign-id CAMPAIGN-ID', String,
-        '(Optional) Campaign ID') do |v|
+        'Campaign ID') do |v|
       options[:campaign_id] = v
     end
 
@@ -135,11 +132,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

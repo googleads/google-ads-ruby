@@ -18,24 +18,25 @@
 require 'minitest/autorun'
 
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/v1/resources/campaign_pb'
+require 'google/ads/google_ads/v3/resources/campaign_pb'
+require 'google/ads/google_ads/v3/resources/ad_pb'
 
 class TestAutoboxing < Minitest::Test
   def test_initialize
-    Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: "hi")
+    Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: "hi")
 
-    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: "hi")
+    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: "hi")
     assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
 
-    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: Google::Protobuf::StringValue.new(value: "hi"))
+    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: Google::Protobuf::StringValue.new(value: "hi"))
     assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
 
-    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new(name: nil)
+    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: nil)
     assert_nil nil, c.name
   end
 
   def test_assign
-    c = Google::Ads::GoogleAds::V1::Resources::Campaign.new
+    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new
     c.name = "hi"
     c.id = 3
 
@@ -51,9 +52,17 @@ class TestAutoboxing < Minitest::Test
   end
 
   def test_repeated_fields
-    ad = Google::Ads::GoogleAds::V1::Resources::Ad.new
+    ad = Google::Ads::GoogleAds::V3::Resources::Ad.new
     ad.final_urls << "hi"
 
-    ad = Google::Ads::GoogleAds::V1::Resources::Ad.new(final_urls: ["hi"])
+    ad = Google::Ads::GoogleAds::V3::Resources::Ad.new(final_urls: ["hi"])
+  end
+
+  def test_nested_decoded_fields
+    campaign = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    campaign.dynamic_search_ads_setting = Google::Ads::GoogleAds::V3::Resources::Campaign::DynamicSearchAdsSetting.new
+    encoded = campaign.class.encode(campaign)
+    campaign = campaign.class.decode(encoded)
+    campaign.dynamic_search_ads_setting.feeds << "bees"
   end
 end

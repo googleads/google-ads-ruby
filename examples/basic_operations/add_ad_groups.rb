@@ -40,7 +40,9 @@ def add_ad_groups(customer_id, campaign_id)
 
   # Add the ad group.
   response = client.service.ad_group.mutate_ad_groups(
-      customer_id, [ad_group_operation])
+    customer_id: customer_id,
+    operations: [ad_group_operation],
+  )
 
   puts "Created ad group #{response.results.first.resource_name}."
 end
@@ -97,11 +99,5 @@ if __FILE__ == $0
       end
     end
     raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
-    raise
   end
 end
-

@@ -28,7 +28,7 @@ def generate_forecast_metrics(customer_id, keyword_plan_id)
 
   kp_service = client.service.keyword_plan
   response = kp_service.generate_forecast_metrics(
-    client.path.keyword_plan(customer_id, keyword_plan_id)
+    keyword_plan: client.path.keyword_plan(customer_id, keyword_plan_id),
   )
 
   response.keyword_forecasts.each_with_index do |forecast, i|
@@ -112,11 +112,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

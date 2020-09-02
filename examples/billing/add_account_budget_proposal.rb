@@ -59,8 +59,8 @@ def add_account_budget_proposal(customer_id, billing_setup_id)
   account_budget_proposal_service = client.service.account_budget_proposal
   # Add budget proposal.
   response = account_budget_proposal_service.mutate_account_budget_proposal(
-    customer_id,
-    operation,
+    customer_id: customer_id,
+    operation: operation,
   )
 
   puts sprintf("Created budget proposal %s.",
@@ -120,11 +120,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

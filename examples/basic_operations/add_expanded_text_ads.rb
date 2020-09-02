@@ -50,7 +50,9 @@ def add_expanded_text_ads(customer_id, ad_group_id)
 
   # Add the ad group ad.
   response = client.service.ad_group_ad.mutate_ad_group_ads(
-      customer_id, [ad_group_ad_operation])
+    customer_id: customer_id,
+    operations: [ad_group_ad_operation],
+  )
 
   puts "Created expanded text ad #{response.results.first.resource_name}."
 end
@@ -107,11 +109,5 @@ if __FILE__ == $0
       end
     end
     raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
-    raise
   end
 end
-

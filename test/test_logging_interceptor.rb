@@ -19,8 +19,8 @@
 
 require 'minitest/autorun'
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/logging_interceptor'
-require 'google/ads/google_ads/v1/services/media_file_service_services_pb'
+require 'google/ads/google_ads/interceptors/logging_interceptor'
+require 'google/ads/google_ads/v3/services/media_file_service_services_pb'
 
 class TestLoggingInterceptor < Minitest::Test
   attr_reader :sio
@@ -30,7 +30,7 @@ class TestLoggingInterceptor < Minitest::Test
   def setup
     @sio = StringIO.new
     @logger = Logger.new(sio)
-    @li = Google::Ads::GoogleAds::LoggingInterceptor.new(logger)
+    @li = Google::Ads::GoogleAds::Interceptors::LoggingInterceptor.new(logger)
   end
 
   def test_logging_interceptor_logs_na_customer_id_with_missing_customer_id
@@ -93,7 +93,7 @@ class TestLoggingInterceptor < Minitest::Test
     end
 
     sio.rewind
-    assert_includes(sio.read, "Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest")
+    assert_includes(sio.read, "Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest")
   end
 
   def test_logging_interceptor_logs_isfault_no
@@ -138,17 +138,17 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, JSON.dump("some data"))
   end
 
-  def test_logging_interceptor_logs_some_error_details_if_v1_error
+  def test_logging_interceptor_logs_some_error_details_if_v3_error
     li.request_response(
       request: make_small_request,
       call: make_fake_call,
       method: :doesnt_matter,
     ) do
-      raise make_realistic_error("v1")
+      raise make_realistic_error("v3")
     end
   rescue GRPC::InvalidArgument
     sio.rewind
-    assert_includes(sio.read, "INVALID_CUSTOMER_ID")
+    assert_includes(sio.read, "InvalidArgument(3:bees)")
   end
 
   def test_logging_interceptor_logs_error_details_if_partial_failure
@@ -191,14 +191,14 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_realistic_response_with_partial_error
-    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesResponse.new(
+    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesResponse.new(
       results: [],
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v3.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -207,12 +207,12 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_small_request(customer_id: "123")
-    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V1::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V1::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V1::Resources::MediaImage.new(
+        Google::Ads::GoogleAds::V3::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V3::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V3::Resources::MediaImage.new(
               data: Google::Protobuf::BytesValue.new(
                 value: File.open("test/fixtures/sam.jpg", "rb").read[0..10]
               )
@@ -232,19 +232,18 @@ class TestLoggingInterceptor < Minitest::Test
 
   def make_error_metadata(version)
     {
-      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
-      "grpc-status-details-bin" => "\b\x03\x12%Request contains an invalid argument.\x1A}\nCtype.googleapis.com/google.ads.googleads.#{version}.errors.GoogleAdsFailure\x126\n4\n\x02\b\x10\x12.Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'.\x1A\xD9\x02\n(type.googleapis.com/google.rpc.DebugInfo\x12\xAC\x02\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
+      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v3.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
       "request-id" =>"btwmoTYjaQE1UwVZnDCGAA",
     }
   end
 
   def make_request(customer_id: "123123123")
-    Google::Ads::GoogleAds::V1::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V1::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V1::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V1::Resources::MediaImage.new(
+        Google::Ads::GoogleAds::V3::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V3::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V3::Resources::MediaImage.new(
               data: Google::Protobuf::BytesValue.new(value: File.open("test/fixtures/sam.jpg", "rb").read)
             )
           )

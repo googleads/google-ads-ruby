@@ -17,7 +17,7 @@ module Google
           if @treat_deprecation_warnings_as_errors
             raise Error, deprecation
           else
-            Warning.warn("#{deprecation}. Called from: #{CallerFilter.first_non_google_ads_line}")
+            Warning.warn("\n#{deprecation}. Called from: #{CallerFilter.first_non_google_ads_line}\n")
           end
         end
 
@@ -42,7 +42,14 @@ module Google
       # MIT license: https://git.io/fjR7i
       class CallerFilter
         LIB_REGEX = /lib\/google\/ads\/google_ads/
-        IGNORE_REGEX = Regexp.union(LIB_REGEX, "rubygems/core_ext/kernel_require.rb")
+        GRPC_REGEX = /lib\/(grpc|gapic)/
+        STDLIB_REGEX = /lib\/ruby/
+        IGNORE_REGEX = Regexp.union(
+          LIB_REGEX,
+          STDLIB_REGEX,
+          GRPC_REGEX,
+          "rubygems/core_ext/kernel_require.rb"
+        )
 
         # This method finds the first line from the current stack trace that
         # doesn't originate from lib/google/ads/google_ads. It does this by

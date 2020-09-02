@@ -26,11 +26,8 @@ end
 def filter_services_for_google_ads(version, potential_services)
   # services are already class objects because the gapic generator wraps
   # the protobuf descriptors for us.
-  potential_services.select { |service, _|
-    [
-      service.name.start_with?("Google::Ads::GoogleAds::#{version.to_s.upcase}"),
-      !service.name.include?("OperationsClient"),
-    ].all?
+  potential_services.select { |service|
+    service.is_suitable_for_template_at_verison?(version)
   }
 end
 
@@ -57,9 +54,20 @@ def enhance_operations_with_classes(operations)
   }
 end
 
-def cleanup_paths(collection)
+def cleanup_path(path, entity_type)
+  require_path = path.split(/google-ads-ruby.*\/lib\//).last
+  if entity_type == :SERVICE
+    split_path = require_path.split("/")
+    split_path.pop
+    split_path.join("/")
+  else
+    require_path
+  end
+end
+
+def cleanup_paths(collection, entity_type)
   collection.map { |(item, path)|
-    new_path = path.split(/google-ads-ruby.*\/lib\//).last
+    new_path = cleanup_path(path, entity_type)
     [item, new_path]
   }
 end

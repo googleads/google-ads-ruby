@@ -75,7 +75,28 @@ module Google
         # and extracts error code in the form of a hash
         #
         # Returns a Hash { name:, value:}
-        def self.code(error, version = Google::Ads::GoogleAds.default_api_version)
+        def self.code(error, version = nil)
+          error_version = error.class.name.split("::")[3]
+          if error_version.nil?
+            raise RuntimeError, "passed error is not a google ads class"
+          end
+
+          error_version = error_version.upcase.to_sym
+
+          if version != nil
+            Deprecation.new(false, false).deprecate(
+              "Passing explicit versions to #code is deprecated, instead" \
+              " we now infer it from the passed object."
+            )
+          end
+
+          if version != nil && error_version.to_s != version.to_s
+            raise ArgumentError,
+              "passed version must match verison class of error"
+          end
+
+          version = error_version
+
           mapping = ERROR_CODES_MAPPING.fetch(version)
           match = mapping.find do |error_name|
             error.error_code.send(error_name) != :UNSPECIFIED

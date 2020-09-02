@@ -38,7 +38,9 @@ def use_portfolio_bidding_strategy(customer_id)
   operation = client.operation.create_resource.campaign_budget(budget)
 
   response = client.service.campaign_budget.mutate_campaign_budgets(
-      customer_id, [operation])
+    customer_id: customer_id,
+    operations: [operation],
+  )
   budget_id = response.results.first.resource_name
 
   puts "Budget #{budget_id} was created"
@@ -52,7 +54,9 @@ def use_portfolio_bidding_strategy(customer_id)
   operation = client.operation.create_resource.bidding_strategy(bidding_strategy)
 
   response = client.service.bidding_strategy.mutate_bidding_strategies(
-      customer_id, [operation])
+    customer_id: customer_id,
+    operations: [operation],
+  )
   bidding_id = response.results.first.resource_name
 
   puts "Portfolio bidding strategy #{bidding_id} was created"
@@ -78,7 +82,9 @@ def use_portfolio_bidding_strategy(customer_id)
     client.operation.create_resource.campaign(c)
   }
   response = client.service.campaign.mutate_campaigns(
-    customer_id, campaign_operations)
+    customer_id: customer_id,
+    operations: campaign_operations,
+  )
   response.results.each do |c|
     puts "Campaign #{c.resource_name} was created"
   end
@@ -130,11 +136,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

@@ -36,6 +36,7 @@ module Google
               raise ArgumentError.new("Value #{x} is not boolish")
             end
           },
+          Google::Protobuf::FloatValue => lambda { |x| Float(x) },
           Google::Protobuf::DoubleValue => lambda { |x| Float(x) },
           Google::Protobuf::BytesValue => lambda { |x| x.force_encoding("ASCII-8BIT") },
         })

@@ -35,7 +35,10 @@ def update_campaign(customer_id, campaign_id)
     end
   end
 
-  response = client.service.campaign.mutate_campaigns(customer_id, [operation])
+  response = client.service.campaign.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Campaign with resource name = '#{response.results.first.resource_name}' was updated."
 end
@@ -91,11 +94,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

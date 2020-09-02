@@ -42,8 +42,11 @@ def get_geo_target_constants_by_names
   # https://developers.google.com/adwords/api/docs/appendix/geotargeting
   country_code = 'FR'
 
-  response = gtc_service.suggest_geo_target_constants(locale, country_code,
-      location_names: location_names)
+  response = gtc_service.suggest_geo_target_constants(
+    locale: locale,
+    country_code: country_code,
+    location_names: location_names
+  )
 
   response.geo_target_constant_suggestions.each do |suggestion|
     puts sprintf("%s (%s,%s,%s,%s) is found in locale (%s) with reach (%d)" \
@@ -89,11 +92,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

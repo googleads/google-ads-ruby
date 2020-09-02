@@ -42,7 +42,7 @@ def get_artifact_metadata(artifact_name)
     WHERE name = '#{artifact_name}'
   QUERY
 
-  response = client.service.google_ads_field.search_google_ads_fields(query)
+  response = client.service.google_ads_field.search_google_ads_fields(query: query)
 
   if response.response.results.empty?
     puts "The specified artifact '#{artifact_name}' doesn't exist"
@@ -51,13 +51,13 @@ def get_artifact_metadata(artifact_name)
 
   response.each do |row|
     puts "An artifact named '#{row.name}' with category '#{row.category}' and data type " \
-        "#{row.data_type} #{is_or_not(row.selectable.value)} selectable, " \
-        "#{is_or_not(row.filterable.value)} filterable, #{is_or_not(row.sortable.value)} " \
-        "sortable, and #{is_or_not(row.is_repeated.value)} repeated."
+        "#{row.data_type} #{is_or_not(row.selectable)} selectable, " \
+        "#{is_or_not(row.filterable)} filterable, #{is_or_not(row.sortable)} " \
+        "sortable, and #{is_or_not(row.is_repeated)} repeated."
 
     if !row.selectable_with.empty?
       puts "The artifact can be selected with the following artifacts:"
-      puts (row.selectable_with.sort_by { |field| field.value })
+      puts (row.selectable_with.sort_by { |field| field })
     end
   end
 end
@@ -112,11 +112,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("Error: %s\nDetails: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

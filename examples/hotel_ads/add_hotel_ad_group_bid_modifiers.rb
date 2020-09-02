@@ -61,7 +61,9 @@ def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
   # 3) Issues a mutate request to add an ad group bid modifiers.
   ad_group_bid_modifier_service = client.service.ad_group_bid_modifier
   response = ad_group_bid_modifier_service.mutate_ad_group_bid_modifiers(
-      customer_id, operations)
+    customer_id: customer_id,
+    operations: operations,
+  )
 
   # Print out resource names of the added ad group bid modifiers.
   puts "Added #{response.results.size} hotel ad group bid modifiers:"
@@ -123,11 +125,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end
