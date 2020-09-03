@@ -19,7 +19,7 @@
 module Google
   module Ads
     module GoogleAds
-      CLIENT_LIB_VERSION = '6.0.0'.freeze
+      CLIENT_LIB_VERSION = '7.0.0'.freeze
       VERSION = CLIENT_LIB_VERSION
     end
   end

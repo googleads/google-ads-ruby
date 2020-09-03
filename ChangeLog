@@ -1,3 +1,13 @@
+7.0.0:
+ - Compatibility with v5 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Updated internals of the client library to a new version of gapic. The
+ change requires you to specify keyword arguments instead of positional
+ arguments for all values passed for all service calls, including customer ID
+ and operation. We have included a translator layer in our library that will
+ patch existing calls, but will be deprecated in the future.
+ For complete details, see:
+ https://developers.google.com/google-ads/api/docs/client-libs/ruby/migration
+
 6.0.0:
  - Compatability with v4 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
