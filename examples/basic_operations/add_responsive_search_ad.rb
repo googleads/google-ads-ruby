@@ -61,7 +61,10 @@ def add_responsive_search_ad(customer_id, ad_group_id)
 
   op = client.operation.create_resource.ad_group_ad(ad_group_ad)
 
-  response = client.service.ad_group_ad.mutate_ad_group_ads(customer_id, [op])
+  response = client.service.ad_group_ad.mutate_ad_group_ads(
+    customer_id: customer_id,
+    operations: [op],
+  )
   puts "Created Responsive Search Ad with ID #{response.results.first.resource_name}."
 end
 
@@ -119,11 +122,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

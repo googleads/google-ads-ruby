@@ -28,7 +28,7 @@ def upload_image(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  op = client.operation.create_resource.media_file do |media_file|
+  operation = client.operation.create_resource.media_file do |media_file|
     media_file.type = :IMAGE
     media_file.image = client.resource.media_image do |media_image|
       media_image.data = image_data
@@ -36,7 +36,10 @@ def upload_image(customer_id)
   end
 
   media_file_service = client.service.media_file
-  response = media_file_service.mutate_media_files(customer_id, [op])
+  response = media_file_service.mutate_media_files(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts("Uploaded media file with id: #{response.results.first.resource_name}")
 end
@@ -87,11 +90,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

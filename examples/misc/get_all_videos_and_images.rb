@@ -32,12 +32,12 @@ def get_all_videos_and_images(customer_id)
   EOQUERY
 
   ga_service = client.service.google_ads
-  response = ga_service.search(customer_id, query)
+  response = ga_service.search(customer_id: customer_id, query: query)
 
   response.each do |row|
     puts(
-      "Media file with id: #{row.media_file.id.value}"\
-      ", name: #{row.media_file.name.value}, and type: #{row.media_file.type}"
+      "Media file with id: #{row.media_file.id}"\
+      ", name: #{row.media_file.name}, and type: #{row.media_file.type}"
     )
   end
 end
@@ -89,11 +89,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

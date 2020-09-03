@@ -29,11 +29,11 @@ def remove_billing_setup(customer_id, billing_setup_id)
   billing_setup_service = client.service.billing_setup
 
   resource =  client.path.billing_setup(customer_id, billing_setup_id)
-  op = client.operation.remove_resource.billing_setup(resource)
+  operation = client.operation.remove_resource.billing_setup(resource)
 
   response = billing_setup_service.mutate_billing_setup(
-    customer_id,
-    op,
+    customer_id: customer_id,
+    operation: operation,
   )
 
   puts sprintf("Removed billing_setup %s", response.results.first.resource_name)
@@ -94,11 +94,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

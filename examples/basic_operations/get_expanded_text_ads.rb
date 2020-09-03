@@ -42,9 +42,9 @@ def get_expanded_text_ads(customer_id, ad_group_id = nil)
   end
 
   response = client.service.google_ads.search(
-    customer_id,
-    search_query,
-    page_size: PAGE_SIZE
+    customer_id: customer_id,
+    query: search_query,
+    page_size: PAGE_SIZE,
   )
 
   response.each do |row|
@@ -113,11 +113,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

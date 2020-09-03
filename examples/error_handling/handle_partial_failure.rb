@@ -47,8 +47,8 @@ def add_ad_groups(customer_id, campaign_id)
   end
 
   response = client.service.ad_group.mutate_ad_groups(
-    customer_id,
-    operations,
+    customer_id: customer_id,
+    operations: operations,
     partial_failure: true,
   )
 
@@ -134,11 +134,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

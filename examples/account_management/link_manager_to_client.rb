@@ -45,8 +45,8 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
   client_link_operation = client.operation.create_resource.customer_client_link(client_link)
 
   response = client.service.customer_client_link.mutate_customer_client_link(
-    manager_customer_id,
-    client_link_operation,
+    customer_id: manager_customer_id,
+    operation: client_link_operation,
   )
 
   client_link_resource_name = response.result.resource_name
@@ -65,7 +65,7 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
       customer_client_link.resource_name = '#{client_link_resource_name}'
   QUERY
 
-  response = client.service.google_ads.search(manager_customer_id, query)
+  response = client.service.google_ads.search(customer_id: manager_customer_id, query: query)
   manager_link_id = response.first.customer_client_link.manager_link_id
 
   # Accept the link using the client account.
@@ -85,8 +85,8 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
   end
 
   response = client.service.customer_manager_link.mutate_customer_manager_link(
-    client_customer_id,
-    [manager_link_operation],
+    customer_id: client_customer_id,
+    operations: [manager_link_operation],
   )
 
   puts "Client accepted invitation with resource name " \
@@ -148,11 +148,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

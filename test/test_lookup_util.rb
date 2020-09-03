@@ -32,11 +32,11 @@ module Google
 end
 
 class TestLookupUtil < Minitest::Test
-  def test_path_instantiation()
+  def test_path_instantiation
     lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
-    util = lookup_util.path_lookup_util(:V1)
-    assert_instance_of(Google::Ads::GoogleAds::Utils::V1::PathLookupUtil, util)
+    util = lookup_util.path_lookup_util(:V3)
+    assert_instance_of(Google::Ads::GoogleAds::Utils::V3::PathLookupUtil, util)
     assert_raises do
       util = client.proto_lookup_util(:ABCD)
     end

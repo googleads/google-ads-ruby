@@ -1,5 +1,6 @@
 require "spec_helper"
-require "filters"
+require "src/tracepoints"
+require "src/filters"
 
 RSpec.describe "#filter_resources_for_google_ads" do
   let(:resource) { double(:resource, msgclass: msgclass) }
@@ -71,20 +72,22 @@ RSpec.describe "#filter_services_for_google_ads" do
   let(:service_class) { double(:service_class, name: name) }
   let(:path) { __FILE__ }
 
+  let(:service) { TemplateService.new(service_class, path) }
+
   context "a google ads service" do
-    let(:name) { "Google::Ads::GoogleAds::V1::BeesService" }
+    let(:name) { "Google::Ads::GoogleAds::V1::BeesService::Client" }
 
     it "keeps the service class" do
-      expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
-        [[service_class, path]]
+      expect(filter_services_for_google_ads(:V1, [service])).to eq(
+        [service]
       )
     end
 
     context "an operations client" do
-      let(:name) { "Google::Ads::GoogleAds::V1::BeesService::OperationsClient" }
+      let(:name) { "Google::Ads::GoogleAds::V1::BeesService::Operations::Client" }
 
       it "doesn't keep the service class" do
-        expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
+        expect(filter_services_for_google_ads(:V1, [service])).to eq(
           []
         )
       end
@@ -95,7 +98,7 @@ RSpec.describe "#filter_services_for_google_ads" do
     let(:name) { "RSpec::Core::ExampleGroup" }
 
     it "doesn't keep the service class" do
-      expect(filter_services_for_google_ads(:V1, [[service_class, path]])).to eq(
+      expect(filter_services_for_google_ads(:V1, [service])).to eq(
         []
       )
     end

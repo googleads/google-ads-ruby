@@ -46,7 +46,10 @@ def add_keywords(customer_id, ad_group_id, keyword)
   # Add keyword
   operation = client.operation.create_resource.ad_group_criterion(criterion)
 
-  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [operation])
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Created keyword #{response.results.first.resource_name}"
 end
@@ -107,11 +110,6 @@ if __FILE__ == $PROGRAM_NAME
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-        e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

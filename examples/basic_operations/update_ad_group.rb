@@ -32,7 +32,10 @@ def update_ad_group(customer_id, ad_group_id, bid_micro_amount)
     ag.cpc_bid_micros = bid_micro_amount
   end
 
-  response = client.service.ad_group.mutate_ad_groups(customer_id, [operation])
+  response = client.service.ad_group.mutate_ad_groups(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   puts "Ad group with resource name = '#{response.results.first.resource_name}' was updated."
 end
@@ -65,7 +68,7 @@ if __FILE__ == $0
       options[:ad_group_id] = v
     end
 
-    opts.on('-b', '--cpd-bid-micro-amount CPC-BID-MICRO-AMOUNT', Integer,
+    opts.on('-b', '--cpc-bid-micro-amount CPC-BID-MICRO-AMOUNT', Integer,
         'Bid Micro Amount') do |v|
       options[:bid_micro_amount] = v
     end
@@ -82,24 +85,19 @@ if __FILE__ == $0
   begin
     update_ad_group(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id],
         options[:bid_micro_amount])
-    rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-      e.failure.errors.each do |error|
-        STDERR.printf("Error with message: %s\n", error.message)
-        if error.location
-          error.location.field_path_elements.each do |field_path_element|
-            STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-          end
-        end
-        error.error_code.to_h.each do |k, v|
-          next if v == :UNSPECIFIED
-          STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+  rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
+    e.failure.errors.each do |error|
+      STDERR.printf("Error with message: %s\n", error.message)
+      if error.location
+        error.location.field_path_elements.each do |field_path_element|
+          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
-      raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
+      error.error_code.to_h.each do |k, v|
+        next if v == :UNSPECIFIED
+        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+      end
+    end
     raise
   end
 end

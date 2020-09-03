@@ -69,7 +69,10 @@ def create_feed(client, customer_id)
 
   operation = client.operation.create_resource.feed(feed)
 
-  response = client.service.feed.mutate_feeds(customer_id, [operation])
+  response = client.service.feed.mutate_feeds(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   feed_id = response.results.first.resource_name
 
   # We need to look up the attribute name and IDs for the feed we just created
@@ -85,7 +88,10 @@ def create_feed(client, customer_id)
   LIMIT
     100
   EOD
-  response = client.service.google_ads.search(customer_id, query)
+  response = client.service.google_ads.search(
+    customer_id: customer_id,
+    query: query,
+  )
 
   # Hash.[] takes an aray of pairs and turns them in to a hash with keys
   # equal to the first item, and values equal to the second item, we get two
@@ -127,7 +133,10 @@ def create_feed_mapping(client, customer_id, feed_details)
 
   operation = client.operation.create_resource.feed_mapping(feed_mapping)
 
-  response = client.service.feed_mapping.mutate_feed_mappings(customer_id, [operation])
+  response = client.service.feed_mapping.mutate_feed_mappings(
+    customer_id: customer_id,
+    operations: [operation],
+  )
   puts "Feed mapping created with id #{response.results.first.resource_name}"
 end
 
@@ -157,7 +166,10 @@ def create_feed_items(client, customer_id, feed_details, label)
     client.operation.create_resource.feed_item(fi)
   }
 
-  response = client.service.feed_item.mutate_feed_items(customer_id, ops)
+  response = client.service.feed_item.mutate_feed_items(
+    customer_id: customer_id,
+    operations: ops,
+  )
 
   response.results.each do |result|
     puts "Created feed item with id #{result.resource_name}"
@@ -167,14 +179,20 @@ end
 def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   query = <<~EOD
     SELECT
-      campaign.id, campaign.name, campaign.dynamic_search_ads_setting.domain_name
+      campaign.id,
+      campaign.name,
+      campaign.dynamic_search_ads_setting.domain_name,
+      campaign.dynamic_search_ads_setting.language_code
     FROM
       campaign
     WHERE
       campaign.id = #{campaign_id}
     LIMIT 1000
   EOD
-  response = client.service.google_ads.search(customer_id, query)
+  response = client.service.google_ads.search(
+    customer_id: customer_id,
+    query: query,
+  )
 
   result = response.first
   if result.nil?
@@ -183,16 +201,27 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
 
   campaign = result.campaign
 
-  if !campaign.dynamic_search_ads_setting || !campaign.dynamic_search_ads_setting.domain_name \
-    || campaign.dynamic_search_ads_setting.domain_name.value == ""
+  if !campaign.dynamic_search_ads_setting \
+      || !campaign.dynamic_search_ads_setting.domain_name \
+      || campaign.dynamic_search_ads_setting.domain_name == "" \
+      || !campaign.dynamic_search_ads_setting.language_code \
+      || campaign.dynamic_search_ads_setting.language_code == ""
     raise "Campaign id #{campaign_id} is not set up for dynamic search ads"
   end
 
   op = client.operation.update_resource.campaign(campaign) do
     campaign.dynamic_search_ads_setting.feeds << feed_details.resource_name
   end
+  # You have to specify these fields on all requests, even if you don't change them.
+  # By adding them to the update_mask, the API treats them as new values, but we're
+  # just passing along the old values we selected in the query above.
+  op.update_mask.paths << "dynamic_search_ads_setting.language_code"
+  op.update_mask.paths << "dynamic_search_ads_setting.domain_name"
 
-  response = client.service.campaign.mutate_campaigns(customer_id, [op])
+  response = client.service.campaign.mutate_campaigns(
+    customer_id: customer_id,
+    operations: [op],
+  )
   puts "Updated campaign #{response.results.first.resource_name}"
 end
 
@@ -215,7 +244,10 @@ def add_dsa_targeting(client, customer_id, ad_group_resource_name, label)
 
   op = client.operation.create_resource.ad_group_criterion(ad_group_criterion)
 
-  response = client.service.ad_group_criterion.mutate_ad_group_criteria(customer_id, [op])
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(
+    customer_id: customer_id,
+    operations: [op],
+  )
 
   puts "Created ad group criterion with id: #{response.results.first.resource_name}"
 end
@@ -280,11 +312,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

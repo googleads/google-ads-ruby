@@ -51,7 +51,10 @@ def create_keyword_plan(client, customer_id)
   end
 
   keyword_plan_service = client.service.keyword_plan
-  response = keyword_plan_service.mutate_keyword_plans(customer_id, [operation])
+  response = keyword_plan_service.mutate_keyword_plans(
+    customer_id: customer_id,
+    operations: [operation],
+  )
 
   resource_name = response.results.first.resource_name
   puts "Created keyword plan: #{resource_name}"
@@ -75,8 +78,8 @@ def create_keyword_plan_campaign(client, customer_id, keyword_plan)
 
   kp_campaign_service_client = client.service.keyword_plan_campaign
   response = kp_campaign_service_client.mutate_keyword_plan_campaigns(
-    customer_id,
-    [operation],
+    customer_id: customer_id,
+    operations: [operation],
   )
 
   resource_name = response.results.first.resource_name
@@ -94,8 +97,8 @@ def create_keyword_plan_ad_group(client, customer_id, plan_campaign)
 
   kp_ad_group_service = client.service.keyword_plan_ad_group
   response = kp_ad_group_service.mutate_keyword_plan_ad_groups(
-    customer_id,
-    [operation],
+    customer_id: customer_id,
+    operations: [operation],
   )
 
   resource_name = response.results.first.resource_name
@@ -132,8 +135,8 @@ def create_keyword_plan_ad_group_keywords(client, customer_id, plan_ad_group)
 
   kpa_keyword_service = client.service.keyword_plan_ad_group_keyword
   response = kpa_keyword_service.mutate_keyword_plan_ad_group_keywords(
-    customer_id,
-    operations,
+    customer_id: customer_id,
+    operations: operations,
   )
 
   response.results.each do |result|
@@ -151,8 +154,8 @@ def create_keyword_plan_negative_campaign_keywords(client, customer_id, plan_cam
 
   kp_campaign_keyword_service = client.service.keyword_plan_campaign_keyword
   response = kp_campaign_keyword_service.mutate_keyword_plan_campaign_keywords(
-    customer_id,
-    [operation],
+    customer_id: customer_id,
+    operations: [operation],
   )
 
   puts "Created negative campaign keyword for keyword plan: " +
@@ -207,11 +210,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end

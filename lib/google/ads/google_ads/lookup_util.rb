@@ -1,3 +1,4 @@
+require 'google/ads/google_ads/api_versions'
 module Google
   module Ads
     module GoogleAds

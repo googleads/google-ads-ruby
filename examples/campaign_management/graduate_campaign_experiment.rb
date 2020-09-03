@@ -36,8 +36,8 @@ def graduate_campaign_experiment(customer_id, experiment_resource_name)
   end
 
   response = client.service.campaign_budget.mutate_campaign_budgets(
-    customer_id,
-    [budget_operation]
+    customer_id: customer_id,
+    operations: [budget_operation],
   )
   budget_resource_name = response.results.first.resource_name
 
@@ -45,8 +45,8 @@ def graduate_campaign_experiment(customer_id, experiment_resource_name)
 
   # Graduate the campaign using the budget created above.
   response = client.service.campaign_experiment.graduate_campaign_experiment(
-    experiment_resource_name,
-    budget_resource_name
+    campaign_experiment: experiment_resource_name,
+    campaign_budget: budget_resource_name,
   )
 
   puts "Campaign #{response.graduated_campaign} is now graduated."
@@ -107,11 +107,6 @@ if __FILE__ == $0
         STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
-    raise
-  rescue Google::Gax::RetryError => e
-    STDERR.printf("Error: '%s'\n\tCause: '%s'\n\tCode: %d\n\tDetails: '%s'\n" \
-        "\tRequest-Id: '%s'\n", e.message, e.cause.message, e.cause.code,
-                  e.cause.details, e.cause.metadata['request-id'])
     raise
   end
 end
