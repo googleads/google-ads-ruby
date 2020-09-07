@@ -118,6 +118,7 @@ module Google
             mobile_device_constant: [:criterion],
             mutate_job: [:customer, [:mutate_job]],
             operating_system_version_constant: [:criterion],
+            payments_account: [:customer, :payments_account_id],
             parental_status_view: [:customer, [:ad_group, :criterion]],
             product_bidding_category_constant: [[:country_code, :level, :id]],
             product_group_view: [:customer, [:ad_group, :criterion]],
