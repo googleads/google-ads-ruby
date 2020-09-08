@@ -62,6 +62,20 @@ end
 if __FILE__ == $0
   options = {}
 
+  # The following parameter(s) should be provided to run the example. You can
+  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
+  # the command line.
+  #
+  # Parameters passed on the command line will override any parameters set in
+  # code.
+  #
+  # Running the example with -h will print the command line usage.
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:user_list_ids] = [
+    'INSERT_USER_LIST_ID_1_HERE',
+    'INSERT_USER_LIST_ID_2_HERE',
+  ]
+
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 

@@ -71,7 +71,6 @@ def create_billing_setup(
       raise "No payments account ID or payments profile ID is provided."
     end
   end
-  billing_setup
 end
 
 def set_billing_setup_date_times(client, customer_id, billing_setup)
@@ -97,7 +96,6 @@ def set_billing_setup_date_times(client, customer_id, billing_setup)
   # Retrieves the ending date time of the last billing setup.
   row = stream.first.results.first
   if row
-    puts row
     last_ending_date_time_string = row.billing_setup.end_date_time
     if last_ending_date_time_string.nil?
       raise "Cannot set starting and ending date times for the new billing setup." \
