@@ -121,6 +121,13 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  # Provide an existing payments account ID to link to the new billing setup.
+  # Must be formatted as "1234-5678-9012-3456".
+  options[:payments_account_id] = nil
+  # Alternatively, provide a payments profile ID which will be linked to a new
+  # payments account and the new billing setup. Must be formatted
+  # as "1234-5678-9012".
+  options[:payments_profile_id] = nil
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
