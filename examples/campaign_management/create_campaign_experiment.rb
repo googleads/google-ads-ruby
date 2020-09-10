@@ -22,10 +22,12 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def create_campaign_experiment(customer_id, campaign_draft_resource_name)
+def create_campaign_experiment(customer_id, campaign_id, draft_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
+  campaign_draft_resource_name = client.path.campaign_draft(
+      customer_id, campaign_id, draft_id)
 
   experiment = client.resource.campaign_experiment do |ce|
     ce.campaign_draft = campaign_draft_resource_name
@@ -78,9 +80,11 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  # This is the last ID in the resource name of the draft
+  # You can get these values by extracting them from the resource name
+  # for a draft:
   # customers/{customer_id}/campaignDrafts/{base_campaign_id}~{draft_id}
-  options[:draft_resource_name] = 'INSERT_DRAFT_RESOURCE_NAME_HERE'
+  options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
+  options[:draft_id] = 'INSERT_DRAFT_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: add_campaigns.rb [options]')
@@ -92,8 +96,12 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-d', '--draft-resource_name DRAFT-RESOURCE-NAME', String, 'Draft ID') do |v|
-      options[:draft_resource_name] = v
+    opts.on('-c', '--campaign-id CAMPAIGN-ID', String, 'Campaign ID') do |v|
+      options[:campaign_id] = v
+    end
+
+    opts.on('-d', '--draft-id DRAFT-ID', String, 'Draft ID') do |v|
+      options[:draft_id] = v
     end
 
     opts.separator ''
@@ -108,7 +116,8 @@ if __FILE__ == $0
   begin
     create_campaign_experiment(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:draft_resource_name),
+      options.fetch(:campaign_id),
+      options.fetch(:draft_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
