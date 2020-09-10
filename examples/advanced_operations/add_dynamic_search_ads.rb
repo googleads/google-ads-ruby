@@ -81,7 +81,6 @@ def create_campaign(client, customer_id, budget_resource_name)
   end
 
   operation = client.operation.create_resource.campaign(campaign)
-  require 'pry'; binding.pry
 
   response = client.service.campaign.mutate_campaigns(
     customer_id: customer_id,
