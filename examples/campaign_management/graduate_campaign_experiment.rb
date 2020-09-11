@@ -21,10 +21,12 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def graduate_campaign_experiment(customer_id, experiment_resource_name)
+def graduate_campaign_experiment(customer_id, experiment_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
+  experiment_resource_name = client.path.campaign_experiment(
+      customer_id, experiment_id)
 
   # Graduating a campaign experiment requires a new budget. Since the budget
   # for the base campaign has explicitly_shared set to false, the budget cannot
@@ -63,7 +65,7 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:experiment_resource_name] = 'INSERT_CAMPAIGN_EXPERIMENT_RESOURCE_NAME_HERE'
+  options[:experiment_id] = 'INSERT_EXPERIMENT_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: add_campaigns.rb [options]')
@@ -75,9 +77,8 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-e', '--experiment-resource-name EXPERIMENT-RESOURCE-NAME', String,
-            'Experiment Resource Name') do |v|
-      options[:experiment_resource_name] = v
+    opts.on('-e', '--experiment-id EXPERIMENT-ID', String, 'Experiment ID') do |v|
+      options[:experiment_id] = v
     end
 
     opts.separator ''
@@ -92,7 +93,7 @@ if __FILE__ == $0
   begin
     graduate_campaign_experiment(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:experiment_resource_name),
+      options.fetch(:experiment_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
