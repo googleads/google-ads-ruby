@@ -52,7 +52,7 @@ def create_billing_setup(
   customer_id,
   payments_account_id,
   payments_profile_id)
-  billing_setup = client.operation.create_resource.billing_setup do |b|
+  client.operation.create_resource.billing_setup do |b|
     # Sets the appropriate payments account field.
     if payments_account_id
       # If a payments account ID has been provided, set the resource name.
