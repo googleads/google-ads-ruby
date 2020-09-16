@@ -147,7 +147,7 @@ def create_ad(client, customer_id, ad_group_resource_name)
           aia.asset = square_marketing_image_asset_resource_name
         end
         # Optional: Call to action text.
-        # Valid texts: https://support.google.com/adwords/answer/7005917
+        # Valid texts: https://support.google.com/google-ads/answer/7005917
         rda.call_to_action_text = "Apply Now"
         # Optional: Sets the ad colors.
         rda.main_color = "#0000ff"
