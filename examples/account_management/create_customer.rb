@@ -35,7 +35,7 @@ def create_customer(manager_customer_id)
     c.descriptive_name = "Account created with CustomerService on #{(Time.new.to_f * 1000).to_i}"
 
     # For a list of valid currency codes and time zones, see this documentation:
-    # https://developers.google.com/adwords/api/docs/appendix/codes-formats
+    # https://developers.google.com/google-ads/api/reference/data/codes-formats
     c.currency_code = "USD"
     c.time_zone = "America/New_York"
 

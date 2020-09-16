@@ -67,7 +67,7 @@ def create_extension_feed_items(client, customer_id, campaign_resource_name)
 
       # Targets this sitelink for United States only.
       # A list of country codes can be referenced here:
-      # https://developers.google.com/adwords/api/docs/appendix/geotargeting
+      # https://developers.google.com/google-ads/api/reference/data/geotargets
       efi.targeted_geo_target_constant = client.path.geo_target_constant(2840)
     end,
     client.resource.extension_feed_item do |efi|

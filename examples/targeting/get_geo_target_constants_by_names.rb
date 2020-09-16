@@ -39,7 +39,7 @@ def get_geo_target_constants_by_names
   locale = 'en'
 
   # A list of country codes can be referenced here:
-  # https://developers.google.com/adwords/api/docs/appendix/geotargeting
+  # https://developers.google.com/google-ads/api/reference/data/geotargets
   country_code = 'FR'
 
   response = gtc_service.suggest_geo_target_constants(

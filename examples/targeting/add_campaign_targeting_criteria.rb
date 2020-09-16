@@ -100,7 +100,7 @@ if __FILE__ == $PROGRAM_NAME
   options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
   options[:keyword] = 'jupiter cruise'
   # For more information on determining location_id value, see:
-  # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+  # https://developers.google.com/google-ads/api/reference/data/geotargets
   options[:location_id] = '21167' # New York
 
   OptionParser.new do |opts|
