@@ -39,7 +39,7 @@ def get_ad_group_criterion_cpc_bid_simulations(customer_id, ad_group_id)
 
   responses = client.service.google_ads.search_stream(
     customer_id: customer_id,
-    query: query
+    query: query,
   )
 
   responses.each do |response|
