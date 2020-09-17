@@ -77,7 +77,7 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-e', '--experiment-id EXPERIMENT-ID', String, 'Experiment ID') do |v|
+    opts.on('-e', '--campaign-experiment-id EXPERIMENT-ID', String, 'Campaign Experiment ID') do |v|
       options[:experiment_id] = v
     end
 
