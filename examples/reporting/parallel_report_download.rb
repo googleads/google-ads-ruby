@@ -57,6 +57,8 @@ def parallel_report_download(customer_ids, login_customer_id)
     ]
   ]
 
+  # Use Queue instead of array, to ensure thread safety.
+  # (Array in Ruby is not thread safe.)
   reports_succeeded = Queue.new()
   reports_failed = Queue.new()
 
