@@ -51,7 +51,13 @@ module Google
         def self.index(error)
           path = error.location.field_path_elements.find {|elt| elt.field_name == OPERATIONS }
           if path
-            path.index.value
+            ret = path.index
+            # TODO: Once v5 is sunset, we can always just return path.index.
+            if ret.class == Integer
+              ret
+            else
+              ret.value
+            end
           else
             nil
           end

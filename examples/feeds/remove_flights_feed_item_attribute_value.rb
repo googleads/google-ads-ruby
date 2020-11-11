@@ -129,10 +129,17 @@ def flight_placeholder_fields_map_for(
   feed_attributes = response.first.feed.attributes
   placeholder_fields = []
   feed_attributes.each do |feed_attribute|
+<<<<<<< HEAD
     unless feed_attribute_names_map.has_key?(feed_attribute.name.value.to_sym)
       raise "Invalid feed attribute name."
     end
     placeholder_fields << feed_attribute_names_map[feed_attribute.name.value.to_sym]
+=======
+    unless feed_attribute_names_map.has_key?(feed_attribute.name.to_sym)
+      raise "Invalid feed attribute name."
+    end
+    placeholder_fields << feed_attribute_names_map[feed_attribute.name.to_sym]
+>>>>>>> internal_v6
   end
 
   fields_map = {}

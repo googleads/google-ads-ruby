@@ -25,6 +25,6 @@ client.resource.campaign
 client.operation.campaign
 client.enum.policy_topic_entry_type
 
-raise "bad version on explicit versioning" if client.operation.v1.create_resource != Google::Ads::GoogleAds::Factories::V1::Operations::CreateResource
+raise "bad version on explicit versioning" if client.operation.v6.create_resource != Google::Ads::GoogleAds::Factories::V1::Operations::CreateResource
 EORUBY
 )

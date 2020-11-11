@@ -16,64 +16,6 @@
 #
 # GoogleAds client class to configure settings and fetch services.
 
-# We need to define all modules for all known versions in advance because of a
-# generation issue where they are defined in a single line, which cannot be used
-# to create new modules.
-module Google
-  module Ads
-    module GoogleAds
-      module V2
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
-      module V3
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
-      module V4
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
-      module V5
-        module Common
-        end
-        module Enums
-        end
-        module Errors
-        end
-        module Resources
-        end
-        module Services
-        end
-      end
-    end
-  end
-end
-
 # this require needs to always come first to patch protobufs to have "autoboxing
 # fields"
 require 'google/ads/google_ads/autoboxing_fields'

@@ -65,7 +65,7 @@ def get_product_bidding_category_constant(customer_id)
   response.each do |row|
     product_bidding_category = row.product_bidding_category_constant
     category = {
-      name: product_bidding_category.localized_name.value,
+      name: product_bidding_category.localized_name,
       id: product_bidding_category.resource_name,
       children: []
     }
@@ -74,7 +74,6 @@ def get_product_bidding_category_constant(customer_id)
 
     parent_id = product_bidding_category
       .product_bidding_category_constant_parent
-      &.value
 
     if parent_id
       all_categories[parent_id][:children] << category

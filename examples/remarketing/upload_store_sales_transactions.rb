@@ -235,9 +235,17 @@ def build_offline_user_data_job_operations(
       t.currency_code = "USD"
       # Converts the transaction amount from $200 USD to micros.
       t.transaction_amount_micros = 200_000_000
+<<<<<<< HEAD
       # Specifies the date and time of the transaction. This date and time will
       # be interpreted by the API using the Google Ads customer's time zone.
       # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
+=======
+      # Specifies the date and time of the transaction. The format is
+      # "YYYY-MM-DD HH:MM:SS[+HH:MM]", where [+HH:MM] is an optional timezone
+      # offset from UTC. If the offset is absent, the API will use the
+      # account's timezone as default. Examples: "2018-03-05 09:15:00" or
+      # "2018-02-01 14:34:30+03:00".
+>>>>>>> internal_v6
       t.transaction_date_time = "2020-05-01 23:52:12"
     end
   end
