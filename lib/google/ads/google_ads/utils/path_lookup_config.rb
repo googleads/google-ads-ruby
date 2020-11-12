@@ -56,7 +56,7 @@ module Google
             bidding_strategy: [:customer, [:bidding_strategy]],
             billing_setup: [:customer, [:billing]],
             campaign_audience_view: [:customer, [:campaign, :criterion]],
-            campaign_bid_modifier: [:customer, [:campaign_bid_modifier]],
+            campaign_bid_modifier: [:customer, [:campaign, :criterion]],
             campaign_budget: [:customer, [:campaign_budget]],
             campaign_criterion: [:customer, [:campaign, :criterion]],
             campaign_criterion_simulation: [:customer, [:campaign, :criterion, :type, :modification_method, :start_date, :end_date]],
@@ -70,8 +70,10 @@ module Google
             carrier_constant: [:criterion],
             change_status: [:customer, [:change_status]],
             click_view: [:customer, [:date, :gclid]],
+            combined_audience: [:customer, :combined_audience],
             conversion_action: [:customer, [:conversion_action]],
             currency_constant: [:currency_constant],
+            custom_audience: [:customer, :custom_audience],
             custom_interest: [:customer, [:custom_interest]],
             customer_client_link: [:customer, [:client_customer, :manager_link]],
             customer_client: [:customer, [:client_customer]],
@@ -80,6 +82,7 @@ module Google
             customer_label: [:customer, [:label]],
             customer_manager_link: [:customer, [:manager_customer, :manager_link]],
             customer_negative_criterion: [:customer, [:criterion]],
+            customer_user_access: [:customer, :user],
             customer: [:customer],
             detail_placement_view: [:customer, [:ad_group, :base64_placement]],
             display_keyword_view: [:customer, [:ad_group, :criterion]],
@@ -88,6 +91,8 @@ module Google
             expanded_landing_page_view: [:customer, [:expanded_final_url_fingerprint]],
             extension_feed_item: [:customer, [:feed_item]],
             feed_item: [:customer, [:feed, :feed_item]],
+            feed_item_set_link: [:customer, :feed, :feed_item_set, :feed_item],
+            feed_item_set: [:customer, :feed, :feed_item_set],
             feed_item_target: [:customer, [:feed, :feed_item, :feed_item_target_type, :feed_item_target_id]],
             feed_mapping: [:customer, [:feed, :feed_mapping]],
             feed_placeholder_view: [:customer, [:placeholder_type]],
@@ -144,12 +149,30 @@ module Google
               :keyword_plan_ad_group_keyword,
               :keyword_plan_campaign_keyword,
               :third_party_app_analytics_link,
+              :combined_audience,
+              :custom_audience,
+              :customer_user_access,
+              :feed_item_set_link,
+              :feed_item_set,
             ].include?(k)
           }
-          PATH_LOOKUP_V2 = PATH_LOOKUP_V3.reject { |k, _| [:currency_constant].include?(k) }
 
-          PATH_LOOKUP_V4 = PATH_LOOKUP_BASE.reject { |k, _| [:mutate_job].include?(k) }
+          PATH_LOOKUP_V4 = PATH_LOOKUP_BASE.reject { |k, _|
+            [
+              :mutate_job,
+              :combined_audience,
+              :custom_audience,
+              :customer_user_access,
+              :feed_item_set_link,
+              :feed_item_set,
+            ].include?(k)
+          }
           PATH_LOOKUP_V5 = PATH_LOOKUP_V4
+
+          PATH_LOOKUP_V6 = PATH_LOOKUP_BASE
+            .reject { |k, _| [:mutate_job].include?(k) }
+            .map { |k, v| [k, v.flatten] }
+            .to_h
         end
       end
     end

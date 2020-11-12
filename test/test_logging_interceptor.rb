@@ -20,7 +20,11 @@
 require 'minitest/autorun'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
-require 'google/ads/google_ads/v3/services/media_file_service_services_pb'
+require 'google/ads/google_ads/v6/services/media_file_service_services_pb'
+require 'google/ads/google_ads/v6/services/customer_user_access_service_services_pb'
+require 'google/ads/google_ads/v6/services/google_ads_service_services_pb'
+require 'google/ads/google_ads/v6/resources/customer_user_access_pb'
+require 'google/ads/google_ads/v6/resources/change_event_pb'
 
 class TestLoggingInterceptor < Minitest::Test
   attr_reader :sio
@@ -93,7 +97,7 @@ class TestLoggingInterceptor < Minitest::Test
     end
 
     sio.rewind
-    assert_includes(sio.read, "Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest")
+    assert_includes(sio.read, "Google::Ads::GoogleAds::V6::Services::MutateMediaFilesRequest")
   end
 
   def test_logging_interceptor_logs_isfault_no
@@ -138,13 +142,13 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, JSON.dump("some data"))
   end
 
-  def test_logging_interceptor_logs_some_error_details_if_v3_error
+  def test_logging_interceptor_logs_some_error_details_if_v6_error
     li.request_response(
       request: make_small_request,
       call: make_fake_call,
       method: :doesnt_matter,
     ) do
-      raise make_realistic_error("v3")
+      raise make_realistic_error("v6")
     end
   rescue GRPC::InvalidArgument
     sio.rewind
@@ -176,10 +180,192 @@ class TestLoggingInterceptor < Minitest::Test
     end
   end
 
+  def test_logging_interceptor_sanitizes_dev_token
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter,
+      metadata: {:"developer-token" => "abcd"}
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?("abcd"))
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_customer_user_access_response
+    email_address = "abcdefghijkl"
+    inviter_user = "zyxwvutsr"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V6::Resources::CustomerUserAccess.new(
+        email_address: email_address,
+        inviter_user_email_address: inviter_user,
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_customer_user_access_mutate
+    email_address = "abcdefghijkl"
+    inviter_user = "zyxwvutsr"
+    request = Google::Ads::GoogleAds::V6::Services::MutateCustomerUserAccessRequest.new(
+      operation: Google::Ads::GoogleAds::V6::Services::CustomerUserAccessOperation.new(
+        update: Google::Ads::GoogleAds::V6::Resources::CustomerUserAccess.new(
+          email_address: email_address,
+          inviter_user_email_address: inviter_user,
+        )
+      )
+    )
+    li.request_response(
+      request: request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_search_request
+    li.request_response(
+      request: Google::Ads::GoogleAds::V6::Services::SearchGoogleAdsRequest.new(
+        query: "SELECT change_event.user_email FROM change_event",
+      ),
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?("user_email"), "Failed to remove query containing user email.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_search_stream_request
+    li.request_response(
+      request: Google::Ads::GoogleAds::V6::Services::SearchGoogleAdsStreamRequest.new(
+        query: "SELECT change_event.user_email FROM change_event",
+      ),
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?("user_email"), "Failed to remove query containing user email.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_search_response
+    email_address = "UNIQUE-STRING-ONE"
+    inviter_user = "UNIQUE-STRING-TWO"
+    user_email = "UNIQUE-STRING-THREE"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V6::Services::SearchGoogleAdsResponse.new(
+        field_mask: Google::Protobuf::FieldMask.new(
+          paths: [
+            "customer_user_access.email_address",
+            "customer_user_access.inviter_user_email_address",
+              "change_event.user_email",
+          ]
+        ),
+        results: [
+          Google::Ads::GoogleAds::V6::Services::GoogleAdsRow.new(
+            customer_user_access: Google::Ads::GoogleAds::V6::Resources::CustomerUserAccess.new(
+              email_address: email_address,
+              inviter_user_email_address: inviter_user,
+            ),
+            change_event: Google::Ads::GoogleAds::V6::Resources::ChangeEvent.new(
+              user_email: user_email,
+            ),
+          )
+        ]
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert(!data.include?(user_email), "Failed to remove change event user email.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_search_stream_response
+    email_address = "UNIQUE-STRING-ONE"
+    inviter_user = "UNIQUE-STRING-TWO"
+    user_email = "UNIQUE-STRING-THREE"
+    response = li.server_streamer(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      [
+        Google::Ads::GoogleAds::V6::Services::SearchGoogleAdsStreamResponse.new(
+          field_mask: Google::Protobuf::FieldMask.new(
+            paths: [
+              "customer_user_access.email_address",
+              "customer_user_access.inviter_user_email_address",
+              "change_event.user_email",
+            ]
+          ),
+          results: [
+            Google::Ads::GoogleAds::V6::Services::GoogleAdsRow.new(
+              customer_user_access: Google::Ads::GoogleAds::V6::Resources::CustomerUserAccess.new(
+                email_address: email_address,
+                inviter_user_email_address: inviter_user,
+              ),
+              change_event: Google::Ads::GoogleAds::V6::Resources::ChangeEvent.new(
+                user_email: user_email,
+              ),
+            )
+          ]
+        )
+      ]
+    end
+
+    # We need to iterate through all the results to finish logging when streaming.
+    response.each do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert(!data.include?(user_email), "Failed to remove change event user email.")
+    assert_includes(data, "REDACTED")
+  end
   def make_fake_call(host: "peer")
     Class.new do
       def initialize(host)
         @wrapped = Struct.new(:peer).new(host)
+        @wrapped.instance_variable_set(
+          :@call,
+          Struct.new(:trailing_metadata).new(
+            {"request-id": "fake-id"}
+          )
+        )
       end
     end.new(host)
   end
@@ -191,14 +377,14 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_realistic_response_with_partial_error
-    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesResponse.new(
+    Google::Ads::GoogleAds::V6::Services::MutateMediaFilesResponse.new(
       results: [],
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v3.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v6.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -207,15 +393,13 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_small_request(customer_id: "123")
-    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V6::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V3::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V3::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V3::Resources::MediaImage.new(
-              data: Google::Protobuf::BytesValue.new(
-                value: File.open("test/fixtures/sam.jpg", "rb").read[0..10]
-              )
+        Google::Ads::GoogleAds::V6::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V6::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V6::Resources::MediaImage.new(
+              data: File.open("test/fixtures/sam.jpg", "rb").read[0..10]
             )
           )
         )
@@ -232,19 +416,19 @@ class TestLoggingInterceptor < Minitest::Test
 
   def make_error_metadata(version)
     {
-      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v3.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
+      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v6.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
       "request-id" =>"btwmoTYjaQE1UwVZnDCGAA",
     }
   end
 
   def make_request(customer_id: "123123123")
-    Google::Ads::GoogleAds::V3::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V6::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V3::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V3::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V3::Resources::MediaImage.new(
-              data: Google::Protobuf::BytesValue.new(value: File.open("test/fixtures/sam.jpg", "rb").read)
+        Google::Ads::GoogleAds::V6::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V6::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V6::Resources::MediaImage.new(
+              data: File.open("test/fixtures/sam.jpg", "rb").read
             )
           )
         )

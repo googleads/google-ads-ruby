@@ -52,7 +52,7 @@ def add_campaign_draft(customer_id, campaign_id)
   draft_campaign_resource_name = search_response.first.campaign_draft.draft_campaign
 
   criterion_operation = client.operation.create_resource.campaign_criterion do |cc|
-    cc.campaign = draft_campaign_resource_name.value
+    cc.campaign = draft_campaign_resource_name
     cc.language = client.resource.language_info do |li|
       li.language_constant = client.path.language_constant(1003) # Spanish
     end

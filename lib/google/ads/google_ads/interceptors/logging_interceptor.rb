@@ -27,6 +27,17 @@ module Google
       module Interceptors
         class LoggingInterceptor < GRPC::ClientInterceptor
 
+          HEADERS_TO_MASK = [:"developer-token"]
+          SEARCH_RESPONSE_FIELDS_TO_MASK = %w[
+            emailAddress
+            inviterUserEmailAddress
+            userEmail
+          ]
+          SEARCH_REQUEST_MASK =
+            /customer_user_access.email_address|change_event.user_email/
+
+          MASK_REPLACEMENT = "REDACTED"
+
           def initialize(logger)
             # Don't propagate args, parens are necessary
             super()
@@ -136,7 +147,7 @@ module Google
           end
 
           def build_success_response_message(response)
-            "Incoming response: Payload: #{response.to_json}"
+            "Incoming response: Payload: #{sanitize_message(response).to_json}"
           end
 
           def build_request_message(metadata, request)
@@ -147,9 +158,78 @@ module Google
             request_inspect = if use_bytes_inspect?(request)
                                 request.inspect
                               else
-                                request.to_json
+                                sanitize_message(request).to_json
                               end
-            "Outgoing request: Headers: #{metadata.to_json} Payload: #{request_inspect}"
+            "Outgoing request: Headers: #{sanitize_headers(metadata).to_json} " \
+              "Payload: #{request_inspect}"
+          end
+
+          def sanitize_headers(metadata)
+            metadata = metadata.clone
+            HEADERS_TO_MASK.each do |header|
+              metadata[header] = MASK_REPLACEMENT
+            end
+            metadata
+          end
+
+          def sanitize_message(message)
+            message_class = message.class.to_s.split("::").last
+            if %w[SearchGoogleAdsStreamResponse SearchGoogleAdsResponse].include?(
+                message_class)
+              # Sanitize all known sensitive fields across all search responses.
+              message = JSON.parse(message.to_json)
+              message["fieldMask"].split(",").each do |path|
+                if SEARCH_RESPONSE_FIELDS_TO_MASK.include?(path.split(".").last)
+                  message["results"].each do |result|
+                    sanitize_field(result, path)
+                  end
+                end
+              end
+              message
+            elsif %w[SearchGoogleAdsRequest SearchGoogleAdsStreamRequest].include?(
+                message_class)
+              if SEARCH_REQUEST_MASK === message.query
+                message = JSON.parse(message.to_json)
+                message["query"] = MASK_REPLACEMENT
+              end
+              message
+            elsif "CustomerUserAccess" == message_class
+              # Sanitize sensitive fields specific to CustomerUserAccess get requests.
+              message = JSON.parse(message.to_json)
+              sanitize_customer_user_access(message)
+            elsif "MutateCustomerUserAccessRequest" == message_class
+              # Sanitize sensitive fields when mutating a CustomerUserAccess.
+              message = JSON.parse(message.to_json)
+              if message.include?("operation") && message["operation"].include?("update")
+                message["operation"]["update"] =
+                  sanitize_customer_user_access(message["operation"]["update"])
+              end
+              message
+            else
+              message
+            end
+          end
+
+          def sanitize_customer_user_access(message)
+            if message.include?("emailAddress")
+              message["emailAddress"] = MASK_REPLACEMENT
+            end
+            if message.include?("inviterUserEmailAddress")
+              message["inviterUserEmailAddress"] = MASK_REPLACEMENT
+            end
+            message
+          end
+
+          def sanitize_field(object, path)
+            split_path = path.split(".")
+            target_field = split_path.last
+            split_path.inject(object) do |obj, field|
+              if obj.include?(target_field)
+                obj[target_field] = MASK_REPLACEMENT
+                break
+              end
+              obj[field]
+            end
           end
 
           def build_summary_message(request, call, method, is_fault)

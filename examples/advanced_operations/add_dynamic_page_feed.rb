@@ -100,7 +100,7 @@ def create_feed(client, customer_id)
   # look them back up
   attribute_lookup = Hash[
     response.first.feed.attributes.map { |attribute|
-      [attribute.name.value, attribute.id.value]
+      [attribute.name, attribute.id]
     }
   ]
 

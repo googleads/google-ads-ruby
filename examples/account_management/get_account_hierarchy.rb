@@ -93,7 +93,7 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
         customer_client = row.customer_client
 
         # The customer client that with level 0 is the specified customer
-        if customer_client.level.value == 0
+        if customer_client.level == 0
           if root_customer_client == nil
             root_customer_client = customer_client
           end
@@ -106,10 +106,10 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
         # afterwards.
         cid_to_children[cid.to_s] << customer_client
 
-        if customer_client&.manager&.value
+        unless customer_client.manager.nil?
           if !cid_to_children.key?(customer_client.id.to_s) &&
-              customer_client.level.value == 1
-            unprocessed_customer_ids << customer_client.id
+              customer_client.level == 1
+            unprocessed_customer_ids << customer_client.id.to_s
           end
         end
       end

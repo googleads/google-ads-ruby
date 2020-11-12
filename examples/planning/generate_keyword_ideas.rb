@@ -50,7 +50,7 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
                    seed = client.resource.keyword_and_url_seed do |seed|
                      seed.url = page_url
                      keywords.each do |keyword|
-                       seed.keywords << client.wrapper.string(keyword)
+                       seed.keywords << keyword
                      end
                    end
                    {keyword_and_url_seed: seed}
@@ -64,7 +64,7 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
 
   response = kp_idea_service.generate_keyword_ideas(
     customer_id: customer_id,
-    language: client.wrapper.string(client.path.language_constant(language_id)),
+    language: client.path.language_constant(language_id),
     geo_target_constants: geo_target_constants,
     include_adult_keywords: include_adult_keywords,
     # To restrict to only Google Search, change the parameter below to

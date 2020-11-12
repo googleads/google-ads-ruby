@@ -95,7 +95,7 @@ Find out more at the [Configuration guide][].
 
 [Developer token guide]: https://developers.google.com/google-ads/api/docs/first-call/dev-token
 [Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/overview
-[Authentication example]: https://github.com/googleads/google-ads-ruby/blob/master/examples/authentication/authenticate_in_standalone_application.rb
+[Authentication example]: https://github.com/googleads/google-ads-ruby/blob/master/examples/authentication/authenticate_in_desktop_application.rb
 [google_ads_config.rb]: https://github.com/googleads/google-ads-ruby/blob/master/google_ads_config.rb
 [Configuration guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/configuration
 
