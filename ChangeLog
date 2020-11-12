@@ -1,3 +1,7 @@
+8.0.0:
+ - Compatibility with v6 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v2.
+
 7.0.0:
  - Compatibility with v5 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Updated internals of the client library to a new version of gapic. The
