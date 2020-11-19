@@ -228,4 +228,21 @@ class TestGoogleAdsClient < Minitest::Test
     credentials = client.get_credentials
     assert_equal('path/to/file', credentials)
   end
+
+  def test_load_environment_variables
+    # Test config file path
+    ENV.store("GOOGLE_ADS_CONFIGURATION_FILE_PATH", "test/fixtures/config.rb")
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new
+    assert_equal(client.config.developer_token, "INSERT_DEVELOPER_TOKEN_HERE")
+    assert_equal(client.config.client_id, "INSERT_CLIENT_ID_HERE")
+    assert_equal(client.config.client_secret, "INSERT_CLIENT_SECRET_HERE")
+    # Test environment variable overrides
+    ENV.store("GOOGLE_ADS_DEVELOPER_TOKEN", "XYZ")
+    ENV.store("GOOGLE_ADS_CLIENT_ID", "123")
+    ENV.store("GOOGLE_ADS_CLIENT_SECRET", "456")
+    client.configure_using_environment_variables
+    assert_equal(client.config.developer_token, "XYZ")
+    assert_equal(client.config.client_id, "123")
+    assert_equal(client.config.client_secret, "456")
+  end
 end

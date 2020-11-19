@@ -63,7 +63,8 @@ module Google
             yield @config
           else
             if config_path.nil?
-              config_path = File.join(ENV['HOME'], DEFAULT_CONFIG_FILENAME)
+              config_path = ENV.fetch("GOOGLE_ADS_CONFIGURATION_FILE_PATH",
+                File.join(ENV['HOME'], DEFAULT_CONFIG_FILENAME))
             end
 
             unless File.exist?(config_path)
@@ -96,6 +97,25 @@ module Google
           yield @config
         end
 
+        def configure_using_environment_variables
+          # Client library-generic variables
+          @config.client_id = ENV.fetch("GOOGLE_ADS_CLIENT_ID", @config.client_id)
+          @config.client_secret = ENV.fetch("GOOGLE_ADS_CLIENT_SECRET", @config.client_secret)
+          @config.keyfile = ENV.fetch("GOOGLE_ADS_JSON_KEY_FILE_PATH", @config.keyfile)
+          @config.impersonate = ENV.fetch("GOOGLE_ADS_IMPERSONATED_EMAIL", @config.impersonate)
+          @config.developer_token = ENV.fetch("GOOGLE_ADS_DEVELOPER_TOKEN", @config.developer_token)
+          @config.login_customer_id = ENV.fetch("GOOGLE_ADS_LOGIN_CUSTOMER_ID", @config.login_customer_id)
+          @config.linked_customer_id = ENV.fetch("GOOGLE_ADS_LINKED_CUSTOMER_ID", @config.linked_customer_id)
+
+          # Client library-specific variables
+          @config.treat_deprecation_warnings_as_errors = ENV.fetch("GOOGLE_ADS_RUBY_TREAT_DEPRECATION_WARNINGS_AS_ERRORS", @config.treat_deprecation_warnings_as_errors)
+          @config.warn_on_all_deprecations = ENV.fetch("GOOGLE_ADS_RUBY_WARN_ON_ALL_DEPRECATIONS", @config.warn_on_all_deprecations)
+          @config.authentication = ENV.fetch("GOOGLE_ADS_RUBY_AUTHENTICATION", @config.authentication)
+          @config.log_level = ENV.fetch("GOOGLE_ADS_RUBY_LOG_LEVEL", @config.log_level)
+          @config.log_target = ENV.fetch("GOOGLE_ADS_RUBY_LOG_TARGET", @config.log_target)
+          @config.logger = ENV.fetch("GOOGLE_ADS_RUBY_LOGGER", @config.logger)
+        end
+
         # Return a service for the provided entity type. For example, passing
         # :Campaign will return an instantiated CampaignServiceClient.
         #
@@ -117,7 +137,7 @@ module Google
 
         def target
           default_target = "googleads.googleapis.com:443"
-          target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
+          target = ENV.fetch('GOOGLE_ADS_ENDPOINT', default_target)
         end
 
         def make_channel
