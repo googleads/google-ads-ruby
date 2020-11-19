@@ -31,6 +31,7 @@ module Google
 
         attr_accessor :developer_token
         attr_accessor :login_customer_id
+        attr_accessor :linked_customer_id
 
         attr_accessor :log_level
         attr_accessor :log_target
@@ -40,6 +41,8 @@ module Google
         attr_accessor :warn_on_all_deprecations
 
         attr_accessor :use_insecure_channel
+
+        attr_accessor :api_endpoint
 
         def initialize(&block)
           @refresh_token = nil
@@ -51,6 +54,7 @@ module Google
 
           @developer_token = nil
           @login_customer_id = nil
+          @linked_customer_id = nil
 
           @log_level = nil
           @log_target = nil
@@ -60,6 +64,8 @@ module Google
           @warn_on_all_deprecations = false
 
           @use_insecure_channel = false
+
+          @api_endpoint = nil
 
           yield self if block_given?
         end
