@@ -67,26 +67,39 @@ module Google
           }
 
           if config.login_customer_id
-            validate_login_customer_id
+            validate_customer_id(:login_customer_id)
             # header values must be strings
             headers[:"login-customer-id"] = config.login_customer_id.to_s
+          end
+
+          if config.linked_customer_id
+            validate_customer_id(:linked_customer_id)
+            # header values must be strings
+            headers[:"linked-customer-id"] = config.linked_customer_id.to_s
           end
 
           headers
         end
 
-        def validate_login_customer_id
+        def validate_customer_id(field)
           begin
-            login_customer_id = Integer(config.login_customer_id)
+            customer_id = -1
+            if field == :login_customer_id
+              customer_id = Integer(config.login_customer_id)
+            elsif field == :linked_customer_id
+              customer_id = Integer(config.linked_customer_id)
+            else
+              return
+            end
           rescue ArgumentError => e
             if e.message.start_with?("invalid value for Integer")
-              raise ArgumentError.new("Invalid value for login_customer_id, must be integer")
+              raise ArgumentError.new("Invalid value for #{field.to_s}, must be integer")
             end
           end
-          if login_customer_id <= 0 || login_customer_id > 9_999_999_999
+          if customer_id <= 0 || customer_id > 9_999_999_999
             raise ArgumentError.new(
-              "Invalid login_customer_id. Must be an integer " \
-              "0 < x <= 9,999,999,999. Got #{login_customer_id}"
+              "Invalid #{field.to_s}. Must be an integer " \
+              "0 < x <= 9,999,999,999. Got #{customer_id}"
             )
           end
         end

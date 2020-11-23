@@ -97,7 +97,7 @@ module Google
           yield @config
         end
 
-        def load_from_environment_variables
+        def load_environment_config
           # Generic variables
           @config.refresh_token = ENV.fetch("GOOGLE_ADS_REFRESH_TOKEN", @config.refresh_token)
           @config.client_id = ENV.fetch("GOOGLE_ADS_CLIENT_ID", @config.client_id)

@@ -229,7 +229,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal('path/to/file', credentials)
   end
 
-  def test_load_environment_variables
+  def test_load_environment_config
     # Set config file path
     ENV.store("GOOGLE_ADS_CONFIGURATION_FILE_PATH", "test/fixtures/config.rb")
     # Set environment variable overrides
@@ -259,7 +259,7 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(client.config.log_level, "WARN")
     assert_nil(client.config.http_proxy)
     # Load config from environment variables
-    client.load_from_environment_variables
+    client.load_environment_config
     assert_equal(client.config.refresh_token, "aaabbbccc")
     assert_equal(client.config.client_id, "123")
     assert_equal(client.config.client_secret, "456")
