@@ -31,7 +31,7 @@ def handle_rate_exceeded_error(customer_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Sequentially sends the requests.
-  for i in 0..NUM_REQUESTS-1
+  NUM_REQUESTS.times do |i|
     # Creates operations.
     operations = create_ad_group_criterion_operations(
       client, customer_id, ad_group_id, i)
@@ -87,7 +87,7 @@ def create_ad_group_criterion_operations(
   req_index
 )
   operations = []
-  for i in 0..NUM_KEYWORDS-1
+  NUM_KEYWORDS.times do |i|
     # Creates an ad group criterion operation.
     operations << client.operation.create_resource.ad_group_criterion do |agc|
       agc.ad_group = client.path.ad_group(customer_id, ad_group_id)
