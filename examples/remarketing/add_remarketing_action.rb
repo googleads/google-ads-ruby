@@ -52,8 +52,8 @@ def add_remarketing_action(customer_id)
       remarketing_action
     WHERE
       remarketing_action.resource_name = "#{remarketing_action_resource_name}"
-      # [END add_remarketing_action]
   EOQUERY
+  # [END add_remarketing_action]
 
   response = client.service.google_ads.search(
     customer_id: customer_id,

@@ -31,9 +31,8 @@ def approve_merchant_center_links(customer_id)
   )
   # [END approve_merchant_center_link]
 
-  # [START approve_merchant_center_link_2]
-  #  Iterate the results, and filter for links with pending status.
   # [START approve_merchant_center_link_1]
+  #  Iterate the results, and filter for links with pending status.
   response.merchant_center_links.each do |link|
     # Enables the pending link.
     if link.status == :PENDING
@@ -55,7 +54,6 @@ def approve_merchant_center_links(customer_id)
         "to Google Ads account #{customer_id}"
     end
   end
-  # [END approve_merchant_center_link_2]
   # [END approve_merchant_center_link_1]
 end
 

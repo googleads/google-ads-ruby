@@ -61,7 +61,6 @@ def add_ad_groups(customer_id, campaign_id)
 
   # [START handle_partial_failure_1]
   failures = client.decode_partial_failure_error(response.partial_failure_error)
-  # [START handle_partial_failure_2]
   failures.each do |failure|
     failure.errors.each do |error|
       human_readable_error_path = error
@@ -81,7 +80,6 @@ def add_ad_groups(customer_id, campaign_id)
       puts errmsg
     end
   end
-  # [END handle_partial_failure_2]
   # [END handle_partial_failure_1]
 end
 # [END handle_partial_failure]

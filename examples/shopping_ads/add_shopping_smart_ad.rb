@@ -91,7 +91,6 @@ def add_campaign_budget(client, customer_id)
 end
 
 # [START add_shopping_smart_ad_2]
-# [START add_shopping_smart_ad_3]
 def add_smart_shopping_campaign(
     client, customer_id, budget_name, merchant_center_id)
 
@@ -143,7 +142,6 @@ def add_smart_shopping_campaign(
 
   campaign_name
 end
-# [END add_shopping_smart_ad_3]
 # [END add_shopping_smart_ad_2]
 
 # [START add_shopping_smart_ad_1]
