@@ -24,12 +24,16 @@ require 'google/ads/google_ads'
 def approve_merchant_center_links(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START approve_merchant_center_link]
   # Retrieve all the existing Merchant Center links.
   response = client.service.merchant_center_link.list_merchant_center_links(
     customer_id: customer_id,
   )
+  # [END approve_merchant_center_link]
 
+  # [START approve_merchant_center_link_2]
   #  Iterate the results, and filter for links with pending status.
+  # [START approve_merchant_center_link_1]
   response.merchant_center_links.each do |link|
     # Enables the pending link.
     if link.status == :PENDING
@@ -51,6 +55,8 @@ def approve_merchant_center_links(customer_id)
         "to Google Ads account #{customer_id}"
     end
   end
+  # [END approve_merchant_center_link_2]
+  # [END approve_merchant_center_link_1]
 end
 
 if __FILE__ == $0

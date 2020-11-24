@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_logical_user_list]
 def add_logical_user_list(customer_id, user_list_ids)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -58,6 +59,7 @@ def add_logical_user_list(customer_id, user_list_ids)
   puts "Created combination user list with resource name "\
     "'#{response.results.first.resource_name}'"
 end
+# [END add_logical_user_list]
 
 if __FILE__ == $0
   options = {}

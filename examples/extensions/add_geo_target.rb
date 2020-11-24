@@ -21,6 +21,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_geo_target]
 def add_geo_target(customer_id, feed_item_id, geo_target_constant_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -48,6 +49,7 @@ def add_geo_target(customer_id, feed_item_id, geo_target_constant_id)
   puts "Updated extension feed item with resource name: " \
     "'#{response.results.first.resource_name}'"
 end
+# [END add_geo_target]
 
 if __FILE__ == $0
   # Geo target constant ID for US.

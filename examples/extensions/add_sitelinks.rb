@@ -21,6 +21,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_sitelinks_1]
 def add_sitelinks(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -46,7 +47,9 @@ def add_sitelinks(customer_id, campaign_id)
 
   puts "Created a campaign extension setting with resource name '#{response.results.first.resource_name}'"
 end
+# [END add_sitelinks_1]
 
+# [START add_sitelinks]
 def create_extension_feed_items(client, customer_id, campaign_resource_name)
   extension_feed_items = [
     client.resource.extension_feed_item do |efi|
@@ -109,6 +112,7 @@ def create_extension_feed_items(client, customer_id, campaign_resource_name)
     result.resource_name
   end
 end
+# [END add_sitelinks]
 
 def create_sitelink_feed_item(client, sitelink_text, sitelink_url)
   client.resource.sitelink_feed_item do |sfi|

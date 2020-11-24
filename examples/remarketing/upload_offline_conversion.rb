@@ -24,6 +24,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START upload_offline_conversion]
 def upload_offline_conversion(customer_id, conversion_action_id, gclid,
                               conversion_date_time, conversion_value)
   # GoogleAdsClient will read a config file from
@@ -57,6 +58,7 @@ def upload_offline_conversion(customer_id, conversion_action_id, gclid,
     end
   end
 end
+# [END upload_offline_conversion]
 
 if __FILE__ == $0
   options = {}

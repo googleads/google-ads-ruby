@@ -81,6 +81,7 @@ def create_keyword_criterion(
   return nil, ad_group_criterion_operation
 end
 
+# [START handle_keyword_policy_violations]
 def fetch_exempt_policy_violation_keys(exception)
   exempt_policy_violation_keys = []
 
@@ -104,7 +105,9 @@ def fetch_exempt_policy_violation_keys(exception)
 
   exempt_policy_violation_keys
 end
+# [END handle_keyword_policy_violations]
 
+# [START handle_keyword_policy_violations_1]
 def request_exemption(
     client,
     customer_id,
@@ -123,6 +126,7 @@ def request_exemption(
   puts "Successfully added a keyword with resource name " \
     "#{response.results.first.resource_name} for policy violation exception."
 end
+# [END handle_keyword_policy_violations_1]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}

@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START apply_recommendation]
 def apply_recommendation(customer_id, recommendation_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -54,6 +55,7 @@ def apply_recommendation(customer_id, recommendation_id)
 
   puts "Applied recommendation with resource name: '#{applied_recommendation.resource_name}'."
 end
+# [END apply_recommendation]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

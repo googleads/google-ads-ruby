@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_account_budget_proposal]
 def add_account_budget_proposal(customer_id, billing_setup_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -66,6 +67,7 @@ def add_account_budget_proposal(customer_id, billing_setup_id)
   puts sprintf("Created budget proposal %s.",
       response.results.first.resource_name)
 end
+# [END add_account_budget_proposal]
 
 if __FILE__ == $0
   options = {}

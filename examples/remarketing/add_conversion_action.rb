@@ -21,6 +21,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_conversion_action]
 def add_conversion_action(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -53,6 +54,7 @@ def add_conversion_action(customer_id)
 
   puts "New conversion action with resource name = #{response.results.first.resource_name}."
 end
+# [END add_conversion_action]
 
 if __FILE__ == $0
   options = {}

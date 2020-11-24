@@ -23,6 +23,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START upload_call_conversion]
 def upload_call_conversion(customer_id, conversion_action_id, caller_id,
   call_start_date_time, conversion_date_time, conversion_value)
   # GoogleAdsClient will read a config file from
@@ -81,6 +82,7 @@ def upload_call_conversion(customer_id, conversion_action_id, caller_id,
       "#{uploaded_call_conversion.conversion_action}"
   end
 end
+# [END upload_call_conversion]
 
 if __FILE__ == $0
   options = {}

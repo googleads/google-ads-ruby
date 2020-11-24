@@ -20,6 +20,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_text_ad_recommendations]
 def get_text_ad_recommendations(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -62,6 +63,7 @@ def get_text_ad_recommendations(customer_id)
     end
   end
 end
+# [END get_text_ad_recommendations]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

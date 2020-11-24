@@ -22,6 +22,7 @@ require 'optparse'
 require 'date'
 require 'google/ads/google_ads'
 
+# [START get_change_details]
 def get_change_details(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -104,6 +105,7 @@ def get_change_details(customer_id)
     end
   end
 end
+# [END get_change_details]
 
 # Given the string value of a path from the response, look up the value of the
 # field located at that path on the given object.
