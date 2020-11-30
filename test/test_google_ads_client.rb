@@ -228,4 +228,49 @@ class TestGoogleAdsClient < Minitest::Test
     credentials = client.get_credentials
     assert_equal('path/to/file', credentials)
   end
+
+  def test_load_environment_config
+    # Set config file path
+    ENV.store("GOOGLE_ADS_CONFIGURATION_FILE_PATH", "test/fixtures/config.rb")
+    # Set environment variable overrides
+    ENV.store("GOOGLE_ADS_REFRESH_TOKEN", "aaabbbccc")
+    ENV.store("GOOGLE_ADS_CLIENT_ID", "123")
+    ENV.store("GOOGLE_ADS_CLIENT_SECRET", "456")
+    ENV.store("GOOGLE_ADS_JSON_KEY_FILE_PATH", "path/to/keyfile.json")
+    ENV.store("GOOGLE_ADS_IMPERSONATED_EMAIL", "email@example.com")
+    ENV.store("GOOGLE_ADS_DEVELOPER_TOKEN", "XYZ")
+    ENV.store("GOOGLE_ADS_LOGIN_CUSTOMER_ID", "1234567890")
+    ENV.store("GOOGLE_ADS_LINKED_CUSTOMER_ID", "0987654321")
+    ENV.store("GOOGLE_ADS_ENDPOINT", "x.y.z:123")
+    ENV.store("GOOGLE_ADS_RUBY_LOG_LEVEL", "INFO")
+    ENV.store("GOOGLE_ADS_RUBY_HTTP_PROXY", "http://example.com:8080")
+    # Initialize client from config file
+    client = Google::Ads::GoogleAds::GoogleAdsClient.new
+    assert_equal(client.config.refresh_token, "INSERT_REFRESH_TOKEN_HERE")
+    assert_equal(client.config.client_id, "INSERT_CLIENT_ID_HERE")
+    assert_equal(client.config.client_secret, "INSERT_CLIENT_SECRET_HERE")
+    assert_nil(client.config.keyfile)
+    assert_nil(client.config.impersonate)
+    assert_equal(client.config.developer_token, "INSERT_DEVELOPER_TOKEN_HERE")
+    assert_nil(client.config.login_customer_id)
+    assert_nil(client.config.linked_customer_id)
+    assert_nil(client.config.api_endpoint)
+    assert_equal(client.target, "googleads.googleapis.com:443")
+    assert_equal(client.config.log_level, "WARN")
+    assert_nil(client.config.http_proxy)
+    # Load config from environment variables
+    client.load_environment_config
+    assert_equal(client.config.refresh_token, "aaabbbccc")
+    assert_equal(client.config.client_id, "123")
+    assert_equal(client.config.client_secret, "456")
+    assert_equal(client.config.keyfile, "path/to/keyfile.json")
+    assert_equal(client.config.impersonate, "email@example.com")
+    assert_equal(client.config.developer_token, "XYZ")
+    assert_equal(client.config.login_customer_id, "1234567890")
+    assert_equal(client.config.linked_customer_id, "0987654321")
+    assert_equal(client.config.api_endpoint, "x.y.z:123")
+    assert_equal(client.target, "x.y.z:123")
+    assert_equal(client.config.log_level, "INFO")
+    assert_equal(client.config.http_proxy, "http://example.com:8080")
+  end
 end

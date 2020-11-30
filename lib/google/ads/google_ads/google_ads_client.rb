@@ -63,7 +63,8 @@ module Google
             yield @config
           else
             if config_path.nil?
-              config_path = File.join(ENV['HOME'], DEFAULT_CONFIG_FILENAME)
+              config_path = ENV.fetch("GOOGLE_ADS_CONFIGURATION_FILE_PATH",
+                File.join(ENV['HOME'], DEFAULT_CONFIG_FILENAME))
             end
 
             unless File.exist?(config_path)
@@ -96,6 +97,23 @@ module Google
           yield @config
         end
 
+        def load_environment_config
+          # Generic variables
+          @config.refresh_token = ENV.fetch("GOOGLE_ADS_REFRESH_TOKEN", @config.refresh_token)
+          @config.client_id = ENV.fetch("GOOGLE_ADS_CLIENT_ID", @config.client_id)
+          @config.client_secret = ENV.fetch("GOOGLE_ADS_CLIENT_SECRET", @config.client_secret)
+          @config.keyfile = ENV.fetch("GOOGLE_ADS_JSON_KEY_FILE_PATH", @config.keyfile)
+          @config.impersonate = ENV.fetch("GOOGLE_ADS_IMPERSONATED_EMAIL", @config.impersonate)
+          @config.developer_token = ENV.fetch("GOOGLE_ADS_DEVELOPER_TOKEN", @config.developer_token)
+          @config.login_customer_id = ENV.fetch("GOOGLE_ADS_LOGIN_CUSTOMER_ID", @config.login_customer_id)
+          @config.linked_customer_id = ENV.fetch("GOOGLE_ADS_LINKED_CUSTOMER_ID", @config.linked_customer_id)
+          @config.api_endpoint = ENV.fetch("GOOGLE_ADS_ENDPOINT", @config.api_endpoint)
+
+          # Client library-specific variables
+          @config.log_level = ENV.fetch("GOOGLE_ADS_RUBY_LOG_LEVEL", @config.log_level)
+          @config.http_proxy = ENV.fetch("GOOGLE_ADS_RUBY_HTTP_PROXY", @config.http_proxy)
+        end
+
         # Return a service for the provided entity type. For example, passing
         # :Campaign will return an instantiated CampaignServiceClient.
         #
@@ -117,7 +135,7 @@ module Google
 
         def target
           default_target = "googleads.googleapis.com:443"
-          target = ENV.fetch('GOOGLEADS_SERVICE_PATH', default_target)
+          target = @config.api_endpoint || default_target
         end
 
         def make_channel
