@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START link_manager_to_client]
 def link_manager_to_client(manager_customer_id, client_customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -92,6 +93,7 @@ def link_manager_to_client(manager_customer_id, client_customer_id)
   puts "Client accepted invitation with resource name " \
       "#{response.results.first.resource_name}."
 end
+# [END link_manager_to_client]
 
 if __FILE__ == $0
   options = {}

@@ -20,6 +20,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START update_ad_group]
 def update_ad_group(customer_id, ad_group_id, bid_micro_amount)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -39,6 +40,7 @@ def update_ad_group(customer_id, ad_group_id, bid_micro_amount)
 
   puts "Ad group with resource name = '#{response.results.first.resource_name}' was updated."
 end
+# [END update_ad_group]
 
 if __FILE__ == $0
   options = {}

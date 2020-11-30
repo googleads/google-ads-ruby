@@ -27,6 +27,7 @@ def use_portfolio_bidding_strategy(customer_id)
 
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START use_portfolio_bidding_strategy]
   # Create a budget, which can be shared by multiple campaigns.
   budget = client.resource.campaign_budget do |cb|
     cb.name = "Interplanetary budget ##{(Time.new.to_f * 1000).to_i}"
@@ -42,9 +43,11 @@ def use_portfolio_bidding_strategy(customer_id)
     operations: [operation],
   )
   budget_id = response.results.first.resource_name
+  # [END use_portfolio_bidding_strategy]
 
   puts "Budget #{budget_id} was created"
 
+  # [START use_portfolio_bidding_strategy_1]
   # Create a portfolio bidding strategy.
   bidding_strategy = client.resource.bidding_strategy do |bs|
     bs.name = "Enhanced CPC ##{(Time.new.to_f * 1000).to_i}"
@@ -62,7 +65,9 @@ def use_portfolio_bidding_strategy(customer_id)
   bidding_id = response.results.first.resource_name
 
   puts "Portfolio bidding strategy #{bidding_id} was created"
+  # [END use_portfolio_bidding_strategy_1]
 
+  # [START use_portfolio_bidding_strategy_2]
   # Create campaigns.
   campaigns = 2.times.map do |i|
     client.resource.campaign do |c|
@@ -79,6 +84,7 @@ def use_portfolio_bidding_strategy(customer_id)
       end
     end
   end
+  # [END use_portfolio_bidding_strategy_2]
 
   campaign_operations = campaigns.map {|c|
     client.operation.create_resource.campaign(c)

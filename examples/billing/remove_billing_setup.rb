@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START remove_billing_setup]
 def remove_billing_setup(customer_id, billing_setup_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -38,6 +39,7 @@ def remove_billing_setup(customer_id, billing_setup_id)
 
   puts sprintf("Removed billing_setup %s", response.results.first.resource_name)
 end
+# [END remove_billing_setup]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}

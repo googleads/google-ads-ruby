@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_keyword_stats]
 def get_keyword_stats(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -69,6 +70,7 @@ def get_keyword_stats(customer_id)
     end
   end
 end
+# [END get_keyword_stats]
 
 if __FILE__ == $PROGRAM_NAME
   PAGE_SIZE = 1000

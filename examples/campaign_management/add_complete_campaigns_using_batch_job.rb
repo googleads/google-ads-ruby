@@ -52,6 +52,7 @@ def add_complete_campaigns_using_batch_job(customer_id)
 end
 
 # Creates a new batch job for the specified customer ID.
+# [START add_complete_campaigns_using_batch_job]
 def create_batch_job(client, batch_job_service, customer_id)
   # Creates a batch job operation to create a new batch job.
   operation = client.operation.create_resource.batch_job do |job|
@@ -69,11 +70,13 @@ def create_batch_job(client, batch_job_service, customer_id)
 
   batch_job_resource_name
 end
+# [END add_complete_campaigns_using_batch_job]
 
 # Adds all batch job operations to the batch job. As this is the first time
 # for this batch job, pass null as a sequence token. The response will contain
 # the next sequence token that you can use to upload more operations in the
 # future.
+# [START add_complete_campaigns_using_batch_job_1]
 def add_all_batch_job_operations(
   client,
   batch_job_service,
@@ -90,9 +93,11 @@ def add_all_batch_job_operations(
   puts "Next sequence token for adding next operations is " \
     "'#{response.next_sequence_token}'"
 end
+# [END add_complete_campaigns_using_batch_job_1]
 
 # Requests the API to run the batch job for executing all uploaded batch job
 # operations.
+# [START add_complete_campaigns_using_batch_job_2]
 def run_batch_job(batch_job_service, batch_job_resource_name)
   operation_response = batch_job_service.run_batch_job(
     resource_name: batch_job_resource_name,
@@ -101,14 +106,18 @@ def run_batch_job(batch_job_service, batch_job_resource_name)
     "has been executed."
   operation_response
 end
+# [END add_complete_campaigns_using_batch_job_2]
 
 # Polls the server until the batch job execution finishes by setting the initial
 # poll delay time and the total time to wait before time-out.
+# [START add_complete_campaigns_using_batch_job_3]
 def poll_batch_job(operation_response)
   operation_response.wait_until_done!
 end
+# [END add_complete_campaigns_using_batch_job_3]
 
 # Prints all the results from running the batch job.
+# [START add_complete_campaigns_using_batch_job_4]
 def fetch_and_print_results(batch_job_service, batch_job_resource_name)
   puts "Batch job with resource name '#{batch_job_resource_name}' has " \
     "finished. Now, printing its results..." \
@@ -124,6 +133,7 @@ def fetch_and_print_results(batch_job_service, batch_job_resource_name)
       "#{result.mutate_operation_response ? result.mutate_operation_response.response : 'N/A'}"
   end
 end
+# [END add_complete_campaigns_using_batch_job_4]
 
 # Builds all operations for creating a complete campaign and return an array of
 # their corresponding mutate operations.

@@ -20,6 +20,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_campaigns_by_label]
 def get_campaigns_by_label(customer_id, label_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -41,6 +42,7 @@ def get_campaigns_by_label(customer_id, label_id)
     puts "Campaign with ID #{row.campaign.id} and name '#{row.campaign.name}' was found."
   end
 end
+# [END get_campaigns_by_label]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

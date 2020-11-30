@@ -20,6 +20,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START handle_partial_failure]
 def add_ad_groups(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -58,6 +59,7 @@ def add_ad_groups(customer_id, campaign_id)
     end
   end
 
+  # [START handle_partial_failure_1]
   failures = client.decode_partial_failure_error(response.partial_failure_error)
   failures.each do |failure|
     failure.errors.each do |error|
@@ -78,7 +80,9 @@ def add_ad_groups(customer_id, campaign_id)
       puts errmsg
     end
   end
+  # [END handle_partial_failure_1]
 end
+# [END handle_partial_failure]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}

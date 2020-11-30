@@ -26,6 +26,7 @@ def add_campaigns(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START add_campaigns_1]
   # Create a budget, which can be shared by multiple campaigns.
   campaign_budget = client.resource.campaign_budget do |cb|
     cb.name = "Interplanetary Budget #{(Time.new.to_f * 1000).to_i}"
@@ -40,7 +41,9 @@ def add_campaigns(customer_id)
     customer_id: customer_id,
     operations: [operation],
   )
+  # [END add_campaigns_1]
 
+  # [START add_campaigns]
   # Create campaign.
   campaign = client.resource.campaign do |c|
     c.name = "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i}"
@@ -69,6 +72,7 @@ def add_campaigns(customer_id)
     # Optional: Set the end date.
     c.end_date = DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d')
   end
+  # [END add_campaigns]
 
   # Create the operation.
   campaign_operation = client.operation.create_resource.campaign(campaign)

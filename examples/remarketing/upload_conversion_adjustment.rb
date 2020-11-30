@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START upload_conversion_adjustment]
 def upload_conversion_adjustment(
   customer_id,
   conversion_action_id,
@@ -78,6 +79,7 @@ def upload_conversion_adjustment(
     end
   end
 end
+# [END upload_conversion_adjustment]
 
 if __FILE__ == $0
   options = {}

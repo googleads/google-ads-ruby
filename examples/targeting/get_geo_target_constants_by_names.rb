@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_geo_target_constants_by_names]
 def get_geo_target_constants_by_names
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -60,6 +61,7 @@ def get_geo_target_constants_by_names
         suggestion.search_term)
   end
 end
+# [END get_geo_target_constants_by_names]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}

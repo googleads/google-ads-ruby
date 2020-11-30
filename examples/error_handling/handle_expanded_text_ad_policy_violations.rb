@@ -73,6 +73,7 @@ def create_expanded_text_ad(client, ad_group_ad_service, customer_id, ad_group_i
   return ad_group_ad_operation, ignorable_policy_topics
 end
 
+# [START handle_expanded_text_ad_policy_violations]
 def fetch_ignorable_policy_topics(exception)
   ignorable_policy_topics = []
 
@@ -92,7 +93,9 @@ def fetch_ignorable_policy_topics(exception)
 
   ignorable_policy_topics
 end
+# [END handle_expanded_text_ad_policy_violations]
 
+# [START handle_expanded_text_ad_policy_violations_1]
 def request_exemption(
     client, customer_id, ad_group_ad_service, ad_group_ad_operation, ignorable_policy_topics)
   # Add all the found ignorable policy topics to the operation.
@@ -109,6 +112,7 @@ def request_exemption(
   puts "Successfully added an expanded text ad with resource name " \
     "#{response.results.first.resource_name} for policy violation exception."
 end
+# [END handle_expanded_text_ad_policy_violations_1]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}

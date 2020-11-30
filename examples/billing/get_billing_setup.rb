@@ -22,6 +22,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_billing_setup]
 def get_billing_setup(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -66,6 +67,7 @@ def get_billing_setup(customer_id)
     )
   end
 end
+# [END get_billing_setup]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

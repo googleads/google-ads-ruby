@@ -42,6 +42,7 @@ def add_campaign_targeting_criteria(customer_id, campaign_id, keyword, location_
   end
 end
 
+# [START add_campaign_targeting_criteria_1]
 def create_proximity(client, customer_id, campaign_id)
   client.operation.create_resource.campaign_criterion do |criterion|
     criterion.campaign = client.path.campaign(customer_id, campaign_id)
@@ -59,7 +60,9 @@ def create_proximity(client, customer_id, campaign_id)
     end
   end
 end
+# [END add_campaign_targeting_criteria_1]
 
+# [START add_campaign_targeting_criteria]
 def create_location(client, customer_id, campaign_id, location_id)
   client.operation.create_resource.campaign_criterion do |criterion|
     criterion.campaign = client.path.campaign(customer_id, campaign_id)
@@ -73,6 +76,7 @@ def create_location(client, customer_id, campaign_id, location_id)
     end
   end
 end
+# [END add_campaign_targeting_criteria]
 
 def create_negative_keyword(client, customer_id, campaign_id, keyword)
   client.operation.create_resource.campaign_criterion do |criterion|

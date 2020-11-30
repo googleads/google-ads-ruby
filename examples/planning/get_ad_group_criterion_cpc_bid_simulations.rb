@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START get_ad_group_criterion_cpc_bid_simulations]
 def get_ad_group_criterion_cpc_bid_simulations(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -63,6 +64,7 @@ def get_ad_group_criterion_cpc_bid_simulations(customer_id, ad_group_id)
     end
   end
 end
+# [END get_ad_group_criterion_cpc_bid_simulations]
 
 if __FILE__ == $PROGRAM_NAME
   PAGE_SIZE = 1000

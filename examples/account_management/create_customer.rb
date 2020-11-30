@@ -26,6 +26,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START create_customer]
 def create_customer(manager_customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -55,6 +56,7 @@ def create_customer(manager_customer_id)
   puts "Created a customer with resource name #{response.resource_name} under" +
       " the manager account with customer ID #{manager_customer_id}."
 end
+# [END create_customer]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000
