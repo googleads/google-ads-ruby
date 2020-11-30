@@ -113,6 +113,9 @@ To fetch a specific service, for example CampaignService:
 See the provided [examples][] for more detailed demonstrations of how to use the
 library.
 
+**Note:** You can ignore comments with `[START...]` and `[END...]` in
+examples—they are specifically used by Google.
+
 Once you're familiar with the [examples][], we also recommend familiarizing
 yourself with [factories][], which provides a set of high level convenience
 methods for working with the Google Ads API
