@@ -20,7 +20,7 @@
 #
 # The customer IDs retrieved from the resource names can be used to set the
 # login_customer_id configuration. For more information, see this documentation:
-# https://developers.google.com/google-ads/api/docs/concepts/call-structure#login-customer-id
+# https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid
 
 require 'optparse'
 require 'google/ads/google_ads'
