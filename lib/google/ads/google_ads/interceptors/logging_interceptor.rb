@@ -34,7 +34,7 @@ module Google
             userEmail
           ]
           SEARCH_REQUEST_MASK =
-            /customer_user_access.email_address|change_event.user_email/
+            /customer_user_access.email_address|change_event.user_email|feed.places_location_feed_data.email_address/
 
           MASK_REPLACEMENT = "REDACTED"
 
@@ -172,12 +172,16 @@ module Google
             metadata
           end
 
+          def clone_to_json(message)
+            JSON.parse(message.to_json)
+          end
+
           def sanitize_message(message)
             message_class = message.class.to_s.split("::").last
             if %w[SearchGoogleAdsStreamResponse SearchGoogleAdsResponse].include?(
                 message_class)
               # Sanitize all known sensitive fields across all search responses.
-              message = JSON.parse(message.to_json)
+              message = clone_to_json(message)
               message["fieldMask"].split(",").each do |path|
                 if SEARCH_RESPONSE_FIELDS_TO_MASK.include?(path.split(".").last)
                   message["results"].each do |result|
@@ -189,20 +193,39 @@ module Google
             elsif %w[SearchGoogleAdsRequest SearchGoogleAdsStreamRequest].include?(
                 message_class)
               if SEARCH_REQUEST_MASK === message.query
-                message = JSON.parse(message.to_json)
+                message = clone_to_json(message)
                 message["query"] = MASK_REPLACEMENT
               end
               message
             elsif "CustomerUserAccess" == message_class
               # Sanitize sensitive fields specific to CustomerUserAccess get requests.
-              message = JSON.parse(message.to_json)
+              message = clone_to_json(message)
               sanitize_customer_user_access(message)
             elsif "MutateCustomerUserAccessRequest" == message_class
               # Sanitize sensitive fields when mutating a CustomerUserAccess.
-              message = JSON.parse(message.to_json)
+              message = clone_to_json(message)
               if message.include?("operation") && message["operation"].include?("update")
                 message["operation"]["update"] =
                   sanitize_customer_user_access(message["operation"]["update"])
+              end
+              message
+            elsif "Feed" == message_class
+              # Sanitize sensitive fields specific to Feed get requests.
+              message = clone_to_json(message)
+              if message.include?("placesLocationFeedData") &&
+                  message["placesLocationFeedData"].include?("emailAddress")
+                message["placesLocationFeedData"]["emailAddress"] = MASK_REPLACEMENT
+              end
+              message
+            elsif "MutateFeedsRequest" == message_class
+              # Sanitize sensitive fields when mutating a Feed.
+              message = clone_to_json(message)
+              sanitize_feeds_request(message)
+            elsif "CreateCustomerClientRequest" == message_class
+              # Sanitize sensitive fields when creating a CustomerClient.
+              message = clone_to_json(message)
+              if message.include?("emailAddress")
+                message["emailAddress"] = MASK_REPLACEMENT
               end
               message
             else
@@ -216,6 +239,26 @@ module Google
             end
             if message.include?("inviterUserEmailAddress")
               message["inviterUserEmailAddress"] = MASK_REPLACEMENT
+            end
+            message
+          end
+
+          def sanitize_feeds_request(message)
+            if message.include?("operations")
+              message["operations"].each do |operation|
+                if operation.include?("create")
+                  operation = operation["create"]
+                elsif operation.include?("update")
+                  operation = operation["update"]
+                else
+                  # Only create and update can contain sensitive fields.
+                  next
+                end
+                if operation.include?("placesLocationFeedData") &&
+                    operation["placesLocationFeedData"].include?("emailAddress")
+                  operation["placesLocationFeedData"]["emailAddress"] = MASK_REPLACEMENT
+                end
+              end
             end
             message
           end
