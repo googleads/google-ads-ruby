@@ -39,29 +39,31 @@ def reject_merchant_center_links(customer_id, merchant_center_account_id)
   response = merchant_center_link_service.list_merchant_center_links(
     customer_id: customer_id,
   )
-  puts "#{response.merchant_center_links.size} Merchant Center link(s) found " \
-    "with the following details:"
 
-  response.merchant_center_links.each do |link|
-    puts "Link #{link.resource_name} has status '#{link.status}'."
+  # Checks if there is a link for the Merchant Center account we are
+  # looking for.
+  # If the Merchant Center link is pending, reject it by removing the link.
+  # If the Merchant Center link is enabled, unlink Merchant Center from
+  # Google Ads by removing the link.
+  # In both cases, the remove action is the same.
+  # There is only one MerchantCenterLink object for a given Google Ads
+  # account and Merchant Center account, so we can just detect the first one.
+  link_to_remove = response.merchant_center_links.detect {|link| link.id == merchant_center_account_id.to_i}
 
-    # Checks if there is a link for the Merchant Center account we are
-    # looking for.
-    if merchant_center_account_id.to_i == link.id
-      # If the Merchant Center link is pending, reject it by removing the link.
-      # If the Merchant Center link is enabled, unlink Merchant Center from
-      # Google Ads by removing the link.
-      # In both cases, the remove action is the same.
-      remove_merchant_center_link(
-        client,
-        merchant_center_link_service,
-        customer_id,
-        link,
-      )
-      # There is only one MerchantCenterLink object for a given Google Ads
-      # account and Merchant Center account, so we can break early.
-      break
-    end
+  if !link_to_remove.nil?
+    puts "Found the link to remove:"
+    puts "\t Link resource name '#{link_to_remove.resource_name}', " \
+      "link status: #{link_to_remove.status}"
+
+    remove_merchant_center_link(
+    client,
+    merchant_center_link_service,
+    customer_id,
+    link_to_remove,
+    )
+  else
+    puts "Link between Google Ads account #{customer_id} " \
+      "and Merchant Center account #{merchant_center_account_id} not found."
   end
 end
 
