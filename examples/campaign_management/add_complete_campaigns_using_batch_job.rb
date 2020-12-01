@@ -55,9 +55,7 @@ end
 # [START add_complete_campaigns_using_batch_job]
 def create_batch_job(client, batch_job_service, customer_id)
   # Creates a batch job operation to create a new batch job.
-  operation = client.operation.create_resource.batch_job do |job|
-    # Empty block to make sure the operation is created correctly.
-  end
+  operation = client.operation.create_resource.batch_job
 
   # Issues a request to the API and get the batch job's resource name.
   response = batch_job_service.mutate_batch_job(
@@ -143,18 +141,18 @@ def build_all_operations(client, customer_id)
   # Creates a new campaign budget operation and add it to the array of mutate
   # operations.
   campaign_budget_operation = build_campaign_budget_operation(client, customer_id)
-  mutate_op = client.operation.mutate
-  mutate_op.campaign_budget_operation = campaign_budget_operation
-  mutate_operations << mutate_op
+  mutate_operations << client.operation.mutate do |mutate_op|
+    mutate_op.campaign_budget_operation = campaign_budget_operation
+  end
 
   # Creates new campaign operations and adds them to the array of mutate
   # operations.
   campaign_operations = build_campaign_operations(
     client, customer_id, campaign_budget_operation.create.resource_name)
   campaign_operations.each do |op|
-    mutate_op = client.operation.mutate
-    mutate_op.campaign_operation = op
-    mutate_operations << mutate_op
+    mutate_operations << client.operation.mutate do |mutate_op|
+      mutate_op.campaign_operation = op
+    end
   end
 
   # Creates new campaign criterion operations and adds them to the array of
@@ -162,9 +160,9 @@ def build_all_operations(client, customer_id)
   campaign_criterion_operations = build_campaign_criterion_operations(
     client, campaign_operations)
   campaign_criterion_operations.each do |op|
-    mutate_op = client.operation.mutate
-    mutate_op.campaign_criterion_operation = op
-    mutate_operations << mutate_op
+    mutate_operations << client.operation.mutate do |mutate_op|
+      mutate_op.campaign_criterion_operation = op
+    end
   end
 
   # Creates new ad group operations and adds them to the array of mutate
@@ -172,9 +170,9 @@ def build_all_operations(client, customer_id)
   ad_group_operations = build_ad_group_operations(
     client, customer_id, campaign_operations)
   ad_group_operations.each do |op|
-    mutate_op = client.operation.mutate
-    mutate_op.ad_group_operation = op
-    mutate_operations << mutate_op
+    mutate_operations << client.operation.mutate do |mutate_op|
+      mutate_op.ad_group_operation = op
+    end
   end
 
   # Creates new ad group criterion operations and adds them to the array of
@@ -182,9 +180,9 @@ def build_all_operations(client, customer_id)
   ad_group_criterion_operations = build_ad_group_criterion_operations(
     client, ad_group_operations)
   ad_group_criterion_operations.each do |op|
-    mutate_op = client.operation.mutate
-    mutate_op.ad_group_criterion_operation = op
-    mutate_operations << mutate_op
+    mutate_operations << client.operation.mutate do |mutate_op|
+      mutate_op.ad_group_criterion_operation = op
+    end
   end
 
   # Creates new ad group ad operations and adds them to the array of mutate
@@ -192,9 +190,9 @@ def build_all_operations(client, customer_id)
   ad_group_ad_operations = build_ad_group_ad_operations(
     client, ad_group_operations)
   ad_group_ad_operations.each do |op|
-    mutate_op = client.operation.mutate
-    mutate_op.ad_group_ad_operation = op
-    mutate_operations << mutate_op
+    mutate_operations << client.operation.mutate do |mutate_op|
+      mutate_op.ad_group_ad_operation = op
+    end
   end
 
   mutate_operations
