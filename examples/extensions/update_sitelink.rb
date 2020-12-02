@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Update the sitelink extension feed item with the specified link text.
+# Updates the sitelink extension feed item with the specified link text.
 
 require 'optparse'
 require 'google/ads/google_ads'
@@ -38,7 +38,8 @@ def update_sitelink(customer_id, feed_item_id, sitelink_text)
     operations: [operation],
   )
 
-  puts "Updated extension feed item with resource name #{response.results.first.resource_name}."
+  puts "Updated extension feed item with resource name " \
+    "'#{response.results.first.resource_name}'."
 end
 
 if __FILE__ == $0
@@ -54,6 +55,7 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:feed_item_id] = 'INSERT_FEED_ITEM_ID_HERE'
+  options[:sitelink_text] = 'INSERT_SITELINK_TEXT_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -69,7 +71,7 @@ if __FILE__ == $0
       options[:feed_item_id] = v
     end
 
-    opts.on('-s', '--sitelink-text SITELINK-TET', String, 'Sitelink Text') do |v|
+    opts.on('-s', '--sitelink-text SITELINK-TEXT', String, 'Sitelink Text') do |v|
       options[:sitelink_text] = v
     end
 
