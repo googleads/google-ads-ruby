@@ -10,7 +10,13 @@ module Google
             # @return [<%= operation.operation.name %>] the operation
             def self.<%= operation.operation.name.split("::").last.underscore.gsub("_operation", "") %>
               require "<%= operation.path %>"
-              <%= operation.operation.name %>.new
+              if block_given?
+                op = <%= operation.operation.name %>.new
+                yield op
+                op
+              else
+                <%= operation.operation.name %>.new
+              end
             end
             <% end %>
 
@@ -60,6 +66,8 @@ module Google
                   op["create"] = res
                 elsif !blk.nil?
                   op["create"] = Factories::<%= version.to_s.camelize %>::Resources.<%= operation.create_class.name.split("::").last.underscore %>(&blk)
+                else
+                  op["create"] = Factories::<%= version.to_s.camelize %>::Resources.<%= operation.create_class.name.split("::").last.underscore %>
                 end
 
                 op
@@ -110,7 +118,7 @@ module Google
 
             module RemoveResource
               <% operations.each do |operation| %>
-              # A convenience method for creationg an <%= operation.operation.name.split("::").last %> instance with
+              # A convenience method for creating an <%= operation.operation.name.split("::").last %> instance with
               # its "remove" field preopulated with a resource path corresponding to the resource to be removed.
               #
               # @param path [String] the resource name of the resource to delete.
