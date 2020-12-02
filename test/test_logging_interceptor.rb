@@ -23,8 +23,11 @@ require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/v6/services/media_file_service_services_pb'
 require 'google/ads/google_ads/v6/services/customer_user_access_service_services_pb'
 require 'google/ads/google_ads/v6/services/google_ads_service_services_pb'
+require 'google/ads/google_ads/v6/services/feed_service_services_pb'
+require 'google/ads/google_ads/v6/services/customer_service_services_pb'
 require 'google/ads/google_ads/v6/resources/customer_user_access_pb'
 require 'google/ads/google_ads/v6/resources/change_event_pb'
+require 'google/ads/google_ads/v6/resources/feed_pb'
 
 class TestLoggingInterceptor < Minitest::Test
   attr_reader :sio
@@ -238,6 +241,80 @@ class TestLoggingInterceptor < Minitest::Test
     data = sio.read
     assert(!data.include?(email_address), "Failed to remove email address.")
     assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_feed_get
+    email_address = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V6::Resources::Feed.new(
+        places_location_feed_data: Google::Ads::GoogleAds::V6::
+          Resources::Feed::PlacesLocationFeedData.new(
+          email_address: email_address,
+        ),
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_feed_mutate_request
+    email_address = "abcdefghijkl"
+    email_address_2 = "zyxwvutsr"
+    li.request_response(
+      request: Google::Ads::GoogleAds::V6::Services::MutateFeedsRequest.new(
+        operations: [
+          Google::Ads::GoogleAds::V6::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V6::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V6::
+                Resources::Feed::PlacesLocationFeedData.new(
+                email_address: email_address,
+              ),
+            ),
+          ),
+          Google::Ads::GoogleAds::V6::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V6::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V6::
+                Resources::Feed::PlacesLocationFeedData.new(
+                email_address: email_address_2,
+              ),
+            ),
+          ),
+        ]
+      ),
+      call: make_fake_call,
+      method: :doesnt_matter,
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert(!data.include?(email_address_2), "Failed to remove email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_customer_client_create_request
+    email_address = "abcdefghijkl"
+    li.request_response(
+      request: Google::Ads::GoogleAds::V6::Services::CreateCustomerClientRequest.new(
+        email_address: email_address,
+      ),
+      call: make_fake_call,
+      method: :doesnt_matter,
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
     assert_includes(data, "REDACTED")
   end
 
