@@ -176,6 +176,7 @@ def create_feed_items(client, customer_id, feed_details, label)
   end
 end
 
+# [START add_dynamic_page_feed]
 def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   query = <<~EOD
     SELECT
@@ -195,10 +196,12 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   )
 
   result = response.first
+  # [END add_dynamic_page_feed]
   if result.nil?
     raise "Campaign with id #{id} not found"
   end
 
+  # [START add_dynamic_page_feed_1]
   campaign = result.campaign
 
   if !campaign.dynamic_search_ads_setting \
@@ -223,8 +226,10 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
     operations: [op],
   )
   puts "Updated campaign #{response.results.first.resource_name}"
+  # [END add_dynamic_page_feed_1]
 end
 
+# [START add_dynamic_page_feed_2]
 def add_dsa_targeting(client, customer_id, ad_group_resource_name, label)
   webpage_condition_info = client.resource.webpage_condition_info do |wci|
     wci.operand = :CUSTOM_LABEL
@@ -251,6 +256,7 @@ def add_dsa_targeting(client, customer_id, ad_group_resource_name, label)
 
   puts "Created ad group criterion with id: #{response.results.first.resource_name}"
 end
+# [END add_dynamic_page_feed_2]
 
 if __FILE__ == $0
   options = {}
