@@ -62,6 +62,7 @@ def create_budget(client, customer_id)
   response.results.first.resource_name
 end
 
+# [START add_dynamic_search_ads]
 def create_campaign(client, customer_id, budget_resource_name)
   campaign = client.resource.campaign do |c|
     c.name = "Interplanetary Cruise #{(Time.now.to_f * 1000).to_i}"
@@ -89,7 +90,9 @@ def create_campaign(client, customer_id, budget_resource_name)
   puts("Created campaign with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
 end
+# [END add_dynamic_search_ads]
 
+# [START add_dynamic_search_ads_1]
 def create_ad_group(client, customer_id, campaign_resource_name)
   ad_group = client.resource.ad_group do |ag|
     ag.type = :SEARCH_DYNAMIC_ADS
@@ -113,7 +116,9 @@ def create_ad_group(client, customer_id, campaign_resource_name)
   puts("Created ad group with ID: #{response.results.first.resource_name}")
   response.results.first.resource_name
 end
+# [END add_dynamic_search_ads_1]
 
+# [START add_dynamic_search_ads_2]
 def create_expanded_dsa(client, customer_id, ad_group_resource_name)
   ad_group_ad = client.resource.ad_group_ad do |aga|
     aga.status = :PAUSED
@@ -134,6 +139,7 @@ def create_expanded_dsa(client, customer_id, ad_group_resource_name)
   )
   puts("Created ad group ad with ID: #{response.results.first.resource_name}")
 end
+# [END add_dynamic_search_ads_2]
 
 def add_web_page_criteria(client, customer_id, ad_group_resource_name)
   criterion = client.resource.ad_group_criterion do |agc|
