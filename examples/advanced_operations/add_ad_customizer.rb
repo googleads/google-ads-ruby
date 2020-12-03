@@ -130,11 +130,7 @@ def get_feed_attributes(
   feed_details = {}
   puts "Found the following attributes for feed with name #{feed.name}:"
   feed.attributes.each do |a|
-<<<<<<< HEAD
-    feed_details[a.name.value.to_sym] = a.id
-=======
     feed_details[a.name.to_sym] = a.id
->>>>>>> internal_v6
     puts "\t#{a.name} with id #{a.id} and type #{a.type}"
   end
 

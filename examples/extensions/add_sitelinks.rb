@@ -63,10 +63,24 @@ def create_extension_feed_items(client, customer_id, campaign_resource_name)
       efi.sitelink_feed_item = create_sitelink_feed_item(
           client, 'Thanksgiving Specials', 'http://www.example.com/thanksgiving')
       efi.targeted_campaign = campaign_resource_name
-      efi.start_date_time =
-          DateTime.new(Date.today.year, 11, 20, 0, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
-      efi.end_date_time =
-          DateTime.new(Date.today.year, 11, 27, 23, 59, 59).strftime("%Y-%m-%d %H:%M:%S")
+      today = Date.today
+      efi.start_date_time = DateTime.new(
+        today.year,
+        today.month,
+        today.day,
+        0,
+        0,
+        0
+      ).strftime("%Y-%m-%d %H:%M:%S")
+      end_date = today + 7
+      efi.end_date_time = DateTime.new(
+        end_date.year,
+        end_date.month,
+        end_date.day,
+        23,
+        59,
+        59
+      ).strftime("%Y-%m-%d %H:%M:%S")
 
       # Targets this sitelink for United States only.
       # A list of country codes can be referenced here:
