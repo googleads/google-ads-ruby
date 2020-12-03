@@ -17,8 +17,8 @@
 #
 # Links the specified feed item set to the specified feed item. The specified
 # feed item set must not be created as a dynamic set, i.e. both
-# FeedItemSet::dynamic_location_set_filter and
-# FeedItemSet::dynamic_affiliate_location_set_filter must not be set.
+# FeedItemSet.dynamic_location_set_filter and
+# FeedItemSet.dynamic_affiliate_location_set_filter must not be set.
 
 require 'optparse'
 require 'google/ads/google_ads'

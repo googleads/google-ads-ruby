@@ -38,15 +38,15 @@ def create_feed_item_set(customer_id, feed_id)
     # code that sets dynamic_location_set_filter. If your feed is an affiliate
     # extension, set dynamic_affiliate_location_set_filter instead.
 
-		# 1) Location extension.
+    # 1) Location extension.
     # set.dynamic_location_set_filter = client.resource.dynamic_location_set_filter do |filter|
     #   filter.business_name_filter = client.resource.business_name_filter do |bnf|
     #     bnf.business_name = "INSERT_YOUR_BUSINESS_NAME_HERE"
     #     bnf.filter_type = :EXACT
     #   end
-		# end
+    # end
 
-		# 2) Affiliate extension.
+    # 2) Affiliate extension.
     # set.dynamic_affiliate_location_set_filter =
     #   client.resource.dynamic_affiliate_location_set_filter do |filter|
     #     filter.chain_ids = [INSERT_CHAIN_IDS_HERE]
