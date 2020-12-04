@@ -124,9 +124,9 @@ def get_reach_curve(
 
   response.reach_curve.reach_forecasts.each do |point|
     products = ""
-    point.forecasted_product_allocations.each do |product|
+    point.planned_product_reach_forecasts.each do |product|
       products += "(Product: #{product.plannable_product_code}, "\
-        "Budget Micros: #{product.budget_micros})"
+        "Cost Micros: #{product.cost_micros})"
     end
     puts "#{currency_code}, #{point.cost_micros}, " \
       "#{point.forecast.on_target_reach}, " \
