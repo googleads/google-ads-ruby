@@ -127,7 +127,7 @@ def get_all_sitelink_extension_feed_items(
     response.results.each do |row|
       extension_feed_items = row.campaign_extension_setting.extension_feed_items
       extension_feed_items.each do |item|
-        extension_feed_item_resource_names += item
+        extension_feed_item_resource_names << item
         puts "Extension feed item with resource name #{item} was found."
       end
     end
