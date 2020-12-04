@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'open-uri'
 
+# [START upload_image_asset]
 def upload_image_asset(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -58,6 +59,7 @@ def upload_image_asset(customer_id)
 
   puts "Uploaded image asset #{response.results.first.resource_name}."
 end
+# [END upload_image_asset]
 
 if __FILE__ == $0
   options = {}

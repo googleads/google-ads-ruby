@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START update_expanded_text_ad]
 def update_expanded_text_ad(customer_id, ad_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -47,6 +48,7 @@ def update_expanded_text_ad(customer_id, ad_id)
 
   puts "Updated expanded text ad #{response.results.first.resource_name}."
 end
+# [END update_expanded_text_ad]
 
 if __FILE__ == $0
   options = {}

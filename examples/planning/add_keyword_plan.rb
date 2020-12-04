@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_keyword_plan]
 def add_keyword_plan(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -161,6 +162,7 @@ def create_keyword_plan_negative_campaign_keywords(client, customer_id, plan_cam
   puts "Created negative campaign keyword for keyword plan: " +
       "#{response.results.first.resource_name}"
 end
+# [END add_keyword_plan]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

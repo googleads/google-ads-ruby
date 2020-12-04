@@ -24,6 +24,7 @@ require "date"
 require "open-uri"
 require "google/ads/google_ads"
 
+# [START add_merchant_center_dynamic_remarketing_campaign]
 def add_merchant_center_dynamic_remarketing_campaign(
   customer_id,
   merchant_center_id,
@@ -52,6 +53,7 @@ def add_merchant_center_dynamic_remarketing_campaign(
   # Targets a specific user list for remarketing.
   attach_user_list(client, customer_id, ad_group_resource_name, user_list_id)
 end
+# [END add_merchant_center_dynamic_remarketing_campaign]
 
 # Creates a campaign linked to a Merchant Center product feed.
 def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
