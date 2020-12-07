@@ -42,6 +42,7 @@ def add_google_my_business_location_extensions(
   create_customer_feed(client, customer_id, gmb_feed_resource_name)
 end
 
+# [START add_google_my_business_location_extensions_4]
 def create_feed(
   client,
   customer_id,
@@ -64,6 +65,7 @@ def create_feed(
     end
   end
 
+  # [START add_google_my_business_location_extensions_1]
   # Issues a mutate request to add the feed and print its information.
   # Since it is a system generated feed, Google Ads will automatically:
   # 1. Set up the feed attributes on the feed.
@@ -79,8 +81,11 @@ def create_feed(
   puts "GMB feed created with resource name: #{gmb_feed_resource_name}"
 
   gmb_feed_resource_name
+  # [END add_google_my_business_location_extensions_1]
 end
+# [END add_google_my_business_location_extensions_4]
 
+# [START add_google_my_business_location_extensions_5]
 def create_customer_feed(
   client,
   customer_id,
@@ -100,6 +105,7 @@ def create_customer_feed(
     end
   end
 
+  # [START add_google_my_business_location_extensions_3]
   # After the completion of the feed ADD operation above the added feed will
   # not be available for usage in a customer feed until the sync between the
   # Google Ads and GMB accounts completes. The loop below will retry adding the
@@ -128,12 +134,14 @@ def create_customer_feed(
     end
     break if number_of_attempts >= MAX_CUSTOMER_FEED_ADD_ATTEMPTS || added_customer_feed
   end
+  # [END add_google_my_business_location_extensions_3]
 
   if added_customer_feed.nil?
     raise "Could not create the customer feed after #{MAX_CUSTOMER_FEED_ADD_ATTEMPTS} " \
       "attempts. Please retry the customer feed ADD operation later."
   end
 end
+# [END add_google_my_business_location_extensions_5]
 
 if __FILE__ == $0
   # The maximum number of customer feed ADD operation attempts to make before

@@ -21,6 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START generate_forecast_metrics]
 def generate_forecast_metrics(customer_id, keyword_plan_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -54,6 +55,7 @@ def generate_forecast_metrics(customer_id, keyword_plan_id)
     puts "Estimated average cpc (micros): #{cpc}"
   end
 end
+# [END generate_forecast_metrics]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

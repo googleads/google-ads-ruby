@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_expanded_text_ads]
 def add_expanded_text_ads(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -56,6 +57,7 @@ def add_expanded_text_ads(customer_id, ad_group_id)
 
   puts "Created expanded text ad #{response.results.first.resource_name}."
 end
+# [END add_expanded_text_ads]
 
 if __FILE__ == $0
   options = {}

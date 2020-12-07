@@ -65,6 +65,7 @@ def create_customer_match_user_list(client, customer_id)
   resource_name
 end
 
+# [START add_customer_match_user_list]
 def add_users_to_customer_match_user_list(client, customer_id, user_list)
   # Creates the offline user data job.
   offline_user_data_job = client.resource.offline_user_data_job do |job|
@@ -139,6 +140,7 @@ def add_users_to_customer_match_user_list(client, customer_id, user_list)
   puts "Offline user data job with resource name " \
     "#{offline_user_data_job_resource_name} has finished"
 end
+# [END add_customer_match_user_list]
 
 def print_customer_match_user_list(client, customer_id, user_list)
   query = <<~EOQUERY

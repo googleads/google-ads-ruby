@@ -20,6 +20,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+# [START generate_keyword_ideas]
 def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
     page_url)
   # GoogleAdsClient will read a config file from
@@ -88,6 +89,7 @@ def generate_keyword_ideas(customer_id, location_ids, language_id, keywords,
         "monthly searches and competition as #{competition}."
   end
 end
+# [END generate_keyword_ideas]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000
