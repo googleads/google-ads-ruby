@@ -105,13 +105,13 @@ def get_change_details(customer_id)
     end
   end
 end
-# [END get_change_details]
 
 # Given the string value of a path from the response, look up the value of the
 # field located at that path on the given object.
 def get_value_from_path(path, object)
   path.split(".").inject(object) {|obj, key| obj.send(key)}
 end
+# [END get_change_details]
 
 if __FILE__ == $PROGRAM_NAME
   PAGE_SIZE = 1000
