@@ -70,7 +70,7 @@ def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
     # This connects the campaign to the merchant center account.
     c.shopping_setting = client.resource.shopping_setting do |ss|
       ss.campaign_priority = 0
-      ss.merchant_id = merchant_center_id
+      ss.merchant_id = merchant_center_id.to_i
 
       # Display Network campaigns do not support partition by country. The only
       # supported value is "ZZ". This signals that products from all countries

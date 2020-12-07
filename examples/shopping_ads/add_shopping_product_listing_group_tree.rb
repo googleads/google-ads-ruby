@@ -325,7 +325,7 @@ if __FILE__ == $0
       options[:ad_group_id] = v
     end
 
-    opts.on('-r', '--should-replace-existing-tree SHOULD-REPLACE-EXISTING-TREE',
+    opts.on('-r', '--replace-existing-tree REPLACE-EXISTING-TREE',
             String, 'Create Default Listing Group') do |v|
       options[:should_replace_existing_tree] = true if v
     end

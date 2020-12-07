@@ -235,7 +235,7 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-M', '--merchant-center-id MERCHANT-CENTER-ID', Integer,
+    opts.on('-M', '--merchant-center-account-id MERCHANT-CENTER-ACCOUNT-ID', Integer,
         'Merchant Center ID') do |v|
       options[:merchant_center_id] = v
     end
