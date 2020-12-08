@@ -272,5 +272,18 @@ class TestGoogleAdsClient < Minitest::Test
     assert_equal(client.target, "x.y.z:123")
     assert_equal(client.config.log_level, "INFO")
     assert_equal(client.config.http_proxy, "http://example.com:8080")
+    # Clean up the env variables so they don't intefere other tests.
+    ENV.delete("GOOGLE_ADS_CONFIGURATION_FILE_PATH")
+    ENV.delete("GOOGLE_ADS_REFRESH_TOKEN")
+    ENV.delete("GOOGLE_ADS_CLIENT_ID")
+    ENV.delete("GOOGLE_ADS_CLIENT_SECRET")
+    ENV.delete("GOOGLE_ADS_JSON_KEY_FILE_PATH")
+    ENV.delete("GOOGLE_ADS_IMPERSONATED_EMAIL")
+    ENV.delete("GOOGLE_ADS_DEVELOPER_TOKEN")
+    ENV.delete("GOOGLE_ADS_LOGIN_CUSTOMER_ID")
+    ENV.delete("GOOGLE_ADS_LINKED_CUSTOMER_ID")
+    ENV.delete("GOOGLE_ADS_ENDPOINT")
+    ENV.delete("GOOGLE_ADS_RUBY_LOG_LEVEL")
+    ENV.delete("GOOGLE_ADS_RUBY_HTTP_PROXY")
   end
 end
