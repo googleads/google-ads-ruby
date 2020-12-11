@@ -326,8 +326,8 @@ if __FILE__ == $0
     end
 
     opts.on('-r', '--replace-existing-tree REPLACE-EXISTING-TREE',
-            String, 'Create Default Listing Group') do |v|
-      options[:should_replace_existing_tree] = true if v
+        TrueClass, 'Create Default Listing Group') do |v|
+      options[:should_replace_existing_tree] = v
     end
 
     opts.separator ''
