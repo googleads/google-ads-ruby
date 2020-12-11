@@ -40,8 +40,6 @@ def get_invoices(customer_id, billing_setup_id)
     issue_month: last_month.strftime("%^B").to_sym,
   )
 
-
-
   # Iterates over all invoices retrieved and prints their information.
   response.invoices.each do |invoice|
     puts <<~OUTPUT
