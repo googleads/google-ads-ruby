@@ -1,3 +1,9 @@
+8.1.0:
+ - Added support for loading configuration from environment variables in
+	 addition to existing methods.
+ - Added support for creating operations to support block syntax like we do
+	 for resources.
+
 8.0.0:
  - Compatibility with v6 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Removed support for v2.
