@@ -241,8 +241,8 @@ if __FILE__ == $0
     end
 
     opts.on('-d', '--create-default-listing-group CREATE-DEFAULT-LISTING-GROUP',
-        String, 'Create Default Listing Group') do |v|
-      options[:create_default_listing_group] = true if v
+        TrueClass, 'Create Default Listing Group') do |v|
+      options[:create_default_listing_group] = v
     end
 
     opts.separator ''
