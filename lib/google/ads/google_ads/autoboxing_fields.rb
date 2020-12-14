@@ -100,7 +100,8 @@ module Google::Protobuf
   module MessageExts
     module ClassMethods
       def new(*args, &blk)
-        if self.name.start_with?("Google::Ads::GoogleAds")
+        if self.name.start_with?("Google::Ads::GoogleAds") &&
+            !["V6"].any? { |v| self.name.include?(v) }
           Google::Ads::GoogleAds::AutoboxingFields.patch_class(self)
         end
 

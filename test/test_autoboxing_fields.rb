@@ -19,6 +19,7 @@ require 'minitest/autorun'
 
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/v3/resources/campaign_pb'
+require 'google/ads/google_ads/v6/resources/campaign_pb'
 require 'google/ads/google_ads/v3/resources/ad_pb'
 
 class TestAutoboxing < Minitest::Test
@@ -64,5 +65,11 @@ class TestAutoboxing < Minitest::Test
     encoded = campaign.class.encode(campaign)
     campaign = campaign.class.decode(encoded)
     campaign.dynamic_search_ads_setting.feeds << "bees"
+  end
+
+  def test_new_version_excludes_autoboxing
+    campaign = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    assert_nil Google::Ads::GoogleAds::V6::Resources::Campaign
+      .instance_variable_get(:@_patched_for_autoboxing_fields)
   end
 end
