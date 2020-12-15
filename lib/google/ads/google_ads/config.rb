@@ -75,6 +75,11 @@ module Google
         end
 
         def http_proxy=(uri)
+          if uri.nil?
+            ENV["http_proxy"] = nil
+            return
+          end
+
           u = URI.parse(uri)
           if u.scheme != "http" && u.scheme != "https"
             raise ArgumentError, "#{uri} has invalid scheme #{u.scheme}, should be http or https"
