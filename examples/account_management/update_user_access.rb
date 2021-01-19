@@ -84,7 +84,7 @@ def modify_user_access(client, customer_id, user_id, access_role)
   )
 
   puts "Successfully updated customer user access with resource name " \
-    "#{response.results.first.resource_name}."
+    "#{response.result.resource_name}."
 end
 
 if __FILE__ == $0

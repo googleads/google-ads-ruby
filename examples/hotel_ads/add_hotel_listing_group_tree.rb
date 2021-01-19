@@ -73,7 +73,10 @@ def add_hotel_listing_group_tree(
     percent_cpc_bid_micro_amount,
   )
 
-  response = client.service.ad_group_criterion.mutate_ad_group_criteria
+  response = client.service.ad_group_criterion.mutate_ad_group_criteria(
+    customer_id: customer_id,
+    operations: operations,
+  )
 
   puts "Added #{response.results.size} listing group info entities."
   response.results.each do |ad_group_criterion|
