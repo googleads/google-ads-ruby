@@ -131,7 +131,7 @@ def add_shopping_product_listing_group_tree(
   # * CPC bid: $0.90
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
     ldi.product_brand = client.resource.product_brand_info do |pbi|
-      pbi.value = client.wrapper.string("CoolBrand")
+      pbi.value = "CoolBrand"
     end
   end
 
@@ -153,7 +153,7 @@ def add_shopping_product_listing_group_tree(
   # * CPC bid: $0.01
   listing_dimension_info = client.resource.listing_dimension_info do |ldi|
     ldi.product_brand = client.resource.product_brand_info do |pbi|
-      pbi.value = client.wrapper.string("CheapBrand")
+      pbi.value = "CheapBrand"
     end
   end
   ad_group_criterion_brand_cheap_brand = create_listing_group_unit_biddable(
