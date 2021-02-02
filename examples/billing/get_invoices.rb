@@ -30,6 +30,7 @@ def get_invoices(customer_id, billing_setup_id)
   # Gets the date one month before now.
   last_month = Date.today.prev_month
 
+  # [START get_invoices]
   # Issues a request to list invoices.
   response = client.service.invoice.list_invoices(
     customer_id: customer_id,
@@ -39,7 +40,9 @@ def get_invoices(customer_id, billing_setup_id)
     # '%^B' option returns the uppercased full month name (e.g. 'JANUARY').
     issue_month: last_month.strftime("%^B").to_sym,
   )
+  # [END get_invoices]
 
+  # [START get_invoices_1]
   # Iterates over all invoices retrieved and prints their information.
   response.invoices.each do |invoice|
     puts <<~OUTPUT
@@ -90,6 +93,7 @@ def get_invoices(customer_id, billing_setup_id)
     end
   end
 end
+# [END get_invoices_1]
 
 # Converts an amount from the micro unit to the base unit.
 def micro_to_base(amount)
