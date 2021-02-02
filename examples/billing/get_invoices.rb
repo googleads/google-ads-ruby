@@ -92,8 +92,8 @@ def get_invoices(customer_id, billing_setup_id)
       OUTPUT
     end
   end
+  # [END get_invoices_1]
 end
-# [END get_invoices_1]
 
 # Converts an amount from the micro unit to the base unit.
 def micro_to_base(amount)
