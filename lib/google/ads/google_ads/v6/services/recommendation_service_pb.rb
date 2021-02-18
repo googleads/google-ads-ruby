@@ -34,6 +34,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :call_extension, :message, 7, "google.ads.googleads.v6.services.ApplyRecommendationOperation.CallExtensionParameters"
         optional :sitelink_extension, :message, 8, "google.ads.googleads.v6.services.ApplyRecommendationOperation.SitelinkExtensionParameters"
         optional :move_unused_budget, :message, 9, "google.ads.googleads.v6.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters"
+        optional :responsive_search_ad, :message, 11, "google.ads.googleads.v6.services.ApplyRecommendationOperation.ResponsiveSearchAdParameters"
       end
     end
     add_message "google.ads.googleads.v6.services.ApplyRecommendationOperation.CampaignBudgetParameters" do
@@ -66,6 +67,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters" do
       proto3_optional :budget_micros_to_move, :int64, 2
+    end
+    add_message "google.ads.googleads.v6.services.ApplyRecommendationOperation.ResponsiveSearchAdParameters" do
+      optional :ad, :message, 1, "google.ads.googleads.v6.resources.Ad"
     end
     add_message "google.ads.googleads.v6.services.ApplyRecommendationResponse" do
       repeated :results, :message, 1, "google.ads.googleads.v6.services.ApplyRecommendationResult"
@@ -109,6 +113,7 @@ module Google
           ApplyRecommendationOperation::CallExtensionParameters = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationOperation.CallExtensionParameters").msgclass
           ApplyRecommendationOperation::SitelinkExtensionParameters = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationOperation.SitelinkExtensionParameters").msgclass
           ApplyRecommendationOperation::MoveUnusedBudgetParameters = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationOperation.MoveUnusedBudgetParameters").msgclass
+          ApplyRecommendationOperation::ResponsiveSearchAdParameters = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationOperation.ResponsiveSearchAdParameters").msgclass
           ApplyRecommendationResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationResponse").msgclass
           ApplyRecommendationResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.ApplyRecommendationResult").msgclass
           DismissRecommendationRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.services.DismissRecommendationRequest").msgclass

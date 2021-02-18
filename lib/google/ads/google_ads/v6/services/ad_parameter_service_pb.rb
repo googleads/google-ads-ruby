@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v6/enums/response_content_type_pb'
 require 'google/ads/google_ads/v6/resources/ad_parameter_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -20,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :operations, :message, 2, "google.ads.googleads.v6.services.AdParameterOperation"
       optional :partial_failure, :bool, 3
       optional :validate_only, :bool, 4
+      optional :response_content_type, :enum, 5, "google.ads.googleads.v6.enums.ResponseContentTypeEnum.ResponseContentType"
     end
     add_message "google.ads.googleads.v6.services.AdParameterOperation" do
       optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -35,6 +37,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.MutateAdParameterResult" do
       optional :resource_name, :string, 1
+      optional :ad_parameter, :message, 2, "google.ads.googleads.v6.resources.AdParameter"
     end
   end
 end

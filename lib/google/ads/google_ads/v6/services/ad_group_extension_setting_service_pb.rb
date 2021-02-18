@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v6/enums/response_content_type_pb'
 require 'google/ads/google_ads/v6/resources/ad_group_extension_setting_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -23,6 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.AdGroupExtensionSettingOperation" do
       optional :update_mask, :message, 4, "google.protobuf.FieldMask"
+      optional :response_content_type, :enum, 5, "google.ads.googleads.v6.enums.ResponseContentTypeEnum.ResponseContentType"
       oneof :operation do
         optional :create, :message, 1, "google.ads.googleads.v6.resources.AdGroupExtensionSetting"
         optional :update, :message, 2, "google.ads.googleads.v6.resources.AdGroupExtensionSetting"
@@ -35,6 +37,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.MutateAdGroupExtensionSettingResult" do
       optional :resource_name, :string, 1
+      optional :ad_group_extension_setting, :message, 2, "google.ads.googleads.v6.resources.AdGroupExtensionSetting"
     end
   end
 end

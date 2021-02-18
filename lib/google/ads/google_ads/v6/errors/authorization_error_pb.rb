@@ -23,6 +23,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :DEVELOPER_TOKEN_NOT_APPROVED, 10
       value :INVALID_LOGIN_CUSTOMER_ID_SERVING_CUSTOMER_ID_COMBINATION, 11
       value :SERVICE_ACCESS_DENIED, 12
+      value :ACCESS_DENIED_FOR_ACCOUNT_TYPE, 25
     end
   end
 end

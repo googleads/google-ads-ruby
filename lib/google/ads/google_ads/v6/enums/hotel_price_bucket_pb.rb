@@ -11,8 +11,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_enum "google.ads.googleads.v6.enums.HotelPriceBucketEnum.HotelPriceBucket" do
       value :UNSPECIFIED, 0
       value :UNKNOWN, 1
+      value :LOWEST_UNIQUE, 2
       value :LOWEST_TIED, 3
       value :NOT_LOWEST, 4
+      value :ONLY_PARTNER_SHOWN, 5
     end
   end
 end

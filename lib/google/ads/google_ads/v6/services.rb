@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@ require "google/ads/google_ads/v6/services/custom_interest_service"
 require "google/ads/google_ads/v6/services/customer_client_link_service"
 require "google/ads/google_ads/v6/services/customer_client_service"
 require "google/ads/google_ads/v6/services/customer_manager_link_service"
+require "google/ads/google_ads/v6/services/customer_user_access_invitation_service"
 require "google/ads/google_ads/v6/services/customer_user_access_service"
 require "google/ads/google_ads/v6/services/detail_placement_view_service"
 require "google/ads/google_ads/v6/services/display_keyword_view_service"
@@ -152,3 +153,6 @@ module Google
     end
   end
 end
+
+helper_path = ::File.join __dir__, "services", "_helpers.rb"
+require "google/ads/google_ads/v6/services/_helpers" if ::File.file? helper_path

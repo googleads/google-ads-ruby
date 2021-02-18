@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v6/enums/response_content_type_pb'
 require 'google/ads/google_ads/v6/resources/campaign_bid_modifier_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -20,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :operations, :message, 2, "google.ads.googleads.v6.services.CampaignBidModifierOperation"
       optional :partial_failure, :bool, 3
       optional :validate_only, :bool, 4
+      optional :response_content_type, :enum, 5, "google.ads.googleads.v6.enums.ResponseContentTypeEnum.ResponseContentType"
     end
     add_message "google.ads.googleads.v6.services.CampaignBidModifierOperation" do
       optional :update_mask, :message, 4, "google.protobuf.FieldMask"
@@ -35,6 +37,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.MutateCampaignBidModifierResult" do
       optional :resource_name, :string, 1
+      optional :campaign_bid_modifier, :message, 2, "google.ads.googleads.v6.resources.CampaignBidModifier"
     end
   end
 end

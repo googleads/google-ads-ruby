@@ -19,7 +19,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :active_view_viewability, :double, 190
       proto3_optional :all_conversions_from_interactions_rate, :double, 191
       proto3_optional :all_conversions_value, :double, 192
+      optional :all_conversions_value_by_conversion_date, :double, 240
       proto3_optional :all_conversions, :double, 193
+      optional :all_conversions_by_conversion_date, :double, 241
       proto3_optional :all_conversions_value_per_cost, :double, 194
       proto3_optional :all_conversions_from_click_to_call, :double, 195
       proto3_optional :all_conversions_from_directions, :double, 196
@@ -50,9 +52,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :content_rank_lost_impression_share, :double, 163
       proto3_optional :conversions_from_interactions_rate, :double, 164
       proto3_optional :conversions_value, :double, 165
+      optional :conversions_value_by_conversion_date, :double, 242
       proto3_optional :conversions_value_per_cost, :double, 166
       proto3_optional :conversions_from_interactions_value_per_interaction, :double, 167
       proto3_optional :conversions, :double, 168
+      optional :conversions_by_conversion_date, :double, 243
       proto3_optional :cost_micros, :int64, 169
       proto3_optional :cost_per_all_conversions, :double, 170
       proto3_optional :cost_per_conversion, :double, 171
@@ -112,7 +116,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :top_impression_percentage, :double, 148
       proto3_optional :valid_accelerated_mobile_pages_clicks_percentage, :double, 149
       proto3_optional :value_per_all_conversions, :double, 150
+      proto3_optional :value_per_all_conversions_by_conversion_date, :double, 244
       proto3_optional :value_per_conversion, :double, 151
+      proto3_optional :value_per_conversions_by_conversion_date, :double, 245
       proto3_optional :value_per_current_model_attributed_conversion, :double, 152
       proto3_optional :video_quartile_p100_rate, :double, 132
       proto3_optional :video_quartile_p25_rate, :double, 133

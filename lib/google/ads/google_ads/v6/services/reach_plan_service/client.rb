@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -574,7 +574,7 @@ module Google
                 # Each configuration object is of type `Gapic::Config::Method` and includes
                 # the following configuration fields:
                 #
-                #  *  `timeout` (*type:* `Numeric`) - The call timeout in milliseconds
+                #  *  `timeout` (*type:* `Numeric`) - The call timeout in seconds
                 #  *  `metadata` (*type:* `Hash{Symbol=>String}`) - Additional gRPC headers
                 #  *  `retry_policy (*type:* `Hash`) - The retry policy. The policy fields
                 #     include the following keys:

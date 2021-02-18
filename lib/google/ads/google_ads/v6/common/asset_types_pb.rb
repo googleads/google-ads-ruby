@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v6/common/asset_types.proto", :syntax => :proto3) do
     add_message "google.ads.googleads.v6.common.YoutubeVideoAsset" do
       proto3_optional :youtube_video_id, :string, 2
+      optional :youtube_video_title, :string, 3
     end
     add_message "google.ads.googleads.v6.common.MediaBundleAsset" do
       proto3_optional :data, :bytes, 2

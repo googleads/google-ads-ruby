@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :FEED_ITEM_ID, 2
       value :DEVICE_NAME, 3
+      value :FEED_ITEM_SET_ID, 4
     end
   end
 end

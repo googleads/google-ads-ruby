@@ -22,10 +22,12 @@ require 'google/ads/google_ads'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/v6/services/media_file_service_services_pb'
 require 'google/ads/google_ads/v6/services/customer_user_access_service_services_pb'
+require 'google/ads/google_ads/v6/services/customer_user_access_invitation_service_services_pb'
 require 'google/ads/google_ads/v6/services/google_ads_service_services_pb'
 require 'google/ads/google_ads/v6/services/feed_service_services_pb'
 require 'google/ads/google_ads/v6/services/customer_service_services_pb'
 require 'google/ads/google_ads/v6/resources/customer_user_access_pb'
+require 'google/ads/google_ads/v6/resources/customer_user_access_invitation_pb'
 require 'google/ads/google_ads/v6/resources/change_event_pb'
 require 'google/ads/google_ads/v6/resources/feed_pb'
 
@@ -241,6 +243,46 @@ class TestLoggingInterceptor < Minitest::Test
     data = sio.read
     assert(!data.include?(email_address), "Failed to remove email address.")
     assert(!data.include?(inviter_user), "Failed to remove inviter user email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_customer_user_access_invitation_response
+    email_address = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V6::Resources::CustomerUserAccessInvitation.new(
+        email_address: email_address,
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_customer_user_access_invitation_mutate
+    email_address = "abcdefghijkl"
+    request = Google::Ads::GoogleAds::V6::Services::MutateCustomerUserAccessInvitationRequest.new(
+      operation: Google::Ads::GoogleAds::V6::Services::CustomerUserAccessInvitationOperation.new(
+        create: Google::Ads::GoogleAds::V6::Resources::CustomerUserAccessInvitation.new(
+          email_address: email_address,
+        )
+      )
+    )
+    li.request_response(
+      request: request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
     assert_includes(data, "REDACTED")
   end
 

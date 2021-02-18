@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,6 +25,20 @@ module Google
           module PaymentsAccountService
             # Path helper methods for the PaymentsAccountService API.
             module Paths
+              ##
+              # Create a fully-qualified Customer resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}`
+              #
+              # @param customer_id [String]
+              #
+              # @return [::String]
+              def customer_path customer_id:
+                "customers/#{customer_id}"
+              end
+
               ##
               # Create a fully-qualified PaymentsAccount resource string.
               #

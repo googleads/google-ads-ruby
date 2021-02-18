@@ -42,6 +42,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :CUSTOM_INTENT, 30
       value :LOCATION_GROUP, 31
       value :CUSTOM_AUDIENCE, 32
+      value :COMBINED_AUDIENCE, 33
     end
   end
 end

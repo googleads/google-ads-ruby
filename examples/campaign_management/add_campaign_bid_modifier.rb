@@ -41,15 +41,30 @@ def add_campaign_bid_modifier(customer_id, campaign_id, bid_modifier)
   # Create campaign Bid Modifier Service
   campaign_bid_modifier_service = client.service.campaign_bid_modifier
   # Add the Campaign Bid Modifier
+  # [START mutable_resource]
+  # Add the campaign bid modifier. Here we pass the optional parameter
+  # response_content_type=MUTABLE_RESOURCE so that the response contains
+  # the mutated object and not just its resource name.
   response = campaign_bid_modifier_service.mutate_campaign_bid_modifiers(
     customer_id: customer_id,
     operations: [operation],
+    response_content_type: :MUTABLE_RESOURCE,
   )
 
-  puts sprintf('Added %d campaign bid modifiers:', response.results.size)
+  puts "Added #{response.results.size} campaign bid modifiers:"
   response.results.each do |added_campaign_bid_modifier|
-    puts sprintf("\t%s", added_campaign_bid_modifier.resource_name)
+    # The resource returned in the response can be accessed directly in the
+    # results list. Its fields can be read directly, and it can also be mutated
+    # further and used in subsequent requests, without needing to make
+    # additional Get or Search requests.
+    mutable_resource = added_campaign_bid_modifier.campaign_bid_modifier
+    puts "\tCreated campaign bid modifier with " \
+      "resource_name '#{mutable_resource.resource_name}', " \
+      "criterion ID #{mutable_resource.criterion_id}, " \
+      "bid_modifier #{mutable_resource.bid_modifier}, " \
+      "under the campaign with resource_name '#{mutable_resource.campaign}'"
   end
+  # [END mutable_resource]
 end
 
 if __FILE__ == $0

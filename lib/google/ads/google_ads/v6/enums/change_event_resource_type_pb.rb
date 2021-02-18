@@ -18,6 +18,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :CAMPAIGN_BUDGET, 6
       value :AD_GROUP_BID_MODIFIER, 7
       value :CAMPAIGN_CRITERION, 8
+      value :FEED, 9
+      value :FEED_ITEM, 10
+      value :CAMPAIGN_FEED, 11
+      value :AD_GROUP_FEED, 12
+      value :AD_GROUP_AD, 13
     end
   end
 end

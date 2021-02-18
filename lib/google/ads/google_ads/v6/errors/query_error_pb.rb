@@ -64,6 +64,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNRECOGNIZED_FIELD, 32
       value :UNEXPECTED_INPUT, 11
       value :REQUESTED_METRICS_FOR_MANAGER, 59
+      value :FILTER_HAS_TOO_MANY_VALUES, 63
     end
   end
 end

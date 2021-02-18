@@ -46,12 +46,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :default_currency_code, :string, 5
       proto3_optional :always_use_default_value, :bool, 6
     end
+    add_message "google.ads.googleads.v6.resources.ConversionAction.ThirdPartyAppAnalyticsSettings" do
+      proto3_optional :event_name, :string, 2
+      optional :provider_name, :string, 3
+    end
     add_message "google.ads.googleads.v6.resources.ConversionAction.FirebaseSettings" do
       proto3_optional :event_name, :string, 3
       proto3_optional :project_id, :string, 4
-    end
-    add_message "google.ads.googleads.v6.resources.ConversionAction.ThirdPartyAppAnalyticsSettings" do
-      proto3_optional :event_name, :string, 2
     end
   end
 end
@@ -64,8 +65,8 @@ module Google
           ConversionAction = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction").msgclass
           ConversionAction::AttributionModelSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction.AttributionModelSettings").msgclass
           ConversionAction::ValueSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction.ValueSettings").msgclass
-          ConversionAction::FirebaseSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction.FirebaseSettings").msgclass
           ConversionAction::ThirdPartyAppAnalyticsSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction.ThirdPartyAppAnalyticsSettings").msgclass
+          ConversionAction::FirebaseSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.resources.ConversionAction.FirebaseSettings").msgclass
         end
       end
     end

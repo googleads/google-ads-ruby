@@ -147,7 +147,7 @@ def create_extension_feed_item_mutate_operations(
     mutate_op = client.operation.mutate
     mutate_op.extension_feed_item_operation = \
       client.operation.remove_resource.extension_feed_item(resource_name)
-    mutate_operations += mutate_op
+    mutate_operations << mutate_op
   end
   mutate_operations
 end

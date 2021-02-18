@@ -6,6 +6,13 @@ require 'google/protobuf'
 require 'google/api/annotations_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v6/enums/image_placeholder_field.proto", :syntax => :proto3) do
+    add_message "google.ads.googleads.v6.enums.ImagePlaceholderFieldEnum" do
+    end
+    add_enum "google.ads.googleads.v6.enums.ImagePlaceholderFieldEnum.ImagePlaceholderField" do
+      value :UNSPECIFIED, 0
+      value :UNKNOWN, 1
+      value :ASSET_ID, 2
+    end
   end
 end
 
@@ -14,6 +21,8 @@ module Google
     module GoogleAds
       module V6
         module Enums
+          ImagePlaceholderFieldEnum = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.enums.ImagePlaceholderFieldEnum").msgclass
+          ImagePlaceholderFieldEnum::ImagePlaceholderField = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v6.enums.ImagePlaceholderFieldEnum.ImagePlaceholderField").enummodule
         end
       end
     end
