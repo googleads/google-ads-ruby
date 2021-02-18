@@ -27,6 +27,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :MOVE_UNUSED_BUDGET, 15
       value :FORECASTING_CAMPAIGN_BUDGET, 16
       value :TARGET_ROAS_OPT_IN, 17
+      value :RESPONSIVE_SEARCH_AD, 18
     end
   end
 end

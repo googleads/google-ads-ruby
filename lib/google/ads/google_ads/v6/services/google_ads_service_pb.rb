@@ -30,6 +30,7 @@ require 'google/ads/google_ads/v6/resources/asset_pb'
 require 'google/ads/google_ads/v6/resources/batch_job_pb'
 require 'google/ads/google_ads/v6/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v6/resources/billing_setup_pb'
+require 'google/ads/google_ads/v6/resources/call_view_pb'
 require 'google/ads/google_ads/v6/resources/campaign_pb'
 require 'google/ads/google_ads/v6/resources/campaign_asset_pb'
 require 'google/ads/google_ads/v6/resources/campaign_audience_view_pb'
@@ -61,6 +62,7 @@ require 'google/ads/google_ads/v6/resources/customer_label_pb'
 require 'google/ads/google_ads/v6/resources/customer_manager_link_pb'
 require 'google/ads/google_ads/v6/resources/customer_negative_criterion_pb'
 require 'google/ads/google_ads/v6/resources/customer_user_access_pb'
+require 'google/ads/google_ads/v6/resources/customer_user_access_invitation_pb'
 require 'google/ads/google_ads/v6/resources/detail_placement_view_pb'
 require 'google/ads/google_ads/v6/resources/display_keyword_view_pb'
 require 'google/ads/google_ads/v6/resources/distance_view_pb'
@@ -221,6 +223,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :batch_job, :message, 139, "google.ads.googleads.v6.resources.BatchJob"
       optional :bidding_strategy, :message, 18, "google.ads.googleads.v6.resources.BiddingStrategy"
       optional :billing_setup, :message, 41, "google.ads.googleads.v6.resources.BillingSetup"
+      optional :call_view, :message, 152, "google.ads.googleads.v6.resources.CallView"
       optional :campaign_budget, :message, 19, "google.ads.googleads.v6.resources.CampaignBudget"
       optional :campaign, :message, 2, "google.ads.googleads.v6.resources.Campaign"
       optional :campaign_asset, :message, 142, "google.ads.googleads.v6.resources.CampaignAsset"
@@ -252,6 +255,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :customer_label, :message, 124, "google.ads.googleads.v6.resources.CustomerLabel"
       optional :customer_negative_criterion, :message, 88, "google.ads.googleads.v6.resources.CustomerNegativeCriterion"
       optional :customer_user_access, :message, 146, "google.ads.googleads.v6.resources.CustomerUserAccess"
+      optional :customer_user_access_invitation, :message, 150, "google.ads.googleads.v6.resources.CustomerUserAccessInvitation"
       optional :detail_placement_view, :message, 118, "google.ads.googleads.v6.resources.DetailPlacementView"
       optional :display_keyword_view, :message, 47, "google.ads.googleads.v6.resources.DisplayKeywordView"
       optional :distance_view, :message, 132, "google.ads.googleads.v6.resources.DistanceView"

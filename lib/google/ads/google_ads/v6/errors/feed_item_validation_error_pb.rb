@@ -108,6 +108,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :MISSING_LONGITUDE_VALUE, 96
       value :ADDRESS_NOT_FOUND, 97
       value :ADDRESS_NOT_TARGETABLE, 98
+      value :INVALID_ASSET_ID, 100
+      value :INCOMPATIBLE_ASSET_TYPE, 101
+      value :IMAGE_ERROR_UNEXPECTED_SIZE, 102
+      value :IMAGE_ERROR_ASPECT_RATIO_NOT_ALLOWED, 103
+      value :IMAGE_ERROR_FILE_TOO_LARGE, 104
+      value :IMAGE_ERROR_FORMAT_NOT_ALLOWED, 105
+      value :IMAGE_ERROR_CONSTRAINTS_VIOLATED, 106
+      value :IMAGE_ERROR_SERVER_ERROR, 107
     end
   end
 end

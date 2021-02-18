@@ -15,6 +15,7 @@ require 'google/ads/google_ads/v6/enums/feed_mapping_criterion_type_pb'
 require 'google/ads/google_ads/v6/enums/feed_mapping_status_pb'
 require 'google/ads/google_ads/v6/enums/flight_placeholder_field_pb'
 require 'google/ads/google_ads/v6/enums/hotel_placeholder_field_pb'
+require 'google/ads/google_ads/v6/enums/image_placeholder_field_pb'
 require 'google/ads/google_ads/v6/enums/job_placeholder_field_pb'
 require 'google/ads/google_ads/v6/enums/local_placeholder_field_pb'
 require 'google/ads/google_ads/v6/enums/location_extension_targeting_criterion_field_pb'
@@ -67,6 +68,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :travel_field, :enum, 21, "google.ads.googleads.v6.enums.TravelPlaceholderFieldEnum.TravelPlaceholderField"
         optional :local_field, :enum, 22, "google.ads.googleads.v6.enums.LocalPlaceholderFieldEnum.LocalPlaceholderField"
         optional :job_field, :enum, 23, "google.ads.googleads.v6.enums.JobPlaceholderFieldEnum.JobPlaceholderField"
+        optional :image_field, :enum, 26, "google.ads.googleads.v6.enums.ImagePlaceholderFieldEnum.ImagePlaceholderField"
       end
     end
   end

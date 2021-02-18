@@ -21,7 +21,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def approve_merchant_center_links(customer_id)
+def approve_merchant_center_links(customer_id, merchant_center_account_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # [START approve_merchant_center_link]
@@ -35,7 +35,7 @@ def approve_merchant_center_links(customer_id)
   #  Iterate the results, and filter for links with pending status.
   response.merchant_center_links.each do |link|
     # Enables the pending link.
-    if link.status == :PENDING
+    if link.status == :PENDING && link.id.to_s == merchant_center_account_id
       # Creates the update operation.
       update_operation = client.operation.update_resource.merchant_center_link(
         link.resource_name) do |updated_link|
@@ -69,6 +69,7 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:manager_customer_id] = 'INSERT_MANAGER_CUSTOMER_ID_HERE'
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:merchant_center_account_id] = 'INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -78,6 +79,11 @@ if __FILE__ == $0
 
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
+    end
+
+    opts.on('-M', '--merchant-center-account-id MERCHANT-CENTER-ACCOUNT-ID',
+      String, 'Merchant Center Account ID') do |v|
+      options[:merchant_center_account_id] = v
     end
 
     opts.separator ''
@@ -92,6 +98,7 @@ if __FILE__ == $0
   begin
     approve_merchant_center_links(
       options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:merchant_center_account_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

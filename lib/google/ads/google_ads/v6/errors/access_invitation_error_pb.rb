@@ -13,6 +13,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :INVALID_EMAIL_ADDRESS, 2
       value :EMAIL_ADDRESS_ALREADY_HAS_ACCESS, 3
+      value :INVALID_INVITATION_STATUS, 4
+      value :GOOGLE_CONSUMER_ACCOUNT_NOT_ALLOWED, 5
+      value :INVALID_INVITATION_ID, 6
+      value :EMAIL_ADDRESS_ALREADY_HAS_PENDING_INVITATION, 7
+      value :PENDING_INVITATIONS_LIMIT_EXCEEDED, 8
     end
   end
 end

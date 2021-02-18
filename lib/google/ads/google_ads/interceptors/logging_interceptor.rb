@@ -33,8 +33,12 @@ module Google
             inviterUserEmailAddress
             userEmail
           ]
-          SEARCH_REQUEST_MASK =
-            /customer_user_access.email_address|change_event.user_email|feed.places_location_feed_data.email_address/
+          SEARCH_REQUEST_MASK = /
+            customer_user_access.email_address|
+            customer_user_access_invitation.email_address|
+            change_event.user_email|
+            feed.places_location_feed_data.email_address
+          /x
 
           MASK_REPLACEMENT = "REDACTED"
 
@@ -184,7 +188,7 @@ module Google
               message = clone_to_json(message)
               message["fieldMask"].split(",").each do |path|
                 if SEARCH_RESPONSE_FIELDS_TO_MASK.include?(path.split(".").last)
-                  message["results"].each do |result|
+                  message["results"]&.each do |result|
                     sanitize_field(result, path)
                   end
                 end
@@ -207,6 +211,18 @@ module Google
               if message.include?("operation") && message["operation"].include?("update")
                 message["operation"]["update"] =
                   sanitize_customer_user_access(message["operation"]["update"])
+              end
+              message
+            elsif "CustomerUserAccessInvitation" == message_class
+              # Sanitize sensitive fields specific to CustomerUserAccessInvitation get requests.
+              message = clone_to_json(message)
+              sanitize_customer_user_access_invitation(message)
+            elsif "MutateCustomerUserAccessInvitationRequest" == message_class
+              # Sanitize sensitive fields when mutating a CustomerUserAccessInvitation.
+              message = clone_to_json(message)
+              if message.include?("operation") && message["operation"].include?("create")
+                message["operation"]["create"] =
+                  sanitize_customer_user_access_invitation(message["operation"]["create"])
               end
               message
             elsif "Feed" == message_class
@@ -239,6 +255,13 @@ module Google
             end
             if message.include?("inviterUserEmailAddress")
               message["inviterUserEmailAddress"] = MASK_REPLACEMENT
+            end
+            message
+          end
+
+          def sanitize_customer_user_access_invitation(message)
+            if message.include?("emailAddress")
+              message["emailAddress"] = MASK_REPLACEMENT
             end
             message
           end

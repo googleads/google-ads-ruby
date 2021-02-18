@@ -18,50 +18,45 @@
 require 'minitest/autorun'
 
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/v3/resources/campaign_pb'
 require 'google/ads/google_ads/v6/resources/campaign_pb'
-require 'google/ads/google_ads/v3/resources/ad_pb'
+require 'google/ads/google_ads/v6/resources/ad_pb'
 
 class TestAutoboxing < Minitest::Test
   def test_initialize
-    Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: "hi")
+    Google::Ads::GoogleAds::V6::Resources::Campaign.new(name: "hi")
 
-    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: "hi")
-    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+    c = Google::Ads::GoogleAds::V6::Resources::Campaign.new(name: "hi")
+    assert_equal "hi", c.name
 
-    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: Google::Protobuf::StringValue.new(value: "hi"))
-    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
-
-    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new(name: nil)
-    assert_nil nil, c.name
+    c = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    assert_empty '', c.name
   end
 
   def test_assign
-    c = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    c = Google::Ads::GoogleAds::V6::Resources::Campaign.new
     c.name = "hi"
     c.id = 3
 
-    c.name = nil
-    assert_nil c.name
+    c.name = ''
+    assert_empty c.name
 
-    c.name = Google::Protobuf::StringValue.new(value: "hi")
-    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
+    c.name = 'hi'
+    assert_equal 'hi', c.name
 
-    c.name = "hi"
-    assert_equal Google::Protobuf::StringValue.new(value: "hi"), c.name
-
+    c.id = 5
+    assert_equal 5, c.id
   end
 
   def test_repeated_fields
-    ad = Google::Ads::GoogleAds::V3::Resources::Ad.new
+    ad = Google::Ads::GoogleAds::V6::Resources::Ad.new
     ad.final_urls << "hi"
 
-    ad = Google::Ads::GoogleAds::V3::Resources::Ad.new(final_urls: ["hi"])
+    ad = Google::Ads::GoogleAds::V6::Resources::Ad.new(final_urls: ["hi"])
   end
 
   def test_nested_decoded_fields
-    campaign = Google::Ads::GoogleAds::V3::Resources::Campaign.new
-    campaign.dynamic_search_ads_setting = Google::Ads::GoogleAds::V3::Resources::Campaign::DynamicSearchAdsSetting.new
+    campaign = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    campaign.dynamic_search_ads_setting = Google::Ads::GoogleAds::V6::Resources::Campaign::DynamicSearchAdsSetting.new
     encoded = campaign.class.encode(campaign)
     campaign = campaign.class.decode(encoded)
     campaign.dynamic_search_ads_setting.feeds << "bees"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,9 @@ module Google
           module KeywordViewService
             # Credentials for the KeywordViewService API.
             class Credentials < ::Google::Auth::Credentials
+              self.scope = [
+                "https://www.googleapis.com/auth/adwords"
+              ]
               self.env_vars = [
                 "GOOGLEADS_CREDENTIALS",
                 "GOOGLEADS_KEYFILE",

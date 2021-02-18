@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -225,7 +225,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload mutate_shared_criteria(customer_id: nil, operations: nil, partial_failure: nil, validate_only: nil)
+              # @overload mutate_shared_criteria(customer_id: nil, operations: nil, partial_failure: nil, validate_only: nil, response_content_type: nil)
               #   Pass arguments to `mutate_shared_criteria` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -242,6 +242,9 @@ module Google
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed. Only errors are
               #     returned, not results.
+              #   @param response_content_type [::Google::Ads::GoogleAds::V6::Enums::ResponseContentTypeEnum::ResponseContentType]
+              #     The response content type setting. Determines whether the mutable resource
+              #     or just the resource name should be returned post mutation.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V6::Services::MutateSharedCriteriaResponse]
@@ -413,7 +416,7 @@ module Google
                 # Each configuration object is of type `Gapic::Config::Method` and includes
                 # the following configuration fields:
                 #
-                #  *  `timeout` (*type:* `Numeric`) - The call timeout in milliseconds
+                #  *  `timeout` (*type:* `Numeric`) - The call timeout in seconds
                 #  *  `metadata` (*type:* `Hash{Symbol=>String}`) - Additional gRPC headers
                 #  *  `retry_policy (*type:* `Hash`) - The retry policy. The policy fields
                 #     include the following keys:

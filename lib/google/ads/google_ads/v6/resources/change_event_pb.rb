@@ -9,14 +9,20 @@ require 'google/ads/google_ads/v6/enums/advertising_channel_type_pb'
 require 'google/ads/google_ads/v6/enums/change_client_type_pb'
 require 'google/ads/google_ads/v6/enums/change_event_resource_type_pb'
 require 'google/ads/google_ads/v6/enums/criterion_type_pb'
+require 'google/ads/google_ads/v6/enums/feed_origin_pb'
 require 'google/ads/google_ads/v6/enums/resource_change_operation_pb'
 require 'google/ads/google_ads/v6/resources/ad_pb'
 require 'google/ads/google_ads/v6/resources/ad_group_pb'
+require 'google/ads/google_ads/v6/resources/ad_group_ad_pb'
 require 'google/ads/google_ads/v6/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v6/resources/ad_group_criterion_pb'
+require 'google/ads/google_ads/v6/resources/ad_group_feed_pb'
 require 'google/ads/google_ads/v6/resources/campaign_pb'
 require 'google/ads/google_ads/v6/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v6/resources/campaign_criterion_pb'
+require 'google/ads/google_ads/v6/resources/campaign_feed_pb'
+require 'google/ads/google_ads/v6/resources/feed_pb'
+require 'google/ads/google_ads/v6/resources/feed_item_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/field_mask_pb'
@@ -36,6 +42,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :changed_fields, :message, 10, "google.protobuf.FieldMask"
       optional :campaign, :string, 11
       optional :ad_group, :string, 12
+      optional :feed, :string, 13
+      optional :feed_item, :string, 14
     end
     add_message "google.ads.googleads.v6.resources.ChangeEvent.ChangedResource" do
       optional :ad, :message, 1, "google.ads.googleads.v6.resources.Ad"
@@ -45,6 +53,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_budget, :message, 5, "google.ads.googleads.v6.resources.CampaignBudget"
       optional :ad_group_bid_modifier, :message, 6, "google.ads.googleads.v6.resources.AdGroupBidModifier"
       optional :campaign_criterion, :message, 7, "google.ads.googleads.v6.resources.CampaignCriterion"
+      optional :feed, :message, 8, "google.ads.googleads.v6.resources.Feed"
+      optional :feed_item, :message, 9, "google.ads.googleads.v6.resources.FeedItem"
+      optional :campaign_feed, :message, 10, "google.ads.googleads.v6.resources.CampaignFeed"
+      optional :ad_group_feed, :message, 11, "google.ads.googleads.v6.resources.AdGroupFeed"
+      optional :ad_group_ad, :message, 12, "google.ads.googleads.v6.resources.AdGroupAd"
     end
   end
 end

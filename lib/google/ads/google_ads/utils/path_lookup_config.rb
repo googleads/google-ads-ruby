@@ -83,6 +83,7 @@ module Google
             customer_manager_link: [:customer, [:manager_customer, :manager_link]],
             customer_negative_criterion: [:customer, [:criterion]],
             customer_user_access: [:customer, :user],
+            customer_user_access_invitation: [:customer, :invitation],
             customer: [:customer],
             detail_placement_view: [:customer, [:ad_group, :base64_placement]],
             display_keyword_view: [:customer, [:ad_group, :criterion]],
@@ -141,22 +142,6 @@ module Google
             video: [:customer, [:video]],
           }
 
-          PATH_LOOKUP_V3 = PATH_LOOKUP_BASE.reject { |k, _|
-            [
-              :batch_job,
-              :account_link,
-              :income_range_view,
-              :keyword_plan_ad_group_keyword,
-              :keyword_plan_campaign_keyword,
-              :third_party_app_analytics_link,
-              :combined_audience,
-              :custom_audience,
-              :customer_user_access,
-              :feed_item_set_link,
-              :feed_item_set,
-            ].include?(k)
-          }
-
           PATH_LOOKUP_V4 = PATH_LOOKUP_BASE.reject { |k, _|
             [
               :mutate_job,
@@ -165,6 +150,7 @@ module Google
               :customer_user_access,
               :feed_item_set_link,
               :feed_item_set,
+              :customer_user_access_invitation,
             ].include?(k)
           }
           PATH_LOOKUP_V5 = PATH_LOOKUP_V4

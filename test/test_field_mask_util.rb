@@ -22,18 +22,18 @@ require 'minitest/autorun'
 require 'google/protobuf/wrappers_pb'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/field_mask_util'
-require 'google/ads/google_ads/v3/resources/campaign_pb'
-require 'google/ads/google_ads/v3/resources/ad_pb'
+require 'google/ads/google_ads/v6/resources/campaign_pb'
+require 'google/ads/google_ads/v6/resources/ad_pb'
 
 class TestFieldMaskUtil < Minitest::Test
   def test_change_from_previous_value()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
-    test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
-    test_object.id = Google::Protobuf::Int64Value.new(value: 1234)
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    test_object.name = 'test name'
+    test_object.id = 1234
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.name = Google::Protobuf::StringValue.new(value: 'new string')
-      test_object.id = Google::Protobuf::Int64Value.new(value: 5678)
+      test_object.name = 'new string'
+      test_object.id = 5678
     end
 
     assert_includes(mask.paths, 'id')
@@ -45,13 +45,13 @@ class TestFieldMaskUtil < Minitest::Test
       # No setup.
     end
 
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
-    test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
-    test_object.id = Google::Protobuf::Int64Value.new(value: 1234)
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    test_object.name = 'test name'
+    test_object.id = 1234
 
     mask = client.field_mask.with test_object do
-      test_object.name = Google::Protobuf::StringValue.new(value: 'new string')
-      test_object.id = Google::Protobuf::Int64Value.new(value: 5678)
+      test_object.name = 'new string'
+      test_object.id = 5678
     end
 
     assert_includes(mask.paths, 'id')
@@ -59,11 +59,11 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_change_from_no_value()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.name = Google::Protobuf::StringValue.new(value: 'new string')
-      test_object.id = Google::Protobuf::Int64Value.new(value: 5678)
+      test_object.name = 'new string'
+      test_object.id = 5678
     end
 
     assert_includes(mask.paths, 'id')
@@ -71,47 +71,46 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_change_to_null_value()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
 
-    test_object.name = Google::Protobuf::StringValue.new(value: 'test name')
+    test_object.network_settings = Google::Ads::GoogleAds::V6::Resources::Campaign::NetworkSettings.new
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.name = nil
+      test_object.network_settings = nil
     end
 
-    assert_includes(mask.paths, 'name')
+    assert_includes(mask.paths, 'network_settings')
   end
 
   def test_no_change_to_value()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
 
     test_name = 'test name'
-    test_object.name = Google::Protobuf::StringValue.new(value: test_name)
+    test_object.name = test_name
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.name = Google::Protobuf::StringValue.new(value: test_name)
+      test_object.name = test_name
     end
 
     assert(!mask.paths.include?('name'))
   end
 
   def test_repeated_field_addition()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Ad.new
 
-    test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
+    test_object.final_urls << 'url 1'
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.final_urls <<
-          Google::Protobuf::StringValue.new(value: 'url 2')
+      test_object.final_urls << 'url 2'
     end
 
     assert_includes(mask.paths, 'final_urls')
   end
 
   def test_repeated_field_removal()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Ad.new
 
-    test_object.final_urls << Google::Protobuf::StringValue.new(value: 'url 1')
+    test_object.final_urls << 'url 1'
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
       test_object.final_urls.pop
@@ -121,16 +120,15 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_changed()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Ad.new
 
-    text_ad = Google::Ads::GoogleAds::V3::Common::TextAdInfo.new
-    text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')
+    text_ad = Google::Ads::GoogleAds::V6::Common::TextAdInfo.new
+    text_ad.headline = 'headline'
     test_object.text_ad = text_ad
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      new_text_ad = Google::Ads::GoogleAds::V3::Common::TextAdInfo.new
-      new_text_ad.headline =
-          Google::Protobuf::StringValue.new(value: 'new headline')
+      new_text_ad = Google::Ads::GoogleAds::V6::Common::TextAdInfo.new
+      new_text_ad.headline = 'new headline'
       test_object.text_ad = new_text_ad
     end
 
@@ -138,16 +136,15 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_field_unchanged()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Ad.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Ad.new
 
-    text_ad = Google::Ads::GoogleAds::V3::Common::TextAdInfo.new
-    text_ad.headline = Google::Protobuf::StringValue.new(value: 'headline')
+    text_ad = Google::Ads::GoogleAds::V6::Common::TextAdInfo.new
+    text_ad.headline = 'headline'
     test_object.text_ad = text_ad
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      new_text_ad = Google::Ads::GoogleAds::V3::Common::TextAdInfo.new
-      new_text_ad.headline =
-          Google::Protobuf::StringValue.new(value: 'headline')
+      new_text_ad = Google::Ads::GoogleAds::V6::Common::TextAdInfo.new
+      new_text_ad.headline = 'headline'
       test_object.text_ad = new_text_ad
     end
 
@@ -155,39 +152,37 @@ class TestFieldMaskUtil < Minitest::Test
   end
 
   def test_nested_fields_for_update_from_nil()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
-    test_object.name = Google::Protobuf::StringValue.new(value: 'Name')
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
+    test_object.name = 'Name'
 
     nested_object =
-        Google::Ads::GoogleAds::V3::Resources::Campaign::NetworkSettings.new
-    nested_object.target_search_network =
-        Google::Protobuf::BoolValue.new(value: true)
+        Google::Ads::GoogleAds::V6::Resources::Campaign::NetworkSettings.new
+    nested_object.target_search_network = true
     test_object.network_settings = nested_object
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.all_set_fields_of(test_object)
 
     assert_equal(
       ['name', 'network_settings.target_search_network'],
-      mask.paths
+      mask.paths.sort
     )
   end
 
   def test_nested_fields_for_update()
-    test_object = Google::Ads::GoogleAds::V3::Resources::Campaign.new
+    test_object = Google::Ads::GoogleAds::V6::Resources::Campaign.new
 
     mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
-      test_object.name = Google::Protobuf::StringValue.new(value: 'Name')
+      test_object.name = 'Name'
 
       nested_object =
-          Google::Ads::GoogleAds::V3::Resources::Campaign::NetworkSettings.new
-      nested_object.target_search_network =
-          Google::Protobuf::BoolValue.new(value: true)
+          Google::Ads::GoogleAds::V6::Resources::Campaign::NetworkSettings.new
+      nested_object.target_search_network = true
       test_object.network_settings = nested_object
     end
 
     assert_equal(
       ['name', 'network_settings.target_search_network'],
-      mask.paths
+      mask.paths.sort
     )
   end
 end

@@ -51,6 +51,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :MERCHANT_NOT_ALLOWED_FOR_COMPARISON_LISTING_ADS, 43
       value :INSUFFICIENT_APP_INSTALLS_COUNT, 44
       value :SENSITIVE_CATEGORY_APP, 45
+      value :HEC_AGREEMENT_REQUIRED, 46
     end
   end
 end

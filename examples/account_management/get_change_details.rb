@@ -74,6 +74,8 @@ def get_change_details(customer_id)
       [event.old_resource.ad, event.new_resource.ad]
     when :AD_GROUP
       [event.old_resource.ad_group, event.new_resource.ad_group]
+    when :AD_GROUP_AD
+      [event.old_resource.ad_group_ad, event.new_resource.ad_group_ad]
     when :AD_GROUP_CRITERION
       [event.old_resource.ad_group_criterion, event.new_resource.ad_group_criterion]
     when :AD_GROUP_BID_MODIFIER
@@ -84,6 +86,14 @@ def get_change_details(customer_id)
       [event.old_resource.campaign_budget, event.new_resource.campaign_budget]
     when :CAMPAIGN_CRITERION
       [event.old_resource.campaign_criterion, event.new_resource.campaign_criterion]
+    when :AD_GROUP_FEED
+      [event.old_resource.ad_group_feed, event.new_resource.ad_group_feed]
+    when :CAMPAIGN_FEED
+      [event.old_resource.campaign_feed, event.new_resource.campaign_feed]
+    when :FEED
+      [event.old_resource.feed, event.new_resource.feed]
+    when :FEED_ITEM
+      [event.old_resource.feed_item, event.new_resource.feed_item]
     else
       puts "Unknown change_resource_type #{event.change_resource_type}."
       next

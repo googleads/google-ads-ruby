@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v6/common/policy_pb'
 require 'google/ads/google_ads/v6/enums/response_content_type_pb'
 require 'google/ads/google_ads/v6/resources/ad_pb'
 require 'google/api/annotations_pb'
@@ -22,6 +23,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v6.services.AdOperation" do
       optional :update_mask, :message, 2, "google.protobuf.FieldMask"
+      optional :policy_validation_parameter, :message, 3, "google.ads.googleads.v6.common.PolicyValidationParameter"
       oneof :operation do
         optional :update, :message, 1, "google.ads.googleads.v6.resources.Ad"
       end
