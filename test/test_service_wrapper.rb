@@ -41,20 +41,13 @@ class TestServiceWrapper < Minitest::Test
   end
 
   def test_service_call_old_style
-    @service_wrapper.search(
-      "123123123",
-      "select * from campaign",
-      page_size: 1000
-    )
-
-    assert_equal(
-      @service.request,
-      make_search_request(
-        customer_id: "123123123",
-        query: "select * from campaign",
+    assert_raises do
+      @service_wrapper.search(
+        "123123123",
+        "select * from campaign",
         page_size: 1000
-      ),
-    )
+      )
+    end
   end
 
   def test_service_call_new_style
@@ -96,7 +89,24 @@ class TestServiceWrapper < Minitest::Test
       make_search_request(
         customer_id: "123123123",
         query: "select * from campaign",
-        page_size: 1000
+        page_size: 1000,
+      ),
+    )
+  end
+
+  def test_service_call_new_style_shortcut
+    @service_wrapper.search(
+      customer_id: "123123123",
+      query: "select * from campaign",
+      page_size: 1000,
+    )
+
+    assert_equal(
+      @service.request,
+      make_search_request(
+        customer_id: "123123123",
+        query: "select * from campaign",
+        page_size: 1000,
       ),
     )
   end

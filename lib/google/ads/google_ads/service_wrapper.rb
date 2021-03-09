@@ -52,10 +52,7 @@ module Google
             # no args specified at all, just pass through
             service.public_send(name, request, nil)
           else
-            # this branch is the legacy version
-            kwargs.each do |name, value|
-              request.public_send("#{name}=", value)
-            end
+            # this branch is the legacy version, which is no longer supported
 
             # zip will fill with nils by default, so we truncate the number
             # of fields we set to match the argument length here.
@@ -65,7 +62,6 @@ module Google
 
             field_names = []
             args_and_fields.each do |(arg, field)|
-              write_field(request, arg, field)
               field_names << field.name
             end
 
@@ -74,14 +70,10 @@ module Google
               service_name_segments[service_name_segments.length-2]
             )
             method_name = "#{service_name}.#{name}"
-            deprecation.deprecate(
-              "Calling #{method_name} with positional " \
+            raise ArgumentError, "Calling #{method_name} with positional " \
               "arguments is deprecated, please update it to use kwargs, e.g.: " \
               "#{method_name}" \
               "(#{field_names.map { |fn| "#{fn}: ..."}.join(", ")})"
-            )
-
-            service.public_send(name, request)
           end
         end
 
