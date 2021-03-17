@@ -23,6 +23,7 @@ require 'google/ads/google_ads'
 def update_sitelink(customer_id, feed_item_id, sitelink_text)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
+  # [START update_sitelink]
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   operation = client.operation.update_resource.extension_feed_item(
@@ -37,6 +38,7 @@ def update_sitelink(customer_id, feed_item_id, sitelink_text)
     customer_id: customer_id,
     operations: [operation],
   )
+  # [END update_sitelink]
 
   puts "Updated extension feed item with resource name " \
     "'#{response.results.first.resource_name}'."
