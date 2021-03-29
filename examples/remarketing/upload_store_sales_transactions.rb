@@ -32,7 +32,9 @@ def upload_store_sales_transactions(
   external_id,
   advertiser_upload_date_time,
   bridge_map_version_id,
-  partner_id)
+  partner_id,
+  custom_key,
+  custom_value)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -48,6 +50,7 @@ def upload_store_sales_transactions(
     advertiser_upload_date_time,
     bridge_map_version_id,
     partner_id,
+    custom_key,
   )
 
   # Add transactions to the job
@@ -57,6 +60,7 @@ def upload_store_sales_transactions(
     customer_id,
     offline_user_data_job_resource_name,
     conversion_action_id,
+    custom_value,
   )
 
   # Issues an asynchronous request to run the offline user data job.
@@ -82,7 +86,8 @@ def create_offline_user_data_job(
   external_id,
   advertiser_upload_date_time,
   bridge_map_version_id,
-  partner_id)
+  partner_id,
+  custom_key)
   # TIP: If you are migrating from the AdWords API, please note tha Google Ads
   # API uses the term "fraction" instead of "rate". For example, loyalty_rate
   # in the AdWords API is called loyalty_fraction in the Google Ads API.
@@ -103,6 +108,7 @@ def create_offline_user_data_job(
     # indicates that you are uploading all 70 of the transactions that can be
     # identified by an email address or phone number.
     s.transaction_upload_fraction = 1.0
+    s.custom_key = custom_key unless custom_key.nil?
   end
 
   # Creates additional metadata required for uploading third party data.
@@ -169,10 +175,11 @@ def add_transactions_to_offline_user_data_job(
   offline_user_data_job_service,
   customer_id,
   offline_user_data_job_resource_name,
-  conversion_action_id)
+  conversion_action_id,
+  custom_value)
   # Constructs the operation for each transaction.
   user_data_job_operations = build_offline_user_data_job_operations(
-    client, customer_id, conversion_action_id)
+    client, customer_id, conversion_action_id, custom_value)
 
   # Issues a request to add the operations to the offline user data job.
   response = offline_user_data_job_service.add_offline_user_data_job_operations(
@@ -214,7 +221,8 @@ end
 def build_offline_user_data_job_operations(
   client,
   customer_id,
-  conversion_action_id)
+  conversion_action_id,
+  custom_value)
   operations = []
 
   # Creates the first transaction for upload based on an email address
@@ -235,18 +243,13 @@ def build_offline_user_data_job_operations(
       t.currency_code = "USD"
       # Converts the transaction amount from $200 USD to micros.
       t.transaction_amount_micros = 200_000_000
-<<<<<<< HEAD
-      # Specifies the date and time of the transaction. This date and time will
-      # be interpreted by the API using the Google Ads customer's time zone.
-      # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
-=======
       # Specifies the date and time of the transaction. The format is
       # "YYYY-MM-DD HH:MM:SS[+HH:MM]", where [+HH:MM] is an optional timezone
       # offset from UTC. If the offset is absent, the API will use the
       # account's timezone as default. Examples: "2018-03-05 09:15:00" or
       # "2018-02-01 14:34:30+03:00".
->>>>>>> internal_v6
       t.transaction_date_time = "2020-05-01 23:52:12"
+      t.custom_value = custom_value unless custom_value.nil?
     end
   end
 
@@ -272,6 +275,7 @@ def build_offline_user_data_job_operations(
       # be interpreted by the API using the Google Ads customer's time zone.
       # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
       t.transaction_date_time = "2020-05-14 19:07:02"
+      t.custom_value = custom_value unless custom_value.nil?
     end
   end
 
@@ -388,6 +392,22 @@ if __FILE__ == $0
       options[:partner_id] = v
     end
 
+    opts.on('-k' '--custom-key CUSTOM-KEY', String,
+      'Only required after creating a custom key and custom values in ' \
+      'the account. Custom key and values are used to segment store sales ' \
+      'conversions. This measurement can be used to provide more advanced ' \
+      'insights. If provided, a custom value must also be provided') do |v|
+      options[:custom_key] = v
+    end
+
+    opts.on('-v' '--custom-value CUSTOM-VALUE', String,
+      'Only required after creating a custom key and custom values in ' \
+      'the account. Custom key and values are used to segment store sales ' \
+      'conversions. This measurement can be used to provide more advanced ' \
+      'insights. If provided, a custom key must also be provided') do |v|
+      options[:custom_value] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -406,6 +426,8 @@ if __FILE__ == $0
       options[:advertiser_upload_date_time],
       options[:bridge_map_version_id],
       options[:partner_id],
+      options[:custom_key],
+      options[:custom_value],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
