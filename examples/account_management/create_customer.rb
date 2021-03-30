@@ -44,8 +44,6 @@ def create_customer(manager_customer_id)
     # https://support.google.com/google-ads/answer/6305348
     c.tracking_url_template = "{lpurl}?device={device}"
     c.final_url_suffix = "keyword={keyword}&matchtype={matchtype}&adgroupid={adgroupid}"
-
-    c.has_partners_badge = false
   end
 
   response = client.service.customer.create_customer_client(

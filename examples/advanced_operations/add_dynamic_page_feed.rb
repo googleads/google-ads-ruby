@@ -181,9 +181,7 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   query = <<~EOD
     SELECT
       campaign.id,
-      campaign.name,
-      campaign.dynamic_search_ads_setting.domain_name,
-      campaign.dynamic_search_ads_setting.language_code
+      campaign.name
     FROM
       campaign
     WHERE
@@ -204,22 +202,9 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   # [START add_dynamic_page_feed_1]
   campaign = result.campaign
 
-  if !campaign.dynamic_search_ads_setting \
-      || !campaign.dynamic_search_ads_setting.domain_name \
-      || campaign.dynamic_search_ads_setting.domain_name == "" \
-      || !campaign.dynamic_search_ads_setting.language_code \
-      || campaign.dynamic_search_ads_setting.language_code == ""
-    raise "Campaign id #{campaign_id} is not set up for dynamic search ads"
-  end
-
   op = client.operation.update_resource.campaign(campaign) do
     campaign.dynamic_search_ads_setting.feeds << feed_details.resource_name
   end
-  # You have to specify these fields on all requests, even if you don't change them.
-  # By adding them to the update_mask, the API treats them as new values, but we're
-  # just passing along the old values we selected in the query above.
-  op.update_mask.paths << "dynamic_search_ads_setting.language_code"
-  op.update_mask.paths << "dynamic_search_ads_setting.domain_name"
 
   response = client.service.campaign.mutate_campaigns(
     customer_id: customer_id,
