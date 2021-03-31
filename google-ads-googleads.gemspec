@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'google-protobuf', '~> 3.12'
 
   s.add_development_dependency 'bundler', ["> 1.9", "< 3"]
-  s.add_development_dependency 'rake', '~> 11.3'
+  s.add_development_dependency 'rake', '~> 13.0'
 
   s.add_development_dependency 'minitest', '~> 5.10'
 end
