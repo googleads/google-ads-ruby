@@ -90,7 +90,7 @@ def add_campaign_budget(client, customer_id)
   budget_name
 end
 
-# [START add_shopping_smart_ad_2]
+# [START add_shopping_smart_ad_3]
 def add_smart_shopping_campaign(
     client, customer_id, budget_name, merchant_center_id)
 
@@ -142,9 +142,9 @@ def add_smart_shopping_campaign(
 
   campaign_name
 end
-# [END add_shopping_smart_ad_2]
+# [END add_shopping_smart_ad_3]
 
-# [START add_shopping_smart_ad_1]
+# [START add_shopping_smart_ad_2]
 def add_smart_shopping_ad_group(client, customer_id, campaign_name)
   operation = client.operation.create_resource.ad_group do |ad_group|
     ad_group.name = "Earth to Mars cruise ##{(Time.new.to_f * 1000).to_i}"
@@ -167,9 +167,9 @@ def add_smart_shopping_ad_group(client, customer_id, campaign_name)
 
   ad_group_name
 end
-# [END add_shopping_smart_ad_1]
+# [END add_shopping_smart_ad_2]
 
-# [START add_shopping_smart_ad]
+# [START add_shopping_smart_ad_1]
 def add_smart_shopping_ad_group_ad(client, customer_id, ad_group_name)
 
   operation = client.operation.create_resource.ad_group_ad do |ad_group_ad|
@@ -188,7 +188,7 @@ def add_smart_shopping_ad_group_ad(client, customer_id, ad_group_name)
   puts "Created a Smart Shopping ad group ad " \
        "#{response.results.first.resource_name}"
 end
-# [END add_shopping_smart_ad]
+# [END add_shopping_smart_ad_1]
 
 def add_default_shopping_listing_group(client, customer_id, ad_group_name)
 

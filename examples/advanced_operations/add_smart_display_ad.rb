@@ -54,7 +54,7 @@ def add_smart_display_ad(
   )
 end
 
-# [START add_smart_display_ad_3]
+# [START add_smart_display_ad]
 def create_campaign_budget(client, customer_id)
   # Creates a campaign budget operation.
   operation = client.operation.create_resource.campaign_budget do |b|
@@ -75,9 +75,9 @@ def create_campaign_budget(client, customer_id)
 
   resource_name
 end
-# [END add_smart_display_ad_3]
+# [END add_smart_display_ad]
 
-# [START add_smart_display_ad_4]
+# [START add_smart_display_ad_1]
 def create_smart_display_campaign(client, customer_id, budget)
   # Creates a campaign operation.
   operation = client.operation.create_resource.campaign do |c|
@@ -110,9 +110,9 @@ def create_smart_display_campaign(client, customer_id, budget)
 
   resource_name
 end
-# [END add_smart_display_ad_4]
+# [END add_smart_display_ad_1]
 
-# [START add_smart_display_ad_2]
+# [START add_smart_display_ad_4]
 def create_ad_group(client, customer_id, campaign)
   # Creates an ad group operation.
   operation = client.operation.create_resource.ad_group do |ag|
@@ -133,9 +133,9 @@ def create_ad_group(client, customer_id, campaign)
 
   resource_name
 end
-# [END add_smart_display_ad_2]
+# [END add_smart_display_ad_4]
 
-# [START add_smart_display_ad]
+# [START add_smart_display_ad_2]
 def create_responsive_display_ad(
   client,
   customer_id,
@@ -207,9 +207,9 @@ def create_responsive_display_ad(
 
   resource_name
 end
-# [END add_smart_display_ad]
+# [END add_smart_display_ad_2]
 
-# [START add_smart_display_ad_1]
+# [START add_smart_display_ad_3]
 def create_image_asset(client, customer_id, image_url, image_name)
   # Creates an asset operation.
   operation = client.operation.create_resource.asset do |a|
@@ -232,7 +232,7 @@ def create_image_asset(client, customer_id, image_url, image_name)
 
   resource_name
 end
-# [END add_smart_display_ad_1]
+# [END add_smart_display_ad_3]
 
 if __FILE__ == $0
   options = {}

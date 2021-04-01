@@ -42,7 +42,7 @@ def add_google_my_business_location_extensions(
   create_customer_feed(client, customer_id, gmb_feed_resource_name)
 end
 
-# [START add_google_my_business_location_extensions_4]
+# [START add_google_my_business_location_extensions]
 def create_feed(
   client,
   customer_id,
@@ -83,9 +83,9 @@ def create_feed(
   gmb_feed_resource_name
   # [END add_google_my_business_location_extensions_1]
 end
-# [END add_google_my_business_location_extensions_4]
+# [END add_google_my_business_location_extensions]
 
-# [START add_google_my_business_location_extensions_5]
+# [START add_google_my_business_location_extensions_2]
 def create_customer_feed(
   client,
   customer_id,
@@ -141,7 +141,7 @@ def create_customer_feed(
       "attempts. Please retry the customer feed ADD operation later."
   end
 end
-# [END add_google_my_business_location_extensions_5]
+# [END add_google_my_business_location_extensions_2]
 
 if __FILE__ == $0
   # The maximum number of customer feed ADD operation attempts to make before

@@ -22,7 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-# [START add_remarketing_action_1]
+# [START add_remarketing_action]
 def add_remarketing_action(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -42,7 +42,7 @@ def add_remarketing_action(customer_id)
 
   # Step 2: Look up the remarketing action we created to get some extra
   # information about it, like its tag snippets.
-  # [START add_remarketing_action]
+  # [START add_remarketing_action_1]
   query = <<~EOQUERY
     SELECT
       remarketing_action.id,
@@ -53,7 +53,7 @@ def add_remarketing_action(customer_id)
     WHERE
       remarketing_action.resource_name = "#{remarketing_action_resource_name}"
   EOQUERY
-  # [END add_remarketing_action]
+  # [END add_remarketing_action_1]
 
   response = client.service.google_ads.search(
     customer_id: customer_id,
@@ -69,7 +69,7 @@ def add_remarketing_action(customer_id)
     puts "and the following event snippet:\n#{ts.event_snippet}"
   end
 end
-# [END add_remarketing_action_1]
+# [END add_remarketing_action]
 
 if __FILE__ == $0
   options = {}
