@@ -24,7 +24,6 @@ require "date"
 require "open-uri"
 require "google/ads/google_ads"
 
-# [START add_merchant_center_dynamic_remarketing_campaign]
 def add_merchant_center_dynamic_remarketing_campaign(
   customer_id,
   merchant_center_id,
@@ -53,7 +52,6 @@ def add_merchant_center_dynamic_remarketing_campaign(
   # Targets a specific user list for remarketing.
   attach_user_list(client, customer_id, ad_group_resource_name, user_list_id)
 end
-# [END add_merchant_center_dynamic_remarketing_campaign]
 
 # Creates a campaign linked to a Merchant Center product feed.
 def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
@@ -113,6 +111,7 @@ def create_ad_group(client, customer_id, campaign_resource_name)
 end
 
 # Creates the responsive display ad.
+# [START add_merchant_center_dynamic_remarketing_campaign]
 def create_ad(client, customer_id, ad_group_resource_name)
   marketing_image_url = "https://goo.gl/3b9Wfh"
   square_marketing_image_url = "https://goo.gl/mtt54n"
@@ -182,6 +181,7 @@ def create_ad(client, customer_id, ad_group_resource_name)
 
   resource_name
 end
+# [END add_merchant_center_dynamic_remarketing_campaign]
 
 # Adds an image to the Google Ads account.
 def upload_asset(client, customer_id, image_url, image_name)
