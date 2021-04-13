@@ -131,19 +131,19 @@ See the [Logging guide][].
 
 ## Ruby versions
 
-The client library supports versions 2.5 and up of Ruby. We plan to support 3
+The client library supports versions 2.6 and up of Ruby. We plan to support 3
 Ruby releases at any one time. As Ruby releases once a year on December 25th,
-that means towards the end of 2020 we will look at dropping 2.5 and adding
-support for the next version of ruby
+we will look at dropping support for the oldest version early in the following
+year.
 
 # Authors
 
-Author:
+Authors:
 
  - Danial Klimkin
  - Michael Cloonan
 
-Maintainer:
+Maintainers:
 
  - Michael Cloonan
- - Penelope Phippen
+ - Fei Xiang
