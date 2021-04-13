@@ -91,6 +91,7 @@ def create_feed(client, customer_id)
 end
 
 # Retrieves the place holder fields to feed attributes map for a real estate feed.
+# [START add_real_estate_feed]
 def real_estate_placeholder_fields_map_for(
   client,
   customer_id,
@@ -136,6 +137,7 @@ def real_estate_placeholder_fields_map_for(
 
   fields_map
 end
+# [END add_real_estate_feed]
 
 # Creates a feed mapping for a given feed.
 def create_feed_mapping(
@@ -180,6 +182,7 @@ def create_feed_mapping(
 end
 
 # Adds a new item to the feed.
+# [START add_real_estate_feed_1]
 def create_feed_item(
   client,
   customer_id,
@@ -219,6 +222,7 @@ def create_feed_item(
   puts "Feed item with resource name " \
     "#{response.results.first.resource_name} was created."
 end
+# [END add_real_estate_feed_1]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

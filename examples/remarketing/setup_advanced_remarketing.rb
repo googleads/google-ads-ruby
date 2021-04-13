@@ -45,15 +45,20 @@ def setup_advanced_remarketing(customer_id)
       # (disjunctive normal form).
       # That is, rule items will be ANDed together within rule item groups and
       # the groups themselves will be ORed together.
+      # [START setup_advanced_remarketing_6]
       r.expression_rule_user_list = client.resource.expression_rule_user_list_info do |expr|
         expr.rule = client.resource.user_list_rule_info do |info|
+          # [END setup_advanced_remarketing_6]
           # Creates a rule group that includes the checkout and cart size rules.
           # Combining the two rule items into a user_list_rule_item_group_info
           # object causes Google Ads to AND their rules together.
           # To instead OR the rules together, each rule should be placed in its
           # own rule item group.
+          # [START setup_advanced_remarketing_2]
           info.rule_item_groups << client.resource.user_list_rule_item_group_info do |g|
+            # [END setup_advanced_remarketing_2]
             # Creates a rule targeting any user that visited the checkout page.
+            # [START setup_advanced_remarketing]
             g.rule_items << client.resource.user_list_rule_item_info do |rule|
               # The rule variable name must match a corresponding key name fired
               # from a pixel.
@@ -67,8 +72,10 @@ def setup_advanced_remarketing(customer_id)
                 sr.value = "checkout"
               end
             end
+            # [END setup_advanced_remarketing]
             # Creates a rule targeting any user that had more than one item in
             # their cart.
+            # [START setup_advanced_remarketing_1]
             g.rule_items << client.resource.user_list_rule_item_info do |rule|
               # The rule variable name must match a corresponding key name fired
               # from a pixel.
@@ -78,6 +85,7 @@ def setup_advanced_remarketing(customer_id)
                 nr.value = 1.0
               end
             end
+            # [END setup_advanced_remarketing_1]
           end
           # Creates a rule group targeting users who checked out between
           # November and December by using the start and end date rules.
@@ -85,10 +93,13 @@ def setup_advanced_remarketing(customer_id)
           # object causes Google Ads to AND their rules together.
           # To instead OR the rules together, each rule should be placed in its
           # own rule item group.
+          # [START setup_advanced_remarketing_5]
           info.rule_item_groups << client.resource.user_list_rule_item_group_info do |g|
+            # [END setup_advanced_remarketing_5]
             # Creates the rule_item for checkout start date.
             # The tags and keys used below must have been in place in the past
             # for the date range specified in the rules.
+            # [START setup_advanced_remarketing_3]
             g.rule_items << client.resource.user_list_rule_item_info do |rule|
               # The rule variable name must match a corresponding key name fired
               # from a pixel.
@@ -98,7 +109,9 @@ def setup_advanced_remarketing(customer_id)
                 dr.value = "20191031"
               end
             end
+            # [END setup_advanced_remarketing_3]
             # Creates the rule_item for checkout end date.
+            # [START setup_advanced_remarketing_4]
             g.rule_items << client.resource.user_list_rule_item_info do |rule|
               # The rule variable name must match a corresponding key name fired
               # from a pixel.
@@ -108,6 +121,7 @@ def setup_advanced_remarketing(customer_id)
                 dr.value = "20200101"
               end
             end
+            # [END setup_advanced_remarketing_4]
           end
         end
       end

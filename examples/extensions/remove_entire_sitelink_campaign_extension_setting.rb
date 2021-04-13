@@ -28,6 +28,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START remove_entire_sitelink_campaign_extension_setting]
 def remove_entire_sitelink_campaign_extension_setting(customer_id, campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -79,6 +80,7 @@ def remove_entire_sitelink_campaign_extension_setting(customer_id, campaign_id)
       "#{mutate_operation_responses[i].extension_feed_item_result.resource_name}"
   end
 end
+# [END remove_entire_sitelink_campaign_extension_setting]
 
 # Creates a mutate operation for the sitelink campaign extension setting that
 # will be removed.
@@ -98,6 +100,7 @@ end
 
 # Returns all sitelink extension feed items associated to the specified
 # campaign extension setting.
+# [START remove_entire_sitelink_campaign_extension_setting_1]
 def get_all_sitelink_extension_feed_items(
   client,
   google_ads_service,
@@ -134,6 +137,7 @@ def get_all_sitelink_extension_feed_items(
   end
   extension_feed_item_resource_names
 end
+# [END remove_entire_sitelink_campaign_extension_setting_1]
 
 # Creates mutate operations for the sitelink extension feed items that will be
 # removed.

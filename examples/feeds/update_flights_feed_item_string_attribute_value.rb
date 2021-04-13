@@ -37,6 +37,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START update_flights_feed_item_string_attribute_value]
 def update_flights_feed_item_string_attribute_value(
   customer_id,
   feed_id,
@@ -105,6 +106,7 @@ def update_flights_feed_item_string_attribute_value(
   puts "Feed item with resource name " \
     "'#{response.results.first.resource_name}' was updated."
 end
+# [END update_flights_feed_item_string_attribute_value]
 
 def flight_placeholder_fields_map_for(
   client,

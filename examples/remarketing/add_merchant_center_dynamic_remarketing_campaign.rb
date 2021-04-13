@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+# Encoding: utf-8
 #
 # Copyright 2020 Google LLC
 #
@@ -54,6 +54,7 @@ def add_merchant_center_dynamic_remarketing_campaign(
 end
 
 # Creates a campaign linked to a Merchant Center product feed.
+# [START add_merchant_center_dynamic_remarketing_campaign_2]
 def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
   operation = client.operation.create_resource.campaign do |c|
     c.name = "Shopping campaign ##{(Time.new.to_f * 1000).to_i}"
@@ -89,8 +90,10 @@ def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
   puts "Created campaign: #{response.results.first.resource_name}"
   response.results.first.resource_name
 end
+# [END add_merchant_center_dynamic_remarketing_campaign_2]
 
 # Creates an ad group for the remarketing campaign.
+# [START add_merchant_center_dynamic_remarketing_campaign_1]
 def create_ad_group(client, customer_id, campaign_resource_name)
   # Creates the ad group.
   ad_group = client.resource.ad_group do |ag|
@@ -109,6 +112,7 @@ def create_ad_group(client, customer_id, campaign_resource_name)
   puts "Created ad group: #{response.results.first.resource_name}"
   response.results.first.resource_name
 end
+# [END add_merchant_center_dynamic_remarketing_campaign_1]
 
 # Creates the responsive display ad.
 # [START add_merchant_center_dynamic_remarketing_campaign]
@@ -208,6 +212,7 @@ def upload_asset(client, customer_id, image_url, image_name)
 end
 
 # Targets a user list.
+# [START add_merchant_center_dynamic_remarketing_campaign_3]
 def attach_user_list(client, customer_id, ad_group_resource_name, user_list_id)
   user_list_resource_name = client.path.user_list(customer_id, user_list_id)
 
@@ -229,6 +234,7 @@ def attach_user_list(client, customer_id, ad_group_resource_name, user_list_id)
 
   puts "Created ad group criterion: #{response.results.first.resource_name}"
 end
+# [END add_merchant_center_dynamic_remarketing_campaign_3]
 
 if __FILE__ == $0
   options = {}
