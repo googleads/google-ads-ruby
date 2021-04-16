@@ -47,6 +47,7 @@ def add_local_campaign(customer_id)
   create_local_ad(client, customer_id, ad_group_resource_name)
 end
 
+# [START add_local_campaign]
 def create_campaign_budget(client, customer_id)
   # Creates a campaign budget operation.
   operation = client.operation.create_resource.campaign_budget do |cb|
@@ -68,7 +69,9 @@ def create_campaign_budget(client, customer_id)
 
   budget_resource_name
 end
+# [END add_local_campaign]
 
+# [START add_local_campaign_1]
 def create_campaign(client, customer_id, budget_resource_name)
   # Creates a campaign operation.
   operation = client.operation.create_resource.campaign do |c|
@@ -117,7 +120,9 @@ def create_campaign(client, customer_id, budget_resource_name)
 
   campaign_resource_name
 end
+# [END add_local_campaign_1]
 
+# [START add_local_campaign_2]
 def create_ad_group(client, customer_id, campaign_resource_name)
   # Creates an ad group operation.
   # Note that the ad group type must not be set.
@@ -141,7 +146,9 @@ def create_ad_group(client, customer_id, campaign_resource_name)
 
   ad_group_resource_name
 end
+# [END add_local_campaign_2]
 
+# [START add_local_campaign_3]
 def create_local_ad(client, customer_id, ad_group_resource_name)
   # Creates an ad group ad operation.
   operation = client.operation.create_resource.ad_group_ad do |aga|
@@ -192,7 +199,9 @@ def create_local_ad(client, customer_id, ad_group_resource_name)
   puts "Created ad group ad with resource name: " \
     "'#{response.results.first.resource_name}'."
 end
+# [END add_local_campaign_3]
 
+# [START add_local_campaign_4]
 def create_image_asset(client, customer_id, image_url, image_name)
   # Creates an asset operation.
   operation = client.operation.create_resource.asset do |a|
@@ -216,7 +225,9 @@ def create_image_asset(client, customer_id, image_url, image_name)
 
   asset_resource_name
 end
+# [END add_local_campaign_4]
 
+# [START add_local_campaign_5]
 def create_youtube_video_asset(
   client,
   customer_id,
@@ -245,6 +256,7 @@ def create_youtube_video_asset(
 
   asset_resource_name
 end
+# [END add_local_campaign_5]
 
 if __FILE__ == $0
   MARKETING_IMAGE_URL = 'https://goo.gl/3b9Wfh'.freeze

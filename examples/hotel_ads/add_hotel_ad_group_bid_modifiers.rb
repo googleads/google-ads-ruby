@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_hotel_ad_group_bid_modifiers]
 def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -71,6 +72,7 @@ def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
     puts "\t#{added_ad_group_bid_modifier.resource_name}"
   end
 end
+# [END add_hotel_ad_group_bid_modifiers]
 
 if __FILE__ == $0
   options = {}

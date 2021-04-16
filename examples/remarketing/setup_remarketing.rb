@@ -73,6 +73,7 @@ def setup_remarketing(customer_id, campaign_id, ad_group_id, bid_modifier_value)
 end
 
 # Creates a user list targeting users that have visited a given url.
+# [START setup_remarketing]
 def create_user_list(client, customer_id)
   # Creates the user list operation.
   operation = client.operation.create_resource.user_list do |ul|
@@ -114,8 +115,10 @@ def create_user_list(client, customer_id)
 
   user_list_resource_name
 end
+# [END setup_remarketing]
 
 # Creates an ad group criterion that targets a user list with an ad group.
+# [START setup_remarketing_1]
 def target_ads_in_ad_group_to_user_list(
   client,
   customer_id,
@@ -142,6 +145,7 @@ def target_ads_in_ad_group_to_user_list(
 
   ad_group_criterion_resource_name
 end
+# [END setup_remarketing_1]
 
 # Updates the bid modifier on an ad group criterion.
 def modify_ad_group_bids(
@@ -167,6 +171,7 @@ end
 
 # Removes all ad group criteria targeting a user list under a given campaign.
 # This is a necessary step before targeting a user list at the campaign level.
+# [START setup_remarketing_3]
 def remove_existing_list_criteria_from_ad_group(
   client,
   customer_id,
@@ -193,8 +198,10 @@ def remove_existing_list_criteria_from_ad_group(
       "'#{result.resource_name}'"
   end
 end
+# [END setup_remarketing_3]
 
 # Finds all of user list ad group criteria under a campaign.
+# [START setup_remarketing_2]
 def get_user_list_ad_group_criterion(
   client,
   customer_id,
@@ -229,8 +236,10 @@ def get_user_list_ad_group_criterion(
 
   user_list_criteria
 end
+# [END setup_remarketing_2]
 
 # Creates a campaign criterion that targets a user list with a campaign.
+# [START setup_remarketing_4]
 def target_ads_in_campaign_to_user_list(
   client,
   customer_id,
@@ -257,6 +266,7 @@ def target_ads_in_campaign_to_user_list(
 
   campaign_criterion_resource_name
 end
+# [END setup_remarketing_4]
 
 # Updates the bid modifier on a campaign criterion.
 def modify_campaign_bids(

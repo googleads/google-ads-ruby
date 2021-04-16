@@ -68,6 +68,7 @@ def reject_merchant_center_links(customer_id, merchant_center_account_id)
 end
 
 # Removes a Merchant Center link from a Google Ads client customer account.
+# [START reject_merchant_center_link]
 def remove_merchant_center_link(
   client,
   merchant_center_link_service,
@@ -85,6 +86,7 @@ def remove_merchant_center_link(
   puts "Removed Merchant Center link with resource name: " \
     "#{response.result.resource_name}"
 end
+# [END reject_merchant_center_link]
 
 if __FILE__ == $0
   options = {}

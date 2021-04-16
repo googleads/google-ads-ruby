@@ -28,12 +28,14 @@ def update_audience_targeting_restriction(customer_id, ad_group_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Creates a query that retrieves the targeting settings from a given ad group.
+  # [START update_audience_target_restriction]
   query = <<~QUERY
     SELECT ad_group.id, ad_group.name,
            ad_group.targeting_setting.target_restrictions
     FROM ad_group
     WHERE ad_group.id = #{ad_group_id}
   QUERY
+  # [END update_audience_target_restriction]
 
   # Issues a search request.
   response = client.service.google_ads.search(
@@ -60,6 +62,7 @@ def update_audience_targeting_restriction(customer_id, ad_group_id)
     # because Google will overwrite the entire targeting_setting field of the
     # ad group when the field mask includes targeting_setting in an update
     # operation.
+    # [START update_audience_target_restriction_1]
     ad_group.targeting_setting.target_restrictions.each do |r|
       # Prints the results.
       targeting_dimension = r.targeting_dimension
@@ -86,6 +89,7 @@ def update_audience_targeting_restriction(customer_id, ad_group_id)
         end
       end
     end
+    # [END update_audience_target_restriction_1]
   end
 
   # Only updates the TargetingSetting on the ad group if there is an AUDIENCE
@@ -108,6 +112,7 @@ def update_audience_targeting_restriction(customer_id, ad_group_id)
 end
 
 # Updates the TargetingSetting of an ad group.
+# [START update_audience_target_restriction_2]
 def update_targeting_setting(
   client,
   customer_id,
@@ -131,6 +136,7 @@ def update_targeting_setting(
     "#{response.results.first.resource_name}; set the AUDIENCE target " \
     "restriction to 'Observation'."
 end
+# [END update_audience_target_restriction_2]
 
 if __FILE__ == $0
   PAGE_SIZE = 1000

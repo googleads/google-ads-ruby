@@ -76,6 +76,7 @@ def add_ad_customizer(customer_id, ad_group_ids)
 end
 
 # Creates a feed to be used for ad customization.
+# [START add_ad_customizer]
 def create_ad_customizer_feed(
   client, customer_id, feed_name)
   # Creates a feed operation for creating a feed.
@@ -110,8 +111,10 @@ def create_ad_customizer_feed(
 
   feed_resource_name
 end
+# [END add_ad_customizer]
 
 # Retrieves attributes for a feed.
+# [START add_ad_customizer_1]
 def get_feed_attributes(
   client, customer_id, ad_customizer_feed_resource_name)
   query = <<~QUERY
@@ -136,8 +139,10 @@ def get_feed_attributes(
 
   feed_details
 end
+# [END add_ad_customizer_1]
 
 # Creates a feed mapping for a given feed.
+# [START add_ad_customizer_2]
 def create_ad_customizer_mapping(
   client,
   customer_id,
@@ -173,8 +178,10 @@ def create_ad_customizer_mapping(
     puts "Created feed mapping with resource name: #{result.resource_name}"
   end
 end
+# [END add_ad_customizer_2]
 
 # Creates two different feed items to enable two different ad customizations.
+# [START add_ad_customizer_3]
 def create_feed_items(
   client,
   customer_id,
@@ -216,8 +223,10 @@ def create_feed_items(
 
   feed_item_resource_names
 end
+# [END add_ad_customizer_3]
 
 # Creates a FeedItemOperation.
+# [START add_ad_customizer_4]
 def create_feed_item_operation(
   client,
   name,
@@ -241,10 +250,12 @@ def create_feed_item_operation(
     end
   end
 end
+# [END add_ad_customizer_4]
 
 # Restricts the feed items to work only with a specific ad group; this prevents
 # the feed items from being used elsewhere and makes sure they are used only for
 # customizing a specific ad group.
+# [START add_ad_customizer_5]
 def create_feed_item_targets(
   client,
   customer_id,
@@ -272,9 +283,11 @@ def create_feed_item_targets(
     puts "Added feed item target with resource name #{response.results.first.resource_name}."
   end
 end
+# [END add_ad_customizer_5]
 
 # Creates expanded text ads that use the ad customizer feed to populate the
 # placeholders.
+# [START add_ad_customizer_6]
 def create_ads_with_customizations(
   client,
   customer_id,
@@ -307,6 +320,7 @@ def create_ads_with_customizations(
     puts "Added an ad with resource name #{result.resource_name}."
   end
 end
+# [END add_ad_customizer_6]
 
 if __FILE__ == $0
   # We're creating two different ad groups to be dynamically populated by

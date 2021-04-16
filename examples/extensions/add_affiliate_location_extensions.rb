@@ -23,6 +23,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_affiliate_location_extensions]
 def add_affiliate_location_extensions(
   customer_id,
   chain_id,
@@ -60,6 +61,7 @@ def add_affiliate_location_extensions(
     chain_id,
   )
 end
+# [END add_affiliate_location_extensions]
 
 # Deletes the existing location extension feeds.
 def delete_location_extension_feeds(client, customer_id)
@@ -193,6 +195,7 @@ end
 
 # Waits for the affiliate location extension feed to be ready. An exponential
 # back-off policy with a maximum number of attempts is used to poll the server.
+# [START add_affiliate_location_extensions_2]
 def wait_for_feed_to_be_ready(client, customer_id, feed_resource_name)
   number_of_attempts = 0
 
@@ -220,8 +223,10 @@ def wait_for_feed_to_be_ready(client, customer_id, feed_resource_name)
   raise "The affiliate location feed mapping is still not ready after " \
     "#{MAX_FEEDMAPPING_RETRIEVAL_ATTEMPTS} attempt(s)."
 end
+# [END add_affiliate_location_extensions_2]
 
 # Gets the affiliate location extension feed mapping.
+# [START add_affiliate_location_extensions_1]
 def get_affiliated_location_extension_feed_mapping(
   client,
   customer_id,
@@ -248,8 +253,10 @@ def get_affiliated_location_extension_feed_mapping(
   response = responses.page.response
   response.total_results_count == 1 ? response.results.first.feed_mapping : nil
 end
+# [END add_affiliate_location_extensions_1]
 
 # Creates the campaign feed.
+# [START add_affiliate_location_extensions_3]
 def create_campaign_feed(
   client,
   customer_id,
@@ -279,8 +286,10 @@ def create_campaign_feed(
   puts "Campaign feed created with resource name: " \
     "#{response.results.first.resource_name}"
 end
+# [END add_affiliate_location_extensions_3]
 
 # Gets the feed attribute ID for the retail chain ID.
+# [START add_affiliate_location_extensions_4]
 def get_attribute_id_for_chain_id(feed_mapping)
   feed_mapping.attribute_field_mappings.each do |fm|
     if fm.affiliate_location_field == :CHAIN_ID
@@ -290,6 +299,7 @@ def get_attribute_id_for_chain_id(feed_mapping)
 
   raise "Affiliate location feed mapping isn't setup correctly."
 end
+# [END add_affiliate_location_extensions_4]
 
 if __FILE__ == $0
   POLL_FREQUENCY_SECONDS = 5

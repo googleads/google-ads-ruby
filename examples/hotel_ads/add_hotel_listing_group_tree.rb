@@ -106,6 +106,7 @@ def add_root_node(
 end
 
 # Creates child nodes of level 1, partitioned by the hotel class info.
+# [START add_hotel_listing_group_tree]
 def add_level1_nodes(
   client,
   customer_id,
@@ -179,6 +180,7 @@ def add_level1_nodes(
 
   other_hotels_ad_group_criterion.resource_name
 end
+# [END add_hotel_listing_group_tree]
 
 # Creates child nodes of level 2, partitioned by the country region.
 def add_level2_nodes(

@@ -42,6 +42,7 @@ def remove_flights_feed_item_attribute_value(
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START remove_flights_feed_item_attribute_value]
   # Gets a map of the placeholder values to feed attributes.
   placeholders_to_feed_attributes_map = flight_placeholder_fields_map_for(
     client,
@@ -80,7 +81,9 @@ def remove_flights_feed_item_attribute_value(
   feed_item_attribute_values = feed_item.attribute_values.select.with_index {
     |item, idx| idx != attribute_index
   }
+  # [END remove_flights_feed_item_attribute_value]
 
+  # [START remove_flights_feed_item_attribute_value_1]
   # Creates the feed item operation.
   operation = client.operation.update_resource.feed_item(feed_item_resource_name) do |item|
     item.attribute_values.replace(feed_item_attribute_values)
@@ -94,6 +97,7 @@ def remove_flights_feed_item_attribute_value(
   puts "Feed item with resource name #{response.results.first.resource_name} " \
     "was updated to remove the value of placeholder field type " \
     "#{flight_placeholder_field_name}."
+  # [END remove_flights_feed_item_attribute_value_1]
 end
 
 def flight_placeholder_fields_map_for(

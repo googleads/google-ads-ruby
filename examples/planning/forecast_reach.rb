@@ -51,6 +51,7 @@ def show_plannable_locations(reach_plan_service)
 end
 
 # Lists plannable products for a given location.
+# [START forecast_reach_2]
 def show_plannable_products(reach_plan_service)
   response = reach_plan_service.list_plannable_products(
     plannable_location_id: LOCATION_ID,
@@ -74,8 +75,10 @@ def show_plannable_products(reach_plan_service)
     end
   end
 end
+# [END forecast_reach_2]
 
 # Retrieves and prints the reach curve for a given product mix.
+# [START forecast_reach]
 def get_reach_curve(
   client,
   reach_plan_service,
@@ -136,8 +139,10 @@ def get_reach_curve(
       "#{products}"
   end
 end
+# [END forecast_reach]
 
 # Gets a forecast for product mix created manually.
+# [START forecast_reach_3]
 def forecast_manual_mix(client, reach_plan_service, customer_id)
   # Set up a ratio to split the budget between two products.
   trueview_allocation = 0.15
@@ -167,8 +172,10 @@ def forecast_manual_mix(client, reach_plan_service, customer_id)
     CURRENCY_CODE,
   )
 end
+# [END forecast_reach_3]
 
 # Gets a forecast for a product mix based on your set of preferences.
+# [START forecast_reach_1]
 def forecast_suggested_mix(client, reach_plan_service, customer_id)
   preferences = client.resource.preferences do |p|
     p.has_guaranteed_price = true
@@ -203,6 +210,7 @@ def forecast_suggested_mix(client, reach_plan_service, customer_id)
     CURRENCY_CODE,
   )
 end
+# [END forecast_reach_1]
 
 if __FILE__ == $0
   CUSTOMER_ID = 'INSERT_CUSTOMER_ID_HERE';

@@ -30,6 +30,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_shopping_product_listing_group_tree]
 def add_shopping_product_listing_group_tree(
   customer_id,
   ad_group_id,
@@ -200,6 +201,7 @@ def add_shopping_product_listing_group_tree(
   end
   puts "#{total_count} criteria added in total."
 end
+# [END add_shopping_product_listing_group_tree]
 
 def remove_listing_group_tree(client, customer_id, ad_group_id)
   ga_service = client.service.google_ads

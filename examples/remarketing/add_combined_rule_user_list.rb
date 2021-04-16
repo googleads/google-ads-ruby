@@ -22,6 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
+# [START add_combined_rule_user_list]
 def add_combined_rule_user_list(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -88,6 +89,7 @@ def add_combined_rule_user_list(customer_id)
   puts "Created user list with resource name " \
     "#{response.results.first.resource_name}"
 end
+# [END add_combined_rule_user_list]
 
 if __FILE__ == $0
   URL_STRING = "url__"
