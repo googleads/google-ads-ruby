@@ -23,7 +23,6 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-# [START add_affiliate_location_extensions]
 def add_affiliate_location_extensions(
   customer_id,
   chain_id,
@@ -61,7 +60,6 @@ def add_affiliate_location_extensions(
     chain_id,
   )
 end
-# [END add_affiliate_location_extensions]
 
 # Deletes the existing location extension feeds.
 def delete_location_extension_feeds(client, customer_id)
@@ -165,6 +163,7 @@ def remove_feeds(client, customer_id, feeds)
 end
 
 # Creates the affiliate location extension feed.
+# [START add_affiliate_location_extensions]
 def create_affiliate_location_extension_feed(client, customer_id, chain_id)
   # Creates a feed that will sync to retail addresses for a given retail
   # chain ID.
@@ -192,6 +191,7 @@ def create_affiliate_location_extension_feed(client, customer_id, chain_id)
 
   feed_resource_name
 end
+# [END add_affiliate_location_extensions]
 
 # Waits for the affiliate location extension feed to be ready. An exponential
 # back-off policy with a maximum number of attempts is used to poll the server.
