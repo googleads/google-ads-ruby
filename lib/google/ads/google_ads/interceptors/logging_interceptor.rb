@@ -58,6 +58,13 @@ module Google
               if response.respond_to?(:partial_failure_error) && response.partial_failure_error
                 @logger.debug { build_partial_failure_message(response) }
               end
+              @logger.debug {
+                  request_id = call
+                    .instance_variable_get(:@wrapped)
+                    .instance_variable_get(:@call)
+                    .trailing_metadata["request-id"]
+                  "Request ID for preceding non-streaming request: #{request_id}"
+                }
               response
             rescue Exception
               @logger.warn { build_summary_message(request, call, method, true) }
