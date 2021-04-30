@@ -312,8 +312,9 @@ module Google
                                 "no"
                               end
 
-            trailing_metadata = call
-              .instance_variable_get(:@wrapped)
+            wrapped_var = call.instance_variable_get(:@wrapped)
+
+            trailing_metadata = wrapped_var
               .instance_variable_get(:@call)
               .trailing_metadata
 
@@ -322,7 +323,7 @@ module Google
 
             [
               "CID: #{customer_id}",
-              "Host: #{call.instance_variable_get('@wrapped').peer}",
+              "Host: #{wrapped_var.peer}",
               "Method: #{method}",
               "IsFault: #{is_fault_string}",
               "Request ID: #{request_id}",
