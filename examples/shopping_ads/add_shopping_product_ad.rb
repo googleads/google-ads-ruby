@@ -177,7 +177,10 @@ def add_default_shopping_listing_group(client, customer_id, ad_group_name)
   end
 
   service = client.service.ad_group_criterion
-  response = service.mutate_ad_group_criteria(customer_id, [operation])
+  response = service.mutate_ad_group_criteria(
+    customer_id: customer_id,
+    operations: [operation]
+  )
 
   puts "Added an ad group criterion containing a listing group with resource " \
        "name #{response.results.first.resource_name}."

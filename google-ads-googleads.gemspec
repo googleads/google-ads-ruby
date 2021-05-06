@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.5.0'
   s.summary = 'Google client library for the Google Ads API'
 
-  s.add_dependency 'gapic-common', '~> 0.3.0'
+  s.add_dependency 'gapic-common', '~> 0.4.1'
   s.add_dependency 'google-protobuf', '~> 3.12'
 
   s.add_development_dependency 'bundler', ["> 1.9", "< 3"]
