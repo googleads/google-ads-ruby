@@ -1,3 +1,6 @@
+11.0.0:
+ - Removed support for v4.
+
 10.0.0:
  - Removing support for old-style positional arguments. If you were still
  using these, see this article for migration instructions:

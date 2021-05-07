@@ -37,6 +37,7 @@ module Google
             account_link: [:customer, [:account_link_id]],
             ad_group_ad_label: [:customer, [:ad_group, :ad, :label]],
             ad_group_ad: [:customer, [:ad_group, :ad]],
+            ad_group_asset: [:customer, :ad_group, :asset, :field_type],
             ad_group_audience_view: [:customer, [:ad_group, :criterion]],
             ad_group_bid_modifier: [:customer, [:ad_group, :criterion]],
             ad_group_criterion_label: [:customer, [:ad_group, :criterion, :label]],
@@ -54,6 +55,7 @@ module Google
             asset: [:customer, [:asset]],
             batch_job: [:customer, [:batch_job]],
             bidding_strategy: [:customer, [:bidding_strategy]],
+            bidding_strategy_simulation: [:customer, :bidding_strategy, :type, :modification_method, :start_date, :end_date],
             billing_setup: [:customer, [:billing]],
             campaign_audience_view: [:customer, [:campaign, :criterion]],
             campaign_bid_modifier: [:customer, [:campaign, :criterion]],
@@ -65,6 +67,7 @@ module Google
             campaign_extension_setting: [:customer, [:campaign, :extension_type]],
             campaign_feed: [:customer, [:campaign, :feed]],
             campaign_label: [:customer, [:campaign, :label]],
+            campaign_simulation: [:customer, :campaign, :type, :modification_method, :start_date, :end_date],
             campaign_shared_set: [:customer, [:campaign, :shared_set]],
             campaign: [:customer, [:campaign]],
             carrier_constant: [:criterion],
@@ -72,9 +75,11 @@ module Google
             click_view: [:customer, [:date, :gclid]],
             combined_audience: [:customer, :combined_audience],
             conversion_action: [:customer, [:conversion_action]],
+            conversion_custom_variable: [:customer, :conversion_custom_variable],
             currency_constant: [:currency_constant],
             custom_audience: [:customer, :custom_audience],
             custom_interest: [:customer, [:custom_interest]],
+            customer_asset: [:customer, :asset, :field_type],
             customer_client_link: [:customer, [:client_customer, :manager_link]],
             customer_client: [:customer, [:client_customer]],
             customer_extension_setting: [:customer, [:extension_type]],
@@ -116,13 +121,13 @@ module Google
             keyword_view: [:customer, [:ad_group, :criterion]],
             label: [:customer, [:label]],
             language_constant: [:criterion],
+            life_event: [:customer, :life_event],
             location_view: [:customer, [:campaign, :criterion]],
             managed_placement_view: [:customer, [:ad_group, :criterion]],
             media_file: [:customer, [:media_file]],
             merchant_center_link: [:customer, [:merchant_center]],
             mobile_app_category_constant: [:mobile_app_category],
             mobile_device_constant: [:criterion],
-            mutate_job: [:customer, [:mutate_job]],
             operating_system_version_constant: [:criterion],
             payments_account: [:customer, :payments_account_id],
             parental_status_view: [:customer, [:ad_group, :criterion]],
@@ -140,23 +145,43 @@ module Google
             user_interest: [:customer, [:user_interest]],
             user_list: [:customer, [:user_list]],
             video: [:customer, [:video]],
+            webpage_view: [:customer, :ad_group, :criterion],
           }
 
-          PATH_LOOKUP_V4 = PATH_LOOKUP_BASE.reject { |k, _|
+          PATH_LOOKUP_V5 = PATH_LOOKUP_BASE.reject { |k, _|
             [
-              :mutate_job,
               :combined_audience,
               :custom_audience,
               :customer_user_access,
               :feed_item_set_link,
               :feed_item_set,
               :customer_user_access_invitation,
+              :ad_group_asset,
+              :bidding_strategy_simulation,
+              :campaign_simulation,
+              :conversion_custom_variable,
+              :customer_asset,
+              :life_event,
+              :webpage_view,
             ].include?(k)
           }
-          PATH_LOOKUP_V5 = PATH_LOOKUP_V4
 
           PATH_LOOKUP_V6 = PATH_LOOKUP_BASE
-            .reject { |k, _| [:mutate_job].include?(k) }
+            .reject { |k, _|
+              [
+                :ad_group_asset,
+                :bidding_strategy_simulation,
+                :campaign_simulation,
+                :conversion_custom_variable,
+                :customer_asset,
+                :life_event,
+                :webpage_view,
+              ].include?(k)
+            }
+            .map { |k, v| [k, v.flatten] }
+            .to_h
+
+          PATH_LOOKUP_V7 = PATH_LOOKUP_BASE
             .map { |k, v| [k, v.flatten] }
             .to_h
         end

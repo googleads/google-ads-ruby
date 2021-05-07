@@ -181,7 +181,8 @@ def update_campaign_dsa_setting(client, customer_id, campaign_id, feed_details)
   query = <<~EOD
     SELECT
       campaign.id,
-      campaign.name
+      campaign.name,
+      campaign.dynamic_search_ads_setting.feeds
     FROM
       campaign
     WHERE
