@@ -22,7 +22,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def update_audience_targeting_restriction(customer_id, ad_group_id)
+def update_audience_target_restriction(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -177,7 +177,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    update_audience_targeting_restriction(
+    update_audience_target_restriction(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:ad_group_id),
     )
