@@ -312,11 +312,21 @@ module Google
                                 "no"
                               end
 
+            wrapped_var = call.instance_variable_get(:@wrapped)
+
+            trailing_metadata = wrapped_var
+              .instance_variable_get(:@call)
+              .trailing_metadata
+
+            request_id = "N/A"
+            request_id = trailing_metadata["request-id"] if trailing_metadata
+
             [
               "CID: #{customer_id}",
-              "Host: #{call.instance_variable_get('@wrapped').peer}",
+              "Host: #{wrapped_var.peer}",
               "Method: #{method}",
               "IsFault: #{is_fault_string}",
+              "Request ID: #{request_id}",
             ].join(", ")
           end
 
