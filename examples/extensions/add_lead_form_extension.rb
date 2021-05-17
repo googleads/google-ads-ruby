@@ -41,6 +41,7 @@ def add_lead_form_extension(customer_id, campaign_id)
   )
 end
 
+# [START add_lead_form_extension]
 def create_lead_form_asset(client, customer_id)
   operation = client.operation.create_resource.asset do |a|
     a.name = "Interplanetary Cruise #{(Time.new.to_f * 1000).to_i} Lead Form"
@@ -106,7 +107,9 @@ def create_lead_form_asset(client, customer_id)
   puts "Asset with resource name #{asset_name} was created."
   asset_name
 end
+# [END add_lead_form_extension]
 
+# [START add_lead_form_extension_1]
 def create_lead_form_extension(client, customer_id, campaign_id, lead_form_asset)
   operation = client.operation.create_resource.campaign_asset do |ca|
     ca.asset = lead_form_asset
@@ -122,6 +125,7 @@ def create_lead_form_extension(client, customer_id, campaign_id, lead_form_asset
   puts "Created campaign asset #{response.results.first.resource_name} for " \
     "campaign #{campaign_id}."
 end
+# [END add_lead_form_extension_1]
 
 if __FILE__ == $0
   options = {}
