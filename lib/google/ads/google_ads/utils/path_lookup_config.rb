@@ -91,6 +91,7 @@ module Google
             customer_user_access_invitation: [:customer, :invitation],
             customer: [:customer],
             detail_placement_view: [:customer, [:ad_group, :base64_placement]],
+            detailed_demographic: [:customer, :detailed_demographic],
             display_keyword_view: [:customer, [:ad_group, :criterion]],
             domain_category: [:customer, [:campaign, :category_base64, :language_code]],
             dynamic_search_ads_search_term_view: [:customer, [:ad_group, :search_term, :headline, :landing_page, :page_url]],
@@ -153,6 +154,7 @@ module Google
               :combined_audience,
               :custom_audience,
               :customer_user_access,
+              :detailed_demographic,
               :feed_item_set_link,
               :feed_item_set,
               :customer_user_access_invitation,
@@ -174,6 +176,7 @@ module Google
                 :campaign_simulation,
                 :conversion_custom_variable,
                 :customer_asset,
+                :detailed_demographic,
                 :life_event,
                 :webpage_view,
               ].include?(k)
@@ -182,6 +185,15 @@ module Google
             .to_h
 
           PATH_LOOKUP_V7 = PATH_LOOKUP_BASE
+            .reject { |k, _|
+              [
+                :detailed_demographic,
+              ].include?(k)
+            }
+            .map { |k, v| [k, v.flatten] }
+            .to_h
+
+          PATH_LOOKUP_V8 = PATH_LOOKUP_BASE
             .map { |k, v| [k, v.flatten] }
             .to_h
         end
