@@ -39,6 +39,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :order_id, :string, 14
       optional :external_attribution_data, :message, 7, "google.ads.googleads.v8.services.ExternalAttributionData"
       repeated :custom_variables, :message, 15, "google.ads.googleads.v8.services.CustomVariable"
+      optional :cart_data, :message, 16, "google.ads.googleads.v8.services.CartData"
     end
     add_message "google.ads.googleads.v8.services.CallConversion" do
       proto3_optional :caller_id, :string, 7
@@ -68,6 +69,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :conversion_custom_variable, :string, 1
       optional :value, :string, 2
     end
+    add_message "google.ads.googleads.v8.services.CartData" do
+      optional :merchant_id, :string, 1
+      optional :feed_region_code, :string, 2
+      optional :feed_language_code, :string, 3
+      optional :local_transaction_cost, :double, 4
+      repeated :items, :message, 5, "google.ads.googleads.v8.services.CartData.Item"
+    end
+    add_message "google.ads.googleads.v8.services.CartData.Item" do
+      optional :product_id, :string, 1
+      optional :quantity, :int32, 2
+      optional :unit_price, :double, 3
+    end
   end
 end
 
@@ -86,6 +99,8 @@ module Google
           ClickConversionResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.ClickConversionResult").msgclass
           CallConversionResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.CallConversionResult").msgclass
           CustomVariable = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.CustomVariable").msgclass
+          CartData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.CartData").msgclass
+          CartData::Item = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.CartData.Item").msgclass
         end
       end
     end

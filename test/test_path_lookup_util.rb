@@ -1028,6 +1028,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/assets/5678'
     assert_equal(expected, util.asset(1234, 5678))
 
+    expected = 'customers/1234/assetFieldTypeViews/5678'
+    assert_equal(expected, util.asset_field_type_view(1234, 5678))
+
     expected = 'customers/1234/batchJobs/5678'
     assert_equal(expected, util.batch_job(1234, 5678))
 
@@ -1096,6 +1099,12 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/conversionCustomVariables/5678'
     assert_equal(expected, util.conversion_custom_variable(1234, 5678))
+
+    expected = 'customers/1234/conversionValueRules/5678'
+    assert_equal(expected, util.conversion_value_rule(1234, 5678))
+
+    expected = 'customers/1234/conversionValueRuleSets/5678'
+    assert_equal(expected, util.conversion_value_rule_set(1234, 5678))
 
     expected = 'currencyConstants/123456'
     assert_equal(expected, util.currency_constant(123456))

@@ -56,6 +56,23 @@ module Google
                 "customers/#{customer_id}/customerClients/#{client_customer_id}"
               end
 
+              ##
+              # Create a fully-qualified Label resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/labels/{label_id}`
+              #
+              # @param customer_id [String]
+              # @param label_id [String]
+              #
+              # @return [::String]
+              def label_path customer_id:, label_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/labels/#{label_id}"
+              end
+
               extend self
             end
           end

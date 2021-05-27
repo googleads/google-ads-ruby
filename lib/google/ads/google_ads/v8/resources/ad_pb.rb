@@ -34,7 +34,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       oneof :ad_data do
         optional :text_ad, :message, 6, "google.ads.googleads.v8.common.TextAdInfo"
         optional :expanded_text_ad, :message, 7, "google.ads.googleads.v8.common.ExpandedTextAdInfo"
-        optional :call_only_ad, :message, 13, "google.ads.googleads.v8.common.CallOnlyAdInfo"
+        optional :call_ad, :message, 49, "google.ads.googleads.v8.common.CallAdInfo"
         optional :expanded_dynamic_search_ad, :message, 14, "google.ads.googleads.v8.common.ExpandedDynamicSearchAdInfo"
         optional :hotel_ad, :message, 15, "google.ads.googleads.v8.common.HotelAdInfo"
         optional :shopping_smart_ad, :message, 17, "google.ads.googleads.v8.common.ShoppingSmartAdInfo"

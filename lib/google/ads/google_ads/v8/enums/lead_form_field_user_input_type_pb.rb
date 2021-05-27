@@ -12,8 +12,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNSPECIFIED, 0
       value :UNKNOWN, 1
       value :FULL_NAME, 2
-      value :GIVEN_NAME, 6
-      value :FAMILY_NAME, 7
       value :EMAIL, 3
       value :PHONE_NUMBER, 4
       value :POSTAL_CODE, 5
@@ -24,6 +22,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :COMPANY_NAME, 13
       value :WORK_PHONE, 14
       value :JOB_TITLE, 15
+      value :FIRST_NAME, 23
+      value :LAST_NAME, 24
       value :VEHICLE_MODEL, 1001
       value :VEHICLE_TYPE, 1002
       value :PREFERRED_DEALERSHIP, 1003

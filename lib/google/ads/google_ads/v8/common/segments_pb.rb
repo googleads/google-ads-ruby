@@ -12,6 +12,7 @@ require 'google/ads/google_ads/v8/enums/conversion_action_category_pb'
 require 'google/ads/google_ads/v8/enums/conversion_attribution_event_type_pb'
 require 'google/ads/google_ads/v8/enums/conversion_lag_bucket_pb'
 require 'google/ads/google_ads/v8/enums/conversion_or_adjustment_lag_bucket_pb'
+require 'google/ads/google_ads/v8/enums/conversion_value_rule_primary_dimension_pb'
 require 'google/ads/google_ads/v8/enums/day_of_week_pb'
 require 'google/ads/google_ads/v8/enums/device_pb'
 require 'google/ads/google_ads/v8/enums/external_conversion_source_pb'
@@ -107,10 +108,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :search_engine_results_page_type, :enum, 70, "google.ads.googleads.v8.enums.SearchEngineResultsPageTypeEnum.SearchEngineResultsPageType"
       optional :search_term_match_type, :enum, 22, "google.ads.googleads.v8.enums.SearchTermMatchTypeEnum.SearchTermMatchType"
       optional :slot, :enum, 23, "google.ads.googleads.v8.enums.SlotEnum.Slot"
+      optional :conversion_value_rule_primary_dimension, :enum, 138, "google.ads.googleads.v8.enums.ConversionValueRulePrimaryDimensionEnum.ConversionValueRulePrimaryDimension"
       proto3_optional :webpage, :string, 129
       proto3_optional :week, :string, 130
       proto3_optional :year, :int32, 131
       proto3_optional :sk_ad_network_conversion_value, :int64, 137
+      proto3_optional :asset_interaction_target, :message, 139, "google.ads.googleads.v8.common.AssetInteractionTarget"
     end
     add_message "google.ads.googleads.v8.common.Keyword" do
       proto3_optional :ad_group_criterion, :string, 3
@@ -119,6 +122,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.common.BudgetCampaignAssociationStatus" do
       proto3_optional :campaign, :string, 1
       optional :status, :enum, 2, "google.ads.googleads.v8.enums.BudgetCampaignAssociationStatusEnum.BudgetCampaignAssociationStatus"
+    end
+    add_message "google.ads.googleads.v8.common.AssetInteractionTarget" do
+      optional :asset, :string, 1
+      optional :interaction_on_this_asset, :bool, 2
     end
   end
 end
@@ -131,6 +138,7 @@ module Google
           Segments = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.Segments").msgclass
           Keyword = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.Keyword").msgclass
           BudgetCampaignAssociationStatus = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.BudgetCampaignAssociationStatus").msgclass
+          AssetInteractionTarget = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.AssetInteractionTarget").msgclass
         end
       end
     end

@@ -13,7 +13,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :TEXT_AD, 2
       value :EXPANDED_TEXT_AD, 3
-      value :CALL_ONLY_AD, 6
       value :EXPANDED_DYNAMIC_SEARCH_AD, 7
       value :HOTEL_AD, 8
       value :SHOPPING_SMART_AD, 9
@@ -37,6 +36,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :VIDEO_TRUEVIEW_DISCOVERY_AD, 28
       value :VIDEO_TRUEVIEW_IN_STREAM_AD, 29
       value :VIDEO_RESPONSIVE_AD, 30
+      value :CALL_AD, 32
     end
   end
 end

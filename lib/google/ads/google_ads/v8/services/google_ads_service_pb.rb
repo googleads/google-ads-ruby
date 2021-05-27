@@ -28,6 +28,7 @@ require 'google/ads/google_ads/v8/resources/ad_parameter_pb'
 require 'google/ads/google_ads/v8/resources/ad_schedule_view_pb'
 require 'google/ads/google_ads/v8/resources/age_range_view_pb'
 require 'google/ads/google_ads/v8/resources/asset_pb'
+require 'google/ads/google_ads/v8/resources/asset_field_type_view_pb'
 require 'google/ads/google_ads/v8/resources/batch_job_pb'
 require 'google/ads/google_ads/v8/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v8/resources/bidding_strategy_simulation_pb'
@@ -54,6 +55,8 @@ require 'google/ads/google_ads/v8/resources/click_view_pb'
 require 'google/ads/google_ads/v8/resources/combined_audience_pb'
 require 'google/ads/google_ads/v8/resources/conversion_action_pb'
 require 'google/ads/google_ads/v8/resources/conversion_custom_variable_pb'
+require 'google/ads/google_ads/v8/resources/conversion_value_rule_pb'
+require 'google/ads/google_ads/v8/resources/conversion_value_rule_set_pb'
 require 'google/ads/google_ads/v8/resources/currency_constant_pb'
 require 'google/ads/google_ads/v8/resources/custom_audience_pb'
 require 'google/ads/google_ads/v8/resources/custom_interest_pb'
@@ -233,6 +236,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_schedule_view, :message, 89, "google.ads.googleads.v8.resources.AdScheduleView"
       optional :domain_category, :message, 91, "google.ads.googleads.v8.resources.DomainCategory"
       optional :asset, :message, 105, "google.ads.googleads.v8.resources.Asset"
+      optional :asset_field_type_view, :message, 168, "google.ads.googleads.v8.resources.AssetFieldTypeView"
       optional :batch_job, :message, 139, "google.ads.googleads.v8.resources.BatchJob"
       optional :bidding_strategy, :message, 18, "google.ads.googleads.v8.resources.BiddingStrategy"
       optional :bidding_strategy_simulation, :message, 158, "google.ads.googleads.v8.resources.BiddingStrategySimulation"
@@ -258,6 +262,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :combined_audience, :message, 148, "google.ads.googleads.v8.resources.CombinedAudience"
       optional :conversion_action, :message, 103, "google.ads.googleads.v8.resources.ConversionAction"
       optional :conversion_custom_variable, :message, 153, "google.ads.googleads.v8.resources.ConversionCustomVariable"
+      optional :conversion_value_rule, :message, 164, "google.ads.googleads.v8.resources.ConversionValueRule"
+      optional :conversion_value_rule_set, :message, 165, "google.ads.googleads.v8.resources.ConversionValueRuleSet"
       optional :click_view, :message, 122, "google.ads.googleads.v8.resources.ClickView"
       optional :currency_constant, :message, 134, "google.ads.googleads.v8.resources.CurrencyConstant"
       optional :custom_audience, :message, 147, "google.ads.googleads.v8.resources.CustomAudience"

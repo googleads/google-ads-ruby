@@ -458,6 +458,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified AssetFieldTypeView resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/assetFieldTypeViews/{field_type}`
+              #
+              # @param customer_id [String]
+              # @param field_type [String]
+              #
+              # @return [::String]
+              def asset_field_type_view_path customer_id:, field_type:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/assetFieldTypeViews/#{field_type}"
+              end
+
+              ##
               # Create a fully-qualified BatchJob resource string.
               #
               # The resource will be in the following format:
@@ -946,6 +963,40 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/conversionCustomVariables/#{conversion_custom_variable_id}"
+              end
+
+              ##
+              # Create a fully-qualified ConversionValueRule resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/conversionValueRules/{conversion_value_rule_id}`
+              #
+              # @param customer_id [String]
+              # @param conversion_value_rule_id [String]
+              #
+              # @return [::String]
+              def conversion_value_rule_path customer_id:, conversion_value_rule_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/conversionValueRules/#{conversion_value_rule_id}"
+              end
+
+              ##
+              # Create a fully-qualified ConversionValueRuleSet resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/conversionValueRuleSets/{conversion_value_rule_set_id}`
+              #
+              # @param customer_id [String]
+              # @param conversion_value_rule_set_id [String]
+              #
+              # @return [::String]
+              def conversion_value_rule_set_path customer_id:, conversion_value_rule_set_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/conversionValueRuleSets/#{conversion_value_rule_set_id}"
               end
 
               ##

@@ -67,13 +67,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :keyword, :message, 1, "google.ads.googleads.v8.common.KeywordInfo"
       proto3_optional :recommended_cpc_bid_micros, :int64, 3
     end
-    add_message "google.ads.googleads.v8.resources.Recommendation.ResponsiveSearchAdRecommendation" do
-      optional :ad, :message, 1, "google.ads.googleads.v8.resources.Ad"
-    end
     add_message "google.ads.googleads.v8.resources.Recommendation.TextAdRecommendation" do
       optional :ad, :message, 1, "google.ads.googleads.v8.resources.Ad"
       proto3_optional :creation_date, :string, 4
       proto3_optional :auto_apply_date, :string, 5
+    end
+    add_message "google.ads.googleads.v8.resources.Recommendation.EnhancedCpcOptInRecommendation" do
+    end
+    add_message "google.ads.googleads.v8.resources.Recommendation.TargetRoasOptInRecommendation" do
+      proto3_optional :recommended_target_roas, :double, 1
+      proto3_optional :required_campaign_budget_amount_micros, :int64, 2
     end
     add_message "google.ads.googleads.v8.resources.Recommendation.TargetCpaOptInRecommendation" do
       repeated :options, :message, 1, "google.ads.googleads.v8.resources.Recommendation.TargetCpaOptInRecommendation.TargetCpaOptInRecommendationOption"
@@ -85,16 +88,22 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :required_campaign_budget_amount_micros, :int64, 6
       optional :impact, :message, 4, "google.ads.googleads.v8.resources.Recommendation.RecommendationImpact"
     end
+    add_message "google.ads.googleads.v8.resources.Recommendation.SearchPartnersOptInRecommendation" do
+    end
+    add_message "google.ads.googleads.v8.resources.Recommendation.ResponsiveSearchAdRecommendation" do
+      optional :ad, :message, 1, "google.ads.googleads.v8.resources.Ad"
+    end
+    add_message "google.ads.googleads.v8.resources.Recommendation.MoveUnusedBudgetRecommendation" do
+      proto3_optional :excess_campaign_budget, :string, 3
+      optional :budget_recommendation, :message, 2, "google.ads.googleads.v8.resources.Recommendation.CampaignBudgetRecommendation"
+    end
     add_message "google.ads.googleads.v8.resources.Recommendation.MaximizeConversionsOptInRecommendation" do
       proto3_optional :recommended_budget_amount_micros, :int64, 2
     end
-    add_message "google.ads.googleads.v8.resources.Recommendation.TargetRoasOptInRecommendation" do
-      proto3_optional :recommended_target_roas, :double, 1
-      proto3_optional :required_campaign_budget_amount_micros, :int64, 2
+    add_message "google.ads.googleads.v8.resources.Recommendation.MaximizeClicksOptInRecommendation" do
+      proto3_optional :recommended_budget_amount_micros, :int64, 2
     end
-    add_message "google.ads.googleads.v8.resources.Recommendation.EnhancedCpcOptInRecommendation" do
-    end
-    add_message "google.ads.googleads.v8.resources.Recommendation.SearchPartnersOptInRecommendation" do
+    add_message "google.ads.googleads.v8.resources.Recommendation.OptimizeAdRotationRecommendation" do
     end
     add_message "google.ads.googleads.v8.resources.Recommendation.CalloutExtensionRecommendation" do
       repeated :recommended_extensions, :message, 1, "google.ads.googleads.v8.common.CalloutFeedItem"
@@ -105,18 +114,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.resources.Recommendation.CallExtensionRecommendation" do
       repeated :recommended_extensions, :message, 1, "google.ads.googleads.v8.common.CallFeedItem"
     end
-    add_message "google.ads.googleads.v8.resources.Recommendation.MaximizeClicksOptInRecommendation" do
-      proto3_optional :recommended_budget_amount_micros, :int64, 2
-    end
     add_message "google.ads.googleads.v8.resources.Recommendation.KeywordMatchTypeRecommendation" do
       optional :keyword, :message, 1, "google.ads.googleads.v8.common.KeywordInfo"
       optional :recommended_match_type, :enum, 2, "google.ads.googleads.v8.enums.KeywordMatchTypeEnum.KeywordMatchType"
-    end
-    add_message "google.ads.googleads.v8.resources.Recommendation.MoveUnusedBudgetRecommendation" do
-      proto3_optional :excess_campaign_budget, :string, 3
-      optional :budget_recommendation, :message, 2, "google.ads.googleads.v8.resources.Recommendation.CampaignBudgetRecommendation"
-    end
-    add_message "google.ads.googleads.v8.resources.Recommendation.OptimizeAdRotationRecommendation" do
     end
   end
 end
@@ -132,21 +132,21 @@ module Google
           Recommendation::CampaignBudgetRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.CampaignBudgetRecommendation").msgclass
           Recommendation::CampaignBudgetRecommendation::CampaignBudgetRecommendationOption = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.CampaignBudgetRecommendation.CampaignBudgetRecommendationOption").msgclass
           Recommendation::KeywordRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.KeywordRecommendation").msgclass
-          Recommendation::ResponsiveSearchAdRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.ResponsiveSearchAdRecommendation").msgclass
           Recommendation::TextAdRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.TextAdRecommendation").msgclass
+          Recommendation::EnhancedCpcOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.EnhancedCpcOptInRecommendation").msgclass
+          Recommendation::TargetRoasOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.TargetRoasOptInRecommendation").msgclass
           Recommendation::TargetCpaOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.TargetCpaOptInRecommendation").msgclass
           Recommendation::TargetCpaOptInRecommendation::TargetCpaOptInRecommendationOption = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.TargetCpaOptInRecommendation.TargetCpaOptInRecommendationOption").msgclass
-          Recommendation::MaximizeConversionsOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MaximizeConversionsOptInRecommendation").msgclass
-          Recommendation::TargetRoasOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.TargetRoasOptInRecommendation").msgclass
-          Recommendation::EnhancedCpcOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.EnhancedCpcOptInRecommendation").msgclass
           Recommendation::SearchPartnersOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.SearchPartnersOptInRecommendation").msgclass
+          Recommendation::ResponsiveSearchAdRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.ResponsiveSearchAdRecommendation").msgclass
+          Recommendation::MoveUnusedBudgetRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MoveUnusedBudgetRecommendation").msgclass
+          Recommendation::MaximizeConversionsOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MaximizeConversionsOptInRecommendation").msgclass
+          Recommendation::MaximizeClicksOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MaximizeClicksOptInRecommendation").msgclass
+          Recommendation::OptimizeAdRotationRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.OptimizeAdRotationRecommendation").msgclass
           Recommendation::CalloutExtensionRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.CalloutExtensionRecommendation").msgclass
           Recommendation::SitelinkExtensionRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.SitelinkExtensionRecommendation").msgclass
           Recommendation::CallExtensionRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.CallExtensionRecommendation").msgclass
-          Recommendation::MaximizeClicksOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MaximizeClicksOptInRecommendation").msgclass
           Recommendation::KeywordMatchTypeRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.KeywordMatchTypeRecommendation").msgclass
-          Recommendation::MoveUnusedBudgetRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.MoveUnusedBudgetRecommendation").msgclass
-          Recommendation::OptimizeAdRotationRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Recommendation.OptimizeAdRotationRecommendation").msgclass
         end
       end
     end

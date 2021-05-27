@@ -26,20 +26,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :path1, :string, 13
       proto3_optional :path2, :string, 14
     end
-    add_message "google.ads.googleads.v8.common.CallOnlyAdInfo" do
-      proto3_optional :country_code, :string, 13
-      proto3_optional :phone_number, :string, 14
-      proto3_optional :business_name, :string, 15
-      proto3_optional :headline1, :string, 16
-      proto3_optional :headline2, :string, 17
-      proto3_optional :description1, :string, 18
-      proto3_optional :description2, :string, 19
-      proto3_optional :call_tracked, :bool, 20
-      proto3_optional :disable_call_conversion, :bool, 21
-      proto3_optional :phone_number_verification_url, :string, 22
-      proto3_optional :conversion_action, :string, 23
-      optional :conversion_reporting_state, :enum, 10, "google.ads.googleads.v8.enums.CallConversionReportingStateEnum.CallConversionReportingState"
-    end
     add_message "google.ads.googleads.v8.common.ExpandedDynamicSearchAdInfo" do
       proto3_optional :description, :string, 3
       proto3_optional :description2, :string, 4
@@ -218,6 +204,22 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :enable_asset_enhancements, :bool, 1
       optional :enable_autogen_video, :bool, 2
     end
+    add_message "google.ads.googleads.v8.common.CallAdInfo" do
+      optional :country_code, :string, 1
+      optional :phone_number, :string, 2
+      optional :business_name, :string, 3
+      optional :headline1, :string, 11
+      optional :headline2, :string, 12
+      optional :description1, :string, 4
+      optional :description2, :string, 5
+      optional :call_tracked, :bool, 6
+      optional :disable_call_conversion, :bool, 7
+      optional :phone_number_verification_url, :string, 8
+      optional :conversion_action, :string, 9
+      optional :conversion_reporting_state, :enum, 10, "google.ads.googleads.v8.enums.CallConversionReportingStateEnum.CallConversionReportingState"
+      optional :path1, :string, 13
+      optional :path2, :string, 14
+    end
   end
 end
 
@@ -228,7 +230,6 @@ module Google
         module Common
           TextAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.TextAdInfo").msgclass
           ExpandedTextAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ExpandedTextAdInfo").msgclass
-          CallOnlyAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CallOnlyAdInfo").msgclass
           ExpandedDynamicSearchAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ExpandedDynamicSearchAdInfo").msgclass
           HotelAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.HotelAdInfo").msgclass
           ShoppingSmartAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ShoppingSmartAdInfo").msgclass
@@ -256,6 +257,7 @@ module Google
           LocalAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.LocalAdInfo").msgclass
           DisplayUploadAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.DisplayUploadAdInfo").msgclass
           ResponsiveDisplayAdControlSpec = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ResponsiveDisplayAdControlSpec").msgclass
+          CallAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CallAdInfo").msgclass
         end
       end
     end

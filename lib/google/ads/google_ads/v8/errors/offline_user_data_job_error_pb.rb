@@ -41,6 +41,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :ATTRIBUTES_NOT_APPLICABLE_FOR_CUSTOMER_MATCH_USER_LIST, 34
       value :LIFETIME_VALUE_BUCKET_NOT_IN_RANGE, 35
       value :INCOMPATIBLE_USER_IDENTIFIER_FOR_ATTRIBUTES, 36
+      value :FUTURE_TIME_NOT_ALLOWED, 37
+      value :LAST_PURCHASE_TIME_LESS_THAN_ACQUISITION_TIME, 38
     end
   end
 end

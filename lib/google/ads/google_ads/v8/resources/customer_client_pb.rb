@@ -19,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :descriptive_name, :string, 18
       proto3_optional :currency_code, :string, 19
       proto3_optional :id, :int64, 20
+      repeated :applied_labels, :string, 21
     end
   end
 end

@@ -53,6 +53,7 @@ module Google
             ad: [:customer, [:ad]],
             age_range_view: [:customer, [:ad_group, :criterion]],
             asset: [:customer, [:asset]],
+            asset_field_type_view: [:customer, [:asset_field_type_view]],
             batch_job: [:customer, [:batch_job]],
             bidding_strategy: [:customer, [:bidding_strategy]],
             bidding_strategy_simulation: [:customer, :bidding_strategy, :type, :modification_method, :start_date, :end_date],
@@ -76,6 +77,8 @@ module Google
             combined_audience: [:customer, :combined_audience],
             conversion_action: [:customer, [:conversion_action]],
             conversion_custom_variable: [:customer, :conversion_custom_variable],
+            conversion_value_rule: [:customer, [:conversion_value_rule]],
+            conversion_value_rule_set: [:customer, [:conversion_value_rule_set]],
             currency_constant: [:currency_constant],
             custom_audience: [:customer, :custom_audience],
             custom_interest: [:customer, [:custom_interest]],
@@ -151,7 +154,10 @@ module Google
 
           PATH_LOOKUP_V5 = PATH_LOOKUP_BASE.reject { |k, _|
             [
+              :asset_field_type_view,
               :combined_audience,
+              :conversion_value_rule,
+              :conversion_value_rule_set,
               :custom_audience,
               :customer_user_access,
               :detailed_demographic,
@@ -172,9 +178,12 @@ module Google
             .reject { |k, _|
               [
                 :ad_group_asset,
+                :asset_field_type_view,
                 :bidding_strategy_simulation,
                 :campaign_simulation,
                 :conversion_custom_variable,
+                :conversion_value_rule,
+                :conversion_value_rule_set,
                 :customer_asset,
                 :detailed_demographic,
                 :life_event,
@@ -187,6 +196,9 @@ module Google
           PATH_LOOKUP_V7 = PATH_LOOKUP_BASE
             .reject { |k, _|
               [
+                :asset_field_type_view,
+                :conversion_value_rule,
+                :conversion_value_rule_set,
                 :detailed_demographic,
               ].include?(k)
             }

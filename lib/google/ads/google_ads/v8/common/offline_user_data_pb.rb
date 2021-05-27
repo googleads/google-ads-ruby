@@ -33,9 +33,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :order_id, :string, 12
       optional :store_attribute, :message, 6, "google.ads.googleads.v8.common.StoreAttribute"
       proto3_optional :custom_value, :string, 13
+      optional :item_attribute, :message, 14, "google.ads.googleads.v8.common.ItemAttribute"
     end
     add_message "google.ads.googleads.v8.common.StoreAttribute" do
       proto3_optional :store_code, :string, 2
+    end
+    add_message "google.ads.googleads.v8.common.ItemAttribute" do
+      optional :item_id, :string, 1
+      proto3_optional :merchant_id, :int64, 2
+      optional :region_code, :string, 3
+      optional :language_code, :string, 4
+      optional :quantity, :int64, 5
     end
     add_message "google.ads.googleads.v8.common.UserData" do
       repeated :user_identifiers, :message, 1, "google.ads.googleads.v8.common.UserIdentifier"
@@ -45,6 +53,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.common.UserAttribute" do
       proto3_optional :lifetime_value_micros, :int64, 1
       proto3_optional :lifetime_value_bucket, :int32, 2
+      optional :last_purchase_date_time, :string, 3
+      optional :average_purchase_count, :int32, 4
+      optional :average_purchase_value_micros, :int64, 5
+      optional :acquisition_date_time, :string, 6
     end
     add_message "google.ads.googleads.v8.common.CustomerMatchUserListMetadata" do
       proto3_optional :user_list, :string, 2
@@ -75,6 +87,7 @@ module Google
           UserIdentifier = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.UserIdentifier").msgclass
           TransactionAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.TransactionAttribute").msgclass
           StoreAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.StoreAttribute").msgclass
+          ItemAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ItemAttribute").msgclass
           UserData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.UserData").msgclass
           UserAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.UserAttribute").msgclass
           CustomerMatchUserListMetadata = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CustomerMatchUserListMetadata").msgclass
