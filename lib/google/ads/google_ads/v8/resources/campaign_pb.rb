@@ -56,6 +56,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :base_campaign, :string, 56
       proto3_optional :campaign_budget, :string, 62
       optional :bidding_strategy_type, :enum, 22, "google.ads.googleads.v8.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
+      optional :accessible_bidding_strategy, :string, 71
       proto3_optional :start_date, :string, 63
       proto3_optional :end_date, :string, 64
       proto3_optional :final_url_suffix, :string, 65
@@ -99,15 +100,26 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :use_supplied_urls_only, :bool, 8
       repeated :feeds, :string, 9
     end
+    add_message "google.ads.googleads.v8.resources.Campaign.VanityPharma" do
+      optional :vanity_pharma_display_url_mode, :enum, 1, "google.ads.googleads.v8.enums.VanityPharmaDisplayUrlModeEnum.VanityPharmaDisplayUrlMode"
+      optional :vanity_pharma_text, :enum, 2, "google.ads.googleads.v8.enums.VanityPharmaTextEnum.VanityPharmaText"
+    end
     add_message "google.ads.googleads.v8.resources.Campaign.ShoppingSetting" do
       proto3_optional :merchant_id, :int64, 5
       proto3_optional :sales_country, :string, 6
       proto3_optional :campaign_priority, :int32, 7
       proto3_optional :enable_local, :bool, 8
     end
-    add_message "google.ads.googleads.v8.resources.Campaign.VanityPharma" do
-      optional :vanity_pharma_display_url_mode, :enum, 1, "google.ads.googleads.v8.enums.VanityPharmaDisplayUrlModeEnum.VanityPharmaDisplayUrlMode"
-      optional :vanity_pharma_text, :enum, 2, "google.ads.googleads.v8.enums.VanityPharmaTextEnum.VanityPharmaText"
+    add_message "google.ads.googleads.v8.resources.Campaign.AppCampaignSetting" do
+      optional :bidding_strategy_goal_type, :enum, 1, "google.ads.googleads.v8.enums.AppCampaignBiddingStrategyGoalTypeEnum.AppCampaignBiddingStrategyGoalType"
+      proto3_optional :app_id, :string, 4
+      optional :app_store, :enum, 3, "google.ads.googleads.v8.enums.AppCampaignAppStoreEnum.AppCampaignAppStore"
+    end
+    add_message "google.ads.googleads.v8.resources.Campaign.SelectiveOptimization" do
+      repeated :conversion_actions, :string, 2
+    end
+    add_message "google.ads.googleads.v8.resources.Campaign.OptimizationGoalSetting" do
+      repeated :optimization_goal_types, :enum, 1, "google.ads.googleads.v8.enums.OptimizationGoalTypeEnum.OptimizationGoalType"
     end
     add_message "google.ads.googleads.v8.resources.Campaign.TrackingSetting" do
       proto3_optional :tracking_url, :string, 2
@@ -118,17 +130,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v8.resources.Campaign.LocalCampaignSetting" do
       optional :location_source_type, :enum, 1, "google.ads.googleads.v8.enums.LocationSourceTypeEnum.LocationSourceType"
-    end
-    add_message "google.ads.googleads.v8.resources.Campaign.AppCampaignSetting" do
-      optional :bidding_strategy_goal_type, :enum, 1, "google.ads.googleads.v8.enums.AppCampaignBiddingStrategyGoalTypeEnum.AppCampaignBiddingStrategyGoalType"
-      proto3_optional :app_id, :string, 4
-      optional :app_store, :enum, 3, "google.ads.googleads.v8.enums.AppCampaignAppStoreEnum.AppCampaignAppStore"
-    end
-    add_message "google.ads.googleads.v8.resources.Campaign.OptimizationGoalSetting" do
-      repeated :optimization_goal_types, :enum, 1, "google.ads.googleads.v8.enums.OptimizationGoalTypeEnum.OptimizationGoalType"
-    end
-    add_message "google.ads.googleads.v8.resources.Campaign.SelectiveOptimization" do
-      repeated :conversion_actions, :string, 2
     end
   end
 end
@@ -142,14 +143,14 @@ module Google
           Campaign::NetworkSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.NetworkSettings").msgclass
           Campaign::HotelSettingInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.HotelSettingInfo").msgclass
           Campaign::DynamicSearchAdsSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.DynamicSearchAdsSetting").msgclass
-          Campaign::ShoppingSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.ShoppingSetting").msgclass
           Campaign::VanityPharma = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.VanityPharma").msgclass
+          Campaign::ShoppingSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.ShoppingSetting").msgclass
+          Campaign::AppCampaignSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.AppCampaignSetting").msgclass
+          Campaign::SelectiveOptimization = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.SelectiveOptimization").msgclass
+          Campaign::OptimizationGoalSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.OptimizationGoalSetting").msgclass
           Campaign::TrackingSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.TrackingSetting").msgclass
           Campaign::GeoTargetTypeSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.GeoTargetTypeSetting").msgclass
           Campaign::LocalCampaignSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.LocalCampaignSetting").msgclass
-          Campaign::AppCampaignSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.AppCampaignSetting").msgclass
-          Campaign::OptimizationGoalSetting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.OptimizationGoalSetting").msgclass
-          Campaign::SelectiveOptimization = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.resources.Campaign.SelectiveOptimization").msgclass
         end
       end
     end

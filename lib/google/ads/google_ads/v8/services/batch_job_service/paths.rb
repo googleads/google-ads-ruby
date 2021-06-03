@@ -26,6 +26,23 @@ module Google
             # Path helper methods for the BatchJobService API.
             module Paths
               ##
+              # Create a fully-qualified AccessibleBiddingStrategy resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/accessibleBiddingStrategies/{bidding_strategy_id}`
+              #
+              # @param customer_id [String]
+              # @param bidding_strategy_id [String]
+              #
+              # @return [::String]
+              def accessible_bidding_strategy_path customer_id:, bidding_strategy_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/accessibleBiddingStrategies/#{bidding_strategy_id}"
+              end
+
+              ##
               # Create a fully-qualified Ad resource string.
               #
               # The resource will be in the following format:
@@ -982,6 +999,23 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/sharedSets/#{shared_set_id}"
+              end
+
+              ##
+              # Create a fully-qualified SmartCampaignSetting resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/smartCampaignSettings/{campaign_id}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              #
+              # @return [::String]
+              def smart_campaign_setting_path customer_id:, campaign_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/smartCampaignSettings/#{campaign_id}"
               end
 
               ##

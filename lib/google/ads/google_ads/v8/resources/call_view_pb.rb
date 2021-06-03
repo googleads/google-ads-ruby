@@ -13,7 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v8/resources/call_view.proto", :syntax => :proto3) do
     add_message "google.ads.googleads.v8.resources.CallView" do
       optional :resource_name, :string, 1
-      optional :caller_region_code, :string, 2
+      optional :caller_country_code, :string, 2
       optional :caller_area_code, :string, 3
       optional :call_duration_seconds, :int64, 4
       optional :start_call_date_time, :string, 5

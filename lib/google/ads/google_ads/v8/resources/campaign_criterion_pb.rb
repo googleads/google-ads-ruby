@@ -50,6 +50,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :custom_affinity, :message, 36, "google.ads.googleads.v8.common.CustomAffinityInfo"
         optional :custom_audience, :message, 41, "google.ads.googleads.v8.common.CustomAudienceInfo"
         optional :combined_audience, :message, 42, "google.ads.googleads.v8.common.CombinedAudienceInfo"
+        optional :keyword_theme, :message, 45, "google.ads.googleads.v8.common.KeywordThemeInfo"
       end
     end
   end

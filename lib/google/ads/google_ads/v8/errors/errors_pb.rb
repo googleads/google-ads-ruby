@@ -42,8 +42,6 @@ require 'google/ads/google_ads/v8/errors/conversion_action_error_pb'
 require 'google/ads/google_ads/v8/errors/conversion_adjustment_upload_error_pb'
 require 'google/ads/google_ads/v8/errors/conversion_custom_variable_error_pb'
 require 'google/ads/google_ads/v8/errors/conversion_upload_error_pb'
-require 'google/ads/google_ads/v8/errors/conversion_value_rule_error_pb'
-require 'google/ads/google_ads/v8/errors/conversion_value_rule_set_error_pb'
 require 'google/ads/google_ads/v8/errors/country_code_error_pb'
 require 'google/ads/google_ads/v8/errors/criterion_error_pb'
 require 'google/ads/google_ads/v8/errors/currency_code_error_pb'
@@ -208,8 +206,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :conversion_adjustment_upload_error, :enum, 115, "google.ads.googleads.v8.errors.ConversionAdjustmentUploadErrorEnum.ConversionAdjustmentUploadError"
         optional :conversion_custom_variable_error, :enum, 143, "google.ads.googleads.v8.errors.ConversionCustomVariableErrorEnum.ConversionCustomVariableError"
         optional :conversion_upload_error, :enum, 111, "google.ads.googleads.v8.errors.ConversionUploadErrorEnum.ConversionUploadError"
-        optional :conversion_value_rule_error, :enum, 145, "google.ads.googleads.v8.errors.ConversionValueRuleErrorEnum.ConversionValueRuleError"
-        optional :conversion_value_rule_set_error, :enum, 146, "google.ads.googleads.v8.errors.ConversionValueRuleSetErrorEnum.ConversionValueRuleSetError"
         optional :header_error, :enum, 66, "google.ads.googleads.v8.errors.HeaderErrorEnum.HeaderError"
         optional :database_error, :enum, 67, "google.ads.googleads.v8.errors.DatabaseErrorEnum.DatabaseError"
         optional :policy_finding_error, :enum, 68, "google.ads.googleads.v8.errors.PolicyFindingErrorEnum.PolicyFindingError"

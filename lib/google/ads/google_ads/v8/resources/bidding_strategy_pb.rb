@@ -17,6 +17,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :name, :string, 17
       optional :status, :enum, 15, "google.ads.googleads.v8.enums.BiddingStrategyStatusEnum.BiddingStrategyStatus"
       optional :type, :enum, 5, "google.ads.googleads.v8.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
+      optional :currency_code, :string, 23
       proto3_optional :effective_currency_code, :string, 20
       proto3_optional :campaign_count, :int64, 18
       proto3_optional :non_removed_campaign_count, :int64, 19

@@ -26,6 +26,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :PROMOTED_HOTEL_ADS, 15
       value :VIDEO_RESPONSIVE, 16
       value :VIDEO_EFFICIENT_REACH, 17
+      value :SMART_CAMPAIGN_ADS, 18
     end
   end
 end

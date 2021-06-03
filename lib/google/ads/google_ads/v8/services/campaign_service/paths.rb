@@ -26,6 +26,23 @@ module Google
             # Path helper methods for the CampaignService API.
             module Paths
               ##
+              # Create a fully-qualified AccessibleBiddingStrategy resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/accessibleBiddingStrategies/{bidding_strategy_id}`
+              #
+              # @param customer_id [String]
+              # @param bidding_strategy_id [String]
+              #
+              # @return [::String]
+              def accessible_bidding_strategy_path customer_id:, bidding_strategy_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/accessibleBiddingStrategies/#{bidding_strategy_id}"
+              end
+
+              ##
               # Create a fully-qualified BiddingStrategy resource string.
               #
               # The resource will be in the following format:

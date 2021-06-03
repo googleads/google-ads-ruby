@@ -36,6 +36,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :VIDEO_TRUEVIEW_DISCOVERY_AD, 28
       value :VIDEO_TRUEVIEW_IN_STREAM_AD, 29
       value :VIDEO_RESPONSIVE_AD, 30
+      value :SMART_CAMPAIGN_AD, 31
       value :CALL_AD, 32
     end
   end

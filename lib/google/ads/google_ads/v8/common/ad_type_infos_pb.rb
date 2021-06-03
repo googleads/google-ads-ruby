@@ -204,6 +204,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :enable_asset_enhancements, :bool, 1
       optional :enable_autogen_video, :bool, 2
     end
+    add_message "google.ads.googleads.v8.common.SmartCampaignAdInfo" do
+      repeated :headlines, :message, 1, "google.ads.googleads.v8.common.AdTextAsset"
+      repeated :descriptions, :message, 2, "google.ads.googleads.v8.common.AdTextAsset"
+    end
     add_message "google.ads.googleads.v8.common.CallAdInfo" do
       optional :country_code, :string, 1
       optional :phone_number, :string, 2
@@ -257,6 +261,7 @@ module Google
           LocalAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.LocalAdInfo").msgclass
           DisplayUploadAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.DisplayUploadAdInfo").msgclass
           ResponsiveDisplayAdControlSpec = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.ResponsiveDisplayAdControlSpec").msgclass
+          SmartCampaignAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.SmartCampaignAdInfo").msgclass
           CallAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CallAdInfo").msgclass
         end
       end

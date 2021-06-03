@@ -968,6 +968,9 @@ class TestPathLookupUtil < Minitest::Test
   def test_path_generation_v8()
     util = Google::Ads::GoogleAds::Utils::V8::PathLookupUtil.new
 
+    expected = 'customers/1234/accessibleBiddingStrategies/5678'
+    assert_equal(expected, util.accessible_bidding_strategy(1234, 5678))
+
     expected = 'customers/1234/accountBudgetProposals/5678'
     assert_equal(expected, util.account_budget_proposal(1234, 5678))
 
@@ -1100,12 +1103,6 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/conversionCustomVariables/5678'
     assert_equal(expected, util.conversion_custom_variable(1234, 5678))
 
-    expected = 'customers/1234/conversionValueRules/5678'
-    assert_equal(expected, util.conversion_value_rule(1234, 5678))
-
-    expected = 'customers/1234/conversionValueRuleSets/5678'
-    assert_equal(expected, util.conversion_value_rule_set(1234, 5678))
-
     expected = 'currencyConstants/123456'
     assert_equal(expected, util.currency_constant(123456))
 
@@ -1227,6 +1224,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/keywordPlans/5678'
     assert_equal(expected, util.keyword_plan(1234, 5678))
 
+    expected = 'keywordThemeConstants/123~456'
+    assert_equal(expected, util.keyword_theme_constant(123,456))
+
     expected = 'customers/1234/keywordViews/567~890'
     assert_equal(expected, util.keyword_view(1234, 567, 890))
 
@@ -1284,6 +1284,15 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/sharedSets/5678'
     assert_equal(expected, util.shared_set(1234, 5678))
+
+    expected = 'customers/1234/shoppingPerformanceView'
+    assert_equal(expected, util.shopping_performance_view(1234))
+
+    expected = 'customers/1234/smartCampaignSearchTermViews/56~78'
+    assert_equal(expected, util.smart_campaign_search_term_view(1234, 56, 78))
+
+    expected = 'customers/1234/smartCampaignSettings/5678'
+    assert_equal(expected, util.smart_campaign_setting(1234, 5678))
 
     expected = 'customers/1234/shoppingPerformanceView'
     assert_equal(expected, util.shopping_performance_view(1234))

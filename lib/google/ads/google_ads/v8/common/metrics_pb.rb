@@ -91,6 +91,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :message_impressions, :int64, 227
       proto3_optional :message_chat_rate, :double, 228
       proto3_optional :mobile_friendly_clicks_percentage, :double, 229
+      proto3_optional :optimization_score_uplift, :double, 247
+      proto3_optional :optimization_score_url, :string, 248
       proto3_optional :organic_clicks, :int64, 230
       proto3_optional :organic_clicks_per_query, :double, 231
       proto3_optional :organic_impressions, :int64, 232

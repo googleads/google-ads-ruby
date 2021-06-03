@@ -71,7 +71,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v8.services.CartData" do
       optional :merchant_id, :string, 1
-      optional :feed_region_code, :string, 2
+      optional :feed_country_code, :string, 2
       optional :feed_language_code, :string, 3
       optional :local_transaction_cost, :double, 4
       repeated :items, :message, 5, "google.ads.googleads.v8.services.CartData.Item"

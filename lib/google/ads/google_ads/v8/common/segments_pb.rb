@@ -12,7 +12,6 @@ require 'google/ads/google_ads/v8/enums/conversion_action_category_pb'
 require 'google/ads/google_ads/v8/enums/conversion_attribution_event_type_pb'
 require 'google/ads/google_ads/v8/enums/conversion_lag_bucket_pb'
 require 'google/ads/google_ads/v8/enums/conversion_or_adjustment_lag_bucket_pb'
-require 'google/ads/google_ads/v8/enums/conversion_value_rule_primary_dimension_pb'
 require 'google/ads/google_ads/v8/enums/day_of_week_pb'
 require 'google/ads/google_ads/v8/enums/device_pb'
 require 'google/ads/google_ads/v8/enums/external_conversion_source_pb'
@@ -24,6 +23,7 @@ require 'google/ads/google_ads/v8/enums/placeholder_type_pb'
 require 'google/ads/google_ads/v8/enums/product_channel_pb'
 require 'google/ads/google_ads/v8/enums/product_channel_exclusivity_pb'
 require 'google/ads/google_ads/v8/enums/product_condition_pb'
+require 'google/ads/google_ads/v8/enums/recommendation_type_pb'
 require 'google/ads/google_ads/v8/enums/search_engine_results_page_type_pb'
 require 'google/ads/google_ads/v8/enums/search_term_match_type_pb'
 require 'google/ads/google_ads/v8/enums/slot_pb'
@@ -105,10 +105,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :product_type_l4, :string, 111
       proto3_optional :product_type_l5, :string, 112
       proto3_optional :quarter, :string, 128
+      optional :recommendation_type, :enum, 140, "google.ads.googleads.v8.enums.RecommendationTypeEnum.RecommendationType"
       optional :search_engine_results_page_type, :enum, 70, "google.ads.googleads.v8.enums.SearchEngineResultsPageTypeEnum.SearchEngineResultsPageType"
       optional :search_term_match_type, :enum, 22, "google.ads.googleads.v8.enums.SearchTermMatchTypeEnum.SearchTermMatchType"
       optional :slot, :enum, 23, "google.ads.googleads.v8.enums.SlotEnum.Slot"
-      optional :conversion_value_rule_primary_dimension, :enum, 138, "google.ads.googleads.v8.enums.ConversionValueRulePrimaryDimensionEnum.ConversionValueRulePrimaryDimension"
       proto3_optional :webpage, :string, 129
       proto3_optional :week, :string, 130
       proto3_optional :year, :int32, 131

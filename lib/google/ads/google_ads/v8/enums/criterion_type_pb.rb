@@ -43,6 +43,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :LOCATION_GROUP, 31
       value :CUSTOM_AUDIENCE, 32
       value :COMBINED_AUDIENCE, 33
+      value :KEYWORD_THEME, 34
     end
   end
 end

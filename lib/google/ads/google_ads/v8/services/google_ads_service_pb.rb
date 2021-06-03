@@ -7,6 +7,7 @@ require 'google/ads/google_ads/v8/common/metrics_pb'
 require 'google/ads/google_ads/v8/common/segments_pb'
 require 'google/ads/google_ads/v8/enums/response_content_type_pb'
 require 'google/ads/google_ads/v8/enums/summary_row_setting_pb'
+require 'google/ads/google_ads/v8/resources/accessible_bidding_strategy_pb'
 require 'google/ads/google_ads/v8/resources/account_budget_pb'
 require 'google/ads/google_ads/v8/resources/account_budget_proposal_pb'
 require 'google/ads/google_ads/v8/resources/account_link_pb'
@@ -55,8 +56,6 @@ require 'google/ads/google_ads/v8/resources/click_view_pb'
 require 'google/ads/google_ads/v8/resources/combined_audience_pb'
 require 'google/ads/google_ads/v8/resources/conversion_action_pb'
 require 'google/ads/google_ads/v8/resources/conversion_custom_variable_pb'
-require 'google/ads/google_ads/v8/resources/conversion_value_rule_pb'
-require 'google/ads/google_ads/v8/resources/conversion_value_rule_set_pb'
 require 'google/ads/google_ads/v8/resources/currency_constant_pb'
 require 'google/ads/google_ads/v8/resources/custom_audience_pb'
 require 'google/ads/google_ads/v8/resources/custom_interest_pb'
@@ -98,6 +97,7 @@ require 'google/ads/google_ads/v8/resources/keyword_plan_ad_group_pb'
 require 'google/ads/google_ads/v8/resources/keyword_plan_ad_group_keyword_pb'
 require 'google/ads/google_ads/v8/resources/keyword_plan_campaign_pb'
 require 'google/ads/google_ads/v8/resources/keyword_plan_campaign_keyword_pb'
+require 'google/ads/google_ads/v8/resources/keyword_theme_constant_pb'
 require 'google/ads/google_ads/v8/resources/keyword_view_pb'
 require 'google/ads/google_ads/v8/resources/label_pb'
 require 'google/ads/google_ads/v8/resources/landing_page_view_pb'
@@ -120,6 +120,8 @@ require 'google/ads/google_ads/v8/resources/search_term_view_pb'
 require 'google/ads/google_ads/v8/resources/shared_criterion_pb'
 require 'google/ads/google_ads/v8/resources/shared_set_pb'
 require 'google/ads/google_ads/v8/resources/shopping_performance_view_pb'
+require 'google/ads/google_ads/v8/resources/smart_campaign_search_term_view_pb'
+require 'google/ads/google_ads/v8/resources/smart_campaign_setting_pb'
 require 'google/ads/google_ads/v8/resources/third_party_app_analytics_link_pb'
 require 'google/ads/google_ads/v8/resources/topic_constant_pb'
 require 'google/ads/google_ads/v8/resources/topic_view_pb'
@@ -178,6 +180,7 @@ require 'google/ads/google_ads/v8/services/media_file_service_pb'
 require 'google/ads/google_ads/v8/services/remarketing_action_service_pb'
 require 'google/ads/google_ads/v8/services/shared_criterion_service_pb'
 require 'google/ads/google_ads/v8/services/shared_set_service_pb'
+require 'google/ads/google_ads/v8/services/smart_campaign_setting_service_pb'
 require 'google/ads/google_ads/v8/services/user_list_service_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -262,14 +265,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :combined_audience, :message, 148, "google.ads.googleads.v8.resources.CombinedAudience"
       optional :conversion_action, :message, 103, "google.ads.googleads.v8.resources.ConversionAction"
       optional :conversion_custom_variable, :message, 153, "google.ads.googleads.v8.resources.ConversionCustomVariable"
-      optional :conversion_value_rule, :message, 164, "google.ads.googleads.v8.resources.ConversionValueRule"
-      optional :conversion_value_rule_set, :message, 165, "google.ads.googleads.v8.resources.ConversionValueRuleSet"
       optional :click_view, :message, 122, "google.ads.googleads.v8.resources.ClickView"
       optional :currency_constant, :message, 134, "google.ads.googleads.v8.resources.CurrencyConstant"
       optional :custom_audience, :message, 147, "google.ads.googleads.v8.resources.CustomAudience"
       optional :custom_interest, :message, 104, "google.ads.googleads.v8.resources.CustomInterest"
       optional :customer, :message, 1, "google.ads.googleads.v8.resources.Customer"
       optional :customer_asset, :message, 155, "google.ads.googleads.v8.resources.CustomerAsset"
+      optional :accessible_bidding_strategy, :message, 169, "google.ads.googleads.v8.resources.AccessibleBiddingStrategy"
       optional :customer_manager_link, :message, 61, "google.ads.googleads.v8.resources.CustomerManagerLink"
       optional :customer_client_link, :message, 62, "google.ads.googleads.v8.resources.CustomerClientLink"
       optional :customer_client, :message, 70, "google.ads.googleads.v8.resources.CustomerClient"
@@ -306,6 +308,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :keyword_plan_campaign_keyword, :message, 140, "google.ads.googleads.v8.resources.KeywordPlanCampaignKeyword"
       optional :keyword_plan_ad_group, :message, 35, "google.ads.googleads.v8.resources.KeywordPlanAdGroup"
       optional :keyword_plan_ad_group_keyword, :message, 141, "google.ads.googleads.v8.resources.KeywordPlanAdGroupKeyword"
+      optional :keyword_theme_constant, :message, 163, "google.ads.googleads.v8.resources.KeywordThemeConstant"
       optional :label, :message, 52, "google.ads.googleads.v8.resources.Label"
       optional :landing_page_view, :message, 126, "google.ads.googleads.v8.resources.LandingPageView"
       optional :language_constant, :message, 55, "google.ads.googleads.v8.resources.LanguageConstant"
@@ -324,7 +327,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :search_term_view, :message, 68, "google.ads.googleads.v8.resources.SearchTermView"
       optional :shared_criterion, :message, 29, "google.ads.googleads.v8.resources.SharedCriterion"
       optional :shared_set, :message, 27, "google.ads.googleads.v8.resources.SharedSet"
+      optional :smart_campaign_setting, :message, 167, "google.ads.googleads.v8.resources.SmartCampaignSetting"
       optional :shopping_performance_view, :message, 117, "google.ads.googleads.v8.resources.ShoppingPerformanceView"
+      optional :smart_campaign_search_term_view, :message, 170, "google.ads.googleads.v8.resources.SmartCampaignSearchTermView"
       optional :third_party_app_analytics_link, :message, 144, "google.ads.googleads.v8.resources.ThirdPartyAppAnalyticsLink"
       optional :topic_view, :message, 44, "google.ads.googleads.v8.resources.TopicView"
       optional :user_interest, :message, 59, "google.ads.googleads.v8.resources.UserInterest"
@@ -401,6 +406,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :remarketing_action_operation, :message, 43, "google.ads.googleads.v8.services.RemarketingActionOperation"
         optional :shared_criterion_operation, :message, 14, "google.ads.googleads.v8.services.SharedCriterionOperation"
         optional :shared_set_operation, :message, 15, "google.ads.googleads.v8.services.SharedSetOperation"
+        optional :smart_campaign_setting_operation, :message, 61, "google.ads.googleads.v8.services.SmartCampaignSettingOperation"
         optional :user_list_operation, :message, 16, "google.ads.googleads.v8.services.UserListOperation"
       end
     end
@@ -456,6 +462,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :remarketing_action_result, :message, 43, "google.ads.googleads.v8.services.MutateRemarketingActionResult"
         optional :shared_criterion_result, :message, 14, "google.ads.googleads.v8.services.MutateSharedCriterionResult"
         optional :shared_set_result, :message, 15, "google.ads.googleads.v8.services.MutateSharedSetResult"
+        optional :smart_campaign_setting_result, :message, 61, "google.ads.googleads.v8.services.MutateSmartCampaignSettingResult"
         optional :user_list_result, :message, 16, "google.ads.googleads.v8.services.MutateUserListResult"
       end
     end

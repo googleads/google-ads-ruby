@@ -41,7 +41,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.common.ItemAttribute" do
       optional :item_id, :string, 1
       proto3_optional :merchant_id, :int64, 2
-      optional :region_code, :string, 3
+      optional :country_code, :string, 3
       optional :language_code, :string, 4
       optional :quantity, :int64, 5
     end

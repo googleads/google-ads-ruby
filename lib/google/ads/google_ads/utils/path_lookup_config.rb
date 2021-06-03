@@ -32,6 +32,7 @@ module Google
           # The way that the arguments to the gapic generated function are
           # determined by introspection of its required keyword arguments.
           PATH_LOOKUP_BASE = {
+            accessible_bidding_strategy: [:customer, [:accessible_bidding_strategy]],
             account_budget_proposal: [:customer, [:account_budget_proposal]],
             account_budget: [:customer, [:account_budget]],
             account_link: [:customer, [:account_link_id]],
@@ -77,8 +78,6 @@ module Google
             combined_audience: [:customer, :combined_audience],
             conversion_action: [:customer, [:conversion_action]],
             conversion_custom_variable: [:customer, :conversion_custom_variable],
-            conversion_value_rule: [:customer, [:conversion_value_rule]],
-            conversion_value_rule_set: [:customer, [:conversion_value_rule_set]],
             currency_constant: [:currency_constant],
             custom_audience: [:customer, :custom_audience],
             custom_interest: [:customer, [:custom_interest]],
@@ -122,6 +121,7 @@ module Google
             keyword_plan_keyword: [:customer, [:kp_ad_group_keyword]],
             keyword_plan_negative_keyword: [:customer, [:kp_negative_keyword]],
             keyword_plan: [:customer, [:kp_plan]],
+            keyword_theme_constant: [[:express_category_id, :express_sub_category_id]],
             keyword_view: [:customer, [:ad_group, :criterion]],
             label: [:customer, [:label]],
             language_constant: [:criterion],
@@ -143,6 +143,8 @@ module Google
             shared_criterion: [:customer, [:shared_set, :criterion]],
             shared_set: [:customer, [:shared_set]],
             shopping_performance_view: [:customer],
+            smart_campaign_search_term_view: [:customer, [:campaign_id, :query]],
+            smart_campaign_setting: [:customer, [:smart_campaign_setting]],
             third_party_app_analytics_link: [:customer, [:account_link_id]],
             topic_constant: [:vertical],
             topic_view: [:customer, [:ad_group, :criterion]],
@@ -171,6 +173,10 @@ module Google
               :customer_asset,
               :life_event,
               :webpage_view,
+              :accessible_bidding_strategy,
+              :keyword_theme_constant,
+              :smart_campaign_search_term_view,
+              :smart_campaign_setting,
             ].include?(k)
           }
 
@@ -188,6 +194,10 @@ module Google
                 :detailed_demographic,
                 :life_event,
                 :webpage_view,
+                :accessible_bidding_strategy,
+                :keyword_theme_constant,
+                :smart_campaign_search_term_view,
+                :smart_campaign_setting,
               ].include?(k)
             }
             .map { |k, v| [k, v.flatten] }
@@ -200,6 +210,10 @@ module Google
                 :conversion_value_rule,
                 :conversion_value_rule_set,
                 :detailed_demographic,
+                :accessible_bidding_strategy,
+                :keyword_theme_constant,
+                :smart_campaign_search_term_view,
+                :smart_campaign_setting,
               ].include?(k)
             }
             .map { |k, v| [k, v.flatten] }

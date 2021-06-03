@@ -26,6 +26,23 @@ module Google
             # Path helper methods for the GoogleAdsService API.
             module Paths
               ##
+              # Create a fully-qualified AccessibleBiddingStrategy resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/accessibleBiddingStrategies/{bidding_strategy_id}`
+              #
+              # @param customer_id [String]
+              # @param bidding_strategy_id [String]
+              #
+              # @return [::String]
+              def accessible_bidding_strategy_path customer_id:, bidding_strategy_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/accessibleBiddingStrategies/#{bidding_strategy_id}"
+              end
+
+              ##
               # Create a fully-qualified AccountBudget resource string.
               #
               # The resource will be in the following format:
@@ -966,40 +983,6 @@ module Google
               end
 
               ##
-              # Create a fully-qualified ConversionValueRule resource string.
-              #
-              # The resource will be in the following format:
-              #
-              # `customers/{customer_id}/conversionValueRules/{conversion_value_rule_id}`
-              #
-              # @param customer_id [String]
-              # @param conversion_value_rule_id [String]
-              #
-              # @return [::String]
-              def conversion_value_rule_path customer_id:, conversion_value_rule_id:
-                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
-
-                "customers/#{customer_id}/conversionValueRules/#{conversion_value_rule_id}"
-              end
-
-              ##
-              # Create a fully-qualified ConversionValueRuleSet resource string.
-              #
-              # The resource will be in the following format:
-              #
-              # `customers/{customer_id}/conversionValueRuleSets/{conversion_value_rule_set_id}`
-              #
-              # @param customer_id [String]
-              # @param conversion_value_rule_set_id [String]
-              #
-              # @return [::String]
-              def conversion_value_rule_set_path customer_id:, conversion_value_rule_set_id:
-                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
-
-                "customers/#{customer_id}/conversionValueRuleSets/#{conversion_value_rule_set_id}"
-              end
-
-              ##
               # Create a fully-qualified CurrencyConstant resource string.
               #
               # The resource will be in the following format:
@@ -1738,6 +1721,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified KeywordThemeConstant resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `keywordThemeConstants/{express_category_id}~{express_sub_category_id}`
+              #
+              # @param express_category_id [String]
+              # @param express_sub_category_id [String]
+              #
+              # @return [::String]
+              def keyword_theme_constant_path express_category_id:, express_sub_category_id:
+                raise ::ArgumentError, "express_category_id cannot contain /" if express_category_id.to_s.include? "/"
+
+                "keywordThemeConstants/#{express_category_id}~#{express_sub_category_id}"
+              end
+
+              ##
               # Create a fully-qualified KeywordView resource string.
               #
               # The resource will be in the following format:
@@ -2133,6 +2133,42 @@ module Google
               # @return [::String]
               def shopping_performance_view_path customer_id:
                 "customers/#{customer_id}/shoppingPerformanceView"
+              end
+
+              ##
+              # Create a fully-qualified SmartCampaignSearchTermView resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/smartCampaignSearchTermViews/{campaign_id}~{query}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              # @param query [String]
+              #
+              # @return [::String]
+              def smart_campaign_search_term_view_path customer_id:, campaign_id:, query:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/smartCampaignSearchTermViews/#{campaign_id}~#{query}"
+              end
+
+              ##
+              # Create a fully-qualified SmartCampaignSetting resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/smartCampaignSettings/{campaign_id}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              #
+              # @return [::String]
+              def smart_campaign_setting_path customer_id:, campaign_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/smartCampaignSettings/#{campaign_id}"
               end
 
               ##

@@ -253,6 +253,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.common.CombinedAudienceInfo" do
       optional :combined_audience, :string, 1
     end
+    add_message "google.ads.googleads.v8.common.KeywordThemeInfo" do
+      oneof :keyword_theme do
+        optional :keyword_theme_constant, :string, 1
+        optional :free_form_keyword_theme, :string, 2
+      end
+    end
   end
 end
 
@@ -319,6 +325,7 @@ module Google
           LocationGroupInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.LocationGroupInfo").msgclass
           CustomAudienceInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CustomAudienceInfo").msgclass
           CombinedAudienceInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.CombinedAudienceInfo").msgclass
+          KeywordThemeInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.common.KeywordThemeInfo").msgclass
         end
       end
     end
