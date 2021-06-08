@@ -50,14 +50,17 @@ end
 
 # Creates a new TargetSpend (Maximize Clicks) cross-account bidding strategy
 # in the manager account.
+# [START create_cross_account_strategy]
 def create_bidding_strategy(client, manager_customer_id)
   # Constructs an operation that will create a portfolio bidding strategy.
+  # [START set_currency_code]
   operation = client.operation.create_resource.bidding_strategy do |b|
     b.name = "Maximize Clicks ##{(Time.new.to_f * 1000).to_i}"
     b.target_spend = Google::Ads::GoogleAds::V8::Common::TargetSpend.new
     # Sets the currency of the new bidding strategy. If not provided, the
     # bidding strategy uses the manager account's default currency.
     b.currency_code = "USD"
+    # [END set_currency_code]
   end
 
   # Sends the operation in a mutate request.
@@ -71,8 +74,10 @@ def create_bidding_strategy(client, manager_customer_id)
 
   resource_name
 end
+# [END create_cross_account_strategy]
 
 # Lists all cross-account bidding strategies in manager account.
+# [START list_manager_strategies]
 def list_manager_owned_bidding_strategies(client, manager_customer_id)
   query = <<~QUERY
     SELECT bidding_strategy.id,
@@ -99,10 +104,12 @@ def list_manager_owned_bidding_strategies(client, manager_customer_id)
     end
   end
 end
+# [END list_manager_strategies]
 
 # Lists all bidding strategies available to account. This includes both
 # portfolio bidding strategies owned by account and cross-account bidding
 # strategies shared by any of its managers.
+# [START list_accessible_strategies]
 def list_customer_accessible_bidding_strategies(client, customer_id)
   query = <<~QUERY
     SELECT accessible_bidding_strategy.id,
@@ -138,8 +145,10 @@ def list_customer_accessible_bidding_strategies(client, customer_id)
     end
   end
 end
+# [END list_accessible_strategies]
 
 # Attaches the cross-account bidding strategy to campaign in client account.
+# [START attach_strategy]
 def attach_cross_account_bidding_strategy_to_campaign(
   client,
   customer_id,
@@ -159,6 +168,7 @@ def attach_cross_account_bidding_strategy_to_campaign(
   puts "Updated campaign with resource name: " \
     "`#{response.results.first.resource_name}`"
 end
+# [END attach_strategy]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}
