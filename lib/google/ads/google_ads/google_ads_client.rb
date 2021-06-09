@@ -231,16 +231,14 @@ module Google
           raise 'config.impersonate required if keyfile specified' unless @config.impersonate
           keyfile = File.read(@config.keyfile)
           keyfile = JSON.parse(keyfile)
-          Google::Auth::Credentials.new(
-            Signet::OAuth2::Client.new(
-              token_credential_uri: "https://accounts.google.com/o/oauth2/token",
-              audience: "https://accounts.google.com/o/oauth2/token",
-              issuer: keyfile.fetch("client_email"),
-              signing_key: OpenSSL::PKey::RSA.new(keyfile.fetch("private_key")),
-              person: @config.impersonate,
-              scope: [SCOPE],
-            )
-          )
+          Signet::OAuth2::Client.new(
+            token_credential_uri: "https://accounts.google.com/o/oauth2/token",
+            audience: "https://accounts.google.com/o/oauth2/token",
+            issuer: keyfile.fetch("client_email"),
+            signing_key: OpenSSL::PKey::RSA.new(keyfile.fetch("private_key")),
+            person: @config.impersonate,
+            scope: [SCOPE],
+          ).updater_proc
         end
 
         # Create the default logger, useful if the user hasn't defined one.
