@@ -124,9 +124,8 @@ def add_smart_shopping_campaign(
     # "total value" by "total spend".
     # For more information on maximize conversion value, see the support article:
     # http://support.google.com/google-ads/answer/7684216.
-    campaign.maximize_conversion_value = client.resource.maximize_conversion_value do |m|
-      m.target_roas = 3.5
-    end
+    campaign.maximize_conversion_value = Google::Ads::GoogleAds::V8::Common::MaximizeConversionValue.new
+    campaign.maximize_conversion_value.target_roas = 3.5
 
     campaign.campaign_budget = budget_name
   end
