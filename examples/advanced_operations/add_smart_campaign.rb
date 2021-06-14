@@ -403,18 +403,18 @@ def print_response_details(response)
     resource_type = "unrecognized"
     resource_name = "not found"
 
-    resource_type, resource_name = if result.campaign_budget_result \
-      "campaign_budget", result.campaign_budget_result.resource_name
-    elsif result.campaign_result \
-      "campaign", result.campaign_result.resource_name
-    elsif result.smart_campaign_setting_result \
-      "smart_campaign_setting", result.smart_campaign_setting_result.resource_name
-    elsif result.campaign_criterion_result \
-      "campaign_criterion", result.campaign_criterion_result.resource_name
-    elsif result.ad_group_result \
-      "ad_group", result.ad_group_result.resource_name
-    elsif result.ad_group_ad_result \
-      "ad_group_ad", result.ad_group_ad_result.resource_name
+    resource_type, resource_name = if result.campaign_budget_result
+      ["campaign_budget", result.campaign_budget_result.resource_name]
+    elsif result.campaign_result
+      ["campaign", result.campaign_result.resource_name]
+    elsif result.smart_campaign_setting_result
+      ["smart_campaign_setting", result.smart_campaign_setting_result.resource_name]
+    elsif result.campaign_criterion_result
+      ["campaign_criterion", result.campaign_criterion_result.resource_name]
+    elsif result.ad_group_result
+      ["ad_group", result.ad_group_result.resource_name]
+    elsif result.ad_group_ad_result
+      ["ad_group_ad", result.ad_group_ad_result.resource_name]
     end
 
     puts "Created a(n) #{resource_type} with resource name: '#{resource_name}'"
@@ -449,8 +449,6 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:keyword_text] = DEFAULT_KEYWORD
-  options[:business_location_id] = 'INSERT_BUSINESS_LOCATION_ID'
-  options[:business_name] = 'INSERT_BUSINESS_NAME'
 
 
   OptionParser.new do |opts|
@@ -497,8 +495,8 @@ if __FILE__ == $0
     add_smart_campaign(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:keyword_text),
-      options.fetch(:business_location_id),
-      options.fetch(:business_name),
+      options[:business_location_id],
+      options[:business_name],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
