@@ -51,9 +51,8 @@ def use_portfolio_bidding_strategy(customer_id)
   # Create a portfolio bidding strategy.
   bidding_strategy = client.resource.bidding_strategy do |bs|
     bs.name = "Enhanced CPC ##{(Time.new.to_f * 1000).to_i}"
-    bs.target_spend = client.resource.target_spend do |ts|
-      ts.cpc_bid_ceiling_micros = 2_000_000
-    end
+    bs.target_spend = Google::Ads::GoogleAds::V8::Common::TargetSpend.new
+    bs.target_spend.cpc_bid_ceiling_micros = 2_000_000
   end
 
   operation = client.operation.create_resource.bidding_strategy(bidding_strategy)
