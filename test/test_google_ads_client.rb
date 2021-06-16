@@ -173,38 +173,40 @@ class TestGoogleAdsClient < Minitest::Test
     assert_instance_of(Proc, credentials)
   end
 
-  def test_keyfile_overrides_updater_proc
-    orig_credentials_init = Google::Auth::Credentials.method(:initialize)
-    Google::Auth::Credentials.instance_eval do
-      define_method(:initialize) do |k|
-      end
-    end
-    orig_rsa_init = OpenSSL::PKey::RSA.method(:initialize)
-    OpenSSL::PKey::RSA.instance_eval do
-      define_method(:initialize) do |k|
-      end
-    end
+  # TODO: Re-implement this once we have a proper solution for service
+  # accounts.
+  # def test_keyfile_overrides_updater_proc
+  #   orig_credentials_init = Google::Auth::Credentials.method(:initialize)
+  #   Google::Auth::Credentials.instance_eval do
+  #     define_method(:initialize) do |k|
+  #     end
+  #   end
+  #   orig_rsa_init = OpenSSL::PKey::RSA.method(:initialize)
+  #   OpenSSL::PKey::RSA.instance_eval do
+  #     define_method(:initialize) do |k|
+  #     end
+  #   end
 
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
-      config.client_id = 'client_id'
-      config.client_secret = 'client_secret'
-      config.refresh_token = 'refresh_token'
-      config.keyfile = 'test/fixtures/keyfile.json'
-      config.impersonate = 'impersonate'
-    end
+  #   client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
+  #     config.client_id = 'client_id'
+  #     config.client_secret = 'client_secret'
+  #     config.refresh_token = 'refresh_token'
+  #     config.keyfile = 'test/fixtures/keyfile.json'
+  #     config.impersonate = 'impersonate'
+  #   end
 
-    credentials = client.get_credentials
-    assert_instance_of(Google::Auth::Credentials, credentials)
-  ensure
-    Google::Auth::Credentials.instance_eval do
-      undef initialize
-      define_method(:initialize, &orig_credentials_init)
-    end
-    OpenSSL::PKey::RSA.instance_eval do
-      undef initialize
-      define_method(:initialize, &orig_rsa_init)
-    end
-  end
+  #   credentials = client.get_credentials
+  #   assert_instance_of(Google::Auth::Credentials, credentials)
+  # ensure
+  #   Google::Auth::Credentials.instance_eval do
+  #     undef initialize
+  #     define_method(:initialize, &orig_credentials_init)
+  #   end
+  #   OpenSSL::PKey::RSA.instance_eval do
+  #     undef initialize
+  #     define_method(:initialize, &orig_rsa_init)
+  #   end
+  # end
 
   def test_keyfile_without_impersonate_raises
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
