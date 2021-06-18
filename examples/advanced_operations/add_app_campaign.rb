@@ -89,9 +89,8 @@ def create_campaign(client, customer_id, budget_resource_name)
     # manual_cpc, commission, maximize_conversions, etc.
     # See https://developers.google.com/google-ads/api/reference/rpc
     # under current version / resources / Campaign
-    c.target_cpa = client.resource.target_cpa do |target_cpa|
-      target_cpa.target_cpa_micros = 1_000_000
-    end
+    c.target_cpa = Google::Ads::GoogleAds::V8::Common::TargetCpa.new
+    c.target_cpa.target_cpa_micros = 1_000_000
     # Sets the App Campaign Settings.
     c.app_campaign_setting = client.resource.app_campaign_setting do |acs|
       acs.app_id = 'com.google.android.apps.adwords'

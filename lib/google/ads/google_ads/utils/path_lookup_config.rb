@@ -32,6 +32,7 @@ module Google
           # The way that the arguments to the gapic generated function are
           # determined by introspection of its required keyword arguments.
           PATH_LOOKUP_BASE = {
+            accessible_bidding_strategy: [:customer, [:accessible_bidding_strategy]],
             account_budget_proposal: [:customer, [:account_budget_proposal]],
             account_budget: [:customer, [:account_budget]],
             account_link: [:customer, [:account_link_id]],
@@ -53,6 +54,7 @@ module Google
             ad: [:customer, [:ad]],
             age_range_view: [:customer, [:ad_group, :criterion]],
             asset: [:customer, [:asset]],
+            asset_field_type_view: [:customer, [:asset_field_type_view]],
             batch_job: [:customer, [:batch_job]],
             bidding_strategy: [:customer, [:bidding_strategy]],
             bidding_strategy_simulation: [:customer, :bidding_strategy, :type, :modification_method, :start_date, :end_date],
@@ -91,6 +93,7 @@ module Google
             customer_user_access_invitation: [:customer, :invitation],
             customer: [:customer],
             detail_placement_view: [:customer, [:ad_group, :base64_placement]],
+            detailed_demographic: [:customer, :detailed_demographic],
             display_keyword_view: [:customer, [:ad_group, :criterion]],
             domain_category: [:customer, [:campaign, :category_base64, :language_code]],
             dynamic_search_ads_search_term_view: [:customer, [:ad_group, :search_term, :headline, :landing_page, :page_url]],
@@ -118,6 +121,7 @@ module Google
             keyword_plan_keyword: [:customer, [:kp_ad_group_keyword]],
             keyword_plan_negative_keyword: [:customer, [:kp_negative_keyword]],
             keyword_plan: [:customer, [:kp_plan]],
+            keyword_theme_constant: [[:express_category_id, :express_sub_category_id]],
             keyword_view: [:customer, [:ad_group, :criterion]],
             label: [:customer, [:label]],
             language_constant: [:criterion],
@@ -139,6 +143,8 @@ module Google
             shared_criterion: [:customer, [:shared_set, :criterion]],
             shared_set: [:customer, [:shared_set]],
             shopping_performance_view: [:customer],
+            smart_campaign_search_term_view: [:customer, [:campaign_id, :query]],
+            smart_campaign_setting: [:customer, [:smart_campaign_setting]],
             third_party_app_analytics_link: [:customer, [:account_link_id]],
             topic_constant: [:vertical],
             topic_view: [:customer, [:ad_group, :criterion]],
@@ -150,9 +156,13 @@ module Google
 
           PATH_LOOKUP_V5 = PATH_LOOKUP_BASE.reject { |k, _|
             [
+              :asset_field_type_view,
               :combined_audience,
+              :conversion_value_rule,
+              :conversion_value_rule_set,
               :custom_audience,
               :customer_user_access,
+              :detailed_demographic,
               :feed_item_set_link,
               :feed_item_set,
               :customer_user_access_invitation,
@@ -163,6 +173,10 @@ module Google
               :customer_asset,
               :life_event,
               :webpage_view,
+              :accessible_bidding_strategy,
+              :keyword_theme_constant,
+              :smart_campaign_search_term_view,
+              :smart_campaign_setting,
             ].include?(k)
           }
 
@@ -170,18 +184,42 @@ module Google
             .reject { |k, _|
               [
                 :ad_group_asset,
+                :asset_field_type_view,
                 :bidding_strategy_simulation,
                 :campaign_simulation,
                 :conversion_custom_variable,
+                :conversion_value_rule,
+                :conversion_value_rule_set,
                 :customer_asset,
+                :detailed_demographic,
                 :life_event,
                 :webpage_view,
+                :accessible_bidding_strategy,
+                :keyword_theme_constant,
+                :smart_campaign_search_term_view,
+                :smart_campaign_setting,
               ].include?(k)
             }
             .map { |k, v| [k, v.flatten] }
             .to_h
 
           PATH_LOOKUP_V7 = PATH_LOOKUP_BASE
+            .reject { |k, _|
+              [
+                :asset_field_type_view,
+                :conversion_value_rule,
+                :conversion_value_rule_set,
+                :detailed_demographic,
+                :accessible_bidding_strategy,
+                :keyword_theme_constant,
+                :smart_campaign_search_term_view,
+                :smart_campaign_setting,
+              ].include?(k)
+            }
+            .map { |k, v| [k, v.flatten] }
+            .to_h
+
+          PATH_LOOKUP_V8 = PATH_LOOKUP_BASE
             .map { |k, v| [k, v.flatten] }
             .to_h
         end

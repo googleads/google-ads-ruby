@@ -88,9 +88,8 @@ def create_smart_display_campaign(client, customer_id, budget)
     # 'DISPLAY_SMART_CAMPAIGN'.
     c.advertising_channel_sub_type = :DISPLAY_SMART_CAMPAIGN
     # Smart Display campaign requires the TargetCpa bidding strategy.
-    c.target_cpa = client.resource.target_cpa do |tcpa|
-      tcpa.target_cpa_micros = 5_000_000
-    end
+    c.target_cpa = Google::Ads::GoogleAds::V8::Common::TargetCpa.new
+    c.target_cpa.target_cpa_micros = 5_000_000
     c.campaign_budget = budget
     # Optional: Sets the start and end dates for the campaign, beginning one day
     # from now and ending a month from now.

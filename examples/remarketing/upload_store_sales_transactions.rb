@@ -34,7 +34,12 @@ def upload_store_sales_transactions(
   bridge_map_version_id,
   partner_id,
   custom_key,
-  custom_value)
+  custom_value,
+  item_id,
+  merchant_center_account_id,
+  region_code,
+  language_code,
+  quantity)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -142,7 +147,7 @@ def create_offline_user_data_job(
       # Sets the version of partner IDs to be used for uploads.
       t.bridge_map_version_id = bridge_map_version_id
       # Sets the third party partner ID uploading the transactions.
-      t.partner_id = partner_id
+      t.partner_id = partner_id.to_i
     end
   end
 
@@ -276,6 +281,15 @@ def build_offline_user_data_job_operations(
       # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
       t.transaction_date_time = "2020-05-14 19:07:02"
       t.custom_value = custom_value unless custom_value.nil?
+      if item_id
+        t.item_attribute = client.resource.item_attribute do |item|
+          item.item_id = item_id
+          item.merchant_id = merchant_center_account_id.to_i
+          item.region_code = region_code
+          item.language_code = language_code
+          item.quantity = quantity.to_i
+        end
+      end
     end
   end
 
@@ -408,6 +422,39 @@ if __FILE__ == $0
       options[:custom_value] = v
     end
 
+    opts.on('-i', '--item-id ITEM-ID', String,
+      'Optional: Specify a unique identifier of a product, either the ' \
+      'Merchant Center Item ID or Global Trade Item Number (GTIN). ' \
+      'Only required if uploading with item attributes.') do |v|
+      options[:item_id] = v
+    end
+
+    opts.on('-m', '--merchant-center-account-id MERCHANT-CENTER-ACCOUNT-ID', String,
+      'Optional: Specify a Merchant Center Account ID. Only required if ' \
+      'uploading with item attributes.') do |v|
+      options[:merchant_center_account_id] = v
+    end
+
+    opts.on('-r', '--region-code REGION-CODE', String,
+      'Optional: Specify a two-letter region code of the location associated ' \
+      'with the feed where your items are uploaded. Only required if ' \
+      'uploading with item attributes.') do |v|
+      options[:region_code] = v
+    end
+
+    opts.on('-L', '--language-code LANGUAGE-CODE', String,
+      'Optional: Specify a two-letter language code of the language ' \
+      'associated with the feed where your items are uploaded. Only required ' \
+      'if uploading with item attributes.') do |v|
+      options[:language_code] = v
+    end
+
+    opts.on('-q', '--quantity QUANTITY', String,
+      'Optional: Specify a number of items sold. Only required if uploading ' \
+      'with item attributes.') do |v|
+      options[:quantity] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -428,6 +475,11 @@ if __FILE__ == $0
       options[:partner_id],
       options[:custom_key],
       options[:custom_value],
+      options[:item_id],
+      options[:merchant_center_account_id],
+      options[:region_code],
+      options[:language_code],
+      options[:quantity],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
