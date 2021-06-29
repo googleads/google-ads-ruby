@@ -95,6 +95,9 @@ class TestPathLookupUtil < Minitest::Test
     expected = 'customers/1234/billingSetups/5678'
     assert_equal(expected, util.billing_setup(1234, 5678))
 
+    expected = 'customers/1234/campaignAssets/56~78~90'
+    assert_equal(expected, util.campaign_asset(1234, 56, 78, 90))
+
     expected = 'customers/1234/campaignAudienceViews/567~890'
     assert_equal(expected, util.campaign_audience_view(1234, 567, 890))
 
@@ -388,6 +391,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/billingSetups/5678'
     assert_equal(expected, util.billing_setup(1234, 5678))
+
+    expected = 'customers/1234/campaignAssets/56~78~90'
+    assert_equal(expected, util.campaign_asset(1234, 56, 78, 90))
 
     expected = 'customers/1234/campaignAudienceViews/567~890'
     assert_equal(expected, util.campaign_audience_view(1234, 567, 890))
@@ -706,6 +712,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/billingSetups/5678'
     assert_equal(expected, util.billing_setup(1234, 5678))
+
+    expected = 'customers/1234/campaignAssets/56~78~90'
+    assert_equal(expected, util.campaign_asset(1234, 56, 78, 90))
 
     expected = 'customers/1234/campaignAudienceViews/567~890'
     assert_equal(expected, util.campaign_audience_view(1234, 567, 890))
@@ -1045,6 +1054,9 @@ class TestPathLookupUtil < Minitest::Test
 
     expected = 'customers/1234/billingSetups/5678'
     assert_equal(expected, util.billing_setup(1234, 5678))
+
+    expected = 'customers/1234/campaignAssets/56~78~90'
+    assert_equal(expected, util.campaign_asset(1234, 56, 78, 90))
 
     expected = 'customers/1234/campaignAudienceViews/567~890'
     assert_equal(expected, util.campaign_audience_view(1234, 567, 890))

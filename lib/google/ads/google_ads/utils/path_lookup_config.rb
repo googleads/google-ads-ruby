@@ -59,6 +59,7 @@ module Google
             bidding_strategy: [:customer, [:bidding_strategy]],
             bidding_strategy_simulation: [:customer, :bidding_strategy, :type, :modification_method, :start_date, :end_date],
             billing_setup: [:customer, [:billing]],
+            campaign_asset: [:customer, [:campaign, :asset, :field_type]],
             campaign_audience_view: [:customer, [:campaign, :criterion]],
             campaign_bid_modifier: [:customer, [:campaign, :criterion]],
             campaign_budget: [:customer, [:campaign_budget]],
