@@ -155,32 +155,6 @@ module Google
             webpage_view: [:customer, :ad_group, :criterion],
           }
 
-          PATH_LOOKUP_V5 = PATH_LOOKUP_BASE.reject { |k, _|
-            [
-              :asset_field_type_view,
-              :combined_audience,
-              :conversion_value_rule,
-              :conversion_value_rule_set,
-              :custom_audience,
-              :customer_user_access,
-              :detailed_demographic,
-              :feed_item_set_link,
-              :feed_item_set,
-              :customer_user_access_invitation,
-              :ad_group_asset,
-              :bidding_strategy_simulation,
-              :campaign_simulation,
-              :conversion_custom_variable,
-              :customer_asset,
-              :life_event,
-              :webpage_view,
-              :accessible_bidding_strategy,
-              :keyword_theme_constant,
-              :smart_campaign_search_term_view,
-              :smart_campaign_setting,
-            ].include?(k)
-          }
-
           PATH_LOOKUP_V6 = PATH_LOOKUP_BASE
             .reject { |k, _|
               [

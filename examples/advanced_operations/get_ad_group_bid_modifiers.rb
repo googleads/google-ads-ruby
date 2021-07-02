@@ -40,7 +40,7 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
             ad_group_bid_modifier.hotel_check_in_date_range.end_date,
             ad_group_bid_modifier.preferred_content.type,
             campaign.id
-    FROM ad_group_bid_modifier
+    FROM ad_group_bid_modifier LIMIT 10000
   QUERY
 
   if ad_group_id
