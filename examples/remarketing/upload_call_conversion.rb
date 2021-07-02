@@ -24,8 +24,15 @@ require 'google/ads/google_ads'
 require 'date'
 
 # [START upload_call_conversion]
-def upload_call_conversion(customer_id, conversion_action_id, caller_id,
-  call_start_date_time, conversion_date_time, conversion_value)
+def upload_call_conversion(
+  customer_id,
+  conversion_action_id,
+  caller_id,
+  call_start_date_time,
+  conversion_date_time,
+  conversion_value,
+  conversion_custom_variable_id,
+  conversion_custom_variable_value)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -39,6 +46,13 @@ def upload_call_conversion(customer_id, conversion_action_id, caller_id,
     c.conversion_date_time = conversion_date_time
     c.conversion_value = conversion_value
     c.currency_code = "USD"
+    if conversion_custom_variable_id && conversion_custom_variable_value
+      c.custom_variables << client.resource.custom_variable do |cv|
+        cv.conversion_custom_variable = client.path.conversion_custom_variable(
+          customer_id, conversion_custom_variable_id)
+        cv.value = conversion_custom_variable_value
+      end
+    end
   end
 
   # Issues a request to upload the call conversion.
@@ -95,6 +109,10 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  # Optional: Specify the conversion custom variable ID and value you want to
+  # associate with the call conversion upload.
+  options[:conversion_custom_variable_id] = nil;
+  options[:conversion_custom_variable_value] = nil;
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -126,6 +144,18 @@ if __FILE__ == $0
       options[:conversion_value] = v.to_f
     end
 
+    opts.on('-d', '--conversion-custom-variable-id CONVERSION-CUSTOM-VARIABLE-ID', \
+            String, '(Optional) The ID of the conversion custom variable to ' \
+            'associate with the upload') do |v|
+      options[:conversion_custom_variable_id] = v
+    end
+
+    opts.on('-u', '--conversion-custom-variable-value CONVERSION-CUSTOM-VARIABLE-VALUE', \
+            String, '(Optional) The value of the conversion custom ' \
+            'variable to associate with the upload') do |v|
+      options[:conversion_custom_variable_value] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -143,6 +173,8 @@ if __FILE__ == $0
       options.fetch(:call_start_date_time),
       options.fetch(:conversion_date_time),
       options.fetch(:conversion_value),
+      options[:conversion_custom_variable_id],
+      options[:conversion_custom_variable_value],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
