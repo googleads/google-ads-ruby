@@ -40,12 +40,14 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
             ad_group_bid_modifier.hotel_check_in_date_range.end_date,
             ad_group_bid_modifier.preferred_content.type,
             campaign.id
-    FROM ad_group_bid_modifier LIMIT 10000
+    FROM ad_group_bid_modifier
   QUERY
 
   if ad_group_id
     search_query << "WHERE ad_group.id = #{ad_group_id}"
   end
+
+  search_query << " LIMIT 10000"
 
   response = client.service.google_ads.search(
     customer_id: customer_id,
