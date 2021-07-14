@@ -4,7 +4,7 @@ set -euxo pipefail
 rm -rf lib/google/ads/google_ads/factories
 mkdir -p lib/google/ads/google_ads/factories
 bundle exec ruby codegen/main.rb
-bundle exec standardrb --fix -- lib/google/ads/google_ads/factories/**/*.rb lib/google/ads/google_ads/factories.rb
+# bundle exec standardrb --fix -- lib/google/ads/google_ads/factories/**/*.rb lib/google/ads/google_ads/factories.rb
 
 GEM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/../"
 
@@ -25,6 +25,6 @@ client.resource.campaign
 client.operation.campaign
 client.enum.policy_topic_entry_type
 
-raise "bad version on explicit versioning" if client.operation.v6.create_resource != Google::Ads::GoogleAds::Factories::V1::Operations::CreateResource
+# raise "bad version on explicit versioning" if client.operation.v6.create_resource != Google::Ads::GoogleAds::Factories::V8::Operations::CreateResource
 EORUBY
 )

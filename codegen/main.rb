@@ -60,9 +60,11 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
       require fn.gsub("#{GEM_ROOT}/lib/", "")
     end
   end
+
   resources = filter_resources_for_google_ads(version, potential_resources)
   resources = cleanup_paths(resources, :RESOURCE)
   resources, operations = filter_resources_into_resources_and_operations(resources)
+  resources = deduplicate_resources(resources)
 
   enums = filter_enums_for_google_ads(version, potential_enums)
   enums = cleanup_paths(enums, :ENUM)
@@ -95,7 +97,7 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
     File.join(DIR, "templates", "operations.rb.erb"),
     File.join(factories_dir, "operations.rb"),
     {operations: operations, version: version}
- )
+   )
 end
 
 gads_dir = File.join(GEM_ROOT, "lib", "google", "ads", "google_ads")

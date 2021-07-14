@@ -39,6 +39,39 @@ def filter_resources_into_resources_and_operations(resources)
   }
 end
 
+def deduplicate_resources(resources)
+  names = Hash.new(0)
+  resources = resources.map do |klass, path|
+    name = get_class_name(klass)
+    names[name] += 1
+    [name, klass, path]
+  end
+  resources.map do |name, klass, path|
+    [
+      if names[name] > 1
+        get_expanded_class_name(klass)
+      else
+        name
+      end,
+      klass,
+      path,
+    ]
+  end
+end
+
+def get_class_name(klass)
+  klass.name.split("::").last.underscore
+end
+
+def get_expanded_class_name(klass)
+  components = klass.name.split("::")
+  while !["Resources", "Common", "Services"].include?(components.first)
+    components.shift
+  end
+  components.shift
+  components.map { |component| component.underscore }.join("_")
+end
+
 Operation = Struct.new(
   :operation,
   :update_class,
