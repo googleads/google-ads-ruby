@@ -18,7 +18,6 @@
 # Utility that generates up resource names for entities given IDs.
 
 require "google/ads/google_ads/utils/path_lookup_definer"
-require "google/ads/google_ads/utils/path_lookup_config"
 
 module Google
   module Ads
@@ -26,19 +25,18 @@ module Google
       module Utils
         def self.build_path_lookup_class(version)
           Class.new do
-            define_method(:lookups) do
-              GoogleAds.const_get("Utils::PathLookupConfig::PATH_LOOKUP_#{version.upcase}")
-            end
+            @lookups = Set.new
 
             define_method(:respond_to_missing?) do |name, include_private=false|
-              lookups.include?(name) || super
+              return true if lookups.include?(name)
+              if require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
+                lookups.add(name)
+                return true
+              end
+              super
             end
 
             define_method(:method_missing) do |name, *args, **kwargs|
-              if !lookups.include?(name)
-                raise NoMethodError, "undefined method `#{name}' for #{inspect}"
-              end
-
               if args.any? { |arg| arg.nil? }
                 raise ArgumentError, "invalid args for #{name}: #{args.inspect}"
               end
@@ -48,7 +46,7 @@ module Google
             end
 
             define_method(:define_lookup_method) do |name, version|
-              Utils::PathLookupDefiner.new(self, name, lookups.fetch(name)).call(version)
+              Utils::PathLookupDefiner.new(self, name).call(version)
             end
           end
         end
