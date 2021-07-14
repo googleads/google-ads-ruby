@@ -25,18 +25,17 @@ module Google
       module Utils
         def self.build_path_lookup_class(version)
           Class.new do
-            @lookups = Set.new
+            define_method(:initialize) do
+              @lookups = Set.new
+              @non_path_methods = Set.new
+            end
 
             define_method(:respond_to_missing?) do |name, include_private=false|
-              return true if lookups.include?(name)
-              if require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
-                lookups.add(name)
-                return true
-              end
-              super
+              validate_method_name(name) || super
             end
 
             define_method(:method_missing) do |name, *args, **kwargs|
+              raise ArgumentError, "unknown path type #{name}" unless validate_method_name(name)
               if args.any? { |arg| arg.nil? }
                 raise ArgumentError, "invalid args for #{name}: #{args.inspect}"
               end
@@ -47,6 +46,21 @@ module Google
 
             define_method(:define_lookup_method) do |name, version|
               Utils::PathLookupDefiner.new(self, name).call(version)
+            end
+
+            define_method(:validate_method_name) do |name|
+              if !@non_path_methods.include?(name)
+                return true if @lookups.include?(name)
+                begin
+                  require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
+                  @lookups.add(name)
+                  return true
+                rescue LoadError => e
+                  puts e.inspect
+                  @non_path_methods.add(name)
+                end
+                return false
+              end
             end
           end
         end
