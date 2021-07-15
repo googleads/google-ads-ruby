@@ -22,10 +22,9 @@ module Google
     module GoogleAds
       module Utils
         class PathLookupDefiner
-          def initialize(target, name, arg_sequence)
+          def initialize(target, name)
             @target = target
             @name = name
-            @arg_sequence = arg_sequence
           end
 
           # Defines a path lookup method on the target object instance that
@@ -38,36 +37,35 @@ module Google
           # implementation here by comparison with this method, so I moved them
           # below.
           def call(version)
-            arg_sequence = @arg_sequence
             name = @name
             @target.send(:define_singleton_method, name) do |*args, **kwargs|
-              Utils::PathLookupDefiner.verify_args(name, arg_sequence, args, kwargs)
-
-              if !args.empty?
-                arg_sequence.flatten.each_with_index do |arg, idx|
-                  kwargs[arg] = args[idx]
-                end
-              end
-
-              compound_paths = arg_sequence.map { |arg_group|
-                kwargs.fetch_values(*arg_group).join("~")
-              }
-
               mod_host = Utils::PathLookupDefiner.load_path_helper(name, version)
               target_method = mod_host.method(:"#{name}_path")
 
               params = Utils::PathLookupDefiner.kwargs_from(target_method)
+
+              Utils::PathLookupDefiner.verify_args(name, params, args, kwargs)
+
+              if !args.empty?
+                params.each_with_index do |arg, idx|
+                  kwargs[arg] = args[idx]
+                end
+              end
+
+              compound_paths = params.map { |arg_group|
+                kwargs.fetch_values(*arg_group).join("~")
+              }
+
               new_kwargs = Hash[params.zip(compound_paths)]
 
               target_method.call(**new_kwargs)
             end
           end
 
-          def self.verify_args(name, arg_sequence, args, kwargs)
-            flat_args = arg_sequence.flatten
-            total_arg_count = flat_args.length
-            positional_form = "#{name}(#{flat_args.join(", ")})"
-            kwargs_form = "#{name}(#{flat_args.map { |arg| "#{arg}:" }.join(", ")})"
+          def self.verify_args(name, params, args, kwargs)
+            total_arg_count = params.length
+            positional_form = "#{name}(#{params.join(", ")})"
+            kwargs_form = "#{name}(#{params.map { |arg| "#{arg}:" }.join(", ")})"
 
             if kwargs.empty? && !args.empty?
               if args.length != total_arg_count
@@ -78,7 +76,7 @@ module Google
               raise ArgumentError, "#{name} does not simultaneously accept " \
                 "positional arguments and keyword arguments, must specify " \
                 "#{kwargs_form}"
-            elsif !(flat_args.all? { |k| kwargs.include?(k) })
+            elsif !(params.all? { |k| kwargs.include?(k) })
               raise ArgumentError, "must specify #{kwargs_form}"
             end
           end
