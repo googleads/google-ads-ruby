@@ -56,7 +56,6 @@ module Google
                   @lookups.add(name)
                   return true
                 rescue LoadError => e
-                  puts e.inspect
                   @non_path_methods.add(name)
                 end
                 return false
