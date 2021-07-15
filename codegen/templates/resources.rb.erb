@@ -4,14 +4,14 @@ module Google
       module Factories
         module <%= version.to_s.camelize %>
           module Resources
-            <% resources.each do |res, path| %>
-            # Returns a new instance of <%= res.name.split("::").last %>, optionally
+            <% resources.each do |name, res, path| %>
+            # Returns a new instance of <%= name %>, optionally
             # yielding it to a passed block so that attributes can be set on it.
             #
             # @yield [<%= res.name %>] the new instance that will be returned so attributes
             #  can be set
             # @return [<%= res.name %>] the created resource
-            def self.<%= res.name.split("::").last.underscore %>
+            def self.<%= name %>
               require "<%= path %>"
               res = <%= res.name %>.new
               yield res if block_given?
