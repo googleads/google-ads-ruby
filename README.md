@@ -22,9 +22,10 @@ easy-to-use client library for the [Google Ads API][].
 
 The recommended way to install is using [bundler][].
 
-Add a line to your `Gemfile`:
+Add a line to your `Gemfile` (replacing x.y.z with the version number
+you're interested in):
 
-    gem "google-ads-googleads", "~> x.y.z"
+    gem 'google-ads-googleads', '~> x.y.z'
 
 Then run:
 
