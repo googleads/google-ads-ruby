@@ -32,7 +32,6 @@ module Google
         module Services
           ##
           # Service to manage user data uploads.
-          # Accessible only to customers on the allow-list.
           #
           # To load this service and instantiate a client:
           #

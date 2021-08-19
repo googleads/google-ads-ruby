@@ -56,7 +56,7 @@ class TestErrors < Minitest::Test
 
   def test_blank_code
     error = build_error
-    error.error_code = Google::Ads::GoogleAds::V6::Errors::ErrorCode.new
+    error.error_code = Google::Ads::GoogleAds::V8::Errors::ErrorCode.new
     error_code = Google::Ads::GoogleAds::Errors.code(error)
 
     assert_equal({}, error_code)
@@ -71,16 +71,16 @@ class TestErrors < Minitest::Test
   end
 
   def build_error
-    Google::Ads::GoogleAds::V6::Errors::GoogleAdsError.new.tap do |error|
-      location = Google::Ads::GoogleAds::V6::Errors::ErrorLocation.new
-      path1 = Google::Ads::GoogleAds::V6::Errors::ErrorLocation::FieldPathElement.new
+    Google::Ads::GoogleAds::V8::Errors::GoogleAdsError.new.tap do |error|
+      location = Google::Ads::GoogleAds::V8::Errors::ErrorLocation.new
+      path1 = Google::Ads::GoogleAds::V8::Errors::ErrorLocation::FieldPathElement.new
       path1.field_name = 'operations'
       path1.index = 1
-      path2 = Google::Ads::GoogleAds::V6::Errors::ErrorLocation::FieldPathElement.new
+      path2 = Google::Ads::GoogleAds::V8::Errors::ErrorLocation::FieldPathElement.new
       path2.field_name = 'create'
-      path3 = Google::Ads::GoogleAds::V6::Errors::ErrorLocation::FieldPathElement.new
+      path3 = Google::Ads::GoogleAds::V8::Errors::ErrorLocation::FieldPathElement.new
       path3.field_name = 'amount_micros'
-      error_code = Google::Ads::GoogleAds::V6::Errors::ErrorCode.new
+      error_code = Google::Ads::GoogleAds::V8::Errors::ErrorCode.new
       error_code.range_error = :TOO_LOW
       location.field_path_elements.push path1
       location.field_path_elements.push path2

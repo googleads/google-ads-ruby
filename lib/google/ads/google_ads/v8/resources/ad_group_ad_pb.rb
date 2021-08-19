@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad, :message, 5, "google.ads.googleads.v8.resources.Ad"
       optional :policy_summary, :message, 6, "google.ads.googleads.v8.resources.AdGroupAdPolicySummary"
       optional :ad_strength, :enum, 7, "google.ads.googleads.v8.enums.AdStrengthEnum.AdStrength"
+      repeated :action_items, :string, 13
       repeated :labels, :string, 10
     end
     add_message "google.ads.googleads.v8.resources.AdGroupAdPolicySummary" do

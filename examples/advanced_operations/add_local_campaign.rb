@@ -260,7 +260,7 @@ end
 if __FILE__ == $0
   MARKETING_IMAGE_URL = 'https://goo.gl/3b9Wfh'.freeze
   LOGO_IMAGE_URL = 'https://goo.gl/mtt54n'.freeze
-  YOUTUBE_VIDEO_ID = 't1fDo0VyeEo'.freeze
+  YOUTUBE_VIDEO_ID = 'ECpDzH9gXh8'.freeze
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can

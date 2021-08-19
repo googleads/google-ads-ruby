@@ -136,6 +136,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :HOTEL_CHECK_IN_DATE_RANGE_START_DATE_TOO_EARLY, 132
       value :HOTEL_CHECK_IN_DATE_RANGE_END_DATE_TOO_LATE, 133
       value :HOTEL_CHECK_IN_DATE_RANGE_REVERSED, 134
+      value :BROAD_MATCH_MODIFIER_KEYWORD_NOT_ALLOWED, 135
     end
   end
 end

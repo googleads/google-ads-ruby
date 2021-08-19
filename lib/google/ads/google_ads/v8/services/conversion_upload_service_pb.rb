@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v8/common/offline_user_data_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
 require 'google/api/field_behavior_pb'
@@ -40,6 +41,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :external_attribution_data, :message, 7, "google.ads.googleads.v8.services.ExternalAttributionData"
       repeated :custom_variables, :message, 15, "google.ads.googleads.v8.services.CustomVariable"
       optional :cart_data, :message, 16, "google.ads.googleads.v8.services.CartData"
+      repeated :user_identifiers, :message, 17, "google.ads.googleads.v8.common.UserIdentifier"
     end
     add_message "google.ads.googleads.v8.services.CallConversion" do
       proto3_optional :caller_id, :string, 7
@@ -58,6 +60,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :gclid, :string, 4
       proto3_optional :conversion_action, :string, 5
       proto3_optional :conversion_date_time, :string, 6
+      repeated :user_identifiers, :message, 7, "google.ads.googleads.v8.common.UserIdentifier"
     end
     add_message "google.ads.googleads.v8.services.CallConversionResult" do
       proto3_optional :caller_id, :string, 5

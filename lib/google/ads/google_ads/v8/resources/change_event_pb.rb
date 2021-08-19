@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v8/enums/ad_type_pb'
 require 'google/ads/google_ads/v8/enums/advertising_channel_sub_type_pb'
 require 'google/ads/google_ads/v8/enums/advertising_channel_type_pb'
+require 'google/ads/google_ads/v8/enums/asset_type_pb'
 require 'google/ads/google_ads/v8/enums/change_client_type_pb'
 require 'google/ads/google_ads/v8/enums/change_event_resource_type_pb'
 require 'google/ads/google_ads/v8/enums/criterion_type_pb'
@@ -14,13 +15,17 @@ require 'google/ads/google_ads/v8/enums/resource_change_operation_pb'
 require 'google/ads/google_ads/v8/resources/ad_pb'
 require 'google/ads/google_ads/v8/resources/ad_group_pb'
 require 'google/ads/google_ads/v8/resources/ad_group_ad_pb'
+require 'google/ads/google_ads/v8/resources/ad_group_asset_pb'
 require 'google/ads/google_ads/v8/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v8/resources/ad_group_criterion_pb'
 require 'google/ads/google_ads/v8/resources/ad_group_feed_pb'
+require 'google/ads/google_ads/v8/resources/asset_pb'
 require 'google/ads/google_ads/v8/resources/campaign_pb'
+require 'google/ads/google_ads/v8/resources/campaign_asset_pb'
 require 'google/ads/google_ads/v8/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v8/resources/campaign_criterion_pb'
 require 'google/ads/google_ads/v8/resources/campaign_feed_pb'
+require 'google/ads/google_ads/v8/resources/customer_asset_pb'
 require 'google/ads/google_ads/v8/resources/feed_pb'
 require 'google/ads/google_ads/v8/resources/feed_item_pb'
 require 'google/api/field_behavior_pb'
@@ -44,6 +49,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :ad_group, :string, 12
       optional :feed, :string, 13
       optional :feed_item, :string, 14
+      optional :asset, :string, 20
     end
     add_message "google.ads.googleads.v8.resources.ChangeEvent.ChangedResource" do
       optional :ad, :message, 1, "google.ads.googleads.v8.resources.Ad"
@@ -58,6 +64,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_feed, :message, 10, "google.ads.googleads.v8.resources.CampaignFeed"
       optional :ad_group_feed, :message, 11, "google.ads.googleads.v8.resources.AdGroupFeed"
       optional :ad_group_ad, :message, 12, "google.ads.googleads.v8.resources.AdGroupAd"
+      optional :asset, :message, 13, "google.ads.googleads.v8.resources.Asset"
+      optional :customer_asset, :message, 14, "google.ads.googleads.v8.resources.CustomerAsset"
+      optional :campaign_asset, :message, 15, "google.ads.googleads.v8.resources.CampaignAsset"
+      optional :ad_group_asset, :message, 16, "google.ads.googleads.v8.resources.AdGroupAsset"
     end
   end
 end

@@ -31,6 +31,8 @@ require 'google/ads/google_ads/v8/resources/age_range_view_pb'
 require 'google/ads/google_ads/v8/resources/asset_pb'
 require 'google/ads/google_ads/v8/resources/asset_field_type_view_pb'
 require 'google/ads/google_ads/v8/resources/batch_job_pb'
+require 'google/ads/google_ads/v8/resources/bidding_data_exclusion_pb'
+require 'google/ads/google_ads/v8/resources/bidding_seasonality_adjustment_pb'
 require 'google/ads/google_ads/v8/resources/bidding_strategy_pb'
 require 'google/ads/google_ads/v8/resources/bidding_strategy_simulation_pb'
 require 'google/ads/google_ads/v8/resources/billing_setup_pb'
@@ -56,6 +58,8 @@ require 'google/ads/google_ads/v8/resources/click_view_pb'
 require 'google/ads/google_ads/v8/resources/combined_audience_pb'
 require 'google/ads/google_ads/v8/resources/conversion_action_pb'
 require 'google/ads/google_ads/v8/resources/conversion_custom_variable_pb'
+require 'google/ads/google_ads/v8/resources/conversion_value_rule_pb'
+require 'google/ads/google_ads/v8/resources/conversion_value_rule_set_pb'
 require 'google/ads/google_ads/v8/resources/currency_constant_pb'
 require 'google/ads/google_ads/v8/resources/custom_audience_pb'
 require 'google/ads/google_ads/v8/resources/custom_interest_pb'
@@ -143,6 +147,8 @@ require 'google/ads/google_ads/v8/services/ad_group_service_pb'
 require 'google/ads/google_ads/v8/services/ad_parameter_service_pb'
 require 'google/ads/google_ads/v8/services/ad_service_pb'
 require 'google/ads/google_ads/v8/services/asset_service_pb'
+require 'google/ads/google_ads/v8/services/bidding_data_exclusion_service_pb'
+require 'google/ads/google_ads/v8/services/bidding_seasonality_adjustment_service_pb'
 require 'google/ads/google_ads/v8/services/bidding_strategy_service_pb'
 require 'google/ads/google_ads/v8/services/campaign_asset_service_pb'
 require 'google/ads/google_ads/v8/services/campaign_bid_modifier_service_pb'
@@ -157,6 +163,8 @@ require 'google/ads/google_ads/v8/services/campaign_service_pb'
 require 'google/ads/google_ads/v8/services/campaign_shared_set_service_pb'
 require 'google/ads/google_ads/v8/services/conversion_action_service_pb'
 require 'google/ads/google_ads/v8/services/conversion_custom_variable_service_pb'
+require 'google/ads/google_ads/v8/services/conversion_value_rule_service_pb'
+require 'google/ads/google_ads/v8/services/conversion_value_rule_set_service_pb'
 require 'google/ads/google_ads/v8/services/customer_asset_service_pb'
 require 'google/ads/google_ads/v8/services/customer_extension_setting_service_pb'
 require 'google/ads/google_ads/v8/services/customer_feed_service_pb'
@@ -241,6 +249,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :asset, :message, 105, "google.ads.googleads.v8.resources.Asset"
       optional :asset_field_type_view, :message, 168, "google.ads.googleads.v8.resources.AssetFieldTypeView"
       optional :batch_job, :message, 139, "google.ads.googleads.v8.resources.BatchJob"
+      optional :bidding_data_exclusion, :message, 159, "google.ads.googleads.v8.resources.BiddingDataExclusion"
+      optional :bidding_seasonality_adjustment, :message, 160, "google.ads.googleads.v8.resources.BiddingSeasonalityAdjustment"
       optional :bidding_strategy, :message, 18, "google.ads.googleads.v8.resources.BiddingStrategy"
       optional :bidding_strategy_simulation, :message, 158, "google.ads.googleads.v8.resources.BiddingStrategySimulation"
       optional :billing_setup, :message, 41, "google.ads.googleads.v8.resources.BillingSetup"
@@ -265,6 +275,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :combined_audience, :message, 148, "google.ads.googleads.v8.resources.CombinedAudience"
       optional :conversion_action, :message, 103, "google.ads.googleads.v8.resources.ConversionAction"
       optional :conversion_custom_variable, :message, 153, "google.ads.googleads.v8.resources.ConversionCustomVariable"
+      optional :conversion_value_rule, :message, 164, "google.ads.googleads.v8.resources.ConversionValueRule"
+      optional :conversion_value_rule_set, :message, 165, "google.ads.googleads.v8.resources.ConversionValueRuleSet"
       optional :click_view, :message, 122, "google.ads.googleads.v8.resources.ClickView"
       optional :currency_constant, :message, 134, "google.ads.googleads.v8.resources.CurrencyConstant"
       optional :custom_audience, :message, 147, "google.ads.googleads.v8.resources.CustomAudience"
@@ -369,6 +381,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :ad_operation, :message, 49, "google.ads.googleads.v8.services.AdOperation"
         optional :ad_parameter_operation, :message, 22, "google.ads.googleads.v8.services.AdParameterOperation"
         optional :asset_operation, :message, 23, "google.ads.googleads.v8.services.AssetOperation"
+        optional :bidding_data_exclusion_operation, :message, 58, "google.ads.googleads.v8.services.BiddingDataExclusionOperation"
+        optional :bidding_seasonality_adjustment_operation, :message, 59, "google.ads.googleads.v8.services.BiddingSeasonalityAdjustmentOperation"
         optional :bidding_strategy_operation, :message, 6, "google.ads.googleads.v8.services.BiddingStrategyOperation"
         optional :campaign_asset_operation, :message, 52, "google.ads.googleads.v8.services.CampaignAssetOperation"
         optional :campaign_bid_modifier_operation, :message, 7, "google.ads.googleads.v8.services.CampaignBidModifierOperation"
@@ -383,6 +397,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :campaign_shared_set_operation, :message, 11, "google.ads.googleads.v8.services.CampaignSharedSetOperation"
         optional :conversion_action_operation, :message, 12, "google.ads.googleads.v8.services.ConversionActionOperation"
         optional :conversion_custom_variable_operation, :message, 55, "google.ads.googleads.v8.services.ConversionCustomVariableOperation"
+        optional :conversion_value_rule_operation, :message, 63, "google.ads.googleads.v8.services.ConversionValueRuleOperation"
+        optional :conversion_value_rule_set_operation, :message, 64, "google.ads.googleads.v8.services.ConversionValueRuleSetOperation"
         optional :customer_asset_operation, :message, 57, "google.ads.googleads.v8.services.CustomerAssetOperation"
         optional :customer_extension_setting_operation, :message, 30, "google.ads.googleads.v8.services.CustomerExtensionSettingOperation"
         optional :customer_feed_operation, :message, 31, "google.ads.googleads.v8.services.CustomerFeedOperation"
@@ -425,6 +441,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :ad_parameter_result, :message, 22, "google.ads.googleads.v8.services.MutateAdParameterResult"
         optional :ad_result, :message, 49, "google.ads.googleads.v8.services.MutateAdResult"
         optional :asset_result, :message, 23, "google.ads.googleads.v8.services.MutateAssetResult"
+        optional :bidding_data_exclusion_result, :message, 58, "google.ads.googleads.v8.services.MutateBiddingDataExclusionsResult"
+        optional :bidding_seasonality_adjustment_result, :message, 59, "google.ads.googleads.v8.services.MutateBiddingSeasonalityAdjustmentsResult"
         optional :bidding_strategy_result, :message, 6, "google.ads.googleads.v8.services.MutateBiddingStrategyResult"
         optional :campaign_asset_result, :message, 52, "google.ads.googleads.v8.services.MutateCampaignAssetResult"
         optional :campaign_bid_modifier_result, :message, 7, "google.ads.googleads.v8.services.MutateCampaignBidModifierResult"
@@ -439,6 +457,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :campaign_shared_set_result, :message, 11, "google.ads.googleads.v8.services.MutateCampaignSharedSetResult"
         optional :conversion_action_result, :message, 12, "google.ads.googleads.v8.services.MutateConversionActionResult"
         optional :conversion_custom_variable_result, :message, 55, "google.ads.googleads.v8.services.MutateConversionCustomVariableResult"
+        optional :conversion_value_rule_result, :message, 63, "google.ads.googleads.v8.services.MutateConversionValueRuleResult"
+        optional :conversion_value_rule_set_result, :message, 64, "google.ads.googleads.v8.services.MutateConversionValueRuleSetResult"
         optional :customer_asset_result, :message, 57, "google.ads.googleads.v8.services.MutateCustomerAssetResult"
         optional :customer_extension_setting_result, :message, 30, "google.ads.googleads.v8.services.MutateCustomerExtensionSettingResult"
         optional :customer_feed_result, :message, 31, "google.ads.googleads.v8.services.MutateCustomerFeedResult"
