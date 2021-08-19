@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :RETRACTION, 2
       value :RESTATEMENT, 3
+      value :ENHANCEMENT, 4
     end
   end
 end

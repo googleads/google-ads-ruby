@@ -13,6 +13,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :COMMISSION, 16
       value :ENHANCED_CPC, 2
+      value :INVALID, 17
       value :MANUAL_CPC, 3
       value :MANUAL_CPM, 4
       value :MANUAL_CPV, 13

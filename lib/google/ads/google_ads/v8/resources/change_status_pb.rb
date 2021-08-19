@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v8/enums/ad_type_pb'
 require 'google/ads/google_ads/v8/enums/advertising_channel_sub_type_pb'
 require 'google/ads/google_ads/v8/enums/advertising_channel_type_pb'
+require 'google/ads/google_ads/v8/enums/asset_type_pb'
 require 'google/ads/google_ads/v8/enums/change_status_operation_pb'
 require 'google/ads/google_ads/v8/enums/change_status_resource_type_pb'
 require 'google/ads/google_ads/v8/enums/criterion_type_pb'
@@ -30,6 +31,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :ad_group_feed, :string, 30
       proto3_optional :campaign_feed, :string, 31
       proto3_optional :ad_group_bid_modifier, :string, 32
+      optional :shared_set, :string, 33
+      optional :campaign_shared_set, :string, 34
+      optional :asset, :string, 35
+      optional :customer_asset, :string, 36
+      optional :campaign_asset, :string, 37
+      optional :ad_group_asset, :string, 38
     end
   end
 end

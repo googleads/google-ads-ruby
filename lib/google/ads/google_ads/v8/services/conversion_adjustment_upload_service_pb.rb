@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v8/common/offline_user_data_pb'
 require 'google/ads/google_ads/v8/enums/conversion_adjustment_type_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -25,6 +26,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :adjustment_date_time, :string, 9
       optional :adjustment_type, :enum, 5, "google.ads.googleads.v8.enums.ConversionAdjustmentTypeEnum.ConversionAdjustmentType"
       optional :restatement_value, :message, 6, "google.ads.googleads.v8.services.RestatementValue"
+      repeated :user_identifiers, :message, 10, "google.ads.googleads.v8.common.UserIdentifier"
+      proto3_optional :user_agent, :string, 11
       oneof :conversion_identifier do
         optional :gclid_date_time_pair, :message, 1, "google.ads.googleads.v8.services.GclidDateTimePair"
         optional :order_id, :string, 7

@@ -48,14 +48,14 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_decode_partial_failure_error
-    response_with_pfe = Google::Ads::GoogleAds::V6::Services::MutateMediaFilesResponse.new(
+    response_with_pfe = Google::Ads::GoogleAds::V8::Services::MutateMediaFilesResponse.new(
       results: [],
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v6.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v8.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -69,7 +69,7 @@ class TestGoogleAdsClient < Minitest::Test
     errors = client.decode_partial_failure_error(
       response_with_pfe.partial_failure_error,
     )
-    assert_equal errors[0].class, Google::Ads::GoogleAds::V6::Errors::GoogleAdsFailure
+    assert_equal errors[0].class, Google::Ads::GoogleAds::V8::Errors::GoogleAdsFailure
   end
 
   def test_config
@@ -107,7 +107,7 @@ class TestGoogleAdsClient < Minitest::Test
       # No setup.
     end
 
-    service = client.service.v6.campaign
+    service = client.service.v8.campaign
     assert(service.respond_to?(:mutate_campaigns))
   end
 
@@ -116,7 +116,7 @@ class TestGoogleAdsClient < Minitest::Test
       config.login_customer_id = 1234567890
     end
 
-    service = client.service.v6.campaign
+    service = client.service.v8.campaign
     assert(service.respond_to?(:mutate_campaigns))
   end
 
@@ -126,7 +126,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     assert_raises do
-      service = client.service.v6.campaign
+      service = client.service.v8.campaign
     end
   end
 

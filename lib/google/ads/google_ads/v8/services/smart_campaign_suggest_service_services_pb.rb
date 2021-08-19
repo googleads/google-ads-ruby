@@ -36,6 +36,9 @@ module Google
 
               # Returns BudgetOption suggestions.
               rpc :SuggestSmartCampaignBudgetOptions, ::Google::Ads::GoogleAds::V8::Services::SuggestSmartCampaignBudgetOptionsRequest, ::Google::Ads::GoogleAds::V8::Services::SuggestSmartCampaignBudgetOptionsResponse
+              # Suggests a Smart campaign ad compatible with the Ad family of resources,
+              # based on data points such as targeting and the business to advertise.
+              rpc :SuggestSmartCampaignAd, ::Google::Ads::GoogleAds::V8::Services::SuggestSmartCampaignAdRequest, ::Google::Ads::GoogleAds::V8::Services::SuggestSmartCampaignAdResponse
             end
 
             Stub = Service.rpc_stub_class

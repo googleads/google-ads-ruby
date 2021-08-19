@@ -36,11 +36,21 @@ def add_smart_campaign(
   keyword_theme_infos = map_keyword_theme_constants_to_infos(
     client, keyword_theme_constants)
 
+  suggestion_info = get_smart_campaign_suggestion_info(
+    client,
+    business_location_id,
+    business_name,
+    keyword_theme_infos,
+  )
   suggested_budget_amount = get_budget_suggestion(
     client,
     customer_id,
-    business_location_id,
-    keyword_theme_infos,
+    suggestion_info,
+  )
+  ad_suggestions = get_ad_suggestions(
+    client,
+    customer_id,
+    suggestion_info,
   )
 
   # [START add_smart_campaign_7]
@@ -83,7 +93,11 @@ def add_smart_campaign(
 
   mutate_operations << create_ad_group_operation(client, customer_id)
 
-  mutate_operations << create_ad_group_ad_operation(client, customer_id)
+  mutate_operations << create_ad_group_ad_operation(
+    client,
+    customer_id,
+    ad_suggestions
+  )
 
   # Sends the operations into a single Mutate request.
   response = client.service.google_ads.mutate(
@@ -123,15 +137,19 @@ def map_keyword_theme_constants_to_infos(client, keyword_theme_constants)
   infos
 end
 
-# [START add_smart_campaign_1]
-# Retrieves a suggested budget amount for a new budget.
-# Using the smart_campaign_suggest_service to determine a daily budget for new
-# and existing Smart campaigns is highly recommended because it helps the
-# campaigns achieve optimal performance.
-def get_budget_suggestion(
+# [START add_smart_campaign_9]
+# Builds a SmartCampaignSuggestionInfo object with business details.
+#
+# The details are used by the SmartCampaignSuggestService to suggest a
+# budget amount as well as creatives for the ad.
+#
+# Note that when retrieving ad creative suggestions it's required that the
+# "final_url", "language_code" and "keyword_themes" fields are set on the
+# SmartCampaignSuggestionInfo instance.
+def get_smart_campaign_suggestion_info(
   client,
-  customer_id,
   business_location_id,
+  business_name,
   keyword_theme_infos)
 
   # Since these suggestions are for a new campaign, we're going to
@@ -139,6 +157,8 @@ def get_budget_suggestion(
   suggestion_info = client.resource.smart_campaign_suggestion_info do |si|
     # Adds the URL of the campaign's landing page.
     si.final_url = LANDING_PAGE_URL
+    # Add the language code for the campaign.
+    si.language_code = LANGUAGE_CODE
     # Constructs location information using the given geo target constant. It's
     # also possible to provide a geographic proximity using the "proximity"
     # field on suggestion_info, for example:
@@ -168,9 +188,14 @@ def get_budget_suggestion(
     end
     # Adds the keyword_theme_info objects to the suggestion_info object.
     si.keyword_themes += keyword_theme_infos
-    # If provided, add the GMB location ID.
+    # Set either of the business_location_id or business_name, depending on
+    # whichever is provided.
     if business_location_id
       si.business_location_id = business_location_id.to_i
+    else
+      si.business_context = client.resource.business_context do |bc|
+        bc.business_name = business_name
+      end
     end
     # Adds a schedule detailing which days of the week the business is open.
     # This schedule describes a schedule in which the business is open on
@@ -189,9 +214,26 @@ def get_budget_suggestion(
     ]
   end
 
+  suggestion_info
+end
+# [END add_smart_campaign_9]
+
+# [START add_smart_campaign_1]
+# Retrieves a suggested budget amount for a new budget.
+#
+# Using the SmartCampaignSuggestService to determine a daily budget for new
+# and existing Smart campaigns is highly recommended because it helps the
+# campaigns achieve optimal performance.
+def get_budget_suggestion(client, customer_id, suggestion_info)
   # Issues a request to retrieve a budget suggestion.
   response = client.service.smart_campaign_suggest.suggest_smart_campaign_budget_options(
     customer_id: customer_id,
+    # You can retrieve suggestions for an existing campaign by setting the
+    # "campaign" field of the request equal to the resource name of a campaign
+    # and leaving the rest of the request fields below unset:
+    # campaign: INSERT_CAMPAIGN_RESOURCE_NAME_HERE,
+    # Since these suggestions are for a new campaign, we're going to
+    # use the suggestion_info field instead.
     suggestion_info: suggestion_info,
   )
 
@@ -207,6 +249,41 @@ def get_budget_suggestion(
   recommendation.daily_amount_micros
 end
 # [END add_smart_campaign_1]
+
+# [START add_smart_campaign_10]
+# Retrieves creative suggestions for a Smart campaign ad.
+#
+# Using the SmartCampaignSuggestService to suggest creatives for new and
+# existing Smart campaigns is highly recommended because it helps the
+# campaigns achieve optimal performance.
+def get_ad_suggestions(client, customer_id, suggestion_info)
+  # Issue a request to retrieve ad creative suggestions.
+  response = client.service.smart_campaign_suggest.suggest_smart_campaign_ad(
+    customer_id: customer_id,
+    # Unlike the SuggestSmartCampaignBudgetOptions method, it's only possible
+    # to use suggestion_info to retrieve ad creative suggestions.
+    suggestion_info: suggestion_info,
+  )
+
+  # The SmartCampaignAdInfo object in the response contains a list of up to
+  # three headlines and two descriptions. Note that some of the suggestions
+  # may have empty strings as text. Before setting these on the ad you should
+  # review them and filter out any empty values.
+  ad_suggestions = response.ad_info
+
+  puts 'The following headlines were suggested:'
+  ad_suggestions.headlines.each do  |headline|
+    puts "\t#{headline.text || '<None>'}"
+  end
+
+  puts 'And the following descriptions were suggested:'
+  ad_suggestions.descriptions.each do |description|
+    puts "\t#{description.text || '<None>'}"
+  end
+
+  ad_suggestions
+end
+# [END add_smart_campaign_10]
 
 # [START add_smart_campaign_2]
 # Creates a mutate_operation that creates a new campaign_budget.
@@ -358,7 +435,7 @@ end
 # Creates a mutate_operation that creates a new ad group ad.
 # A temporary ID will be used in the ad group resource name for this
 # ad group ad to associate it with the ad group created in earlier steps.
-def create_ad_group_ad_operation(client, customer_id)
+def create_ad_group_ad_operation(client, customer_id, ad_suggestions)
   mutate_operation = client.operation.mutate do |m|
     m.ad_group_ad_operation = client.operation.create_resource.ad_group_ad do |aga|
       # Set the ad group ID to a temporary ID.
@@ -367,23 +444,16 @@ def create_ad_group_ad_operation(client, customer_id)
         # Set the type to SMART_CAMPAIGN_AD.
         ad.type = :SMART_CAMPAIGN_AD
         ad.smart_campaign_ad = client.resource.smart_campaign_ad_info do |sca|
-          # At most, three headlines can be specified for a Smart campaign ad.
-          sca.headlines << client.resource.ad_text_asset do |ata|
-            ata.text = "Headline number one"
-          end
-          sca.headlines << client.resource.ad_text_asset do |ata|
-            ata.text = "Headline number two"
-          end
-          sca.headlines << client.resource.ad_text_asset do |ata|
-            ata.text = "Headline number three"
-          end
-          # At most, two descriptions can be specified for a Smart campaign ad.
-          sca.descriptions << client.resource.ad_text_asset do |ata|
-            ata.text = "Descriptions number one"
-          end
-          sca.descriptions << client.resource.ad_text_asset do |ata|
-            ata.text = "Descriptions number two"
-          end
+          # The SmartCampaignAdInfo object includes headlines and descriptions
+          # retrieved from the SmartCampaignSuggestService.SuggestSmartCampaignAd
+          # method. It's recommended that users review and approve or update these
+          # creatives before they're set on the ad. It's possible that some or all of
+          # these assets may contain empty texts, which should not be set on the ad
+          # and instead should be replaced with meaninful texts from the user. Below
+          # we just accept the creatives that were suggested while filtering out empty
+          # assets, but individual workflows will vary here.
+          sca.headlines += ad_suggestions.headlines.filter(&:text)
+          sca.descriptions += ad_suggestions.descriptions.filter(&:text)
         end
       end
     end

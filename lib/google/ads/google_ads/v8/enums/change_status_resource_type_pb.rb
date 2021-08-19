@@ -21,6 +21,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :AD_GROUP_FEED, 11
       value :CAMPAIGN_FEED, 12
       value :AD_GROUP_BID_MODIFIER, 13
+      value :SHARED_SET, 14
+      value :CAMPAIGN_SHARED_SET, 15
+      value :ASSET, 16
+      value :CUSTOMER_ASSET, 17
+      value :CAMPAIGN_ASSET, 18
+      value :AD_GROUP_ASSET, 19
     end
   end
 end

@@ -29,12 +29,6 @@ module Google
               self.scope = [
                 "https://www.googleapis.com/auth/adwords"
               ]
-              self.env_vars = [
-                "GOOGLEADS_CREDENTIALS",
-                "GOOGLEADS_KEYFILE",
-                "GOOGLEADS_CREDENTIALS_JSON",
-                "GOOGLEADS_KEYFILE_JSON"
-              ]
             end
           end
         end

@@ -68,8 +68,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :cookie_frequency_cap, :int32, 10
       optional :cookie_frequency_cap_setting, :message, 8, "google.ads.googleads.v8.services.FrequencyCap"
       proto3_optional :min_effective_frequency, :int32, 11
+      proto3_optional :effective_frequency_limit, :message, 12, "google.ads.googleads.v8.services.EffectiveFrequencyLimit"
       optional :targeting, :message, 6, "google.ads.googleads.v8.services.Targeting"
       repeated :planned_products, :message, 7, "google.ads.googleads.v8.services.PlannedProduct"
+    end
+    add_message "google.ads.googleads.v8.services.EffectiveFrequencyLimit" do
+      optional :effective_frequency_breakdown_limit, :int32, 1
     end
     add_message "google.ads.googleads.v8.services.FrequencyCap" do
       optional :impressions, :int32, 3
@@ -107,6 +111,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :on_target_impressions, :int64, 7
       proto3_optional :total_impressions, :int64, 8
       proto3_optional :viewable_impressions, :int64, 9
+      repeated :effective_frequency_breakdowns, :message, 10, "google.ads.googleads.v8.services.EffectiveFrequencyBreakdown"
     end
     add_message "google.ads.googleads.v8.services.PlannedProductReachForecast" do
       optional :plannable_product_code, :string, 1
@@ -123,6 +128,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v8.services.OnTargetAudienceMetrics" do
       proto3_optional :youtube_audience_size, :int64, 3
       proto3_optional :census_audience_size, :int64, 4
+    end
+    add_message "google.ads.googleads.v8.services.EffectiveFrequencyBreakdown" do
+      optional :effective_frequency, :int32, 1
+      optional :on_target_reach, :int64, 2
+      optional :total_reach, :int64, 3
     end
   end
 end
@@ -144,6 +154,7 @@ module Google
           GenerateProductMixIdeasResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.GenerateProductMixIdeasResponse").msgclass
           ProductAllocation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.ProductAllocation").msgclass
           GenerateReachForecastRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.GenerateReachForecastRequest").msgclass
+          EffectiveFrequencyLimit = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.EffectiveFrequencyLimit").msgclass
           FrequencyCap = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.FrequencyCap").msgclass
           Targeting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.Targeting").msgclass
           CampaignDuration = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.CampaignDuration").msgclass
@@ -155,6 +166,7 @@ module Google
           PlannedProductReachForecast = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.PlannedProductReachForecast").msgclass
           PlannedProductForecast = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.PlannedProductForecast").msgclass
           OnTargetAudienceMetrics = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.OnTargetAudienceMetrics").msgclass
+          EffectiveFrequencyBreakdown = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v8.services.EffectiveFrequencyBreakdown").msgclass
         end
       end
     end

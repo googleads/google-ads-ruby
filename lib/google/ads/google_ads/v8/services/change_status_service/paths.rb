@@ -62,6 +62,27 @@ module Google
               end
 
               ##
+              # Create a fully-qualified AdGroupAsset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/adGroupAssets/{ad_group_id}~{asset_id}~{field_type}`
+              #
+              # @param customer_id [String]
+              # @param ad_group_id [String]
+              # @param asset_id [String]
+              # @param field_type [String]
+              #
+              # @return [::String]
+              def ad_group_asset_path customer_id:, ad_group_id:, asset_id:, field_type:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
+                raise ::ArgumentError, "asset_id cannot contain /" if asset_id.to_s.include? "/"
+
+                "customers/#{customer_id}/adGroupAssets/#{ad_group_id}~#{asset_id}~#{field_type}"
+              end
+
+              ##
               # Create a fully-qualified AdGroupBidModifier resource string.
               #
               # The resource will be in the following format:
@@ -119,6 +140,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified Asset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/assets/{asset_id}`
+              #
+              # @param customer_id [String]
+              # @param asset_id [String]
+              #
+              # @return [::String]
+              def asset_path customer_id:, asset_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/assets/#{asset_id}"
+              end
+
+              ##
               # Create a fully-qualified Campaign resource string.
               #
               # The resource will be in the following format:
@@ -133,6 +171,27 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/campaigns/#{campaign_id}"
+              end
+
+              ##
+              # Create a fully-qualified CampaignAsset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/campaignAssets/{campaign_id}~{asset_id}~{field_type}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              # @param asset_id [String]
+              # @param field_type [String]
+              #
+              # @return [::String]
+              def campaign_asset_path customer_id:, campaign_id:, asset_id:, field_type:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+                raise ::ArgumentError, "asset_id cannot contain /" if asset_id.to_s.include? "/"
+
+                "customers/#{customer_id}/campaignAssets/#{campaign_id}~#{asset_id}~#{field_type}"
               end
 
               ##
@@ -174,6 +233,25 @@ module Google
               end
 
               ##
+              # Create a fully-qualified CampaignSharedSet resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/campaignSharedSets/{campaign_id}~{shared_set_id}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              # @param shared_set_id [String]
+              #
+              # @return [::String]
+              def campaign_shared_set_path customer_id:, campaign_id:, shared_set_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/campaignSharedSets/#{campaign_id}~#{shared_set_id}"
+              end
+
+              ##
               # Create a fully-qualified ChangeStatus resource string.
               #
               # The resource will be in the following format:
@@ -188,6 +266,25 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/changeStatus/#{change_status_id}"
+              end
+
+              ##
+              # Create a fully-qualified CustomerAsset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/customerAssets/{asset_id}~{field_type}`
+              #
+              # @param customer_id [String]
+              # @param asset_id [String]
+              # @param field_type [String]
+              #
+              # @return [::String]
+              def customer_asset_path customer_id:, asset_id:, field_type:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "asset_id cannot contain /" if asset_id.to_s.include? "/"
+
+                "customers/#{customer_id}/customerAssets/#{asset_id}~#{field_type}"
               end
 
               ##
@@ -224,6 +321,23 @@ module Google
                 raise ::ArgumentError, "feed_id cannot contain /" if feed_id.to_s.include? "/"
 
                 "customers/#{customer_id}/feedItems/#{feed_id}~#{feed_item_id}"
+              end
+
+              ##
+              # Create a fully-qualified SharedSet resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/sharedSets/{shared_set_id}`
+              #
+              # @param customer_id [String]
+              # @param shared_set_id [String]
+              #
+              # @return [::String]
+              def shared_set_path customer_id:, shared_set_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/sharedSets/#{shared_set_id}"
               end
 
               extend self

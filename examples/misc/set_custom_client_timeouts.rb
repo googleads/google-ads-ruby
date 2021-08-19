@@ -24,7 +24,6 @@
 require 'optparse'
 require 'google/ads/google_ads'
 require 'open-uri'
-require 'google/ads/google_ads/v6/errors/internal_error_pb.rb'
 
 def set_custom_client_timeouts(customer_id)
   # GoogleAdsClient will read a config file from
@@ -46,10 +45,10 @@ def make_server_streaming_call(client, customer_id)
   begin
     ga_service = client.service.google_ads
     ga_service.configure do |config|
-      # As of V6, any server streaming call has a default timeout setting.
+      # Any server streaming call has a default timeout setting.
       # For this particular call, the default setting can be found in the
       # following file:
-      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v6/services/google_ads_service/client.rb
+      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v8/services/google_ads_service/client.rb
       #
       # When making a server streaming call, config.rpcs.search_stream.timeout can
       # be used to override the default timeout setting with a given value.
@@ -85,10 +84,10 @@ def make_unary_call(client, customer_id)
   begin
     ga_service = client.service.google_ads
     ga_service.configure do |config|
-      # As of V6, any unary call is retryable and has default retry settings.
+      # Any unary call is retryable and has default retry settings.
       # For this particular call, the default setting can be found in the
       # following file:
-      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v6/services/google_ads_service/client.rb
+      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v8/services/google_ads_service/client.rb
       #
       # When making an unary call, config.retry_policy can
       # be used to override the default retry settings with given values.

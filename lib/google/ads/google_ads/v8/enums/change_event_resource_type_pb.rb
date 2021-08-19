@@ -23,6 +23,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :CAMPAIGN_FEED, 11
       value :AD_GROUP_FEED, 12
       value :AD_GROUP_AD, 13
+      value :ASSET, 14
+      value :CUSTOMER_ASSET, 15
+      value :CAMPAIGN_ASSET, 16
+      value :AD_GROUP_ASSET, 17
     end
   end
 end

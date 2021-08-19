@@ -509,6 +509,40 @@ module Google
               end
 
               ##
+              # Create a fully-qualified BiddingDataExclusion resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/biddingDataExclusions/{seasonality_event_id}`
+              #
+              # @param customer_id [String]
+              # @param seasonality_event_id [String]
+              #
+              # @return [::String]
+              def bidding_data_exclusion_path customer_id:, seasonality_event_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/biddingDataExclusions/#{seasonality_event_id}"
+              end
+
+              ##
+              # Create a fully-qualified BiddingSeasonalityAdjustment resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/biddingSeasonalityAdjustments/{seasonality_event_id}`
+              #
+              # @param customer_id [String]
+              # @param seasonality_event_id [String]
+              #
+              # @return [::String]
+              def bidding_seasonality_adjustment_path customer_id:, seasonality_event_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/biddingSeasonalityAdjustments/#{seasonality_event_id}"
+              end
+
+              ##
               # Create a fully-qualified BiddingStrategy resource string.
               #
               # The resource will be in the following format:
@@ -980,6 +1014,40 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/conversionCustomVariables/#{conversion_custom_variable_id}"
+              end
+
+              ##
+              # Create a fully-qualified ConversionValueRule resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/conversionValueRules/{conversion_value_rule_id}`
+              #
+              # @param customer_id [String]
+              # @param conversion_value_rule_id [String]
+              #
+              # @return [::String]
+              def conversion_value_rule_path customer_id:, conversion_value_rule_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/conversionValueRules/#{conversion_value_rule_id}"
+              end
+
+              ##
+              # Create a fully-qualified ConversionValueRuleSet resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/conversionValueRuleSets/{conversion_value_rule_set_id}`
+              #
+              # @param customer_id [String]
+              # @param conversion_value_rule_set_id [String]
+              #
+              # @return [::String]
+              def conversion_value_rule_set_path customer_id:, conversion_value_rule_set_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/conversionValueRuleSets/#{conversion_value_rule_set_id}"
               end
 
               ##

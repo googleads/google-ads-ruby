@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :state, :string, 10
       proto3_optional :country_code, :string, 11
       proto3_optional :postal_code, :string, 12
+      proto3_optional :hashed_street_address, :string, 13
     end
     add_message "google.ads.googleads.v8.common.UserIdentifier" do
       optional :user_identifier_source, :enum, 6, "google.ads.googleads.v8.enums.UserIdentifierSourceEnum.UserIdentifierSource"

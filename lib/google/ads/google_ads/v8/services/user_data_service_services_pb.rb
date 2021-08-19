@@ -28,7 +28,6 @@ module Google
             # Proto file describing the UserDataService.
             #
             # Service to manage user data uploads.
-            # Accessible only to customers on the allow-list.
             class Service
 
               include GRPC::GenericService

@@ -1,3 +1,5 @@
+require 'delegate'
+
 module Google
   module Ads
     module GoogleAds

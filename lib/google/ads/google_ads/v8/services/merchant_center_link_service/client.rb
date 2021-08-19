@@ -43,13 +43,12 @@ module Google
               # See {::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client::Configuration}
               # for a description of the configuration fields.
               #
-              # ## Example
+              # @example
               #
-              # To modify the configuration for all MerchantCenterLinkService clients:
-              #
-              #     ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.configure do |config|
-              #       config.timeout = 10.0
-              #     end
+              #   # Modify the configuration for all MerchantCenterLinkService clients
+              #   ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.configure do |config|
+              #     config.timeout = 10.0
+              #   end
               #
               # @yield [config] Configure the Client client.
               # @yieldparam config [Client::Configuration]
@@ -62,10 +61,7 @@ module Google
 
                   default_config.timeout = 3600.0
                   default_config.retry_policy = {
-                    initial_delay: 5.0,
-                    max_delay: 60.0,
-                    multiplier: 1.3,
-                    retry_codes: [14, 4]
+                    initial_delay: 5.0, max_delay: 60.0, multiplier: 1.3, retry_codes: [14, 4]
                   }
 
                   default_config
@@ -97,19 +93,15 @@ module Google
               ##
               # Create a new MerchantCenterLinkService client object.
               #
-              # ## Examples
+              # @example
               #
-              # To create a new MerchantCenterLinkService client with the default
-              # configuration:
+              #   # Create a client using the default configuration
+              #   client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new
               #
-              #     client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new
-              #
-              # To create a new MerchantCenterLinkService client with a custom
-              # configuration:
-              #
-              #     client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new do |config|
-              #       config.timeout = 10.0
-              #     end
+              #   # Create a client using a custom configuration
+              #   client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new do |config|
+              #     config.timeout = 10.0
+              #   end
               #
               # @yield [config] Configure the MerchantCenterLinkService client.
               # @yieldparam config [Client::Configuration]
@@ -129,14 +121,13 @@ module Google
 
                 # Create credentials
                 credentials = @config.credentials
-                # Use self-signed JWT if the scope and endpoint are unchanged from default,
+                # Use self-signed JWT if the endpoint is unchanged from default,
                 # but only if the default endpoint does not have a region prefix.
-                enable_self_signed_jwt = @config.scope == Client.configure.scope &&
-                                         @config.endpoint == Client.configure.endpoint &&
+                enable_self_signed_jwt = @config.endpoint == Client.configure.endpoint &&
                                          !@config.endpoint.split(".").first.include?("-")
                 credentials ||= Credentials.default scope: @config.scope,
                                                     enable_self_signed_jwt: enable_self_signed_jwt
-                if credentials.is_a?(String) || credentials.is_a?(Hash)
+                if credentials.is_a?(::String) || credentials.is_a?(::Hash)
                   credentials = Credentials.new credentials, scope: @config.scope
                 end
                 @quota_project_id = @config.quota_project
@@ -218,7 +209,9 @@ module Google
                 options.apply_defaults timeout:      @config.rpcs.list_merchant_center_links.timeout,
                                        metadata:     metadata,
                                        retry_policy: @config.rpcs.list_merchant_center_links.retry_policy
-                options.apply_defaults metadata:     @config.metadata,
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
                                        retry_policy: @config.retry_policy
 
                 @merchant_center_link_service_stub.call_rpc :list_merchant_center_links, request,
@@ -294,7 +287,9 @@ module Google
                 options.apply_defaults timeout:      @config.rpcs.get_merchant_center_link.timeout,
                                        metadata:     metadata,
                                        retry_policy: @config.rpcs.get_merchant_center_link.retry_policy
-                options.apply_defaults metadata:     @config.metadata,
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
                                        retry_policy: @config.retry_policy
 
                 @merchant_center_link_service_stub.call_rpc :get_merchant_center_link, request,
@@ -376,7 +371,9 @@ module Google
                 options.apply_defaults timeout:      @config.rpcs.mutate_merchant_center_link.timeout,
                                        metadata:     metadata,
                                        retry_policy: @config.rpcs.mutate_merchant_center_link.retry_policy
-                options.apply_defaults metadata:     @config.metadata,
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
                                        retry_policy: @config.retry_policy
 
                 @merchant_center_link_service_stub.call_rpc :mutate_merchant_center_link, request,
@@ -401,22 +398,21 @@ module Google
               # Configuration can be applied globally to all clients, or to a single client
               # on construction.
               #
-              # # Examples
+              # @example
               #
-              # To modify the global config, setting the timeout for list_merchant_center_links
-              # to 20 seconds, and all remaining timeouts to 10 seconds:
+              #   # Modify the global config, setting the timeout for
+              #   # list_merchant_center_links to 20 seconds,
+              #   # and all remaining timeouts to 10 seconds.
+              #   ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.configure do |config|
+              #     config.timeout = 10.0
+              #     config.rpcs.list_merchant_center_links.timeout = 20.0
+              #   end
               #
-              #     ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.configure do |config|
-              #       config.timeout = 10.0
-              #       config.rpcs.list_merchant_center_links.timeout = 20.0
-              #     end
-              #
-              # To apply the above configuration only to a new client:
-              #
-              #     client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new do |config|
-              #       config.timeout = 10.0
-              #       config.rpcs.list_merchant_center_links.timeout = 20.0
-              #     end
+              #   # Apply the above configuration only to a new client.
+              #   client = ::Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::Client.new do |config|
+              #     config.timeout = 10.0
+              #     config.rpcs.list_merchant_center_links.timeout = 20.0
+              #   end
               #
               # @!attribute [rw] endpoint
               #   The hostname or hostname:port of the service endpoint.
