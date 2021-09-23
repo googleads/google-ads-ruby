@@ -2,6 +2,7 @@
 
 `google-ads-googleads` uses [Google API extensions][google-gax] to provide an
 easy-to-use client library for the [Google Ads API][].
+Test me!!!
 
 [google-gax]: https://github.com/googleapis/gax-ruby
 [Google Ads API]: https://developers.google.com/google-ads/api
