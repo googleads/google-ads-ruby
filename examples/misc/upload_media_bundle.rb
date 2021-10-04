@@ -26,7 +26,7 @@ def upload_media_bundle(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  url = 'https://goo.gl/9Y7qI2'
+  url = 'https://gaagl.page.link/ib8'
   bundle_content = open(url) { |f| f.read }
 
   # Creates a media file containing the bundle content.

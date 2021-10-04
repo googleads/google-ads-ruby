@@ -142,8 +142,8 @@ def create_responsive_display_ad(
   marketing_image_asset_resource_name,
   square_marketing_image_asset_resource_name
 )
-  marketing_image_url = 'https://goo.gl/3b9Wfh'
-  square_marketing_image_url = 'https://goo.gl/mtt54n'
+  marketing_image_url = 'https://gaagl.page.link/Eit5'
+  square_marketing_image_url = 'https://gaagl.page.link/bjYi'
 
   # Creates a new image asset for marketing image and square marketing image
   # if there are no assets' resource names specified.
