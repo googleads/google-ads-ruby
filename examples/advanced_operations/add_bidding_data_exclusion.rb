@@ -15,7 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets all campaigns. To add campaigns, run add_campaigns.rb.
+# Adds a channel-level data exclusion for Smart Bidding.
+#
+# The exclusion specifically excludes conversions from being used by Smart
+# Bidding for the time interval specified.
+#
+# For more information on using data exclusions, see:
+# https://developers.google.com/google-ads/api/docs/campaigns/bidding/data-exclusions
 
 require 'optparse'
 require 'google/ads/google_ads'
