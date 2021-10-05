@@ -22,7 +22,7 @@ require 'google/ads/google_ads'
 require 'open-uri'
 
 def upload_image(customer_id)
-  image_data = open("https://goo.gl/3b9Wfh") { |f| f.read }
+  image_data = open("https://gaagl.page.link/Eit5") { |f| f.read }
 
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters

@@ -258,8 +258,8 @@ end
 # [END add_local_campaign_5]
 
 if __FILE__ == $0
-  MARKETING_IMAGE_URL = 'https://goo.gl/3b9Wfh'.freeze
-  LOGO_IMAGE_URL = 'https://goo.gl/mtt54n'.freeze
+  MARKETING_IMAGE_URL = 'https://gaagl.page.link/Eit5'.freeze
+  LOGO_IMAGE_URL = 'https://gaagl.page.link/bjYi'.freeze
   YOUTUBE_VIDEO_ID = 'ECpDzH9gXh8'.freeze
 
   options = {}

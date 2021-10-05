@@ -51,7 +51,7 @@ def create_media_bundle_asset(client, customer_id)
   # The HTML5 zip file contains all the HTML, CSS, and images needed for the
   # HTML5 ad. For help on creating an HTML5 zip file, check out Google Web
   # Designer (https://www.google.com/webdesigner/).
-  html5_zip = open("https://goo.gl/9Y7qI2") { |f| f.read }
+  html5_zip = open("https://gaagl.page.link/ib87") { |f| f.read }
 
   # Creates the media bundle asset.
   operation = client.operation.create_resource.asset do |asset|

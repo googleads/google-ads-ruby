@@ -117,8 +117,8 @@ end
 # Creates the responsive display ad.
 # [START add_merchant_center_dynamic_remarketing_campaign]
 def create_ad(client, customer_id, ad_group_resource_name)
-  marketing_image_url = "https://goo.gl/3b9Wfh"
-  square_marketing_image_url = "https://goo.gl/mtt54n"
+  marketing_image_url = "https://gaagl.page.link/Eit5"
+  square_marketing_image_url = "https://gaagl.page.link/bjYi"
   marketing_image_asset_resource_name = upload_asset(
     client, customer_id, marketing_image_url, "Marketing Image"
   )

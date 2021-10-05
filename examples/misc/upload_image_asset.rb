@@ -28,7 +28,7 @@ def upload_image_asset(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  url = 'https://goo.gl/3b9Wfh'
+  url = 'https://gaagl.page.link/Eit5'
   image_data = open(url) { |f| f.read }
 
   # Create the operation for uploading the image asset.
