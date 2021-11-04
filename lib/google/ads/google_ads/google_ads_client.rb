@@ -201,7 +201,7 @@ module Google
 
         def get_credentials
           if @config.authentication
-            @config.authentication
+            get_authentication_config_credentials
           elsif @config.keyfile
             get_service_account_credentials
           else
@@ -218,6 +218,21 @@ module Google
             client_secret: @config.client_secret,
             refresh_token: @config.refresh_token,
             scope: [SCOPE]
+          ).updater_proc
+        end
+
+        # Provides a Google::Auth::Credentials initialized with the authentication hash
+        # specified in the config.
+        def get_authentication_config_credentials
+          # raise 'config.impersonate required if authentication specified' unless @config.impersonate
+
+          Signet::OAuth2::Client.new(
+            token_credential_uri: "https://accounts.google.com/o/oauth2/token",
+            audience: "https://accounts.google.com/o/oauth2/token",
+            issuer: @config.authentication.fetch("client_email"),
+            signing_key: OpenSSL::PKey::RSA.new(@config.authentication.fetch("private_key")),
+            person: @config.impersonate,
+            scope: [SCOPE],
           ).updater_proc
         end
 
