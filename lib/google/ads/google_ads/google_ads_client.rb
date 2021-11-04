@@ -224,7 +224,7 @@ module Google
         # Provides a Google::Auth::Credentials initialized with the authentication hash
         # specified in the config.
         def get_authentication_config_credentials
-          # raise 'config.impersonate required if authentication specified' unless @config.impersonate
+          raise 'config.impersonate required if authentication specified' unless @config.impersonate
 
           Signet::OAuth2::Client.new(
             token_credential_uri: "https://accounts.google.com/o/oauth2/token",
