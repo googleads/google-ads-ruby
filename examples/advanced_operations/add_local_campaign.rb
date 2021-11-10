@@ -93,8 +93,9 @@ def create_campaign(client, customer_id, budget_resource_name)
     # the API. It is calculated by dividing "total value" by "total spend".
     # For more information on maximize conversion value, see the support article:
     # http://support.google.com/google-ads/answer/7684216.
-    c.maximize_conversion_value = Google::Ads::GoogleAds::V8::Common::MaximizeConversionValue.new
-    c.maximize_conversion_value.target_roas = 3.5
+    c.maximize_conversion_value = client.resource.maximize_conversion_value do |mcv|
+      mcv.target_roas = 3.5
+    end
     # Configures the Local campaign setting.
     c.local_campaign_setting = client.resource.local_campaign_setting do |lcs|
       # Use the locations associated with the customer's linked

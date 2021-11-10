@@ -191,6 +191,7 @@ def add_transactions_to_offline_user_data_job(
     resource_name: offline_user_data_job_resource_name,
     operations: user_data_job_operations,
     enable_partial_failure: true,
+    enable_warnings: true,
   )
 
   # Prints errors if any partial failure error is returned.
@@ -216,10 +217,16 @@ def add_transactions_to_offline_user_data_job(
         puts errmsg
       end
     end
-  else
-    puts "Successfully added #{user_data_job_operations.size} operations to " \
-      "the offline user data job."
   end
+
+  if response.warning
+    # Convert to a GoogleAdsFailure.
+    warnings = client.decode_warning(response.warning)
+    puts "Encountered #{warnings.errors.size} warning(s)."
+  end
+
+  puts "Successfully added #{user_data_job_operations.size} operations to " \
+    "the offline user data job."
 end
 
 # Creates a list of offline user data job operations for sample transactions.

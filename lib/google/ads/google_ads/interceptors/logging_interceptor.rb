@@ -17,7 +17,7 @@
 # Interceptor to log outgoing requests and incoming responses.
 
 require 'google/ads/google_ads/api_versions'
-require 'google/ads/google_ads/partial_failure_error_decoder'
+require 'google/ads/google_ads/status_decoder'
 require 'grpc/generic/interceptors'
 require 'json'
 
@@ -105,7 +105,7 @@ module Google
           end
 
           def build_partial_failure_message(response)
-            errors = PartialFailureErrorDecoder.decode(
+            errors = StatusDecoder.decode(
               response.partial_failure_error
             )
             errors.reduce("Partial failure errors: ") do |accum, error|

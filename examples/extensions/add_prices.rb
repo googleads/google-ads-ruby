@@ -16,66 +16,69 @@
 # limitations under the License.
 #
 # Adds a price extension and associates it with an account.
-# Campaign targeting is also set using the specified campaign ID. To get
-# campaigns, run basic_operations/get_campaigns.rb.
 
 require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def add_prices(customer_id, campaign_id)
+def add_prices(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # Create a new price asset.
+  price_asset_resource_name = create_price_asset(client, customer_id)
+
+  # Add the new price asset to the account.
+  add_asset_to_account(client, customer_id, price_asset_resource_name)
+end
+
+def create_price_asset(client, customer_id)
   # The operation creates a customer extension setting with price feed item.
   # This associates the price extension to your account.
-  operation = client.operation.create_resource.extension_feed_item do |efi|
-    efi.extension_type = :PRICE
-    efi.price_feed_item = client.resource.price_feed_item do |pfi|
-      pfi.type = :SERVICES
+  operation = client.operation.create_resource.asset do |asset|
+    asset.name = "Price Asset ##{(Time.new.to_f * 1000).to_i}"
+    asset.tracking_url_template = 'http://tracker.example.com/?u={lpurl}'
+    asset.price_asset = client.resource.price_asset do |price|
+      price.type = :SERVICES
       # Optional: set price qualifier.
-      pfi.price_qualifier = :FROM
-      pfi.tracking_url_template = 'http://tracker.example.com/?u={lpurl}'
-      pfi.language_code = 'en'
+      price.price_qualifier = :FROM
+      price.language_code = 'en'
 
       # To create a price extension, at least three price offerings are needed.
-      pfi.price_offerings << create_price_offer(
+      price.price_offerings << create_price_offer(
           client, 'Scrubs', 'Body Scrub, Salt Scrub', 60_000_000, # 60 USD
           'USD', :PER_HOUR, 'http://www.example.com/scrubs',
           'http://m.example.com/scrubs')
-      pfi.price_offerings << create_price_offer(
+      price.price_offerings << create_price_offer(
           client, 'Hair Cuts', 'Once a month', 75_000_000, # 75 USD
           'USD', :PER_MONTH, 'http://www.example.com/haircuts',
           'http://m.example.com/haircuts')
-      pfi.price_offerings << create_price_offer(
+      price.price_offerings << create_price_offer(
           client, 'Skin Care Package',
           'Four times a month', 250_000_000, # 250 USD
           'USD', :PER_MONTH, 'http://www.example.com/skincarepackage')
     end
-    efi.targeted_campaign = client.path.campaign(customer_id, campaign_id)
-    efi.ad_schedules << create_ad_schedule_info(
-        client, :SUNDAY, 10, :ZERO, 18, :ZERO)
-    efi.ad_schedules << create_ad_schedule_info(
-        client, :SATURDAY, 10, :ZERO, 22, :ZERO)
   end
 
-  response = client.service.extension_feed_item.mutate_extension_feed_items(
+  response = client.service.asset.mutate_assets(
     customer_id: customer_id,
     operations: [operation],
   )
 
-  puts "Created extension feed with resource name " +
-      "'#{response.results.first.resource_name}'"
+  resource_name = response.results.first.resource_name
+  puts "Created extension feed with resource name '#{resource_name}'"
+
+  resource_name
 end
 
 def create_price_offer(
     client, header, description, price_in_micros,
     currency_code, unit, final_url, final_mobile_url=nil)
-  client.resource.price_offer do |po|
+  client.resource.price_offering do |po|
     po.header = header
     po.description = description
-    po.final_urls << final_url
+    po.final_url = final_url
     po.price = client.resource.money do |pr|
       pr.amount_micros = price_in_micros
       pr.currency_code = currency_code
@@ -83,20 +86,23 @@ def create_price_offer(
     po.unit = unit
     # Optional: set the final mobile URLs
     unless final_mobile_url.nil?
-      po.final_mobile_urls << final_mobile_url
+      po.final_mobile_url = final_mobile_url
     end
   end
 end
 
-def create_ad_schedule_info(
-    client, day_of_week, start_hour, start_minute, end_hour, end_minute)
-  client.resource.ad_schedule_info do |asi|
-    asi.day_of_week = day_of_week
-    asi.start_hour = start_hour
-    asi.start_minute = start_minute
-    asi.end_hour = end_hour
-    asi.end_minute = end_minute
+def add_asset_to_account(client, customer_id, asset)
+  operation = client.operation.create_resource.customer_asset do |ca|
+    ca.asset = asset
+    ca.field_type = :PRICE
   end
+
+  response = client.service.customer_asset.mutate_customer_assets(
+    customer_id: customer_id,
+    operations: [operation],
+  )
+
+  puts "Created customer asset with resource name '#{response.results.first.resource_name}'"
 end
 
 if __FILE__ == $0
@@ -110,7 +116,6 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -120,10 +125,6 @@ if __FILE__ == $0
 
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
-    end
-
-    opts.on('-c', '--campaign-id CAMPAIGN-ID', String, 'Campaign ID') do |v|
-      options[:campaign_id] = v
     end
 
     opts.separator ''
@@ -136,7 +137,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_prices(options.fetch(:customer_id).tr("-", ""), options.fetch(:campaign_id))
+    add_prices(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
