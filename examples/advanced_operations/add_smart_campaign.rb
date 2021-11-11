@@ -151,6 +151,7 @@ def add_smart_campaign(
   # [END add_smart_campaign_7]
 end
 
+# [START add_smart_campaign_11]
 def get_keyword_theme_suggestions(client, customer_id, suggestion_info)
   response = client.service.smart_campaign_suggest.suggest_keyword_themes(
     customer_id: customer_id,
@@ -161,6 +162,7 @@ def get_keyword_theme_suggestions(client, customer_id, suggestion_info)
     " suggestions from SuggestKeywordThemes service."
   return response.keyword_themes
 end
+# [END add_smart_campaign_11]
 
 # [START add_smart_campaign]
 # Retrieves keyword_theme_constants for the given criteria.
@@ -276,6 +278,7 @@ def get_smart_campaign_suggestion_info(
 end
 # [END add_smart_campaign_9]
 
+# [START add_smart_campaign_14]
 # The business location ID is an unsigned 64-bit integer. However, the API
 # expects a signed 64-bit integer. This means that for business location IDs
 # that are too large, we have to do some extra steps to convert it to a form
@@ -298,6 +301,7 @@ def convert_business_location_id(business_location_id)
     business_location_id
   end
 end
+# [END add_smart_campaign_14]
 
 # [START add_smart_campaign_1]
 # Retrieves a suggested budget amount for a new budget.
