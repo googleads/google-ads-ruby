@@ -28,6 +28,7 @@ require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
 require 'google/ads/google_ads/service_lookup'
 require 'google/ads/google_ads/deprecation'
+require 'google/ads/google_ads/status_decoder'
 
 require 'grpc'
 
@@ -194,7 +195,13 @@ module Google
         # See Google::Ads::GoogleAds::PartialFailureErrorDecoder for full
         # documentation.
         def decode_partial_failure_error(pfe)
-          PartialFailureErrorDecoder.decode(pfe)
+          StatusDecoder.decode(pfe)
+        end
+
+        # Identical to decoding a partial failure error as above, but
+        # duplicated so the client code is easier to follow.
+        def decode_warning(warning)
+          StatusDecoder.decode(warning)
         end
 
         private

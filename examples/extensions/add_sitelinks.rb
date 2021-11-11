@@ -16,6 +16,9 @@
 # limitations under the License.
 #
 # Adds sitelinks to a campaign. To create a campaign, run add_campaigns.rb.
+# DEPRECATION WARNING!
+# THIS USAGE IS DEPRECATED AND WILL BE REMOVED IN AN UPCOMING API VERSION
+# All extensions should migrate to Assets. See add_sitelinks_using_assets.rb.
 
 require 'optparse'
 require 'google/ads/google_ads'

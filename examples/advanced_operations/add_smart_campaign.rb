@@ -27,21 +27,63 @@ require 'google/ads/google_ads'
 def add_smart_campaign(
   customer_id,
   keyword_text,
+  freeform_keyword_text,
   business_location_id,
   business_name)
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  keyword_theme_constants = get_keyword_theme_constants(client, keyword_text)
-
-  keyword_theme_infos = map_keyword_theme_constants_to_infos(
-    client, keyword_theme_constants)
-
+  # [START add_smart_campaign_12]
+  # The SmartCampaignSuggestionInfo object acts as the basis for many of the
+  # entities necessary to create a Smart campaign. It will be reused a number
+  # of times to retrieve suggestions for keyword themes, budget amount,
+  # ad creatives, and campaign criteria.
   suggestion_info = get_smart_campaign_suggestion_info(
     client,
     business_location_id,
     business_name,
-    keyword_theme_infos,
   )
+
+  # After creating a SmartCampaignSuggestionInfo object we first use it to
+  # generate a list of keyword themes using the SuggestKeywordThemes method
+  # on the SmartCampaignSuggestService. It is strongly recommended that you
+  # use this strategy for generating keyword themes.
+  keyword_theme_constants = get_keyword_theme_suggestions(
+    client,
+    customer_id,
+    suggestion_info,
+  )
+
+  # If a keyword text is given retrieve keyword theme constant suggestions
+  # from the KeywordThemeConstantService and append them to the existing list.
+  if keyword_text
+    keyword_theme_constants += get_keyword_text_auto_completions(
+      client,
+      keyword_text,
+    )
+  end
+
+  # Map the KeywordThemeConstants retrieved by the previous two steps to
+  # KeywordThemeInfo instances.
+  keyword_theme_infos = map_keyword_theme_constants_to_infos(
+    client,
+    keyword_theme_constants,
+  )
+
+  # If a free-form keyword text is given we create a KeywordThemeInfo instance
+  # from it and add it to the existing list.
+  if freeform_keyword_text
+    keyword_theme_infos << get_freeform_keyword_theme_info(
+      client,
+      freeform_keyword_text,
+    )
+  end
+
+  # Now add the generated keyword themes to the suggestion info instance.
+  suggestion_info.keyword_themes += keyword_theme_infos
+  # [END add_smart_campaign_12]
+
   suggested_budget_amount = get_budget_suggestion(
     client,
     customer_id,
@@ -109,9 +151,20 @@ def add_smart_campaign(
   # [END add_smart_campaign_7]
 end
 
+def get_keyword_theme_suggestions(client, customer_id, suggestion_info)
+  response = client.service.smart_campaign_suggest.suggest_keyword_themes(
+    customer_id: customer_id,
+    suggestion_info: suggestion_info,
+  )
+
+  puts "Retrieved #{response.keyword_themes.size} keyword theme constant" \
+    " suggestions from SuggestKeywordThemes service."
+  return response.keyword_themes
+end
+
 # [START add_smart_campaign]
 # Retrieves keyword_theme_constants for the given criteria.
-def get_keyword_theme_constants(client, keyword_text)
+def get_keyword_text_auto_completions(client, keyword_text)
   response = client.service.keyword_theme_constant.suggest_keyword_theme_constants(
     query_text: keyword_text,
     country_code: COUNTRY_CODE,
@@ -124,6 +177,14 @@ def get_keyword_theme_constants(client, keyword_text)
   response.keyword_theme_constants
 end
 # [END add_smart_campaign]
+
+# [START add_smart_campaign_13]
+def get_freeform_keyword_theme_info(client, freeform_keyword_text)
+  client.resource.keyword_theme_info do |kti|
+    kti.free_form_keyword_name = freeform_keyword_text
+  end
+end
+# [END add_smart_campaign_13]
 
 # Maps a list of keyword_theme_constants to keyword_theme_infos.
 def map_keyword_theme_constants_to_infos(client, keyword_theme_constants)
@@ -149,8 +210,7 @@ end
 def get_smart_campaign_suggestion_info(
   client,
   business_location_id,
-  business_name,
-  keyword_theme_infos)
+  business_name)
 
   # Since these suggestions are for a new campaign, we're going to
   # use the suggestion_info field instead.
@@ -186,12 +246,10 @@ def get_smart_campaign_suggestion_info(
         li.geo_target_constant = client.path.geo_target_constant(GEO_TARGET_CONSTANT)
       end
     end
-    # Adds the keyword_theme_info objects to the suggestion_info object.
-    si.keyword_themes += keyword_theme_infos
     # Set either of the business_location_id or business_name, depending on
     # whichever is provided.
     if business_location_id
-      si.business_location_id = business_location_id.to_i
+      si.business_location_id = convert_business_location_id(business_location_id.to_i)
     else
       si.business_context = client.resource.business_context do |bc|
         bc.business_name = business_name
@@ -217,6 +275,29 @@ def get_smart_campaign_suggestion_info(
   suggestion_info
 end
 # [END add_smart_campaign_9]
+
+# The business location ID is an unsigned 64-bit integer. However, the API
+# expects a signed 64-bit integer. This means that for business location IDs
+# that are too large, we have to do some extra steps to convert it to a form
+# the API can understand.
+# Specifically, we perform the two's complement. Since Ruby supports arbitrary
+# precision numbers, we have to calculate it manually.
+LONG_MAX = 2 ** 63
+ULONG_MAX = LONG_MAX * 2
+def convert_business_location_id(business_location_id)
+  if business_location_id > ULONG_MAX
+    raise "Business location id #{business_location_id} is too large. Maximium " \
+      "value is #{ULONG_MAX}."
+  end
+  # Action only needs to be taken if the most significant bit is set.
+  if business_location_id > LONG_MAX
+    # Perform the two's complement.
+    -1 * (ULONG_MAX - business_location_id)
+  else
+    # For all other cases, the normal representation is fine.
+    business_location_id
+  end
+end
 
 # [START add_smart_campaign_1]
 # Retrieves a suggested budget amount for a new budget.
@@ -270,6 +351,9 @@ def get_ad_suggestions(client, customer_id, suggestion_info)
   # may have empty strings as text. Before setting these on the ad you should
   # review them and filter out any empty values.
   ad_suggestions = response.ad_info
+
+  # If there are no suggestions, the response will be blank.
+  return nil if ad_suggestions.nil?
 
   puts 'The following headlines were suggested:'
   ad_suggestions.headlines.each do  |headline|
@@ -369,7 +453,7 @@ def create_smart_campaign_setting_operation(
       # It's required that either a business location ID or a business name is
       # added to the smart_campaign_setting.
       if business_location_id
-        scs.business_location_id = business_location_id.to_i
+        scs.business_location_id = convert_business_location_id(business_location_id.to_i)
       else
         scs.business_name = business_name
       end
@@ -449,11 +533,28 @@ def create_ad_group_ad_operation(client, customer_id, ad_suggestions)
           # method. It's recommended that users review and approve or update these
           # creatives before they're set on the ad. It's possible that some or all of
           # these assets may contain empty texts, which should not be set on the ad
-          # and instead should be replaced with meaninful texts from the user. Below
+          # and instead should be replaced with meaningful texts from the user. Below
           # we just accept the creatives that were suggested while filtering out empty
-          # assets, but individual workflows will vary here.
-          sca.headlines += ad_suggestions.headlines.filter(&:text)
-          sca.descriptions += ad_suggestions.descriptions.filter(&:text)
+          # assets. If no headlines or descriptions were suggested, then we manually
+          # add some, otherwise this operation will generate an INVALID_ARGUMENT
+          # error. Individual workflows will likely vary here.
+          sca.headlines += ad_suggestions.headlines.filter(&:text) if ad_suggestions
+          if sca.headlines.size < REQUIRED_NUM_HEADLINES
+            (REQUIRED_NUM_HEADLINES - sca.headlines.size).times do |i|
+              sca.headlines << client.resource.ad_text_asset do |asset|
+                asset.text = "placeholder headline #{i}"
+              end
+            end
+          end
+
+          sca.descriptions += ad_suggestions.descriptions.filter(&:text) if ad_suggestions
+          if sca.descriptions.size < REQUIRED_NUM_DESCRIPTIONS
+            (REQUIRED_NUM_DESCRIPTIONS - sca.descriptions.size).times do |i|
+              sca.descriptions << client.resource.ad_text_asset do |asset|
+                asset.text = "placeholder description #{i}"
+              end
+            end
+          end
         end
       end
     end
@@ -492,7 +593,6 @@ def print_response_details(response)
 end
 
 if __FILE__ == $0
-  DEFAULT_KEYWORD = "travel"
   # Geo target constant for New York City.
   GEO_TARGET_CONSTANT = "1023191"
   # Country code is a two-letter ISO-3166 code, for a list of all codes see:
@@ -506,6 +606,10 @@ if __FILE__ == $0
   BUDGET_TEMPORARY_ID = "-1"
   SMART_CAMPAIGN_TEMPORARY_ID = "-2"
   AD_GROUP_TEMPORARY_ID = "-3"
+  # These define the minimum number of headlines and descriptions that are
+  # required to create an AdGroupAd in a Smart campaign.
+  REQUIRED_NUM_HEADLINES = 3
+  REQUIRED_NUM_DESCRIPTIONS = 2
 
   options = {}
 
@@ -518,8 +622,6 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:keyword_text] = DEFAULT_KEYWORD
-
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -532,10 +634,22 @@ if __FILE__ == $0
     end
 
     opts.on('-k', '--keyword-text KEYWORD-TEXT', String,
-      'A keyword text used to generate a set of keyword themes, which ' \
-      ' are used to improve the budget suggestion and performance of the' \
-      ' Smart campaign') do |v|
+      'A keyword text used to retrieve keyword theme constant ' \
+      'suggestions from the KeywordThemeConstantService. These keyword ' \
+      'theme suggestions are generated using auto-completion data for ' \
+      'the given text and may help improve the performance of ' \
+      'the Smart campaign.') do |v|
       options[:keyword_text] = v
+    end
+
+    opts.on('-f', '--freeform-keyword-text FREEFORM-KEYWORD-TEXT', String,
+      'A keyword text used to create a freeform keyword theme, which is ' \
+      'entirely user-specified and not derived from any suggestion ' \
+      'service. Using free-form keyword themes is typically not ' \
+      'recommended because they are less effective than suggested ' \
+      'keyword themes, however they are useful in situations where a ' \
+      'very specific term needs to be targeted.') do |v|
+      options[:freeform_keyword_text] = v
     end
 
     opts.on('-b', '--business-location-id BUSINESS-LOCATION-ID', String,
@@ -564,7 +678,8 @@ if __FILE__ == $0
   begin
     add_smart_campaign(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:keyword_text),
+      options[:keyword_text],
+      options[:freeform_keyword_text],
       options[:business_location_id],
       options[:business_name],
     )

@@ -163,6 +163,7 @@ def print_customer_match_user_list(client, customer_id, user_list)
 end
 
 def build_offline_user_data_job_operations(client)
+  # [START add_customer_match_user_list_2]
   operations = []
 
   # Creates a first user data based on an email address.
@@ -186,6 +187,7 @@ def build_offline_user_data_job_operations(client)
       end
     end
   end
+  # [END add_customer_match_user_list_2]
 
   operations
 end

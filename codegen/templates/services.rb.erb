@@ -1,4 +1,5 @@
 require 'google/ads/google_ads/service_wrapper'
+require 'google/ads/google_ads/version'
 module Google
   module Ads
     module GoogleAds
@@ -36,6 +37,8 @@ module Google
                   config.interceptors = @interceptors
                   config.metadata = @metadata
                   config.endpoint = @endpoint
+                  config.lib_name = Google::Ads::GoogleAds::CLIENT_LIB_NAME
+                  config.lib_version = Google::Ads::GoogleAds::CLIENT_LIB_VERSION
                 end,
                 rpc_inputs: {
                   <% service.rpc_names.each do |rpc_name| %>

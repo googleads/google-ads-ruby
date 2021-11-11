@@ -56,7 +56,7 @@ def create_bidding_strategy(client, manager_customer_id)
   # [START set_currency_code]
   operation = client.operation.create_resource.bidding_strategy do |b|
     b.name = "Maximize Clicks ##{(Time.new.to_f * 1000).to_i}"
-    b.target_spend = Google::Ads::GoogleAds::V8::Common::TargetSpend.new
+    b.target_spend = client.resource.target_spend
     # Sets the currency of the new bidding strategy. If not provided, the
     # bidding strategy uses the manager account's default currency.
     b.currency_code = "USD"
