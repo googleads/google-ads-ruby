@@ -41,14 +41,20 @@ def upload_conversion_enhancement(
     ca.adjustment_type = :ENHANCEMENT
     ca.order_id = order_id
 
+    # Sets the conversion date and time if provided. Providing this value is
+    # optional but recommended.
     unless conversion_date_time.nil?
       ca.gclid_date_time_pair = client.resource.gclid_date_time_pair do |pair|
         pair.conversion_date_time = conversion_date_time
       end
     end
 
+    # Creates a user identifier using sample values for the user address.
     ca.user_identifiers << client.resource.user_identifier do |ui|
       ui.address_info = client.resource.offline_user_address_info do |info|
+        # Certain fields must be hashed using SHA256 in order to handle
+        # identifiers in a privacy-safe way, as described at
+        # https://support.google.com/google-ads/answer/9888656.
         info.hashed_first_name = normalize_and_hash("Joanna")
         info.hashed_last_name = normalize_and_hash("Smith")
         info.hashed_street_address = normalize_and_hash("1600 Amphitheatre Pkwy")
@@ -57,14 +63,18 @@ def upload_conversion_enhancement(
         info.postal_code = "94043"
         info.country_code = "US"
       end
+      # Optional: Specifies the user identifier source.
       ui.user_identifier_source = :FIRST_PARTY
     end
 
+    # Creates a user identifier using the hashed email address.
     ca.user_identifiers << client.resource.user_identifier do |ui|
+      # Uses the normalize and hash method specifically for email addresses.
       ui.hashed_email = normalize_and_hash_email("joannasmith@example.com")
       ui.user_identifier_source = :FIRST_PARTY
     end
 
+    # Sets optional fields where a value was provided.
     unless user_agent.nil?
       # Sets the user agent. This should match the user agent of the request
       # that sent the original conversion so the conversion and its enhancement
@@ -76,6 +86,9 @@ def upload_conversion_enhancement(
     unless restatement_value.nil?
       ca.restatement_value = client.resource.restatement_value do |ra|
         ra.adjusted_value = restatement_value.to_f
+        # Sets the currency of the new value, if provided. Otherwise, the
+        # default currency from the conversion action is used, and if that is
+        # not set then the account currency is used.
         unless currency_code.nil?
           ra.currency_code = currency_code
         end
@@ -87,6 +100,7 @@ def upload_conversion_enhancement(
   response = client.service.conversion_adjustment_upload.upload_conversion_adjustments(
     customer_id: customer_id,
     conversion_adjustments: [enhancement],
+    # Partial failure must be set to true.
     partial_failure: true,
   )
 
@@ -100,18 +114,29 @@ def upload_conversion_enhancement(
 end
 # [END upload_conversion_enhancement]
 
-
+# [START normalize_and_hash]
+# Returns the result of normalizing and then hashing the string using the
+# provided digest.  Private customer data must be hashed during upload, as
+# described at https://support.google.com/google-ads/answer/7474263.
 def normalize_and_hash(str)
+  # Remove leading and trailing whitespace and ensure all letters are lowercase
+  # before hasing.
   Digest::SHA256.hexdigest(str.strip.downcase)
 end
 
+# Returns the result of normalizing and hashing an email address. For this use
+# case, Google Ads requires removal of any '.' characters preceding 'gmail.com'
+# or 'googlemail.com'.
 def normalize_and_hash_email(email)
   email_parts = email.downcase.split("@")
+  # Removes any '.' characters from the portion of the email address before the
+  # domain if the domain is gmail.com or googlemail.com.
   if email_parts.last === /^(gmail|googlemail)\\.com\\s*/
     email_parts[0] = email_parts[0].gsub('.', '')
   end
   normalize_and_hash(email_parts.join('@'))
 end
+# [END normalize_and_hash]
 
 if __FILE__ == $0
   options = {}
