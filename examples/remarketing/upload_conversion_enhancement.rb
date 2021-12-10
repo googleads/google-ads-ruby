@@ -43,7 +43,7 @@ def upload_conversion_enhancement(
 
     unless conversion_date_time.nil?
       ca.gclid_date_time_pair = client.resource.gclid_date_time_pair do |pair|
-        pair.conversion-date_time = conversion_date_time
+        pair.conversion_date_time = conversion_date_time
       end
     end
 
