@@ -23,7 +23,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def setup_advanced_remarketing(customer_id)
+def set_up_advanced_remarketing(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -170,7 +170,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    setup_advanced_remarketing(options.fetch(:customer_id).tr("-", ""))
+    set_up_advanced_remarketing(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

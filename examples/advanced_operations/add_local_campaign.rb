@@ -18,7 +18,7 @@
 # This example adds a Local campaign.
 #
 # Prerequisite: To create a Local campaign, you need to define the store
-# locations you want to promote by linking your Google My Business account or
+# locations you want to promote by linking your Business Profile account or
 # selecting affiliate locations. More information about Local campaigns can be
 # found at: https://support.google.com/google-ads/answer/9118422.
 
@@ -99,7 +99,7 @@ def create_campaign(client, customer_id, budget_resource_name)
     # Configures the Local campaign setting.
     c.local_campaign_setting = client.resource.local_campaign_setting do |lcs|
       # Use the locations associated with the customer's linked
-      # Google My Business account.
+      # Business Profile account.
       lcs.location_source_type = :GOOGLE_MY_BUSINESS
     end
     # Optimization goal setting is mandatory for Local campaigns. This example

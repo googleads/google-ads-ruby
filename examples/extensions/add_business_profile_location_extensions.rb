@@ -15,57 +15,57 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a feed that syncs feed items from a Google My Business (GMB)
+# This example adds a feed that syncs feed items from a Business Profile
 # account and associates the feed with a customer.
 
 require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def add_google_my_business_location_extensions(
+def add_business_profile_location_extensions(
   customer_id,
-  gmb_email_address,
-  gmb_access_token,
+  business_profile_email_address,
+  business_profile_access_token,
   business_account_identifier)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  gmb_feed_resource_name = create_feed(
+  business_profile_feed_resource_name = create_feed(
     client,
     customer_id,
-    gmb_email_address,
-    gmb_access_token,
+    business_profile_email_address,
+    business_profile_access_token,
     business_account_identifier,
   )
 
-  create_customer_feed(client, customer_id, gmb_feed_resource_name)
+  create_customer_feed(client, customer_id, business_profile_feed_resource_name)
 end
 
-# [START add_google_my_business_location_extensions]
+# [START add_business_profile_location_extensions]
 def create_feed(
   client,
   customer_id,
-  gmb_email_address,
-  gmb_access_token,
+  business_profile_email_address,
+  business_profile_access_token,
   business_account_identifier)
   # Creates a feed operation.
   operation = client.operation.create_resource.feed do |feed|
-    feed.name = "Google My Business feed #{(Time.new.to_f * 1000).to_i}"
+    feed.name = "Business Profile feed #{(Time.new.to_f * 1000).to_i}"
     feed.origin = :GOOGLE
     feed.places_location_feed_data = client.resource.places_location_feed_data do |data|
-      data.email_address = gmb_email_address
+      data.email_address = business_profile_email_address
       data.business_account_id = business_account_identifier
       data.label_filters << "Stores in New York"
       data.oauth_info = client.resource.o_auth_info do |oauth|
         oauth.http_method = "GET"
         oauth.http_request_url = "https://www.googleapis.com/auth/adwords"
-        oauth.http_authorization_header = "Bearer #{gmb_access_token}"
+        oauth.http_authorization_header = "Bearer #{business_profile_access_token}"
       end
     end
   end
 
-  # [START add_google_my_business_location_extensions_1]
+  # [START add_business_profile_location_extensions_1]
   # Issues a mutate request to add the feed and print its information.
   # Since it is a system generated feed, Google Ads will automatically:
   # 1. Set up the feed attributes on the feed.
@@ -76,23 +76,23 @@ def create_feed(
     operations: [operation],
   )
 
-  # Prints out the GMB feed resource name.
-  gmb_feed_resource_name = response.results.first.resource_name
-  puts "GMB feed created with resource name: #{gmb_feed_resource_name}"
+  # Prints out the Business Profile feed resource name.
+  business_profile_feed_resource_name = response.results.first.resource_name
+  puts "Business Profile feed created with resource name: #{business_profile_feed_resource_name}"
 
-  gmb_feed_resource_name
-  # [END add_google_my_business_location_extensions_1]
+  business_profile_feed_resource_name
+  # [END add_business_profile_location_extensions_1]
 end
-# [END add_google_my_business_location_extensions]
+# [END add_business_profile_location_extensions]
 
-# [START add_google_my_business_location_extensions_2]
+# [START add_business_profile_location_extensions_2]
 def create_customer_feed(
   client,
   customer_id,
-  gmb_feed_resource_name)
+  business_profile_feed_resource_name)
   # Creates a customer feed operation.
   operation = client.operation.create_resource.customer_feed do |cf|
-    cf.feed = gmb_feed_resource_name
+    cf.feed = business_profile_feed_resource_name
     cf.placeholder_types << :LOCATION
     cf.matching_function = client.resource.matching_function do |m|
       m.left_operands << client.resource.operand do |op|
@@ -105,11 +105,12 @@ def create_customer_feed(
     end
   end
 
-  # [START add_google_my_business_location_extensions_3]
+  # [START add_business_profile_location_extensions_3]
   # After the completion of the feed ADD operation above the added feed will
   # not be available for usage in a customer feed until the sync between the
-  # Google Ads and GMB accounts completes. The loop below will retry adding the
-  # customer feed up to ten times with an exponential back-off policy.
+  # Google Ads and Business Profile accounts completes. The loop below will
+  # retry adding the customer feed up to ten times with an exponential back-off
+  # policy.
   number_of_attempts = 0
   added_customer_feed = nil
   customer_feed_service_client = client.service.customer_feed
@@ -134,14 +135,14 @@ def create_customer_feed(
     end
     break if number_of_attempts >= MAX_CUSTOMER_FEED_ADD_ATTEMPTS || added_customer_feed
   end
-  # [END add_google_my_business_location_extensions_3]
+  # [END add_business_profile_location_extensions_3]
 
   if added_customer_feed.nil?
     raise "Could not create the customer feed after #{MAX_CUSTOMER_FEED_ADD_ATTEMPTS} " \
       "attempts. Please retry the customer feed ADD operation later."
   end
 end
-# [END add_google_my_business_location_extensions_2]
+# [END add_business_profile_location_extensions_2]
 
 if __FILE__ == $0
   # The maximum number of customer feed ADD operation attempts to make before
@@ -171,12 +172,14 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-E', '--gmb-email-address GMB-EMAIL-ADDRESS', String, 'GMB Email Address') do |v|
-      options[:gmb_email_address] = v
+    opts.on('-E', '--business-profile-email-address BUSINESS-PROFILE-EMAIL-ADDRESS',
+            String, 'Business Profile Email Address') do |v|
+      options[:business_profile_email_address] = v
     end
 
-    opts.on('-T', '--gmb-access-token GMB-ACCESS-TOKEN', String, 'GMB Access Token') do |v|
-      options[:gmb_access_token] = v
+    opts.on('-T', '--business-profile-access-token BUSINESS-PROFILE-ACCESS-TOKEN', String,
+            'Business Profile Access Token') do |v|
+      options[:business_profile_access_token] = v
     end
 
     opts.on('-B', '--business-account-identifier BUSINESS-ACCOUNT-IDENTIFIER', String, 'Business Account Identifier') do |v|
@@ -193,10 +196,10 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_google_my_business_location_extensions(
+    add_business_profile_location_extensions(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:gmb_email_address),
-      options.fetch(:gmb_access_token),
+      options.fetch(:business_profile_email_address),
+      options.fetch(:business_profile_access_token),
       options.fetch(:business_account_identifier),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
