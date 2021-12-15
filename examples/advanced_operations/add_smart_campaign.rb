@@ -131,6 +131,7 @@ def add_smart_campaign(
     client,
     customer_id,
     keyword_theme_infos,
+    suggestion_info,
   )
 
   mutate_operations << create_ad_group_operation(client, customer_id)
@@ -473,7 +474,8 @@ end
 def create_campaign_criterion_operations(
   client,
   customer_id,
-  keyword_theme_infos)
+  keyword_theme_infos,
+  suggestion_info)
   operations = []
 
   keyword_theme_infos.each do |info|
@@ -483,10 +485,23 @@ def create_campaign_criterion_operations(
         # Sets the campaign ID to a temporary ID.
         cc.campaign = client.path.campaign(
           customer_id, SMART_CAMPAIGN_TEMPORARY_ID)
-        # Sets the criterion type to KEYWORD_THEME.
-        cc.type = :KEYWORD_THEME
         # Sets the keyword theme to the given keyword_theme_info.
         cc.keyword_theme = info
+      end
+    end
+  end
+
+  # Create a location criterion for each location in the suggestion info object
+  # to add corresponding location targeting to the Smart campaign
+  suggestion_info.location_list.locations.each do |location|
+    operations << client.operation.mutate do |m|
+      m.campaign_criterion_operation =
+        client.operation.create_resource.campaign_criterion do |cc|
+        # Sets the campaign ID to a temporary ID.
+        cc.campaign = client.path.campaign(
+          customer_id, SMART_CAMPAIGN_TEMPORARY_ID)
+        # Sets the location to the given location.
+        cc.location = location
       end
     end
   end
