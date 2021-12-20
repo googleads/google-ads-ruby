@@ -30,7 +30,7 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def setup_remarketing(customer_id, campaign_id, ad_group_id, bid_modifier_value)
+def set_up_remarketing(customer_id, campaign_id, ad_group_id, bid_modifier_value)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -342,7 +342,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    setup_remarketing(
+    set_up_remarketing(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:campaign_id),
       options.fetch(:ad_group_id),

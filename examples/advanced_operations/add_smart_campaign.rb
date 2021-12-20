@@ -672,7 +672,7 @@ if __FILE__ == $0
     end
 
     opts.on('-b', '--business-location-id BUSINESS-LOCATION-ID', String,
-      'The ID of a Google My Business (GMB) location. This is required' \
+      'The ID of a Business Profile location. This is required' \
       ' if a business name is not provided. It can be retrieved using the' \
       ' GMB API, for details see:' \
       ' https://developers.google.com/my-business/reference/rest/v4/accounts.locations') do |v|
@@ -680,7 +680,7 @@ if __FILE__ == $0
     end
 
     opts.on('-n', '--business-name BUSINESS-NAME', String,
-      'The name of a Google My Business (GMB) business. This is required' \
+      'The name of a Business Profile business. This is required' \
       ' if a business location ID is not provided.') do |v|
       options[:business_name] = v
     end
