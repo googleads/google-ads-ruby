@@ -64,7 +64,7 @@ def upload_conversion_with_identifiers(
   else
     result = response.results.first
     puts "Uploaded click conversion that happened at #{result.conversion_date_time} " \
-      "from Google Click ID #{result.gclid} to #{result.conversion_action}."
+      "to #{result.conversion_action}."
   end
 end
 # [END upload_conversion_with_identifiers]
