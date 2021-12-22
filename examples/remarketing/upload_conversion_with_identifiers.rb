@@ -32,6 +32,7 @@ def upload_conversion_with_identifiers(
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START create_conversion]
   click_conversion = client.resource.click_conversion do |cc|
     cc.conversion_action = client.path.conversion_action(customer_id, conversion_action_id)
     cc.conversion_date_time = conversion_date_time
@@ -51,6 +52,7 @@ def upload_conversion_with_identifiers(
       id.user_identifier_source = :FIRST_PARTY
     end
   end
+  # [END create_conversion]
 
   response = client.service.conversion_upload.upload_click_conversions(
     customer_id: customer_id,
