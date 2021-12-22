@@ -186,6 +186,7 @@ def add_transactions_to_offline_user_data_job(
   user_data_job_operations = build_offline_user_data_job_operations(
     client, customer_id, conversion_action_id, custom_value)
 
+  # [START enable_warnings_1]
   # Issues a request to add the operations to the offline user data job.
   response = offline_user_data_job_service.add_offline_user_data_job_operations(
     resource_name: offline_user_data_job_resource_name,
@@ -193,6 +194,7 @@ def add_transactions_to_offline_user_data_job(
     enable_partial_failure: true,
     enable_warnings: true,
   )
+  # [END enable_warnings_1]
 
   # Prints errors if any partial failure error is returned.
   if response.partial_failure_error
@@ -219,11 +221,13 @@ def add_transactions_to_offline_user_data_job(
     end
   end
 
+  # [START enable_warnings_2]
   if response.warning
     # Convert to a GoogleAdsFailure.
     warnings = client.decode_warning(response.warning)
     puts "Encountered #{warnings.errors.size} warning(s)."
   end
+  # [END enable_warnings_2]
 
   puts "Successfully added #{user_data_job_operations.size} operations to " \
     "the offline user data job."
