@@ -30,7 +30,7 @@ you're interested in):
 Then run:
 
     $ bundle install
-    
+
 This will cause bundler to update your `Gemfile.lock` locking to the exact
 version of the gem, and all dependencies of the gem that were installed.
 Using the pessimistic version operator `"~> x.y.z"` will cause `bundle
@@ -132,10 +132,10 @@ See the [Logging guide][].
 
 ## Ruby versions
 
-The client library supports versions 2.6 and up of Ruby. We plan to support 3
-Ruby releases at any one time. As Ruby releases once a year on December 25th,
-we will look at dropping support for the oldest version early in the following
-year.
+The client library supports versions 2.7, 3.0, and 3.1 of Ruby. We plan to
+support three Ruby releases at any one time. As Ruby releases once a year on
+December 25th, we will look at dropping support for the oldest version early in
+the following year.
 
 # Authors
 
@@ -148,3 +148,4 @@ Maintainers:
 
  - Michael Cloonan
  - Fei Xiang
+ - Abraham Williams
