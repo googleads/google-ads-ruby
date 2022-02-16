@@ -43,11 +43,11 @@ def upload_image_asset(customer_id)
         dimension.width_pixels = 600
         dimension.url = url
       end
-      # Provide a unique friendly name to identify your asset.
-      # When there is an existing image asset with the same content but a different
-      # name, the new name will be dropped silently.
-      image_asset.name = "Marketing Image"
     end
+    # Provide a unique friendly name to identify your asset.
+    # When there is an existing image asset with the same content but a different
+    # name, the new name will be dropped silently.
+    asset.name = "Marketing Image"
   end
 
   # Upload the image asset.
