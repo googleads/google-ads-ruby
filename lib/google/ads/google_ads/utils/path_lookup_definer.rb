@@ -90,12 +90,17 @@ module Google
           end
 
           def self.load_path_helper(name, version)
-            require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
-
-            const_name = ::Google::Ads::GoogleAds::Utils.camelize(name.to_s)
+            require "google/ads/google_ads/#{version}/services/google_ads_service/paths"
 
             mod_host = Object.new
-            mod = Kernel.const_get("Google::Ads::GoogleAds::#{version.upcase}::Services::#{const_name}Service::Paths")
+            mod = Kernel.const_get("Google::Ads::GoogleAds::#{version.upcase}::Services::GoogleAdsService::Paths")
+
+            unless mod.respond_to?(:"#{name}_path")
+              require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
+              const_name = ::Google::Ads::GoogleAds::Utils.camelize(name.to_s)
+              mod = Kernel.const_get("Google::Ads::GoogleAds::#{version.upcase}::Services::#{const_name}Service::Paths")
+            end
+
             mod_host.extend(mod)
             mod_host
           end

@@ -49,17 +49,20 @@ module Google
             end
 
             define_method(:validate_method_name) do |name|
-              if !@non_path_methods.include?(name)
-                return true if @lookups.include?(name)
-                begin
-                  require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
-                  @lookups.add(name)
-                  return true
-                rescue LoadError => e
-                  @non_path_methods.add(name)
-                end
-                return false
+              return false if @non_path_methods.include?(name)
+              return true if @lookups.include?(name)
+
+              require "google/ads/google_ads/#{version}/services/google_ads_service/paths"
+              mod = Kernel.const_get("Google::Ads::GoogleAds::#{version.upcase}::Services::GoogleAdsService::Paths")
+              unless mod.respond_to?("#{name}_path")
+                # A handful of path helpers like `google_ads_field_path` are not included in `google_ads_service/paths`
+                require "google/ads/google_ads/#{version}/services/#{name}_service/paths"
               end
+              @lookups.add(name)
+              return true
+            rescue LoadError
+              @non_path_methods.add(name)
+              return false
             end
           end
         end

@@ -46,6 +46,11 @@ task :copy_third_party_code do |t|
   `cp third_party/rspec/caller_filter.rb lib/google/ads/google_ads/deprecation.rb`
 end
 
+task :file_permissions do |t|
+  # Recursively add read permissions to users, groups, and others
+  `chmod -R ugo+r .`
+end
+
 task :copy_code => [:copy_third_party_code]
-task :build => [:copy_code, :codegen, :validate_protos]
+task :build => [:copy_code, :codegen, :validate_protos, :file_permissions]
 task :test => [:copy_code, :codegen]

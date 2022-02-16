@@ -15,12 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example retrieves keywords for a customer or for a specific Ad Group.
+# This example retrieves keywords for a customer or for a specific Ad Group and
+# demonstrates how to use the omit_unselected_resource_names option in GAQL to
+# reduce payload size.
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_keywords(customer_id, ad_group_id=nil)
+def get_keywords(customer_id, ad_group_id=nil, omit_unselected_resource_names=false)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -39,6 +41,19 @@ def get_keywords(customer_id, ad_group_id=nil)
     search_query << " AND ad_group.id = #{ad_group_id}"
   end
 
+  # Adds omit_unselected_resource_names=true to the PARAMETERS clause of the
+  # Google Ads Query Language (GAQL) query, which excludes the resource names of
+  # all resources that aren't explicitly requested in the SELECT clause.
+  # Enabling this option reduces payload size, but if you plan to use a returned
+  # object in subsequent mutate operations, make sure you explicitly request its
+  # "resource_name" field in the SELECT clause.
+  #
+  # Read more about PARAMETERS:
+  # https://developers.google.com/google-ads/api/docs/query/structure#parameters
+  if omit_unselected_resource_names
+    search_query << ' PARAMETERS omit_unselected_resource_names=true'
+  end
+
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: search_query,
@@ -49,10 +64,15 @@ def get_keywords(customer_id, ad_group_id=nil)
       ad_group = row.ad_group
       ad_group_criterion = row.ad_group_criterion
       keyword_info = ad_group_criterion.keyword
+      if omit_unselected_resource_names
+        and_resource_name = ''
+      else
+        and_resource_name = " and resource name #{ad_group.resource_name}"
+      end
 
       puts "Keyword with text '#{keyword_info.text}', match type #{keyword_info.match_type}, " \
           "criteria type #{ad_group_criterion.type}, and ID #{ad_group_criterion.criterion_id} " \
-          "was found in ad group with ID #{ad_group.id}."
+          "was found in ad group with ID #{ad_group.id}#{and_resource_name}."
   end
 end
 
@@ -85,6 +105,11 @@ if __FILE__ == $0
       options[:ad_group_id] = v
     end
 
+    opts.on('-o', '--omit-unselected-resource-names OMIT-UNSELECTED-RESOURCE-NAMES', TrueClass,
+    '(Optional) Omit unselected resource names') do |v|
+      options[:omit_unselected_resource_names] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -95,7 +120,10 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    get_keywords(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id])
+    get_keywords(
+      options.fetch(:customer_id).tr("-", ""),
+      options[:ad_group_id],
+      options[:omit_unselected_resource_names])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)

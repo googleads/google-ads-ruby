@@ -43,11 +43,10 @@ def upload_image_asset(customer_id)
         dimension.width_pixels = 600
         dimension.url = url
       end
-      # Optional: Provide a unique friendly name to identify your asset.
-      # If you specify the name field, then both the asset name and the image
-      # being uploaded should be unique, and should not match another ACTIVE
-      # asset in this customer account.
-      # image_asset.name = 'Jupiter Trip #' + SecureRandom.uuid
+      # Provide a unique friendly name to identify your asset.
+      # When there is an existing image asset with the same content but a different
+      # name, the new name will be dropped silently.
+      image_asset.name = "Marketing Image"
     end
   end
 
