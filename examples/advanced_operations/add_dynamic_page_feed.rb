@@ -19,6 +19,10 @@
 # This code example adds a page feed to specify precisely which URLs to use with
 # your Dynamic Search Ads campaign. To use a Dynamic Search Ads campaign, run
 # add_dynamic_search_ads_campaign.rb. To get campaigns, run get_campaigns.rb.
+#
+# DEPRECATION WARNING!
+# Feed-services based DSA page feeds are deprecated and being replaced with
+# assets. See add_dynamic_page_feed_asset.rb.
 
 require 'optparse'
 require 'google/ads/google_ads'

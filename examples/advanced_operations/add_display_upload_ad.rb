@@ -56,6 +56,7 @@ def create_media_bundle_asset(client, customer_id)
   # Creates the media bundle asset.
   operation = client.operation.create_resource.asset do |asset|
     asset.type = :MEDIA_BUNDLE
+    asset.name = "Ad Media Bundle"
     asset.media_bundle_asset = client.resource.media_bundle_asset do |media|
       media.data = html5_zip
     end

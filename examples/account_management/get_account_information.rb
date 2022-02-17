@@ -25,9 +25,31 @@ def get_account_information(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
+  google_ads_service = client.service.google_ads
 
-  resource_name = client.path.customer(customer_id)
-  customer = client.service.customer.get_customer(resource_name: resource_name)
+  # Constructs a query to retrieve the customer.
+  #
+  # Limits to 1 to clarify that selecting from the customer resource
+  # will always return only one row, which will be for the customer
+  # ID specified in the request.
+  query = <<~QUERY
+    SELECT
+        customer.id,
+        customer.descriptive_name,
+        customer.currency_code,
+        customer.time_zone,
+        customer.tracking_url_template,
+        customer.auto_tagging_enabled
+    FROM customer
+    LIMIT 1
+  QUERY
+
+  # Executes the query and gets the Customer object from the single row of the response.
+  response = google_ads_service.search(
+    customer_id: customer_id,
+    query: query,
+  )
+  customer = response.first.customer
 
   puts "Customer ID #{customer.id}\n"\
       "\tdescriptive_name: #{customer.descriptive_name}\n"\

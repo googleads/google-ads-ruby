@@ -376,21 +376,24 @@ def create_asset_group_operation(
     client,
     customer_id,
     "https://gaagl.page.link/bjYi",
-    :LOGO)
+    :LOGO,
+    "Marketing Logo")
 
   # Create and link the Marketing Image Asset.
   operations += create_and_link_image_asset(
     client,
     customer_id,
     "https://gaagl.page.link/Eit5",
-    :MARKETING_IMAGE)
+    :MARKETING_IMAGE,
+    "Marketing Image")
 
   # Create and link the Square Marketing Image Asset.
   operations += create_and_link_image_asset(
     client,
     customer_id,
     "https://gaagl.page.link/bjYi",
-    :SQUARE_MARKETING_IMAGE)
+    :SQUARE_MARKETING_IMAGE,
+    "Square Marketing Image")
 
   operations
 end
@@ -430,7 +433,7 @@ end
 
 # [START add_performance_max_campaign_8]
 # Creates a list of MutateOperations that create a new linked image asset.
-def create_and_link_image_asset(client, customer_id, url, field_type)
+def create_and_link_image_asset(client, customer_id, url, field_type, asset_name)
   operations = []
   temp_id = next_temp_id
 
@@ -438,6 +441,10 @@ def create_and_link_image_asset(client, customer_id, url, field_type)
   operations << client.operation.mutate do |m|
     m.asset_operation = client.operation.create_resource.asset do |a|
       a.resource_name = client.path.asset(customer_id, temp_id)
+      # Provide a unique friendly name to identify your asset.
+      # When there is an existing image asset with the same content but a different
+      # name, the new name will be dropped silently.
+      a.name = asset_name
       a.type = :IMAGE
       a.image_asset = client.resource.image_asset do |image_asset|
         image_asset.data = get_image_bytes(url)
