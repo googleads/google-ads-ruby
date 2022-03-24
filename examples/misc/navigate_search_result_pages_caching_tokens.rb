@@ -94,7 +94,7 @@ end
 # [START navigate_search_result_pages_caching_tokens]
 def fetch_and_print_page_results(client, customer_id, query, page_size,
                                  return_total_results_count, page_number, page_tokens)
-  if page_tokens.has_key?(page_number)
+  if page_tokens.has_key?(page_number - 1)
     puts 'The page token for the request page was cached. Reusing it.'
     current_page = page_number
   else
