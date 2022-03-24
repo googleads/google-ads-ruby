@@ -107,26 +107,35 @@ def add_performance_max_retail_campaign(
   # successfully or fail entirely, leaving no orphaned entities. See:
   # https://developers.google.com/google-ads/api/docs/mutating/overview
   campaign_budget_operation = create_campaign_budget_operation(
-      client,
-      customer_id)
+    client,
+    customer_id,
+  )
   performance_max_campaign_operation = create_performance_max_campaign_operation(
-      client,
-      customer_id,
-      merchant_center_account_id,
-      sales_country)
+    client,
+    customer_id,
+    merchant_center_account_id,
+    sales_country,
+  )
   campaign_criterion_operations = create_campaign_criterion_operations(
-      client,
-      customer_id)
+    client,
+    customer_id,
+  )
   asset_group_operations = create_asset_group_operation(
-      client,
-      customer_id,
-      final_url,
-      headline_asset_resource_names,
-      description_asset_resource_names)
+    client,
+    customer_id,
+    final_url,
+    headline_asset_resource_names,
+    description_asset_resource_names,
+  )
   conversion_goal_operations = create_conversion_goal_operations(
-      client,
-      customer_id,
-      customer_conversion_goals)
+    client,
+    customer_id,
+    customer_conversion_goals,
+  )
+  asset_group_listing_group_operations = create_asset_group_listing_group_operations(
+    client,
+    customer_id,
+  )
 
   # Send the operations in a single Mutate request.
   response = client.service.google_ads.mutate(
@@ -141,6 +150,7 @@ def add_performance_max_retail_campaign(
       campaign_criterion_operations,
       asset_group_operations,
       conversion_goal_operations,
+      asset_group_listing_group_operations,
     ].flatten)
 
   print_response_details(response)
@@ -217,7 +227,10 @@ def create_performance_max_campaign_operation(
         # If opted in (false), the entire domain will be targeted. For best
         # results, set this value to false to opt in and allow URL expansions. You
         # can optionally add exclusions to limit traffic to parts of your website.
-        c.url_expansion_opt_out = false
+        #
+        # For a Retail campaign, we want the final URLs to be limited to those
+        # explicitly surfaced via GMC.
+        c.url_expansion_opt_out = true
 
         # Assign the resource name with a temporary ID.
         c.resource_name = client.path.campaign(customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID)
@@ -572,6 +585,27 @@ def create_conversion_goal_operations(client, customer_id, customer_conversion_g
   operations
 end
 # [END add_performance_max_retail_campaign_9]
+
+# [START add_performance_max_retail_campaign_10]
+# Create a list of MutateOperations that create a new asset group listing group filter.
+def create_asset_group_listing_group_operations(client, customer_id)
+  operations = []
+
+  operations << client.operation.create_resource.
+      asset_group_listing_group_filter do |lgf|
+    lgf.asset_group = client.path.asset_group(customer_id, ASSET_GROUP_TEMPORARY_ID)
+
+    # Since this is the root node, do not set the ParentListingGroupFilter. For all
+    # other nodes, this would refer to the parent listing group filter resource name.
+    # lgf.parent_listing_group_filter = "<PARENT FILTER NAME>"
+
+    lgf.type = :UNIT_INCLUDED
+    lgf.vertical = :SHOPPING
+  end
+
+  operations
+end
+# [END add_performance_max_retail_campaign_10]
 
 # Loads image data from a URL.
 def get_image_bytes(url)

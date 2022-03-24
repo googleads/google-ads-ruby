@@ -62,7 +62,9 @@ def add_campaigns(customer_id)
     c.network_settings = client.resource.network_settings do |ns|
       ns.target_google_search = true
       ns.target_search_network = true
-      ns.target_content_network = false
+      # Enable Display Expansion on Search campaigns. See
+      # https://support.google.com/google-ads/answer/7193800 to learn more.
+      ns.target_content_network = true
       ns.target_partner_search_network = false
     end
 
