@@ -36,10 +36,10 @@ def navigate_search_result_pages_caching_tokens(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # The cache of page tokens. The key is the 0-indexed page number.
+  # The cache of page tokens. The key is the page number.
   # The first page's token is always the empty string.
   page_tokens = {
-    0 => ''
+    1 => ''
   }
 
   puts "Fetching page 1 to get metadata"
@@ -51,7 +51,7 @@ def navigate_search_result_pages_caching_tokens(customer_id)
     return_total_results_count: true,
   )
 
-  cache_next_page_token(page_tokens, response.page, 1)
+  cache_next_page_token(page_tokens, response.page, 2)
 
   # The total results count does not take into consideration the LIMIT clause
   # of the query so we need to find the minimal value between the limit and the
@@ -94,7 +94,7 @@ end
 # [START navigate_search_result_pages_caching_tokens]
 def fetch_and_print_page_results(client, customer_id, query, page_size,
                                  return_total_results_count, page_number, page_tokens)
-  if page_tokens.has_key?(page_number - 1)
+  if page_tokens.has_key?(page_number)
     puts 'The page token for the request page was cached. Reusing it.'
     current_page = page_number
   else
@@ -104,15 +104,15 @@ def fetch_and_print_page_results(client, customer_id, query, page_size,
   end
 
   while current_page <= page_number
-    puts "Fetching page #{current_page}."
+    puts page_tokens
     response = client.service.google_ads.search(
       customer_id: customer_id,
       query: query,
       page_size: page_size,
       return_total_results_count: return_total_results_count,
-      page_token: page_tokens[current_page - 1],
+      page_token: page_tokens[current_page],
     )
-    cache_next_page_token(page_tokens, response.page, current_page)
+    cache_next_page_token(page_tokens, response.page, current_page + 1)
     current_page += 1
   end
 
@@ -126,7 +126,7 @@ end
 def cache_next_page_token(page_tokens, page, page_number)
   if !page.next_page_token.nil? && page_tokens[page_number].nil?
     page_tokens[page_number] = page.next_page_token
-    puts "Caching token for page #{page_number + 1}."
+    puts "Caching token for page #{page_number}."
   end
 end
 
