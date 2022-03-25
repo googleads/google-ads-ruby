@@ -111,7 +111,7 @@ def add_performance_max_product_listing_group_tree(
     end,
   )
 
-  # We save this ID because create child nodes underneath it.
+  # We save this ID because we create child nodes underneath it.
   subdivision_id_condition_other = create_operation_factory.next_id
 
   operations << create_operation_factory.create_subdivision(
@@ -319,11 +319,11 @@ class AssetGroupListingGroupFilterCreateOperationFactory
       # lgf.parent_listing_group_filter = "<PARENT FILTER NAME>"
 
       # Unlike AddPerformanceMaxRetailCampaign, the type for the root node here
-      # must be Subdivision because we add child partitions under it.
+      # must be SUBDIVISION  because we add child partitions under it.
       lgf.type = :SUBDIVISION
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the shopping vertical.
+      # specify that this is in the SHOPPING vertical.
       lgf.vertical = :SHOPPING
     end
 
@@ -356,12 +356,12 @@ class AssetGroupListingGroupFilterCreateOperationFactory
         parent,
       )
 
-      # We must use the Subdivision type to indicate that the
+      # We must use the SUBDIVISION type to indicate that the
       # AssetGroupListingGroupFilter will have children.
       lgf.type = :SUBDIVISION
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the shopping vertical.
+      # specify that this is in the SHOPPING vertical.
       lgf.vertical = :SHOPPING
 
       lgf.case_value = dimension
@@ -396,12 +396,12 @@ class AssetGroupListingGroupFilterCreateOperationFactory
         parent,
       )
 
-      # We must use the UnitIncluded type to indicate that the
+      # We must use the UNIT_INCLUDED type to indicate that the
       # AssetGroupListingGroupFilter won't have children.
       lgf.type = :UNIT_INCLUDED
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the shopping vertical.
+      # specify that this is in the SHOPPING vertical.
       lgf.vertical = :SHOPPING
 
       lgf.case_value = dimension
