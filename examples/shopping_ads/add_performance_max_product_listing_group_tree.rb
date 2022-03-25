@@ -156,10 +156,9 @@ def add_performance_max_product_listing_group_tree(
     end,
   )
 
-  require 'pry'; binding.pry
   response = client.service.google_ads.mutate(
     customer_id: customer_id,
-    operations: operations,
+    mutate_operations: operations,
   )
 
   print_response_details(operations, response)
@@ -188,8 +187,8 @@ end
 # [END add_performance_max_product_listing_group_tree_7]
 
 def print_response_details(operations, response)
-  response.each_with_index do |row, i|
-    resource_name = row.asset_group_listing_group_filter.resource_name
+  response.mutate_operation_responses.each_with_index do |row, i|
+    resource_name = row.asset_group_listing_group_filter_result.resource_name
     operation_type = operations[i].asset_group_listing_group_filter_operation.operation
     case operation_type
     when :create
@@ -260,13 +259,13 @@ class AssetGroupListingGroupFilterRemoveOperationFactory
 
     if @parents_to_children.has_key?(resource_name)
       @parents_to_children[resource_name].each do |child|
-        operations += remove_descendents_and_filter(child)
+        operations += remove_descendents_and_filter(client, child)
       end
     end
 
     operations << client.operation.mutate do |m|
-      m.asset_group_listing_filter_operation =
-        client.operation.remove_resource.asset_group_listing_filter(resource_name)
+      m.asset_group_listing_group_filter_operation =
+        client.operation.remove_resource.asset_group_listing_group_filter(resource_name)
     end
 
     operations
@@ -445,8 +444,8 @@ if __FILE__ == $0
       end
 
       opts.on('-r', '--replace-existing-tree REPLACE-EXISTING-TREE',
-              TrueClass, 'Replace existing tree?') do |v|
-        options[:replace_existing_tree] = v
+              String, 'Replace existing tree?') do |v|
+        options[:replace_existing_tree] = true
       end
 
       opts.separator ''
