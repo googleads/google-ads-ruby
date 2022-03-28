@@ -29,6 +29,8 @@ def upload_offline_conversion(
   customer_id,
   conversion_action_id,
   gclid,
+  gbraid,
+  wbraid,
   conversion_date_time,
   conversion_value,
   conversion_custom_variable_id,
@@ -37,9 +39,24 @@ def upload_offline_conversion(
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # Verifies that exactly one of gclid, gbraid, and wbraid is specified, as required.
+  # See https://developers.google.com/google-ads/api/docs/conversions/upload-clicks for details.
+  identifiers_specified = [gclid, gbraid, wbraid].reject {|v| v.nil?}.count
+  if identifiers_specified != 1
+    raise "Must specify exactly one of GCLID, GBRAID, and WBRAID. " \
+      "#{identifiers_specified} values were provided."
+  end
+
   click_conversion = client.resource.click_conversion do |cc|
     cc.conversion_action = client.path.conversion_action(customer_id, conversion_action_id)
-    cc.gclid = gclid
+    # Sets the single specified ID field.
+    if !gclid.nil?
+      cc.gclid = gclid
+    elsif !gbraid.nil?
+      cc.gbraid = gbraid
+    else
+      cc.wbraid = wbraid
+    end
     cc.conversion_value = conversion_value.to_f
     cc.conversion_date_time = conversion_date_time
     cc.currency_code = 'USD'
@@ -85,7 +102,9 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:conversion_action_id] = 'INSERT_CONVERSION_ACTION_ID_HERE'
-  options[:gclid] = 'INSERT_GCLID_HERE'
+  options[:gclid] = nil
+  options[:gbraid] = nil
+  options[:wbraid] = nil
   options[:conversion_date_time] = 'INSERT_CONVERSION_DATE_TIME_HERE'
   options[:conversion_value] = 'INSERT_CONVERSION_VALUE_HERE'
   # Optional: Specify the conversion custom variable ID and value you want to
@@ -109,8 +128,21 @@ if __FILE__ == $0
 
     opts.on('-g', '--gclid GCLID', String,
             'Google Click ID (should be newer than the number of days set ' \
-            'on the conversion window of the conversion action).') do |v|
+            'on the conversion window of the conversion action).' \
+            'If setting this option, don\'t set GBRAID or WBRAID') do |v|
       options[:gclid] = v
+    end
+
+    opts.on('-G', '--gbraid GBRAID', String,
+            'The GBRAID identifier for an iOS app conversion. If setting this value, ' \
+            'do not set GCLID or WBRAID.') do |v|
+      options[:gbraid] = v
+    end
+
+    opts.on('w', '--wbraid WBRAID', String,
+            'The WBRAID identifier for an iOS app conversion. If setting this value, ' \
+            'do not set GCLID or GBRAID.') do |v|
+      options[:wbraid] = v
     end
 
     opts.on('-t', '--conversion-date-time CONVERSION-DATE-TIME', String,
@@ -149,7 +181,9 @@ if __FILE__ == $0
     upload_offline_conversion(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:conversion_action_id),
-      options.fetch(:gclid),
+      options[:gclid],
+      options[:gbraid],
+      options[:wbraid],
       options.fetch(:conversion_date_time),
       options.fetch(:conversion_value),
       options[:conversion_custom_variable_id],

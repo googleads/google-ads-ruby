@@ -53,7 +53,7 @@ def next_temp_id
 end
 
 # [START add_performance_max_campaign]
-def add_performance_max_campaign(customer_id)
+def add_performance_max_campaign(customer_id, audience_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -91,18 +91,27 @@ def add_performance_max_campaign(customer_id)
   # https://developers.google.com/google-ads/api/docs/mutating/overview
   campaign_budget_operation = create_campaign_budget_operation(
     client,
-    customer_id)
+    customer_id,
+  )
   performance_max_campaign_operation = create_performance_max_campaign_operation(
     client,
-    customer_id)
+    customer_id,
+  )
   campaign_criterion_operations = create_campaign_criterion_operations(
-      client,
-      customer_id)
+    client,
+    customer_id,
+  )
   asset_group_operations = create_asset_group_operation(
-      client,
-      customer_id,
-      headline_asset_resource_names,
-      description_asset_resource_names)
+    client,
+    customer_id,
+    headline_asset_resource_names,
+    description_asset_resource_names,
+  )
+  asset_group_signal_operations = create_asset_group_signal_operations(
+    client,
+    customer_id,
+    audience_id,
+  )
 
   # Send the operations in a single Mutate request.
   response = client.service.google_ads.mutate(
@@ -116,6 +125,7 @@ def add_performance_max_campaign(customer_id)
       # other mutate operations
       campaign_criterion_operations,
       asset_group_operations,
+      asset_group_signal_operationss,
     ].flatten)
 
   print_response_details(response)
@@ -454,12 +464,13 @@ def create_and_link_image_asset(client, customer_id, url, field_type, asset_name
 
   # Create an AssetGroupAsset to link the Asset to the AssetGroup.
   operations << client.operation.mutate do |m|
-    m.asset_group_asset_operation = client.operation.create_resource
-        .asset_group_asset do |aga|
+    m.asset_group_asset_operation = client.operation.create_resource.
+        asset_group_asset do |aga|
       aga.field_type = field_type
       aga.asset_group = client.path.asset_group(
         customer_id,
-        ASSET_GROUP_TEMPORARY_ID)
+        ASSET_GROUP_TEMPORARY_ID,
+      )
       aga.asset = client.path.asset(customer_id, temp_id)
     end
   end
@@ -467,6 +478,29 @@ def create_and_link_image_asset(client, customer_id, url, field_type, asset_name
   operations
 end
 # [END add_performance_max_campaign_8]
+
+# [START add_performance_max_campaign_9]
+# Create a list of MutateOperations that create AssetGroupSignals.
+def create_asset_group_signal_operations(client, customer_id, audience_id)
+  operations = []
+  return operations if audience_id.nil?
+
+  operations << client.operation.mutate do |m|
+    m.asset_group_signal_operation = client.operation.create_resource.
+        asset_group_signal do |ags|
+      ags.asset_group = client.path.asset_group(
+        customer_id,
+        ASSET_GROUP_TEMPORARY_ID,
+      )
+      ags.audience = client.resource.audience_info do |ai|
+        ai.audience = client.path.audience(customer_id, audience_id)
+      end
+    end
+  end
+
+  operations
+end
+# [END add_performance_max_campaign_9]
 
 # Loads image data from a URL.
 def get_image_bytes(url)
@@ -503,6 +537,7 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:audience_id] = nil
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -512,6 +547,10 @@ if __FILE__ == $0
 
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
+    end
+
+    opts.on('-D', '--audience-id AUDIENCE-ID', String, 'Audience ID (optional)') do |v|
+      options[:audience_id] = v
     end
 
     opts.separator ''
@@ -524,7 +563,10 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_performance_max_campaign(options.fetch(:customer_id).tr("-", ""))
+    add_performance_max_campaign(
+      options.fetch(:customer_id).tr("-", ""),
+      options[:audience_id],
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
