@@ -7,7 +7,6 @@ require 'google/ads/google_ads/v10/common/policy_pb'
 require 'google/ads/google_ads/v10/enums/asset_type_pb'
 require 'google/ads/google_ads/v10/enums/policy_approval_status_pb'
 require 'google/ads/google_ads/v10/enums/policy_review_status_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -43,6 +42,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :call_asset, :message, 27, "google.ads.googleads.v10.common.CallAsset"
         optional :price_asset, :message, 28, "google.ads.googleads.v10.common.PriceAsset"
         optional :call_to_action_asset, :message, 29, "google.ads.googleads.v10.common.CallToActionAsset"
+        optional :dynamic_real_estate_asset, :message, 30, "google.ads.googleads.v10.common.DynamicRealEstateAsset"
+        optional :dynamic_custom_asset, :message, 31, "google.ads.googleads.v10.common.DynamicCustomAsset"
+        optional :dynamic_hotels_and_rentals_asset, :message, 32, "google.ads.googleads.v10.common.DynamicHotelsAndRentalsAsset"
+        optional :dynamic_flights_asset, :message, 33, "google.ads.googleads.v10.common.DynamicFlightsAsset"
+        optional :discovery_carousel_card_asset, :message, 34, "google.ads.googleads.v10.common.DiscoveryCarouselCardAsset"
+        optional :dynamic_travel_asset, :message, 35, "google.ads.googleads.v10.common.DynamicTravelAsset"
+        optional :dynamic_local_asset, :message, 36, "google.ads.googleads.v10.common.DynamicLocalAsset"
+        optional :dynamic_jobs_asset, :message, 37, "google.ads.googleads.v10.common.DynamicJobsAsset"
       end
     end
     add_message "google.ads.googleads.v10.resources.AssetPolicySummary" do

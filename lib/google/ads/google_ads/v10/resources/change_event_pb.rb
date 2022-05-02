@@ -12,15 +12,17 @@ require 'google/ads/google_ads/v10/resources/ad_group_bid_modifier_pb'
 require 'google/ads/google_ads/v10/resources/ad_group_criterion_pb'
 require 'google/ads/google_ads/v10/resources/ad_group_feed_pb'
 require 'google/ads/google_ads/v10/resources/asset_pb'
+require 'google/ads/google_ads/v10/resources/asset_set_pb'
+require 'google/ads/google_ads/v10/resources/asset_set_asset_pb'
 require 'google/ads/google_ads/v10/resources/campaign_pb'
 require 'google/ads/google_ads/v10/resources/campaign_asset_pb'
+require 'google/ads/google_ads/v10/resources/campaign_asset_set_pb'
 require 'google/ads/google_ads/v10/resources/campaign_budget_pb'
 require 'google/ads/google_ads/v10/resources/campaign_criterion_pb'
 require 'google/ads/google_ads/v10/resources/campaign_feed_pb'
 require 'google/ads/google_ads/v10/resources/customer_asset_pb'
 require 'google/ads/google_ads/v10/resources/feed_pb'
 require 'google/ads/google_ads/v10/resources/feed_item_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf/field_mask_pb'
@@ -62,6 +64,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :customer_asset, :message, 14, "google.ads.googleads.v10.resources.CustomerAsset"
       optional :campaign_asset, :message, 15, "google.ads.googleads.v10.resources.CampaignAsset"
       optional :ad_group_asset, :message, 16, "google.ads.googleads.v10.resources.AdGroupAsset"
+      optional :asset_set, :message, 17, "google.ads.googleads.v10.resources.AssetSet"
+      optional :asset_set_asset, :message, 18, "google.ads.googleads.v10.resources.AssetSetAsset"
+      optional :campaign_asset_set, :message, 19, "google.ads.googleads.v10.resources.CampaignAssetSet"
     end
   end
 end

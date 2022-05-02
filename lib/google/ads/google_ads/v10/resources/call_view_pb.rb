@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/call_tracking_display_location_pb'
 require 'google/ads/google_ads/v10/enums/call_type_pb'
 require 'google/ads/google_ads/v10/enums/google_voice_call_status_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

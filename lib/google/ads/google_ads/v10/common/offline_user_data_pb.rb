@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/offline_user_data.proto
 
 require 'google/ads/google_ads/v10/enums/user_identifier_source_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

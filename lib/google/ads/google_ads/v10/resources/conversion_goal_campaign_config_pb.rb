@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/resources/conversion_goal_campaign_config.proto
 
 require 'google/ads/google_ads/v10/enums/goal_config_level_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

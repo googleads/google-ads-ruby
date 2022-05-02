@@ -48,7 +48,7 @@ def make_server_streaming_call(client, customer_id)
       # Any server streaming call has a default timeout setting.
       # For this particular call, the default setting can be found in the
       # following file:
-      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v8/services/google_ads_service/client.rb
+      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v10/services/google_ads_service/client.rb
       #
       # When making a server streaming call, config.rpcs.search_stream.timeout can
       # be used to override the default timeout setting with a given value.
@@ -87,7 +87,7 @@ def make_unary_call(client, customer_id)
       # Any unary call is retryable and has default retry settings.
       # For this particular call, the default setting can be found in the
       # following file:
-      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v8/services/google_ads_service/client.rb
+      # https://github.com/googleads/google-ads-ruby/blob/master/lib/google/ads/google_ads/v10/services/google_ads_service/client.rb
       #
       # When making an unary call, config.retry_policy can
       # be used to override the default retry settings with given values.

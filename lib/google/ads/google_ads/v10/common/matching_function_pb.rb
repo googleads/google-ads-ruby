@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/matching_function_context_type_pb'
 require 'google/ads/google_ads/v10/enums/matching_function_operator_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

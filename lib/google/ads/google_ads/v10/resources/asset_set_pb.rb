@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/asset_set_status_pb'
 require 'google/ads/google_ads/v10/enums/asset_set_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -11,6 +10,7 @@ require 'google/protobuf'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v10/resources/asset_set.proto", :syntax => :proto3) do
     add_message "google.ads.googleads.v10.resources.AssetSet" do
+      optional :id, :int64, 6
       optional :resource_name, :string, 1
       optional :name, :string, 2
       optional :type, :enum, 3, "google.ads.googleads.v10.enums.AssetSetTypeEnum.AssetSetType"

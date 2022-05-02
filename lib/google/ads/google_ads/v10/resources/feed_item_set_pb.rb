@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/common/feed_item_set_filter_type_infos_pb'
 require 'google/ads/google_ads/v10/enums/feed_item_set_status_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

@@ -60,7 +60,7 @@ module Google
                 @configure ||= begin
                   default_config = Client::Configuration.new
 
-                  default_config.timeout = 3600.0
+                  default_config.timeout = 14_400.0
                   default_config.retry_policy = {
                     initial_delay: 5.0, max_delay: 60.0, multiplier: 1.3, retry_codes: [14, 4]
                   }
@@ -146,7 +146,7 @@ module Google
               # Service calls
 
               ##
-              # Returns the list of plannable locations (for example, countries & DMAs).
+              # Returns the list of plannable locations (for example, countries).
               #
               # List of thrown errors:
               #   [AuthenticationError]()
@@ -253,7 +253,7 @@ module Google
               #
               #   @param plannable_location_id [::String]
               #     Required. The ID of the selected location for planning. To list the available
-              #     plannable location ids use {::Google::Ads::GoogleAds::V10::Services::ReachPlanService::Client#list_plannable_locations ReachPlanService.ListPlannableLocations}.
+              #     plannable location IDs use {::Google::Ads::GoogleAds::V10::Services::ReachPlanService::Client#list_plannable_locations ReachPlanService.ListPlannableLocations}.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V10::Services::ListPlannableProductsResponse]
@@ -345,7 +345,7 @@ module Google
               #   @param customer_id [::String]
               #     Required. The ID of the customer.
               #   @param plannable_location_id [::String]
-              #     Required. The ID of the location, this is one of the ids returned by
+              #     Required. The ID of the location, this is one of the IDs returned by
               #     {::Google::Ads::GoogleAds::V10::Services::ReachPlanService::Client#list_plannable_locations ReachPlanService.ListPlannableLocations}.
               #   @param currency_code [::String]
               #     Required. Currency code.
@@ -461,16 +461,16 @@ module Google
               #   @param campaign_duration [::Google::Ads::GoogleAds::V10::Services::CampaignDuration, ::Hash]
               #     Required. Campaign duration.
               #   @param cookie_frequency_cap [::Integer]
-              #     Desired cookie frequency cap that will be applied to each planned product.
+              #     Desired cookie frequency cap to be applied to each planned product.
               #     This is equivalent to the frequency cap exposed in Google Ads when creating
               #     a campaign, it represents the maximum number of times an ad can be shown to
               #     the same user.
-              #     If not specified no cap is applied.
+              #     If not specified, no cap is applied.
               #
               #     This field is deprecated in v4 and will eventually be removed.
               #     Please use cookie_frequency_cap_setting instead.
               #   @param cookie_frequency_cap_setting [::Google::Ads::GoogleAds::V10::Services::FrequencyCap, ::Hash]
-              #     Desired cookie frequency cap that will be applied to each planned product.
+              #     Desired cookie frequency cap to be applied to each planned product.
               #     This is equivalent to the frequency cap exposed in Google Ads when creating
               #     a campaign, it represents the maximum number of times an ad can be shown to
               #     the same user during a specified time interval.

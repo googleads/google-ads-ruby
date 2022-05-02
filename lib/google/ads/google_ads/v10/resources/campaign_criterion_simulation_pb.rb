@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/common/simulation_pb'
 require 'google/ads/google_ads/v10/enums/simulation_modification_method_pb'
 require 'google/ads/google_ads/v10/enums/simulation_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

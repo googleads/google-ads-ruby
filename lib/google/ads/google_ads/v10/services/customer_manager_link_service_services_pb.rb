@@ -34,7 +34,7 @@ module Google
               self.unmarshal_class_method = :decode
               self.service_name = 'google.ads.googleads.v10.services.CustomerManagerLinkService'
 
-              # Creates or updates customer manager links. Operation statuses are returned.
+              # Updates customer manager links. Operation statuses are returned.
               #
               # List of thrown errors:
               #   [AuthenticationError]()

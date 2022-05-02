@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/bidding.proto
 
 require 'google/ads/google_ads/v10/enums/target_impression_share_location_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

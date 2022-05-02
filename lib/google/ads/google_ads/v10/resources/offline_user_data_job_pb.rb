@@ -6,7 +6,6 @@ require 'google/ads/google_ads/v10/enums/offline_user_data_job_failure_reason_pb
 require 'google/ads/google_ads/v10/enums/offline_user_data_job_match_rate_range_pb'
 require 'google/ads/google_ads/v10/enums/offline_user_data_job_status_pb'
 require 'google/ads/google_ads/v10/enums/offline_user_data_job_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

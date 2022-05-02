@@ -40,7 +40,7 @@ module Google
               self.unmarshal_class_method = :decode
               self.service_name = 'google.ads.googleads.v10.services.ReachPlanService'
 
-              # Returns the list of plannable locations (for example, countries & DMAs).
+              # Returns the list of plannable locations (for example, countries).
               #
               # List of thrown errors:
               #   [AuthenticationError]()

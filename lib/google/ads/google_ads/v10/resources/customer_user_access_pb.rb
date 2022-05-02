@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/resources/customer_user_access.proto
 
 require 'google/ads/google_ads/v10/enums/access_role_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

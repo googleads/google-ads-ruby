@@ -26,9 +26,9 @@ require 'google/ads/google_ads/v10/enums/recommendation_type_pb'
 require 'google/ads/google_ads/v10/enums/search_engine_results_page_type_pb'
 require 'google/ads/google_ads/v10/enums/search_term_match_type_pb'
 require 'google/ads/google_ads/v10/enums/sk_ad_network_ad_event_type_pb'
+require 'google/ads/google_ads/v10/enums/sk_ad_network_attribution_credit_pb'
 require 'google/ads/google_ads/v10/enums/sk_ad_network_user_type_pb'
 require 'google/ads/google_ads/v10/enums/slot_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -120,6 +120,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :sk_ad_network_user_type, :enum, 141, "google.ads.googleads.v10.enums.SkAdNetworkUserTypeEnum.SkAdNetworkUserType"
       optional :sk_ad_network_ad_event_type, :enum, 142, "google.ads.googleads.v10.enums.SkAdNetworkAdEventTypeEnum.SkAdNetworkAdEventType"
       proto3_optional :sk_ad_network_source_app, :message, 143, "google.ads.googleads.v10.common.SkAdNetworkSourceApp"
+      optional :sk_ad_network_attribution_credit, :enum, 144, "google.ads.googleads.v10.enums.SkAdNetworkAttributionCreditEnum.SkAdNetworkAttributionCredit"
       proto3_optional :asset_interaction_target, :message, 139, "google.ads.googleads.v10.common.AssetInteractionTarget"
     end
     add_message "google.ads.googleads.v10.common.Keyword" do

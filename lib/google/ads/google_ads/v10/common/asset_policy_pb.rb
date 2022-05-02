@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/common/policy_pb'
 require 'google/ads/google_ads/v10/enums/policy_approval_status_pb'
 require 'google/ads/google_ads/v10/enums/policy_review_status_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

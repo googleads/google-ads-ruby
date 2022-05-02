@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/extension_setting_device_pb'
 require 'google/ads/google_ads/v10/enums/extension_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

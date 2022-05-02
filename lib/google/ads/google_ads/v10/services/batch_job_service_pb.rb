@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v10.services.BatchJobOperation" do
       oneof :operation do
         optional :create, :message, 1, "google.ads.googleads.v10.resources.BatchJob"
+        optional :remove, :string, 4
       end
     end
     add_message "google.ads.googleads.v10.services.MutateBatchJobResponse" do

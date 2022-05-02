@@ -45,6 +45,7 @@ def create_asset(client, customer_id)
 
   # Creates an operation to add the asset.
   operation = client.operation.create_resource.asset do |asset|
+    asset.final_urls << 'https://www.example.com'
     asset.dynamic_education_asset = client.resource.dynamic_education_asset do |dea|
       # Defines meta-information about the school and program.
       dea.school_name = 'The University of Unknown'
