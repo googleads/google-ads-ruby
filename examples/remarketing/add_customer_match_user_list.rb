@@ -34,7 +34,6 @@ def add_customer_match_user_list(customer_id)
 
   user_list = create_customer_match_user_list(client, customer_id)
   add_users_to_customer_match_user_list(client, customer_id, user_list)
-  print_customer_match_user_list(client, customer_id, user_list)
 end
 
 def create_customer_match_user_list(client, customer_id)
@@ -128,17 +127,16 @@ def add_users_to_customer_match_user_list(client, customer_id, user_list)
   puts "Asynchronous request to execute the added operations started."
   puts "Waiting until operation completes."
 
-  # The wait_until_done! method implements a default backoff policy for
-  # retrying.
-  # You can also use operation.refresh! to make a call to the API to check
-  # whether the LRO is finished, and operation.done? after refreshing to check
-  # the status, if you'd rather implement your own backoff logic.
-  response.wait_until_done! do |op|
-    raise op.results.message if response.error?
-  end
-
-  puts "Offline user data job with resource name " \
-    "#{offline_user_data_job_resource_name} has finished"
+  # Offline user data jobs may take 6 hours or more to complete, so instead of
+  # waiting for the job to complete, retrieves and displays the job status
+  # once. If the job is completed successfully, prints information about the
+  # user list. Otherwise, prints the query to use to check the job again later.
+  check_job_status(
+    client,
+    customer_id,
+    offline_user_data_job_resource_name,
+    user_list,
+  )
 end
 # [END add_customer_match_user_list]
 
@@ -190,6 +188,40 @@ def build_offline_user_data_job_operations(client)
   # [END add_customer_match_user_list_2]
 
   operations
+end
+
+def check_job_status(client, customer_id, offline_user_data_job, user_list)
+  query = <<~QUERY
+    SELECT
+      offline_user_data_job.resource_name,
+      offline_user_data_job.id,
+      offline_user_data_job.status,
+      offline_user_data_job.type,
+      offline_user_data_job.failure_reason
+    FROM
+      offline_user_data_job
+    WHERE
+      offline_user_data_job.resource_name = '#{offline_user_data_job}'
+  QUERY
+
+  row = client.service.google_ads.search(
+    customer_id: customer_id,
+    query: query,
+  ).first
+
+  job = row.offline_user_data_job
+  puts "Offline user data job ID #{job.id} with type '#{job.type}' has status: #{job.status}."
+
+  case job.status
+  when :SUCCESS
+    print_customer_match_user_list(client, customer_id, user_list)
+  when :FAILED
+    puts "  Failure reason: #{job.failure_reason}"
+  else
+    puts "  To check the status of the job periodically, use the following GAQL " \
+      "query with GoogleAdsService.search:"
+    puts query
+  end
 end
 
 def normalize_and_hash(str)

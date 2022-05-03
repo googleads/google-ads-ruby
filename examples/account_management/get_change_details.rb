@@ -82,10 +82,18 @@ def get_change_details(customer_id)
       [event.old_resource.ad_group_criterion, event.new_resource.ad_group_criterion]
     when :AD_GROUP_BID_MODIFIER
       [event.old_resource.ad_group_bid_modifier, event.new_resource.ad_group_bid_modifier]
+    when :ASSET
+      [event.old_resource.asset, event.new_resource.asset]
+    when :ASSET_SET
+      [event.old_resource.asset_set, event.new_resource.asset_set]
+    when :ASSET_SET_ASSET
+      [event.old_resource.asset_set_asset, event.new_resource.asset_set_asset]
     when :CAMPAIGN
       [event.old_resource.campaign, event.new_resource.campaign]
     when :CAMPAIGN_ASSET
       [event.old_resource.campaign_asset, event.new_resource.campaign_asset]
+    when :CAMPAIGN_ASSET_SET
+      [event.old_resource.campaign_asset_set, event.new_resource.campaign_asset_set]
     when :CAMPAIGN_BUDGET
       [event.old_resource.campaign_budget, event.new_resource.campaign_budget]
     when :CAMPAIGN_CRITERION

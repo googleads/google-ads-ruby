@@ -51,6 +51,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :text, :string, 5
       optional :keyword_idea_metrics, :message, 3, "google.ads.googleads.v10.common.KeywordPlanHistoricalMetrics"
       optional :keyword_annotations, :message, 6, "google.ads.googleads.v10.common.KeywordAnnotations"
+      repeated :close_variants, :string, 7
+    end
+    add_message "google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsRequest" do
+      optional :customer_id, :string, 1
+      repeated :keywords, :string, 2
+      optional :historical_metrics_options, :message, 3, "google.ads.googleads.v10.common.HistoricalMetricsOptions"
+    end
+    add_message "google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsResponse" do
+      repeated :results, :message, 1, "google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsResult"
+    end
+    add_message "google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsResult" do
+      proto3_optional :text, :string, 1
+      repeated :close_variants, :string, 3
+      optional :keyword_metrics, :message, 2, "google.ads.googleads.v10.common.KeywordPlanHistoricalMetrics"
     end
   end
 end
@@ -67,6 +81,9 @@ module Google
           UrlSeed = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.UrlSeed").msgclass
           GenerateKeywordIdeaResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.GenerateKeywordIdeaResponse").msgclass
           GenerateKeywordIdeaResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.GenerateKeywordIdeaResult").msgclass
+          GenerateKeywordHistoricalMetricsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsRequest").msgclass
+          GenerateKeywordHistoricalMetricsResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsResponse").msgclass
+          GenerateKeywordHistoricalMetricsResult = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.services.GenerateKeywordHistoricalMetricsResult").msgclass
         end
       end
     end

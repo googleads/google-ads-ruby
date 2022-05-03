@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/common/asset_policy_pb'
 require 'google/ads/google_ads/v10/enums/asset_performance_label_pb'
 require 'google/ads/google_ads/v10/enums/served_asset_field_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -24,6 +23,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v10.common.AdMediaBundleAsset" do
       proto3_optional :asset, :string, 2
     end
+    add_message "google.ads.googleads.v10.common.AdDiscoveryCarouselCardAsset" do
+      proto3_optional :asset, :string, 1
+    end
   end
 end
 
@@ -36,6 +38,7 @@ module Google
           AdImageAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.AdImageAsset").msgclass
           AdVideoAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.AdVideoAsset").msgclass
           AdMediaBundleAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.AdMediaBundleAsset").msgclass
+          AdDiscoveryCarouselCardAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.AdDiscoveryCarouselCardAsset").msgclass
         end
       end
     end

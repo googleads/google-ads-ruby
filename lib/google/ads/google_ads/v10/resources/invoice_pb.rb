@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/common/dates_pb'
 require 'google/ads/google_ads/v10/enums/invoice_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

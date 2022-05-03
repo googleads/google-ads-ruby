@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/final_app_url.proto
 
 require 'google/ads/google_ads/v10/enums/app_url_operating_system_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

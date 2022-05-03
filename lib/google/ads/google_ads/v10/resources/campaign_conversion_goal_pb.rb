@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/conversion_action_category_pb'
 require 'google/ads/google_ads/v10/enums/conversion_origin_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

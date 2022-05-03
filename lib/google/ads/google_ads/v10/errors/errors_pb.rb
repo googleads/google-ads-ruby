@@ -35,6 +35,7 @@ require 'google/ads/google_ads/v10/errors/bidding_error_pb'
 require 'google/ads/google_ads/v10/errors/bidding_strategy_error_pb'
 require 'google/ads/google_ads/v10/errors/billing_setup_error_pb'
 require 'google/ads/google_ads/v10/errors/campaign_budget_error_pb'
+require 'google/ads/google_ads/v10/errors/campaign_conversion_goal_error_pb'
 require 'google/ads/google_ads/v10/errors/campaign_criterion_error_pb'
 require 'google/ads/google_ads/v10/errors/campaign_customizer_error_pb'
 require 'google/ads/google_ads/v10/errors/campaign_draft_error_pb'
@@ -49,6 +50,7 @@ require 'google/ads/google_ads/v10/errors/context_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_action_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_adjustment_upload_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_custom_variable_error_pb'
+require 'google/ads/google_ads/v10/errors/conversion_goal_campaign_config_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_upload_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_value_rule_error_pb'
 require 'google/ads/google_ads/v10/errors/conversion_value_rule_set_error_pb'
@@ -141,7 +143,6 @@ require 'google/ads/google_ads/v10/errors/url_field_error_pb'
 require 'google/ads/google_ads/v10/errors/user_data_error_pb'
 require 'google/ads/google_ads/v10/errors/user_list_error_pb'
 require 'google/ads/google_ads/v10/errors/youtube_video_registration_error_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf/duration_pb'
 require 'google/protobuf'
 
@@ -191,8 +192,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :asset_set_error, :enum, 152, "google.ads.googleads.v10.errors.AssetSetErrorEnum.AssetSetError"
         optional :bidding_error, :enum, 26, "google.ads.googleads.v10.errors.BiddingErrorEnum.BiddingError"
         optional :campaign_criterion_error, :enum, 29, "google.ads.googleads.v10.errors.CampaignCriterionErrorEnum.CampaignCriterionError"
+        optional :campaign_conversion_goal_error, :enum, 166, "google.ads.googleads.v10.errors.CampaignConversionGoalErrorEnum.CampaignConversionGoalError"
         optional :campaign_customizer_error, :enum, 160, "google.ads.googleads.v10.errors.CampaignCustomizerErrorEnum.CampaignCustomizerError"
         optional :collection_size_error, :enum, 31, "google.ads.googleads.v10.errors.CollectionSizeErrorEnum.CollectionSizeError"
+        optional :conversion_goal_campaign_config_error, :enum, 165, "google.ads.googleads.v10.errors.ConversionGoalCampaignConfigErrorEnum.ConversionGoalCampaignConfigError"
         optional :country_code_error, :enum, 109, "google.ads.googleads.v10.errors.CountryCodeErrorEnum.CountryCodeError"
         optional :criterion_error, :enum, 32, "google.ads.googleads.v10.errors.CriterionErrorEnum.CriterionError"
         optional :custom_conversion_goal_error, :enum, 150, "google.ads.googleads.v10.errors.CustomConversionGoalErrorEnum.CustomConversionGoalError"

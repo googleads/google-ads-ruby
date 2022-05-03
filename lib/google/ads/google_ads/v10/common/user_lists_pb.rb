@@ -10,7 +10,6 @@ require 'google/ads/google_ads/v10/enums/user_list_number_rule_item_operator_pb'
 require 'google/ads/google_ads/v10/enums/user_list_prepopulation_status_pb'
 require 'google/ads/google_ads/v10/enums/user_list_rule_type_pb'
 require 'google/ads/google_ads/v10/enums/user_list_string_rule_item_operator_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

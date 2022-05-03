@@ -5,7 +5,6 @@ require 'google/ads/google_ads/v10/enums/policy_topic_entry_type_pb'
 require 'google/ads/google_ads/v10/enums/policy_topic_evidence_destination_mismatch_url_type_pb'
 require 'google/ads/google_ads/v10/enums/policy_topic_evidence_destination_not_working_device_pb'
 require 'google/ads/google_ads/v10/enums/policy_topic_evidence_destination_not_working_dns_error_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

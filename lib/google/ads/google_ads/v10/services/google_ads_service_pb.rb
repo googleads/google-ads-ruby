@@ -60,6 +60,7 @@ require 'google/ads/google_ads/v10/resources/campaign_draft_pb'
 require 'google/ads/google_ads/v10/resources/campaign_experiment_pb'
 require 'google/ads/google_ads/v10/resources/campaign_extension_setting_pb'
 require 'google/ads/google_ads/v10/resources/campaign_feed_pb'
+require 'google/ads/google_ads/v10/resources/campaign_group_pb'
 require 'google/ads/google_ads/v10/resources/campaign_label_pb'
 require 'google/ads/google_ads/v10/resources/campaign_shared_set_pb'
 require 'google/ads/google_ads/v10/resources/campaign_simulation_pb'
@@ -126,6 +127,7 @@ require 'google/ads/google_ads/v10/resources/keyword_view_pb'
 require 'google/ads/google_ads/v10/resources/label_pb'
 require 'google/ads/google_ads/v10/resources/landing_page_view_pb'
 require 'google/ads/google_ads/v10/resources/language_constant_pb'
+require 'google/ads/google_ads/v10/resources/lead_form_submission_data_pb'
 require 'google/ads/google_ads/v10/resources/life_event_pb'
 require 'google/ads/google_ads/v10/resources/location_view_pb'
 require 'google/ads/google_ads/v10/resources/managed_placement_view_pb'
@@ -190,6 +192,7 @@ require 'google/ads/google_ads/v10/services/campaign_draft_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_experiment_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_extension_setting_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_feed_service_pb'
+require 'google/ads/google_ads/v10/services/campaign_group_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_label_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_service_pb'
 require 'google/ads/google_ads/v10/services/campaign_shared_set_service_pb'
@@ -320,6 +323,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :campaign_experiment, :message, 84, "google.ads.googleads.v10.resources.CampaignExperiment"
       optional :campaign_extension_setting, :message, 113, "google.ads.googleads.v10.resources.CampaignExtensionSetting"
       optional :campaign_feed, :message, 63, "google.ads.googleads.v10.resources.CampaignFeed"
+      optional :campaign_group, :message, 25, "google.ads.googleads.v10.resources.CampaignGroup"
       optional :campaign_label, :message, 108, "google.ads.googleads.v10.resources.CampaignLabel"
       optional :campaign_shared_set, :message, 30, "google.ads.googleads.v10.resources.CampaignSharedSet"
       optional :campaign_simulation, :message, 157, "google.ads.googleads.v10.resources.CampaignSimulation"
@@ -415,6 +419,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :topic_constant, :message, 31, "google.ads.googleads.v10.resources.TopicConstant"
       optional :video, :message, 39, "google.ads.googleads.v10.resources.Video"
       optional :webpage_view, :message, 162, "google.ads.googleads.v10.resources.WebpageView"
+      optional :lead_form_submission_data, :message, 192, "google.ads.googleads.v10.resources.LeadFormSubmissionData"
       optional :metrics, :message, 4, "google.ads.googleads.v10.common.Metrics"
       optional :segments, :message, 102, "google.ads.googleads.v10.common.Segments"
     end
@@ -467,6 +472,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :campaign_experiment_operation, :message, 25, "google.ads.googleads.v10.services.CampaignExperimentOperation"
         optional :campaign_extension_setting_operation, :message, 26, "google.ads.googleads.v10.services.CampaignExtensionSettingOperation"
         optional :campaign_feed_operation, :message, 27, "google.ads.googleads.v10.services.CampaignFeedOperation"
+        optional :campaign_group_operation, :message, 9, "google.ads.googleads.v10.services.CampaignGroupOperation"
         optional :campaign_label_operation, :message, 28, "google.ads.googleads.v10.services.CampaignLabelOperation"
         optional :campaign_operation, :message, 10, "google.ads.googleads.v10.services.CampaignOperation"
         optional :campaign_shared_set_operation, :message, 11, "google.ads.googleads.v10.services.CampaignSharedSetOperation"
@@ -546,6 +552,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :campaign_experiment_result, :message, 25, "google.ads.googleads.v10.services.MutateCampaignExperimentResult"
         optional :campaign_extension_setting_result, :message, 26, "google.ads.googleads.v10.services.MutateCampaignExtensionSettingResult"
         optional :campaign_feed_result, :message, 27, "google.ads.googleads.v10.services.MutateCampaignFeedResult"
+        optional :campaign_group_result, :message, 9, "google.ads.googleads.v10.services.MutateCampaignGroupResult"
         optional :campaign_label_result, :message, 28, "google.ads.googleads.v10.services.MutateCampaignLabelResult"
         optional :campaign_result, :message, 10, "google.ads.googleads.v10.services.MutateCampaignResult"
         optional :campaign_shared_set_result, :message, 11, "google.ads.googleads.v10.services.MutateCampaignSharedSetResult"

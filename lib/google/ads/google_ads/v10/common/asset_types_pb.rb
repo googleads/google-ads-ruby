@@ -16,7 +16,6 @@ require 'google/ads/google_ads/v10/enums/price_extension_price_unit_pb'
 require 'google/ads/google_ads/v10/enums/price_extension_type_pb'
 require 'google/ads/google_ads/v10/enums/promotion_extension_discount_modifier_pb'
 require 'google/ads/google_ads/v10/enums/promotion_extension_occasion_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -54,6 +53,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :post_submit_headline, :string, 15
       proto3_optional :post_submit_description, :string, 16
       repeated :fields, :message, 8, "google.ads.googleads.v10.common.LeadFormField"
+      repeated :custom_question_fields, :message, 23, "google.ads.googleads.v10.common.LeadFormCustomQuestionField"
       repeated :delivery_methods, :message, 9, "google.ads.googleads.v10.common.LeadFormDeliveryMethod"
       optional :post_submit_call_to_action_type, :enum, 19, "google.ads.googleads.v10.enums.LeadFormPostSubmitCallToActionTypeEnum.LeadFormPostSubmitCallToActionType"
       proto3_optional :background_image_asset, :string, 20
@@ -62,6 +62,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v10.common.LeadFormField" do
       optional :input_type, :enum, 1, "google.ads.googleads.v10.enums.LeadFormFieldUserInputTypeEnum.LeadFormFieldUserInputType"
+      oneof :answers do
+        optional :single_choice_answers, :message, 2, "google.ads.googleads.v10.common.LeadFormSingleChoiceAnswers"
+      end
+    end
+    add_message "google.ads.googleads.v10.common.LeadFormCustomQuestionField" do
+      optional :custom_question_text, :string, 1
       oneof :answers do
         optional :single_choice_answers, :message, 2, "google.ads.googleads.v10.common.LeadFormSingleChoiceAnswers"
       end
@@ -173,6 +179,138 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v10.common.CallToActionAsset" do
       optional :call_to_action, :enum, 1, "google.ads.googleads.v10.enums.CallToActionTypeEnum.CallToActionType"
     end
+    add_message "google.ads.googleads.v10.common.DynamicRealEstateAsset" do
+      optional :listing_id, :string, 1
+      optional :listing_name, :string, 2
+      optional :city_name, :string, 3
+      optional :description, :string, 4
+      optional :address, :string, 5
+      optional :price, :string, 6
+      optional :image_url, :string, 7
+      optional :property_type, :string, 8
+      optional :listing_type, :string, 9
+      repeated :contextual_keywords, :string, 10
+      optional :formatted_price, :string, 11
+      optional :android_app_link, :string, 12
+      optional :ios_app_link, :string, 13
+      optional :ios_app_store_id, :int64, 14
+      repeated :similar_listing_ids, :string, 15
+    end
+    add_message "google.ads.googleads.v10.common.DynamicCustomAsset" do
+      optional :id, :string, 1
+      optional :id2, :string, 2
+      optional :item_title, :string, 3
+      optional :item_subtitle, :string, 4
+      optional :item_description, :string, 5
+      optional :item_address, :string, 6
+      optional :item_category, :string, 7
+      optional :price, :string, 8
+      optional :sale_price, :string, 9
+      optional :formatted_price, :string, 10
+      optional :formatted_sale_price, :string, 11
+      optional :image_url, :string, 12
+      repeated :contextual_keywords, :string, 13
+      optional :android_app_link, :string, 14
+      optional :ios_app_link, :string, 16
+      optional :ios_app_store_id, :int64, 17
+      repeated :similar_ids, :string, 15
+    end
+    add_message "google.ads.googleads.v10.common.DynamicHotelsAndRentalsAsset" do
+      optional :property_id, :string, 1
+      optional :property_name, :string, 2
+      optional :image_url, :string, 3
+      optional :destination_name, :string, 4
+      optional :description, :string, 5
+      optional :price, :string, 6
+      optional :sale_price, :string, 7
+      optional :star_rating, :int64, 8
+      optional :category, :string, 9
+      repeated :contextual_keywords, :string, 10
+      optional :address, :string, 11
+      optional :android_app_link, :string, 12
+      optional :ios_app_link, :string, 13
+      optional :ios_app_store_id, :int64, 14
+      optional :formatted_price, :string, 15
+      optional :formatted_sale_price, :string, 16
+      repeated :similar_property_ids, :string, 17
+    end
+    add_message "google.ads.googleads.v10.common.DynamicFlightsAsset" do
+      optional :destination_id, :string, 1
+      optional :origin_id, :string, 2
+      optional :flight_description, :string, 3
+      optional :image_url, :string, 4
+      optional :destination_name, :string, 5
+      optional :origin_name, :string, 6
+      optional :flight_price, :string, 7
+      optional :flight_sale_price, :string, 8
+      optional :formatted_price, :string, 9
+      optional :formatted_sale_price, :string, 10
+      optional :android_app_link, :string, 11
+      optional :ios_app_link, :string, 12
+      optional :ios_app_store_id, :int64, 13
+      repeated :similar_destination_ids, :string, 14
+      optional :custom_mapping, :string, 15
+    end
+    add_message "google.ads.googleads.v10.common.DiscoveryCarouselCardAsset" do
+      optional :marketing_image_asset, :string, 1
+      optional :square_marketing_image_asset, :string, 2
+      optional :portrait_marketing_image_asset, :string, 3
+      optional :headline, :string, 4
+      optional :call_to_action_text, :string, 5
+    end
+    add_message "google.ads.googleads.v10.common.DynamicTravelAsset" do
+      optional :destination_id, :string, 1
+      optional :origin_id, :string, 2
+      optional :title, :string, 3
+      optional :destination_name, :string, 4
+      optional :destination_address, :string, 5
+      optional :origin_name, :string, 6
+      optional :price, :string, 7
+      optional :sale_price, :string, 8
+      optional :formatted_price, :string, 9
+      optional :formatted_sale_price, :string, 10
+      optional :category, :string, 11
+      repeated :contextual_keywords, :string, 12
+      repeated :similar_destination_ids, :string, 13
+      optional :image_url, :string, 14
+      optional :android_app_link, :string, 15
+      optional :ios_app_link, :string, 16
+      optional :ios_app_store_id, :int64, 17
+    end
+    add_message "google.ads.googleads.v10.common.DynamicLocalAsset" do
+      optional :deal_id, :string, 1
+      optional :deal_name, :string, 2
+      optional :subtitle, :string, 3
+      optional :description, :string, 4
+      optional :price, :string, 5
+      optional :sale_price, :string, 6
+      optional :image_url, :string, 7
+      optional :address, :string, 8
+      optional :category, :string, 9
+      repeated :contextual_keywords, :string, 10
+      optional :formatted_price, :string, 11
+      optional :formatted_sale_price, :string, 12
+      optional :android_app_link, :string, 13
+      repeated :similar_deal_ids, :string, 14
+      optional :ios_app_link, :string, 15
+      optional :ios_app_store_id, :int64, 16
+    end
+    add_message "google.ads.googleads.v10.common.DynamicJobsAsset" do
+      optional :job_id, :string, 1
+      optional :location_id, :string, 2
+      optional :job_title, :string, 3
+      optional :job_subtitle, :string, 4
+      optional :description, :string, 5
+      optional :image_url, :string, 6
+      optional :job_category, :string, 7
+      repeated :contextual_keywords, :string, 8
+      optional :address, :string, 9
+      optional :salary, :string, 10
+      optional :android_app_link, :string, 11
+      repeated :similar_job_ids, :string, 12
+      optional :ios_app_link, :string, 13
+      optional :ios_app_store_id, :int64, 14
+    end
   end
 end
 
@@ -188,6 +326,7 @@ module Google
           TextAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.TextAsset").msgclass
           LeadFormAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.LeadFormAsset").msgclass
           LeadFormField = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.LeadFormField").msgclass
+          LeadFormCustomQuestionField = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.LeadFormCustomQuestionField").msgclass
           LeadFormSingleChoiceAnswers = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.LeadFormSingleChoiceAnswers").msgclass
           LeadFormDeliveryMethod = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.LeadFormDeliveryMethod").msgclass
           WebhookDelivery = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.WebhookDelivery").msgclass
@@ -204,6 +343,14 @@ module Google
           PriceAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.PriceAsset").msgclass
           PriceOffering = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.PriceOffering").msgclass
           CallToActionAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.CallToActionAsset").msgclass
+          DynamicRealEstateAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicRealEstateAsset").msgclass
+          DynamicCustomAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicCustomAsset").msgclass
+          DynamicHotelsAndRentalsAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicHotelsAndRentalsAsset").msgclass
+          DynamicFlightsAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicFlightsAsset").msgclass
+          DiscoveryCarouselCardAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DiscoveryCarouselCardAsset").msgclass
+          DynamicTravelAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicTravelAsset").msgclass
+          DynamicLocalAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicLocalAsset").msgclass
+          DynamicJobsAsset = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DynamicJobsAsset").msgclass
         end
       end
     end

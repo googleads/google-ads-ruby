@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/conversion_tracking_status_enum_pb'
 require 'google/ads/google_ads/v10/enums/customer_pay_per_conversion_eligibility_failure_reason_pb'
 require 'google/ads/google_ads/v10/enums/customer_status_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -42,6 +41,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :accepted_customer_data_terms, :bool, 5
       optional :conversion_tracking_status, :enum, 6, "google.ads.googleads.v10.enums.ConversionTrackingStatusEnum.ConversionTrackingStatus"
       optional :enhanced_conversions_for_leads_enabled, :bool, 7
+      optional :google_ads_conversion_customer, :string, 8
     end
     add_message "google.ads.googleads.v10.resources.RemarketingSetting" do
       proto3_optional :google_global_site_tag, :string, 2

@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/customizer_value.proto
 
 require 'google/ads/google_ads/v10/enums/customizer_attribute_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/protobuf'
 

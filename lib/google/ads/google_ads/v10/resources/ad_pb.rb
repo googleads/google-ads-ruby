@@ -8,7 +8,6 @@ require 'google/ads/google_ads/v10/common/url_collection_pb'
 require 'google/ads/google_ads/v10/enums/ad_type_pb'
 require 'google/ads/google_ads/v10/enums/device_pb'
 require 'google/ads/google_ads/v10/enums/system_managed_entity_source_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -54,6 +53,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :shopping_comparison_listing_ad, :message, 36, "google.ads.googleads.v10.common.ShoppingComparisonListingAdInfo"
         optional :smart_campaign_ad, :message, 48, "google.ads.googleads.v10.common.SmartCampaignAdInfo"
         optional :app_pre_registration_ad, :message, 50, "google.ads.googleads.v10.common.AppPreRegistrationAdInfo"
+        optional :discovery_multi_asset_ad, :message, 51, "google.ads.googleads.v10.common.DiscoveryMultiAssetAdInfo"
+        optional :discovery_carousel_ad, :message, 52, "google.ads.googleads.v10.common.DiscoveryCarouselAdInfo"
       end
     end
   end

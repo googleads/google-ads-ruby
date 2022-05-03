@@ -54,6 +54,7 @@ require "google/ads/google_ads/v10/services/campaign_draft_service"
 require "google/ads/google_ads/v10/services/campaign_experiment_service"
 require "google/ads/google_ads/v10/services/campaign_extension_setting_service"
 require "google/ads/google_ads/v10/services/campaign_feed_service"
+require "google/ads/google_ads/v10/services/campaign_group_service"
 require "google/ads/google_ads/v10/services/campaign_label_service"
 require "google/ads/google_ads/v10/services/campaign_service"
 require "google/ads/google_ads/v10/services/campaign_shared_set_service"
@@ -125,6 +126,8 @@ module Google
       module V10
         ##
         # To load this package, including all its services, and instantiate a client:
+        #
+        # @example
         #
         #     require "google/ads/google_ads/v10/services"
         #     client = ::Google::Ads::GoogleAds::V10::Services::AccountBudgetProposalService::Client.new

@@ -8,7 +8,7 @@ require 'google/ads/google_ads/v10/enums/display_upload_product_type_pb'
 require 'google/ads/google_ads/v10/enums/legacy_app_install_ad_app_store_pb'
 require 'google/ads/google_ads/v10/enums/mime_type_pb'
 require 'google/ads/google_ads/v10/enums/video_thumbnail_pb'
-require 'google/api/annotations_pb'
+require 'google/api/field_behavior_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -124,6 +124,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :call_to_actions, :message, 4, "google.ads.googleads.v10.common.AdTextAsset"
       repeated :videos, :message, 5, "google.ads.googleads.v10.common.AdVideoAsset"
       repeated :companion_banners, :message, 6, "google.ads.googleads.v10.common.AdImageAsset"
+      optional :breadcrumb1, :string, 7
+      optional :breadcrumb2, :string, 8
     end
     add_message "google.ads.googleads.v10.common.ResponsiveSearchAdInfo" do
       repeated :headlines, :message, 1, "google.ads.googleads.v10.common.AdTextAsset"
@@ -234,6 +236,25 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :path1, :string, 13
       optional :path2, :string, 14
     end
+    add_message "google.ads.googleads.v10.common.DiscoveryMultiAssetAdInfo" do
+      repeated :marketing_images, :message, 1, "google.ads.googleads.v10.common.AdImageAsset"
+      repeated :square_marketing_images, :message, 2, "google.ads.googleads.v10.common.AdImageAsset"
+      repeated :portrait_marketing_images, :message, 3, "google.ads.googleads.v10.common.AdImageAsset"
+      repeated :logo_images, :message, 4, "google.ads.googleads.v10.common.AdImageAsset"
+      repeated :headlines, :message, 5, "google.ads.googleads.v10.common.AdTextAsset"
+      repeated :descriptions, :message, 6, "google.ads.googleads.v10.common.AdTextAsset"
+      proto3_optional :business_name, :string, 7
+      proto3_optional :call_to_action_text, :string, 8
+      proto3_optional :lead_form_only, :bool, 9
+    end
+    add_message "google.ads.googleads.v10.common.DiscoveryCarouselAdInfo" do
+      optional :business_name, :string, 1
+      optional :logo_image, :message, 2, "google.ads.googleads.v10.common.AdImageAsset"
+      optional :headline, :message, 3, "google.ads.googleads.v10.common.AdTextAsset"
+      optional :description, :message, 4, "google.ads.googleads.v10.common.AdTextAsset"
+      optional :call_to_action_text, :string, 5
+      repeated :carousel_cards, :message, 6, "google.ads.googleads.v10.common.AdDiscoveryCarouselCardAsset"
+    end
   end
 end
 
@@ -274,6 +295,8 @@ module Google
           ResponsiveDisplayAdControlSpec = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ResponsiveDisplayAdControlSpec").msgclass
           SmartCampaignAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.SmartCampaignAdInfo").msgclass
           CallAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.CallAdInfo").msgclass
+          DiscoveryMultiAssetAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DiscoveryMultiAssetAdInfo").msgclass
+          DiscoveryCarouselAdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.DiscoveryCarouselAdInfo").msgclass
         end
       end
     end

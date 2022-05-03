@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/custom_interest_member_type_pb'
 require 'google/ads/google_ads/v10/enums/custom_interest_status_pb'
 require 'google/ads/google_ads/v10/enums/custom_interest_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

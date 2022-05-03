@@ -25,7 +25,6 @@ require 'google/ads/google_ads/v10/enums/product_type_level_pb'
 require 'google/ads/google_ads/v10/enums/proximity_radius_units_pb'
 require 'google/ads/google_ads/v10/enums/webpage_condition_operand_pb'
 require 'google/ads/google_ads/v10/enums/webpage_condition_operator_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -76,6 +75,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :product_custom_attribute, :message, 16, "google.ads.googleads.v10.common.ProductCustomAttributeInfo"
         optional :product_item_id, :message, 11, "google.ads.googleads.v10.common.ProductItemIdInfo"
         optional :product_type, :message, 12, "google.ads.googleads.v10.common.ProductTypeInfo"
+        optional :product_grouping, :message, 17, "google.ads.googleads.v10.common.ProductGroupingInfo"
+        optional :product_labels, :message, 18, "google.ads.googleads.v10.common.ProductLabelsInfo"
+        optional :product_legacy_condition, :message, 19, "google.ads.googleads.v10.common.ProductLegacyConditionInfo"
+        optional :product_type_full, :message, 20, "google.ads.googleads.v10.common.ProductTypeFullInfo"
         optional :unknown_listing_dimension, :message, 14, "google.ads.googleads.v10.common.UnknownListingDimensionInfo"
       end
     end
@@ -121,6 +124,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v10.common.ProductTypeInfo" do
       proto3_optional :value, :string, 3
       optional :level, :enum, 2, "google.ads.googleads.v10.enums.ProductTypeLevelEnum.ProductTypeLevel"
+    end
+    add_message "google.ads.googleads.v10.common.ProductGroupingInfo" do
+      proto3_optional :value, :string, 1
+    end
+    add_message "google.ads.googleads.v10.common.ProductLabelsInfo" do
+      proto3_optional :value, :string, 1
+    end
+    add_message "google.ads.googleads.v10.common.ProductLegacyConditionInfo" do
+      proto3_optional :value, :string, 1
+    end
+    add_message "google.ads.googleads.v10.common.ProductTypeFullInfo" do
+      proto3_optional :value, :string, 1
     end
     add_message "google.ads.googleads.v10.common.UnknownListingDimensionInfo" do
     end
@@ -293,6 +308,10 @@ module Google
           ProductCustomAttributeInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductCustomAttributeInfo").msgclass
           ProductItemIdInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductItemIdInfo").msgclass
           ProductTypeInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductTypeInfo").msgclass
+          ProductGroupingInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductGroupingInfo").msgclass
+          ProductLabelsInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductLabelsInfo").msgclass
+          ProductLegacyConditionInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductLegacyConditionInfo").msgclass
+          ProductTypeFullInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.ProductTypeFullInfo").msgclass
           UnknownListingDimensionInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.UnknownListingDimensionInfo").msgclass
           HotelDateSelectionTypeInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.HotelDateSelectionTypeInfo").msgclass
           HotelAdvanceBookingWindowInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.common.HotelAdvanceBookingWindowInfo").msgclass

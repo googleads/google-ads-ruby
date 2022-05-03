@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/resources/campaign_draft.proto
 
 require 'google/ads/google_ads/v10/enums/campaign_draft_status_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

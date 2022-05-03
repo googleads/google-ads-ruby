@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/asset_usage.proto
 
 require 'google/ads/google_ads/v10/enums/served_asset_field_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

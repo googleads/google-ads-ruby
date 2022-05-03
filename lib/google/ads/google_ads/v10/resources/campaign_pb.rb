@@ -24,7 +24,6 @@ require 'google/ads/google_ads/v10/enums/payment_mode_pb'
 require 'google/ads/google_ads/v10/enums/positive_geo_target_type_pb'
 require 'google/ads/google_ads/v10/enums/vanity_pharma_display_url_mode_pb'
 require 'google/ads/google_ads/v10/enums/vanity_pharma_text_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -59,6 +58,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :bidding_strategy_type, :enum, 22, "google.ads.googleads.v10.enums.BiddingStrategyTypeEnum.BiddingStrategyType"
       optional :accessible_bidding_strategy, :string, 71
       proto3_optional :start_date, :string, 63
+      proto3_optional :campaign_group, :string, 76
       proto3_optional :end_date, :string, 64
       proto3_optional :final_url_suffix, :string, 65
       repeated :frequency_caps, :message, 40, "google.ads.googleads.v10.common.FrequencyCapEntry"

@@ -755,6 +755,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified CampaignGroup resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/campaignGroups/{campaign_group_id}`
+              #
+              # @param customer_id [String]
+              # @param campaign_group_id [String]
+              #
+              # @return [::String]
+              def campaign_group_path customer_id:, campaign_group_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/campaignGroups/#{campaign_group_id}"
+              end
+
+              ##
               # Create a fully-qualified CampaignLabel resource string.
               #
               # The resource will be in the following format:

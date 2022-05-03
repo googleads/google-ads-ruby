@@ -7,7 +7,6 @@ require 'google/ads/google_ads/v10/enums/keyword_plan_aggregate_metric_type_pb'
 require 'google/ads/google_ads/v10/enums/keyword_plan_competition_level_pb'
 require 'google/ads/google_ads/v10/enums/keyword_plan_concept_group_type_pb'
 require 'google/ads/google_ads/v10/enums/month_of_year_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
@@ -19,9 +18,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :competition_index, :int64, 8
       proto3_optional :low_top_of_page_bid_micros, :int64, 9
       proto3_optional :high_top_of_page_bid_micros, :int64, 10
+      proto3_optional :average_cpc_micros, :int64, 11
     end
     add_message "google.ads.googleads.v10.common.HistoricalMetricsOptions" do
       proto3_optional :year_month_range, :message, 1, "google.ads.googleads.v10.common.YearMonthRange"
+      optional :include_average_cpc, :bool, 2
     end
     add_message "google.ads.googleads.v10.common.MonthlySearchVolume" do
       proto3_optional :year, :int64, 4

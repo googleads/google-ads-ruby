@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/feed_item_set_filter_type_infos.proto
 
 require 'google/ads/google_ads/v10/enums/feed_item_set_string_filter_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

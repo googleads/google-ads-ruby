@@ -48,6 +48,17 @@ module Google
               #   [QuotaError]()
               #   [RequestError]()
               rpc :GenerateKeywordIdeas, ::Google::Ads::GoogleAds::V10::Services::GenerateKeywordIdeasRequest, ::Google::Ads::GoogleAds::V10::Services::GenerateKeywordIdeaResponse
+              # Returns a list of keyword historical metrics.
+              #
+              # List of thrown errors:
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [CollectionSizeError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RequestError]()
+              rpc :GenerateKeywordHistoricalMetrics, ::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsRequest, ::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsResponse
             end
 
             Stub = Service.rpc_stub_class

@@ -7,7 +7,7 @@ RSpec.describe TemplateService do
   let(:gapic_client_class) {
     double(
       :klass,
-      name: "Google::Ads::GoogleAds::V8::Services::GoogleAdsService::Client",
+      name: "Google::Ads::GoogleAds::V10::Services::GoogleAdsService::Client",
     )
   }
 
@@ -26,7 +26,7 @@ RSpec.describe TemplateService do
       # require returns true, so let's just stub it here
       allow(service).to receive(:require).with(path).and_return(true)
       stub_const(
-        "Google::Ads::GoogleAds::V8::Services::GoogleAdsService::Service",
+        "Google::Ads::GoogleAds::V10::Services::GoogleAdsService::Service",
         double(
           :fake_service_klass,
           rpc_descs: {Search: double(input: input)}

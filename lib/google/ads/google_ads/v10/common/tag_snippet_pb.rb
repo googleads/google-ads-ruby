@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/tracking_code_page_format_pb'
 require 'google/ads/google_ads/v10/enums/tracking_code_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

@@ -5,7 +5,6 @@ require 'google/ads/google_ads/v10/enums/advertising_channel_sub_type_pb'
 require 'google/ads/google_ads/v10/enums/advertising_channel_type_pb'
 require 'google/ads/google_ads/v10/enums/criterion_category_channel_availability_mode_pb'
 require 'google/ads/google_ads/v10/enums/criterion_category_locale_availability_mode_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

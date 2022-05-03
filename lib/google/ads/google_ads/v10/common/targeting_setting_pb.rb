@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/common/targeting_setting.proto
 
 require 'google/ads/google_ads/v10/enums/targeting_dimension_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

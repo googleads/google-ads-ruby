@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/resources/keyword_plan_campaign.proto
 
 require 'google/ads/google_ads/v10/enums/keyword_plan_network_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

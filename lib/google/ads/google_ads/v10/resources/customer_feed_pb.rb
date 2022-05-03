@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/common/matching_function_pb'
 require 'google/ads/google_ads/v10/enums/feed_link_status_pb'
 require 'google/ads/google_ads/v10/enums/placeholder_type_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

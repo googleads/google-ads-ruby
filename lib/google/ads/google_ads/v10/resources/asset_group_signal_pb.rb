@@ -2,7 +2,6 @@
 # source: google/ads/googleads/v10/resources/asset_group_signal.proto
 
 require 'google/ads/google_ads/v10/common/criteria_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

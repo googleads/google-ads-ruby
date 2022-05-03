@@ -2,6 +2,7 @@
 # source: google/ads/googleads/v10/services/conversion_upload_service.proto
 
 require 'google/ads/google_ads/v10/common/offline_user_data_pb'
+require 'google/ads/google_ads/v10/enums/conversion_environment_enum_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
 require 'google/api/field_behavior_pb'
@@ -44,6 +45,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :custom_variables, :message, 15, "google.ads.googleads.v10.services.CustomVariable"
       optional :cart_data, :message, 16, "google.ads.googleads.v10.services.CartData"
       repeated :user_identifiers, :message, 17, "google.ads.googleads.v10.common.UserIdentifier"
+      optional :conversion_environment, :enum, 20, "google.ads.googleads.v10.enums.ConversionEnvironmentEnum.ConversionEnvironment"
     end
     add_message "google.ads.googleads.v10.services.CallConversion" do
       proto3_optional :caller_id, :string, 7

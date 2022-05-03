@@ -56,7 +56,7 @@ module Google
                 @configure ||= begin
                   default_config = Client::Configuration.new
 
-                  default_config.timeout = 3600.0
+                  default_config.timeout = 14_400.0
                   default_config.retry_policy = {
                     initial_delay: 5.0, max_delay: 60.0, multiplier: 1.3, retry_codes: [14, 4]
                   }
@@ -286,6 +286,110 @@ module Google
               end
 
               ##
+              # Returns a list of keyword historical metrics.
+              #
+              # List of thrown errors:
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [CollectionSizeError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RequestError]()
+              #
+              # @overload generate_keyword_historical_metrics(request, options = nil)
+              #   Pass arguments to `generate_keyword_historical_metrics` via a request object, either of type
+              #   {::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsRequest} or an equivalent Hash.
+              #
+              #   @param request [::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsRequest, ::Hash]
+              #     A request object representing the call parameters. Required. To specify no
+              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #   @param options [::Gapic::CallOptions, ::Hash]
+              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #
+              # @overload generate_keyword_historical_metrics(customer_id: nil, keywords: nil, historical_metrics_options: nil)
+              #   Pass arguments to `generate_keyword_historical_metrics` via keyword arguments. Note that at
+              #   least one keyword argument is required. To specify no parameters, or to keep all
+              #   the default parameter values, pass an empty Hash as a request object (see above).
+              #
+              #   @param customer_id [::String]
+              #     The ID of the customer with the recommendation.
+              #   @param keywords [::Array<::String>]
+              #     A list of keywords to get historical metrics.
+              #     Not all inputs will be returned as a result of near-exact deduplication.
+              #     For example, if stats for "car" and "cars" are requested, only "car" will
+              #     be returned.
+              #     A maximum of 10,000 keywords can be used.
+              #   @param historical_metrics_options [::Google::Ads::GoogleAds::V10::Common::HistoricalMetricsOptions, ::Hash]
+              #     The options for historical metrics data.
+              #
+              # @yield [response, operation] Access the result along with the RPC operation
+              # @yieldparam response [::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsResponse]
+              # @yieldparam operation [::GRPC::ActiveCall::Operation]
+              #
+              # @return [::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsResponse]
+              #
+              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              #
+              # @example Basic example
+              #   require "google/ads/google_ads/v10/services"
+              #
+              #   # Create a client object. The client can be reused for multiple calls.
+              #   client = Google::Ads::GoogleAds::V10::Services::KeywordPlanIdeaService::Client.new
+              #
+              #   # Create a request. To set request fields, pass in keyword arguments.
+              #   request = Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsRequest.new
+              #
+              #   # Call the generate_keyword_historical_metrics method.
+              #   result = client.generate_keyword_historical_metrics request
+              #
+              #   # The returned object is of type Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsResponse.
+              #   p result
+              #
+              def generate_keyword_historical_metrics request, options = nil
+                raise ::ArgumentError, "request must be provided" if request.nil?
+
+                request = ::Gapic::Protobuf.coerce request,
+                                                   to: ::Google::Ads::GoogleAds::V10::Services::GenerateKeywordHistoricalMetricsRequest
+
+                # Converts hash and nil to an options object
+                options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
+
+                # Customize the options with defaults
+                metadata = @config.rpcs.generate_keyword_historical_metrics.metadata.to_h
+
+                # Set x-goog-api-client and x-goog-user-project headers
+                metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
+                  lib_name: @config.lib_name, lib_version: @config.lib_version,
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
+
+                header_params = {}
+                if request.customer_id
+                  header_params["customer_id"] = request.customer_id
+                end
+
+                request_params_header = header_params.map { |k, v| "#{k}=#{v}" }.join("&")
+                metadata[:"x-goog-request-params"] ||= request_params_header
+
+                options.apply_defaults timeout:      @config.rpcs.generate_keyword_historical_metrics.timeout,
+                                       metadata:     metadata,
+                                       retry_policy: @config.rpcs.generate_keyword_historical_metrics.retry_policy
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
+                                       retry_policy: @config.retry_policy
+
+                @keyword_plan_idea_service_stub.call_rpc :generate_keyword_historical_metrics, request,
+                                                         options: options do |response, operation|
+                  yield response, operation if block_given?
+                  return response
+                end
+                # rescue GRPC::BadStatus => grpc_error
+                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+              end
+
+              ##
               # Configuration class for the KeywordPlanIdeaService API.
               #
               # This class represents the configuration for KeywordPlanIdeaService,
@@ -426,11 +530,18 @@ module Google
                   # @return [::Gapic::Config::Method]
                   #
                   attr_reader :generate_keyword_ideas
+                  ##
+                  # RPC-specific configuration for `generate_keyword_historical_metrics`
+                  # @return [::Gapic::Config::Method]
+                  #
+                  attr_reader :generate_keyword_historical_metrics
 
                   # @private
                   def initialize parent_rpcs = nil
                     generate_keyword_ideas_config = parent_rpcs.generate_keyword_ideas if parent_rpcs.respond_to? :generate_keyword_ideas
                     @generate_keyword_ideas = ::Gapic::Config::Method.new generate_keyword_ideas_config
+                    generate_keyword_historical_metrics_config = parent_rpcs.generate_keyword_historical_metrics if parent_rpcs.respond_to? :generate_keyword_historical_metrics
+                    @generate_keyword_historical_metrics = ::Gapic::Config::Method.new generate_keyword_historical_metrics_config
 
                     yield self if block_given?
                   end

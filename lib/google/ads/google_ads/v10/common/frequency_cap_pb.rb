@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/frequency_cap_event_type_pb'
 require 'google/ads/google_ads/v10/enums/frequency_cap_level_pb'
 require 'google/ads/google_ads/v10/enums/frequency_cap_time_unit_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

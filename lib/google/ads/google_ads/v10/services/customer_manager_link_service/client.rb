@@ -58,7 +58,7 @@ module Google
                 @configure ||= begin
                   default_config = Client::Configuration.new
 
-                  default_config.timeout = 3600.0
+                  default_config.timeout = 14_400.0
                   default_config.retry_policy = {
                     initial_delay: 5.0, max_delay: 60.0, multiplier: 1.3, retry_codes: [14, 4]
                   }
@@ -144,7 +144,7 @@ module Google
               # Service calls
 
               ##
-              # Creates or updates customer manager links. Operation statuses are returned.
+              # Updates customer manager links. Operation statuses are returned.
               #
               # List of thrown errors:
               #   [AuthenticationError]()

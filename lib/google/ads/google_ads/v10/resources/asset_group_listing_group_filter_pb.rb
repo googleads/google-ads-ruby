@@ -8,7 +8,6 @@ require 'google/ads/google_ads/v10/enums/listing_group_filter_product_condition_
 require 'google/ads/google_ads/v10/enums/listing_group_filter_product_type_level_pb'
 require 'google/ads/google_ads/v10/enums/listing_group_filter_type_enum_pb'
 require 'google/ads/google_ads/v10/enums/listing_group_filter_vertical_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'

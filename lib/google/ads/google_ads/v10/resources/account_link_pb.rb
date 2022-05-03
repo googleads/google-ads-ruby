@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/account_link_status_pb'
 require 'google/ads/google_ads/v10/enums/linked_account_type_pb'
 require 'google/ads/google_ads/v10/enums/mobile_app_vendor_pb'
-require 'google/api/annotations_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 require 'google/protobuf'
@@ -20,6 +19,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :third_party_app_analytics, :message, 5, "google.ads.googleads.v10.resources.ThirdPartyAppAnalyticsLinkIdentifier"
         optional :data_partner, :message, 6, "google.ads.googleads.v10.resources.DataPartnerLinkIdentifier"
         optional :google_ads, :message, 7, "google.ads.googleads.v10.resources.GoogleAdsLinkIdentifier"
+        optional :hotel_center, :message, 9, "google.ads.googleads.v10.resources.HotelCenterLinkIdentifier"
       end
     end
     add_message "google.ads.googleads.v10.resources.ThirdPartyAppAnalyticsLinkIdentifier" do
@@ -29,6 +29,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v10.resources.DataPartnerLinkIdentifier" do
       proto3_optional :data_partner_id, :int64, 1
+    end
+    add_message "google.ads.googleads.v10.resources.HotelCenterLinkIdentifier" do
+      optional :hotel_center_id, :int64, 1
     end
     add_message "google.ads.googleads.v10.resources.GoogleAdsLinkIdentifier" do
       proto3_optional :customer, :string, 3
@@ -44,6 +47,7 @@ module Google
           AccountLink = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.resources.AccountLink").msgclass
           ThirdPartyAppAnalyticsLinkIdentifier = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.resources.ThirdPartyAppAnalyticsLinkIdentifier").msgclass
           DataPartnerLinkIdentifier = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.resources.DataPartnerLinkIdentifier").msgclass
+          HotelCenterLinkIdentifier = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.resources.HotelCenterLinkIdentifier").msgclass
           GoogleAdsLinkIdentifier = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v10.resources.GoogleAdsLinkIdentifier").msgclass
         end
       end

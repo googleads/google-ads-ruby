@@ -3,7 +3,6 @@
 
 require 'google/ads/google_ads/v10/enums/experiment_metric_pb'
 require 'google/ads/google_ads/v10/enums/experiment_metric_direction_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do

@@ -4,7 +4,6 @@
 require 'google/ads/google_ads/v10/enums/gender_type_pb'
 require 'google/ads/google_ads/v10/enums/income_range_type_pb'
 require 'google/ads/google_ads/v10/enums/parental_status_type_pb'
-require 'google/api/annotations_pb'
 require 'google/protobuf'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
