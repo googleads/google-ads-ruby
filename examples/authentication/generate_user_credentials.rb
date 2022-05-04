@@ -114,8 +114,9 @@ if __FILE__ == $PROGRAM_NAME
 
   # To fill in the values below, generate a client secret JSON file from the
   # Google Cloud Console (https://console.cloud.google.com) by creating
-  # credentials for a web or installed application. Set the "Authorized
-  # redirect URIs" to: http://127.0.0.1:[PORT]
+  # credentials for a web or desktop application. If using a web application,
+  # add the following to its "Authorized redirect URIs":
+  # http://127.0.0.1:[PORT]
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can
