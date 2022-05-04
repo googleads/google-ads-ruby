@@ -37,6 +37,8 @@ def generate_user_credential(path)
             [json["installed"], "http://#{SERVER}:#{PORT}", PORT]
           elsif !json["web"].nil?
             web_creds = json["web"]
+            # If you have more than one redirect URI, you may need to add some
+            # code here to ensure that you choose the correct one.
             uri = json["web"]["redirect_uris"].first
             port = uri.split(":").last
             [web_creds, uri, port]
@@ -110,10 +112,10 @@ if __FILE__ == $PROGRAM_NAME
   SERVER = '127.0.0.1'
   PORT = 8080
 
-  # To fill in the values below, generate a client ID and client secret from the
+  # To fill in the values below, generate a client secret JSON file from the
   # Google Cloud Console (https://console.cloud.google.com) by creating
-  # credentials for a Web application. Set the "Authorized redirect URIs" to:
-  #   http://localhost:[PORT]
+  # credentials for a web or installed application. Set the "Authorized
+  # redirect URIs" to: http://127.0.0.1:[PORT]
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can
