@@ -27,16 +27,33 @@ require 'uri'
 require 'cgi'
 require 'socket'
 
+require 'json'
+
 require 'optparse'
 
-def authenticate_in_web_application(client_id, client_secret, port)
-  callback_uri = sprintf('http://localhost:%s', port)
+def generate_user_credential(path)
+  json = JSON.load_file(path)
+  creds, callback_uri, port = if !json["installed"].nil?
+            [json["installed"], "http://#{SERVER}:#{PORT}", PORT]
+          elsif !json["web"].nil?
+            web_creds = json["web"]
+            # If you have more than one redirect URI, you may need to add some
+            # code here to ensure that you choose the correct one.
+            uri = json["web"]["redirect_uris"].first
+            port = uri.split(":").last
+            [web_creds, uri, port]
+          else
+            raise "No installed or web credentials found."
+          end
 
   # Create an anti-forgery state token as described here:
   # https://developers.google.com/identity/protocols/OpenIDConnect#createxsrftoken
   state = SecureRandom.hex(16)
 
-  client_id = Google::Auth::ClientId.new(client_id, client_secret)
+  client_id = Google::Auth::ClientId.new(
+    creds["client_id"],
+    creds["client_secret"],
+  )
 
   # This example does not store credentials, so no TokenStore is needed.
   user_authorizer = Google::Auth::UserAuthorizer.new(
@@ -92,11 +109,14 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   SCOPE = 'https://www.googleapis.com/auth/adwords'
+  SERVER = '127.0.0.1'
+  PORT = 8080
 
-  # To fill in the values below, generate a client ID and client secret from the
+  # To fill in the values below, generate a client secret JSON file from the
   # Google Cloud Console (https://console.cloud.google.com) by creating
-  # credentials for a Web application. Set the "Authorized redirect URIs" to:
-  #   http://localhost:[PORT]
+  # credentials for a web or desktop application. If using a web application,
+  # add the following to its "Authorized redirect URIs":
+  # http://127.0.0.1:[PORT]
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can
@@ -107,9 +127,7 @@ if __FILE__ == $PROGRAM_NAME
   # code.
   #
   # Running the example with -h will print the command line usage.
-  options[:client_id] = 'INSERT_CLIENT_ID_HERE'
-  options[:client_secret] = 'INSERT_CLIENT_SECRET_HERE'
-  options[:port] = 'INSERT_PORT_HERE'
+  options[:path] = 'INSERT_CLIENT_SECRETS_PATH_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -117,17 +135,8 @@ if __FILE__ == $PROGRAM_NAME
     opts.separator ''
     opts.separator 'Options:'
 
-    opts.on('-I', '--client-id CLIENT-ID', String, 'Client ID') do |v|
-      options[:client_id] = v
-    end
-
-    opts.on('-S', '--client-secret CLIENT-SECRET', String,
-        'Client Secret') do |v|
-      options[:client_secret] = v
-    end
-
-    opts.on('-p', '--port PORT', String, 'Port') do |v|
-      options[:port] = v
+    opts.on('-P', '--client-secrets-path CLIENT-SECRETS-PATH', String, 'Client Secrets Path') do |v|
+      options[:path] = v
     end
 
     opts.separator ''
@@ -139,6 +148,7 @@ if __FILE__ == $PROGRAM_NAME
     end
   end.parse!
 
-  authenticate_in_web_application(options[:client_id], options[:client_secret],
-      options[:port])
+  generate_user_credential(
+    options[:path],
+  )
 end
