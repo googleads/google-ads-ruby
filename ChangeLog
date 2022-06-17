@@ -1,3 +1,6 @@
+18.0.0:
+ - Compatibility wiht v11 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 17.0.0:
  - Compatibility with v10.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Removed support for v8.
