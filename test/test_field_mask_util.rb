@@ -185,4 +185,17 @@ class TestFieldMaskUtil < Minitest::Test
       mask.paths.sort
     )
   end
+
+  def test_empty_top_level_field()
+    test_object = Google::Ads::GoogleAds::V10::Resources::Campaign.new
+
+    mask = Google::Ads::GoogleAds::FieldMaskUtil.with test_object do
+      test_object.maximize_conversions = Google::Ads::GoogleAds::V10::Common::MaximizeConversions.new
+    end
+
+    assert_equal(
+      ['maximize_conversions'],
+      mask.paths
+    )
+  end
 end
