@@ -101,8 +101,11 @@ module Google
               case field.type
               when :message
                 if original_value != modified_value
-                  # wrappers - do not include the .value part of the path
                   if is_wrapper? [original_value, modified_value]
+                    # wrappers - do not include the .value part of the path
+                    mask.paths << field_path
+                  elsif is_clearing_message?(original_value, modified_value)
+                    # blanking out a top level field that has subfields
                     mask.paths << field_path
                   elsif original_value.nil?
                     # new message, make a blank instance and then compare
@@ -144,6 +147,37 @@ module Google
         def self.is_wrapper?(obj)
           obj = [obj] unless obj.is_a?(Array)
           obj.any? { |x| WRAPPER_TYPES.count { |klass| klass == x.class } > 0 }
+        end
+
+        # Checks if we've updated to a blank message in an attempt to clear an existing value.
+        def self.is_clearing_message?(original, modified)
+          (modified.nil? && !original.nil? && is_empty?(original)) ||
+          (original.nil? && !modified.nil? && is_empty?(modified))
+        end
+
+        def self.is_empty?(object)
+          fields = object.class.descriptor.entries
+          fields.each do |field|
+            if !is_empty_value? object[field.name]
+              return false
+            end
+          end
+          true
+        end
+
+        def self.is_empty_value?(value)
+          # Some types throw errors if we try to do an == comparison, in
+          # particular repeated fields that have data. If anything goes wrong,
+          # just assume it's not empty.
+          begin
+            return value.nil? ||
+              (value.respond_to?(:empty?) && value.empty?) ||
+              value == false ||
+              value == 0 ||
+              value == :UNSPECIFIED
+          rescue
+            return false
+          end
         end
 
         # Checks if the object is a repeated field

@@ -125,7 +125,7 @@ def add_performance_max_campaign(customer_id, audience_id)
       # other mutate operations
       campaign_criterion_operations,
       asset_group_operations,
-      asset_group_signal_operationss,
+      asset_group_signal_operations,
     ].flatten)
 
   print_response_details(response)

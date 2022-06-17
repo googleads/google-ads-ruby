@@ -28,7 +28,7 @@ def add_smart_campaign(
   customer_id,
   keyword_text,
   freeform_keyword_text,
-  business_location_id,
+  business_profile_location,
   business_name)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -41,7 +41,7 @@ def add_smart_campaign(
   # ad creatives, and campaign criteria.
   suggestion_info = get_smart_campaign_suggestion_info(
     client,
-    business_location_id,
+    business_profile_location,
     business_name,
   )
 
@@ -123,7 +123,7 @@ def add_smart_campaign(
   mutate_operations << create_smart_campaign_setting_operation(
     client,
     customer_id,
-    business_location_id,
+    business_profile_location,
     business_name,
   )
 
@@ -184,7 +184,7 @@ end
 # [START add_smart_campaign_13]
 def get_freeform_keyword_theme_info(client, freeform_keyword_text)
   client.resource.keyword_theme_info do |kti|
-    kti.free_form_keyword_name = freeform_keyword_text
+    kti.free_form_keyword_theme = freeform_keyword_text
   end
 end
 # [END add_smart_campaign_13]
@@ -212,7 +212,7 @@ end
 # SmartCampaignSuggestionInfo instance.
 def get_smart_campaign_suggestion_info(
   client,
-  business_location_id,
+  business_profile_location,
   business_name)
 
   # Since these suggestions are for a new campaign, we're going to
@@ -249,10 +249,10 @@ def get_smart_campaign_suggestion_info(
         li.geo_target_constant = client.path.geo_target_constant(GEO_TARGET_CONSTANT)
       end
     end
-    # Set either of the business_location_id or business_name, depending on
+    # Set either of the business_profile_location or business_name, depending on
     # whichever is provided.
-    if business_location_id
-      si.business_location_id = convert_business_location_id(business_location_id.to_i)
+    if business_profile_location
+      si.business_profile_location = business_profile_location
     else
       si.business_context = client.resource.business_context do |bc|
         bc.business_name = business_name
@@ -278,31 +278,6 @@ def get_smart_campaign_suggestion_info(
   suggestion_info
 end
 # [END add_smart_campaign_9]
-
-# [START add_smart_campaign_14]
-# The business location ID is an unsigned 64-bit integer. However, the API
-# expects a signed 64-bit integer. This means that for business location IDs
-# that are too large, we have to do some extra steps to convert it to a form
-# the API can understand.
-# Specifically, we perform the two's complement. Since Ruby supports arbitrary
-# precision numbers, we have to calculate it manually.
-LONG_MAX = 2 ** 63
-ULONG_MAX = LONG_MAX * 2
-def convert_business_location_id(business_location_id)
-  if business_location_id > ULONG_MAX
-    raise "Business location id #{business_location_id} is too large. Maximium " \
-      "value is #{ULONG_MAX}."
-  end
-  # Action only needs to be taken if the most significant bit is set.
-  if business_location_id > LONG_MAX
-    # Perform the two's complement.
-    -1 * (ULONG_MAX - business_location_id)
-  else
-    # For all other cases, the normal representation is fine.
-    business_location_id
-  end
-end
-# [END add_smart_campaign_14]
 
 # [START add_smart_campaign_1]
 # Retrieves a suggested budget amount for a new budget.
@@ -437,7 +412,7 @@ end
 def create_smart_campaign_setting_operation(
   client,
   customer_id,
-  business_location_id,
+  business_profile_location,
   business_name)
   mutate_operation = client.operation.mutate do |m|
     m.smart_campaign_setting_operation =
@@ -457,8 +432,8 @@ def create_smart_campaign_setting_operation(
       scs.advertising_language_code = LANGUAGE_CODE
       # It's required that either a business location ID or a business name is
       # added to the smart_campaign_setting.
-      if business_location_id
-        scs.business_location_id = convert_business_location_id(business_location_id.to_i)
+      if business_profile_location
+        scs.business_profile_location = business_profile_location
       else
         scs.business_name = business_name
       end
@@ -671,12 +646,13 @@ if __FILE__ == $0
       options[:freeform_keyword_text] = v
     end
 
-    opts.on('-b', '--business-location-id BUSINESS-LOCATION-ID', String,
-      'The ID of a Business Profile location. This is required' \
+    opts.on('-b', '--business-profile-location BUSINESS-PROFILE-LOCATION', String,
+      'The resource name of a Business Profile location. This is required' \
       ' if a business name is not provided. It can be retrieved using the' \
       ' GMB API, for details see:' \
-      ' https://developers.google.com/my-business/reference/rest/v4/accounts.locations') do |v|
-      options[:business_location_id] = v
+      ' https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations' \
+      ' or from the Business Profile UI (https://support.google.com/business/answer/10737668).') do |v|
+      options[:business_profile_location] = v
     end
 
     opts.on('-n', '--business-name BUSINESS-NAME', String,
@@ -699,7 +675,7 @@ if __FILE__ == $0
       options.fetch(:customer_id).tr("-", ""),
       options[:keyword_text],
       options[:freeform_keyword_text],
-      options[:business_location_id],
+      options[:business_profile_location],
       options[:business_name],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
