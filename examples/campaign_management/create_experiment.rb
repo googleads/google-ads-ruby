@@ -21,13 +21,13 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def create_experiment(customer_id, campaign_id)
+def create_experiment(customer_id, base_campaign_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   experiment = create_experiment_resource(client, customer_id)
-  treatment_arm = create_experiment_arms(client, customer_id, campaign_id, experiment)
+  treatment_arm = create_experiment_arms(client, customer_id, base_campaign_id, experiment)
   draft_campaign = fetch_draft_campaign(client, customer_id, treatment_arm)
 
   modify_draft_campaign(client, customer_id, draft_campaign)
@@ -63,12 +63,12 @@ end
 # [END create_experiment_1]
 
   # [START create_experiment_2]
-def create_experiment_arms(client, customer_id, campaign_id, experiment)
+def create_experiment_arms(client, customer_id, base_campaign_id, experiment)
   operations = []
   operations << client.operation.create_resource.experiment_arm do |ea|
     # The "control" arm references an already-existing campaign.
     ea.control = true
-    ea.campaigns << client.path.campaign(customer_id, campaign_id)
+    ea.campaigns << client.path.campaign(customer_id, base_campaign_id)
     ea.trial = experiment
     ea.name = 'control arm'
     ea.traffic_split = 40
@@ -166,7 +166,7 @@ if __FILE__ == $0
     end
 
     opts.on('-c', '--base-campaign-id BASE-CAMPAIGN', String, 'Base Campaign ID') do |v|
-      options[:campaign_id] = v
+      options[:base_campaign_id] = v
     end
 
     opts.separator ''
@@ -181,7 +181,7 @@ if __FILE__ == $0
   begin
     create_experiment(
       options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:campaign_id),
+      options.fetch(:base_campaign_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
