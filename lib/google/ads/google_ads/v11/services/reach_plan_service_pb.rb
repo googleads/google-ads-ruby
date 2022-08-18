@@ -43,6 +43,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :genders, :message, 2, "google.ads.googleads.v11.common.GenderInfo"
       repeated :devices, :message, 3, "google.ads.googleads.v11.common.DeviceInfo"
       repeated :networks, :enum, 4, "google.ads.googleads.v11.enums.ReachPlanNetworkEnum.ReachPlanNetwork"
+      repeated :youtube_select_lineups, :message, 5, "google.ads.googleads.v11.services.YouTubeSelectLineUp"
     end
     add_message "google.ads.googleads.v11.services.GenerateProductMixIdeasRequest" do
       optional :customer_id, :string, 1
@@ -76,6 +77,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :targeting, :message, 6, "google.ads.googleads.v11.services.Targeting"
       repeated :planned_products, :message, 7, "google.ads.googleads.v11.services.PlannedProduct"
       optional :forecast_metric_options, :message, 13, "google.ads.googleads.v11.services.ForecastMetricOptions"
+      proto3_optional :customer_reach_group, :string, 14
     end
     add_message "google.ads.googleads.v11.services.EffectiveFrequencyLimit" do
       optional :effective_frequency_breakdown_limit, :int32, 1
@@ -90,6 +92,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       repeated :genders, :message, 3, "google.ads.googleads.v11.common.GenderInfo"
       repeated :devices, :message, 4, "google.ads.googleads.v11.common.DeviceInfo"
       optional :network, :enum, 5, "google.ads.googleads.v11.enums.ReachPlanNetworkEnum.ReachPlanNetwork"
+      optional :audience_targeting, :message, 7, "google.ads.googleads.v11.services.AudienceTargeting"
     end
     add_message "google.ads.googleads.v11.services.CampaignDuration" do
       proto3_optional :duration_in_days, :int32, 2
@@ -98,6 +101,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v11.services.PlannedProduct" do
       proto3_optional :plannable_product_code, :string, 3
       proto3_optional :budget_micros, :int64, 4
+      optional :advanced_product_targeting, :message, 5, "google.ads.googleads.v11.services.AdvancedProductTargeting"
     end
     add_message "google.ads.googleads.v11.services.GenerateReachForecastResponse" do
       optional :on_target_audience_metrics, :message, 1, "google.ads.googleads.v11.services.OnTargetAudienceMetrics"
@@ -153,6 +157,21 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v11.services.ForecastMetricOptions" do
       optional :include_coview, :bool, 1
     end
+    add_message "google.ads.googleads.v11.services.AudienceTargeting" do
+      repeated :user_interest, :message, 1, "google.ads.googleads.v11.common.UserInterestInfo"
+    end
+    add_message "google.ads.googleads.v11.services.AdvancedProductTargeting" do
+      oneof :advanced_targeting do
+        optional :youtube_select_settings, :message, 1, "google.ads.googleads.v11.services.YouTubeSelectSettings"
+      end
+    end
+    add_message "google.ads.googleads.v11.services.YouTubeSelectSettings" do
+      optional :lineup_id, :int64, 1
+    end
+    add_message "google.ads.googleads.v11.services.YouTubeSelectLineUp" do
+      optional :lineup_id, :int64, 1
+      optional :lineup_name, :string, 2
+    end
   end
 end
 
@@ -187,6 +206,10 @@ module Google
           OnTargetAudienceMetrics = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.OnTargetAudienceMetrics").msgclass
           EffectiveFrequencyBreakdown = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.EffectiveFrequencyBreakdown").msgclass
           ForecastMetricOptions = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.ForecastMetricOptions").msgclass
+          AudienceTargeting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.AudienceTargeting").msgclass
+          AdvancedProductTargeting = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.AdvancedProductTargeting").msgclass
+          YouTubeSelectSettings = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.YouTubeSelectSettings").msgclass
+          YouTubeSelectLineUp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.services.YouTubeSelectLineUp").msgclass
         end
       end
     end

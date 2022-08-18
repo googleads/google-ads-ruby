@@ -160,7 +160,8 @@ module Google
               # @param asset_combination_id_high [String]
               #
               # @return [::String]
-              def ad_group_ad_asset_combination_view_path customer_id:, ad_group_id:, ad_id:, asset_combination_id_low:, asset_combination_id_high:
+              def ad_group_ad_asset_combination_view_path customer_id:, ad_group_id:, ad_id:,
+                                                          asset_combination_id_low:, asset_combination_id_high:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
                 raise ::ArgumentError, "ad_id cannot contain /" if ad_id.to_s.include? "/"
@@ -350,7 +351,8 @@ module Google
               # @param end_date [String]
               #
               # @return [::String]
-              def ad_group_criterion_simulation_path customer_id:, ad_group_id:, criterion_id:, type:, modification_method:, start_date:, end_date:
+              def ad_group_criterion_simulation_path customer_id:, ad_group_id:, criterion_id:, type:,
+                                                     modification_method:, start_date:, end_date:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
                 raise ::ArgumentError, "criterion_id cannot contain /" if criterion_id.to_s.include? "/"
@@ -452,7 +454,8 @@ module Google
               # @param end_date [String]
               #
               # @return [::String]
-              def ad_group_simulation_path customer_id:, ad_group_id:, type:, modification_method:, start_date:, end_date:
+              def ad_group_simulation_path customer_id:, ad_group_id:, type:, modification_method:, start_date:,
+                                           end_date:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
                 raise ::ArgumentError, "type cannot contain /" if type.to_s.include? "/"
@@ -786,7 +789,8 @@ module Google
               # @param end_date [String]
               #
               # @return [::String]
-              def bidding_strategy_simulation_path customer_id:, bidding_strategy_id:, type:, modification_method:, start_date:, end_date:
+              def bidding_strategy_simulation_path customer_id:, bidding_strategy_id:, type:, modification_method:,
+                                                   start_date:, end_date:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "bidding_strategy_id cannot contain /" if bidding_strategy_id.to_s.include? "/"
                 raise ::ArgumentError, "type cannot contain /" if type.to_s.include? "/"
@@ -998,7 +1002,8 @@ module Google
               # @param end_date [String]
               #
               # @return [::String]
-              def campaign_criterion_simulation_path customer_id:, campaign_id:, criterion_id:, type:, modification_method:, start_date:, end_date:
+              def campaign_criterion_simulation_path customer_id:, campaign_id:, criterion_id:, type:,
+                                                     modification_method:, start_date:, end_date:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
                 raise ::ArgumentError, "criterion_id cannot contain /" if criterion_id.to_s.include? "/"
@@ -1172,7 +1177,8 @@ module Google
               # @param end_date [String]
               #
               # @return [::String]
-              def campaign_simulation_path customer_id:, campaign_id:, type:, modification_method:, start_date:, end_date:
+              def campaign_simulation_path customer_id:, campaign_id:, type:, modification_method:, start_date:,
+                                           end_date:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
                 raise ::ArgumentError, "type cannot contain /" if type.to_s.include? "/"
@@ -1773,7 +1779,8 @@ module Google
               # @param page_url_fingerprint [String]
               #
               # @return [::String]
-              def dynamic_search_ads_search_term_view_path customer_id:, ad_group_id:, search_term_fingerprint:, headline_fingerprint:, landing_page_fingerprint:, page_url_fingerprint:
+              def dynamic_search_ads_search_term_view_path customer_id:, ad_group_id:, search_term_fingerprint:,
+                                                           headline_fingerprint:, landing_page_fingerprint:, page_url_fingerprint:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
                 raise ::ArgumentError,
@@ -1945,7 +1952,8 @@ module Google
               # @param feed_item_target_id [String]
               #
               # @return [::String]
-              def feed_item_target_path customer_id:, feed_id:, feed_item_id:, feed_item_target_type:, feed_item_target_id:
+              def feed_item_target_path customer_id:, feed_id:, feed_item_id:, feed_item_target_type:,
+                                        feed_item_target_id:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "feed_id cannot contain /" if feed_id.to_s.include? "/"
                 raise ::ArgumentError, "feed_item_id cannot contain /" if feed_item_id.to_s.include? "/"

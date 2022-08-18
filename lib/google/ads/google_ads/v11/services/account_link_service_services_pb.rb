@@ -51,7 +51,7 @@ module Google
               rpc :CreateAccountLink, ::Google::Ads::GoogleAds::V11::Services::CreateAccountLinkRequest, ::Google::Ads::GoogleAds::V11::Services::CreateAccountLinkResponse
               # Creates or removes an account link.
               # From V5, create is not supported through
-              # AccountLinkService.MutateAccountLink. Please use
+              # AccountLinkService.MutateAccountLink. Use
               # AccountLinkService.CreateAccountLink instead.
               #
               # List of thrown errors:

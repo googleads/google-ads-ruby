@@ -206,13 +206,13 @@ module Google
               #     The options for historical metrics data.
               #   @param keyword_and_url_seed [::Google::Ads::GoogleAds::V11::Services::KeywordAndUrlSeed, ::Hash]
               #     A Keyword and a specific Url to generate ideas from
-              #     e.g. cars, www.example.com/cars.
+              #     for example, cars, www.example.com/cars.
               #   @param keyword_seed [::Google::Ads::GoogleAds::V11::Services::KeywordSeed, ::Hash]
-              #     A Keyword or phrase to generate ideas from, e.g. cars.
+              #     A Keyword or phrase to generate ideas from, for example, cars.
               #   @param url_seed [::Google::Ads::GoogleAds::V11::Services::UrlSeed, ::Hash]
-              #     A specific url to generate ideas from, e.g. www.example.com/cars.
+              #     A specific url to generate ideas from, for example, www.example.com/cars.
               #   @param site_seed [::Google::Ads::GoogleAds::V11::Services::SiteSeed, ::Hash]
-              #     The site to generate ideas from, e.g. www.example.com.
+              #     The site to generate ideas from, for example, www.example.com.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Gapic::PagedEnumerable<::Google::Ads::GoogleAds::V11::Services::GenerateKeywordIdeaResult>]

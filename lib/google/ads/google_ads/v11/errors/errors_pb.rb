@@ -30,6 +30,7 @@ require 'google/ads/google_ads/v11/errors/asset_set_asset_error_pb'
 require 'google/ads/google_ads/v11/errors/asset_set_error_pb'
 require 'google/ads/google_ads/v11/errors/asset_set_link_error_pb'
 require 'google/ads/google_ads/v11/errors/audience_error_pb'
+require 'google/ads/google_ads/v11/errors/audience_insights_error_pb'
 require 'google/ads/google_ads/v11/errors/authentication_error_pb'
 require 'google/ads/google_ads/v11/errors/authorization_error_pb'
 require 'google/ads/google_ads/v11/errors/batch_job_error_pb'
@@ -301,6 +302,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :custom_audience_error, :enum, 139, "google.ads.googleads.v11.errors.CustomAudienceErrorEnum.CustomAudienceError"
         optional :audience_error, :enum, 164, "google.ads.googleads.v11.errors.AudienceErrorEnum.AudienceError"
         optional :experiment_arm_error, :enum, 156, "google.ads.googleads.v11.errors.ExperimentArmErrorEnum.ExperimentArmError"
+        optional :audience_insights_error, :enum, 167, "google.ads.googleads.v11.errors.AudienceInsightsErrorEnum.AudienceInsightsError"
       end
     end
     add_message "google.ads.googleads.v11.errors.ErrorLocation" do

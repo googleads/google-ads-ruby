@@ -27,7 +27,7 @@ module Google
           module AccountBudgetProposalService
             # Proto file describing the AccountBudgetProposal service.
             #
-            # A service for managing account-level budgets via proposals.
+            # A service for managing account-level budgets through proposals.
             #
             # A proposal is a request to create a new budget or make changes to an
             # existing one.

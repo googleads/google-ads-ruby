@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v11/enums/user_identifier_source_pb'
+require 'google/api/field_behavior_pb'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v11/common/offline_user_data.proto", :syntax => :proto3) do
@@ -59,6 +60,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :average_purchase_value_micros, :int64, 5
       optional :acquisition_date_time, :string, 6
       proto3_optional :shopping_loyalty, :message, 7, "google.ads.googleads.v11.common.ShoppingLoyalty"
+      optional :lifecycle_stage, :string, 8
+      optional :first_purchase_date_time, :string, 9
+      repeated :event_attribute, :message, 10, "google.ads.googleads.v11.common.EventAttribute"
+    end
+    add_message "google.ads.googleads.v11.common.EventAttribute" do
+      optional :event, :string, 1
+      optional :event_date_time, :string, 2
+      repeated :item_attribute, :message, 3, "google.ads.googleads.v11.common.EventItemAttribute"
+    end
+    add_message "google.ads.googleads.v11.common.EventItemAttribute" do
+      optional :item_id, :string, 1
     end
     add_message "google.ads.googleads.v11.common.ShoppingLoyalty" do
       proto3_optional :loyalty_tier, :string, 1
@@ -95,6 +107,8 @@ module Google
           ItemAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.ItemAttribute").msgclass
           UserData = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.UserData").msgclass
           UserAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.UserAttribute").msgclass
+          EventAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.EventAttribute").msgclass
+          EventItemAttribute = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.EventItemAttribute").msgclass
           ShoppingLoyalty = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.ShoppingLoyalty").msgclass
           CustomerMatchUserListMetadata = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.CustomerMatchUserListMetadata").msgclass
           StoreSalesMetadata = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.StoreSalesMetadata").msgclass

@@ -352,6 +352,116 @@ module Google
               end
 
               ##
+              # Returns a collection of attributes that are represented in an audience of
+              # interest, with metrics that compare each attribute's share of the audience
+              # with its share of a baseline audience.
+              #
+              # List of thrown errors:
+              #   [AudienceInsightsError]()
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [FieldError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RangeError]()
+              #   [RequestError]()
+              #
+              # @overload generate_audience_composition_insights(request, options = nil)
+              #   Pass arguments to `generate_audience_composition_insights` via a request object, either of type
+              #   {::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsRequest} or an equivalent Hash.
+              #
+              #   @param request [::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsRequest, ::Hash]
+              #     A request object representing the call parameters. Required. To specify no
+              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #   @param options [::Gapic::CallOptions, ::Hash]
+              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #
+              # @overload generate_audience_composition_insights(customer_id: nil, audience: nil, data_month: nil, dimensions: nil, customer_insights_group: nil)
+              #   Pass arguments to `generate_audience_composition_insights` via keyword arguments. Note that at
+              #   least one keyword argument is required. To specify no parameters, or to keep all
+              #   the default parameter values, pass an empty Hash as a request object (see above).
+              #
+              #   @param customer_id [::String]
+              #     Required. The ID of the customer.
+              #   @param audience [::Google::Ads::GoogleAds::V11::Services::InsightsAudience, ::Hash]
+              #     Required. The audience of interest for which insights are being requested.
+              #   @param data_month [::String]
+              #     The one-month range of historical data to use for insights, in the format
+              #     "yyyy-mm". If unset, insights will be returned for the last thirty days of
+              #     data.
+              #   @param dimensions [::Array<::Google::Ads::GoogleAds::V11::Enums::AudienceInsightsDimensionEnum::AudienceInsightsDimension>]
+              #     Required. The audience dimensions for which composition insights should be returned.
+              #   @param customer_insights_group [::String]
+              #     The name of the customer being planned for.  This is a user-defined value.
+              #
+              # @yield [response, operation] Access the result along with the RPC operation
+              # @yieldparam response [::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsResponse]
+              # @yieldparam operation [::GRPC::ActiveCall::Operation]
+              #
+              # @return [::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsResponse]
+              #
+              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              #
+              # @example Basic example
+              #   require "google/ads/google_ads/v11/services"
+              #
+              #   # Create a client object. The client can be reused for multiple calls.
+              #   client = Google::Ads::GoogleAds::V11::Services::AudienceInsightsService::Client.new
+              #
+              #   # Create a request. To set request fields, pass in keyword arguments.
+              #   request = Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsRequest.new
+              #
+              #   # Call the generate_audience_composition_insights method.
+              #   result = client.generate_audience_composition_insights request
+              #
+              #   # The returned object is of type Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsResponse.
+              #   p result
+              #
+              def generate_audience_composition_insights request, options = nil
+                raise ::ArgumentError, "request must be provided" if request.nil?
+
+                request = ::Gapic::Protobuf.coerce request,
+                                                   to: ::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsRequest
+
+                # Converts hash and nil to an options object
+                options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
+
+                # Customize the options with defaults
+                metadata = @config.rpcs.generate_audience_composition_insights.metadata.to_h
+
+                # Set x-goog-api-client and x-goog-user-project headers
+                metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
+                  lib_name: @config.lib_name, lib_version: @config.lib_version,
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
+
+                header_params = {}
+                if request.customer_id
+                  header_params["customer_id"] = request.customer_id
+                end
+
+                request_params_header = header_params.map { |k, v| "#{k}=#{v}" }.join("&")
+                metadata[:"x-goog-request-params"] ||= request_params_header
+
+                options.apply_defaults timeout:      @config.rpcs.generate_audience_composition_insights.timeout,
+                                       metadata:     metadata,
+                                       retry_policy: @config.rpcs.generate_audience_composition_insights.retry_policy
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
+                                       retry_policy: @config.retry_policy
+
+                @audience_insights_service_stub.call_rpc :generate_audience_composition_insights, request,
+                                                         options: options do |response, operation|
+                  yield response, operation if block_given?
+                  return response
+                end
+                # rescue GRPC::BadStatus => grpc_error
+                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+              end
+
+              ##
               # Configuration class for the AudienceInsightsService API.
               #
               # This class represents the configuration for AudienceInsightsService,
@@ -497,6 +607,11 @@ module Google
                   # @return [::Gapic::Config::Method]
                   #
                   attr_reader :list_audience_insights_attributes
+                  ##
+                  # RPC-specific configuration for `generate_audience_composition_insights`
+                  # @return [::Gapic::Config::Method]
+                  #
+                  attr_reader :generate_audience_composition_insights
 
                   # @private
                   def initialize parent_rpcs = nil
@@ -504,6 +619,8 @@ module Google
                     @generate_insights_finder_report = ::Gapic::Config::Method.new generate_insights_finder_report_config
                     list_audience_insights_attributes_config = parent_rpcs.list_audience_insights_attributes if parent_rpcs.respond_to? :list_audience_insights_attributes
                     @list_audience_insights_attributes = ::Gapic::Config::Method.new list_audience_insights_attributes_config
+                    generate_audience_composition_insights_config = parent_rpcs.generate_audience_composition_insights if parent_rpcs.respond_to? :generate_audience_composition_insights
+                    @generate_audience_composition_insights = ::Gapic::Config::Method.new generate_audience_composition_insights_config
 
                     yield self if block_given?
                   end

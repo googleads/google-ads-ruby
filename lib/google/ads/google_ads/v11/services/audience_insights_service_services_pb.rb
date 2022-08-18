@@ -61,6 +61,21 @@ module Google
               #   [RangeError]()
               #   [RequestError]()
               rpc :ListAudienceInsightsAttributes, ::Google::Ads::GoogleAds::V11::Services::ListAudienceInsightsAttributesRequest, ::Google::Ads::GoogleAds::V11::Services::ListAudienceInsightsAttributesResponse
+              # Returns a collection of attributes that are represented in an audience of
+              # interest, with metrics that compare each attribute's share of the audience
+              # with its share of a baseline audience.
+              #
+              # List of thrown errors:
+              #   [AudienceInsightsError]()
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [FieldError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RangeError]()
+              #   [RequestError]()
+              rpc :GenerateAudienceCompositionInsights, ::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsRequest, ::Google::Ads::GoogleAds::V11::Services::GenerateAudienceCompositionInsightsResponse
             end
 
             Stub = Service.rpc_stub_class
