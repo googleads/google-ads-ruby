@@ -171,7 +171,7 @@ module Google
               #
               #   @param query_text [::String]
               #     The query text of a keyword theme that will be used to map to similar
-              #     keyword themes. E.g. "plumber" or "roofer".
+              #     keyword themes. For example, "plumber" or "roofer".
               #   @param country_code [::String]
               #     Upper-case, two-letter country code as defined by ISO-3166. This for
               #     refining the scope of the query, default to 'US' if not set.

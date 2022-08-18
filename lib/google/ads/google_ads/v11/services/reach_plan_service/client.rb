@@ -448,7 +448,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_reach_forecast(customer_id: nil, currency_code: nil, campaign_duration: nil, cookie_frequency_cap: nil, cookie_frequency_cap_setting: nil, min_effective_frequency: nil, effective_frequency_limit: nil, targeting: nil, planned_products: nil, forecast_metric_options: nil)
+              # @overload generate_reach_forecast(customer_id: nil, currency_code: nil, campaign_duration: nil, cookie_frequency_cap: nil, cookie_frequency_cap_setting: nil, min_effective_frequency: nil, effective_frequency_limit: nil, targeting: nil, planned_products: nil, forecast_metric_options: nil, customer_reach_group: nil)
               #   Pass arguments to `generate_reach_forecast` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -461,16 +461,16 @@ module Google
               #   @param campaign_duration [::Google::Ads::GoogleAds::V11::Services::CampaignDuration, ::Hash]
               #     Required. Campaign duration.
               #   @param cookie_frequency_cap [::Integer]
-              #     Desired cookie frequency cap to be applied to each planned product.
+              #     Chosen cookie frequency cap to be applied to each planned product.
               #     This is equivalent to the frequency cap exposed in Google Ads when creating
               #     a campaign, it represents the maximum number of times an ad can be shown to
               #     the same user.
               #     If not specified, no cap is applied.
               #
               #     This field is deprecated in v4 and will eventually be removed.
-              #     Please use cookie_frequency_cap_setting instead.
+              #     Use cookie_frequency_cap_setting instead.
               #   @param cookie_frequency_cap_setting [::Google::Ads::GoogleAds::V11::Services::FrequencyCap, ::Hash]
-              #     Desired cookie frequency cap to be applied to each planned product.
+              #     Chosen cookie frequency cap to be applied to each planned product.
               #     This is equivalent to the frequency cap exposed in Google Ads when creating
               #     a campaign, it represents the maximum number of times an ad can be shown to
               #     the same user during a specified time interval.
@@ -478,7 +478,7 @@ module Google
               #
               #     This field replaces the deprecated cookie_frequency_cap field.
               #   @param min_effective_frequency [::Integer]
-              #     Desired minimum effective frequency (the number of times a person was
+              #     Chosen minimum effective frequency (the number of times a person was
               #     exposed to the ad) for the reported reach metrics [1-10].
               #     This won't affect the targeting, but just the reporting.
               #     If not specified, a default of 1 is applied.
@@ -499,7 +499,7 @@ module Google
               #     The targeting to be applied to all products selected in the product mix.
               #
               #     This is planned targeting: execution details might vary based on the
-              #     advertising product, please consult an implementation specialist.
+              #     advertising product, consult an implementation specialist.
               #
               #     See specific metrics for details on how targeting affects them.
               #   @param planned_products [::Array<::Google::Ads::GoogleAds::V11::Services::PlannedProduct, ::Hash>]
@@ -507,6 +507,9 @@ module Google
               #     The max number of allowed planned products is 15.
               #   @param forecast_metric_options [::Google::Ads::GoogleAds::V11::Services::ForecastMetricOptions, ::Hash]
               #     Controls the forecast metrics returned in the response.
+              #   @param customer_reach_group [::String]
+              #     The name of the customer being planned for. This is a user-defined value.
+              #     Required if targeting.audience_targeting is set.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V11::Services::GenerateReachForecastResponse]

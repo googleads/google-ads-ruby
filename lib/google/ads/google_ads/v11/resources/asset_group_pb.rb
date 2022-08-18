@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v11/enums/ad_strength_pb'
 require 'google/ads/google_ads/v11/enums/asset_group_status_pb'
 require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
@@ -19,6 +20,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :status, :enum, 6, "google.ads.googleads.v11.enums.AssetGroupStatusEnum.AssetGroupStatus"
       optional :path1, :string, 7
       optional :path2, :string, 8
+      optional :ad_strength, :enum, 10, "google.ads.googleads.v11.enums.AdStrengthEnum.AdStrength"
     end
   end
 end

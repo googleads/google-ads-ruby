@@ -12,6 +12,16 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :UNKNOWN, 1
       value :CATEGORY, 2
       value :KNOWLEDGE_GRAPH, 3
+      value :GEO_TARGET_COUNTRY, 4
+      value :SUB_COUNTRY_LOCATION, 5
+      value :YOUTUBE_CHANNEL, 6
+      value :YOUTUBE_DYNAMIC_LINEUP, 7
+      value :AFFINITY_USER_INTEREST, 8
+      value :IN_MARKET_USER_INTEREST, 9
+      value :PARENTAL_STATUS, 10
+      value :INCOME_RANGE, 11
+      value :AGE_RANGE, 12
+      value :GENDER, 13
     end
   end
 end

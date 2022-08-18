@@ -572,6 +572,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :customer_negative_criterion_result, :message, 34, "google.ads.googleads.v11.services.MutateCustomerNegativeCriteriaResult"
         optional :customer_result, :message, 35, "google.ads.googleads.v11.services.MutateCustomerResult"
         optional :customizer_attribute_result, :message, 70, "google.ads.googleads.v11.services.MutateCustomizerAttributeResult"
+        optional :experiment_result, :message, 81, "google.ads.googleads.v11.services.MutateExperimentResult"
+        optional :experiment_arm_result, :message, 82, "google.ads.googleads.v11.services.MutateExperimentArmResult"
         optional :extension_feed_item_result, :message, 36, "google.ads.googleads.v11.services.MutateExtensionFeedItemResult"
         optional :feed_item_result, :message, 37, "google.ads.googleads.v11.services.MutateFeedItemResult"
         optional :feed_item_set_result, :message, 53, "google.ads.googleads.v11.services.MutateFeedItemSetResult"

@@ -397,7 +397,7 @@ module Google
               #
               # Atomicity makes error handling much easier. If you're making a series of
               # changes and one fails, it can leave your account in an inconsistent state.
-              # With atomicity, you either reach the desired state directly, or the request
+              # With atomicity, you either reach the chosen state directly, or the request
               # fails and you can retry.
               #
               # ## Temp Resource Names
@@ -522,7 +522,7 @@ module Google
               #     The response content type setting. Determines whether the mutable resource
               #     or just the resource name should be returned post mutation. The mutable
               #     resource will only be returned if the resource has the appropriate response
-              #     field. E.g. MutateCampaignResult.campaign.
+              #     field. For example, MutateCampaignResult.campaign.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V11::Services::MutateGoogleAdsResponse]

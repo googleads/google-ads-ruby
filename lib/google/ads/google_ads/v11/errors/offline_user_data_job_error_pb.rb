@@ -44,6 +44,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :LAST_PURCHASE_TIME_LESS_THAN_ACQUISITION_TIME, 38
       value :CUSTOMER_IDENTIFIER_NOT_ALLOWED, 39
       value :INVALID_ITEM_ID, 40
+      value :FIRST_PURCHASE_TIME_GREATER_THAN_LAST_PURCHASE_TIME, 42
+      value :INVALID_LIFECYCLE_STAGE, 43
+      value :INVALID_EVENT_VALUE, 44
+      value :EVENT_ATTRIBUTE_ALL_FIELDS_ARE_REQUIRED, 45
     end
   end
 end

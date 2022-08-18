@@ -32,6 +32,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :RESPONSIVE_SEARCH_AD_ASSET, 21
       value :UPGRADE_SMART_SHOPPING_CAMPAIGN_TO_PERFORMANCE_MAX, 22
       value :RESPONSIVE_SEARCH_AD_IMPROVE_AD_STRENGTH, 23
+      value :DISPLAY_EXPANSION_OPT_IN, 24
+      value :UPGRADE_LOCAL_CAMPAIGN_TO_PERFORMANCE_MAX, 25
     end
   end
 end

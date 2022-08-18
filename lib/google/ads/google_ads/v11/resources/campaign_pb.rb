@@ -14,6 +14,7 @@ require 'google/ads/google_ads/v11/enums/advertising_channel_type_pb'
 require 'google/ads/google_ads/v11/enums/app_campaign_app_store_pb'
 require 'google/ads/google_ads/v11/enums/app_campaign_bidding_strategy_goal_type_pb'
 require 'google/ads/google_ads/v11/enums/asset_field_type_pb'
+require 'google/ads/google_ads/v11/enums/bidding_strategy_system_status_pb'
 require 'google/ads/google_ads/v11/enums/bidding_strategy_type_pb'
 require 'google/ads/google_ads/v11/enums/brand_safety_suitability_pb'
 require 'google/ads/google_ads/v11/enums/campaign_experiment_type_pb'
@@ -38,6 +39,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :name, :string, 58
       optional :status, :enum, 5, "google.ads.googleads.v11.enums.CampaignStatusEnum.CampaignStatus"
       optional :serving_status, :enum, 21, "google.ads.googleads.v11.enums.CampaignServingStatusEnum.CampaignServingStatus"
+      optional :bidding_strategy_system_status, :enum, 78, "google.ads.googleads.v11.enums.BiddingStrategySystemStatusEnum.BiddingStrategySystemStatus"
       optional :ad_serving_optimization_status, :enum, 8, "google.ads.googleads.v11.enums.AdServingOptimizationStatusEnum.AdServingOptimizationStatus"
       optional :advertising_channel_type, :enum, 9, "google.ads.googleads.v11.enums.AdvertisingChannelTypeEnum.AdvertisingChannelType"
       optional :advertising_channel_sub_type, :enum, 10, "google.ads.googleads.v11.enums.AdvertisingChannelSubTypeEnum.AdvertisingChannelSubType"

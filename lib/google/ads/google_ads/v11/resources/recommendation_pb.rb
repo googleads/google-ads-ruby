@@ -45,6 +45,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :responsive_search_ad_asset_recommendation, :message, 31, "google.ads.googleads.v11.resources.Recommendation.ResponsiveSearchAdAssetRecommendation"
         optional :upgrade_smart_shopping_campaign_to_performance_max_recommendation, :message, 32, "google.ads.googleads.v11.resources.Recommendation.UpgradeSmartShoppingCampaignToPerformanceMaxRecommendation"
         optional :responsive_search_ad_improve_ad_strength_recommendation, :message, 33, "google.ads.googleads.v11.resources.Recommendation.ResponsiveSearchAdImproveAdStrengthRecommendation"
+        optional :display_expansion_opt_in_recommendation, :message, 34, "google.ads.googleads.v11.resources.Recommendation.DisplayExpansionOptInRecommendation"
+        optional :upgrade_local_campaign_to_performance_max_recommendation, :message, 35, "google.ads.googleads.v11.resources.Recommendation.UpgradeLocalCampaignToPerformanceMaxRecommendation"
       end
     end
     add_message "google.ads.googleads.v11.resources.Recommendation.RecommendationImpact" do
@@ -141,6 +143,10 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :merchant_id, :int64, 1
       optional :sales_country_code, :string, 2
     end
+    add_message "google.ads.googleads.v11.resources.Recommendation.DisplayExpansionOptInRecommendation" do
+    end
+    add_message "google.ads.googleads.v11.resources.Recommendation.UpgradeLocalCampaignToPerformanceMaxRecommendation" do
+    end
   end
 end
 
@@ -174,6 +180,8 @@ module Google
           Recommendation::ResponsiveSearchAdRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.resources.Recommendation.ResponsiveSearchAdRecommendation").msgclass
           Recommendation::UseBroadMatchKeywordRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.resources.Recommendation.UseBroadMatchKeywordRecommendation").msgclass
           Recommendation::UpgradeSmartShoppingCampaignToPerformanceMaxRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.resources.Recommendation.UpgradeSmartShoppingCampaignToPerformanceMaxRecommendation").msgclass
+          Recommendation::DisplayExpansionOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.resources.Recommendation.DisplayExpansionOptInRecommendation").msgclass
+          Recommendation::UpgradeLocalCampaignToPerformanceMaxRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.resources.Recommendation.UpgradeLocalCampaignToPerformanceMaxRecommendation").msgclass
         end
       end
     end

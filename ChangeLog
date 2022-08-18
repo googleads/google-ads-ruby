@@ -1,3 +1,6 @@
+18.1.0:
+ - Compatibility with v11.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 18.0.0:
  - Compatibility with v11 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Field mask util was updated to support empty top-level fields with

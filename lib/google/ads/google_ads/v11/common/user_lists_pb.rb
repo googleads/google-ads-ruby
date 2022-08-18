@@ -7,6 +7,7 @@ require 'google/ads/google_ads/v11/enums/customer_match_upload_key_type_pb'
 require 'google/ads/google_ads/v11/enums/user_list_combined_rule_operator_pb'
 require 'google/ads/google_ads/v11/enums/user_list_crm_data_source_type_pb'
 require 'google/ads/google_ads/v11/enums/user_list_date_rule_item_operator_pb'
+require 'google/ads/google_ads/v11/enums/user_list_flexible_rule_operator_pb'
 require 'google/ads/google_ads/v11/enums/user_list_logical_rule_operator_pb'
 require 'google/ads/google_ads/v11/enums/user_list_number_rule_item_operator_pb'
 require 'google/ads/google_ads/v11/enums/user_list_prepopulation_status_pb'
@@ -59,8 +60,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v11.common.ExpressionRuleUserListInfo" do
       optional :rule, :message, 1, "google.ads.googleads.v11.common.UserListRuleInfo"
     end
+    add_message "google.ads.googleads.v11.common.FlexibleRuleOperandInfo" do
+      optional :rule, :message, 1, "google.ads.googleads.v11.common.UserListRuleInfo"
+      proto3_optional :lookback_window_days, :int64, 2
+    end
+    add_message "google.ads.googleads.v11.common.FlexibleRuleUserListInfo" do
+      optional :inclusive_rule_operator, :enum, 1, "google.ads.googleads.v11.enums.UserListFlexibleRuleOperatorEnum.UserListFlexibleRuleOperator"
+      repeated :inclusive_operands, :message, 2, "google.ads.googleads.v11.common.FlexibleRuleOperandInfo"
+      repeated :exclusive_operands, :message, 3, "google.ads.googleads.v11.common.FlexibleRuleOperandInfo"
+    end
     add_message "google.ads.googleads.v11.common.RuleBasedUserListInfo" do
       optional :prepopulation_status, :enum, 1, "google.ads.googleads.v11.enums.UserListPrepopulationStatusEnum.UserListPrepopulationStatus"
+      optional :flexible_rule_user_list, :message, 5, "google.ads.googleads.v11.common.FlexibleRuleUserListInfo"
       oneof :rule_based_user_list do
         optional :combined_rule_user_list, :message, 2, "google.ads.googleads.v11.common.CombinedRuleUserListInfo"
         optional :expression_rule_user_list, :message, 4, "google.ads.googleads.v11.common.ExpressionRuleUserListInfo"
@@ -103,6 +114,8 @@ module Google
           UserListStringRuleItemInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.UserListStringRuleItemInfo").msgclass
           CombinedRuleUserListInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.CombinedRuleUserListInfo").msgclass
           ExpressionRuleUserListInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.ExpressionRuleUserListInfo").msgclass
+          FlexibleRuleOperandInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.FlexibleRuleOperandInfo").msgclass
+          FlexibleRuleUserListInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.FlexibleRuleUserListInfo").msgclass
           RuleBasedUserListInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.RuleBasedUserListInfo").msgclass
           LogicalUserListInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.LogicalUserListInfo").msgclass
           UserListLogicalRuleInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v11.common.UserListLogicalRuleInfo").msgclass

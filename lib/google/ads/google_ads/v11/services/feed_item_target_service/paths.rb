@@ -92,7 +92,8 @@ module Google
               # @param feed_item_target_id [String]
               #
               # @return [::String]
-              def feed_item_target_path customer_id:, feed_id:, feed_item_id:, feed_item_target_type:, feed_item_target_id:
+              def feed_item_target_path customer_id:, feed_id:, feed_item_id:, feed_item_target_type:,
+                                        feed_item_target_id:
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
                 raise ::ArgumentError, "feed_id cannot contain /" if feed_id.to_s.include? "/"
                 raise ::ArgumentError, "feed_item_id cannot contain /" if feed_item_id.to_s.include? "/"

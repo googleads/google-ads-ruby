@@ -31,6 +31,7 @@ require 'google/ads/google_ads/v11/enums/sk_ad_network_ad_event_type_pb'
 require 'google/ads/google_ads/v11/enums/sk_ad_network_attribution_credit_pb'
 require 'google/ads/google_ads/v11/enums/sk_ad_network_user_type_pb'
 require 'google/ads/google_ads/v11/enums/slot_pb'
+require 'google/api/resource_pb'
 
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("google/ads/googleads/v11/common/segments.proto", :syntax => :proto3) do

@@ -24,6 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :YOUTUBE_VIDEO_REMOVED, 13
       value :YOUTUBE_VIDEO_TOO_LONG, 14
       value :YOUTUBE_VIDEO_TOO_SHORT, 15
+      value :EXCLUDED_PARENT_FIELD_TYPE, 16
       value :INVALID_STATUS, 17
       value :YOUTUBE_VIDEO_DURATION_NOT_DEFINED, 18
       value :CANNOT_CREATE_AUTOMATICALLY_CREATED_LINKS, 19

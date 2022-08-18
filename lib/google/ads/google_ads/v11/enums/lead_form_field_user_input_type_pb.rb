@@ -14,6 +14,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :EMAIL, 3
       value :PHONE_NUMBER, 4
       value :POSTAL_CODE, 5
+      value :STREET_ADDRESS, 8
       value :CITY, 9
       value :REGION, 10
       value :COUNTRY, 11
@@ -42,6 +43,54 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :YEARS_IN_BUSINESS, 1008
       value :JOB_DEPARTMENT, 1011
       value :JOB_ROLE, 1012
+      value :OVER_18_AGE, 1078
+      value :OVER_19_AGE, 1079
+      value :OVER_20_AGE, 1080
+      value :OVER_21_AGE, 1081
+      value :OVER_22_AGE, 1082
+      value :OVER_23_AGE, 1083
+      value :OVER_24_AGE, 1084
+      value :OVER_25_AGE, 1085
+      value :OVER_26_AGE, 1086
+      value :OVER_27_AGE, 1087
+      value :OVER_28_AGE, 1088
+      value :OVER_29_AGE, 1089
+      value :OVER_30_AGE, 1090
+      value :OVER_31_AGE, 1091
+      value :OVER_32_AGE, 1092
+      value :OVER_33_AGE, 1093
+      value :OVER_34_AGE, 1094
+      value :OVER_35_AGE, 1095
+      value :OVER_36_AGE, 1096
+      value :OVER_37_AGE, 1097
+      value :OVER_38_AGE, 1098
+      value :OVER_39_AGE, 1099
+      value :OVER_40_AGE, 1100
+      value :OVER_41_AGE, 1101
+      value :OVER_42_AGE, 1102
+      value :OVER_43_AGE, 1103
+      value :OVER_44_AGE, 1104
+      value :OVER_45_AGE, 1105
+      value :OVER_46_AGE, 1106
+      value :OVER_47_AGE, 1107
+      value :OVER_48_AGE, 1108
+      value :OVER_49_AGE, 1109
+      value :OVER_50_AGE, 1110
+      value :OVER_51_AGE, 1111
+      value :OVER_52_AGE, 1112
+      value :OVER_53_AGE, 1113
+      value :OVER_54_AGE, 1114
+      value :OVER_55_AGE, 1115
+      value :OVER_56_AGE, 1116
+      value :OVER_57_AGE, 1117
+      value :OVER_58_AGE, 1118
+      value :OVER_59_AGE, 1119
+      value :OVER_60_AGE, 1120
+      value :OVER_61_AGE, 1121
+      value :OVER_62_AGE, 1122
+      value :OVER_63_AGE, 1123
+      value :OVER_64_AGE, 1124
+      value :OVER_65_AGE, 1125
       value :EDUCATION_PROGRAM, 1013
       value :EDUCATION_COURSE, 1014
       value :PRODUCT, 1016
