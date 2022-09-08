@@ -174,11 +174,6 @@ module Google
           Google::Ads::GoogleAds::FieldMaskUtil
         end
 
-        # Returns a reference to the WrapperUtil class for ease of access.
-        def wrapper()
-          Google::Ads::GoogleAds::WrapperUtil
-        end
-
         # Returns a reference to the PathLookupUtil to generate resource names.
         def path(version = default_api_version)
           lookup_util.path(version)
