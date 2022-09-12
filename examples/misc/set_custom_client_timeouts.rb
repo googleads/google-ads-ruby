@@ -93,6 +93,9 @@ def make_unary_call(client, customer_id)
       # be used to override the default retry settings with given values.
       config.rpcs.search.timeout = CLIENT_TIMEOUT_SECONDS
       config.rpcs.search.retry_policy = {
+        # Note: This overrides the default value and can lead to
+        # RequestError.RPC_DEADLINE_TOO_SHORT errors when too small. We
+        # recommend to do it only if necessary.
         'initial_delay' => CLIENT_TIMEOUT_SECONDS / 10.0,
         'max_delay' => CLIENT_TIMEOUT_SECONDS / 5.0,
       }
