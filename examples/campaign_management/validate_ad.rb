@@ -15,13 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example shows use of the validate_only header for an expanded text ad.
-# No objects will be created, but exceptions will still be thrown.
+# This example shows use of the validate_only header for a responsive search
+# ad. No objects will be created, but exceptions will still be thrown.
 
 require 'optparse'
 require 'google/ads/google_ads'
 
-def validate_text_ad(customer_id, ad_group_id)
+def validate_ad(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -33,13 +33,30 @@ def validate_text_ad(customer_id, ad_group_id)
     aga.ad = client.resource.ad do |ad|
       ad.final_urls << "http://www.example.com"
 
-      ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
-        eta.description = "Luxury Cruise to Mars"
-        eta.headline_part1 = "Visit the Red Planet in style."
-        # Adds a headline that will trigger a policy violation to demonstrate
-        # error handling.
-        eta.headline_part2 = "Low-gravity fun for everyone!!"
+      ad.responsive_search_ad = client.resource.responsive_search_ad_info do |rsa|
+        rsa.headlines += [
+          client.resource.ad_text_asset do |ata|
+            ata.text = "Visit the Red Planet in style."
+            ata.pinned_field = :HEADLINE_1
+          end,
+          client.resource.ad_text_asset do |ata|
+            # This field will produce a violation for excessive exclamation marks.
+            ata.text = "Low-gravity fun for everyone!!"
+          end,
+          client.resource.ad_text_asset do |ata|
+            ata.text = "Book your cruise to Mars now."
+          end,
+        ]
+        rsa.descriptions += [
+          client.resource.ad_text_asset do |ata|
+            ata.text = "Luxury cruise to Mars."
+          end,
+          client.resource.ad_text_asset do |ata|
+            ata.text = "Book your ticket now"
+          end,
+        ]
       end
+      ad.final_urls << "https://www.example.com"
     end
   end
 
@@ -49,7 +66,7 @@ def validate_text_ad(customer_id, ad_group_id)
       operations: [operation],
       validate_only: true,
     )
-    puts "Expanded text ad validated successfully."
+    puts "Responsive search ad validated successfully."
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     # This code path will be reached if there is a validation error from the server.
     e.failure.errors.each do |error|
@@ -107,7 +124,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    validate_text_ad(
+    validate_ad(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:ad_group_id),
     )
