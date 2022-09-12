@@ -41,7 +41,7 @@ def validate_ad(customer_id, ad_group_id)
           end,
           client.resource.ad_text_asset do |ata|
             # This field will produce a violation for excessive exclamation marks.
-            ata.text = "Low-gravity fun fo reveryone!!"
+            ata.text = "Low-gravity fun for everyone!!"
           end,
           client.resource.ad_text_asset do |ata|
             ata.text = "Book your cruise to Mars now."
