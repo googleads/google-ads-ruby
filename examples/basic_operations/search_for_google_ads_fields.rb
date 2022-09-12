@@ -24,7 +24,7 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-def get_artifact_metadata(artifact_name)
+def search_for_google_ads_fields(name_prefix)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -39,47 +39,39 @@ def get_artifact_metadata(artifact_name)
       selectable_with,
       data_type,
       is_repeated
-    WHERE name = '#{artifact_name}'
+    WHERE name LIKE '#{name_prefix}%'
   QUERY
+  # The % after the name prefix indicates that any series of characters may
+  # come after the provided prefix.
 
   response = client.service.google_ads_field.search_google_ads_fields(query: query)
 
   if response.response.results.empty?
-    puts "The specified artifact '#{artifact_name}' doesn't exist"
+    puts "No GoogleAdsField found with name that begins with '#{name_prefix}'"
     return
   end
 
   response.each do |row|
-    puts "An artifact named '#{row.name}' with category '#{row.category}' and data type " \
-        "#{row.data_type} #{is_or_not(row.selectable)} selectable, " \
-        "#{is_or_not(row.filterable)} filterable, #{is_or_not(row.sortable)} " \
-        "sortable, and #{is_or_not(row.is_repeated)} repeated."
+    puts "#{row.name}:"
+    puts "\t\tcategory: #{row.category}"
+    puts "\t\tdata type: #{row.data_type}"
+    puts "\t\tselectable: #{row.selectable}"
+    puts "\t\tfilterable: #{row.filterable}"
+    puts "\t\tsortable: #{row.sortable}"
+    puts "\t\trepeated: #{row.is_repeated}"
 
     if !row.selectable_with.empty?
-      puts "The artifact can be selected with the following artifacts:"
-      puts (row.selectable_with.sort_by { |field| field })
+      puts "\tselectable with:"
+      row.selectable_with.sort_by {|field| field}.each do |field|
+        puts "\t\t#{field}"
+      end
     end
   end
 end
 
-# Returns "is" when the specified value is true and "is not" when the
-# specified value is false
-def is_or_not(bool)
-  bool ? 'is' : 'is not'
-end
-
 if __FILE__ == $PROGRAM_NAME
   options = {}
-
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
   # Running the example with -h will print the command line usage.
-  options[:artifact_name] = 'campaign'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
@@ -87,11 +79,8 @@ if __FILE__ == $PROGRAM_NAME
     opts.separator ''
     opts.separator 'Options:'
 
-    help_msg = 'Artifact Name (e.g. a resource such as customer, campaign' \
-        ' or a field such as metrics.impressions, campaign.id)'
-
-    opts.on('-A', '--artifact-name ARTIFACT-NAME', String, help_msg) do |v|
-      options[:artifact_name] = v
+    opts.on('-n', '--name-prefix NAME-PREFIX', String) do |v|
+      options[:name_prefix] = v
     end
 
     opts.separator ''
@@ -104,7 +93,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    get_artifact_metadata(options[:artifact_name])
+    search_for_google_ads_fields(options[:name_prefix])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       error.error_code.to_h.each do |k, v|
