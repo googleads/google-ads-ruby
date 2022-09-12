@@ -22,7 +22,6 @@ require 'google/ads/google_ads/patches'
 require 'google/ads/google_ads/config'
 require 'google/ads/google_ads/field_mask_util'
 require 'google/ads/google_ads/lookup_util'
-require 'google/ads/google_ads/wrapper_util'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/factories'
 require 'google/ads/google_ads/errors'
@@ -173,11 +172,6 @@ module Google
         # Returns a reference to the FieldMaskUtil class for ease of access.
         def field_mask()
           Google::Ads::GoogleAds::FieldMaskUtil
-        end
-
-        # Returns a reference to the WrapperUtil class for ease of access.
-        def wrapper()
-          Google::Ads::GoogleAds::WrapperUtil
         end
 
         # Returns a reference to the PathLookupUtil to generate resource names.
