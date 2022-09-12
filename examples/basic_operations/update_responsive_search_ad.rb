@@ -38,6 +38,7 @@ def update_responsive_search_ad(customer_id, ad_id)
       rsa.headlines += [
         client.resource.ad_text_asset do |ata|
           ata.text = "Cruise to Pluto #{(Time.new.to_f * 100).to_i}"
+          ata.pinned_field = :HEADLINE_1
         end,
         client.resource.ad_text_asset do |ata|
           ata.text = "Tickets on sale now"
