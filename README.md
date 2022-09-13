@@ -96,8 +96,8 @@ Find out more at the [Configuration guide][].
 
 [Developer token guide]: https://developers.google.com/google-ads/api/docs/first-call/dev-token
 [Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/overview
-[Authentication example]: https://github.com/googleads/google-ads-ruby/blob/master/examples/authentication/authenticate_in_desktop_application.rb
-[google_ads_config.rb]: https://github.com/googleads/google-ads-ruby/blob/master/google_ads_config.rb
+[Authentication example]: https://github.com/googleads/google-ads-ruby/blob/main/examples/authentication/generate_user_credentials.rb
+[google_ads_config.rb]: https://github.com/googleads/google-ads-ruby/blob/main/google_ads_config.rb
 [Configuration guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/configuration
 
 ## Usage
@@ -121,7 +121,7 @@ Once you're familiar with the [examples][], we also recommend familiarizing
 yourself with [factories][], which provides a set of high level convenience
 methods for working with the Google Ads API
 
-[examples]: https://github.com/googleads/google-ads-ruby/blob/master/examples
+[examples]: https://github.com/googleads/google-ads-ruby/blob/main/examples
 [factories]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/factories
 
 ## Logging
