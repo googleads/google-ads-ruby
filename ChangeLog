@@ -1,3 +1,6 @@
+FRONTLOG:
+ - Compatibility with v12 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 19.0.0:
  - Removed support for v9.
 
