@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,49 +15,58 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds an expanded text ad. To get expanded text ads,
-# run get_expanded_text_ads.rb.
+# This example updates a responsive search ad.
+# To get responsive search ads, run get_responsive_search_ads.rb.
 
 require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-# [START add_expanded_text_ads]
-def add_expanded_text_ads(customer_id, ad_group_id)
+# [START update_responsive_search_ad]
+def update_responsive_search_ad(customer_id, ad_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # Create an ad group ad.
-  ad_group_ad = client.resource.ad_group_ad do |aga|
-    aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
-    aga.status = :PAUSED
-    aga.ad = client.resource.ad do |ad|
-      ad.final_urls << "http://www.example.com"
+  ad_resource_name = client.path.ad(customer_id, ad_id)
 
-      # Set expanded text ad info
-      ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
-        eta.description = "Buy your tickets now!"
-        eta.headline_part1 = "Cruise to Mars #{(Time.new.to_f * 100).to_i}"
-        eta.headline_part2 = "Best Space Cruise Line"
-        eta.path1 = "all-inclusive"
-        eta.path2 = "deals"
-      end
+  # Create the operation for updating the ad.
+  ad_operation = client.operation.update_resource.ad(ad_resource_name) do |ad|
+    ad.final_urls << 'http://www.example.com'
+    ad.final_mobile_urls << 'http://www.example.com/mobile'
+    ad.responsive_search_ad = client.resource.responsive_search_ad_info do |rsa|
+      rsa.headlines += [
+        client.resource.ad_text_asset do |ata|
+          ata.text = "Cruise to Pluto #{(Time.new.to_f * 100).to_i}"
+          ata.pinned_field = :HEADLINE_1
+        end,
+        client.resource.ad_text_asset do |ata|
+          ata.text = "Tickets on sale now"
+        end,
+        client.resource.ad_text_asset do |ata|
+          ata.text = "Buy your ticket now"
+        end,
+      ]
+      rsa.descriptions += [
+        client.resource.ad_text_asset do |ata|
+          ata.text = "Best space cruise ever"
+        end,
+        client.resource.ad_text_asset do |ata|
+          ata.text = "The most wonderful space experience you will ever have"
+        end,
+      ]
     end
   end
 
-  # Create the operation.
-  ad_group_ad_operation = client.operation.create_resource.ad_group_ad(ad_group_ad)
-
-  # Add the ad group ad.
-  response = client.service.ad_group_ad.mutate_ad_group_ads(
+  # Update the ad.
+  response = client.service.ad.mutate_ads(
     customer_id: customer_id,
-    operations: [ad_group_ad_operation],
+    operations: [ad_operation],
   )
 
-  puts "Created expanded text ad #{response.results.first.resource_name}."
+  puts "Updated responsive search ad #{response.results.first.resource_name}."
 end
-# [END add_expanded_text_ads]
+# [END update_responsive_search_ad]
 
 if __FILE__ == $0
   options = {}
@@ -70,7 +79,7 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
+  options[:ad_id] = 'INSERT_AD_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -82,8 +91,8 @@ if __FILE__ == $0
       options[:customer_id] = v
     end
 
-    opts.on('-A', '--ad-group-id AD-GROUP-ID', String, 'AdGroup ID') do |v|
-      options[:ad_group_id] = v
+    opts.on('-a', '--ad-id AD-ID', String, 'Ad ID') do |v|
+      options[:ad_id] = v
     end
 
     opts.separator ''
@@ -96,20 +105,21 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_expanded_text_ads(options.fetch(:customer_id).tr("-", ""), options[:ad_group_id])
+    update_responsive_search_ad(options.fetch(:customer_id).tr('-', ''), options[:ad_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      STDERR.printf('Error with message: %s\n', error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          STDERR.printf('\tOn field: %s\n', field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        STDERR.printf('\tType: %s\n\tCode: %s\n', k, v)
       end
     end
     raise
   end
 end
+
