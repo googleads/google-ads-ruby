@@ -481,79 +481,79 @@ def create_asset_and_asset_group_asset_operations(
     :SQUARE_MARKETING_IMAGE,
     "Square Marketing Image")
 
-	# After being created the list must be sorted so that all asset
-	# operations come before all the asset group asset operations,
-	# otherwise the API will reject the request.
-	sort_asset_and_asset_group_asset_operations(operations)
+  # After being created the list must be sorted so that all asset
+  # operations come before all the asset group asset operations,
+  # otherwise the API will reject the request.
+  sort_asset_and_asset_group_asset_operations(operations)
 end
 # [END add_performance_max_retail_campaign_6]
 
 # [START add_performance_max_retail_campaign_7]
 # Creates a list of MutateOperations that create a new linked text asset.
 def create_and_link_text_asset(client, customer_id, text, field_type)
-	operations = []
-	temp_id = next_temp_id
+  operations = []
+  temp_id = next_temp_id
 
-	# Create the Text Asset.
-	operations << client.operation.mutate do |m|
-		m.asset_operation = client.operation.create_resource.asset do |a|
-			a.resource_name = client.path.asset(customer_id, temp_id)
-			a.text_asset = client.resource.text_asset do |text_asset|
-				text_asset.text = text
-			end
-		end
-	end
+  # Create the Text Asset.
+  operations << client.operation.mutate do |m|
+    m.asset_operation = client.operation.create_resource.asset do |a|
+      a.resource_name = client.path.asset(customer_id, temp_id)
+      a.text_asset = client.resource.text_asset do |text_asset|
+        text_asset.text = text
+      end
+    end
+  end
 
-	# Create an AssetGroupAsset to link the Asset to the AssetGroup.
-	operations << client.operation.mutate do |m|
-		m.asset_group_asset_operation = client.operation.create_resource
-				.asset_group_asset do |aga|
-			aga.field_type = field_type
-			aga.asset_group = client.path.asset_group(
-				customer_id,
-				ASSET_GROUP_TEMPORARY_ID)
-			aga.asset = client.path.asset(customer_id, temp_id)
-		end
-	end
+  # Create an AssetGroupAsset to link the Asset to the AssetGroup.
+  operations << client.operation.mutate do |m|
+    m.asset_group_asset_operation = client.operation.create_resource
+        .asset_group_asset do |aga|
+      aga.field_type = field_type
+      aga.asset_group = client.path.asset_group(
+        customer_id,
+        ASSET_GROUP_TEMPORARY_ID)
+      aga.asset = client.path.asset(customer_id, temp_id)
+    end
+  end
 
-	operations
+  operations
 end
 # [END add_performance_max_retail_campaign_7]
 
 # [START add_performance_max_campaign_retail__8]
 # Creates a list of MutateOperations that create a new linked image asset.
 def create_and_link_image_asset(client, customer_id, url, field_type, asset_name)
-	operations = []
-	temp_id = next_temp_id
+  operations = []
+  temp_id = next_temp_id
 
-	# Create the Image Asset.
-	operations << client.operation.mutate do |m|
-		m.asset_operation = client.operation.create_resource.asset do |a|
-			a.resource_name = client.path.asset(customer_id, temp_id)
-			a.type = :IMAGE
-			# Provide a unique friendly name to identify your asset.
-			# When there is an existing image asset with the same content but a different
-			# name, the new name will be dropped silently.
-			a.name = asset_name
-			a.image_asset = client.resource.image_asset do |image_asset|
-				image_asset.data = get_image_bytes(url)
-			end
-		end
-	end
+  # Create the Image Asset.
+  operations << client.operation.mutate do |m|
+    m.asset_operation = client.operation.create_resource.asset do |a|
+      a.resource_name = client.path.asset(customer_id, temp_id)
+      a.type = :IMAGE
+      # Provide a unique friendly name to identify your asset.
+      # When there is an existing image asset with the same content but a different
+      # name, the new name will be dropped silently.
+      a.name = asset_name
+      a.image_asset = client.resource.image_asset do |image_asset|
+        image_asset.data = get_image_bytes(url)
+      end
+    end
+  end
 
-	# Create an AssetGroupAsset to link the Asset to the AssetGroup.
-	operations << client.operation.mutate do |m|
-		m.asset_group_asset_operation = client.operation.create_resource
-				.asset_group_asset do |aga|
-			aga.field_type = field_type
-			aga.asset_group = client.path.asset_group(
-				customer_id,
-				ASSET_GROUP_TEMPORARY_ID)
-			aga.asset = client.path.asset(customer_id, temp_id)
-		end
-	end
+  # Create an AssetGroupAsset to link the Asset to the AssetGroup.
+  operations << client.operation.mutate do |m|
+    m.asset_group_asset_operation = client.operation.create_resource
+        .asset_group_asset do |aga|
+      aga.field_type = field_type
+      aga.asset_group = client.path.asset_group(
+        customer_id,
+        ASSET_GROUP_TEMPORARY_ID)
+      aga.asset = client.path.asset(customer_id, temp_id)
+    end
+  end
 
-	operations
+  operations
 end
 # [END add_performance_max_retail_campaign_8]
 
