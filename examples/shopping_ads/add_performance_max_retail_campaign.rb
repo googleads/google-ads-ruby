@@ -120,10 +120,18 @@ def add_performance_max_retail_campaign(
     client,
     customer_id,
   )
-  asset_group_operations = create_asset_group_operation(
+  asset_group_operation = create_asset_group_operation(
     client,
     customer_id,
     final_url,
+  )
+  listing_group_filter_operation = create_listing_group_filter_operation(
+    client,
+    customer_id,
+  )
+  asset_and_asset_group_asset_operations = create_asset_and_asset_group_asset_operations(
+    client,
+    customer_id,
     headline_asset_resource_names,
     description_asset_resource_names,
   )
@@ -131,10 +139,6 @@ def add_performance_max_retail_campaign(
     client,
     customer_id,
     customer_conversion_goals,
-  )
-  asset_group_listing_group_operations = create_asset_group_listing_group_operations(
-    client,
-    customer_id,
   )
 
   # Send the operations in a single Mutate request.
@@ -148,9 +152,10 @@ def add_performance_max_retail_campaign(
       # Expand the list of multiple operations into the list of
       # other mutate operations
       campaign_criterion_operations,
-      asset_group_operations,
+      asset_group_operation,
+      listing_group_filter_operation,
+      asset_and_asset_group_asset_operations,
       conversion_goal_operations,
-      asset_group_listing_group_operations,
     ].flatten)
 
   print_response_details(response)
@@ -256,15 +261,13 @@ def create_campaign_criterion_operations(client, customer_id)
     # https://developers.google.com/google-ads/api/reference/data/geotargets
     # and they can also be retrieved using the GeoTargetConstantService as shown
     # here: https://developers.google.com/google-ads/api/docs/targeting/location-targeting
-    #
-    # We will add one positive location target for New York City (ID=1023191)
-    # and one negative location target for Brooklyn (ID=1022762).
-    # First, add the positive (negative = false) for New York City.
     operations << client.operation.mutate do |m|
       m.campaign_criterion_operation =
         client.operation.create_resource.campaign_criterion do |cc|
         cc.campaign = client.path.campaign(
           customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID)
+        # Adds one positive location target for New York City (ID=1023191),
+        # specifically adding the positive criteria before the negative one.
         cc.location = client.resource.location_info do  |li|
           li.geo_target_constant = client.path.geo_target_constant("1023191")
         end
@@ -272,7 +275,7 @@ def create_campaign_criterion_operations(client, customer_id)
       end
     end
 
-  # Next add the negative target for Brooklyn.
+  # Next add the negative target for Brooklyn (ID=1022762).
   operations << client.operation.mutate do |m|
     m.campaign_criterion_operation =
       client.operation.create_resource.campaign_criterion do |cc|
@@ -306,49 +309,48 @@ end
 
 # [START add_performance_max_retail_campaign_5]
 # Creates multiple text assets and returns the list of resource names.
+# These repeated assets must be created in a separate request prior to creating
+# the campaign.
 def create_multiple_text_assets(client, customer_id, texts)
-    operations = texts.map do |text|
-      client.operation.mutate do |m|
-        m.asset_operation = client.operation.create_resource.asset do |asset|
-          asset.text_asset = client.resource.text_asset do |text_asset|
-            text_asset.text = text
-          end
+  operations = texts.map do |text|
+    client.operation.mutate do |m|
+      m.asset_operation = client.operation.create_resource.asset do |asset|
+        asset.text_asset = client.resource.text_asset do |text_asset|
+          text_asset.text = text
         end
       end
     end
-
-    # Send the operations in a single Mutate request.
-    response = client.service.google_ads.mutate(
-      customer_id: customer_id,
-      mutate_operations: operations,
-    )
-
-    asset_resource_names = []
-    response.mutate_operation_responses.each do |result|
-      if result.asset_result
-        asset_resource_names.append(result.asset_result.resource_name)
-      end
-    end
-    print_response_details(response)
-    asset_resource_names
   end
-  # [END add_performance_max_retail_campaign_5]
 
-# [START add_performance_max_retail_campaign_6]
-# Creates a list of MutateOperations that create a new asset_group.
+  # Send the operations in a single Mutate request.
+  response = client.service.google_ads.mutate(
+    customer_id: customer_id,
+    mutate_operations: operations,
+  )
+
+  asset_resource_names = []
+  response.mutate_operation_responses.each do |result|
+    if result.asset_result
+      asset_resource_names.append(result.asset_result.resource_name)
+    end
+  end
+  print_response_details(response)
+  asset_resource_names
+end
+# [END add_performance_max_retail_campaign_5]
+
+# [START add_performance_max_retail_campaign_10]
+# Creates a MutateOperation that creates a new asset_group.
 #
 # A temporary ID will be assigned to this asset group so that it can
 # be referenced by other objects being created in the same Mutate request.
 def create_asset_group_operation(
     client,
     customer_id,
-    final_url,
-    headline_asset_resource_names,
-    description_asset_resource_names)
-  operations = []
+    final_url)
 
   # Create the AssetGroup
-  operations << client.operation.mutate do |m|
+  client.operation.mutate do |m|
     m.asset_group_operation = client.operation.create_resource.asset_group do |ag|
       ag.name = "Performance Max retail asset group #{SecureRandom.uuid}"
       ag.campaign = client.path.campaign(
@@ -359,10 +361,44 @@ def create_asset_group_operation(
       ag.status = :PAUSED
       ag.resource_name = client.path.asset_group(
         customer_id,
-        ASSET_GROUP_TEMPORARY_ID)
+        ASSET_GROUP_TEMPORARY_ID,
+      )
     end
   end
+end
+# [END add_performance_max_retail_campaign_10]
 
+# [START add_performance_max_retail_campaign_11]
+# Creates a MutateOperation that creates a new listing group filter.
+# A temporary ID will be assigned to this listing group filter so that it can
+# be referenced by other objects being created in the same Mutate request.
+def create_listing_group_filter_operation(client, customer_id)
+  client.operation.mutate do |m|
+    m.asset_group_listing_group_filter_operation =
+      client.operation.create_resource.asset_group_listing_group_filter do |aglg|
+        aglg.asset_group = client.path.asset_group(
+          customer_id,
+          ASSET_GROUP_TEMPORARY_ID,
+        )
+        aglg.type = :UNIT_INCLUDED
+        # Because this is a Performance Max campaign for retail, we need to
+        # specify that this is in the shopping vertical.
+        aglg.vertical = :SHOPPING
+      end
+  end
+end
+# [END add_performance_max_retail_campaign_11]
+
+# [START add_performance_max_retail_campaign_6]
+# Creates a list of MutateOperations that create a new asset_group.
+# A temporary ID will be assigned to this asset group so that it can be
+# referenced by other objects being created in the same Mutate request.
+def create_asset_and_asset_group_asset_operations(
+  client,
+  customer_id,
+  headline_asset_resource_names,
+  description_asset_resource_names)
+  operations = []
   # For the list of required assets for a Performance Max campaign, see
   # https://developers.google.com/google-ads/api/docs/performance-max/assets
   #
@@ -425,7 +461,7 @@ def create_asset_group_operation(
   operations += create_and_link_image_asset(
     client,
     customer_id,
-    "https://gaagl.page.link/bjYi",
+    "https://gaagl.page.link/1Crm",
     :LOGO,
     "Logo Image")
 
@@ -445,78 +481,97 @@ def create_asset_group_operation(
     :SQUARE_MARKETING_IMAGE,
     "Square Marketing Image")
 
-  operations
+	# After being created the list must be sorted so that all asset
+	# operations come before all the asset group asset operations,
+	# otherwise the API will reject the request.
+	sort_asset_and_asset_group_asset_operations(operations)
 end
 # [END add_performance_max_retail_campaign_6]
 
 # [START add_performance_max_retail_campaign_7]
 # Creates a list of MutateOperations that create a new linked text asset.
 def create_and_link_text_asset(client, customer_id, text, field_type)
-    operations = []
-    temp_id = next_temp_id
+	operations = []
+	temp_id = next_temp_id
 
-    # Create the Text Asset.
-    operations << client.operation.mutate do |m|
-      m.asset_operation = client.operation.create_resource.asset do |a|
-        a.resource_name = client.path.asset(customer_id, temp_id)
-        a.text_asset = client.resource.text_asset do |text_asset|
-          text_asset.text = text
-        end
-      end
-    end
+	# Create the Text Asset.
+	operations << client.operation.mutate do |m|
+		m.asset_operation = client.operation.create_resource.asset do |a|
+			a.resource_name = client.path.asset(customer_id, temp_id)
+			a.text_asset = client.resource.text_asset do |text_asset|
+				text_asset.text = text
+			end
+		end
+	end
 
-    # Create an AssetGroupAsset to link the Asset to the AssetGroup.
-    operations << client.operation.mutate do |m|
-      m.asset_group_asset_operation = client.operation.create_resource
-          .asset_group_asset do |aga|
-        aga.field_type = field_type
-        aga.asset_group = client.path.asset_group(
-          customer_id,
-          ASSET_GROUP_TEMPORARY_ID)
-        aga.asset = client.path.asset(customer_id, temp_id)
-      end
-    end
+	# Create an AssetGroupAsset to link the Asset to the AssetGroup.
+	operations << client.operation.mutate do |m|
+		m.asset_group_asset_operation = client.operation.create_resource
+				.asset_group_asset do |aga|
+			aga.field_type = field_type
+			aga.asset_group = client.path.asset_group(
+				customer_id,
+				ASSET_GROUP_TEMPORARY_ID)
+			aga.asset = client.path.asset(customer_id, temp_id)
+		end
+	end
 
-    operations
-  end
-  # [END add_performance_max_retail_campaign_7]
+	operations
+end
+# [END add_performance_max_retail_campaign_7]
 
 # [START add_performance_max_campaign_retail__8]
 # Creates a list of MutateOperations that create a new linked image asset.
 def create_and_link_image_asset(client, customer_id, url, field_type, asset_name)
-    operations = []
-    temp_id = next_temp_id
+	operations = []
+	temp_id = next_temp_id
 
-    # Create the Image Asset.
-    operations << client.operation.mutate do |m|
-      m.asset_operation = client.operation.create_resource.asset do |a|
-        a.resource_name = client.path.asset(customer_id, temp_id)
-        a.type = :IMAGE
-        # Provide a unique friendly name to identify your asset.
-        # When there is an existing image asset with the same content but a different
-        # name, the new name will be dropped silently.
-        a.name = asset_name
-        a.image_asset = client.resource.image_asset do |image_asset|
-          image_asset.data = get_image_bytes(url)
-        end
-      end
+	# Create the Image Asset.
+	operations << client.operation.mutate do |m|
+		m.asset_operation = client.operation.create_resource.asset do |a|
+			a.resource_name = client.path.asset(customer_id, temp_id)
+			a.type = :IMAGE
+			# Provide a unique friendly name to identify your asset.
+			# When there is an existing image asset with the same content but a different
+			# name, the new name will be dropped silently.
+			a.name = asset_name
+			a.image_asset = client.resource.image_asset do |image_asset|
+				image_asset.data = get_image_bytes(url)
+			end
+		end
+	end
+
+	# Create an AssetGroupAsset to link the Asset to the AssetGroup.
+	operations << client.operation.mutate do |m|
+		m.asset_group_asset_operation = client.operation.create_resource
+				.asset_group_asset do |aga|
+			aga.field_type = field_type
+			aga.asset_group = client.path.asset_group(
+				customer_id,
+				ASSET_GROUP_TEMPORARY_ID)
+			aga.asset = client.path.asset(customer_id, temp_id)
+		end
+	end
+
+	operations
+end
+# [END add_performance_max_retail_campaign_8]
+
+# [START add_performance_max_retail_campaign_12]
+# Sorts a list of asset and asset group asset operations.  This sorts the list
+# such that all asset operations precede all asset group asset operations. If
+# asset group assets are created before assets then an error will be returned
+# by the API.
+def sort_asset_and_asset_group_asset_operations(operations)
+  operations.sort_by do |operation|
+    if operation.asset_group_asset_operation
+      1
+    else
+      0
     end
-
-    # Create an AssetGroupAsset to link the Asset to the AssetGroup.
-    operations << client.operation.mutate do |m|
-      m.asset_group_asset_operation = client.operation.create_resource
-          .asset_group_asset do |aga|
-        aga.field_type = field_type
-        aga.asset_group = client.path.asset_group(
-          customer_id,
-          ASSET_GROUP_TEMPORARY_ID)
-        aga.asset = client.path.asset(customer_id, temp_id)
-      end
-    end
-
-    operations
   end
-  # [END add_performance_max_retail_campaign_8]
+end
+# [END add_performance_max_retail_campaign_12]
 
 # [START add_performance_max_retail_campaign_9]
 def _get_customer_conversion_goals(client, customer_id)
@@ -585,27 +640,6 @@ def create_conversion_goal_operations(client, customer_id, customer_conversion_g
   operations
 end
 # [END add_performance_max_retail_campaign_9]
-
-# [START add_performance_max_retail_campaign_10]
-# Create a list of MutateOperations that create a new asset group listing group filter.
-def create_asset_group_listing_group_operations(client, customer_id)
-  operations = []
-
-  operations << client.operation.create_resource.
-      asset_group_listing_group_filter do |lgf|
-    lgf.asset_group = client.path.asset_group(customer_id, ASSET_GROUP_TEMPORARY_ID)
-
-    # Since this is the root node, do not set the ParentListingGroupFilter. For all
-    # other nodes, this would refer to the parent listing group filter resource name.
-    # lgf.parent_listing_group_filter = "<PARENT FILTER NAME>"
-
-    lgf.type = :UNIT_INCLUDED
-    lgf.vertical = :SHOPPING
-  end
-
-  operations
-end
-# [END add_performance_max_retail_campaign_10]
 
 # Loads image data from a URL.
 def get_image_bytes(url)
