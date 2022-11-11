@@ -27,7 +27,7 @@ require 'google/ads/google_ads'
 def add_smart_campaign(
   customer_id,
   keyword_text,
-  freeform_keyword_text,
+  free_form_keyword_text,
   business_profile_location,
   business_name)
   # GoogleAdsClient will read a config file from
@@ -49,16 +49,19 @@ def add_smart_campaign(
   # generate a list of keyword themes using the SuggestKeywordThemes method
   # on the SmartCampaignSuggestService. It is strongly recommended that you
   # use this strategy for generating keyword themes.
-  keyword_theme_constants = get_keyword_theme_suggestions(
+  keyword_themes = get_keyword_theme_suggestions(
     client,
     customer_id,
     suggestion_info,
   )
 
-  # If a keyword text is given retrieve keyword theme constant suggestions
-  # from the KeywordThemeConstantService and append them to the existing list.
+  # If a keyword text is given, retrieve keyword theme constant suggestions
+  # from the KeywordThemeConstantService, map them to KeywordThemes, and append
+  # them to the existing list. This logic should ideally only be used if the
+  # suggestions from the get_keyword_theme_suggestions function are
+  # insufficient.
   if keyword_text
-    keyword_theme_constants += get_keyword_text_auto_completions(
+    keyword_themes += get_keyword_text_auto_completions(
       client,
       keyword_text,
     )
@@ -66,17 +69,17 @@ def add_smart_campaign(
 
   # Map the KeywordThemeConstants retrieved by the previous two steps to
   # KeywordThemeInfo instances.
-  keyword_theme_infos = map_keyword_theme_constants_to_infos(
+  keyword_theme_infos = map_keyword_themes_to_keyword_infos(
     client,
-    keyword_theme_constants,
+    keyword_themes,
   )
 
   # If a free-form keyword text is given we create a KeywordThemeInfo instance
   # from it and add it to the existing list.
-  if freeform_keyword_text
+  if free_form_keyword_text
     keyword_theme_infos << get_freeform_keyword_theme_info(
       client,
-      freeform_keyword_text,
+      free_form_keyword_text,
     )
   end
 
@@ -159,7 +162,7 @@ def get_keyword_theme_suggestions(client, customer_id, suggestion_info)
     suggestion_info: suggestion_info,
   )
 
-  puts "Retrieved #{response.keyword_themes.size} keyword theme constant" \
+  puts "Retrieved #{response.keyword_themes.size} keyword theme" \
     " suggestions from SuggestKeywordThemes service."
   return response.keyword_themes
 end
@@ -167,6 +170,8 @@ end
 
 # [START add_smart_campaign]
 # Retrieves keyword_theme_constants for the given criteria.
+# These KeywordThemeConstants are derived from autocomplete data for the given
+# keyword text. They are mapped to KeywordThemes before being returned.
 def get_keyword_text_auto_completions(client, keyword_text)
   response = client.service.keyword_theme_constant.suggest_keyword_theme_constants(
     query_text: keyword_text,
@@ -177,28 +182,35 @@ def get_keyword_text_auto_completions(client, keyword_text)
   puts "Retrieved #{response.keyword_theme_constants.size} keyword theme" \
     "constants using the keyword: '#{keyword_text}'"
 
-  response.keyword_theme_constants
+  response.keyword_theme_constants.map do |ktc|
+    client.resource.keyword_theme do |kt|
+      kt.keyword_theme_constant = ktc
+    end
+  end
 end
 # [END add_smart_campaign]
 
 # [START add_smart_campaign_13]
-def get_freeform_keyword_theme_info(client, freeform_keyword_text)
+def get_freeform_keyword_theme_info(client, free_form_keyword_text)
   client.resource.keyword_theme_info do |kti|
-    kti.free_form_keyword_theme = freeform_keyword_text
+    kti.free_form_keyword_theme = free_form_keyword_text
   end
 end
 # [END add_smart_campaign_13]
 
 # Maps a list of keyword_theme_constants to keyword_theme_infos.
-def map_keyword_theme_constants_to_infos(client, keyword_theme_constants)
-  infos = []
-  keyword_theme_constants.each do |constant|
-    infos << client.resource.keyword_theme_info do |kti|
-      kti.keyword_theme_constant = constant.resource_name
+def map_keyword_themes_to_keyword_infos(client, keyword_themes)
+  keyword_themes.map do |kt|
+    client.resource.keyword_theme_info do |kti|
+      if kt.keyword_theme_constant
+        kti.keyword_theme_constant = kt.keyword_theme_constant.resource_name
+      elsif kt.free_form_keyword_theme
+        kti.free_form_keyword_theme = kt.free_form_keyword_theme
+      else
+        raise "Malformed keyword_theme #{kt}"
+      end
     end
   end
-
-  infos
 end
 
 # [START add_smart_campaign_9]
@@ -643,7 +655,7 @@ if __FILE__ == $0
       'recommended because they are less effective than suggested ' \
       'keyword themes, however they are useful in situations where a ' \
       'very specific term needs to be targeted.') do |v|
-      options[:freeform_keyword_text] = v
+      options[:free_form_keyword_text] = v
     end
 
     opts.on('-b', '--business-profile-location BUSINESS-PROFILE-LOCATION', String,
@@ -674,7 +686,7 @@ if __FILE__ == $0
     add_smart_campaign(
       options.fetch(:customer_id).tr("-", ""),
       options[:keyword_text],
-      options[:freeform_keyword_text],
+      options[:free_form_keyword_text],
       options[:business_profile_location],
       options[:business_name],
     )

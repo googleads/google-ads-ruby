@@ -69,7 +69,7 @@ def create_experiment_arms(client, customer_id, base_campaign_id, experiment)
     # The "control" arm references an already-existing campaign.
     ea.control = true
     ea.campaigns << client.path.campaign(customer_id, base_campaign_id)
-    ea.trial = experiment
+    ea.experiment = experiment
     ea.name = 'control arm'
     ea.traffic_split = 40
   end
@@ -78,7 +78,7 @@ def create_experiment_arms(client, customer_id, base_campaign_id, experiment)
     # generate draft campaigns that you can modify before starting the
     # experiment.
     ea.control = false
-    ea.trial = experiment
+    ea.experiment = experiment
     ea.name = 'experiment arm'
     ea.traffic_split = 60
   end
