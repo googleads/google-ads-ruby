@@ -26,6 +26,15 @@ module Google
           string.to_str.split("_").map(&:capitalize).join
         end
 
+        # Takes a string and converts it from snake case to camel case with a
+        # lower case first letter. e.g:
+        # foo_service becomes fooService
+        def self.lower_camelize(string)
+          camelized = camelize(string)
+          camelized[0] = camelized[0].downcase
+          camelized
+        end
+
         def self.underscore(string)
           string.to_str.gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
             gsub(/([a-z\d])([A-Z])/,'\1_\2').

@@ -120,6 +120,14 @@ module Google
                   end
                 end
               else # primitive types
+                # bool subfields that are unspecified are returned as false,
+                # which would result in incorrectly omitting the field we're
+                # trying to set to false in an update from the field mask
+                # we can use JSON to get around this
+                if field.type == :bool
+                  original_value = JSON.parse(original.to_json)[Utils.lower_camelize(field.name)]
+                  modified_value = JSON.parse(modified.to_json)[Utils.lower_camelize(field.name)]
+                end
                 mask.paths << field_path unless original_value == modified_value
               end
             end
@@ -172,7 +180,6 @@ module Google
           begin
             return value.nil? ||
               (value.respond_to?(:empty?) && value.empty?) ||
-              value == false ||
               value == 0 ||
               value == :UNSPECIFIED
           rescue
