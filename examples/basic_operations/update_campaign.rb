@@ -30,10 +30,18 @@ def update_campaign(customer_id, campaign_id)
 
   operation = client.operation.update_resource.campaign(resource_name) do |c|
     c.status = :PAUSED
-    c.network_settings = client.resource.network_settings do |ns|
-      ns.target_search_network = false
-    end
   end
+
+  # The field mask util will misinterpret the change to target_search_network,
+  # since it is a primitive type and we are setting it to the default value.
+  # Because of this, we must add it manually to the field mask.
+  # See
+  # https://developers.google.com/google-ads/api/docs/client-libs/ruby/field-masks#clearing_fields
+  # for more details.
+  operation.update.network_settings = client.resource.network_settings do |ns|
+    ns.target_search_network = false
+  end
+  operation.update_mask.paths << 'network_settings.target_search_network'
 
   response = client.service.campaign.mutate_campaigns(
     customer_id: customer_id,
