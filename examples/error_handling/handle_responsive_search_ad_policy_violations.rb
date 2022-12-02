@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Requests an exemption for policy violations of an expanded text ad.
+# Requests an exemption for policy violations of a responsive search ad.
 #
 # If the request somehow fails with exceptions that are not policy finding
 # errors, the example will stop instead of trying to send an exemption request.
@@ -23,13 +23,13 @@ require 'optparse'
 require 'google/ads/google_ads'
 require 'date'
 
-def handle_expanded_text_ad_policy_violations(customer_id, ad_group_id)
+def handle_responsive_search_ad_policy_violations(customer_id, ad_group_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
   ad_group_ad_service = client.service.ad_group_ad
 
-  ad_group_ad_operation, ignorable_policy_topics = create_expanded_text_ad(
+  ad_group_ad_operation, ignorable_policy_topics = create_responsive_search_ad(
     client,
     ad_group_ad_service,
     customer_id,
@@ -45,17 +45,31 @@ def handle_expanded_text_ad_policy_violations(customer_id, ad_group_id)
   )
 end
 
-def create_expanded_text_ad(client, ad_group_ad_service, customer_id, ad_group_id)
+def create_responsive_search_ad(client, ad_group_ad_service, customer_id, ad_group_id)
   ad_group_ad_operation = client.operation.create_resource.ad_group_ad do |aga|
     aga.ad_group = client.path.ad_group(customer_id, ad_group_id)
     aga.status = :PAUSED
 
     aga.ad = client.resource.ad do |ad|
       ad.final_urls << "http://www.example.com"
-      ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
-        eta.headline_part1 = "Cruise to Mars ##{(Time.new.to_f * 1000).to_i}"
-        eta.headline_part2 = "Best space cruise line"
-        eta.description = "Buy your tickets now!!!!!!!"
+      ad.responsive_search_ad = client.resource.responsive_search_ad_info do |rsa|
+        rsa.headlines << client.resource.ad_text_asset do |ta|
+          ta.text = "Cruise to Mars ##{(Time.new.to_f * 1000).to_i}"
+        end
+        rsa.headlines << client.resource.ad_text_asset do |ta|
+          ta.text = "Best space cruise line"
+        end
+        rsa.headlines << client.resource.ad_text_asset do |ta|
+          ta.text = "Experience the stars"
+        end
+        rsa.descriptions << client.resource.ad_text_asset do |ta|
+          # Intentionally use an ad text that violates policy -- having too
+          # many exclamation marks.
+          ta.text = "Buy your tickets now!!!!!!!"
+        end
+        rsa.descriptions << client.resource.ad_text_asset do |ta|
+          ta.text = "Visit the Red Planet"
+        end
       end
     end
   end
@@ -73,7 +87,7 @@ def create_expanded_text_ad(client, ad_group_ad_service, customer_id, ad_group_i
   return ad_group_ad_operation, ignorable_policy_topics
 end
 
-# [START handle_expanded_text_ad_policy_violations]
+# [START handle_responsive_search_ad_policy_violations]
 def fetch_ignorable_policy_topics(exception)
   ignorable_policy_topics = []
 
@@ -93,9 +107,9 @@ def fetch_ignorable_policy_topics(exception)
 
   ignorable_policy_topics
 end
-# [END handle_expanded_text_ad_policy_violations]
+# [END handle_responsive_search_ad_policy_violations]
 
-# [START handle_expanded_text_ad_policy_violations_1]
+# [START handle_responsive_search_ad_policy_violations_1]
 def request_exemption(
     client, customer_id, ad_group_ad_service, ad_group_ad_operation, ignorable_policy_topics)
   # Add all the found ignorable policy topics to the operation.
@@ -109,10 +123,10 @@ def request_exemption(
     customer_id: customer_id,
     operations: [ad_group_ad_operation],
   )
-  puts "Successfully added an expanded text ad with resource name " \
+  puts "Successfully added a responsive search ad with resource name " \
     "#{response.results.first.resource_name} for policy violation exception."
 end
-# [END handle_expanded_text_ad_policy_violations_1]
+# [END handle_responsive_search_ad_policy_violations_1]
 
 if __FILE__ == $PROGRAM_NAME
   options = {}
@@ -151,7 +165,7 @@ if __FILE__ == $PROGRAM_NAME
   end.parse!
 
   begin
-    handle_expanded_text_ad_policy_violations(
+    handle_responsive_search_ad_policy_violations(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:ad_group_id),
     )

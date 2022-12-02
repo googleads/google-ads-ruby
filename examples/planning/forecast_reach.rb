@@ -34,8 +34,6 @@ def forecast_reach(customer_id)
   show_plannable_products(reach_plan_service)
 
   forecast_manual_mix(client, reach_plan_service, customer_id)
-
-  forecast_suggested_mix(client, reach_plan_service, customer_id)
 end
 
 # Shows map of plannable locations to their IDs.
@@ -173,44 +171,6 @@ def forecast_manual_mix(client, reach_plan_service, customer_id)
   )
 end
 # [END forecast_reach_3]
-
-# Gets a forecast for a product mix based on your set of preferences.
-# [START forecast_reach_1]
-def forecast_suggested_mix(client, reach_plan_service, customer_id)
-  preferences = client.resource.preferences do |p|
-    p.has_guaranteed_price = true
-    p.starts_with_sound = true
-    p.is_skippable = false
-    p.top_content_only = true
-    p.ad_length = :FIFTEEN_OR_TWENTY_SECONDS
-  end
-
-  mix_response = reach_plan_service.generate_product_mix_ideas(
-    customer_id: customer_id,
-    plannable_location_id: LOCATION_ID,
-    currency_code: CURRENCY_CODE,
-    budget_micros: BUDGET_MICROS,
-    preferences: preferences,
-  )
-
-  product_mix = []
-  mix_response.product_allocation.each do |product|
-    product_mix << client.resource.planned_product do |pp|
-      pp.plannable_product_code = product.plannable_product_code
-      pp.budget_micros = product.budget_micros
-    end
-  end
-
-  get_reach_curve(
-    client,
-    reach_plan_service,
-    customer_id,
-    product_mix,
-    LOCATION_ID,
-    CURRENCY_CODE,
-  )
-end
-# [END forecast_reach_1]
 
 if __FILE__ == $0
   CUSTOMER_ID = 'INSERT_CUSTOMER_ID_HERE';
