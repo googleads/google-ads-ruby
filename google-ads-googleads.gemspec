@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.email         = ['adwordsapiadvisor+michael@google.com']
   s.files = Dir.glob(File.join('lib', '**', '*.rb')) +
       Dir.glob(File.join('lib', '**', '*.json')) +
-      %w(Rakefile README.md ChangeLog google_ads_config.rb THIRD-PARTY-LICENCES.txt)
+      %w(Rakefile README.md CHANGELOG.md google_ads_config.rb THIRD-PARTY-LICENCES.txt)
   s.homepage = 'https://github.com/googleads/google-ads-ruby'
   s.license = 'Apache-2.0'
   s.platform = Gem::Platform::RUBY
