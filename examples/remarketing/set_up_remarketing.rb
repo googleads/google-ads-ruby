@@ -88,18 +88,23 @@ def create_user_list(client, customer_id)
       r.prepopulation_status = :REQUESTED
       # Specifies that the user list targets visitors of a page based on
       # the provided rule.
-      r.expression_rule_user_list = client.resource.expression_rule_user_list_info do |expr|
-        expr.rule = client.resource.user_list_rule_info do |u|
-          u.rule_item_groups << client.resource.user_list_rule_item_group_info do |group|
-            group.rule_items << client.resource.user_list_rule_item_info do |item|
-              # Uses a built-in parameter to create a domain URL rule.
-              item.name = "url__"
-              item.string_rule_item = client.resource.user_list_string_rule_item_info do |s|
-                s.operator = :CONTAINS
-                s.value = "example.com"
+      r.flexible_rule_user_list = client.resource.flexible_rule_user_list_info do |frul|
+        frul.inclusive_rule_operator = :AND
+        frul.inclusive_operands << client.resource.flexible_rule_operand_info do |froi|
+          froi.rule = client.resource.user_list_rule_info do |u|
+            u.rule_item_groups << client.resource.user_list_rule_item_group_info do |group|
+              group.rule_items << client.resource.user_list_rule_item_info do |item|
+                # Uses a built-in parameter to create a domain URL rule.
+                item.name = "url__"
+                item.string_rule_item = client.resource.user_list_string_rule_item_info do |s|
+                  s.operator = :CONTAINS
+                  s.value = "example.com"
+                end
               end
             end
           end
+          # Optionally add a lookback window for this rule, in days.
+          froi.lookback_window_days = 7
         end
       end
     end
@@ -294,19 +299,8 @@ if __FILE__ == $0
   PAGE_SIZE = 1000
 
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
+
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:campaign_id] = 'INSERT_CAMPAIGN_ID_HERE'
-  options[:ad_group_id] = 'INSERT_AD_GROUP_ID_HERE'
-  # To use a different bid modifier value from the default (1.5), pass the
-  # value using -B option on the command line.
   options[:bid_modifier_value] = 1.5
 
   OptionParser.new do |opts|

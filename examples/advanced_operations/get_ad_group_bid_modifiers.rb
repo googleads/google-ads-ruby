@@ -38,7 +38,6 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
             ad_group_bid_modifier.hotel_check_in_day.day_of_week,
             ad_group_bid_modifier.hotel_check_in_date_range.start_date,
             ad_group_bid_modifier.hotel_check_in_date_range.end_date,
-            ad_group_bid_modifier.preferred_content.type,
             campaign.id
     FROM ad_group_bid_modifier
   QUERY
@@ -92,8 +91,6 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
       hotel_check_in_date_range = ad_group_bid_modifier.hotel_check_in_date_range
       criterion_details += "Start Date: #{hotel_check_in_date_range.start_date}, " \
           "End Date: #{hotel_check_in_date_range.end_date}"
-    when :preferred_content
-      criterion_details += "Type: #{ad_group_bid_modifier.preferred_content.type}"
     else
       criterion_details = '  - No Criterion type found.'
     end

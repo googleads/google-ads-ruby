@@ -28,10 +28,22 @@ def add_combined_rule_user_list(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  user_visited_site1_rule_info = create_user_list_rule_info_from_url(
+    client,
+    'http://example.com/example1',
+  )
+  user_visited_site2_rule_info = create_user_list_rule_info_from_url(
+    client,
+    'http://example.com/example2',
+  )
+  user_visited_site3_rule_info = create_user_list_rule_info_from_url(
+    client,
+    'http://example.com/example3',
+  )
+
   # Creates a user list.
   operation = client.operation.create_resource.user_list do |u|
-    u.name = "All visitors to http://example.com/example1 AND " \
-      "http://example.com/example2 ##{(Time.new.to_f * 1000).to_i}"
+    u.name = "Flexible rule user list for example.com ##{(Time.new.to_f * 1000).to_i}"
     u.description = "Visitors of both http://example.com/example1 AND " \
       "http://example.com/example2"
     u.membership_status = :OPEN
@@ -41,41 +53,23 @@ def add_combined_rule_user_list(customer_id)
       # Optional: To include past users in the user list, set the
       # prepopulation_status to REQUESTED.
       r.prepopulation_status = :REQUESTED
-      # Creates the user list where "Visitors of a page who did visit another
-      # page". To create a user list where "Visitors of a page who did not visit
-      # another page", change the rule_operator from AND to AND_NOT.
-      r.combined_rule_user_list = client.resource.combined_rule_user_list_info do |c|
-        # Creates a UserListRuleInfo object containing the first rule.
-        c.left_operand = client.resource.user_list_rule_info do |rule|
-          rule.rule_item_groups << client.resource.user_list_rule_item_group_info do |group|
-            # Creates a rule targeting any user that visited a url that equals
-            # 'http://example.com/example1'.
-            group.rule_items << client.resource.user_list_rule_item_info do |item|
-              # Uses a built-in parameter to create a domain URL rule.
-              item.name = URL_STRING
-              item.string_rule_item = client.resource.user_list_string_rule_item_info do |string_rule|
-                string_rule.operator = :EQUALS
-                string_rule.value = "http://example.com/example1"
-              end
-            end
-          end
+      r.flexible_rule_user_list = client.resource.flexible_rule_user_list_info do |frul|
+        frul.inclusive_rule_operator = :AND
+        frul.inclusive_operands += [
+          client.resource.flexible_rule_operand_info do |froi|
+            froi.rule = user_visited_site1_rule_info
+            # Optionally add a lookback window for this rule, in days.
+            froi.lookback_window_days = 7
+          end,
+          client.resource.flexible_rule_operand_info do |froi|
+            froi.rule = user_visited_site2_rule_info
+            # Optionally add a lookback window for this rule, in days.
+            froi.lookback_window_days = 7
+          end,
+        ]
+        frul.exclusive_operands << client.resource.flexible_rule_operand_info do |froi|
+          froi.rule = user_visited_site3_rule_info
         end
-        # Creates a UserListRuleInfo object containing the second rule.
-        c.right_operand = client.resource.user_list_rule_info do |rule|
-          rule.rule_item_groups << client.resource.user_list_rule_item_group_info do |group|
-            # Creates a rule targeting any user that visited a url that equals
-            # 'http://example.com/example2'.
-            group.rule_items << client.resource.user_list_rule_item_info do |item|
-              # Uses a built-in parameter to create a domain URL rule.
-              item.name = URL_STRING
-              item.string_rule_item = client.resource.user_list_string_rule_item_info do |string_rule|
-                string_rule.operator = :EQUALS
-                string_rule.value = "http://example.com/example2"
-              end
-            end
-          end
-        end
-        c.rule_operator = :AND
       end
     end
   end
@@ -91,20 +85,26 @@ def add_combined_rule_user_list(customer_id)
 end
 # [END add_combined_rule_user_list]
 
+def create_user_list_rule_info_from_url(client, url)
+  client.resource.user_list_rule_info do |rule|
+    rule.rule_item_groups << client.resource.user_list_rule_item_group_info do |group|
+      group.rule_items << client.resource.user_list_rule_item_info do |item|
+        item.name = URL_STRING
+        item.string_rule_item = client.resource.user_list_string_rule_item_info do |string|
+          string.operator = :EQUALS
+          string.value = url
+        end
+      end
+    end
+  end
+end
+
 if __FILE__ == $0
   URL_STRING = "url__"
 
   options = {}
 
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))

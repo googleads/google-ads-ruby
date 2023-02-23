@@ -28,6 +28,85 @@ def set_up_advanced_remarketing(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # Create a rule targeting any user that visited the checkout page.
+  # [START setup_advanced_remarketing]
+  checkout_rule = client.resource.user_list_rule_item_info do |rule|
+    # The rule variable name must match a corresponding key name fired
+    # from a pixel.
+    # To learn more about setting up remarketing tags, visit
+    # https://support.google.com/google-ads/answer/2476688.
+    # To learn more about remarketing events and parameters, visit
+    # https://support.google.com/google-ads/answer/7305793.
+    rule.name = "ecomm_pagetype"
+    rule.string_rule_item = client.resource.user_list_string_rule_item_info do |sr|
+      sr.operator = :EQUALS
+      sr.value = "checkout"
+    end
+  end
+  # [END setup_advanced_remarketing]
+
+  # Create a rule targeting any user that had more than one item in their cart.
+  # [START setup_advanced_remarketing_1]
+  cart_size_rule = client.resource.user_list_rule_item_info do |rule|
+    # The rule variable name must match a corresponding key name fired
+    # from a pixel.
+    rule.name = "cart_size"
+    rule.number_rule_item = client.resource.user_list_number_rule_item_info do |nr|
+      nr.operator = :GREATER_THAN
+      nr.value = 1.0
+    end
+  end
+  # [END setup_advanced_remarketing_1]
+
+  # Create a rule group that includes the checkout and cart size rules.
+  # Combining the two rule items into a UserListRuleItemGroupInfo object causes
+  # Google Ads to AND their rules together. To instead OR the rules together,
+  # each rule should be placed in its own rule item group.
+  # [START setup_advanced_remarketing_2]
+  checkout_and_cart_size_rule_group = client.resource.user_list_rule_item_group_info do |g|
+    g.rule_items += [checkout_rule, cart_size_rule]
+  end
+
+  # Create the RuleItem for checkout start date.
+  # The tags and keys used below must have been in place in the past for the
+  # date range specified in the rules.
+  # [START setup_advanced_remarketing_3]
+  start_date_rule = client.resource.user_list_rule_item_info do |rule|
+    # The rule variable name must match a corresponding key name fired
+    # from a pixel.
+    rule.name = "checkoutdate"
+    rule.date_rule_item = client.resource.user_list_date_rule_item_info do |dr|
+      dr.operator = :AFTER
+      dr.value = "20191031"
+    end
+  end
+  # [END setup_advanced_remarketing_3]
+
+  # Create the RuleItem for checkout end date.
+  # [START setup_advanced_remarketing_4]
+  end_date_rule = client.resource.user_list_rule_item_info do |rule|
+    # The rule variable name must match a corresponding key name fired
+    # from a pixel.
+    rule.name = "checkoutdate"
+    rule.date_rule_item = client.resource.user_list_date_rule_item_info do |dr|
+      dr.operator = :BEFORE
+      dr.value = "20200101"
+    end
+  end
+  # [END setup_advanced_remarketing_4]
+
+  # Creates a rule group targeting users who checked out between
+  # November and December by using the start and end date rules.
+  # Combining the two rule items into a user_list_rule_item_group_info
+  # object causes Google Ads to AND their rules together.
+  # To instead OR the rules together, each rule should be placed in its
+  # own rule item group.
+  # [START setup_advanced_remarketing_5]
+  checkout_date_rule_group = client.resource.user_list_rule_item_group_info do |g|
+    g.rule_items += [start_date_rule, end_date_rule]
+  end
+  # [END setup_advanced_remarketing_5]
+
   # Creates the user list operation.
   operation = client.operation.create_resource.user_list do |ul|
     ul.name = "My expression rule user list ##{(Time.new.to_f * 1000).to_i}"
@@ -39,92 +118,22 @@ def set_up_advanced_remarketing(customer_id)
       # Optional: To include past users in the user list, set the
       # prepopulation_status to REQUESTED.
       r.prepopulation_status = :REQUESTED
-      # Creates an expression_rule_user_list_info object, or a boolean rule that
-      # defines this user list.
-      # The default rule_type for a user_list_rule_info object is OR of ANDs
-      # (disjunctive normal form).
-      # That is, rule items will be ANDed together within rule item groups and
-      # the groups themselves will be ORed together.
+      # Create a flexible_rule_user_list object, or a flexible rule representation
+      # of visitors with one or multiple actions. FlexibleRuleUserListInfo wraps
+      # UserListRuleInfo in a FlexibleRuleOperandInfo object that represents which
+      # user lists to include or exclude.
       # [START setup_advanced_remarketing_6]
-      r.expression_rule_user_list = client.resource.expression_rule_user_list_info do |expr|
-        expr.rule = client.resource.user_list_rule_info do |info|
-          # [END setup_advanced_remarketing_6]
-          # Creates a rule group that includes the checkout and cart size rules.
-          # Combining the two rule items into a user_list_rule_item_group_info
-          # object causes Google Ads to AND their rules together.
-          # To instead OR the rules together, each rule should be placed in its
-          # own rule item group.
-          # [START setup_advanced_remarketing_2]
-          info.rule_item_groups << client.resource.user_list_rule_item_group_info do |g|
-            # [END setup_advanced_remarketing_2]
-            # Creates a rule targeting any user that visited the checkout page.
-            # [START setup_advanced_remarketing]
-            g.rule_items << client.resource.user_list_rule_item_info do |rule|
-              # The rule variable name must match a corresponding key name fired
-              # from a pixel.
-              # To learn more about setting up remarketing tags, visit
-              # https://support.google.com/google-ads/answer/2476688.
-              # To learn more about remarketing events and parameters, visit
-              # https://support.google.com/google-ads/answer/7305793.
-              rule.name = "ecomm_pagetype"
-              rule.string_rule_item = client.resource.user_list_string_rule_item_info do |sr|
-                sr.operator = :EQUALS
-                sr.value = "checkout"
-              end
-            end
-            # [END setup_advanced_remarketing]
-            # Creates a rule targeting any user that had more than one item in
-            # their cart.
-            # [START setup_advanced_remarketing_1]
-            g.rule_items << client.resource.user_list_rule_item_info do |rule|
-              # The rule variable name must match a corresponding key name fired
-              # from a pixel.
-              rule.name = "cart_size"
-              rule.number_rule_item = client.resource.user_list_number_rule_item_info do |nr|
-                nr.operator = :GREATER_THAN
-                nr.value = 1.0
-              end
-            end
-            # [END setup_advanced_remarketing_1]
+      r.flexible_rule_user_list = client.resource.flexible_rule_user_list_info do |frul|
+        frul.inclusive_rule_operator = :AND
+        frul.inclusive_operands << client.resource.flexible_rule_operand_info do |froi|
+          froi.rule = client.resource.user_list_rule_info do |info|
+            info.rule_item_groups += [checkout_date_rule_group, checkout_and_cart_size_rule_group]
           end
-          # Creates a rule group targeting users who checked out between
-          # November and December by using the start and end date rules.
-          # Combining the two rule items into a user_list_rule_item_group_info
-          # object causes Google Ads to AND their rules together.
-          # To instead OR the rules together, each rule should be placed in its
-          # own rule item group.
-          # [START setup_advanced_remarketing_5]
-          info.rule_item_groups << client.resource.user_list_rule_item_group_info do |g|
-            # [END setup_advanced_remarketing_5]
-            # Creates the rule_item for checkout start date.
-            # The tags and keys used below must have been in place in the past
-            # for the date range specified in the rules.
-            # [START setup_advanced_remarketing_3]
-            g.rule_items << client.resource.user_list_rule_item_info do |rule|
-              # The rule variable name must match a corresponding key name fired
-              # from a pixel.
-              rule.name = "checkoutdate"
-              rule.date_rule_item = client.resource.user_list_date_rule_item_info do |dr|
-                dr.operator = :AFTER
-                dr.value = "20191031"
-              end
-            end
-            # [END setup_advanced_remarketing_3]
-            # Creates the rule_item for checkout end date.
-            # [START setup_advanced_remarketing_4]
-            g.rule_items << client.resource.user_list_rule_item_info do |rule|
-              # The rule variable name must match a corresponding key name fired
-              # from a pixel.
-              rule.name = "checkoutdate"
-              rule.date_rule_item = client.resource.user_list_date_rule_item_info do |dr|
-                dr.operator = :BEFORE
-                dr.value = "20200101"
-              end
-            end
-            # [END setup_advanced_remarketing_4]
-          end
+          # Optionally include a lookback window for this rule, in days.
+          froi.lookback_window_days = 7
         end
       end
+      # [END setup_advanced_remarketing_6]
     end
   end
 
@@ -140,16 +149,8 @@ if __FILE__ == $0
   PAGE_SIZE = 1000
 
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
+  # Running the example with -h will print the command line usage.
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
