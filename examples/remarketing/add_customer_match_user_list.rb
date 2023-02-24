@@ -18,6 +18,9 @@
 # This example uses Customer Match to create a new user list (a.k.a. audience)
 # and adds users to it.
 #
+# This feature is only available to accounts that meet the requirements described at
+#     https://support.google.com/adspolicy/answer/6299717.
+#
 # Note: It may take up to several hours for the list to be populated with users.
 # Email addresses must be associated with a Google account.
 # For privacy purposes, the user list size will show as zero until the list has
@@ -29,11 +32,17 @@ require 'google/ads/google_ads'
 require 'date'
 require 'digest'
 
-def add_customer_match_user_list(customer_id)
+def add_customer_match_user_list(customer_id, run_job, user_list_id, job_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  user_list = create_customer_match_user_list(client, customer_id)
-  add_users_to_customer_match_user_list(client, customer_id, user_list)
+  if job_id.nil?
+    if user_list_id.nil?
+      list_name = create_customer_match_user_list(client, customer_id)
+    else
+      list_name = client.path.user_list(customer_id, user_list_id)
+    end
+  end
+  add_users_to_customer_match_user_list(client, customer_id, run_job, list_name, job_id)
 end
 
 def create_customer_match_user_list(client, customer_id)
@@ -65,28 +74,41 @@ def create_customer_match_user_list(client, customer_id)
 end
 
 # [START add_customer_match_user_list]
-def add_users_to_customer_match_user_list(client, customer_id, user_list)
-  # Creates the offline user data job.
-  offline_user_data_job = client.resource.offline_user_data_job do |job|
-    job.type = :CUSTOMER_MATCH_USER_LIST
-    job.customer_match_user_list_metadata =
-      client.resource.customer_match_user_list_metadata do |m|
-        m.user_list = user_list
-      end
-  end
-
+def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id)
   offline_user_data_service = client.service.offline_user_data_job
 
-  # Issues a request to create the offline user data job.
-  response = offline_user_data_service.create_offline_user_data_job(
-    customer_id: customer_id,
-    job: offline_user_data_job,
-  )
-  offline_user_data_job_resource_name = response.resource_name
-  puts "Created an offline user data job with resource name: " \
-    "#{offline_user_data_job_resource_name}"
+  job_name = if job_id.nil?
+    # Creates the offline user data job.
+    offline_user_data_job = client.resource.offline_user_data_job do |job|
+      job.type = :CUSTOMER_MATCH_USER_LIST
+      job.customer_match_user_list_metadata =
+        client.resource.customer_match_user_list_metadata do |m|
+          m.user_list = user_list
+        end
+    end
 
-  # Issues a request to add the operations to the offline user data job.
+    # Issues a request to create the offline user data job.
+    response = offline_user_data_service.create_offline_user_data_job(
+      customer_id: customer_id,
+      job: offline_user_data_job,
+    )
+    offline_user_data_job_resource_name = response.resource_name
+    puts "Created an offline user data job with resource name: " \
+      "#{offline_user_data_job_resource_name}"
+
+    offline_user_data_job_resource_name
+  else
+    client.path.offline_user_data_job(customer_id, job_id)
+  end
+
+  # Issues a request to add the operations to the offline user data job. This
+  # example only adds a few operations, so it only sends one
+  # AddOfflineUserDataJobOperations request.  If your application is adding a
+  # large number of operations, split the operations into batches and send
+  # multiple AddOfflineUserDataJobOperations requests for the SAME job. See
+  # https://developers.google.com/google-ads/api/docs/remarketing/audience-types/customer-match#customer_match_considerations
+  # and https://developers.google.com/google-ads/api/docs/best-practices/quotas#user_data
+  # for more information on the per-request limits.
   response = offline_user_data_service.add_offline_user_data_job_operations(
     resource_name: offline_user_data_job_resource_name,
     enable_partial_failure: true,
@@ -119,6 +141,11 @@ def add_users_to_customer_match_user_list(client, customer_id, user_list)
   end
   puts "The operations are added to the offline user data job."
 
+  unless run_job
+    puts "Not running offline user data job #{job_name}, as requested."
+    return
+  end
+
   # Issues an asynchronous request to run the offline user data job
   # for executing all added operations.
   response = offline_user_data_service.run_offline_user_data_job(
@@ -135,7 +162,6 @@ def add_users_to_customer_match_user_list(client, customer_id, user_list)
     client,
     customer_id,
     offline_user_data_job_resource_name,
-    user_list,
   )
 end
 # [END add_customer_match_user_list]
@@ -162,42 +188,89 @@ end
 
 def build_offline_user_data_job_operations(client)
   # [START add_customer_match_user_list_2]
-  operations = []
+  # Create a list of unhashed user data records that we will format in the
+  # following steps to prepare for the API.
+  raw_records = [
+    # The first user data has an email address and a phone number.
+    {
+      email: 'test@gmail.com',
+      # Phone number to be converted to E.164 format, with a leading '+' as
+      # required. This includes whitespace that will be removed later.
+      phone: '+1 234 5678910',
+    },
+    # The second user data has an email address, a phone number, and an address.
+    {
+      # Email address that includes a period (.) before the Gmail domain.
+      email: 'test.2@gmail.com',
+      # Address that includes all four required elements: first name, last
+      # name, country code, and postal code.
+      first_name: 'John',
+      last_name: 'Doe',
+      country_code: 'US',
+      postal_code: '10011',
+      # Phone number to be converted to E.164 format, with a leading '+' as
+      # required.
+      phone: '+1 234 5678911',
+    },
+    # The third user data only has an email address.
+    {
+      email: 'test3@gmail.com',
+    },
+  ]
 
-  # Creates a first user data based on an email address.
-  operations << client.operation.create_resource.offline_user_data_job do |u|
-    u.user_identifiers << client.resource.user_identifier do |uid|
-      # Hash normalized email addresses based on SHA-256 hashing algorithm.
-      uid.hashed_email = normalize_and_hash("customer@example.com")
+  # Create a UserData for each entry in the raw records.
+  user_data_list = raw_records.map do |record|
+    client.resource.user_data do |data|
+      if record[:email]
+        data.user_identifiers << client.resource.user_identifier do |ui|
+          ui.hashed_email = normalize_and_hash(record[:email], true)
+        end
+      end
+      if record[:phone]
+        data.user_identifiers << client.resource.user_identifier do |ui|
+          ui.hashed_phone_number = normalize_and_hash(record[:phone], true)
+        end
+      end
+      if record[:first_name]
+        # Check that we have all the required information.
+        missing_keys = [:last_name, :country_code, :postal_code].reject {|key|
+          record[key].nil?
+        }
+        if missing_keys.empty?
+          # If nothing is missing, add the address.
+          data.user_identifiers << client.resource.user_identifier do |ui|
+            ui.address_identifier = client.resource.offline_user_address_info do |address|
+              address.hashed_first_name = normalize_and_hash(record[:first_name])
+              address.hashed_last_name = normalize_and_hash(record[:last_name])
+              address.country_code = record[:country_code]
+              address.postal_code = record[:postal_code]
+            end
+          end
+        else
+          # If some data is missing, skip this entry.
+          puts "Skipping addition of mailing information because the following keys are missing:" \
+            "#{missing_keys}"
+        end
+      end
     end
   end
 
-  # Creates a second user data based on a physical address.
-  operations << client.operation.create_resource.offline_user_data_job do |u|
-    u.user_identifiers << client.resource.user_identifier do |uid|
-      uid.address_info = client.resource.offline_user_address_info do |a|
-        # First and last name must be normalized and hashed.
-        a.hashed_first_name = normalize_and_hash("John")
-        a.hashed_last_name = normalize_and_hash("Doe")
-        # Country code and zip code are sent in plain text.
-        a.country_code = "US"
-        a.postal_code = "10011"
-      end
-    end
+  operations = user_data_list.map do |user_data|
+    client.operation.create_resource.offline_user_data_job(user_data)
   end
   # [END add_customer_match_user_list_2]
 
   operations
 end
 
-def check_job_status(client, customer_id, offline_user_data_job, user_list)
+def check_job_status(client, customer_id, offline_user_data_job)
   query = <<~QUERY
     SELECT
-      offline_user_data_job.resource_name,
       offline_user_data_job.id,
       offline_user_data_job.status,
       offline_user_data_job.type,
-      offline_user_data_job.failure_reason
+      offline_user_data_job.failure_reason,
+      offline_user_data_job.customer_match_user_list_metadata.user_list
     FROM
       offline_user_data_job
     WHERE
@@ -214,7 +287,7 @@ def check_job_status(client, customer_id, offline_user_data_job, user_list)
 
   case job.status
   when :SUCCESS
-    print_customer_match_user_list(client, customer_id, user_list)
+    print_customer_match_user_list(client, customer_id, job.customer_match_user_list_metadata.user_list)
   when :FAILED
     puts "  Failure reason: #{job.failure_reason}"
   else
@@ -224,21 +297,17 @@ def check_job_status(client, customer_id, offline_user_data_job, user_list)
   end
 end
 
-def normalize_and_hash(str)
+def normalize_and_hash(str, trim_inner_spaces = false)
+  if trim_inner_spaces
+    str = str.gsub("\s", '')
+  end
   Digest::SHA256.hexdigest(str.strip.downcase)
 end
 
 if __FILE__ == $0
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
+
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -248,6 +317,22 @@ if __FILE__ == $0
 
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
+    end
+
+    opts.on('-r', '--run-job', 'If true, runs the OfflineUserDataJob after adding operations.' \
+        'The default value is false.') do |v|
+      options[:run_job] = v
+    end
+
+    opts.on('-u', '--user-list-id [USER-LIST-ID]', String,
+        'The ID of an existing user list. If not specified, this example will create a new user list.') do |v|
+      options[:user_list_id] = v
+    end
+
+    opts.on('-j', '--offline-user-data-job-id [OFFLINE-USER-DATA-JOB-ID]', String,
+        'The ID of an existing OfflineUserDataJob in the PENDING state. If not specified, this' \
+        ' example will create a new job.') do |v|
+      options[:job_id] = v
     end
 
     opts.separator ''
@@ -260,7 +345,12 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_customer_match_user_list(options.fetch(:customer_id).tr("-", ""))
+    add_customer_match_user_list(
+      options.fetch(:customer_id).tr("-", ""),
+      options[:run_job],
+      options[:user_list_id],
+      options[:job_id],
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
