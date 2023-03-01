@@ -92,9 +92,7 @@ def create_experiment_arms(client, customer_id, base_campaign_id, experiment)
   )
 
   # Results always return in the order that you specify them in the request.
-  # Since we created the treatment arm last, it will be the last result.  If
-  # you don't remember which arm is the treatment arm, you can always filter
-  # the query in the next section with `experiment_arm.control = false`.
+  # Since we created the treatment arm last, it will be the last result.
   control_arm_result = response.results.first
   treatment_arm_result = response.results.last
 
