@@ -27,8 +27,7 @@ def create_experiment(customer_id, base_campaign_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   experiment = create_experiment_resource(client, customer_id)
-  treatment_arm = create_experiment_arms(client, customer_id, base_campaign_id, experiment)
-  draft_campaign = fetch_draft_campaign(client, customer_id, treatment_arm)
+  draft_campaign = create_experiment_arms(client, customer_id, base_campaign_id, experiment)
 
   modify_draft_campaign(client, customer_id, draft_campaign)
 
@@ -86,46 +85,23 @@ def create_experiment_arms(client, customer_id, base_campaign_id, experiment)
   response = client.service.experiment_arm.mutate_experiment_arms(
     customer_id: customer_id,
     operations: operations,
+    # We want to fetch the draft campaign IDs from the treatment arm, so the
+    # easiest way to do that is to have the response return the newly created
+    # entities.
+    response_content_type: :MUTABLE_RESOURCE,
   )
 
   # Results always return in the order that you specify them in the request.
-  # Since we created the treatment arm last, it will be the last result.  If
-  # you don't remember which arm is the treatment arm, you can always filter
-  # the query in the next section with `experiment_arm.control = false`.
-  control_arm = response.results.first.resource_name
-  treatment_arm = response.results.last.resource_name
+  # Since we created the treatment arm last, it will be the last result.
+  control_arm_result = response.results.first
+  treatment_arm_result = response.results.last
 
-  puts "Created control arm with resource name #{control_arm}."
-  puts "Created treatment arm with resource name #{treatment_arm}."
+  puts "Created control arm with resource name #{control_arm_result.resource_name}."
+  puts "Created treatment arm with resource name #{treatment_arm_result.resource_name}."
 
-  treatment_arm
+  treatment_arm_result.experiment_arm.in_design_campaigns.first
 end
 # [END create_experiment_2]
-
-# [START create_experiment_3]
-def fetch_draft_campaign(client, customer_id, treatment_arm)
-  # The `in_design_campaigns` represent campaign drafts, which you can modify
-  # before starting the experiment.
-  query = <<~QUERY
-    SELECT experiment_arm.in_design_campaigns
-    FROM experiment_arm
-    WHERE experiment_arm.resource_name = "#{treatment_arm}"
-  QUERY
-
-  response = client.service.google_ads.search(
-    customer_id: customer_id,
-    query: query
-  )
-
-  # In design campaigns returns as an array, but for now it can only ever
-  # contain a single ID, so we just grab the first one.
-  draft_campaign = response.first.experiment_arm.in_design_campaigns.first
-
-  puts "Found draft campaign with resource name #{draft_campaign}."
-
-  draft_campaign
-end
-# [END create_experiment_3]
 
 def modify_draft_campaign(client, customer_id, draft_campaign)
   operation = client.operation.update_resource.campaign(draft_campaign) do |c|
