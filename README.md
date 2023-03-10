@@ -13,6 +13,12 @@ easy-to-use client library for the [Google Ads API][].
 
 [Developers site Ruby guide]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/
 
+## API Versions
+
+The developer site also contains a
+[list](https://developers.google.com/google-ads/api/docs/client-libs#ruby)
+of which `google-ads-googleads` gem version you would need to use for each API version.
+
 ## Getting started
 
 `google-ads-googleads` will allow you to connect to the
@@ -147,5 +153,3 @@ Authors:
 Maintainers:
 
  - Michael Cloonan
- - Fei Xiang
- - Abraham Williams
