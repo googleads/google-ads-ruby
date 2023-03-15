@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2018 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -197,7 +197,6 @@ def create_hotel_asset_set(client, customer_id)
     )
 
   # Prints some information about the response.
-  print_response_details(response)
   response.results.first.resource_name
 end
 # [END create_hotel_asset_set]
@@ -229,7 +228,6 @@ def create_hotel_asset(
       customer_id: customer_id,
       operations: [asset_operation]
     )
-  print_response_details(response)
 
   asset_resource_name = response.results.first.resource_name
 
@@ -246,8 +244,6 @@ def create_hotel_asset(
       customer_id: customer_id,
       operations: [asset_set_asset_operation]
     )
-
-  print_response_details(response)
 
   asset_resource_name
 end
@@ -338,7 +334,7 @@ def get_hotel_asset_suggestion(client, customer_id, place_id)
       place_id: [place_id]
     )
 
-  response.hotel_asset_suggestions[0]
+  response.hotel_asset_suggestions.first
 end
 # [END get_hotel_asset_suggestion]
 
@@ -540,11 +536,7 @@ def create_text_assets_for_asset_group(
         next
       end
 
-      puts format(
-        "A text asset with text '%s' is suggested for the asset field type '%s'.",
-        hotel_text_asset.text,
-        hotel_text_asset.asset_field_type
-      )
+      puts "A text asset with text '#{hotel_text_asset.text}' is suggested for the asset field type '#{hotel_text_asset.asset_field_type}'."
 
       operations +=
         create_and_link_text_asset_operations(
@@ -570,11 +562,8 @@ def create_text_assets_for_asset_group(
 
     for i in required_text_asset_counts[asset_field_type]...count
       default_text = DEFAULT_TEXT_ASSETS_INFO[asset_field_type][i]
-      puts format(
-        "A default text '%s' is used to create a text asset for the asset field type '%s'.",
-        default_text,
-        asset_field_type
-      )
+      puts "A default text '#{default_text}' is used to create a text asset for the asset field type '#{asset_field_type}'."
+
       operations +=
         create_and_link_text_asset_operations(
           client,
@@ -635,11 +624,7 @@ def create_image_assets_for_asset_group(
   # Creates mutate operations for the suggested image assets.
   if hotel_asset_suggestion.status == :SUCCESS
     hotel_asset_suggestion.image_assets.each do |hotel_image_asset|
-      puts format(
-        "An image asset with URL '%s' is suggested for the asset field type '%s'.",
-        hotel_image_asset.uri,
-        hotel_image_asset.asset_field_type
-      )
+      puts "An image asset with URL '#{hotel_image_asset.uri}' is suggested for the asset field type '#{hotel_image_asset.asset_field_type}'."
 
       operations +=
         create_and_link_image_asset_operations(
@@ -669,11 +654,7 @@ def create_image_assets_for_asset_group(
 
     for i in required_image_asset_counts[asset_field_type]...count
       default_uri = DEFAULT_IMAGE_ASSETS_INFO[asset_field_type][i]
-      puts format(
-        "A default image URL '%s' is used to create an image asset for the asset field type '%s'.",
-        default_uri,
-        asset_field_type
-      )
+      puts "A default image URL '#{default_uri}' is used to create an image asset for the asset field type '#{asset_field_type}'."
 
       operations +=
         create_and_link_image_asset_operations(
