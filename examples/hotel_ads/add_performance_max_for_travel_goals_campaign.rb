@@ -742,26 +742,14 @@ end
 
 if __FILE__ == $0
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-
-  # Sets a place ID that uniquely identifies a place in the Google Places database.
-  # See https://developers.google.com/places/web-service/place-id to learn more.
-  # The provided place ID must belong to a hotel property.
-  options[:place_id] = 'INSERT_PLACE_ID_HERE'
 
   OptionParser
     .new do |opts|
       opts.banner = format('Usage: %s [options]', File.basename(__FILE__))
+
       opts.separator ''
       opts.separator 'Options:'
+
       opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
         options[:customer_id] = v
       end
