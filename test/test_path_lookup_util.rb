@@ -20,13 +20,12 @@
 require 'minitest/autorun'
 
 require 'google/ads/google_ads'
-require 'google/ads/google_ads/utils/v11/path_lookup_util'
 require 'google/ads/google_ads/utils/v12/path_lookup_util'
 require 'google/ads/google_ads/utils/v13/path_lookup_util'
 
 class TestPathLookupUtil < Minitest::Test
-  def test_path_generation_v11()
-    util = Google::Ads::GoogleAds::Utils::V11::PathLookupUtil.new
+  def test_path_generation_v13()
+    util = Google::Ads::GoogleAds::Utils::V13::PathLookupUtil.new
 
     expected = 'customers/1234/accessibleBiddingStrategies/5678'
     assert_equal(expected, util.accessible_bidding_strategy(1234, 5678))

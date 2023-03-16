@@ -21,7 +21,7 @@ require 'minitest/autorun'
 
 require 'google/ads/google_ads/google_ads_client'
 
-require 'google/ads/google_ads/v11/services/offline_user_data_job_service_pb'
+require 'google/ads/google_ads/v13/services/offline_user_data_job_service_pb'
 
 module Google
   module Ads
@@ -50,13 +50,13 @@ class TestGoogleAdsClient < Minitest::Test
   end
 
   def test_decode_partial_failure_error
-    response_with_pfe = Google::Ads::GoogleAds::V11::Services::AddOfflineUserDataJobOperationsResponse.new(
+    response_with_pfe = Google::Ads::GoogleAds::V13::Services::AddOfflineUserDataJobOperationsResponse.new(
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v11.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v13.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -70,17 +70,17 @@ class TestGoogleAdsClient < Minitest::Test
     errors = client.decode_partial_failure_error(
       response_with_pfe.partial_failure_error,
     )
-    assert_equal errors[0].class, Google::Ads::GoogleAds::V11::Errors::GoogleAdsFailure
+    assert_equal errors[0].class, Google::Ads::GoogleAds::V13::Errors::GoogleAdsFailure
   end
 
   def test_decode_warning
-    response_with_warning = Google::Ads::GoogleAds::V11::Services::AddOfflineUserDataJobOperationsResponse.new(
+    response_with_warning = Google::Ads::GoogleAds::V13::Services::AddOfflineUserDataJobOperationsResponse.new(
       warning: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v11.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v13.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -94,7 +94,7 @@ class TestGoogleAdsClient < Minitest::Test
     errors = client.decode_warning(
       response_with_warning.warning,
     )
-    assert_equal errors[0].class, Google::Ads::GoogleAds::V11::Errors::GoogleAdsFailure
+    assert_equal errors[0].class, Google::Ads::GoogleAds::V13::Errors::GoogleAdsFailure
   end
 
   def test_config
@@ -132,7 +132,7 @@ class TestGoogleAdsClient < Minitest::Test
       # No setup.
     end
 
-    service = client.service.v11.campaign
+    service = client.service.v13.campaign
     assert(service.respond_to?(:mutate_campaigns))
   end
 
@@ -141,7 +141,7 @@ class TestGoogleAdsClient < Minitest::Test
       config.login_customer_id = 1234567890
     end
 
-    service = client.service.v11.campaign
+    service = client.service.v13.campaign
     assert(service.respond_to?(:mutate_campaigns))
   end
 
@@ -151,7 +151,7 @@ class TestGoogleAdsClient < Minitest::Test
     end
 
     assert_raises do
-      service = client.service.v11.campaign
+      service = client.service.v13.campaign
     end
   end
 
