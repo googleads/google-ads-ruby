@@ -131,7 +131,7 @@ def normalize_and_hash_email(email)
   email_parts = email.downcase.split("@")
   # Removes any '.' characters from the portion of the email address before the
   # domain if the domain is gmail.com or googlemail.com.
-  if email_parts.last === /^(gmail|googlemail)\\.com\\s*/
+  if email_parts.last =~ /^(gmail|googlemail)\.com\s*/
     email_parts[0] = email_parts[0].gsub('.', '')
   end
   normalize_and_hash(email_parts.join('@'))
