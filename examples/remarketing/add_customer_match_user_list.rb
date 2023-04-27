@@ -193,28 +193,28 @@ def build_offline_user_data_job_operations(client)
   raw_records = [
     # The first user data has an email address and a phone number.
     {
-      email: 'test@gmail.com',
+      email: 'dana@example.com',
       # Phone number to be converted to E.164 format, with a leading '+' as
       # required. This includes whitespace that will be removed later.
-      phone: '+1 234 5678910',
+      phone: '+1 800 5550100',
     },
     # The second user data has an email address, a phone number, and an address.
     {
       # Email address that includes a period (.) before the Gmail domain.
-      email: 'test.2@gmail.com',
+      email: 'alex.2@example.com',
       # Address that includes all four required elements: first name, last
       # name, country code, and postal code.
-      first_name: 'John',
-      last_name: 'Doe',
+      first_name: 'Alex',
+      last_name: 'Quinn',
       country_code: 'US',
-      postal_code: '10011',
+      postal_code: '94045',
       # Phone number to be converted to E.164 format, with a leading '+' as
       # required.
-      phone: '+1 234 5678911',
+      phone: '+1 800 5550102',
     },
     # The third user data only has an email address.
     {
-      email: 'test3@gmail.com',
+      email: 'charlie@example.com',
     },
   ]
 
