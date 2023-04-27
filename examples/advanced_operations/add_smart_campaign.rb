@@ -608,7 +608,7 @@ if __FILE__ == $0
   # https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-7
   LANGUAGE_CODE = "en"
   LANDING_PAGE_URL = "http://www.example.com"
-  PHONE_NUMBER = "555-555-5555"
+  PHONE_NUMBER = "800-555-0100"
   BUDGET_TEMPORARY_ID = "-1"
   SMART_CAMPAIGN_TEMPORARY_ID = "-2"
   AD_GROUP_TEMPORARY_ID = "-3"

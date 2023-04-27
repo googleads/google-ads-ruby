@@ -68,7 +68,7 @@ def upload_conversion_enhancement(
     # Creates a user identifier using the hashed email address.
     ca.user_identifiers << client.resource.user_identifier do |ui|
       # Uses the normalize and hash method specifically for email addresses.
-      ui.hashed_email = normalize_and_hash_email("joannasmith@example.com")
+      ui.hashed_email = normalize_and_hash_email("dana@example.com")
       ui.user_identifier_source = :FIRST_PARTY
     end
 

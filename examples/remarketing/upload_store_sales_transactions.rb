@@ -246,7 +246,7 @@ def build_offline_user_data_job_operations(
   operations << client.operation.create_resource.offline_user_data_job do |job|
     job.user_identifiers << client.resource.user_identifier do |id|
       # Email addresses must be normalized and hashed.
-      id.hashed_email = normalize_and_hash("customer@example.com")
+      id.hashed_email = normalize_and_hash("dana@example.com")
     end
     job.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
@@ -274,8 +274,8 @@ def build_offline_user_data_job_operations(
     job.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
         # First and last name must be normalized and hashed.
-        info.hashed_first_name = normalize_and_hash("John")
-        info.hashed_last_name = normalize_and_hash("Doe")
+        info.hashed_first_name = normalize_and_hash("Dana")
+        info.hashed_last_name = normalize_and_hash("Quinn")
         # Country code and zip code are sent in plain text.
         info.country_code = "US"
         info.postal_code = "10011"

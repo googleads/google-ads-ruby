@@ -128,7 +128,7 @@ if __FILE__ == $0
       options[:conversion_action_id] = v
     end
 
-    opts.on('-L', '--caller-id CALLER-ID', String, 'Caller ID') do |v|
+    opts.on('-L', '--caller-id CALLER-ID', String, 'The caller ID from which this call was placed. Caller ID is expected to be in E.164 format with preceding "+" sign, e.g. "+18005550100"') do |v|
       options[:caller_id] = v
     end
 

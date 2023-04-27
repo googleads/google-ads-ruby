@@ -122,7 +122,7 @@ if __FILE__ == $0
     end
 
     opts.on('-N', '--phone-number PHONE-NUMBER', String,
-        "A phone number for your business, e.g. '(123) 456-7890'") do |v|
+        "A phone number for your business, e.g. '(800) 555-0100'") do |v|
       options[:phone_number] = v
     end
 
