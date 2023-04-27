@@ -27,9 +27,7 @@ def upload_conversion_enhancement(
   conversion_action_id,
   order_id,
   conversion_date_time,
-  user_agent,
-  restatement_value,
-  currency_code
+  user_agent
 )
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -81,18 +79,6 @@ def upload_conversion_enhancement(
       # are either both attributed as same-device or both attributed as
       # cross-device.
       ca.user_agent = user_agent
-    end
-
-    unless restatement_value.nil?
-      ca.restatement_value = client.resource.restatement_value do |ra|
-        ra.adjusted_value = restatement_value.to_f
-        # Sets the currency of the new value, if provided. Otherwise, the
-        # default currency from the conversion action is used, and if that is
-        # not set then the account currency is used.
-        unless currency_code.nil?
-          ra.currency_code = currency_code
-        end
-      end
     end
   end
   # [END create_adjustment]
@@ -182,15 +168,6 @@ if __FILE__ == $0
       options[:user_agent] = v
     end
 
-    opts.on('-r', '--restatement-value RESTATEMENT-VALUE', String,
-            '[optional] The adjusted value for adjustment type RESTATEMENT.') do |v|
-      options[:restatement_value] = v
-    end
-
-    opts.on('-R', '--currency-code CURRENCY-CODE', String, 'Currency Code') do |v|
-      options[:currency_code] = v
-    end
-
     opts.separator ''
     opts.separator 'Help:'
 
@@ -206,9 +183,7 @@ if __FILE__ == $0
       options.fetch(:conversion_action_id),
       options.fetch(:order_id),
       options[:conversion_date_time],
-      options[:user_agent],
-      options[:restatement_value],
-      options[:currency_code]
+      options[:user_agent]
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
