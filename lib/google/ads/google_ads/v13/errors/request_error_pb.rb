@@ -33,6 +33,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :INCONSISTENT_RETURN_SUMMARY_ROW_VALUE, 31
       value :TOTAL_RESULTS_COUNT_NOT_ORIGINALLY_REQUESTED, 32
       value :RPC_DEADLINE_TOO_SHORT, 33
+      value :UNSUPPORTED_VERSION, 38
     end
   end
 end

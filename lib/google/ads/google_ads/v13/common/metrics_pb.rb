@@ -125,6 +125,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :search_rank_lost_top_impression_share, :double, 145
       proto3_optional :search_top_impression_share, :double, 146
       proto3_optional :speed_score, :int64, 147
+      proto3_optional :average_target_cpa_micros, :int64, 290
+      proto3_optional :average_target_roas, :double, 250
       proto3_optional :top_impression_percentage, :double, 148
       proto3_optional :valid_accelerated_mobile_pages_clicks_percentage, :double, 149
       proto3_optional :value_per_all_conversions, :double, 150

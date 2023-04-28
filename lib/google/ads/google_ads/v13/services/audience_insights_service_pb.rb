@@ -4,6 +4,7 @@
 require 'google/protobuf'
 
 require 'google/ads/google_ads/v13/common/criteria_pb'
+require 'google/ads/google_ads/v13/common/dates_pb'
 require 'google/ads/google_ads/v13/enums/audience_insights_dimension_pb'
 require 'google/api/annotations_pb'
 require 'google/api/client_pb'
@@ -23,6 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "google.ads.googleads.v13.services.GenerateAudienceCompositionInsightsRequest" do
       optional :customer_id, :string, 1
       optional :audience, :message, 2, "google.ads.googleads.v13.services.InsightsAudience"
+      optional :baseline_audience, :message, 6, "google.ads.googleads.v13.services.InsightsAudience"
       optional :data_month, :string, 3
       repeated :dimensions, :enum, 4, "google.ads.googleads.v13.enums.AudienceInsightsDimensionEnum.AudienceInsightsDimension"
       optional :customer_insights_group, :string, 5
@@ -44,6 +46,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "google.ads.googleads.v13.services.ListInsightsEligibleDatesResponse" do
       repeated :data_months, :string, 1
+      optional :last_thirty_days, :message, 2, "google.ads.googleads.v13.common.DateRange"
     end
     add_message "google.ads.googleads.v13.services.AudienceInsightsAttribute" do
       oneof :attribute do

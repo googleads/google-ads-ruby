@@ -23,6 +23,7 @@ require 'google/ads/google_ads/v13/enums/campaign_primary_status_pb'
 require 'google/ads/google_ads/v13/enums/campaign_primary_status_reason_pb'
 require 'google/ads/google_ads/v13/enums/campaign_serving_status_pb'
 require 'google/ads/google_ads/v13/enums/campaign_status_pb'
+require 'google/ads/google_ads/v13/enums/listing_type_pb'
 require 'google/ads/google_ads/v13/enums/location_source_type_pb'
 require 'google/ads/google_ads/v13/enums/negative_geo_target_type_pb'
 require 'google/ads/google_ads/v13/enums/optimization_goal_type_pb'
@@ -85,6 +86,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       proto3_optional :url_expansion_opt_out, :bool, 72
       optional :performance_max_upgrade, :message, 77, "google.ads.googleads.v13.resources.Campaign.PerformanceMaxUpgrade"
       proto3_optional :hotel_property_asset_set, :string, 83
+      proto3_optional :listing_type, :enum, 86, "google.ads.googleads.v13.enums.ListingTypeEnum.ListingType"
       oneof :campaign_bidding_strategy do
         optional :bidding_strategy, :string, 67
         optional :commission, :message, 49, "google.ads.googleads.v13.common.Commission"

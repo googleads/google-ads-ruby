@@ -466,7 +466,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_audience_composition_insights(customer_id: nil, audience: nil, data_month: nil, dimensions: nil, customer_insights_group: nil)
+              # @overload generate_audience_composition_insights(customer_id: nil, audience: nil, baseline_audience: nil, data_month: nil, dimensions: nil, customer_insights_group: nil)
               #   Pass arguments to `generate_audience_composition_insights` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -475,6 +475,9 @@ module Google
               #     Required. The ID of the customer.
               #   @param audience [::Google::Ads::GoogleAds::V13::Services::InsightsAudience, ::Hash]
               #     Required. The audience of interest for which insights are being requested.
+              #   @param baseline_audience [::Google::Ads::GoogleAds::V13::Services::InsightsAudience, ::Hash]
+              #     The baseline audience to which the audience of interest is being
+              #     compared.
               #   @param data_month [::String]
               #     The one-month range of historical data to use for insights, in the format
               #     "yyyy-mm". If unset, insights will be returned for the last thirty days of
@@ -589,9 +592,9 @@ module Google
               #    *  (`String`) The path to a service account key file in JSON format
               #    *  (`Hash`) A service account key as a Hash
               #    *  (`Google::Auth::Credentials`) A googleauth credentials object
-              #       (see the [googleauth docs](https://googleapis.dev/ruby/googleauth/latest/index.html))
+              #       (see the [googleauth docs](https://rubydoc.info/gems/googleauth/Google/Auth/Credentials))
               #    *  (`Signet::OAuth2::Client`) A signet oauth2 client object
-              #       (see the [signet docs](https://googleapis.dev/ruby/signet/latest/Signet/OAuth2/Client.html))
+              #       (see the [signet docs](https://rubydoc.info/gems/signet/Signet/OAuth2/Client))
               #    *  (`GRPC::Core::Channel`) a gRPC channel with included credentials
               #    *  (`GRPC::Core::ChannelCredentials`) a gRPC credentails object
               #    *  (`nil`) indicating no credentials

@@ -30,6 +30,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :CANNOT_CREATE_AUTOMATICALLY_CREATED_LINKS, 19
       value :CANNOT_LINK_TO_AUTOMATICALLY_CREATED_ASSET, 20
       value :CANNOT_MODIFY_ASSET_LINK_SOURCE, 21
+      value :CANNOT_LINK_LOCATION_LEAD_FORM_WITHOUT_LOCATION_ASSET, 22
     end
   end
 end

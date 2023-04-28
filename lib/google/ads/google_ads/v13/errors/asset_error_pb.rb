@@ -44,6 +44,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :NAME_CONFLICT_FOR_ASSET_TYPE, 34
       value :CANNOT_MODIFY_ASSET_SOURCE, 35
       value :CANNOT_MODIFY_AUTOMATICALLY_CREATED_ASSET, 36
+      value :LEAD_FORM_LOCATION_ANSWER_TYPE_DISALLOWED, 37
     end
   end
 end

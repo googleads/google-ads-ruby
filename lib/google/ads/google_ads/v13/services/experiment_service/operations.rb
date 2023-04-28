@@ -567,6 +567,14 @@ module Google
                   gapic_version: ::Google::Ads::GoogleAds::VERSION
                 metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
 
+                header_params = {}
+                if request.name
+                  header_params["name"] = request.name
+                end
+
+                request_params_header = header_params.map { |k, v| "#{k}=#{v}" }.join("&")
+                metadata[:"x-goog-request-params"] ||= request_params_header
+
                 options.apply_defaults timeout:      @config.rpcs.wait_operation.timeout,
                                        metadata:     metadata,
                                        retry_policy: @config.rpcs.wait_operation.retry_policy
@@ -622,9 +630,9 @@ module Google
               #    *  (`String`) The path to a service account key file in JSON format
               #    *  (`Hash`) A service account key as a Hash
               #    *  (`Google::Auth::Credentials`) A googleauth credentials object
-              #       (see the [googleauth docs](https://googleapis.dev/ruby/googleauth/latest/index.html))
+              #       (see the [googleauth docs](https://rubydoc.info/gems/googleauth/Google/Auth/Credentials))
               #    *  (`Signet::OAuth2::Client`) A signet oauth2 client object
-              #       (see the [signet docs](https://googleapis.dev/ruby/signet/latest/Signet/OAuth2/Client.html))
+              #       (see the [signet docs](https://rubydoc.info/gems/signet/Signet/OAuth2/Client))
               #    *  (`GRPC::Core::Channel`) a gRPC channel with included credentials
               #    *  (`GRPC::Core::ChannelCredentials`) a gRPC credentails object
               #    *  (`nil`) indicating no credentials

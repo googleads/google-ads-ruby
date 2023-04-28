@@ -24,6 +24,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :DUPLICATE_RESOURCE_NAME, 13
       value :RECOMMENDATION_ALREADY_DISMISSED, 14
       value :INVALID_APPLY_REQUEST, 15
+      value :RECOMMENDATION_TYPE_APPLY_NOT_SUPPORTED, 17
     end
   end
 end
