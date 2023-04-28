@@ -69,6 +69,7 @@ require 'google/ads/google_ads/v13/errors/customer_customizer_error_pb'
 require 'google/ads/google_ads/v13/errors/customer_error_pb'
 require 'google/ads/google_ads/v13/errors/customer_feed_error_pb'
 require 'google/ads/google_ads/v13/errors/customer_manager_link_error_pb'
+require 'google/ads/google_ads/v13/errors/customer_sk_ad_network_conversion_value_schema_error_pb'
 require 'google/ads/google_ads/v13/errors/customer_user_access_error_pb'
 require 'google/ads/google_ads/v13/errors/customizer_attribute_error_pb'
 require 'google/ads/google_ads/v13/errors/database_error_pb'
@@ -306,6 +307,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :smart_campaign_error, :enum, 147, "google.ads.googleads.v13.errors.SmartCampaignErrorEnum.SmartCampaignError"
         optional :experiment_arm_error, :enum, 156, "google.ads.googleads.v13.errors.ExperimentArmErrorEnum.ExperimentArmError"
         optional :audience_insights_error, :enum, 167, "google.ads.googleads.v13.errors.AudienceInsightsErrorEnum.AudienceInsightsError"
+        optional :customer_sk_ad_network_conversion_value_schema_error, :enum, 170, "google.ads.googleads.v13.errors.CustomerSkAdNetworkConversionValueSchemaErrorEnum.CustomerSkAdNetworkConversionValueSchemaError"
         optional :currency_error, :enum, 171, "google.ads.googleads.v13.errors.CurrencyErrorEnum.CurrencyError"
       end
     end

@@ -66,12 +66,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :input_type, :enum, 1, "google.ads.googleads.v13.enums.LeadFormFieldUserInputTypeEnum.LeadFormFieldUserInputType"
       oneof :answers do
         optional :single_choice_answers, :message, 2, "google.ads.googleads.v13.common.LeadFormSingleChoiceAnswers"
+        optional :has_location_answer, :bool, 3
       end
     end
     add_message "google.ads.googleads.v13.common.LeadFormCustomQuestionField" do
       optional :custom_question_text, :string, 1
       oneof :answers do
         optional :single_choice_answers, :message, 2, "google.ads.googleads.v13.common.LeadFormSingleChoiceAnswers"
+        optional :has_location_answer, :bool, 3
       end
     end
     add_message "google.ads.googleads.v13.common.LeadFormSingleChoiceAnswers" do

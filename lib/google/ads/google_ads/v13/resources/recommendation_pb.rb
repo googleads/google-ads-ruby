@@ -6,6 +6,7 @@ require 'google/protobuf'
 require 'google/ads/google_ads/v13/common/criteria_pb'
 require 'google/ads/google_ads/v13/enums/keyword_match_type_pb'
 require 'google/ads/google_ads/v13/enums/recommendation_type_pb'
+require 'google/ads/google_ads/v13/enums/shopping_add_products_to_campaign_recommendation_enum_pb'
 require 'google/ads/google_ads/v13/enums/target_cpa_opt_in_recommendation_goal_pb'
 require 'google/ads/google_ads/v13/resources/ad_pb'
 require 'google/ads/google_ads/v13/resources/asset_pb'
@@ -50,7 +51,24 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :callout_asset_recommendation, :message, 39, "google.ads.googleads.v13.resources.Recommendation.CalloutAssetRecommendation"
         optional :sitelink_asset_recommendation, :message, 40, "google.ads.googleads.v13.resources.Recommendation.SitelinkAssetRecommendation"
         optional :call_asset_recommendation, :message, 41, "google.ads.googleads.v13.resources.Recommendation.CallAssetRecommendation"
+        optional :shopping_add_age_group_recommendation, :message, 42, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_color_recommendation, :message, 43, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_gender_recommendation, :message, 44, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_gtin_recommendation, :message, 45, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_more_identifiers_recommendation, :message, 46, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_size_recommendation, :message, 47, "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation"
+        optional :shopping_add_products_to_campaign_recommendation, :message, 48, "google.ads.googleads.v13.resources.Recommendation.ShoppingAddProductsToCampaignRecommendation"
+        optional :shopping_fix_disapproved_products_recommendation, :message, 49, "google.ads.googleads.v13.resources.Recommendation.ShoppingFixDisapprovedProductsRecommendation"
+        optional :shopping_target_all_offers_recommendation, :message, 50, "google.ads.googleads.v13.resources.Recommendation.ShoppingTargetAllOffersRecommendation"
+        optional :shopping_fix_suspended_merchant_center_account_recommendation, :message, 51, "google.ads.googleads.v13.resources.Recommendation.ShoppingMerchantCenterAccountSuspensionRecommendation"
+        optional :shopping_fix_merchant_center_account_suspension_warning_recommendation, :message, 52, "google.ads.googleads.v13.resources.Recommendation.ShoppingMerchantCenterAccountSuspensionRecommendation"
+        optional :shopping_migrate_regular_shopping_campaign_offers_to_performance_max_recommendation, :message, 53, "google.ads.googleads.v13.resources.Recommendation.ShoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation"
       end
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.MerchantInfo" do
+      optional :id, :int64, 1
+      optional :name, :string, 2
+      optional :multi_client, :bool, 3
     end
     add_message "google.ads.googleads.v13.resources.Recommendation.RecommendationImpact" do
       optional :base_metrics, :message, 1, "google.ads.googleads.v13.resources.Recommendation.RecommendationMetrics"
@@ -158,6 +176,36 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :recommended_target_roas, :double, 1
       optional :campaign_budget, :message, 2, "google.ads.googleads.v13.resources.Recommendation.CampaignBudget"
     end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :feed_label, :string, 2
+      optional :offers_count, :int64, 3
+      optional :demoted_offers_count, :int64, 4
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingFixDisapprovedProductsRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :feed_label, :string, 2
+      optional :products_count, :int64, 3
+      optional :disapproved_products_count, :int64, 4
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingTargetAllOffersRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :untargeted_offers_count, :int64, 2
+      optional :feed_label, :string, 3
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingAddProductsToCampaignRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :feed_label, :string, 2
+      optional :reason, :enum, 3, "google.ads.googleads.v13.enums.ShoppingAddProductsToCampaignRecommendationEnum.Reason"
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingMerchantCenterAccountSuspensionRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :feed_label, :string, 2
+    end
+    add_message "google.ads.googleads.v13.resources.Recommendation.ShoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation" do
+      optional :merchant, :message, 1, "google.ads.googleads.v13.resources.Recommendation.MerchantInfo"
+      optional :feed_label, :string, 2
+    end
     add_message "google.ads.googleads.v13.resources.Recommendation.CampaignBudget" do
       optional :current_amount_micros, :int64, 1
       optional :recommended_new_amount_micros, :int64, 2
@@ -172,6 +220,7 @@ module Google
       module V13
         module Resources
           Recommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation").msgclass
+          Recommendation::MerchantInfo = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.MerchantInfo").msgclass
           Recommendation::RecommendationImpact = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.RecommendationImpact").msgclass
           Recommendation::RecommendationMetrics = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.RecommendationMetrics").msgclass
           Recommendation::CampaignBudgetRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.CampaignBudgetRecommendation").msgclass
@@ -200,6 +249,12 @@ module Google
           Recommendation::DisplayExpansionOptInRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.DisplayExpansionOptInRecommendation").msgclass
           Recommendation::UpgradeLocalCampaignToPerformanceMaxRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.UpgradeLocalCampaignToPerformanceMaxRecommendation").msgclass
           Recommendation::ForecastingSetTargetRoasRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ForecastingSetTargetRoasRecommendation").msgclass
+          Recommendation::ShoppingOfferAttributeRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingOfferAttributeRecommendation").msgclass
+          Recommendation::ShoppingFixDisapprovedProductsRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingFixDisapprovedProductsRecommendation").msgclass
+          Recommendation::ShoppingTargetAllOffersRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingTargetAllOffersRecommendation").msgclass
+          Recommendation::ShoppingAddProductsToCampaignRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingAddProductsToCampaignRecommendation").msgclass
+          Recommendation::ShoppingMerchantCenterAccountSuspensionRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingMerchantCenterAccountSuspensionRecommendation").msgclass
+          Recommendation::ShoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.ShoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation").msgclass
           Recommendation::CampaignBudget = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v13.resources.Recommendation.CampaignBudget").msgclass
         end
       end

@@ -15,6 +15,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :CANNOT_REMOVE_LINKED_CUSTOM_CONVERSION_GOAL, 4
       value :CUSTOM_GOAL_DUPLICATE_NAME, 5
       value :DUPLICATE_CONVERSION_ACTION_LIST, 6
+      value :NON_BIDDABLE_CONVERSION_ACTION_NOT_ELIGIBLE_FOR_CUSTOM_GOAL, 7
     end
   end
 end

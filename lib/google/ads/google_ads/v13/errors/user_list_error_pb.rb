@@ -36,6 +36,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :RULE_TYPE_IS_NOT_SUPPORTED, 34
       value :CAN_NOT_ADD_A_SIMILAR_USERLIST_AS_LOGICAL_LIST_OPERAND, 35
       value :CAN_NOT_MIX_CRM_BASED_IN_LOGICAL_LIST_WITH_OTHER_LISTS, 36
+      value :APP_ID_NOT_ALLOWED, 39
+      value :CANNOT_MUTATE_SYSTEM_LIST, 40
+      value :MOBILE_APP_IS_SENSITIVE, 41
     end
   end
 end
