@@ -1,3 +1,7 @@
+22.1.0
+------
+- Compatibility with v13.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 22.0.0
 ------
 - Removed support for v11.
