@@ -45,6 +45,7 @@ def add_customer_match_user_list(customer_id, run_job, user_list_id, job_id)
   add_users_to_customer_match_user_list(client, customer_id, run_job, list_name, job_id)
 end
 
+# [START add_customer_match_user_list_3]
 def create_customer_match_user_list(client, customer_id)
   # Creates the user list.
   operation = client.operation.create_resource.user_list do |ul|
@@ -72,6 +73,7 @@ def create_customer_match_user_list(client, customer_id)
 
   resource_name
 end
+# [END add_customer_match_user_list_3]
 
 # [START add_customer_match_user_list]
 def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id)
@@ -167,6 +169,7 @@ end
 # [END add_customer_match_user_list]
 
 def print_customer_match_user_list(client, customer_id, user_list)
+  # [START add_customer_match_user_list_5]
   query = <<~EOQUERY
     SELECT user_list.size_for_display, user_list.size_for_search
     FROM user_list
@@ -177,6 +180,7 @@ def print_customer_match_user_list(client, customer_id, user_list)
     customer_id: customer_id,
     query: query,
   )
+  # [END add_customer_match_user_list_5]
   row = response.first
   puts "The estimated number of users that the user list " \
     "#{row.user_list.resource_name} has is " \
@@ -263,6 +267,7 @@ def build_offline_user_data_job_operations(client)
   operations
 end
 
+# [START add_customer_match_user_list_4]
 def check_job_status(client, customer_id, offline_user_data_job)
   query = <<~QUERY
     SELECT
@@ -296,6 +301,7 @@ def check_job_status(client, customer_id, offline_user_data_job)
     puts query
   end
 end
+# [END add_customer_match_user_list_4]
 
 def normalize_and_hash(str, trim_inner_spaces = false)
   if trim_inner_spaces
