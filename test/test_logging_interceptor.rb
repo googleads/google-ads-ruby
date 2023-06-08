@@ -20,16 +20,16 @@
 require 'minitest/autorun'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
-require 'google/ads/google_ads/v13/services/media_file_service_services_pb'
-require 'google/ads/google_ads/v13/services/customer_user_access_service_services_pb'
-require 'google/ads/google_ads/v13/services/customer_user_access_invitation_service_services_pb'
-require 'google/ads/google_ads/v13/services/google_ads_service_services_pb'
-require 'google/ads/google_ads/v13/services/feed_service_services_pb'
-require 'google/ads/google_ads/v13/services/customer_service_services_pb'
-require 'google/ads/google_ads/v13/resources/customer_user_access_pb'
-require 'google/ads/google_ads/v13/resources/customer_user_access_invitation_pb'
-require 'google/ads/google_ads/v13/resources/change_event_pb'
-require 'google/ads/google_ads/v13/resources/feed_pb'
+require 'google/ads/google_ads/v14/services/media_file_service_services_pb'
+require 'google/ads/google_ads/v14/services/customer_user_access_service_services_pb'
+require 'google/ads/google_ads/v14/services/customer_user_access_invitation_service_services_pb'
+require 'google/ads/google_ads/v14/services/google_ads_service_services_pb'
+require 'google/ads/google_ads/v14/services/feed_service_services_pb'
+require 'google/ads/google_ads/v14/services/customer_service_services_pb'
+require 'google/ads/google_ads/v14/resources/customer_user_access_pb'
+require 'google/ads/google_ads/v14/resources/customer_user_access_invitation_pb'
+require 'google/ads/google_ads/v14/resources/change_event_pb'
+require 'google/ads/google_ads/v14/resources/feed_pb'
 
 class TestLoggingInterceptor < Minitest::Test
   attr_reader :sio
@@ -102,7 +102,7 @@ class TestLoggingInterceptor < Minitest::Test
     end
 
     sio.rewind
-    assert_includes(sio.read, "Google::Ads::GoogleAds::V13::Services::MutateMediaFilesRequest")
+    assert_includes(sio.read, "Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest")
   end
 
   def test_logging_interceptor_logs_isfault_no
@@ -147,13 +147,13 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, JSON.dump("some data"))
   end
 
-  def test_logging_interceptor_logs_some_error_details_if_v13_error
+  def test_logging_interceptor_logs_some_error_details_if_v14_error
     li.request_response(
       request: make_small_request,
       call: make_fake_call,
       method: :doesnt_matter,
     ) do
-      raise make_realistic_error("v13")
+      raise make_realistic_error("v14")
     end
   rescue GRPC::InvalidArgument
     sio.rewind
@@ -208,7 +208,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V13::Resources::CustomerUserAccess.new(
+      Google::Ads::GoogleAds::V14::Resources::CustomerUserAccess.new(
         email_address: email_address,
         inviter_user_email_address: inviter_user,
       )
@@ -224,9 +224,9 @@ class TestLoggingInterceptor < Minitest::Test
   def test_logging_interceptor_sanitizes_customer_user_access_mutate
     email_address = "abcdefghijkl"
     inviter_user = "zyxwvutsr"
-    request = Google::Ads::GoogleAds::V13::Services::MutateCustomerUserAccessRequest.new(
-      operation: Google::Ads::GoogleAds::V13::Services::CustomerUserAccessOperation.new(
-        update: Google::Ads::GoogleAds::V13::Resources::CustomerUserAccess.new(
+    request = Google::Ads::GoogleAds::V14::Services::MutateCustomerUserAccessRequest.new(
+      operation: Google::Ads::GoogleAds::V14::Services::CustomerUserAccessOperation.new(
+        update: Google::Ads::GoogleAds::V14::Resources::CustomerUserAccess.new(
           email_address: email_address,
           inviter_user_email_address: inviter_user,
         )
@@ -253,7 +253,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V13::Resources::CustomerUserAccessInvitation.new(
+      Google::Ads::GoogleAds::V14::Resources::CustomerUserAccessInvitation.new(
         email_address: email_address,
       )
     end
@@ -266,9 +266,9 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_customer_user_access_invitation_mutate
     email_address = "abcdefghijkl"
-    request = Google::Ads::GoogleAds::V13::Services::MutateCustomerUserAccessInvitationRequest.new(
-      operation: Google::Ads::GoogleAds::V13::Services::CustomerUserAccessInvitationOperation.new(
-        create: Google::Ads::GoogleAds::V13::Resources::CustomerUserAccessInvitation.new(
+    request = Google::Ads::GoogleAds::V14::Services::MutateCustomerUserAccessInvitationRequest.new(
+      operation: Google::Ads::GoogleAds::V14::Services::CustomerUserAccessInvitationOperation.new(
+        create: Google::Ads::GoogleAds::V14::Resources::CustomerUserAccessInvitation.new(
           email_address: email_address,
         )
       )
@@ -293,8 +293,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V13::Resources::Feed.new(
-        places_location_feed_data: Google::Ads::GoogleAds::V13::
+      Google::Ads::GoogleAds::V14::Resources::Feed.new(
+        places_location_feed_data: Google::Ads::GoogleAds::V14::
           Resources::Feed::PlacesLocationFeedData.new(
           email_address: email_address,
         ),
@@ -311,19 +311,19 @@ class TestLoggingInterceptor < Minitest::Test
     email_address = "abcdefghijkl"
     email_address_2 = "zyxwvutsr"
     li.request_response(
-      request: Google::Ads::GoogleAds::V13::Services::MutateFeedsRequest.new(
+      request: Google::Ads::GoogleAds::V14::Services::MutateFeedsRequest.new(
         operations: [
-          Google::Ads::GoogleAds::V13::Services::FeedOperation.new(
-            create: Google::Ads::GoogleAds::V13::Resources::Feed.new(
-              places_location_feed_data: Google::Ads::GoogleAds::V13::
+          Google::Ads::GoogleAds::V14::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V14::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V14::
                 Resources::Feed::PlacesLocationFeedData.new(
                 email_address: email_address,
               ),
             ),
           ),
-          Google::Ads::GoogleAds::V13::Services::FeedOperation.new(
-            create: Google::Ads::GoogleAds::V13::Resources::Feed.new(
-              places_location_feed_data: Google::Ads::GoogleAds::V13::
+          Google::Ads::GoogleAds::V14::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V14::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V14::
                 Resources::Feed::PlacesLocationFeedData.new(
                 email_address: email_address_2,
               ),
@@ -346,7 +346,7 @@ class TestLoggingInterceptor < Minitest::Test
   def test_logging_interceptor_sanitizes_customer_client_create_request
     email_address = "abcdefghijkl"
     li.request_response(
-      request: Google::Ads::GoogleAds::V13::Services::CreateCustomerClientRequest.new(
+      request: Google::Ads::GoogleAds::V14::Services::CreateCustomerClientRequest.new(
         email_address: email_address,
       ),
       call: make_fake_call,
@@ -362,7 +362,7 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_search_request
     li.request_response(
-      request: Google::Ads::GoogleAds::V13::Services::SearchGoogleAdsRequest.new(
+      request: Google::Ads::GoogleAds::V14::Services::SearchGoogleAdsRequest.new(
         query: "SELECT change_event.user_email FROM change_event",
       ),
       call: make_fake_call,
@@ -378,7 +378,7 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_search_stream_request
     li.request_response(
-      request: Google::Ads::GoogleAds::V13::Services::SearchGoogleAdsStreamRequest.new(
+      request: Google::Ads::GoogleAds::V14::Services::SearchGoogleAdsStreamRequest.new(
         query: "SELECT change_event.user_email FROM change_event",
       ),
       call: make_fake_call,
@@ -401,7 +401,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V13::Services::SearchGoogleAdsResponse.new(
+      Google::Ads::GoogleAds::V14::Services::SearchGoogleAdsResponse.new(
         field_mask: Google::Protobuf::FieldMask.new(
           paths: [
             "customer_user_access.email_address",
@@ -410,12 +410,12 @@ class TestLoggingInterceptor < Minitest::Test
           ]
         ),
         results: [
-          Google::Ads::GoogleAds::V13::Services::GoogleAdsRow.new(
-            customer_user_access: Google::Ads::GoogleAds::V13::Resources::CustomerUserAccess.new(
+          Google::Ads::GoogleAds::V14::Services::GoogleAdsRow.new(
+            customer_user_access: Google::Ads::GoogleAds::V14::Resources::CustomerUserAccess.new(
               email_address: email_address,
               inviter_user_email_address: inviter_user,
             ),
-            change_event: Google::Ads::GoogleAds::V13::Resources::ChangeEvent.new(
+            change_event: Google::Ads::GoogleAds::V14::Resources::ChangeEvent.new(
               user_email: user_email,
             ),
           )
@@ -441,7 +441,7 @@ class TestLoggingInterceptor < Minitest::Test
       method: :doesnt_matter
     ) do
       [
-        Google::Ads::GoogleAds::V13::Services::SearchGoogleAdsStreamResponse.new(
+        Google::Ads::GoogleAds::V14::Services::SearchGoogleAdsStreamResponse.new(
           field_mask: Google::Protobuf::FieldMask.new(
             paths: [
               "customer_user_access.email_address",
@@ -450,12 +450,12 @@ class TestLoggingInterceptor < Minitest::Test
             ]
           ),
           results: [
-            Google::Ads::GoogleAds::V13::Services::GoogleAdsRow.new(
-              customer_user_access: Google::Ads::GoogleAds::V13::Resources::CustomerUserAccess.new(
+            Google::Ads::GoogleAds::V14::Services::GoogleAdsRow.new(
+              customer_user_access: Google::Ads::GoogleAds::V14::Resources::CustomerUserAccess.new(
                 email_address: email_address,
                 inviter_user_email_address: inviter_user,
               ),
-              change_event: Google::Ads::GoogleAds::V13::Resources::ChangeEvent.new(
+              change_event: Google::Ads::GoogleAds::V14::Resources::ChangeEvent.new(
                 user_email: user_email,
               ),
             )
@@ -496,14 +496,14 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_realistic_response_with_partial_error
-    Google::Ads::GoogleAds::V13::Services::MutateMediaFilesResponse.new(
+    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesResponse.new(
       results: [],
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v13.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v14.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -512,12 +512,12 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_small_request(customer_id: "123")
-    Google::Ads::GoogleAds::V13::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V13::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V13::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V13::Resources::MediaImage.new(
+        Google::Ads::GoogleAds::V14::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V14::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V14::Resources::MediaImage.new(
               data: File.open("test/fixtures/sam.jpg", "rb").read[0..10]
             )
           )
@@ -535,18 +535,18 @@ class TestLoggingInterceptor < Minitest::Test
 
   def make_error_metadata(version)
     {
-      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v13.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
+      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v14.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
       "request-id" =>"btwmoTYjaQE1UwVZnDCGAA",
     }
   end
 
   def make_request(customer_id: "123123123")
-    Google::Ads::GoogleAds::V13::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V13::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V13::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V13::Resources::MediaImage.new(
+        Google::Ads::GoogleAds::V14::Services::MediaFileOperation.new(
+          create: Google::Ads::GoogleAds::V14::Resources::MediaFile.new(
+            image: Google::Ads::GoogleAds::V14::Resources::MediaImage.new(
               data: File.open("test/fixtures/sam.jpg", "rb").read
             )
           )

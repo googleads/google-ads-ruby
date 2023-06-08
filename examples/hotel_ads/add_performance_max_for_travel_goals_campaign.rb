@@ -331,7 +331,7 @@ def get_hotel_asset_suggestion(client, customer_id, place_id)
     client.service.travel_asset_suggestion.suggest_travel_assets(
       customer_id: customer_id,
       language_option: 'en-US',
-      place_id: [place_id]
+      place_ids: [place_id]
     )
 
   response.hotel_asset_suggestions.first
