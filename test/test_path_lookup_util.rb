@@ -21,7 +21,7 @@ require 'minitest/autorun'
 
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/utils/v12/path_lookup_util'
-require 'google/ads/google_ads/utils/v13/path_lookup_util'
+require 'google/ads/google_ads/utils/v14/path_lookup_util'
 
 class TestPathLookupUtil < Minitest::Test
   def test_path_generation_v12()
@@ -472,7 +472,7 @@ class TestPathLookupUtil < Minitest::Test
   end
 
   def test_malformed_path_input
-    util = Google::Ads::GoogleAds::Utils::V13::PathLookupUtil.new
+    util = Google::Ads::GoogleAds::Utils::V14::PathLookupUtil.new
 
     assert_raises ArgumentError do
       util.campaign(nil, nil)
