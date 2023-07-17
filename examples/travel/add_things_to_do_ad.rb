@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2018 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example creates a Things to do campaign, an ad group and a Things to do
+# This example creates a Things to Do campaign, an ad group and a Things to Do
 # ad.
 #
 # Prerequisite: You need to have an access to the Things to Do Center. The
@@ -34,7 +34,7 @@ def add_things_to_do_ad(customer_id, things_to_do_center_account_id)
   # Creates a budget to be used by the campaign that will be created below.
   budget_resource = add_campaign_budget(client, customer_id)
 
-  # Creates a Things to do campaign.
+  # Creates a Things to Do campaign.
   campaign_resource = add_things_to_do_campaign(client, customer_id,
     budget_resource, things_to_do_center_account_id)
 
@@ -74,7 +74,7 @@ def add_campaign_budget(client, customer_id)
 end
 
 
-# Creates a new Things to do campaign in the specified customer account.
+# Creates a new Things to Do campaign in the specified customer account.
 # [START add_things_to_do_ad]
 def add_things_to_do_campaign(client, customer_id, budget_resource,
   things_to_do_center_account_id)
@@ -84,7 +84,7 @@ def add_things_to_do_campaign(client, customer_id, budget_resource,
   campaign_operation = client.operation.create_resource.campaign do |c|
     c.name = generate_random_name_field("Interplanetary Cruise Campaign")
 
-    #  Configures settings related to Things to do campaigns including
+    #  Configures settings related to Things to Do campaigns including
     # advertising channel type, advertising channel sub type and
     # travel campaign settings.
     c.advertising_channel_type = :TRAVEL
@@ -100,14 +100,14 @@ def add_things_to_do_campaign(client, customer_id, budget_resource,
     c.status = :PAUSED
 
     # Sets the bidding strategy to MaximizeConversionValue. Only this type can
-    # be used for Things to do campaigns.
+    # be used for Things to Do campaigns.
     c.maximize_conversion_value = client.resource.maximize_conversion_value
 
     # Set the budget.
     c.campaign_budget = budget_resource
 
     # Configures the campaign network options. Only Google Search is allowed for
-    # Things To Do campaigns.
+    # Things to Do campaigns.
     c.network_settings = client.resource.network_settings do |ns|
       ns.target_google_search = true
     end
@@ -131,7 +131,7 @@ end
 # [END add_things_to_do_ad]
 
 
-# Creates a new ad group in the specified Things to do campaign.
+# Creates a new ad group in the specified Things to Do campaign.
 # [START add_things_to_do_ad_2]
 def add_ad_group(client, customer_id, campaign_resource)
   # Create an ad group.
@@ -172,7 +172,7 @@ def add_ad_group_ad(client, customer_id, ad_group_resource)
       ad.travel_ad = client.resource.travel_ad_info
     end
     # Set the ad group ad to enabled. Setting this to paused will cause an error
-    # for Things to do campaigns. Pausing should happen at either the ad group
+    # for Things to Do campaigns. Pausing should happen at either the ad group
     # or campaign level.
     aga.status = :ENABLED
 
@@ -204,21 +204,13 @@ end
 
 if __FILE__ == $0
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:things_to_do_center_account_id] = 'INSERT_THINGS_TO_DO_CENTER_ACCOUNT_ID_HERE'
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+
     opts.separator ''
     opts.separator 'Options:'
+
     opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
       options[:customer_id] = v
     end
@@ -238,7 +230,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    add_things_to_do_ad(options.fetch(:customer_id).tr("-", ""), options[:things_to_do_center_account_id])
+    add_things_to_do_ad(options.fetch(:customer_id).tr("-", ""), options.fetch(:things_to_do_center_account_id))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
