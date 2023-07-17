@@ -54,7 +54,7 @@ def add_campaign_budget(client, customer_id)
     cb.delivery_method = :STANDARD
     cb.amount_micros = 50_000_000
     # Makes the budget explicitly shared. You cannot set it to `false` for
-    # Things To Do campaigns.
+    # Things to Do campaigns.
     cb.explicitly_shared = true
   end
 
@@ -216,7 +216,7 @@ if __FILE__ == $0
     end
 
     opts.on('-T', '--things-to-do-center-account-id THINGS-TO-DO-CENTER-ACCOUNT-ID',
-      Integer, 'Things To Do Account ID') do |v|
+      Integer, 'Things to Do Account ID') do |v|
       options[:things_to_do_center_account_id] = v
     end
 
