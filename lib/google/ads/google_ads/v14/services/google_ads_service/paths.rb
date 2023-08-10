@@ -1137,6 +1137,25 @@ module Google
               end
 
               ##
+              # Create a fully-qualified CampaignSearchTermInsight resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/campaignSearchTermInsights/{campaign_id}~{cluster_id}`
+              #
+              # @param customer_id [String]
+              # @param campaign_id [String]
+              # @param cluster_id [String]
+              #
+              # @return [::String]
+              def campaign_search_term_insight_path customer_id:, campaign_id:, cluster_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/campaignSearchTermInsights/#{campaign_id}~#{cluster_id}"
+              end
+
+              ##
               # Create a fully-qualified CampaignSharedSet resource string.
               #
               # The resource will be in the following format:
@@ -1626,6 +1645,23 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/customerNegativeCriteria/#{criterion_id}"
+              end
+
+              ##
+              # Create a fully-qualified CustomerSearchTermInsight resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/customerSearchTermInsights/{cluster_id}`
+              #
+              # @param customer_id [String]
+              # @param cluster_id [String]
+              #
+              # @return [::String]
+              def customer_search_term_insight_path customer_id:, cluster_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/customerSearchTermInsights/#{cluster_id}"
               end
 
               ##
