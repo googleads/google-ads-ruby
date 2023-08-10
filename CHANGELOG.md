@@ -1,3 +1,7 @@
+23.1.0
+------
+ - Compatibility with v14.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 23.0.0
 ------
  - Compatibility with v14 of the API: https://developers.google.com/google-ads/api/docs/release-notes
