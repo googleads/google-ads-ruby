@@ -2,50 +2,50 @@
 
 - Compatibility with v14.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  23.0.0
+## 23.0.0
 
 ---
 
 - Compatibility with v14 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  22.1.0
+## 22.1.0
 
 ---
 
 - Compatibility with v13.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  22.0.0
+## 22.0.0
 
 ---
 
 - Removed support for v11.
 
-  21.0.0
+## 21.0.0
 
 ---
 
 - Compatibility with v13 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 - Removed support for v10.
 
-  20.0.0
+## 20.0.0
 
 ---
 
 - Compatibility with v12 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  19.0.0
+## 19.0.0
 
 ---
 
 - Removed support for v9.
 
-  18.1.0
+## 18.1.0
 
 ---
 
 - Compatibility with v11.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  18.0.0
+## 18.0.0
 
 ---
 
@@ -54,65 +54,65 @@
   subfields. For a full overview of the field mask util, see:
   https://developers.google.com/google-ads/api/docs/client-libs/ruby/field-masks
 
-  17.0.0
+## 17.0.0
 
 ---
 
 - Compatibility with v10.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 - Removed support for v8.
 
-  16.0.0
+## 16.0.0
 
 ---
 
 - Compatibility with v10.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 - Removed support for v7.
 
-  15.0.0
+## 15.0.0
 
 ---
 
 - Compatibility with v9.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  14.0.0
+## 14.0.0
 
 ---
 
 - Compatibility with v8.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 - Removed support for v6.
 
-  13.0.0
+## 13.0.0
 
 ---
 
 - Removed support for v5.
 
-  12.0.2
+## 12.0.2
 
 ---
 
 - Fixed a missing type in path lookup util.
 
-  12.0.1
+## 12.0.1
 
 ---
 
 - Fixed an issue in the gem factories files.
 
-  12.0.0
+## 12.0.0
 
 ---
 
 - Compatibility with v8 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
-  11.0.0
+## 11.0.0
 
 ---
 
 - Compatibility with v7 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 - Removed support for v4.
 
-  10.0.0
+## 10.0.0
 
 ---
 
