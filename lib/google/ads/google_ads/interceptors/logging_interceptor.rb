@@ -299,11 +299,13 @@ module Google
           end
 
           def build_summary_message(request, call, method, is_fault)
-            customer_id = "N/A"
-            customer_id = request.customer_id if request.respond_to?(:customer_id)
-            # CustomerService get requests have a different format.
-            if request.respond_to?(:resource_name)
-              customer_id = request.resource_name.split('/').last
+            customer_id = if request.respond_to?(:customer_id)
+              request.customer_id
+            elsif request.respond_to?(:resource_name)
+              segments = request.resource_name.split('/')
+              segments[1] if segments[0] == "customers"
+            else
+              "N/A"
             end
 
             is_fault_string = if is_fault
