@@ -23,7 +23,7 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
-require "google/ads/google_ads/v14/services"
+require "google/ads/google_ads/v15/services"
 require 'date'
 
 # [START generate_forecast_metrics]
