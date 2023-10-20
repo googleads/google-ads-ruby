@@ -62,16 +62,23 @@ def get_product_category_constant(customer_id)
 
   response.each do |row|
     product_category = row.product_category_constant
+
+    localized_name = ""
+    product_category.localizations.each do |l|
+      if l.region_code == "US" && l.language_code == 'en'
+        localized_name = l.value
+        break
+      end
+    end
+
     category = {
-      name: product_category.localizations,
+      name: localized_name,
       id: product_category.resource_name,
       children: []
     }
 
     all_categories[category.fetch(:id)] = category
-
-    parent_id = product_category
-      .product_category_constant_parent
+    parent_id = product_category.product_category_constant_parent
 
     if parent_id
       all_categories[parent_id][:children] << category
