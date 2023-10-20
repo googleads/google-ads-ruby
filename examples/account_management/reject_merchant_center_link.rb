@@ -25,13 +25,18 @@
 # for Shopping to send a link request between your Merchant Center and
 # Google Ads accounts.
 
+# NOTE: This code example uses version v14 of the Google Ads API.
+# Version v15 of the Google Ads API replaces MerchantCenterLinkService with
+# ProductLinkInvitationService and ProductLinkService. We will add new code
+# examples using these services shortly.
+
 require 'optparse'
 require 'google/ads/google_ads'
 
 def reject_merchant_center_links(customer_id, merchant_center_account_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  merchant_center_link_service = client.service.merchant_center_link
+  merchant_center_link_service = client.service.v14.merchant_center_link
 
   # Rejects a pending link request or unlinks an enabled link for a Google Ads
   # account with customer_id from a Merchant Center account with
@@ -76,7 +81,7 @@ def remove_merchant_center_link(
   link)
   # Creates a single remove operation, specifying the Merchant Center link
   # resource name.
-  operation = client.operation.remove_resource.merchant_center_link(link.resource_name)
+  operation = client.operation.v14.remove_resource.merchant_center_link(link.resource_name)
 
   # Issues a mutate request to remove the link and prints the result info.
   response = merchant_center_link_service.mutate_merchant_center_link(

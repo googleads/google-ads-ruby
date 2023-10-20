@@ -17,6 +17,13 @@
 #
 # This example uploads an HTML5 zip file as a media bundle.
 
+# NOTE: This code example uses version v14 of the Google Ads API.
+# Google Ads is migrating from individual media files to assets,
+# and version v15 of the API removed support for
+# MediaFileService as part of this migration.
+# See https://ads-developers.googleblog.com/2023/07/image-and-location-auto-migration.html
+# for more details.
+
 require 'optparse'
 require 'google/ads/google_ads'
 require 'open-uri'
@@ -27,19 +34,19 @@ def upload_media_bundle(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   url = 'https://gaagl.page.link/ib87'
-  bundle_content = open(url) { |f| f.read }
+  bundle_content = URI.open(url) { |f| f.read }
 
   # Creates a media file containing the bundle content.
-  operation = client.operation.create_resource.media_file do |media|
+  operation = client.operation.v14.create_resource.media_file do |media|
     media.name = 'Ad Media Bundle'
     media.type = :MEDIA_BUNDLE
-    media.media_bundle = client.resource.media_bundle do |bundle|
+    media.media_bundle = client.resource.v14.media_bundle do |bundle|
       bundle.data = bundle_content
     end
   end
 
   # Issues a mutate request to add the media file.
-  response = client.service.media_file.mutate_media_files(
+  response = client.service.v14.media_file.mutate_media_files(
     customer_id: customer_id,
     operations: [operation],
   )
