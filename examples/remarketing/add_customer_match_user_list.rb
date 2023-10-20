@@ -89,7 +89,7 @@ def add_users_to_customer_match_user_list(client, customer_id, run_job, user_lis
         client.resource.customer_match_user_list_metadata do |m|
           m.user_list = user_list
 
-          unless ad_user_data_consent.nil? && ad_personalization_consent.nil?
+          if !gclid.nil? || !gclid.nil?
             m.consent = client.resource.consent do |c|
               # Specifies whether user consent was obtained for the data you are
               # uploading. For more details, see:

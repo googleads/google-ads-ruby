@@ -39,7 +39,9 @@ def upload_store_sales_transactions(
   merchant_center_account_id,
   region_code,
   language_code,
-  quantity)
+  quantity,
+  ad_user_data_consent,
+  ad_personalization_consent)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -66,6 +68,8 @@ def upload_store_sales_transactions(
     offline_user_data_job_resource_name,
     conversion_action_id,
     custom_value,
+    ad_user_data_consent,
+    ad_personalization_consent
   )
 
   # Issues an asynchronous request to run the offline user data job.
@@ -181,10 +185,13 @@ def add_transactions_to_offline_user_data_job(
   customer_id,
   offline_user_data_job_resource_name,
   conversion_action_id,
-  custom_value)
+  custom_value,
+  ad_user_data_consent,
+  ad_personalization_consent)
   # Constructs the operation for each transaction.
   user_data_job_operations = build_offline_user_data_job_operations(
-    client, customer_id, conversion_action_id, custom_value)
+    client, customer_id, conversion_action_id, custom_value, ad_user_data_consent,
+    ad_personalization_consent)
 
   # [START enable_warnings_1]
   # Issues a request to add the operations to the offline user data job.
@@ -238,7 +245,9 @@ def build_offline_user_data_job_operations(
   client,
   customer_id,
   conversion_action_id,
-  custom_value)
+  custom_value,
+  ad_user_data_consent,
+  ad_personalization_consent)
   operations = []
 
   # Creates the first transaction for upload based on an email address
@@ -266,6 +275,19 @@ def build_offline_user_data_job_operations(
       # "2018-02-01 14:34:30+03:00".
       t.transaction_date_time = "2020-05-01 23:52:12"
       t.custom_value = custom_value unless custom_value.nil?
+    end
+    if !gclid.nil? || !gclid.nil?
+      job.consent = client.resource.consent do |c|
+        # Specifies whether user consent was obtained for the data you are
+        # uploading. For more details, see:
+        # https://www.google.com/about/company/user-consent-policy
+        unless ad_user_data_consent.nil?
+          c.ad_user_data = ad_user_data_consent
+        end
+        unless ad_personalization_consent.nil?
+          c.ad_personalization = ad_personalization_consent
+        end
+      end
     end
   end
 
@@ -466,6 +488,18 @@ if __FILE__ == $0
       options[:quantity] = v
     end
 
+    opts.on('-d', '--ad-user-data-consent [AD-USER-DATA_CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_user_data_consent] = v
+    end
+
+    opts.on('-p', '--ad-personalization-consent [AD-PERSONALIZATION-CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_personalization_consent] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -491,6 +525,8 @@ if __FILE__ == $0
       options[:region_code],
       options[:language_code],
       options[:quantity],
+      options[:ad_user_data_consent],
+      options[:ad_personalization_consent],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
