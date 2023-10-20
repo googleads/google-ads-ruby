@@ -14,14 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Adjusts an existing conversion by supplying user identifiers so Google can
-# enhance the conversion value.
+# Enhances a web conversion by uploading a ConversionAdjustment.
+# The conversion adjustment contains hashed user identifiers and an order ID.
 
 require 'optparse'
 require 'google/ads/google_ads'
 require 'digest'
 
-# [START upload_conversion_enhancement]
 def upload_conversion_enhancement(
   customer_id,
   conversion_action_id,
@@ -33,8 +32,49 @@ def upload_conversion_enhancement(
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # [START create_adjustment]
+  # [START add_user_identifiers]
+  # Extracts user email, phone, and address info from the raw data, normalizes
+  # and hashes it, then wraps it in UserIdentifier objects. Creates a separate
+  # UserIdentifier object for each. The data in this example is hardcoded, but
+  # in your application you might read the raw data from an input file.
+
+  # IMPORTANT: Since the identifier attribute of UserIdentifier
+  # (https://developers.google.com/google-ads/api/reference/rpc/latest/UserIdentifier)
+  # is a oneof
+  # (https://protobuf.dev/programming-guides/proto3/#oneof-features), you must
+  # set only ONE of hashed_email, hashed_phone_number, mobile_id,
+  # third_party_user_id, or address_info. Setting more than one of these
+  # attributes on the same UserIdentifier will clear all the other members of
+  # the oneof. For example, the following code is INCORRECT and will result in
+  # a UserIdentifier with ONLY a hashed_phone_number:
+  #
+  # incorrectly_populated_user_identifier.hashed_email = "...""
+  # incorrectly_populated_user_identifier.hashed_phone_number = "...""
+
+  raw_record = {
+      # Email address that includes a period (.) before the Gmail domain.
+      "email" => "alex.2@example.com",
+      # Address that includes all four required elements: first name, last
+      # name, country code, and postal code.
+      "first_name" => "Alex",
+      "last_name" => "Quinn",
+      "country_code" => "US",
+      "postal_code" => "94045",
+      # Phone number to be converted to E.164 format, with a leading '+' as
+      # required.
+      "phone" => "+1 800 5550102",
+      # This example lets you input conversion details as arguments, but in
+      # reality you might store this data alongside other user data, so we
+      # include it in this sample user record.
+      "order_id" => order_id,
+      "conversion_action_id" => conversion_action_id,
+      "conversion_date_time" => conversion_date_time,
+      "currency_code" => "USD",
+      "user_agent" => user_agent,
+  }
+
   enhancement = client.resource.conversion_adjustment do |ca|
+    # [START add_conversion_details]
     ca.conversion_action = client.path.conversion_action(customer_id, conversion_action_id)
     ca.adjustment_type = :ENHANCEMENT
     ca.order_id = order_id
@@ -47,30 +87,52 @@ def upload_conversion_enhancement(
       end
     end
 
-    # Creates a user identifier using sample values for the user address.
+    # Creates a user identifier using the hashed email address, using the
+    # normalize and hash method specifically for email addresses.
     ca.user_identifiers << client.resource.user_identifier do |ui|
-      ui.address_info = client.resource.offline_user_address_info do |info|
-        # Certain fields must be hashed using SHA256 in order to handle
-        # identifiers in a privacy-safe way, as described at
-        # https://support.google.com/google-ads/answer/9888656.
-        info.hashed_first_name = normalize_and_hash("Joanna")
-        info.hashed_last_name = normalize_and_hash("Smith")
-        info.hashed_street_address = normalize_and_hash("1600 Amphitheatre Pkwy")
-        info.city = "Mountain View"
-        info.state = "CA"
-        info.postal_code = "94043"
-        info.country_code = "US"
-      end
+      # Uses the normalize and hash method specifically for email addresses.
+      ui.hashed_email = normalize_and_hash_email(raw_record["email"])
       # Optional: Specifies the user identifier source.
       ui.user_identifier_source = :FIRST_PARTY
     end
 
-    # Creates a user identifier using the hashed email address.
-    ca.user_identifiers << client.resource.user_identifier do |ui|
-      # Uses the normalize and hash method specifically for email addresses.
-      ui.hashed_email = normalize_and_hash_email("dana@example.com")
-      ui.user_identifier_source = :FIRST_PARTY
+    # Checks if the record has a phone number, and if so, adds a UserIdentifier
+    # for it.
+    unless raw_record["phone"].nil?
+      ca.user_identifiers << client.resource.user_identifier do |ui|
+        ui.hashed_phone_number = normalize_and_hash_email(raw_record["phone"])
+      end
     end
+
+    # Checks if the record has all the required mailing address elements, and if
+    # so, adds a UserIdentifier for the mailing address.
+    unless raw_record["first_name"].nil?
+      # Checks if the record contains all the other required elements of a
+      # mailing address.
+      required_keys = ["last_name", "country_code", "postal_code"]
+      # Builds a new list of the required keys that are missing from
+      # raw_record.
+      missing_keys = required_keys - raw_record.keys
+      if missing_keys
+          puts(
+              "Skipping addition of mailing address information because the" \
+              "following required keys are missing: #{missing_keys}"
+          )
+      else
+        ca.user_identifiers << client.resource.user_identifier do |ui|
+          ui.address_info = client.resource.offline_user_address_info do |info|
+            # Certain fields must be hashed using SHA256 in order to handle
+            # identifiers in a privacy-safe way, as described at
+            # https://support.google.com/google-ads/answer/9888656.
+            info.hashed_first_name = normalize_and_hash( raw_record["first_name"])
+            info.hashed_last_name = normalize_and_hash( raw_record["last_name"])
+            info.postal_code = normalize_and_hash(raw_record["country_code"])
+            info.country_code = normalize_and_hash(raw_record["postal_code"])
+          end
+        end
+      end
+    end
+    # [END add_user_identifiers]
 
     # Sets optional fields where a value was provided.
     unless user_agent.nil?
@@ -80,16 +142,25 @@ def upload_conversion_enhancement(
       # cross-device.
       ca.user_agent = user_agent
     end
+    # [END add_conversion_details]
   end
-  # [END create_adjustment]
 
+  # [START upload_enhancement]
   response = client.service.conversion_adjustment_upload.upload_conversion_adjustments(
     customer_id: customer_id,
+    # NOTE: This request only uploads a single conversion, but if you have
+    # multiple conversions to upload, it's still best to upload them in a single
+    # request. See the following for per-request limits for reference:
+    # https://developers.google.com/google-ads/api/docs/best-practices/quotas#conversion_upload_service
     conversion_adjustments: [enhancement],
     # Partial failure must be set to true.
     partial_failure: true,
   )
+  # [END upload_enhancement]
 
+  # Prints any partial errors returned.
+  # To review the overall health of your recent uploads, see:
+  # https://developers.google.com/google-ads/api/docs/conversions/upload-summaries
   if response.partial_failure_error
     puts "Partial failure encountered: #{response.partial_failure_error.message}."
   else
@@ -98,12 +169,11 @@ def upload_conversion_enhancement(
       "order ID #{result.order_id}."
   end
 end
-# [END upload_conversion_enhancement]
 
 # [START normalize_and_hash]
 # Returns the result of normalizing and then hashing the string using the
 # provided digest.  Private customer data must be hashed during upload, as
-# described at https://support.google.com/google-ads/answer/7474263.
+# described at https://support.google.com/google-ads/answer/9888656.
 def normalize_and_hash(str)
   # Remove leading and trailing whitespace and ensure all letters are lowercase
   # before hasing.
