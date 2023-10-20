@@ -58,6 +58,11 @@ def upload_call_conversion(
   # Issues a request to upload the call conversion.
   response = client.service.conversion_upload.upload_call_conversions(
     customer_id: customer_id,
+    # NOTE: This request contains a single conversion as a demonstration.
+    # However, if you have multiple conversions to upload, it's best to upload
+    # multiple conversions per request instead of sending a separate request per
+    # conversion. See the following for per-request limits:
+    # https://developers.google.com/google-ads/api/docs/best-practices/quotas#conversion_upload_service
     conversions: [call_conversion],
     partial_failure: true
   )
