@@ -32,8 +32,13 @@ require 'google/ads/google_ads'
 require 'date'
 require 'digest'
 
-def add_customer_match_user_list(customer_id, run_job, user_list_id, job_id,
-  ad_user_data_consent, ad_personalization_consent)
+def add_customer_match_user_list(
+  customer_id,
+  run_job,
+  user_list_id,
+  job_id,
+  ad_user_data_consent,
+  ad_personalization_consent)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   if job_id.nil?
@@ -77,8 +82,7 @@ end
 # [END add_customer_match_user_list_3]
 
 # [START add_customer_match_user_list]
-def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id,
-  ad_user_data_consent, ad_personalization_consent)
+def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id, ad_user_data_consent, ad_personalization_consent)
   offline_user_data_service = client.service.offline_user_data_job
 
   job_name = if job_id.nil?
@@ -89,7 +93,7 @@ def add_users_to_customer_match_user_list(client, customer_id, run_job, user_lis
         client.resource.customer_match_user_list_metadata do |m|
           m.user_list = user_list
 
-          if !gclid.nil? || !gclid.nil?
+          if !ad_user_data_consent.nil? || !ad_personalization_consent.nil?
             m.consent = client.resource.consent do |c|
               # Specifies whether user consent was obtained for the data you are
               # uploading. For more details, see:

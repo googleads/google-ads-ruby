@@ -276,7 +276,7 @@ def build_offline_user_data_job_operations(
       t.transaction_date_time = "2020-05-01 23:52:12"
       t.custom_value = custom_value unless custom_value.nil?
     end
-    if !gclid.nil? || !gclid.nil?
+    if !ad_user_data_consent.nil? || !ad_personalization_consent.nil?
       job.consent = client.resource.consent do |c|
         # Specifies whether user consent was obtained for the data you are
         # uploading. For more details, see:
