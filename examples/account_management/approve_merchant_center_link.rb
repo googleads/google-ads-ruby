@@ -18,15 +18,20 @@
 # This code example accepts all pending invitations from Google Merchant Center
 # accounts to your Google Ads account.
 
+# NOTE: This code example uses version v14 of the Google Ads API.
+# Version v15 of the Google Ads API replaces MerchantCenterLinkService with
+# ProductLinkInvitationService and ProductLinkService. We will add new code
+# examples using these services shortly.
+
 require 'optparse'
 require 'google/ads/google_ads'
 
 def approve_merchant_center_links(customer_id, merchant_center_account_id)
-  client = Google::Ads::GoogleAds::GoogleAdsClient.new
+  client = Google::Ads::GoogleAds::GoogleAdsClient::new
 
   # [START approve_merchant_center_link]
   # Retrieve all the existing Merchant Center links.
-  response = client.service.merchant_center_link.list_merchant_center_links(
+  response = client.service.v14.merchant_center_link.list_merchant_center_links(
     customer_id: customer_id,
   )
   # [END approve_merchant_center_link]
@@ -37,13 +42,13 @@ def approve_merchant_center_links(customer_id, merchant_center_account_id)
     # Enables the pending link.
     if link.status == :PENDING && link.id.to_s == merchant_center_account_id
       # Creates the update operation.
-      update_operation = client.operation.update_resource.merchant_center_link(
+      update_operation = client.operation.v14.update_resource.merchant_center_link(
         link.resource_name) do |updated_link|
         updated_link.status = :ENABLED
       end
 
       # Updates the link.
-      mutate_response = client.service.merchant_center_link.mutate_merchant_center_link(
+      mutate_response = client.service.v14.merchant_center_link.mutate_merchant_center_link(
         customer_id: customer_id,
         operation: update_operation,
       )
