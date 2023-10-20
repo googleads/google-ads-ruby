@@ -90,7 +90,6 @@ def add_standard_shopping_campaign(
 
     campaign.shopping_setting = client.resource.shopping_setting do |shopping_setting|
       shopping_setting.merchant_id = merchant_center_id
-      shopping_setting.sales_country = "US"
       shopping_setting.campaign_priority = 0
       shopping_setting.enable_local = true
     end

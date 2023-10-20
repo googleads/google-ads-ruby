@@ -64,7 +64,6 @@ end
 def add_performance_max_retail_campaign(
     customer_id,
     merchant_center_account_id,
-    sales_country,
     final_url)
   # [START add_performance_max_retail_campaign_1]
   # GoogleAdsClient will read a config file from
@@ -114,7 +113,6 @@ def add_performance_max_retail_campaign(
     client,
     customer_id,
     merchant_center_account_id,
-    sales_country,
   )
   campaign_criterion_operations = create_campaign_criterion_operations(
     client,
@@ -193,8 +191,7 @@ def create_campaign_budget_operation(client, customer_id)
 def create_performance_max_campaign_operation(
     client,
     customer_id,
-    merchant_center_account_id,
-    sales_country)
+    merchant_center_account_id)
     client.operation.mutate do |m|
       m.campaign_operation = client.operation.create_resource.campaign do |c|
         c.name = "Performance Max retail campaign #{SecureRandom.uuid}"
@@ -222,7 +219,11 @@ def create_performance_max_campaign_operation(
         # Set the shopping settings.
         c.shopping_setting = client.resource.shopping_setting do |ss|
             ss.merchant_id = merchant_center_account_id
-            ss.sales_country = sales_country
+            # Optional: To use products only from a specific feed, set feed_label
+            # to the feed label used in Merchant Center.
+            # See: https://support.google.com/merchants/answer/12453549.
+            # Omitting the feed_label field will use products from all feeds.
+            # feed_label = "INSERT_FEED_LABEL_HERE"
         end
 
         # Set the Final URL expansion opt out. This flag is specific to
@@ -382,8 +383,8 @@ def create_listing_group_filter_operation(client, customer_id)
         )
         aglg.type = :UNIT_INCLUDED
         # Because this is a Performance Max campaign for retail, we need to
-        # specify that this is in the shopping vertical.
-        aglg.vertical = :SHOPPING
+        # specify that this is in the shopping listing source.
+        aglg.listing_source = :SHOPPING
       end
   end
 end
@@ -679,7 +680,6 @@ if __FILE__ == $0
     # Running the example with -h will print the command line usage.
     options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
     options[:merchant_center_account_id] = 'INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE'
-    options[:sales_country] = 'INSERT_SALES_COUNTRY_HERE'
     options[:final_url] = 'INSERT_FINAL_URL_HERE'
 
     OptionParser.new do |opts|
@@ -695,10 +695,6 @@ if __FILE__ == $0
       opts.on('-m', '--merchant-center-account-id MERCHANT-CENTER-ACCOUNT-ID',
           Integer, 'Merchant Center Account ID') do |v|
         options[:merchant_center_account_id] = v
-      end
-
-      opts.on('-s', '--sales-country-id SALES-COUNTRY', String, 'Sales Country') do |v|
-        options[:sales_country] = v
       end
 
       opts.on('-f', '--final-url FINAL-URL', String, 'Final URL') do |v|
@@ -718,7 +714,6 @@ if __FILE__ == $0
       add_performance_max_retail_campaign(
           options.fetch(:customer_id).tr("-", ""),
           options.fetch(:merchant_center_account_id),
-          options.fetch(:sales_country),
           options.fetch(:final_url))
     rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
       e.failure.errors.each do |error|

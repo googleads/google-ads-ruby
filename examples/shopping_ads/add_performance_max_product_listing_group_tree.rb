@@ -323,8 +323,8 @@ class AssetGroupListingGroupFilterCreateOperationFactory
       lgf.type = :SUBDIVISION
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the SHOPPING vertical.
-      lgf.vertical = :SHOPPING
+      # specify that this is in the SHOPPING listing source.
+      lgf.listing_source = :SHOPPING
     end
 
     client.operation.mutate do |m|
@@ -361,8 +361,8 @@ class AssetGroupListingGroupFilterCreateOperationFactory
       lgf.type = :SUBDIVISION
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the SHOPPING vertical.
-      lgf.vertical = :SHOPPING
+      # specify that this is in the SHOPPING listing source.
+      lgf.listing_source = :SHOPPING
 
       lgf.case_value = dimension
     end
@@ -401,8 +401,8 @@ class AssetGroupListingGroupFilterCreateOperationFactory
       lgf.type = :UNIT_INCLUDED
 
       # Because this is a Performance Max campaign for retail, we need to
-      # specify that this is in the SHOPPING vertical.
-      lgf.vertical = :SHOPPING
+      # specify that this is in the SHOPPING listing source.
+      lgf.listing_source = :SHOPPING
 
       lgf.case_value = dimension
     end
