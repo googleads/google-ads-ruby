@@ -84,14 +84,14 @@ def upload_conversion_with_identifiers(
       cc.order_id = order_id
     end
 
-    unless raw_record[:gclid].nil?
+    unless raw_record["gclid"].nil?
       cc.gclid = gclid
     end
 
     # Specifies whether user consent was obtained for the data you are
     # uploading. For more details, see:
     # https://www.google.com/about/company/user-consent-policy
-    unless raw_record[:ad_user_data_consent].nil?
+    unless raw_record["ad_user_data_consent"].nil?
       # cc.consent.ad_user_data = client.enums.ConsentStatusEnum[
       #   raw_record["ad_user_data_consent"]
       # ]
