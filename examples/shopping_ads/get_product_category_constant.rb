@@ -63,16 +63,12 @@ def get_product_category_constant(customer_id)
   response.each do |row|
     product_category = row.product_category_constant
 
-    localized_name = ""
-    product_category.localizations.each do |l|
-      if l.region_code == "US" && l.language_code == 'en'
-        localized_name = l.value
-        break
-      end
-    end
+    localized_product = product_category.localizations.detect{ |l|
+      l.region_code == "US" && l.language_code == 'en'
+    }
 
     category = {
-      name: localized_name,
+      name: localized_product.value,
       id: product_category.resource_name,
       children: []
     }
