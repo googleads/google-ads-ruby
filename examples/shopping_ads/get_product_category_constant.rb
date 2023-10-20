@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example fetches the set of valid ProductBiddingCategories.
+# This example fetches the set of all ProductCategoryConstants.
 
 require 'optparse'
 require 'google/ads/google_ads'
@@ -32,19 +32,17 @@ def display_categories(categories, prefix: '')
   end
 end
 
-def get_product_bidding_category_constant(customer_id)
+def get_product_category_constant(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   query = <<~EOD
     SELECT
-       product_bidding_category_constant.localized_name,
-       product_bidding_category_constant.product_bidding_category_constant_parent
+      product_category_constant.localizations,
+      product_category_constant.product_category_constant_parent
     FROM
-      product_bidding_category_constant
-    WHERE
-      product_bidding_category_constant.country_code IN ('US')
+      product_category_constant
   EOD
 
   ga_service = client.service.google_ads
@@ -63,17 +61,17 @@ def get_product_bidding_category_constant(customer_id)
   root_categories = Set.new
 
   response.each do |row|
-    product_bidding_category = row.product_bidding_category_constant
+    product_category = row.product_category_constant
     category = {
-      name: product_bidding_category.localized_name,
-      id: product_bidding_category.resource_name,
+      name: product_category.localizations,
+      id: product_category.resource_name,
       children: []
     }
 
     all_categories[category.fetch(:id)] = category
 
-    parent_id = product_bidding_category
-      .product_bidding_category_constant_parent
+    parent_id = product_category
+      .product_category_constant_parent
 
     if parent_id
       all_categories[parent_id][:children] << category
@@ -119,7 +117,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    get_product_bidding_category_constant(
+    get_product_category_constant(
       options.fetch(:customer_id).tr("-", "")
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
