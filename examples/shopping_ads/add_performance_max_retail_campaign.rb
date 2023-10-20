@@ -219,6 +219,11 @@ def create_performance_max_campaign_operation(
         # Set the shopping settings.
         c.shopping_setting = client.resource.shopping_setting do |ss|
             ss.merchant_id = merchant_center_account_id
+            # Optional: To use products only from a specific feed, set feed_label
+            # to the feed label used in Merchant Center.
+            # See: https://support.google.com/merchants/answer/12453549.
+            # Omitting the feed_label field will use products from all feeds.
+            # feed_label = "INSERT_FEED_LABEL_HERE"
         end
 
         # Set the Final URL expansion opt out. This flag is specific to
