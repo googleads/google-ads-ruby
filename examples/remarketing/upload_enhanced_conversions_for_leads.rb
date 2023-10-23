@@ -92,9 +92,9 @@ def upload_conversion_with_identifiers(
     # uploading. For more details, see:
     # https://www.google.com/about/company/user-consent-policy
     unless raw_record["ad_user_data_consent"].nil?
-      # cc.consent.ad_user_data = client.enums.ConsentStatusEnum[
-      #   raw_record["ad_user_data_consent"]
-      # ]
+      cc.consent = client.resource.consent do |c|
+        c.ad_user_data = ad_user_data_consent
+      end
     end
     # [END add_conversion_details]
 
@@ -117,6 +117,7 @@ def upload_conversion_with_identifiers(
   end
   # [END add_user_identifiers]
 
+  # [START upload_conversion]
   response = client.service.conversion_upload.upload_click_conversions(
     customer_id: customer_id,
     conversions: [click_conversion],
@@ -131,6 +132,7 @@ def upload_conversion_with_identifiers(
     puts "Uploaded click conversion that happened at #{result.conversion_date_time} " \
       "to #{result.conversion_action}."
   end
+  # [END upload_conversion]
 end
 
 # [START normalize_and_hash]
@@ -173,8 +175,8 @@ if __FILE__ == $0
   options[:conversion_date_time] = 'INSERT_CONVERSION_DATE_TIME_HERE'
   options[:conversion_value] = 'INSERT_CONVERSION_VALUE_HERE'
   options[:order_id] = nil
-  options[:gclid] = 'INSERT_GCLID_HERE'
-  options[:ad_user_data_consent] = 'INSERT_AD_USER_DATA_CONSENT_ENUM_HERE'
+  options[:gclid] = nil
+  options[:ad_user_data_consent] = nil
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -211,7 +213,8 @@ if __FILE__ == $0
 
     opts.on('-d', '--ad-user-data-dconsent GCLID', String,
             'The data consent status for ad user data for all members in' \
-            'the job.') do |v|
+            'the job.' \
+            'e.g. UNKNOWN, GRANTED, DENIED') do |v|
       options[:ad_user_data_consent] = v
     end
 

@@ -39,7 +39,9 @@ def upload_store_sales_transactions(
   merchant_center_account_id,
   region_code,
   language_code,
-  quantity)
+  quantity,
+  ad_user_data_consent,
+  ad_personalization_consent)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -66,6 +68,8 @@ def upload_store_sales_transactions(
     offline_user_data_job_resource_name,
     conversion_action_id,
     custom_value,
+    ad_user_data_consent,
+    ad_personalization_consent
   )
 
   # Issues an asynchronous request to run the offline user data job.
@@ -181,10 +185,13 @@ def add_transactions_to_offline_user_data_job(
   customer_id,
   offline_user_data_job_resource_name,
   conversion_action_id,
-  custom_value)
+  custom_value,
+  ad_user_data_consent,
+  ad_personalization_consent)
   # Constructs the operation for each transaction.
   user_data_job_operations = build_offline_user_data_job_operations(
-    client, customer_id, conversion_action_id, custom_value)
+    client, customer_id, conversion_action_id, custom_value, ad_user_data_consent,
+    ad_personalization_consent)
 
   # [START enable_warnings_1]
   # Issues a request to add the operations to the offline user data job.
@@ -238,22 +245,24 @@ def build_offline_user_data_job_operations(
   client,
   customer_id,
   conversion_action_id,
-  custom_value)
+  custom_value,
+  ad_user_data_consent,
+  ad_personalization_consent)
   operations = []
 
   # Creates the first transaction for upload based on an email address
   # and state.
-  operations << client.operation.create_resource.offline_user_data_job do |job|
-    job.user_identifiers << client.resource.user_identifier do |id|
+  operations << client.operation.create_resource.offline_user_data_job do |op|
+    op.user_identifiers << client.resource.user_identifier do |id|
       # Email addresses must be normalized and hashed.
       id.hashed_email = normalize_and_hash("dana@example.com")
     end
-    job.user_identifiers << client.resource.user_identifier do |id|
+    op.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
         info.state = "NY"
       end
     end
-    job.transaction_attribute = client.resource.transaction_attribute do |t|
+    op.transaction_attribute = client.resource.transaction_attribute do |t|
       t.conversion_action = client.path.conversion_action(
         customer_id, conversion_action_id)
       t.currency_code = "USD"
@@ -267,11 +276,24 @@ def build_offline_user_data_job_operations(
       t.transaction_date_time = "2020-05-01 23:52:12"
       t.custom_value = custom_value unless custom_value.nil?
     end
+    if !ad_user_data_consent.nil? || !ad_personalization_consent.nil?
+      op.consent = client.resource.consent do |c|
+        # Specifies whether user consent was obtained for the data you are
+        # uploading. For more details, see:
+        # https://www.google.com/about/company/user-consent-policy
+        unless ad_user_data_consent.nil?
+          c.ad_user_data = ad_user_data_consent
+        end
+        unless ad_personalization_consent.nil?
+          c.ad_personalization = ad_personalization_consent
+        end
+      end
+    end
   end
 
   # Creates the second transaction for upload based on a physical address.
-  operations << client.operation.create_resource.offline_user_data_job do |job|
-    job.user_identifiers << client.resource.user_identifier do |id|
+  operations << client.operation.create_resource.offline_user_data_job do |op|
+    op.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
         # First and last name must be normalized and hashed.
         info.hashed_first_name = normalize_and_hash("Dana")
@@ -281,7 +303,7 @@ def build_offline_user_data_job_operations(
         info.postal_code = "10011"
       end
     end
-    job.transaction_attribute = client.resource.transaction_attribute do |t|
+    op.transaction_attribute = client.resource.transaction_attribute do |t|
       t.conversion_action = client.path.conversion_action(
         customer_id, conversion_action_id)
       t.currency_code = "EUR"
@@ -466,6 +488,18 @@ if __FILE__ == $0
       options[:quantity] = v
     end
 
+    opts.on('-d', '--ad-user-data-consent [AD-USER-DATA_CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_user_data_consent] = v
+    end
+
+    opts.on('-p', '--ad-personalization-consent [AD-PERSONALIZATION-CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_personalization_consent] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -491,6 +525,8 @@ if __FILE__ == $0
       options[:region_code],
       options[:language_code],
       options[:quantity],
+      options[:ad_user_data_consent],
+      options[:ad_personalization_consent],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

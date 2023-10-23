@@ -32,7 +32,13 @@ require 'google/ads/google_ads'
 require 'date'
 require 'digest'
 
-def add_customer_match_user_list(customer_id, run_job, user_list_id, job_id)
+def add_customer_match_user_list(
+  customer_id,
+  run_job,
+  user_list_id,
+  job_id,
+  ad_user_data_consent,
+  ad_personalization_consent)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   if job_id.nil?
@@ -42,7 +48,7 @@ def add_customer_match_user_list(customer_id, run_job, user_list_id, job_id)
       list_name = client.path.user_list(customer_id, user_list_id)
     end
   end
-  add_users_to_customer_match_user_list(client, customer_id, run_job, list_name, job_id)
+  add_users_to_customer_match_user_list(client, customer_id, run_job, list_name, job_id, ad_user_data_consent, ad_personalization_consent)
 end
 
 # [START add_customer_match_user_list_3]
@@ -76,7 +82,7 @@ end
 # [END add_customer_match_user_list_3]
 
 # [START add_customer_match_user_list]
-def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id)
+def add_users_to_customer_match_user_list(client, customer_id, run_job, user_list, job_id, ad_user_data_consent, ad_personalization_consent)
   offline_user_data_service = client.service.offline_user_data_job
 
   job_name = if job_id.nil?
@@ -86,6 +92,20 @@ def add_users_to_customer_match_user_list(client, customer_id, run_job, user_lis
       job.customer_match_user_list_metadata =
         client.resource.customer_match_user_list_metadata do |m|
           m.user_list = user_list
+
+          if !ad_user_data_consent.nil? || !ad_personalization_consent.nil?
+            m.consent = client.resource.consent do |c|
+              # Specifies whether user consent was obtained for the data you are
+              # uploading. For more details, see:
+              # https://www.google.com/about/company/user-consent-policy
+              unless ad_user_data_consent.nil?
+                c.ad_user_data = ad_user_data_consent
+              end
+              unless ad_personalization_consent.nil?
+                c.ad_personalization = ad_personalization_consent
+              end
+            end
+          end
         end
     end
 
@@ -341,6 +361,18 @@ if __FILE__ == $0
       options[:job_id] = v
     end
 
+    opts.on('-d', '--ad-user-data-consent [AD-USER-DATA_CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_user_data_consent] = v
+    end
+
+    opts.on('-p', '--ad-personalization-consent [AD-PERSONALIZATION-CONSENT]', String,
+        'The personalization consent status for ad user data for all members in the job.' \
+        'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_personalization_consent] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -356,6 +388,8 @@ if __FILE__ == $0
       options[:run_job],
       options[:user_list_id],
       options[:job_id],
+      options[:ad_user_data_consent],
+      options[:ad_personalization_consent],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

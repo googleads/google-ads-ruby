@@ -32,7 +32,8 @@ def upload_call_conversion(
   conversion_date_time,
   conversion_value,
   conversion_custom_variable_id,
-  conversion_custom_variable_value)
+  conversion_custom_variable_value,
+  ad_user_data_consent)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -53,15 +54,23 @@ def upload_call_conversion(
         cv.value = conversion_custom_variable_value
       end
     end
+
+    unless ad_user_data_consent.nil?
+      c.consent = client.resource.consent do |c|
+        # Specifies whether user consent was obtained for the data you are
+        # uploading. For more details, see:
+        # https://www.google.com/about/company/user-consent-policy
+        c.ad_user_data = ad_user_data_consent
+      end
+    end
   end
 
   # Issues a request to upload the call conversion.
   response = client.service.conversion_upload.upload_call_conversions(
     customer_id: customer_id,
-    # NOTE: This request contains a single conversion as a demonstration.
-    # However, if you have multiple conversions to upload, it's best to upload
-    # multiple conversions per request instead of sending a separate request per
-    # conversion. See the following for per-request limits:
+    # NOTE: This request only uploads a single conversion, but if you have
+    # multiple conversions to upload, it's most efficient to upload them in a
+    # single request. See the following for per-request limits for reference:
     # https://developers.google.com/google-ads/api/docs/best-practices/quotas#conversion_upload_service
     conversions: [call_conversion],
     partial_failure: true
@@ -118,6 +127,7 @@ if __FILE__ == $0
   # associate with the call conversion upload.
   options[:conversion_custom_variable_id] = nil;
   options[:conversion_custom_variable_value] = nil;
+  options[:ad_user_data_consent] = nil;
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -149,16 +159,22 @@ if __FILE__ == $0
       options[:conversion_value] = v.to_f
     end
 
-    opts.on('-d', '--conversion-custom-variable-id CONVERSION-CUSTOM-VARIABLE-ID', \
+    opts.on('-w', '--conversion-custom-variable-id CONVERSION-CUSTOM-VARIABLE-ID', \
             String, '(Optional) The ID of the conversion custom variable to ' \
             'associate with the upload') do |v|
       options[:conversion_custom_variable_id] = v
     end
 
-    opts.on('-u', '--conversion-custom-variable-value CONVERSION-CUSTOM-VARIABLE-VALUE', \
+    opts.on('-x', '--conversion-custom-variable-value CONVERSION-CUSTOM-VARIABLE-VALUE', \
             String, '(Optional) The value of the conversion custom ' \
             'variable to associate with the upload') do |v|
       options[:conversion_custom_variable_value] = v
+    end
+
+    opts.on('-d', '--ad-user-data-consent AD-USER-DATA_CONSENT', \
+            String, '(Optional) The data consent status for ad user data for all members in the job.' \
+            'e.g. UNKNOWN, GRANTED, DENIED') do |v|
+      options[:ad_user_data_consent] = v
     end
 
     opts.separator ''
@@ -180,6 +196,7 @@ if __FILE__ == $0
       options.fetch(:conversion_value),
       options[:conversion_custom_variable_id],
       options[:conversion_custom_variable_value],
+      options[:ad_user_data_consent],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
