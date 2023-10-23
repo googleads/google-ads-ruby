@@ -252,17 +252,17 @@ def build_offline_user_data_job_operations(
 
   # Creates the first transaction for upload based on an email address
   # and state.
-  operations << client.operation.create_resource.offline_user_data_job do |job|
-    job.user_identifiers << client.resource.user_identifier do |id|
+  operations << client.operation.create_resource.offline_user_data_job do |op|
+    op.user_identifiers << client.resource.user_identifier do |id|
       # Email addresses must be normalized and hashed.
       id.hashed_email = normalize_and_hash("dana@example.com")
     end
-    job.user_identifiers << client.resource.user_identifier do |id|
+    op.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
         info.state = "NY"
       end
     end
-    job.transaction_attribute = client.resource.transaction_attribute do |t|
+    op.transaction_attribute = client.resource.transaction_attribute do |t|
       t.conversion_action = client.path.conversion_action(
         customer_id, conversion_action_id)
       t.currency_code = "USD"
@@ -277,7 +277,7 @@ def build_offline_user_data_job_operations(
       t.custom_value = custom_value unless custom_value.nil?
     end
     if !ad_user_data_consent.nil? || !ad_personalization_consent.nil?
-      job.consent = client.resource.consent do |c|
+      op.consent = client.resource.consent do |c|
         # Specifies whether user consent was obtained for the data you are
         # uploading. For more details, see:
         # https://www.google.com/about/company/user-consent-policy
@@ -292,8 +292,8 @@ def build_offline_user_data_job_operations(
   end
 
   # Creates the second transaction for upload based on a physical address.
-  operations << client.operation.create_resource.offline_user_data_job do |job|
-    job.user_identifiers << client.resource.user_identifier do |id|
+  operations << client.operation.create_resource.offline_user_data_job do |op|
+    op.user_identifiers << client.resource.user_identifier do |id|
       id.address_info = client.resource.offline_user_address_info do |info|
         # First and last name must be normalized and hashed.
         info.hashed_first_name = normalize_and_hash("Dana")
@@ -303,7 +303,7 @@ def build_offline_user_data_job_operations(
         info.postal_code = "10011"
       end
     end
-    job.transaction_attribute = client.resource.transaction_attribute do |t|
+    op.transaction_attribute = client.resource.transaction_attribute do |t|
       t.conversion_action = client.path.conversion_action(
         customer_id, conversion_action_id)
       t.currency_code = "EUR"
