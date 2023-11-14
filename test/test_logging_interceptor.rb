@@ -307,6 +307,90 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(data, "REDACTED")
   end
 
+  def test_logging_interceptor_sanitizes_local_services_lead_contact_details_email
+    email_address = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V15::
+          Resources::ContactDetails.new(
+          email: email_address,
+        ),
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(email_address), "Failed to remove email address.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_local_services_lead_contact_details_phone_number
+    phone_number = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V15::
+          Resources::ContactDetails.new(
+            phone_number: phone_number,
+        ),
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(phone_number), "Failed to remove phone number.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_local_services_lead_contact_details_consumer_name
+    consumer_name = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V15::
+          Resources::ContactDetails.new(
+            consumer_name: consumer_name,
+        ),
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(consumer_name), "Failed to remove consumer name.")
+    assert_includes(data, "REDACTED")
+  end
+
+  def test_logging_interceptor_sanitizes_local_services_lead_conversation_text
+    text = "abcdefghijkl"
+    li.request_response(
+      request: make_request,
+      call: make_fake_call,
+      method: :doesnt_matter
+    ) do
+      Google::Ads::GoogleAds::V15::Resources::LocalServicesLeadConversation.new(
+        message_details: Google::Ads::GoogleAds::V15::
+          Resources::MessageDetails.new(
+            text: text,
+        ),
+      )
+    end
+
+    sio.rewind
+    data = sio.read
+    assert(!data.include?(text), "Failed to remove message_details text.")
+    assert_includes(data, "REDACTED")
+  end
+
   def test_logging_interceptor_sanitizes_feed_mutate_request
     email_address = "abcdefghijkl"
     email_address_2 = "zyxwvutsr"
