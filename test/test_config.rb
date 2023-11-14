@@ -61,4 +61,26 @@ class TestConfig < Minitest::Test
     assert_equal(client_secret_value, config.client_secret)
     assert_equal(developer_token_value, config.developer_token)
   end
+
+  def test_use_cloud_org_for_api_access()
+    config = Google::Ads::GoogleAds::Config.new
+
+    refresh_token_value = '1234'
+    client_id_value = 'abcd'
+    client_secret_value = '!@#$'
+    use_cloud_org_for_api_access = true
+
+    config.configure do |c|
+      c.refresh_token = refresh_token_value
+      c.client_id = client_id_value
+      c.client_secret = client_secret_value
+      c.use_cloud_org_for_api_access = true
+    end
+
+    assert_equal(refresh_token_value, config.refresh_token)
+    assert_equal(client_id_value, config.client_id)
+    assert_equal(client_secret_value, config.client_secret)
+    assert_equal(nil, config.developer_token)
+    assert_equal(true, config.use_cloud_org_for_api_access)
+  end
 end

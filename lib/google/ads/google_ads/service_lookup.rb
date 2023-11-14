@@ -62,9 +62,13 @@ module Google
         end
 
         def headers
-          headers = {
-            :"developer-token" => config.developer_token
-          }
+          headers = {}
+
+          # If config.use_cloud_org_for_api_access is not True, add the developer
+          # token to the request's metadata
+          if !config.use_cloud_org_for_api_access
+            headers[:"developer-token"] = config.developer_token
+          end
 
           if config.login_customer_id
             validate_customer_id(:login_customer_id)

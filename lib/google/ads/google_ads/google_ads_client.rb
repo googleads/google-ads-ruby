@@ -103,6 +103,7 @@ module Google
           @config.developer_token = ENV.fetch("GOOGLE_ADS_DEVELOPER_TOKEN", @config.developer_token)
           @config.login_customer_id = ENV.fetch("GOOGLE_ADS_LOGIN_CUSTOMER_ID", @config.login_customer_id)
           @config.linked_customer_id = ENV.fetch("GOOGLE_ADS_LINKED_CUSTOMER_ID", @config.linked_customer_id)
+          @config.use_cloud_org_for_api_access = ENV.fetch("GOOGLE_ADS_USE_CLOUD_ORG_FOR_API_ACCESS", @config.use_cloud_org_for_api_access)
           @config.api_endpoint = ENV.fetch("GOOGLE_ADS_ENDPOINT", @config.api_endpoint)
 
           # Client library-specific variables
