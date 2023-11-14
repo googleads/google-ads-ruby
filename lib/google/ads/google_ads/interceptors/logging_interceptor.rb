@@ -186,7 +186,6 @@ module Google
 
           def sanitize_message(message)
             message_class = message.class.to_s.split("::").last
-            puts "!!!!! " + message_class
             if %w[SearchGoogleAdsStreamResponse SearchGoogleAdsResponse].include?(
                 message_class)
               # Sanitize all known sensitive fields across all search responses.
