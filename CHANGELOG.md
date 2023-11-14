@@ -1,3 +1,7 @@
+25.0.1
+------
+ - Updated dependencies to support new gRPC features
+
 25.0.0
 ------
  - Compatibility with v15 of the API: https://developers.google.com/google-ads/api/docs/release-notes
