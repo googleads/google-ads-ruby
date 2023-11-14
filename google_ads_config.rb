@@ -26,6 +26,12 @@ Google::Ads::GoogleAds::Config.new do |c|
   c.client_secret = 'INSERT_CLIENT_SECRET_HERE'
   c.refresh_token = 'INSERT_REFRESH_TOKEN_HERE'
 
+  # Whether to use the Google Cloud Organization of your Google Cloud
+  # project instead of developer token to determine your Google Ads API access levels.
+  # Use this flag only if you are enrolled into a limited pilot that supports
+  # this configuration.
+  # c.use_cloud_org_for_api_access = false
+
   # You can also authenticate using a service account. If "keyfile" is
   # specified below, then service account authentication will be assumed and
   # the above authentication fields ignored. Read more about service account
