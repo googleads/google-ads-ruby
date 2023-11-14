@@ -225,7 +225,6 @@ module Google
         # Provides a Google::Auth::Credentials initialized with a keyfile
         # specified in the config.
         def get_service_account_credentials
-          raise 'config.impersonate required if keyfile specified' unless @config.impersonate
           keyfile = File.read(@config.keyfile)
           keyfile = JSON.parse(keyfile)
           Signet::OAuth2::Client.new(

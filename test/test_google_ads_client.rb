@@ -233,12 +233,14 @@ class TestGoogleAdsClient < Minitest::Test
   #   end
   # end
 
-  def test_keyfile_without_impersonate_raises
+  def test_crendetials_work_with_service_account_keyfile
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
-      config.keyfile = 'keyfile'
+      config.keyfile = 'test/fixtures/keyfile.json'
     end
 
-    assert_raises do
+    assert_raises(OpenSSL::PKey::RSAError) do
+      # OpenSSL::PKey::RSAError means it read the test file and tried to
+      # initialize a key with it. Since it's not a valid key, it raises.
       client.get_credentials
     end
   end
