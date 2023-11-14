@@ -37,7 +37,11 @@ module Google
             customer_user_access.email_address|
             customer_user_access_invitation.email_address|
             change_event.user_email|
-            feed.places_location_feed_data.email_address
+            feed.places_location_feed_data.email_address|
+            local_services_lead.contact_details.phone_number|
+            local_services_lead.contact_details.email|
+            local_services_lead.contact_details.consumer_name|
+            local_services_lead_conversation.message_details.text
           /x
 
           MASK_REPLACEMENT = "REDACTED"
@@ -182,6 +186,7 @@ module Google
 
           def sanitize_message(message)
             message_class = message.class.to_s.split("::").last
+            puts "!!!!! " + message_class
             if %w[SearchGoogleAdsStreamResponse SearchGoogleAdsResponse].include?(
                 message_class)
               # Sanitize all known sensitive fields across all search responses.
@@ -244,9 +249,41 @@ module Google
                 message["emailAddress"] = MASK_REPLACEMENT
               end
               message
+            elsif "LocalServicesLead" == message_class
+              # Sanitize sensitive fields when creating a LocalServiceLead.
+              message = clone_to_json(message)
+              sanitize_local_services_lead(message)
+            elsif "LocalServicesLeadConversation" == message_class
+              # Sanitize sensitive fields when creating a LocalServicesLeadConversation.
+              message = clone_to_json(message)
+              sanitize_local_services_lead_conversation(message)
             else
               message
             end
+          end
+
+          def sanitize_local_services_lead_conversation(message)
+            if message.include?("messageDetails")
+              if message["messageDetails"].include?("text")
+                message["messageDetails"]["text"] = MASK_REPLACEMENT
+              end
+            end
+            message
+          end
+
+          def sanitize_local_services_lead(message)
+            if message.include?("contactDetails")
+              if message["contactDetails"].include?("email")
+                message["contactDetails"]["email"] = MASK_REPLACEMENT
+              end
+              if message["contactDetails"].include?("phoneNumber")
+                message["contactDetails"]["phoneNumber"] = MASK_REPLACEMENT
+              end
+              if message["contactDetails"].include?("consumerName")
+                message["contactDetails"]["consumerName"] = MASK_REPLACEMENT
+              end
+            end
+            message
           end
 
           def sanitize_customer_user_access(message)
