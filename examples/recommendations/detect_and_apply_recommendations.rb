@@ -33,7 +33,8 @@ def detect_and_apply_recommendations(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   query = <<~QUERY
-    SELECT recommendation.resource_name
+    SELECT recommendation.resource_name, recommendation.campaign,
+        recommendation.keyword_recommendation
     FROM recommendation
     WHERE recommendation.type = KEYWORD
     LIMIT #{MAX_RESULT_SIZE}
@@ -41,26 +42,25 @@ def detect_and_apply_recommendations(customer_id)
 
   reccomendation_service = client.service.recommendation
   google_ads_service = client.service.google_ads
+
   NUMBER_OF_RUNS.times do |i|
     search_response = google_ads_service.search(
       customer_id: customer_id,
       query: query,
+      page_size: PAGE_SIZE,
     )
-    operations = search_response.map do |row|
-      client.operation.apply_recommendation do |aro|
-        aro.resource_name = row.recommendation.resource_name
-      end
-    end
 
-    unless operations.empty?
-      response = recommendation_service.apply_recommendation(
-        customer_id: customer_id,
-        operations: operations,
-      )
+    search_response.each do |row|
+      recommendation = row.recommendation
 
-      response.each do |result|
-        puts "Applied recommendation with resource name #{result.resource_name}."
+      puts "Keyword recommendation ('#{recommendation.resource_name}') was found for "\
+        "campaign '#{recommendation.campaign}'."
+      if recommendation.keyword_recommendation
+        keyword = recommendation.keyword_recommendation.keyword
+        puts "\tKeyword = '#{keyword.text}'\n\ttype = '#{keyword.match_type}'"
       end
+
+      apply_recommendation(client, customer_id, recommendation.resource_name)
     end
 
     if i < NUMBER_OF_RUNS - 1
@@ -70,10 +70,46 @@ def detect_and_apply_recommendations(customer_id)
   end
 end
 
+# [START apply_recommendation]
+def apply_recommendation(client, customer_id, recommendation_resource)
+  # If you have a recommendation_id instead of the resournce_name
+  # you can create a resource name from it like this:
+  # recommendation_resource =
+  #    client.path.recommendation(customer_id, recommendation_id)
+
+  apply_recommendation_operation = client.operation.apply_recommendation
+  apply_recommendation_operation.resource_name = recommendation_resource
+
+  # Each recommendation type has optional parameters to override the recommended
+  # values. This is an example to override a recommended ad when a
+  # TextAdRecommendation is applied.
+  # For details, please read
+  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v1.services#google.ads.google_ads.v1.services.ApplyRecommendationOperation
+  #
+  # text_ad_parameters = client.resource.text_ad_parameters do |tap|
+  #   tap.ad = client.resource.ad do |ad|
+  #     ad.id = "INSERT_AD_ID_AS_INTEGER_HERE"
+  #   end
+  # end
+  # apply_recommendation_operation.text_ad = text_ad_parameters
+
+  # Issues a mutate request to apply the recommendation.
+  recommendation_service = client.service.recommendation
+  response = recommendation_service.apply_recommendation(
+    customer_id: customer_id,
+    operations: [apply_recommendation_operation],
+  )
+  applied_recommendation = response.results.first
+
+  puts "Applied recommendation with resource name: '#{applied_recommendation.resource_name}'."
+end
+# [END apply_recommendation]
+
 if __FILE__ == $0
   MAX_RESULT_SIZE = 2
-  NUMBER_OF_RUNS = 3
+  NUMBER_OF_RUNS = 1
   PERIOD_IN_SECONDS = 5
+  PAGE_SIZE = 1000
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can
