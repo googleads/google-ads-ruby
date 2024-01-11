@@ -146,7 +146,7 @@ the following year.
 Older versions of Ruby may still work with the library once our official support ends.
 However, we will not actively fix bugs for unsupported Ruby versions. If you run
 into an issue on an older version of Ruby, be sure to upgrade to a new version
-and testing again before filing an issue.
+and test again before filing an issue.
 
 # Authors
 
