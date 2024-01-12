@@ -34,7 +34,8 @@ def upload_offline_conversion(
   conversion_date_time,
   conversion_value,
   conversion_custom_variable_id,
-  conversion_custom_variable_value)
+  conversion_custom_variable_value,
+  ad_user_data_consent)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -65,6 +66,15 @@ def upload_offline_conversion(
         cv.conversion_custom_variable = client.path.conversion_custom_variable(
           customer_id, conversion_custom_variable_id)
         cv.value = conversion_custom_variable_value
+      end
+    end
+    # Sets the consent information, if provided.
+    unless ad_user_data_consent.nil?
+      c.consent = client.resource.consent do |c|
+        # Specifies whether user consent was obtained for the data you are
+        # uploading. For more details, see:
+        # https://www.google.com/about/company/user-consent-policy
+        c.ad_user_data = ad_user_data_consent
       end
     end
   end
@@ -173,6 +183,11 @@ if __FILE__ == $0
       options[:conversion_custom_variable_value] = v
     end
 
+    opts.on('-a', '--ad-user-data-consent CONSENT', String, \
+            '(Optional) The ad user data consent for the click.') do |v|
+      options[:ad_user_data_consent] = v
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -193,6 +208,7 @@ if __FILE__ == $0
       options.fetch(:conversion_value),
       options[:conversion_custom_variable_id],
       options[:conversion_custom_variable_value],
+      options[:ad_user_data_consent],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
