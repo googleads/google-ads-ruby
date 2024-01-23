@@ -1,3 +1,7 @@
+26.0.0
+------
+ - Removed support for v13.
+
 25.0.1
 ------
  - Updated dependencies to support new gRPC features
