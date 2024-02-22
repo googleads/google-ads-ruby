@@ -21,15 +21,15 @@ require 'minitest/autorun'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/v14/services/media_file_service_services_pb'
-require 'google/ads/google_ads/v15/services/customer_user_access_service_services_pb'
-require 'google/ads/google_ads/v15/services/customer_user_access_invitation_service_services_pb'
-require 'google/ads/google_ads/v15/services/google_ads_service_services_pb'
-require 'google/ads/google_ads/v15/services/feed_service_services_pb'
-require 'google/ads/google_ads/v15/services/customer_service_services_pb'
-require 'google/ads/google_ads/v15/resources/customer_user_access_pb'
-require 'google/ads/google_ads/v15/resources/customer_user_access_invitation_pb'
-require 'google/ads/google_ads/v15/resources/change_event_pb'
-require 'google/ads/google_ads/v15/resources/feed_pb'
+require 'google/ads/google_ads/v16/services/customer_user_access_service_services_pb'
+require 'google/ads/google_ads/v16/services/customer_user_access_invitation_service_services_pb'
+require 'google/ads/google_ads/v16/services/google_ads_service_services_pb'
+require 'google/ads/google_ads/v16/services/feed_service_services_pb'
+require 'google/ads/google_ads/v16/services/customer_service_services_pb'
+require 'google/ads/google_ads/v16/resources/customer_user_access_pb'
+require 'google/ads/google_ads/v16/resources/customer_user_access_invitation_pb'
+require 'google/ads/google_ads/v16/resources/change_event_pb'
+require 'google/ads/google_ads/v16/resources/feed_pb'
 
 class TestLoggingInterceptor < Minitest::Test
   attr_reader :sio
@@ -147,13 +147,13 @@ class TestLoggingInterceptor < Minitest::Test
     assert_includes(sio.read, JSON.dump("some data"))
   end
 
-  def test_logging_interceptor_logs_some_error_details_if_v15_error
+  def test_logging_interceptor_logs_some_error_details_if_v16_error
     li.request_response(
       request: make_small_request,
       call: make_fake_call,
       method: :doesnt_matter,
     ) do
-      raise make_realistic_error("v15")
+      raise make_realistic_error("v16")
     end
   rescue GRPC::InvalidArgument
     sio.rewind
@@ -208,7 +208,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::CustomerUserAccess.new(
+      Google::Ads::GoogleAds::V16::Resources::CustomerUserAccess.new(
         email_address: email_address,
         inviter_user_email_address: inviter_user,
       )
@@ -224,9 +224,9 @@ class TestLoggingInterceptor < Minitest::Test
   def test_logging_interceptor_sanitizes_customer_user_access_mutate
     email_address = "abcdefghijkl"
     inviter_user = "zyxwvutsr"
-    request = Google::Ads::GoogleAds::V15::Services::MutateCustomerUserAccessRequest.new(
-      operation: Google::Ads::GoogleAds::V15::Services::CustomerUserAccessOperation.new(
-        update: Google::Ads::GoogleAds::V15::Resources::CustomerUserAccess.new(
+    request = Google::Ads::GoogleAds::V16::Services::MutateCustomerUserAccessRequest.new(
+      operation: Google::Ads::GoogleAds::V16::Services::CustomerUserAccessOperation.new(
+        update: Google::Ads::GoogleAds::V16::Resources::CustomerUserAccess.new(
           email_address: email_address,
           inviter_user_email_address: inviter_user,
         )
@@ -253,7 +253,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::CustomerUserAccessInvitation.new(
+      Google::Ads::GoogleAds::V16::Resources::CustomerUserAccessInvitation.new(
         email_address: email_address,
       )
     end
@@ -266,9 +266,9 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_customer_user_access_invitation_mutate
     email_address = "abcdefghijkl"
-    request = Google::Ads::GoogleAds::V15::Services::MutateCustomerUserAccessInvitationRequest.new(
-      operation: Google::Ads::GoogleAds::V15::Services::CustomerUserAccessInvitationOperation.new(
-        create: Google::Ads::GoogleAds::V15::Resources::CustomerUserAccessInvitation.new(
+    request = Google::Ads::GoogleAds::V16::Services::MutateCustomerUserAccessInvitationRequest.new(
+      operation: Google::Ads::GoogleAds::V16::Services::CustomerUserAccessInvitationOperation.new(
+        create: Google::Ads::GoogleAds::V16::Resources::CustomerUserAccessInvitation.new(
           email_address: email_address,
         )
       )
@@ -293,8 +293,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::Feed.new(
-        places_location_feed_data: Google::Ads::GoogleAds::V15::
+      Google::Ads::GoogleAds::V16::Resources::Feed.new(
+        places_location_feed_data: Google::Ads::GoogleAds::V16::
           Resources::Feed::PlacesLocationFeedData.new(
           email_address: email_address,
         ),
@@ -314,8 +314,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
-        contact_details: Google::Ads::GoogleAds::V15::
+      Google::Ads::GoogleAds::V16::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V16::
           Resources::ContactDetails.new(
           email: email_address,
         ),
@@ -335,8 +335,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
-        contact_details: Google::Ads::GoogleAds::V15::
+      Google::Ads::GoogleAds::V16::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V16::
           Resources::ContactDetails.new(
             phone_number: phone_number,
         ),
@@ -356,8 +356,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::LocalServicesLead.new(
-        contact_details: Google::Ads::GoogleAds::V15::
+      Google::Ads::GoogleAds::V16::Resources::LocalServicesLead.new(
+        contact_details: Google::Ads::GoogleAds::V16::
           Resources::ContactDetails.new(
             consumer_name: consumer_name,
         ),
@@ -377,8 +377,8 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Resources::LocalServicesLeadConversation.new(
-        message_details: Google::Ads::GoogleAds::V15::
+      Google::Ads::GoogleAds::V16::Resources::LocalServicesLeadConversation.new(
+        message_details: Google::Ads::GoogleAds::V16::
           Resources::MessageDetails.new(
             text: text,
         ),
@@ -395,19 +395,19 @@ class TestLoggingInterceptor < Minitest::Test
     email_address = "abcdefghijkl"
     email_address_2 = "zyxwvutsr"
     li.request_response(
-      request: Google::Ads::GoogleAds::V15::Services::MutateFeedsRequest.new(
+      request: Google::Ads::GoogleAds::V16::Services::MutateFeedsRequest.new(
         operations: [
-          Google::Ads::GoogleAds::V15::Services::FeedOperation.new(
-            create: Google::Ads::GoogleAds::V15::Resources::Feed.new(
-              places_location_feed_data: Google::Ads::GoogleAds::V15::
+          Google::Ads::GoogleAds::V16::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V16::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V16::
                 Resources::Feed::PlacesLocationFeedData.new(
                 email_address: email_address,
               ),
             ),
           ),
-          Google::Ads::GoogleAds::V15::Services::FeedOperation.new(
-            create: Google::Ads::GoogleAds::V15::Resources::Feed.new(
-              places_location_feed_data: Google::Ads::GoogleAds::V15::
+          Google::Ads::GoogleAds::V16::Services::FeedOperation.new(
+            create: Google::Ads::GoogleAds::V16::Resources::Feed.new(
+              places_location_feed_data: Google::Ads::GoogleAds::V16::
                 Resources::Feed::PlacesLocationFeedData.new(
                 email_address: email_address_2,
               ),
@@ -430,7 +430,7 @@ class TestLoggingInterceptor < Minitest::Test
   def test_logging_interceptor_sanitizes_customer_client_create_request
     email_address = "abcdefghijkl"
     li.request_response(
-      request: Google::Ads::GoogleAds::V15::Services::CreateCustomerClientRequest.new(
+      request: Google::Ads::GoogleAds::V16::Services::CreateCustomerClientRequest.new(
         email_address: email_address,
       ),
       call: make_fake_call,
@@ -446,7 +446,7 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_search_request
     li.request_response(
-      request: Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsRequest.new(
+      request: Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsRequest.new(
         query: "SELECT change_event.user_email FROM change_event",
       ),
       call: make_fake_call,
@@ -462,7 +462,7 @@ class TestLoggingInterceptor < Minitest::Test
 
   def test_logging_interceptor_sanitizes_search_stream_request
     li.request_response(
-      request: Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsStreamRequest.new(
+      request: Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsStreamRequest.new(
         query: "SELECT change_event.user_email FROM change_event",
       ),
       call: make_fake_call,
@@ -485,7 +485,7 @@ class TestLoggingInterceptor < Minitest::Test
       call: make_fake_call,
       method: :doesnt_matter
     ) do
-      Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsResponse.new(
+      Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsResponse.new(
         field_mask: Google::Protobuf::FieldMask.new(
           paths: [
             "customer_user_access.email_address",
@@ -494,12 +494,12 @@ class TestLoggingInterceptor < Minitest::Test
           ]
         ),
         results: [
-          Google::Ads::GoogleAds::V15::Services::GoogleAdsRow.new(
-            customer_user_access: Google::Ads::GoogleAds::V15::Resources::CustomerUserAccess.new(
+          Google::Ads::GoogleAds::V16::Services::GoogleAdsRow.new(
+            customer_user_access: Google::Ads::GoogleAds::V16::Resources::CustomerUserAccess.new(
               email_address: email_address,
               inviter_user_email_address: inviter_user,
             ),
-            change_event: Google::Ads::GoogleAds::V15::Resources::ChangeEvent.new(
+            change_event: Google::Ads::GoogleAds::V16::Resources::ChangeEvent.new(
               user_email: user_email,
             ),
           )
@@ -525,7 +525,7 @@ class TestLoggingInterceptor < Minitest::Test
       method: :doesnt_matter
     ) do
       [
-        Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsStreamResponse.new(
+        Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsStreamResponse.new(
           field_mask: Google::Protobuf::FieldMask.new(
             paths: [
               "customer_user_access.email_address",
@@ -534,12 +534,12 @@ class TestLoggingInterceptor < Minitest::Test
             ]
           ),
           results: [
-            Google::Ads::GoogleAds::V15::Services::GoogleAdsRow.new(
-              customer_user_access: Google::Ads::GoogleAds::V15::Resources::CustomerUserAccess.new(
+            Google::Ads::GoogleAds::V16::Services::GoogleAdsRow.new(
+              customer_user_access: Google::Ads::GoogleAds::V16::Resources::CustomerUserAccess.new(
                 email_address: email_address,
                 inviter_user_email_address: inviter_user,
               ),
-              change_event: Google::Ads::GoogleAds::V15::Resources::ChangeEvent.new(
+              change_event: Google::Ads::GoogleAds::V16::Resources::ChangeEvent.new(
                 user_email: user_email,
               ),
             )
@@ -587,7 +587,7 @@ class TestLoggingInterceptor < Minitest::Test
         message: "Multiple errors in ‘details’. First error: A required field was not specified or is an empty string., at operations[0].create.type",
         details: [
           Google::Protobuf::Any.new(
-            type_url: "type.googleapis.com/google.ads.googleads.v15.errors.GoogleAdsFailure",
+            type_url: "type.googleapis.com/google.ads.googleads.v16.errors.GoogleAdsFailure",
             value: "\nh\n\x03\xB0\x05\x06\x129A required field was not specified or is an empty string.\x1A\x02*\x00\"\"\x12\x0E\n\noperations\x12\x00\x12\b\n\x06create\x12\x06\n\x04type\n=\n\x02P\x02\x12\x1FAn internal error has occurred.\x1A\x02*\x00\"\x12\x12\x10\n\noperations\x12\x02\b\x01".b
           )
         ]
@@ -619,7 +619,7 @@ class TestLoggingInterceptor < Minitest::Test
 
   def make_error_metadata(version)
     {
-      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v15.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
+      "google.rpc.debuginfo-bin" => "\x12\xA9\x02[ORIGINAL ERROR] generic::invalid_argument: Invalid customer ID 'INSERT_CUSTOMER_ID_HERE'. [google.rpc.error_details_ext] { details { type_url: \"type.googleapis.com/google.ads.googleads.v16.errors.GoogleAdsFailure\" value: \"\\n4\\n\\002\\010\\020\\022.Invalid customer ID \\'INSERT_CUSTOMER_ID_HERE\\'.\" } }",
       "request-id" =>"btwmoTYjaQE1UwVZnDCGAA",
     }
   end
