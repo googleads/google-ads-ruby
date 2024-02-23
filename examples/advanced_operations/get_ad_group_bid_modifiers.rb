@@ -58,15 +58,16 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
     ad_group_bid_modifier = row.ad_group_bid_modifier
     ad_group = row.ad_group
     campaign = row.campaign
-    bid_modifier = '"nil"'
 
-    if ad_group_bid_modifier.bid_modifier
-      bid_modifier = sprintf("%.2f", ad_group_bid_modifier.bid_modifier)
+    print "Ad group bid modifier with criterion ID #{ad_group_bid_modifier.criterion_id} in " \
+      "ad group ID #{ad_group.id} of campaign ID #{campaign.id} "
+
+    if ad_group_bid_modifier.has_bid_modifier?
+      puts "has a bid modifier value of #{sprintf("%.2f", ad_group_bid_modifier.bid_modifier)}."
+    else
+      puts "does NOT have a bid modifier value."
     end
 
-    puts "Ad group bid modifier with criterion ID #{ad_group_bid_modifier.criterion_id}, bid " \
-        "modifier value #{bid_modifier} was found in an ad group with ID #{ad_group.id} of " \
-        "campaign ID #{campaign.id}."
 
     criterion_details = "  - Criterion type: #{ad_group_bid_modifier.criterion}, "
 

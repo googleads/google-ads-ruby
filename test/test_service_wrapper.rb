@@ -19,7 +19,7 @@ require 'minitest/autorun'
 
 require 'google/ads/google_ads/service_wrapper'
 require 'google/ads/google_ads/deprecation'
-require 'google/ads/google_ads/v15/services/google_ads_service_pb'
+require 'google/ads/google_ads/v16/services/google_ads_service_pb'
 
 class TestServiceWrapper < Minitest::Test
   class FakeService
@@ -35,7 +35,7 @@ class TestServiceWrapper < Minitest::Test
     @service = FakeService.new
     @service_wrapper = Google::Ads::GoogleAds::ServiceWrapper.new(
       service: @service,
-      rpc_inputs: {search: Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsRequest},
+      rpc_inputs: {search: Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsRequest},
       deprecation: Google::Ads::GoogleAds::Deprecation.new(false, false),
     )
   end
@@ -112,6 +112,6 @@ class TestServiceWrapper < Minitest::Test
   end
 
   def make_search_request(options)
-    Google::Ads::GoogleAds::V15::Services::SearchGoogleAdsRequest.new(options)
+    Google::Ads::GoogleAds::V16::Services::SearchGoogleAdsRequest.new(options)
   end
 end
