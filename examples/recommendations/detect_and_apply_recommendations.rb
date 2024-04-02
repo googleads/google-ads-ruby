@@ -74,7 +74,7 @@ end
 
 # [START build_apply_recommendation_operation]
 def build_recommendation_operation(client, recommendation)
-  # If you have a recommendation_id instead of the resournce_name
+  # If you have a recommendation_id instead of the resource_name
   # you can create a resource name from it like this:
   # recommendation_resource =
   #    client.path.recommendation(customer_id, recommendation_id)
@@ -85,8 +85,6 @@ def build_recommendation_operation(client, recommendation)
   # Each recommendation type has optional parameters to override the recommended
   # values. This is an example to override a recommended ad when a
   # TextAdRecommendation is applied.
-  # For details, please read
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.google_ads.v1.services#google.ads.google_ads.v1.services.ApplyRecommendationOperation
   #
   # text_ad_parameters = client.resource.text_ad_parameters do |tap|
   #   tap.ad = client.resource.ad do |ad|
