@@ -15,14 +15,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# The auto-apply feature, which automatically applies recommendations as they
-# become eligible, is currently supported by the Google Ads UI but not by the
-# Google Ads API. See https://support.google.com/google-ads/answer/10279006 for
-# more information on using auto-apply in the Google Ads UI.
+# Recommendations should be applied shortly after they're retrieved. Depending
+# on the recommendation type, a recommendation can become obsolete quickly, and
+# obsolete recommendations throw an error when applied. For more details, see:
+# https://developers.google.com/google-ads/api/docs/recommendations#take_action
 #
-# This example demonstrates how an alternative can be implemented with the
-# features that are currently supported by the Google Ads API. It periodically
-# retrieves and applies `KEYWORD` recommendations with default parameters.
+# As of Google Ads API v15 users can subscribe to certain recommendation types
+# to apply them automatically. For more details, see:
+# https://developers.google.com/google-ads/api/docs/recommendations#auto-apply
+#
+# As of Google Ads API v16 users can proactively generate certain recommendation
+# types during the campaign construction process. For more details see:
+# https://developers.google.com/google-ads/api/docs/recommendations#recommendations-in-campaign-construction
 
 require 'optparse'
 require 'google/ads/google_ads'
@@ -32,49 +36,89 @@ def detect_and_apply_recommendations(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # [START detect_keyword_recommendations]
   query = <<~QUERY
-    SELECT recommendation.resource_name
+    SELECT recommendation.resource_name, recommendation.campaign,
+        recommendation.keyword_recommendation
     FROM recommendation
     WHERE recommendation.type = KEYWORD
-    LIMIT #{MAX_RESULT_SIZE}
   QUERY
 
-  reccomendation_service = client.service.recommendation
   google_ads_service = client.service.google_ads
-  NUMBER_OF_RUNS.times do |i|
-    search_response = google_ads_service.search(
-      customer_id: customer_id,
-      query: query,
-    )
-    operations = search_response.map do |row|
-      client.operation.apply_recommendation do |aro|
-        aro.resource_name = row.recommendation.resource_name
-      end
+
+  response = google_ads_service.search(
+    customer_id: customer_id,
+    query: query,
+  )
+
+  operations = response.each do |row|
+    recommendation = row.recommendation
+
+    puts "Keyword recommendation ('#{recommendation.resource_name}') was found for "\
+      "campaign '#{recommendation.campaign}'."
+
+    if recommendation.keyword_recommendation
+      keyword = recommendation.keyword_recommendation.keyword
+      puts "\tKeyword = '#{keyword.text}'"
+      puts "\ttype = '#{keyword.match_type}'"
     end
 
-    unless operations.empty?
-      response = recommendation_service.apply_recommendation(
-        customer_id: customer_id,
-        operations: operations,
-      )
+    build_recommendation_operation(client, recommendation.resource_name)
+  end
+  # [END detect_keyword_recommendations]
 
-      response.each do |result|
-        puts "Applied recommendation with resource name #{result.resource_name}."
-      end
-    end
-
-    if i < NUMBER_OF_RUNS - 1
-      puts "Waiting #{PERIOD_IN_SECONDS} seconds before applying more recommendations."
-      sleep(PERIOD_IN_SECONDS)
-    end
+  if operations
+    apply_recommendations(client, customer_id, recommendation.resource_name)
   end
 end
 
-if __FILE__ == $0
-  MAX_RESULT_SIZE = 2
-  NUMBER_OF_RUNS = 3
-  PERIOD_IN_SECONDS = 5
 
+# [START build_apply_recommendation_operation]
+def build_recommendation_operation(client, recommendation)
+  # If you have a recommendation_id instead of the resource_name
+  # you can create a resource name from it like this:
+  # recommendation_resource =
+  #    client.path.recommendation(customer_id, recommendation_id)
+
+  operations = client.operation.apply_recommendation
+  operations.resource_name = recommendation_resource
+
+  # Each recommendation type has optional parameters to override the recommended
+  # values. This is an example to override a recommended ad when a
+  # TextAdRecommendation is applied.
+  #
+  # text_ad_parameters = client.resource.text_ad_parameters do |tap|
+  #   tap.ad = client.resource.ad do |ad|
+  #     ad.id = "INSERT_AD_ID_AS_INTEGER_HERE"
+  #   end
+  # end
+  # operation.text_ad = text_ad_parameters
+  #
+  # For more details, see:
+  # https://developers.google.com/google-ads/api/reference/rpc/latest/ApplyRecommendationOperation#apply_parameters
+
+  return operation
+end
+# [END build_apply_recommendation_operation]
+
+
+# [START apply_recommendation]
+def apply_recommendations(client, customer_id, operations)
+  # Issues a mutate request to apply the recommendation.
+  recommendation_service = client.service.recommendation
+
+  response = recommendation_service.apply_recommendation(
+    customer_id: customer_id,
+    operations: [operations],
+  )
+
+  response.results.each do |applied_recommendation|
+    puts "Applied recommendation with resource name: '#{applied_recommendation.resource_name}'."
+  end
+end
+# [END apply_recommendation]
+
+if __FILE__ == $0
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
