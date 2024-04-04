@@ -59,7 +59,8 @@ def detect_and_apply_recommendations(customer_id)
 
     if recommendation.keyword_recommendation
       keyword = recommendation.keyword_recommendation.keyword
-      puts "\tKeyword = '#{keyword.text}'\n\ttype = '#{keyword.match_type}'"
+      puts "\tKeyword = '#{keyword.text}'"
+      puts "\ttype = '#{keyword.match_type}'"
     end
 
     build_recommendation_operation(client, recommendation.resource_name)
