@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\nCgoogle/ads/googleads/v16/errors/product_link_invitation_error.proto\x12\x1fgoogle.ads.googleads.v16.errors\"\xa4\x01\n\x1eProductLinkInvitationErrorEnum\"\x81\x01\n\x1aProductLinkInvitationError\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x12\n\x0eINVALID_STATUS\x10\x02\x12\x15\n\x11PERMISSION_DENIED\x10\x03\x12\x1a\n\x16NO_INVITATION_REQUIRED\x10\x04\x42\xff\x01\n#com.google.ads.googleads.v16.errorsB\x1fProductLinkInvitationErrorProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v16/errors;errors\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V16.Errors\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V16\\Errors\xea\x02#Google::Ads::GoogleAds::V16::Errorsb\x06proto3"
+descriptor_data = "\nCgoogle/ads/googleads/v16/errors/product_link_invitation_error.proto\x12\x1fgoogle.ads.googleads.v16.errors\"\xd5\x01\n\x1eProductLinkInvitationErrorEnum\"\xb2\x01\n\x1aProductLinkInvitationError\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x12\n\x0eINVALID_STATUS\x10\x02\x12\x15\n\x11PERMISSION_DENIED\x10\x03\x12\x1a\n\x16NO_INVITATION_REQUIRED\x10\x04\x12/\n+CUSTOMER_NOT_PERMITTED_TO_CREATE_INVITATION\x10\x05\x42\xff\x01\n#com.google.ads.googleads.v16.errorsB\x1fProductLinkInvitationErrorProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v16/errors;errors\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V16.Errors\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V16\\Errors\xea\x02#Google::Ads::GoogleAds::V16::Errorsb\x06proto3"
 
 pool = Google::Protobuf::DescriptorPool.generated_pool
 

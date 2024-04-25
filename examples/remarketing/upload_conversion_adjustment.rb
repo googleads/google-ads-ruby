@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 #
 # Copyright 2020 Google LLC
 #
@@ -25,9 +24,8 @@ require 'google/ads/google_ads'
 def upload_conversion_adjustment(
   customer_id,
   conversion_action_id,
-  gclid,
+  order_id,
   adjustment_type,
-  conversion_date_time,
   adjustment_date_time,
   restatement_value
 )
@@ -35,15 +33,11 @@ def upload_conversion_adjustment(
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # Associate conversion adjustments with the existing conversion action.
-  # The GCLID should have been uploaded before with a conversion.
+  # Applies the conversion adjustment to the existing conversion.
   conversion_adjustment = client.resource.conversion_adjustment do |ca|
     ca.conversion_action = client.path.conversion_action(customer_id, conversion_action_id)
     ca.adjustment_type = adjustment_type
-    ca.gclid_date_time_pair = client.resource.gclid_date_time_pair do |gdtp|
-      gdtp.gclid = gclid
-      gdtp.conversion_date_time = conversion_date_time
-    end
+    ca.order_id = order_id
     ca.adjustment_date_time = adjustment_date_time
 
     # Set adjusted value for adjustment type RESTATEMENT.
@@ -65,8 +59,8 @@ def upload_conversion_adjustment(
   if response.partial_failure_error.nil?
     # Process and print all results for multiple adjustments
     response.results.each do |result|
-      puts "Uploaded conversion adjustment at #{result.adjustment_date_time} " \
-      "for adjustment #{result.adjustment_type} to #{result.conversion_action}."
+      puts "Uploaded conversion adjustment for conversion action #{result.conversion_action} "\
+        "and order ID #{result.order_id}."
     end
   else
     # Print any partial errors returned.
@@ -74,7 +68,8 @@ def upload_conversion_adjustment(
     puts 'Request failed. Failure details:'
     failures.each do |failure|
       failure.errors.each do |error|
-        puts "\t#{error.error_code.error_code}: #{error.message}"
+        index = error.location.field_path_elements.first.index
+        puts "\toperation[#{index}] #{error.error_code.error_code}: #{error.message}"
       end
     end
   end
@@ -83,25 +78,7 @@ end
 
 if __FILE__ == $0
   options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
   # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:conversion_action_id] = 'INSERT_CONVERSION_ACTION_ID_HERE'
-  options[:gclid] = 'INSERT_GCLID_HERE'
-  # RETRACTION negates a conversion, and RESTATEMENT changes the value of a
-  # conversion.
-  options[:adjustment_type] = 'INSERT_ADJUSTMENT_TYPE_HERE'
-  options[:conversion_date_time] = 'INSERT_CONVERSION_DATE_TIME_HERE'
-  options[:adjustment_date_time] = 'INSERT_ADJUSTMENT_DATE_TIME_HERE'
-  # Optional: Specify an adjusted value below for adjustment type RESTATEMENT.
-  # This value will be ignored if you specify RETRACTION as adjustment type.
-  options[:restatement_value] = 'INSERT_RESTATEMENT_VALUE_HERE'
 
   OptionParser.new do |opts|
     opts.banner = format('Usage: %s [options]', File.basename(__FILE__))
@@ -118,22 +95,17 @@ if __FILE__ == $0
       options[:conversion_action_id] = v
     end
 
-    opts.on('-g', '--gclid GCLID', String,
-            'Google Click ID (should be newer than the number of days set on '\
-            'the conversion window of the conversion action).') do |v|
-      options[:gclid] = v
+    opts.on('-O', '--order-id ORDER-ID', String,
+            'The transaction ID of the conversion to adjust. Required if the conversion being '\
+            'adjusted meets the criteria described at '\
+            'https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments#requirements.'
+        ) do |v|
+      options[:order_id] = v
     end
 
     opts.on('-a', '--adjustment-type ADJUSTMENT-TYPE', String,
-            'Adjustment Type, e.g. RETRACTION, RESTATEMENT') do |v|
+            'RETRACTION negates a conversion, and RESTATEMENT changes the value of a conversion.') do |v|
       options[:adjustment_type] = v
-    end
-
-    opts.on('-o', '--conversion-date-time CONVERSION-DATE-TIME', String,
-            'The date and time of the conversion (should be after click time).'\
-            ' The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", '\
-            'e.g. "2019-01-01 12:32:45-08:00".') do |v|
-      options[:conversion_date_time] = v
     end
 
     opts.on('-A', '--adjustment-date-time ADJUSTMENT-DATE-TIME', String,
@@ -161,11 +133,10 @@ if __FILE__ == $0
     upload_conversion_adjustment(
       options.fetch(:customer_id).tr('-', ''),
       options.fetch(:conversion_action_id),
-      options.fetch(:gclid),
+      options.fetch(:order_id),
       options.fetch(:adjustment_type).to_sym,
-      options.fetch(:conversion_date_time),
       options.fetch(:adjustment_date_time),
-      options.fetch(:restatement_value)
+      options[:restatement_value]
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
