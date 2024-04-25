@@ -179,7 +179,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload mutate_customer_sk_ad_network_conversion_value_schema(customer_id: nil, operation: nil, validate_only: nil)
+              # @overload mutate_customer_sk_ad_network_conversion_value_schema(customer_id: nil, operation: nil, validate_only: nil, enable_warnings: nil)
               #   Pass arguments to `mutate_customer_sk_ad_network_conversion_value_schema` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -191,6 +191,10 @@ module Google
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed. Only errors are
               #     returned, not results.
+              #   @param enable_warnings [::Boolean]
+              #     Optional. If true, enables returning warnings. Warnings return error
+              #     messages and error codes without blocking the execution of the mutate
+              #     operation.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V16::Services::MutateCustomerSkAdNetworkConversionValueSchemaResponse]
