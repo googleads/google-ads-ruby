@@ -1,6 +1,7 @@
 28.0.0
 ------
  - Compatibility with v16.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v14.
 
 27.0.0
 ------

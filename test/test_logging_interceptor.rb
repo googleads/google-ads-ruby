@@ -20,7 +20,7 @@
 require 'minitest/autorun'
 require 'google/ads/google_ads'
 require 'google/ads/google_ads/interceptors/logging_interceptor'
-require 'google/ads/google_ads/v14/services/media_file_service_services_pb'
+require 'google/ads/google_ads/v16/services/campaign_service_services_pb'
 require 'google/ads/google_ads/v16/services/customer_user_access_service_services_pb'
 require 'google/ads/google_ads/v16/services/customer_user_access_invitation_service_services_pb'
 require 'google/ads/google_ads/v16/services/google_ads_service_services_pb'
@@ -91,18 +91,6 @@ class TestLoggingInterceptor < Minitest::Test
 
     sio.rewind
     assert_includes(sio.read, "Method: #{method}")
-  end
-
-  def test_logging_interceptor_inspects_request
-    li.request_response(
-      request: make_request,
-      call: make_fake_call,
-      method: :doesnt_matter,
-    ) do
-    end
-
-    sio.rewind
-    assert_includes(sio.read, "Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest")
   end
 
   def test_logging_interceptor_logs_isfault_no
@@ -580,7 +568,7 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_realistic_response_with_partial_error
-    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesResponse.new(
+    Google::Ads::GoogleAds::V16::Services::MutateCampaignsResponse.new(
       results: [],
       partial_failure_error: Google::Rpc::Status.new(
         code: 13,
@@ -596,14 +584,12 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_small_request(customer_id: "123")
-    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V16::Services::MutateCampaignsRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V14::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V14::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V14::Resources::MediaImage.new(
-              data: File.open("test/fixtures/sam.jpg", "rb").read[0..10]
-            )
+        Google::Ads::GoogleAds::V16::Services::CampaignOperation.new(
+          create: Google::Ads::GoogleAds::V16::Resources::Campaign.new(
+            name: "test campaign"
           )
         )
       ]
@@ -625,14 +611,12 @@ class TestLoggingInterceptor < Minitest::Test
   end
 
   def make_request(customer_id: "123123123")
-    Google::Ads::GoogleAds::V14::Services::MutateMediaFilesRequest.new(
+    Google::Ads::GoogleAds::V16::Services::MutateCampaignsRequest.new(
       customer_id: customer_id,
       operations: [
-        Google::Ads::GoogleAds::V14::Services::MediaFileOperation.new(
-          create: Google::Ads::GoogleAds::V14::Resources::MediaFile.new(
-            image: Google::Ads::GoogleAds::V14::Resources::MediaImage.new(
-              data: File.open("test/fixtures/sam.jpg", "rb").read
-            )
+        Google::Ads::GoogleAds::V16::Services::CampaignOperation.new(
+          create: Google::Ads::GoogleAds::V16::Resources::Campaign.new(
+            name: "test campaign"
           )
         )
       ]
