@@ -70,7 +70,7 @@ def upload_offline_conversion(
     end
     # Sets the consent information, if provided.
     unless ad_user_data_consent.nil?
-      c.consent = client.resource.consent do |c|
+      cc.consent = client.resource.consent do |c|
         # Specifies whether user consent was obtained for the data you are
         # uploading. For more details, see:
         # https://www.google.com/about/company/user-consent-policy
