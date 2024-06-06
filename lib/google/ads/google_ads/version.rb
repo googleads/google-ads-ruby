@@ -20,7 +20,7 @@ module Google
   module Ads
     module GoogleAds
       CLIENT_LIB_NAME = 'gccl'.freeze
-      CLIENT_LIB_VERSION = '28.0.0'.freeze
+      CLIENT_LIB_VERSION = '29.0.0'.freeze
       VERSION = CLIENT_LIB_VERSION
     end
   end
