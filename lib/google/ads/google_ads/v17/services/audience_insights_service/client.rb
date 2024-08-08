@@ -292,7 +292,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload list_audience_insights_attributes(customer_id: nil, dimensions: nil, query_text: nil, customer_insights_group: nil, location_country_filters: nil)
+              # @overload list_audience_insights_attributes(customer_id: nil, dimensions: nil, query_text: nil, customer_insights_group: nil, location_country_filters: nil, youtube_reach_location: nil)
               #   Pass arguments to `list_audience_insights_attributes` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -315,6 +315,12 @@ module Google
               #     will be located in these countries. If this field is absent, then location
               #     attributes are not filtered by country. Setting this field when
               #     SUB_COUNTRY_LOCATION attributes are not requested will return an error.
+              #   @param youtube_reach_location [::Google::Ads::GoogleAds::V17::Common::LocationInfo, ::Hash]
+              #     If present, potential YouTube reach estimates within the specified market
+              #     will be returned for attributes for which they are available.  Reach is
+              #     only available for the AGE_RANGE, GENDER, AFFINITY_USER_INTEREST and
+              #     IN_MARKET_USER_INTEREST dimensions, and may not be available for every
+              #     attribute of those dimensions in every market.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V17::Services::ListAudienceInsightsAttributesResponse]
@@ -693,6 +699,120 @@ module Google
               end
 
               ##
+              # Returns a collection of audience attributes along with estimates of the
+              # overlap between their potential YouTube reach and that of a given input
+              # attribute.
+              #
+              # List of thrown errors:
+              #   [AudienceInsightsError]()
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [FieldError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RangeError]()
+              #   [RequestError]()
+              #
+              # @overload generate_audience_overlap_insights(request, options = nil)
+              #   Pass arguments to `generate_audience_overlap_insights` via a request object, either of type
+              #   {::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsRequest} or an equivalent Hash.
+              #
+              #   @param request [::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsRequest, ::Hash]
+              #     A request object representing the call parameters. Required. To specify no
+              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #   @param options [::Gapic::CallOptions, ::Hash]
+              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #
+              # @overload generate_audience_overlap_insights(customer_id: nil, country_location: nil, primary_attribute: nil, dimensions: nil, customer_insights_group: nil)
+              #   Pass arguments to `generate_audience_overlap_insights` via keyword arguments. Note that at
+              #   least one keyword argument is required. To specify no parameters, or to keep all
+              #   the default parameter values, pass an empty Hash as a request object (see above).
+              #
+              #   @param customer_id [::String]
+              #     Required. The ID of the customer.
+              #   @param country_location [::Google::Ads::GoogleAds::V17::Common::LocationInfo, ::Hash]
+              #     Required. The country in which to calculate the sizes and overlaps of
+              #     audiences.
+              #   @param primary_attribute [::Google::Ads::GoogleAds::V17::Services::AudienceInsightsAttribute, ::Hash]
+              #     Required. The audience attribute that should be intersected with all other
+              #     eligible audiences.  This must be an Affinity or In-Market UserInterest, an
+              #     AgeRange or a Gender.
+              #   @param dimensions [::Array<::Google::Ads::GoogleAds::V17::Enums::AudienceInsightsDimensionEnum::AudienceInsightsDimension>]
+              #     Required. The types of attributes of which to calculate the overlap with
+              #     the primary_attribute. The values must be a subset of
+              #     AFFINITY_USER_INTEREST, IN_MARKET_USER_INTEREST, AGE_RANGE and GENDER.
+              #   @param customer_insights_group [::String]
+              #     The name of the customer being planned for.  This is a user-defined value.
+              #
+              # @yield [response, operation] Access the result along with the RPC operation
+              # @yieldparam response [::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsResponse]
+              # @yieldparam operation [::GRPC::ActiveCall::Operation]
+              #
+              # @return [::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsResponse]
+              #
+              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              #
+              # @example Basic example
+              #   require "google/ads/google_ads/v17/services"
+              #
+              #   # Create a client object. The client can be reused for multiple calls.
+              #   client = Google::Ads::GoogleAds::V17::Services::AudienceInsightsService::Client.new
+              #
+              #   # Create a request. To set request fields, pass in keyword arguments.
+              #   request = Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsRequest.new
+              #
+              #   # Call the generate_audience_overlap_insights method.
+              #   result = client.generate_audience_overlap_insights request
+              #
+              #   # The returned object is of type Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsResponse.
+              #   p result
+              #
+              def generate_audience_overlap_insights request, options = nil
+                raise ::ArgumentError, "request must be provided" if request.nil?
+
+                request = ::Gapic::Protobuf.coerce request,
+                                                   to: ::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsRequest
+
+                # Converts hash and nil to an options object
+                options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
+
+                # Customize the options with defaults
+                metadata = @config.rpcs.generate_audience_overlap_insights.metadata.to_h
+
+                # Set x-goog-api-client, x-goog-user-project and x-goog-api-version headers
+                metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
+                  lib_name: @config.lib_name, lib_version: @config.lib_version,
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                metadata[:"x-goog-api-version"] = API_VERSION unless API_VERSION.empty?
+                metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
+
+                header_params = {}
+                if request.customer_id
+                  header_params["customer_id"] = request.customer_id
+                end
+
+                request_params_header = header_params.map { |k, v| "#{k}=#{v}" }.join("&")
+                metadata[:"x-goog-request-params"] ||= request_params_header
+
+                options.apply_defaults timeout:      @config.rpcs.generate_audience_overlap_insights.timeout,
+                                       metadata:     metadata,
+                                       retry_policy: @config.rpcs.generate_audience_overlap_insights.retry_policy
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
+                                       retry_policy: @config.retry_policy
+
+                @audience_insights_service_stub.call_rpc :generate_audience_overlap_insights, request,
+                                                         options: options do |response, operation|
+                  yield response, operation if block_given?
+                  return response
+                end
+                # rescue GRPC::BadStatus => grpc_error
+                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+              end
+
+              ##
               # Configuration class for the AudienceInsightsService API.
               #
               # This class represents the configuration for AudienceInsightsService,
@@ -871,6 +991,11 @@ module Google
                   # @return [::Gapic::Config::Method]
                   #
                   attr_reader :generate_suggested_targeting_insights
+                  ##
+                  # RPC-specific configuration for `generate_audience_overlap_insights`
+                  # @return [::Gapic::Config::Method]
+                  #
+                  attr_reader :generate_audience_overlap_insights
 
                   # @private
                   def initialize parent_rpcs = nil
@@ -884,6 +1009,8 @@ module Google
                     @generate_audience_composition_insights = ::Gapic::Config::Method.new generate_audience_composition_insights_config
                     generate_suggested_targeting_insights_config = parent_rpcs.generate_suggested_targeting_insights if parent_rpcs.respond_to? :generate_suggested_targeting_insights
                     @generate_suggested_targeting_insights = ::Gapic::Config::Method.new generate_suggested_targeting_insights_config
+                    generate_audience_overlap_insights_config = parent_rpcs.generate_audience_overlap_insights if parent_rpcs.respond_to? :generate_audience_overlap_insights
+                    @generate_audience_overlap_insights = ::Gapic::Config::Method.new generate_audience_overlap_insights_config
 
                     yield self if block_given?
                   end

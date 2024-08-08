@@ -2751,6 +2751,25 @@ module Google
               end
 
               ##
+              # Create a fully-qualified OfflineConversionUploadConversionActionSummary resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/offlineConversionUploadConversionActionSummaries/{conversion_type_id}~{client}`
+              #
+              # @param customer_id [String]
+              # @param conversion_type_id [String]
+              # @param client [String]
+              #
+              # @return [::String]
+              def offline_conversion_upload_conversion_action_summary_path customer_id:, conversion_type_id:, client:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "conversion_type_id cannot contain /" if conversion_type_id.to_s.include? "/"
+
+                "customers/#{customer_id}/offlineConversionUploadConversionActionSummaries/#{conversion_type_id}~#{client}"
+              end
+
+              ##
               # Create a fully-qualified OfflineUserDataJob resource string.
               #
               # The resource will be in the following format:

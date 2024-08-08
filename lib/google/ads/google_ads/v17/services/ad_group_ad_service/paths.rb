@@ -99,6 +99,23 @@ module Google
                 "customers/#{customer_id}/adGroupAdLabels/#{ad_group_id}~#{ad_id}~#{label_id}"
               end
 
+              ##
+              # Create a fully-qualified Asset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/assets/{asset_id}`
+              #
+              # @param customer_id [String]
+              # @param asset_id [String]
+              #
+              # @return [::String]
+              def asset_path customer_id:, asset_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/assets/#{asset_id}"
+              end
+
               extend self
             end
           end

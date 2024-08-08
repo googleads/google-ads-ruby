@@ -103,6 +103,21 @@ module Google
               #   [RangeError]()
               #   [RequestError]()
               rpc :GenerateSuggestedTargetingInsights, ::Google::Ads::GoogleAds::V17::Services::GenerateSuggestedTargetingInsightsRequest, ::Google::Ads::GoogleAds::V17::Services::GenerateSuggestedTargetingInsightsResponse
+              # Returns a collection of audience attributes along with estimates of the
+              # overlap between their potential YouTube reach and that of a given input
+              # attribute.
+              #
+              # List of thrown errors:
+              #   [AudienceInsightsError]()
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [FieldError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RangeError]()
+              #   [RequestError]()
+              rpc :GenerateAudienceOverlapInsights, ::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsRequest, ::Google::Ads::GoogleAds::V17::Services::GenerateAudienceOverlapInsightsResponse
             end
 
             Stub = Service.rpc_stub_class
