@@ -83,6 +83,19 @@ module Google
               #   [StringLengthError]()
               #   [UrlFieldError]()
               rpc :MutateAdGroupAds, ::Google::Ads::GoogleAds::V17::Services::MutateAdGroupAdsRequest, ::Google::Ads::GoogleAds::V17::Services::MutateAdGroupAdsResponse
+              # Remove automatically created assets from an ad.
+              #
+              # List of thrown errors:
+              #   [AdError]()
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [AutomaticallyCreatedAssetRemovalError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [MutateError]()
+              #   [QuotaError]()
+              #   [RequestError]()
+              rpc :RemoveAutomaticallyCreatedAssets, ::Google::Ads::GoogleAds::V17::Services::RemoveAutomaticallyCreatedAssetsRequest, ::Google::Protobuf::Empty
             end
 
             Stub = Service.rpc_stub_class
