@@ -1,3 +1,7 @@
+UPCOMING
+--------
+ - Improved the logging format to include more information and increase human readability.
+
 30.0.0
 ------
  - Compatibility with v17.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
