@@ -23,8 +23,6 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
-require "google/ads/google_ads/v15/services"
-require 'date'
 
 # [START generate_forecast_metrics]
 def generate_forecast_metrics(customer_id)
