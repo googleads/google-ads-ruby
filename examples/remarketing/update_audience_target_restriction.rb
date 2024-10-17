@@ -41,7 +41,6 @@ def update_audience_target_restriction(customer_id, ad_group_id)
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: query,
-    page_size: PAGE_SIZE,
   )
 
   # Iterates over all rows in all pages and prints the requested field values
@@ -139,8 +138,6 @@ end
 # [END update_audience_target_restriction_2]
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

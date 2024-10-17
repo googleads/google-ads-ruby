@@ -60,10 +60,6 @@ def get_change_details(customer_id)
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: query,
-    # The page size is superfluous with the default limit set above, but it's
-    # shown here since it's a good practice to use a reasonable page size when
-    # you set a higher limit.
-    page_size: PAGE_SIZE
   )
 
   # Process the results and output changes.
@@ -140,8 +136,6 @@ end
 # [END get_change_details]
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

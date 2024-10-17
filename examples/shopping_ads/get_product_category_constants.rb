@@ -49,7 +49,6 @@ def get_product_category_constant(customer_id)
   response = ga_service.search(
       customer_id: customer_id,
       query: query,
-      page_size: PAGE_SIZE,
   )
 
   # Default the values in the hash to have an Array of children, so that
@@ -87,8 +86,6 @@ def get_product_category_constant(customer_id)
 end
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

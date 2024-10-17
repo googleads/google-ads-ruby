@@ -40,8 +40,6 @@ end
 # [END list_accessible_customers]
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   begin
     list_accessible_customers()
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e

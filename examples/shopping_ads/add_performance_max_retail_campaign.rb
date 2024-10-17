@@ -591,7 +591,6 @@ def _get_customer_conversion_goals(client, customer_id)
   response = ga_service.search(
       customer_id: customer_id,
       query: query,
-      page_size: PAGE_SIZE,
   )
 
   # Iterate over the results and build the list of conversion goals.
@@ -666,8 +665,6 @@ def get_image_bytes(url)
   # [END add_performance_max_campaign]
 
 if __FILE__ == $0
-    PAGE_SIZE = 1000
-
     options = {}
 
     # The following parameter(s) should be provided to run the example. You can
