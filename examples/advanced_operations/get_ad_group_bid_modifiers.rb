@@ -51,7 +51,6 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: search_query,
-    page_size: PAGE_SIZE,
   )
 
   response.each do |row|
@@ -101,7 +100,6 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
 end
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

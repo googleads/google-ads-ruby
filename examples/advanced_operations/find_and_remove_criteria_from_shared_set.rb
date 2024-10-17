@@ -41,7 +41,6 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
   response = ga_service.search(
     customer_id: customer_id,
     query: query,
-    page_size: PAGE_SIZE,
   )
 
   response.each do |row|
@@ -62,7 +61,6 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
   response = ga_service.search(
     customer_id: customer_id,
     query: query,
-    page_size: PAGE_SIZE,
   )
 
   response.each do |row|
@@ -92,7 +90,6 @@ def find_and_remove_criteria_from_shared_set(customer_id, campaign_id)
 end
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
 
   options = {}
   # The following parameter(s) should be provided to run the example. You can

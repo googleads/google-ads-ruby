@@ -146,8 +146,6 @@ def set_up_advanced_remarketing(customer_id)
 end
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
 
   # Running the example with -h will print the command line usage.

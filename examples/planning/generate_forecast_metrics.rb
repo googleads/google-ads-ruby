@@ -23,7 +23,6 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
-require "google/ads/google_ads/v15/services"
 require 'date'
 
 # [START generate_forecast_metrics]
@@ -135,8 +134,6 @@ end
 
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

@@ -1,3 +1,8 @@
+31.0.0
+------
+ - Compatibility with v18 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v15.
+
 30.0.0
 ------
  - Compatibility with v17.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes

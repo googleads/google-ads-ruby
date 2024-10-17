@@ -227,7 +227,6 @@ def get_user_list_ad_group_criterion(
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: query,
-    page_size: PAGE_SIZE,
   )
 
   # Iterates over all rows in all pages. Prints the results and adds the ad
@@ -296,8 +295,6 @@ def modify_campaign_bids(
 end
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
 
   # Running the example with -h will print the command line usage.

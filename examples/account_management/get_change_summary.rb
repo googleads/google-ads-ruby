@@ -51,7 +51,6 @@ def get_change_summary(customer_id)
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: query,
-    page_size: PAGE_SIZE
   )
 
   # Process the results.
@@ -79,8 +78,6 @@ end
 # [END get_change_summary]
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

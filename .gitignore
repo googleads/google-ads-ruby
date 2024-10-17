@@ -5,3 +5,6 @@ lib/google/ads/google_ads/factories.rb
 doc
 .yardoc
 lib/google/ads/google_ads/deprecation.rb
+
+# For rbenv
+.ruby-version

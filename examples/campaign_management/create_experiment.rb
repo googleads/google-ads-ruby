@@ -126,8 +126,6 @@ def modify_draft_campaign(client, customer_id, draft_campaign)
 end
 
 if __FILE__ == $0
-  PAGE_SIZE = 1000
-
   options = {}
 
   # Running the example with -h will print the command line usage.
