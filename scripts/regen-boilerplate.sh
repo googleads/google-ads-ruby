@@ -20,7 +20,7 @@ done
 # Check if all required arguments are set
 if ! $all_api_versions_set || ! $default_api_version_set || ! $library_version_set; then
   echo "Error: Missing required arguments." >&2
-  echo "Usage: $0 -a <all_api_versions> -d <default_api_version> -l <library_version>" >&2
+  echo "Usage: $0 -a <all_api_versions (space-delimited)> -d <default_api_version> -l <library_version>" >&2
   exit 1
 fi
 
