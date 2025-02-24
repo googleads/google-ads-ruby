@@ -23,8 +23,8 @@ render_template(
   File.join(DIR, "templates", "api_versions.rb.erb"),
   File.join(gads_dir, "api_versions.rb"),
   {
-    all_api_versions: all_api_versions.map {|v| ":v#{v}"}.join(", "),
-    default_api_version: ":v#{default_api_version}",
+    all_api_versions: all_api_versions.map {|v| ":V#{v}"}.join(", "),
+    default_api_version: ":V#{default_api_version}",
   }
 )
 
