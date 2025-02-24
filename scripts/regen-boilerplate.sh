@@ -45,7 +45,5 @@ rm "$script_dir/../lib/google/ads/google_ads/api_versions.rb" || true
 # Remove the version.rb file
 rm "$script_dir/../lib/google/ads/google_ads/version.rb" || true
 
-pwd
-
 # Run the generator to create all the new files
 ruby "$script_dir/../codegen/boilerplate.rb" "${library_version}" "${all_api_versions_commas}" "${default_api_version}"
