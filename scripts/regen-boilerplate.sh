@@ -30,18 +30,20 @@ echo "Library Version: $library_version"
 all_api_versions_commas=$(echo "$all_api_versions" | tr ' ' ',')
 echo "All API Versions (commas): $all_api_versions_commas"
 
+script_dir=$(dirname "$0")
+
 # Remove all path utils, then make new empty folders for new versions
-find ../lib/google/ads/google_ads/utils/ -maxdepth 1 -type d -name 'v[0-9]*' -exec rm -r {} + || true
+find "$script_dir/../lib/google/ads/google_ads/utils/" -maxdepth 1 -type d -name 'v[0-9]*' -exec rm -r {} + || true
 for version in $all_api_versions; do
   # Create the directory for each version
-  mkdir -p "../lib/google/ads/google_ads/utils/v${version}"
+  mkdir -p "$script_dir/../lib/google/ads/google_ads/utils/v${version}"
 done
 
 # Remove the API versions file
-rm ../lib/google/ads/google_ads/api_versions.rb || true
+rm "$script_dir/../lib/google/ads/google_ads/api_versions.rb" || true
 
 # Remove the version.rb file
-rm ../lib/google/ads/google_ads/version.rb || true
+rm "$script_dir/../lib/google/ads/google_ads/version.rb" || true
 
 # Run the generator to create all the new files
-ruby codegen/boilerplate.rb "${library_version}" "${all_api_versions_commas}" "${default_api_version}"
+ruby "$script_dir/../codegen/boilerplate.rb" "${library_version}" "${all_api_versions_commas}" "${default_api_version}"
