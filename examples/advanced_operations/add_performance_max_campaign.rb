@@ -53,7 +53,10 @@ def next_temp_id
 end
 
 # [START add_performance_max_campaign]
-def add_performance_max_campaign(customer_id, audience_id)
+def add_performance_max_campaign(
+    customer_id,
+    audience_id,
+    brand_guidelines_enabled)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -96,6 +99,7 @@ def add_performance_max_campaign(customer_id, audience_id)
   performance_max_campaign_operation = create_performance_max_campaign_operation(
     client,
     customer_id,
+    brand_guidelines_enabled,
   )
   campaign_criterion_operations = create_campaign_criterion_operations(
     client,
@@ -106,6 +110,7 @@ def add_performance_max_campaign(customer_id, audience_id)
     customer_id,
     headline_asset_resource_names,
     description_asset_resource_names,
+    brand_guidelines_enabled,
   )
   asset_group_signal_operations = create_asset_group_signal_operations(
     client,
@@ -160,7 +165,10 @@ end
 #
 # A temporary ID will be assigned to this campaign so that it can
 # be referenced by other objects being created in the same Mutate request.
-def create_performance_max_campaign_operation(client, customer_id)
+def create_performance_max_campaign_operation(
+    client,
+    customer_id,
+    brand_guidelines_enabled)
   client.operation.mutate do |m|
     m.campaign_operation = client.operation.create_resource.campaign do |c|
       c.name = "Performance Max campaign #{SecureRandom.uuid}"
@@ -192,6 +200,11 @@ def create_performance_max_campaign_operation(client, customer_id)
       # results, set this value to false to opt in and allow URL expansions. You
       # can optionally add exclusions to limit traffic to parts of your website.
       c.url_expansion_opt_out = false
+
+      # Set if the campaign is enabled for brand guidelines. For more
+      # information on brand guidelines, see
+      # https://support.google.com/google-ads/answer/14934472.
+      c.brand_guidelines_enabled = brand_guidelines_enabled
 
       # Assign the resource name with a temporary ID.
       c.resource_name = client.path.campaign(customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID)
@@ -304,7 +317,8 @@ def create_asset_group_operation(
     client,
     customer_id,
     headline_asset_resource_names,
-    description_asset_resource_names)
+    description_asset_resource_names,
+    brand_guidelines_enabled)
   operations = []
 
   # Create the AssetGroup
@@ -372,22 +386,16 @@ def create_asset_group_operation(
     "Travel the World",
     :LONG_HEADLINE)
 
-  # Create and link the business name text asset.
-  operations += create_and_link_text_asset(
+  # Create and link the business name and logo asset.
+  operations += create_and_link_brand_assets(
     client,
     customer_id,
+    brand_guidelines_enabled,
     "Interplanetary Cruises",
-    :BUSINESS_NAME)
+    "https://gaagl.page.link/bjYi",
+    "Marketing Logo")
 
   # Create and link the image assets.
-
-  # Create and link the Logo Asset.
-  operations += create_and_link_image_asset(
-    client,
-    customer_id,
-    "https://gaagl.page.link/bjYi",
-    :LOGO,
-    "Marketing Logo")
 
   # Create and link the Marketing Image Asset.
   operations += create_and_link_image_asset(
@@ -479,6 +487,98 @@ def create_and_link_image_asset(client, customer_id, url, field_type, asset_name
 end
 # [END add_performance_max_campaign_8]
 
+# Creates a list of MutateOperations that create linked brand assets.
+def create_and_link_brand_assets(
+    client,
+    customer_id,
+    brand_guidelines_enabled,
+    business_name,
+    logo_url,
+    logo_name)
+  operations = []
+
+  # Create the Text Asset.
+  text_asset_temp_id = next_temp_id
+  operations << client.operation.mutate do |m|
+    m.asset_operation = client.operation.create_resource.asset do |a|
+      a.resource_name = client.path.asset(customer_id, text_asset_temp_id)
+      a.text_asset = client.resource.text_asset do |text_asset|
+        text_asset.text = business_name
+      end
+    end
+  end
+
+  # Create the Image Asset.
+  image_asset_temp_id = next_temp_id
+  operations << client.operation.mutate do |m|
+    m.asset_operation = client.operation.create_resource.asset do |a|
+      a.resource_name = client.path.asset(customer_id, image_asset_temp_id)
+      # Provide a unique friendly name to identify your asset.
+      # When there is an existing image asset with the same content but a different
+      # name, the new name will be dropped silently.
+      a.name = logo_name
+      a.type = :IMAGE
+      a.image_asset = client.resource.image_asset do |image_asset|
+        image_asset.data = get_image_bytes(logo_url)
+      end
+    end
+  end
+
+  if brand_guidelines_enabled
+    # Create CampaignAsset resources to link the Asset resources to the Campaign.
+    operations << client.operation.mutate do |m|
+      m.campaign_asset_operation = client.operation.create_resource.
+          campaign_asset do |ca|
+        ca.field_type = :BUSINESS_NAME
+        ca.campaign = client.path.campaign(
+          customer_id,
+          PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID,
+        )
+        ca.asset = client.path.asset(customer_id, text_asset_temp_id)
+      end
+    end
+
+    operations << client.operation.mutate do |m|
+      m.campaign_asset_operation = client.operation.create_resource.
+          campaign_asset do |ca|
+        ca.field_type = :LOGO
+        ca.campaign = client.path.campaign(
+          customer_id,
+          PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID,
+        )
+        ca.asset = client.path.asset(customer_id, image_asset_temp_id)
+      end
+    end
+  else
+    # Create AssetGroupAsset resources to link the Asset resources to the AssetGroup.
+    operations << client.operation.mutate do |m|
+      m.asset_group_asset_operation = client.operation.create_resource.
+          asset_group_asset do |aga|
+        aga.field_type = :BUSINESS_NAME
+        aga.asset_group = client.path.asset_group(
+          customer_id,
+          ASSET_GROUP_TEMPORARY_ID,
+        )
+        aga.asset = client.path.asset(customer_id, text_asset_temp_id)
+      end
+    end
+
+    operations << client.operation.mutate do |m|
+      m.asset_group_asset_operation = client.operation.create_resource.
+          asset_group_asset do |aga|
+        aga.field_type = :LOGO
+        aga.asset_group = client.path.asset_group(
+          customer_id,
+          ASSET_GROUP_TEMPORARY_ID,
+        )
+        aga.asset = client.path.asset(customer_id, image_asset_temp_id)
+      end
+    end
+  end
+
+  operations
+end
+
 # [START add_performance_max_campaign_9]
 # Create a list of MutateOperations that create AssetGroupSignals.
 def create_asset_group_signal_operations(client, customer_id, audience_id)
@@ -538,6 +638,7 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:audience_id] = nil
+  options[:brand_guidelines_enabled] = false
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -553,6 +654,10 @@ if __FILE__ == $0
       options[:audience_id] = v
     end
 
+    opts.on('-B', '--brand-guidelines-enabled', 'Enable brand guidelines (optional)') do
+      options[:brand_guidelines_enabled] = true
+    end
+
     opts.separator ''
     opts.separator 'Help:'
 
@@ -566,6 +671,7 @@ if __FILE__ == $0
     add_performance_max_campaign(
       options.fetch(:customer_id).tr("-", ""),
       options[:audience_id],
+      options[:brand_guidelines_enabled]
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

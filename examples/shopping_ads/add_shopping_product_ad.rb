@@ -96,14 +96,8 @@ def add_standard_shopping_campaign(
 
     campaign.status = :PAUSED
 
-    # Sets the bidding strategy to Manual CPC (with eCPC disabled). eCPC for standard
-    # Shopping campaigns is deprecated. If eCPC is set to true, Google Ads ignores the
-    # setting and behaves as if the setting was false. See this blog post for more
-    # information:
-    # https://ads-developers.googleblog.com/2023/09/google-ads-shopping-campaign-enhanced.html
-    campaign.manual_cpc = client.resource.manual_cpc do |manual_cpc|
-      manual_cpc.enhanced_cpc_enabled = false
-    end
+    # Sets the bidding strategy to Manual CPC.
+    campaign.manual_cpc = client.resource.manual_cpc
 
     campaign.campaign_budget = budget_name
   end
