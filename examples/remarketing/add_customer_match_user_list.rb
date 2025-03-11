@@ -58,8 +58,8 @@ def create_customer_match_user_list(client, customer_id)
     ul.name = "Customer Match List #{(Time.new.to_f * 1000).to_i}"
     ul.description = "A list of customers that originated from email and " \
       "physical addresses"
-    # Customer Match user lists can use a membership life span of 10000 to
-    # indicate unlimited; otherwise normal values apply.
+    # Membership life span must be between 0 and 540 days inclusive. See:
+    # https://developers.google.com/google-ads/api/reference/rpc/latest/UserList#membership_life_span
     # Sets the membership life span to 30 days.
     ul.membership_life_span = 30
     ul.crm_based_user_list = client.resource.crm_based_user_list_info do |crm|
