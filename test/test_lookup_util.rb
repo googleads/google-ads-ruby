@@ -35,8 +35,8 @@ class TestLookupUtil < Minitest::Test
   def test_path_instantiation
     lookup_util = Google::Ads::GoogleAds::LookupUtil.new
 
-    util = lookup_util.path_lookup_util(:V18)
-    assert_instance_of(Google::Ads::GoogleAds::Utils::V18::PathLookupUtil, util)
+    util = lookup_util.path_lookup_util(:V19)
+    assert_instance_of(Google::Ads::GoogleAds::Utils::V19::PathLookupUtil, util)
     assert_raises do
       util = client.proto_lookup_util(:ABCD)
     end

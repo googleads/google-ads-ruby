@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\n?google/ads/googleads/v19/enums/target_frequency_time_unit.proto\x12\x1egoogle.ads.googleads.v19.enums\"b\n\x1bTargetFrequencyTimeUnitEnum\"C\n\x17TargetFrequencyTimeUnit\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\n\n\x06WEEKLY\x10\x02\x42\xf6\x01\n\"com.google.ads.googleads.v19.enumsB\x1cTargetFrequencyTimeUnitProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v19/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V19.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V19\\Enums\xea\x02\"Google::Ads::GoogleAds::V19::Enumsb\x06proto3"
+descriptor_data = "\n?google/ads/googleads/v19/enums/target_frequency_time_unit.proto\x12\x1egoogle.ads.googleads.v19.enums\"o\n\x1bTargetFrequencyTimeUnitEnum\"P\n\x17TargetFrequencyTimeUnit\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\n\n\x06WEEKLY\x10\x02\x12\x0b\n\x07MONTHLY\x10\x03\x42\xf6\x01\n\"com.google.ads.googleads.v19.enumsB\x1cTargetFrequencyTimeUnitProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v19/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V19.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V19\\Enums\xea\x02\"Google::Ads::GoogleAds::V19::Enumsb\x06proto3"
 
 pool = Google::Protobuf::DescriptorPool.generated_pool
 

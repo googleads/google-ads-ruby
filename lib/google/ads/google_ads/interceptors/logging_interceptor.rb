@@ -37,7 +37,6 @@ module Google
             customer_user_access.email_address|
             customer_user_access_invitation.email_address|
             change_event.user_email|
-            feed.places_location_feed_data.email_address|
             local_services_lead.contact_details.phone_number|
             local_services_lead.contact_details.email|
             local_services_lead.contact_details.consumer_name|
@@ -229,18 +228,6 @@ module Google
                   sanitize_customer_user_access_invitation(message["operation"]["create"])
               end
               message
-            elsif "Feed" == message_class
-              # Sanitize sensitive fields specific to Feed get requests.
-              message = clone_to_json(message)
-              if message.include?("placesLocationFeedData") &&
-                  message["placesLocationFeedData"].include?("emailAddress")
-                message["placesLocationFeedData"]["emailAddress"] = MASK_REPLACEMENT
-              end
-              message
-            elsif "MutateFeedsRequest" == message_class
-              # Sanitize sensitive fields when mutating a Feed.
-              message = clone_to_json(message)
-              sanitize_feeds_request(message)
             elsif "CreateCustomerClientRequest" == message_class
               # Sanitize sensitive fields when creating a CustomerClient.
               message = clone_to_json(message)
@@ -298,26 +285,6 @@ module Google
           def sanitize_customer_user_access_invitation(message)
             if message.include?("emailAddress")
               message["emailAddress"] = MASK_REPLACEMENT
-            end
-            message
-          end
-
-          def sanitize_feeds_request(message)
-            if message.include?("operations")
-              message["operations"].each do |operation|
-                if operation.include?("create")
-                  operation = operation["create"]
-                elsif operation.include?("update")
-                  operation = operation["update"]
-                else
-                  # Only create and update can contain sensitive fields.
-                  next
-                end
-                if operation.include?("placesLocationFeedData") &&
-                    operation["placesLocationFeedData"].include?("emailAddress")
-                  operation["placesLocationFeedData"]["emailAddress"] = MASK_REPLACEMENT
-                end
-              end
             end
             message
           end

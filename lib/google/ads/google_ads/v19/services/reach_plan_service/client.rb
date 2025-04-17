@@ -185,6 +185,97 @@ module Google
               # Service calls
 
               ##
+              # Returns a collection of conversion rate suggestions for supported plannable
+              # products.
+              #
+              # List of thrown errors:
+              #   [AuthenticationError]()
+              #   [AuthorizationError]()
+              #   [HeaderError]()
+              #   [InternalError]()
+              #   [QuotaError]()
+              #   [RequestError]()
+              #
+              # @overload generate_conversion_rates(request, options = nil)
+              #   Pass arguments to `generate_conversion_rates` via a request object, either of type
+              #   {::Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesRequest} or an equivalent Hash.
+              #
+              #   @param request [::Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesRequest, ::Hash]
+              #     A request object representing the call parameters. Required. To specify no
+              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #   @param options [::Gapic::CallOptions, ::Hash]
+              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #
+              # @overload generate_conversion_rates(customer_id: nil, customer_reach_group: nil)
+              #   Pass arguments to `generate_conversion_rates` via keyword arguments. Note that at
+              #   least one keyword argument is required. To specify no parameters, or to keep all
+              #   the default parameter values, pass an empty Hash as a request object (see above).
+              #
+              #   @param customer_id [::String]
+              #     Required. The ID of the customer. A conversion rate based on the historical
+              #     data of this customer may be suggested.
+              #   @param customer_reach_group [::String]
+              #     The name of the customer being planned for. This is a user-defined value.
+              #
+              # @yield [response, operation] Access the result along with the RPC operation
+              # @yieldparam response [::Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesResponse]
+              # @yieldparam operation [::GRPC::ActiveCall::Operation]
+              #
+              # @return [::Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesResponse]
+              #
+              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              #
+              # @example Basic example
+              #   require "google/ads/google_ads/v19/services"
+              #
+              #   # Create a client object. The client can be reused for multiple calls.
+              #   client = Google::Ads::GoogleAds::V19::Services::ReachPlanService::Client.new
+              #
+              #   # Create a request. To set request fields, pass in keyword arguments.
+              #   request = Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesRequest.new
+              #
+              #   # Call the generate_conversion_rates method.
+              #   result = client.generate_conversion_rates request
+              #
+              #   # The returned object is of type Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesResponse.
+              #   p result
+              #
+              def generate_conversion_rates request, options = nil
+                raise ::ArgumentError, "request must be provided" if request.nil?
+
+                request = ::Gapic::Protobuf.coerce request,
+                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateConversionRatesRequest
+
+                # Converts hash and nil to an options object
+                options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
+
+                # Customize the options with defaults
+                metadata = @config.rpcs.generate_conversion_rates.metadata.to_h
+
+                # Set x-goog-api-client, x-goog-user-project and x-goog-api-version headers
+                metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
+                  lib_name: @config.lib_name, lib_version: @config.lib_version,
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                metadata[:"x-goog-api-version"] = API_VERSION unless API_VERSION.empty?
+                metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
+
+                options.apply_defaults timeout:      @config.rpcs.generate_conversion_rates.timeout,
+                                       metadata:     metadata,
+                                       retry_policy: @config.rpcs.generate_conversion_rates.retry_policy
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
+                                       retry_policy: @config.retry_policy
+
+                @reach_plan_service_stub.call_rpc :generate_conversion_rates, request,
+                                                  options: options do |response, operation|
+                  yield response, operation if block_given?
+                end
+                # rescue GRPC::BadStatus => grpc_error
+                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+              end
+
+              ##
               # Returns the list of plannable locations (for example, countries).
               #
               # List of thrown errors:
@@ -521,17 +612,17 @@ module Google
               # @example
               #
               #   # Modify the global config, setting the timeout for
-              #   # list_plannable_locations to 20 seconds,
+              #   # generate_conversion_rates to 20 seconds,
               #   # and all remaining timeouts to 10 seconds.
               #   ::Google::Ads::GoogleAds::V19::Services::ReachPlanService::Client.configure do |config|
               #     config.timeout = 10.0
-              #     config.rpcs.list_plannable_locations.timeout = 20.0
+              #     config.rpcs.generate_conversion_rates.timeout = 20.0
               #   end
               #
               #   # Apply the above configuration only to a new client.
               #   client = ::Google::Ads::GoogleAds::V19::Services::ReachPlanService::Client.new do |config|
               #     config.timeout = 10.0
-              #     config.rpcs.list_plannable_locations.timeout = 20.0
+              #     config.rpcs.generate_conversion_rates.timeout = 20.0
               #   end
               #
               # @!attribute [rw] endpoint
@@ -673,6 +764,11 @@ module Google
                 #
                 class Rpcs
                   ##
+                  # RPC-specific configuration for `generate_conversion_rates`
+                  # @return [::Gapic::Config::Method]
+                  #
+                  attr_reader :generate_conversion_rates
+                  ##
                   # RPC-specific configuration for `list_plannable_locations`
                   # @return [::Gapic::Config::Method]
                   #
@@ -690,6 +786,8 @@ module Google
 
                   # @private
                   def initialize parent_rpcs = nil
+                    generate_conversion_rates_config = parent_rpcs.generate_conversion_rates if parent_rpcs.respond_to? :generate_conversion_rates
+                    @generate_conversion_rates = ::Gapic::Config::Method.new generate_conversion_rates_config
                     list_plannable_locations_config = parent_rpcs.list_plannable_locations if parent_rpcs.respond_to? :list_plannable_locations
                     @list_plannable_locations = ::Gapic::Config::Method.new list_plannable_locations_config
                     list_plannable_products_config = parent_rpcs.list_plannable_products if parent_rpcs.respond_to? :list_plannable_products

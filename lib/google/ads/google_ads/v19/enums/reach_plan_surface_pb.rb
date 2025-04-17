@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\n7google/ads/googleads/v19/enums/reach_plan_surface.proto\x12\x1egoogle.ads.googleads.v19.enums\"\xae\x01\n\x14ReachPlanSurfaceEnum\"\x95\x01\n\x10ReachPlanSurface\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x0b\n\x07IN_FEED\x10\x02\x12\x14\n\x10IN_STREAM_BUMPER\x10\x03\x12\x1b\n\x17IN_STREAM_NON_SKIPPABLE\x10\x04\x12\x17\n\x13IN_STREAM_SKIPPABLE\x10\x05\x12\n\n\x06SHORTS\x10\x06\x42\xef\x01\n\"com.google.ads.googleads.v19.enumsB\x15ReachPlanSurfaceProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v19/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V19.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V19\\Enums\xea\x02\"Google::Ads::GoogleAds::V19::Enumsb\x06proto3"
+descriptor_data = "\n7google/ads/googleads/v19/enums/reach_plan_surface.proto\x12\x1egoogle.ads.googleads.v19.enums\"\xcc\x01\n\x14ReachPlanSurfaceEnum\"\xb3\x01\n\x10ReachPlanSurface\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x11\n\rDISCOVER_FEED\x10\x07\x12\t\n\x05GMAIL\x10\x08\x12\x0b\n\x07IN_FEED\x10\x02\x12\x14\n\x10IN_STREAM_BUMPER\x10\x03\x12\x1b\n\x17IN_STREAM_NON_SKIPPABLE\x10\x04\x12\x17\n\x13IN_STREAM_SKIPPABLE\x10\x05\x12\n\n\x06SHORTS\x10\x06\x42\xef\x01\n\"com.google.ads.googleads.v19.enumsB\x15ReachPlanSurfaceProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v19/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V19.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V19\\Enums\xea\x02\"Google::Ads::GoogleAds::V19::Enumsb\x06proto3"
 
 pool = Google::Protobuf::DescriptorPool.generated_pool
 
