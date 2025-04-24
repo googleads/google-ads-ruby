@@ -132,8 +132,6 @@ def parallel_report_download(customer_ids, login_customer_id)
 end
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
-
   options = {}
 
   # The following parameter(s) should be provided to run the example. You can

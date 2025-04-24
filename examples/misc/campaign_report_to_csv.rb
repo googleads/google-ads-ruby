@@ -23,8 +23,6 @@ require 'time'
 require 'csv'
 require 'google/ads/google_ads'
 
-PAGE_SIZE = 1000
-
 def result_row_as_csv_hash(result_row)
   {
     "campaign.id": result_row.campaign.id.value,
@@ -56,7 +54,7 @@ def write_campaign_report_csv(customer_id, target_filepath)
       ORDER BY segments.date DESC
   QUERY
 
-  response = ga_service.search(customer_id: customer_id, query: query, page_size: PAGE_SIZE)
+  response = ga_service.search(customer_id: customer_id, query: query)
   # convert the Google Ads response rows in to CSV ready hash objects
   csv_rows = response.map { |row| result_row_as_csv_hash(row) }
 

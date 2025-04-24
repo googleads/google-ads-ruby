@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -156,8 +156,28 @@ module Google
                   universe_domain: @config.universe_domain,
                   channel_args: @config.channel_args,
                   interceptors: @config.interceptors,
-                  channel_pool_config: @config.channel_pool
+                  channel_pool_config: @config.channel_pool,
+                  logger: @config.logger
                 )
+
+                @google_ads_service_stub.stub_logger&.info do |entry|
+                  entry.set_system_name
+                  entry.set_service
+                  entry.message = "Created client for #{entry.service}"
+                  entry.set_credentials_fields credentials
+                  entry.set "customEndpoint", @config.endpoint if @config.endpoint
+                  entry.set "defaultTimeout", @config.timeout if @config.timeout
+                  entry.set "quotaProject", @quota_project_id if @quota_project_id
+                end
+              end
+
+              ##
+              # The logger used for request/response debug logging.
+              #
+              # @return [Logger]
+              #
+              def logger
+                @google_ads_service_stub.logger
               end
 
               # Service calls
@@ -202,9 +222,12 @@ module Google
               #     `next_page_token` in the previous response in order to request
               #     the next page of results.
               #   @param page_size [::Integer]
-              #     Number of elements to retrieve in a single page.
-              #     When too large a page is requested, the server may decide to
-              #     further limit the number of returned resources.
+              #     This field is deprecated and will be removed in
+              #     a future version of the API. As of v17, Google Ads API will return a
+              #     `PAGE_SIZE_NOT_SUPPORTED` error if this field is set in the request body.
+              #     See
+              #     https://ads-developers.googleblog.com/2024/07/upcoming-changes-to-page-size-in-google.html
+              #     to learn more details.
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed.
               #   @param return_total_results_count [::Boolean]
@@ -282,7 +305,7 @@ module Google
                   response = ::Gapic::PagedEnumerable.new @google_ads_service_stub, :search, request, response,
                                                           operation, options
                   yield response, operation if block_given?
-                  return response
+                  throw :response, response
                 end
                 # rescue GRPC::BadStatus => grpc_error
                 #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
@@ -390,7 +413,6 @@ module Google
 
                 @google_ads_service_stub.call_rpc :search_stream, request, options: options do |response, operation|
                   yield response, operation if block_given?
-                  return response
                 end
                 # rescue GRPC::BadStatus => grpc_error
                 #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
@@ -603,7 +625,6 @@ module Google
 
                 @google_ads_service_stub.call_rpc :mutate, request, options: options do |response, operation|
                   yield response, operation if block_given?
-                  return response
                 end
                 # rescue GRPC::BadStatus => grpc_error
                 #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
@@ -653,6 +674,13 @@ module Google
               #    *  (`GRPC::Core::Channel`) a gRPC channel with included credentials
               #    *  (`GRPC::Core::ChannelCredentials`) a gRPC credentails object
               #    *  (`nil`) indicating no credentials
+              #
+              #   Warning: If you accept a credential configuration (JSON file or Hash) from an
+              #   external source for authentication to Google Cloud, you must validate it before
+              #   providing it to a Google API client library. Providing an unvalidated credential
+              #   configuration to Google APIs can compromise the security of your systems and data.
+              #   For more information, refer to [Validate credential configurations from external
+              #   sources](https://cloud.google.com/docs/authentication/external/externally-sourced-credentials).
               #   @return [::Object]
               # @!attribute [rw] scope
               #   The OAuth scopes
@@ -692,6 +720,11 @@ module Google
               #   default endpoint URL. The default value of nil uses the environment
               #   universe (usually the default "googleapis.com" universe).
               #   @return [::String,nil]
+              # @!attribute [rw] logger
+              #   A custom logger to use for request/response debug logging, or the value
+              #   `:default` (the default) to construct a default logger, or `nil` to
+              #   explicitly disable logging.
+              #   @return [::Logger,:default,nil]
               #
               class Configuration
                 extend ::Gapic::Config
@@ -717,6 +750,7 @@ module Google
                 config_attr :retry_policy,  nil, ::Hash, ::Proc, nil
                 config_attr :quota_project, nil, ::String, nil
                 config_attr :universe_domain, nil, ::String, nil
+                config_attr :logger, :default, ::Logger, nil, :default
 
                 # @private
                 def initialize parent_config = nil

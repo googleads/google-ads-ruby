@@ -178,7 +178,6 @@ def get_existing_listing_group_filters_in_asset_group(client, customer_id, asset
   QUERY
   response = client.service.google_ads.search(
     customer_id: customer_id,
-    page_size: 10000,
     query: query,
   )
 

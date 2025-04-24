@@ -84,7 +84,6 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
       response = google_ads_service.search(
         customer_id: cid,
         query: search_query,
-        page_size: PAGE_SIZE,
       )
 
       # Iterates over all rows in all pages to get all customer clients under
@@ -145,8 +144,6 @@ def print_account_hierarchy(customer_client, cid_to_children, depth)
 end
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

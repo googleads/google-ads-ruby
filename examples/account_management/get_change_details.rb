@@ -60,10 +60,6 @@ def get_change_details(customer_id)
   response = client.service.google_ads.search(
     customer_id: customer_id,
     query: query,
-    # The page size is superfluous with the default limit set above, but it's
-    # shown here since it's a good practice to use a reasonable page size when
-    # you set a higher limit.
-    page_size: PAGE_SIZE
   )
 
   # Process the results and output changes.
@@ -98,18 +94,10 @@ def get_change_details(customer_id)
       [event.old_resource.campaign_budget, event.new_resource.campaign_budget]
     when :CAMPAIGN_CRITERION
       [event.old_resource.campaign_criterion, event.new_resource.campaign_criterion]
-    when :AD_GROUP_FEED
-      [event.old_resource.ad_group_feed, event.new_resource.ad_group_feed]
     when :ASSET
       [event.old_resource.asset, event.new_resource.asset]
-    when :CAMPAIGN_FEED
-      [event.old_resource.campaign_feed, event.new_resource.campaign_feed]
     when :CUSTOMER_ASSET
       [event.old_resource.customer_asset, event.new_resource.customer_asset]
-    when :FEED
-      [event.old_resource.feed, event.new_resource.feed]
-    when :FEED_ITEM
-      [event.old_resource.feed_item, event.new_resource.feed_item]
     else
       puts "Unknown change_resource_type #{event.change_resource_type}."
       next
@@ -140,8 +128,6 @@ end
 # [END get_change_details]
 
 if __FILE__ == $PROGRAM_NAME
-  PAGE_SIZE = 1000
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

@@ -164,10 +164,6 @@ end
 # [END add_ad_customizer_3]
 
 if __FILE__ == $0
-  # We're doing only searches by resource_name in this example,
-  # we can set page size = 1.
-  PAGE_SIZE = 1;
-
   options = {}
   # Running the example with -h will print the command line usage.
 

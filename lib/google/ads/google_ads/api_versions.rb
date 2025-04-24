@@ -1,8 +1,8 @@
 module Google
   module Ads
     module GoogleAds
-      KNOWN_API_VERSIONS = [:V15, :V16, :V17]
-      DEFAULT_API_VERSION = :V17
+      KNOWN_API_VERSIONS = [:V17, :V18, :V19]
+      DEFAULT_API_VERSION = :V19
 
       def self.default_api_version
         DEFAULT_API_VERSION
