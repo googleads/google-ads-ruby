@@ -1,6 +1,7 @@
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
+ - Update Ruby version in .gemspec file
 
 33.0.0
 ------
