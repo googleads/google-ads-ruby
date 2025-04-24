@@ -1,7 +1,7 @@
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
- - Update Ruby version in .gemspec file
+ - Update Ruby version in .gemspec file to require a minimum version of 3.0.0
 
 33.0.0
 ------
