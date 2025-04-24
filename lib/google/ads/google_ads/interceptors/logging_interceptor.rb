@@ -56,7 +56,7 @@ module Google
               response = yield
 
               @logger.info { build_summary_message(request, call, method, false) }
-              @logger.debug { build_request_message(metadata, request) }
+              @logger.debug { build_request_message(request, call, method, metadata) }
               @logger.debug { build_success_response_message(response) }
               if response.respond_to?(:partial_failure_error) && response.partial_failure_error
                 @logger.debug { build_partial_failure_message(response) }
@@ -64,7 +64,7 @@ module Google
               response
             rescue Exception
               @logger.warn { build_summary_message(request, call, method, true) }
-              @logger.info { build_request_message(metadata, request) }
+              @logger.info { build_request_message(request, call, method, metadata) }
               @logger.info { build_error_response_message }
               raise
             end
@@ -76,7 +76,7 @@ module Google
               responses = yield
               Enumerator.new do |y|
                 responses.each { |response|
-                  @logger.debug { build_request_message(metadata, request) }
+                  @logger.debug { build_request_message(request, call, method, metadata) }
                   @logger.debug { build_success_response_message(response) }
                   if response.respond_to?(:partial_failure_error) && response.partial_failure_error
                     @logger.debug { build_partial_failure_message(response) }
@@ -102,7 +102,7 @@ module Google
 
           def handle_error(request, call, method, metadata)
             @logger.warn { build_summary_message(request, call, method, true) }
-            @logger.info { build_request_message(metadata, request) }
+            @logger.info { build_request_message(request, call, method, metadata) }
             @logger.info { build_error_response_message }
             raise
           end
@@ -154,10 +154,11 @@ module Google
           end
 
           def build_success_response_message(response)
-            "Incoming response: Payload: #{sanitize_message(response).to_json}"
+            "\nResponse\n--------\n" \
+              "Response: #{sanitize_message(response).to_json}"
           end
 
-          def build_request_message(metadata, request)
+          def build_request_message(request, call, method, metadata)
             # calling #to_json on some protos (specifically those with non-UTF8
             # encodable byte values) causes a segfault, however #inspect works
             # so we check if the proto contains a bytevalue, and if it does
@@ -167,8 +168,11 @@ module Google
                               else
                                 sanitize_message(request).to_json
                               end
-            "Outgoing request: Headers: #{sanitize_headers(metadata).to_json} " \
-              "Payload: #{request_inspect}"
+            "\nRequest\n-------\n" \
+              "Method: #{method}\n" \
+              "Host: #{call.instance_variable_get(:@wrapped).instance_variable_get(:@peer)}\n" \
+              "Headers: #{sanitize_headers(metadata).to_json}\n" \
+              "Request: #{request_inspect}"
           end
 
           def sanitize_headers(metadata)

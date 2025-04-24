@@ -1,3 +1,7 @@
+33.1.0
+-----
+ - Improved the logging format to include more information and increase human readability.
+
 33.0.0
 ------
  - Compatibility with v19.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
