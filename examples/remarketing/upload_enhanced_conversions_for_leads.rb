@@ -102,7 +102,7 @@ def upload_conversion_with_identifiers(
     # normalize and hash method specifically for email addresses.
     # If using a phone number, use the normalize_and_hash method instead.
     cc.user_identifiers << client.resource.user_identifier do |ui|
-      ui.hashed_phone_number = normalize_and_hash_email(raw_record["email"])
+      ui.hashed_email = normalize_and_hash_email(raw_record["email"])
       # Optional: Specifies the user identifier source.
       ui.user_identifier_source = :FIRST_PARTY
     end
@@ -111,7 +111,7 @@ def upload_conversion_with_identifiers(
     # for it.
     unless raw_record["phone"].nil?
       cc.user_identifiers << client.resource.user_identifier do |ui|
-        ui.hashed_phone_number = normalize_and_hash_email(raw_record["phone"])
+        ui.hashed_phone_number = normalize_and_hash(raw_record["phone"])
       end
     end
   end
