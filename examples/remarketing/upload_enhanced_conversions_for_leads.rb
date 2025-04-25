@@ -269,7 +269,7 @@ if __FILE__ == $0
     end
   end.parse!
     
-  if (options[:session_attributes_encoded]!=nil && options[:session_attributes_hash]!=nil)
+  if !options[:session_attributes_encoded].nil? && !options[:session_attributes_hash].nil?
     raise ArgumentError.new("Only one of 'session_attributes_encoded' or 'session_attributes_hash' can be set.")
   end
   
