@@ -117,6 +117,7 @@ def upload_conversion_with_identifiers(
       cc.class.module_eval { attr_accessor :session_attributes_key_value_pairs}
       cc.session_attributes_key_value_pairs = ::Google::Ads::GoogleAds::V19::Services::SessionAttributesKeyValuePairs.new
       
+      # Loop thru inputted session_attributes_hash to populate session_attributes_key_value_pairs
       session_attributes_hash.each do |key, value|
         pair = ::Google::Ads::GoogleAds::V19::Services::SessionAttributeKeyValuePair.new
         pair.session_attribute_key = key
