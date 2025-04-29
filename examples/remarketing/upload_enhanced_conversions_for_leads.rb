@@ -31,7 +31,14 @@ def upload_conversion_with_identifiers(
   conversion_value,
   order_id,
   gclid,
-  ad_user_data_consent)
+  ad_user_data_consent,
+  session_attributes_encoded,
+  session_attributes_hash)
+  
+  if (session_attributes_encoded!=nil && session_attributes_hash!=nil)
+    raise ArgumentError.new("Only one of 'session_attributes_encoded' or 'session_attributes_hash' can be set.")
+  end
+  
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -71,6 +78,8 @@ def upload_conversion_with_identifiers(
     "conversion_value" => conversion_value,
     "currency_code" => "USD",
     "ad_user_data_consent" => ad_user_data_consent,
+    "session_attributes_encoded" => session_attributes_encoded,
+    "session_attributes_hash" => session_attributes_hash
   }
 
   click_conversion = client.resource.click_conversion do |cc|
@@ -96,6 +105,27 @@ def upload_conversion_with_identifiers(
         c.ad_user_data = ad_user_data_consent
       end
     end
+
+    # [START add_session_attributes]
+    # Set one of the session_attributes_encoded or
+    # session_attributes_key_value_pairs fields if either are provided.
+    if session_attributes_encoded != nil
+      cc.class.module_eval { attr_accessor :session_attributes_encoded}
+      cc.session_attributes_encoded = session_attributes_encoded
+    elsif session_attributes_hash != nil
+      # Add new attribute to click conversion object
+      cc.class.module_eval { attr_accessor :session_attributes_key_value_pairs}
+      cc.session_attributes_key_value_pairs = ::Google::Ads::GoogleAds::V19::Services::SessionAttributesKeyValuePairs.new
+      
+      # Loop thru inputted session_attributes_hash to populate session_attributes_key_value_pairs
+      session_attributes_hash.each do |key, value|
+        pair = ::Google::Ads::GoogleAds::V19::Services::SessionAttributeKeyValuePair.new
+        pair.session_attribute_key = key
+        pair.session_attribute_value = value
+        cc.session_attributes_key_value_pairs.key_value_pairs << pair
+      end
+    end    
+    # [END add_session_attributes]
     # [END add_conversion_details]
 
     # Creates a user identifier using the hashed email address, using the
@@ -141,7 +171,7 @@ end
 # described at https://support.google.com/google-ads/answer/7474263.
 def normalize_and_hash(str)
   # Remove leading and trailing whitespace and ensure all letters are lowercase
-  # before hasing.
+  # before hashing.
   Digest::SHA256.hexdigest(str.strip.downcase)
 end
 
@@ -177,6 +207,8 @@ if __FILE__ == $0
   options[:order_id] = nil
   options[:gclid] = nil
   options[:ad_user_data_consent] = nil
+  options[:session_attributes_encoded] = nil
+  options[:session_attributes_hash] = nil
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
@@ -211,11 +243,21 @@ if __FILE__ == $0
       options[:gclid] = v
     end
 
-    opts.on('-d', '--ad-user-data-dconsent GCLID', String,
+    opts.on('-n', '--ad-user-data-consent GCLID', String,
             'The data consent status for ad user data for all members in' \
             'the job.' \
             'e.g. UNKNOWN, GRANTED, DENIED') do |v|
       options[:ad_user_data_consent] = v
+    end
+    
+    opts.on('-e', '--session_attributes_encoded ENCODED-SESSION-ATTRIBUTES', String,'A session attributes token.') do |v|
+      options[:session_attributes_encoded] = v
+    end
+    
+    opts.on('-k', '--session_attributes_hash ', String,'A comma-delimited list of session attribute' \
+            'key value pairs. Each pair should be separated by an equal sign, for example:' \
+            '-k gad_campaignid=12345,gad_source=1') do |v|
+      options[:session_attributes_hash] = v
     end
 
     opts.separator ''
@@ -226,6 +268,15 @@ if __FILE__ == $0
       exit
     end
   end.parse!
+    
+  if !options[:session_attributes_encoded].nil? && !options[:session_attributes_hash].nil?
+    raise ArgumentError.new("Only one of 'session_attributes_encoded' or 'session_attributes_hash' can be set.")
+  end
+  
+  if options[:session_attributes_hash]
+    # Convert the string-based input to a hash
+    session_attributes_hash = Hash[options[:session_attributes_hash].split(",").map { |pair| pair.split("=") }]
+  end
 
   begin
     upload_conversion_with_identifiers(
@@ -236,6 +287,11 @@ if __FILE__ == $0
       options[:order_id],
       options[:gclid],
       options[:ad_user_data_consent],
+      # Only one of 'session_attributes_encoded' or
+      # 'session_attributes_hash' can be passed at a time. If both are
+      # passed the example will fail with a ArgumentError.
+      options[:session_attributes_encoded],
+      session_attributes_hash
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
