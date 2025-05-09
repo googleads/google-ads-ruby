@@ -138,7 +138,7 @@ See the [Logging guide][].
 
 ## Ruby versions
 
-The client library supports versions 3.1, 3.2, and 3.3 of Ruby. We plan to
+The client library supports versions 3.2, 3.3, and 3.4 of Ruby. We plan to
 support three Ruby releases at any one time. As Ruby releases once a year on
 December 25th, we will look at dropping support for the oldest version early in
 the following year.
