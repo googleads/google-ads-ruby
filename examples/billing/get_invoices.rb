@@ -21,6 +21,7 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
+require_relative '../shared/error_handler.rb'
 
 def get_invoices(customer_id, billing_setup_id)
   # GoogleAdsClient will read a config file from
@@ -142,18 +143,7 @@ if __FILE__ == $0
       options.fetch(:billing_setup_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
-      if error.location
-        error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-        end
-      end
-      error.error_code.to_h.each do |k, v|
-        next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
-      end
-    end
-    raise
+    GoogleAdsErrorHandler.handle_google_ads_error(e)
+    raise # Re-raise the error to maintain original script behavior.
   end
 end
