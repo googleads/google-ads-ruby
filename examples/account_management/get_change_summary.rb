@@ -17,8 +17,9 @@
 #
 # This example gets a list of which resources have been changed in your account.
 
-require 'optparse'
 require 'google/ads/google_ads'
+require_relative 'argument_parser'
+require_relative 'error_handler'
 
 # [START get_change_summary]
 def get_change_summary(customer_id)
@@ -78,51 +79,22 @@ end
 # [END get_change_summary]
 
 if __FILE__ == $PROGRAM_NAME
-  options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options = ArgumentParser.parse_arguments(ARGV)
 
-  OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
-
-    opts.separator ''
-    opts.separator 'Options:'
-
-    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
-      options[:customer_id] = v
-    end
-
-    opts.separator ''
-    opts.separator 'Help:'
-
-    opts.on_tail('-h', '--help', 'Show this message') do
-      puts opts
-      exit
-    end
-  end.parse!
+  unless options[:customer_id]
+    puts "Usage: #{$0} -c CUSTOMER_ID"
+    puts "  -c, --customer-id CUSTOMER-ID          The Google Ads customer ID."
+    exit 1
+  end
 
   begin
-    get_change_summary(options.fetch(:customer_id).tr("-", ""))
+    get_change_summary(options[:customer_id])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
-      if error.location
-        error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-        end
-      end
-      error.error_code.to_h.each do |k, v|
-        next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
-      end
-    end
+    ErrorHandler.handle_google_ads_error(e)
+    raise
+  rescue StandardError => e
+    STDERR.puts "An unexpected error occurred: #{e.message}"
+    STDERR.puts e.backtrace
     raise
   end
 end

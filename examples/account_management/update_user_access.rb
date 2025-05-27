@@ -23,23 +23,21 @@
 # See https://support.google.com/google-ads/answer/9978556 to learn more about
 # account access levels.
 
-require 'optparse'
 require 'google/ads/google_ads'
+require_relative 'argument_parser'
+require_relative 'error_handler'
 
-def update_user_access(customer_id, email_address, access_role)
+# ACCESS_ROLE_ENUM is now defined in ArgumentParser module.
+
+def update_user_access(customer_id, email_address, access_role_sym)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  if !ACCESS_ROLES.include?(access_role)
-    raise "Illegal access role specified. Expected one of " \
-      "#{ACCESS_ROLES.join(" ")}"
-  end
-
   user_id = get_user_id(client, customer_id, email_address)
 
   if user_id
-    modify_user_access(client, customer_id, user_id, access_role)
+    modify_user_access(client, customer_id, user_id, access_role_sym)
   end
 end
 
@@ -72,10 +70,10 @@ def get_user_id(client, customer_id, email_address)
   end
 end
 
-def modify_user_access(client, customer_id, user_id, access_role)
+def modify_user_access(client, customer_id, user_id, access_role_sym)
   operation = client.operation.update_resource.customer_user_access(
       client.path.customer_user_access(customer_id, user_id)) do |ua|
-    ua.access_role = access_role.to_sym
+    ua.access_role = access_role_sym # Already a symbol
   end
 
   response = client.service.customer_user_access.mutate_customer_user_access(
@@ -88,72 +86,34 @@ def modify_user_access(client, customer_id, user_id, access_role)
 end
 
 if __FILE__ == $0
-  ACCESS_ROLES = %w[
-    ADMIN
-    STANDARD
-    READ_ONLY
-    EMAIL_ONLY
-  ]
+  options = ArgumentParser.parse_arguments(ARGV)
 
-  options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
-  options[:email_address] = 'INSERT_EMAIL_ADDRESS_HERE'
-  options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
+  unless options[:customer_id] && options[:email_address] && options[:access_role]
+    puts "Usage: #{$0} -c CUSTOMER_ID -e EMAIL_ADDRESS -a ACCESS_ROLE"
+    puts "  -c, --customer-id CUSTOMER-ID          The Google Ads customer ID."
+    puts "  -e, --email-address EMAIL-ADDRESS      Email address of the user whose access to update."
+    puts "  -a, --access-role ACCESS-ROLE          Access role for the user. Must be one of: #{ArgumentParser::ACCESS_ROLE_ENUM.keys.join(', ')}"
+    exit 1
+  end
 
-  OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
-
-    opts.separator ''
-    opts.separator 'Options:'
-
-    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
-      options[:customer_id] = v
-    end
-
-    opts.on('-e', '--email-address EMAIL-ADDRESS', String, 'Email Address') do |v|
-      options[:email_address] = v
-    end
-
-    opts.on('-a', '--access-role ACCESS-ROLE', String, 'Access Role') do |v|
-      options[:access_role] = v
-    end
-
-    opts.separator ''
-    opts.separator 'Help:'
-
-    opts.on_tail('-h', '--help', 'Show this message') do
-      puts opts
-      exit
-    end
-  end.parse!
+  access_role_sym = options[:access_role].upcase.to_sym
+  unless ArgumentParser::ACCESS_ROLE_ENUM.key?(access_role_sym)
+    puts "Invalid access role: '#{options[:access_role]}'. Must be one of: #{ArgumentParser::ACCESS_ROLE_ENUM.keys.join(', ')}"
+    exit 1
+  end
 
   begin
     update_user_access(
-      options.fetch(:customer_id).tr("-", ""),
-      options.fetch(:email_address),
-      options.fetch(:access_role),
+      options[:customer_id],
+      options[:email_address],
+      access_role_sym
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
-      if error.location
-        error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-        end
-      end
-      error.error_code.to_h.each do |k, v|
-        next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
-      end
-    end
+    ErrorHandler.handle_google_ads_error(e)
+    raise
+  rescue StandardError => e
+    STDERR.puts "An unexpected error occurred: #{e.message}"
+    STDERR.puts e.backtrace
     raise
   end
 end

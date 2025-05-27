@@ -24,9 +24,10 @@
 # retrieve and print the overlapping portions of the hierarchy for each
 # accessible customer.
 
-require 'optparse'
 require 'google/ads/google_ads'
 require 'thread'
+require_relative 'argument_parser'
+require_relative 'error_handler'
 
 def get_account_hierarchy(manager_customer_id, login_customer_id)
   # GoogleAdsClient will read a config file from
@@ -49,10 +50,8 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
   if manager_customer_id
     seed_customer_ids << manager_customer_id
   else
-    puts 'No manager customer ID is specified. The example will print the ' +
-        'hierarchies of all accessible customer IDs:'
-    customer_resource_names = client.service.customer.
-        list_accessible_customers().resource_names
+    puts 'No manager customer ID is specified. The example will print the hierarchies of all accessible customer IDs:'
+    customer_resource_names = client.service.customer.list_accessible_customers.resource_names
     customer_resource_names.each do |res|
       seed_customer_ids << res.split('/')[1]
     end
@@ -93,7 +92,7 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
 
         # The customer client that with level 0 is the specified customer
         if customer_client.level == 0
-          if root_customer_client == nil
+          if root_customer_client.nil?
             root_customer_client = customer_client
           end
           next
@@ -103,7 +102,7 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
         # the above query will be run against them to create a dictionary of
         # managers mapped to their child accounts for printing the hierarchy
         # afterwards.
-        cid_to_children[cid.to_s] << customer_client
+        cid_to_children[cid] << customer_client
 
         unless customer_client.manager.nil?
           if !cid_to_children.key?(customer_client.id.to_s) &&
@@ -115,12 +114,12 @@ def get_account_hierarchy(manager_customer_id, login_customer_id)
     end
 
     if root_customer_client
-      puts "The hierarychy of customer ID #{root_customer_client.id} " +
-          "is printed below:"
+      puts "The hierarychy of customer ID #{root_customer_client.id} is printed below:"
       print_account_hierarchy(root_customer_client, cid_to_children, 0)
     else
-      puts "Customer ID #{manager_customer_id} is likely a test account, " \
-        "so its customer client information cannot be retrieved."
+      # Note: manager_customer_id is already a string here from arguments.
+      puts "Customer ID #{manager_customer_id} is likely a test account, so " \
+        "its customer client information cannot be retrieved."
     end
   end
 end
@@ -131,8 +130,9 @@ def print_account_hierarchy(customer_client, cid_to_children, depth)
   end
 
   customer_id = customer_client.id
-  puts '-' * (depth * 2) +
-      "#{customer_id} #{customer_client.descriptive_name} " +
+  # customer_id is an integer, descriptive_name, currency_code, and time_zone are strings.
+  # Interpolation handles .to_s for customer_id.
+  puts "#{''.ljust(depth * 2, '-')}#{customer_id} #{customer_client.descriptive_name} " \
       "#{customer_client.currency_code} #{customer_client.time_zone}"
 
   # Recursively call this function for all child accounts of customer_client
@@ -144,58 +144,34 @@ def print_account_hierarchy(customer_client, cid_to_children, depth)
 end
 
 if __FILE__ == $PROGRAM_NAME
-  options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = nil
+  options = ArgumentParser.parse_arguments(ARGV)
 
-  OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
+  # This script requires a login_customer_id (parsed as customer_id) if no
+  # manager_customer_id is provided for the purpose of listing all accessible accounts.
+  # If a manager_customer_id is provided, it can be used as the login_customer_id.
+  # The GoogleAdsClient library will use manager_customer_id as login_customer_id
+  # if login_customer_id is not set in the config.
+  # However, the script's logic for client.configure specifically uses
+  # options[:customer_id] (login_customer_id) first if available.
 
-    opts.separator ''
-    opts.separator 'Options:'
-
-    opts.on('-M', '--manager-customer-id MANAGER-CUSTOMER-ID', String, 'Manager Customer ID (optional)') do |v|
-      options[:manager_customer_id] = v.tr("-", "")
-    end
-
-    opts.on('-L', '--login-customer-id LOGIN-CUSTOMER-ID', String, 'Login Customer ID (optional)') do |v|
-      options[:login_customer_id] = v.tr("-", "")
-    end
-
-    opts.separator ''
-    opts.separator 'Help:'
-
-    opts.on_tail('-h', '--help', 'Show this message') do
-      puts opts
-      exit
-    end
-  end.parse!
+  if options[:customer_id].nil? && options[:manager_customer_id].nil?
+    puts "Usage: #{$0} -c LOGIN_CUSTOMER_ID [-m MANAGER_CUSTOMER_ID]"
+    puts "  OR #{$0} -m MANAGER_CUSTOMER_ID (MANAGER_CUSTOMER_ID will be used as login)"
+    puts "Please provide at least a login customer ID (-c) or a manager customer ID (-m)."
+    exit 1
+  end
 
   begin
     get_account_hierarchy(
-      options[:manager_customer_id],
-      options[:login_customer_id],
+      options[:manager_customer_id], # This can be nil, script handles it
+      options[:customer_id]          # This can be nil if manager_customer_id is present
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
-      if error.location
-        error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-        end
-      end
-      error.error_code.to_h.each do |k, v|
-        next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
-      end
-    end
+    ErrorHandler.handle_google_ads_error(e)
+    raise
+  rescue StandardError => e
+    STDERR.puts "An unexpected error occurred: #{e.message}"
+    STDERR.puts e.backtrace
     raise
   end
 end

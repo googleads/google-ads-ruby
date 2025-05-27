@@ -18,15 +18,21 @@
 # This example gets specific details about the most recent changes in your
 # account, including which field changed and the old and new values.
 
-require 'optparse'
 require 'date'
 require 'google/ads/google_ads'
+require_relative 'argument_parser'
+require_relative 'error_handler'
 
 # [START get_change_details]
-def get_change_details(customer_id)
+def get_change_details(customer_id, start_date_str, end_date_str)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
+
+  # Format dates from YYYYMMDD to YYYY-MM-DD for the GAQL query.
+  # The API expects dates in 'YYYY-MM-DD' format.
+  start_date_formatted = Date.strptime(start_date_str, '%Y%m%d').strftime('%Y-%m-%d')
+  end_date_formatted = Date.strptime(end_date_str, '%Y%m%d').strftime('%Y-%m-%d')
 
   # Construct a query to find details for recent changes in your account.
   # The LIMIT clause is required for the change_event resource.
@@ -49,8 +55,8 @@ def get_change_details(customer_id)
     FROM
       change_event
     WHERE
-      change_event.change_date_time <= '#{(Date.today + 1).to_s}'
-      AND change_event.change_date_time >= '#{(Date.today - 14).to_s}'
+      change_event.change_date_time <= '#{end_date_formatted}'
+      AND change_event.change_date_time >= '#{start_date_formatted}'
     ORDER BY
       change_event.change_date_time DESC
     LIMIT 5
@@ -94,8 +100,9 @@ def get_change_details(customer_id)
       [event.old_resource.campaign_budget, event.new_resource.campaign_budget]
     when :CAMPAIGN_CRITERION
       [event.old_resource.campaign_criterion, event.new_resource.campaign_criterion]
-    when :ASSET
-      [event.old_resource.asset, event.new_resource.asset]
+    # :ASSET is already listed above, this one is a duplicate.
+    # when :ASSET
+    #   [event.old_resource.asset, event.new_resource.asset]
     when :CUSTOMER_ASSET
       [event.old_resource.customer_asset, event.new_resource.customer_asset]
     else
@@ -128,51 +135,28 @@ end
 # [END get_change_details]
 
 if __FILE__ == $PROGRAM_NAME
-  options = {}
-  # The following parameter(s) should be provided to run the example. You can
-  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-  # the command line.
-  #
-  # Parameters passed on the command line will override any parameters set in
-  # code.
-  #
-  # Running the example with -h will print the command line usage.
-  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options = ArgumentParser.parse_arguments(ARGV)
 
-  OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
-
-    opts.separator ''
-    opts.separator 'Options:'
-
-    opts.on('-C', '--customer-id CUSTOMER-ID', String, 'Customer ID') do |v|
-      options[:customer_id] = v
-    end
-
-    opts.separator ''
-    opts.separator 'Help:'
-
-    opts.on_tail('-h', '--help', 'Show this message') do
-      puts opts
-      exit
-    end
-  end.parse!
+  unless options[:customer_id] && options[:start_date] && options[:end_date]
+    puts "Usage: #{$0} -c CUSTOMER_ID --start-date START_DATE --end-date END_DATE"
+    puts "  -c, --customer-id CUSTOMER-ID          The Google Ads customer ID."
+    puts "      --start-date START-DATE            Start date for change history (YYYYMMDD)."
+    puts "      --end-date END-DATE                End date for change history (YYYYMMDD)."
+    exit 1
+  end
 
   begin
-    get_change_details(options.fetch(:customer_id).tr("-", ""))
+    get_change_details(
+      options[:customer_id],
+      options[:start_date],
+      options[:end_date]
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
-      if error.location
-        error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
-        end
-      end
-      error.error_code.to_h.each do |k, v|
-        next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
-      end
-    end
+    ErrorHandler.handle_google_ads_error(e)
+    raise
+  rescue StandardError => e
+    STDERR.puts "An unexpected error occurred: #{e.message}"
+    STDERR.puts e.backtrace
     raise
   end
 end
