@@ -14,3 +14,5 @@ gem 'standard'
 gem 'allocation_tracer'
 gem 'benchmark-ips'
 gem 'yard'
+gem 'rubocop', require: false
+gem 'rubocop-google_ads', require: false
