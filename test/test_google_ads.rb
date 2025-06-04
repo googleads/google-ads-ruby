@@ -23,7 +23,7 @@ require 'google/ads/google_ads'
 
 class TestGoogleAds < Minitest::Test
   def test_valid_version()
-    assert_equal(true, Google::Ads::GoogleAds.valid_version?(:V19))
+    assert_equal(true, Google::Ads::GoogleAds.valid_version?(:V20))
     assert_equal(false, Google::Ads::GoogleAds.valid_version?(:ABCD))
   end
 end

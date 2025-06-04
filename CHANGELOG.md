@@ -1,3 +1,8 @@
+34.0.0
+-----
+ - Compatibility with v20 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v17.
+
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
