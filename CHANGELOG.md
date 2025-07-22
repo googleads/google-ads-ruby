@@ -1,3 +1,8 @@
+34.1.0
+-----
+ - Update activesupport version to 7.1
+ - Increase upper bound for google-protobuf and gapic-common dependencies
+
 34.0.0
 -----
  - Compatibility with v20 of the API: https://developers.google.com/google-ads/api/docs/release-notes
