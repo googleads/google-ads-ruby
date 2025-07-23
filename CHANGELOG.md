@@ -1,3 +1,9 @@
+34.2.0
+-----
+ - Add a minimum version for standard
+ - Remove allocation_tracer
+ - Update gapic-common to 1.0.1
+
 34.1.0
 -----
  - Update activesupport version to 7.1
