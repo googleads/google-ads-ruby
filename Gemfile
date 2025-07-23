@@ -10,8 +10,7 @@ gem 'google-adwords-api', '~> 1.5'
 # used for the factories generator
 gem 'activesupport', '~> 7.1'
 gem 'rspec', '~> 3.6'
-gem 'standard'
-gem 'allocation_tracer'
+gem 'standard', ">= 1.35.1"
 gem 'benchmark-ips'
 gem 'yard'
 gem 'rubocop', require: false
