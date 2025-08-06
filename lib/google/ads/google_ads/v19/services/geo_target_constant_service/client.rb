@@ -218,11 +218,11 @@ module Google
               #   @param location_names [::Google::Ads::GoogleAds::V19::Services::SuggestGeoTargetConstantsRequest::LocationNames, ::Hash]
               #     The location names to search by. At most 25 names can be set.
               #
-              #     Note: The following fields are mutually exclusive: `location_names`, `geo_targets`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `location_names`, `geo_targets`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param geo_targets [::Google::Ads::GoogleAds::V19::Services::SuggestGeoTargetConstantsRequest::GeoTargets, ::Hash]
               #     The geo target constant resource names to filter by.
               #
-              #     Note: The following fields are mutually exclusive: `geo_targets`, `location_names`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `geo_targets`, `location_names`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V19::Services::SuggestGeoTargetConstantsResponse]
@@ -250,8 +250,7 @@ module Google
               def suggest_geo_target_constants request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::SuggestGeoTargetConstantsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::SuggestGeoTargetConstantsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -387,9 +386,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil

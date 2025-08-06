@@ -27,6 +27,7 @@ def result_row_as_csv_hash(result_row)
   {
     "campaign.id": result_row.campaign.id.value,
     "campaign.name": result_row.campaign.name.value,
+    "campaign.contains_eu_political_advertising": result_row.campaign.contains_eu_political_advertising.value,
     "campaign.date": Time.parse(result_row.segments.date.value),
     "metrics.impressions": result_row.metrics.impressions.value,
     "metrics.clicks": result_row.metrics.clicks.value,
@@ -44,6 +45,7 @@ def write_campaign_report_csv(customer_id, target_filepath)
   query = <<~QUERY
       SELECT campaign.id,
              campaign.name,
+             campaign.contains_eu_political_advertising,
              segments.date,
              metrics.impressions,
              metrics.clicks,

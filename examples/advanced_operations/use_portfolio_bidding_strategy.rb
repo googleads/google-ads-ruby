@@ -81,6 +81,7 @@ def use_portfolio_bidding_strategy(customer_id)
         ns.target_search_network = true
         ns.target_content_network = false
         ns.target_partner_search_network = false
+      c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
       end
     end
   end

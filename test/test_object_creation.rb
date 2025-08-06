@@ -26,8 +26,8 @@ class TestResourceCreation < Minitest::Test
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No config needed.
     end
-    campaign_op = client.operation.v20.create_resource.campaign
-    assert_instance_of(Google::Ads::GoogleAds::V20::Resources::Campaign, campaign_op.create)
+    campaign_op = client.operation.v21.create_resource.campaign
+    assert_instance_of(Google::Ads::GoogleAds::V21::Resources::Campaign, campaign_op.create)
   end
 
   def test_resource_creation_from_existing_object()
@@ -59,18 +59,18 @@ class TestResourceCreation < Minitest::Test
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No config needed.
     end
-    mutate_op = client.operation.v20.mutate
-    assert_instance_of(Google::Ads::GoogleAds::V20::Services::MutateOperation, mutate_op)
+    mutate_op = client.operation.v21.mutate
+    assert_instance_of(Google::Ads::GoogleAds::V21::Services::MutateOperation, mutate_op)
   end
 
   def test_operation_creation_using_block()
     client = Google::Ads::GoogleAds::GoogleAdsClient.new do |config|
       # No config needed.
     end
-    mutate_op = client.operation.v20.mutate do |op|
-      op.campaign_operation = client.operation.v20.create_resource.campaign
+    mutate_op = client.operation.v21.mutate do |op|
+      op.campaign_operation = client.operation.v21.create_resource.campaign
     end
-    assert_instance_of(Google::Ads::GoogleAds::V20::Services::MutateOperation, mutate_op)
-    assert_instance_of(Google::Ads::GoogleAds::V20::Services::CampaignOperation, mutate_op.campaign_operation)
+    assert_instance_of(Google::Ads::GoogleAds::V21::Services::MutateOperation, mutate_op)
+    assert_instance_of(Google::Ads::GoogleAds::V21::Services::CampaignOperation, mutate_op.campaign_operation)
   end
 end

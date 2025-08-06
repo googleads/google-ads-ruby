@@ -247,19 +247,19 @@ module Google
               #     A Keyword and a specific Url to generate ideas from
               #     for example, cars, www.example.com/cars.
               #
-              #     Note: The following fields are mutually exclusive: `keyword_and_url_seed`, `keyword_seed`, `url_seed`, `site_seed`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `keyword_and_url_seed`, `keyword_seed`, `url_seed`, `site_seed`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param keyword_seed [::Google::Ads::GoogleAds::V19::Services::KeywordSeed, ::Hash]
               #     A Keyword or phrase to generate ideas from, for example, cars.
               #
-              #     Note: The following fields are mutually exclusive: `keyword_seed`, `keyword_and_url_seed`, `url_seed`, `site_seed`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `keyword_seed`, `keyword_and_url_seed`, `url_seed`, `site_seed`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param url_seed [::Google::Ads::GoogleAds::V19::Services::UrlSeed, ::Hash]
               #     A specific url to generate ideas from, for example, www.example.com/cars.
               #
-              #     Note: The following fields are mutually exclusive: `url_seed`, `keyword_and_url_seed`, `keyword_seed`, `site_seed`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `url_seed`, `keyword_and_url_seed`, `keyword_seed`, `site_seed`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param site_seed [::Google::Ads::GoogleAds::V19::Services::SiteSeed, ::Hash]
               #     The site to generate ideas from, for example, www.example.com.
               #
-              #     Note: The following fields are mutually exclusive: `site_seed`, `keyword_and_url_seed`, `keyword_seed`, `url_seed`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `site_seed`, `keyword_and_url_seed`, `keyword_seed`, `url_seed`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Gapic::PagedEnumerable<::Google::Ads::GoogleAds::V19::Services::GenerateKeywordIdeaResult>]
@@ -291,8 +291,7 @@ module Google
               def generate_keyword_ideas request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordIdeasRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordIdeasRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -414,8 +413,7 @@ module Google
               def generate_keyword_historical_metrics request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordHistoricalMetricsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordHistoricalMetricsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -516,8 +514,7 @@ module Google
               def generate_ad_group_themes request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateAdGroupThemesRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateAdGroupThemesRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -626,8 +623,7 @@ module Google
               def generate_keyword_forecast_metrics request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordForecastMetricsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateKeywordForecastMetricsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -771,9 +767,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil

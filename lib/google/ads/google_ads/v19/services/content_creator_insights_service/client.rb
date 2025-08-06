@@ -221,17 +221,17 @@ module Google
               #     The attributes used to identify top creators. Data fetched is based on
               #     the list of countries specified in [country_locations].
               #
-              #     Note: The following fields are mutually exclusive: `search_attributes`, `search_brand`, `search_channels`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `search_attributes`, `search_brand`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_brand [::Google::Ads::GoogleAds::V19::Services::GenerateCreatorInsightsRequest::SearchBrand, ::Hash]
               #     A brand used to search for top creators. Data fetched is based on the
               #     list of countries specified in [country_locations].
               #
-              #     Note: The following fields are mutually exclusive: `search_brand`, `search_attributes`, `search_channels`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `search_brand`, `search_attributes`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_channels [::Google::Ads::GoogleAds::V19::Services::GenerateCreatorInsightsRequest::YouTubeChannels, ::Hash]
               #     YouTube Channel IDs for Creator Insights. Data fetched for channels is
               #     based on the list of countries specified in [country_locations].
               #
-              #     Note: The following fields are mutually exclusive: `search_channels`, `search_attributes`, `search_brand`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `search_channels`, `search_attributes`, `search_brand`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V19::Services::GenerateCreatorInsightsResponse]
@@ -259,8 +259,7 @@ module Google
               def generate_creator_insights request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateCreatorInsightsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateCreatorInsightsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -337,11 +336,11 @@ module Google
               #   @param search_audience [::Google::Ads::GoogleAds::V19::Services::SearchAudience, ::Hash]
               #     An audience to search for trending content in.
               #
-              #     Note: The following fields are mutually exclusive: `search_audience`, `search_topics`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `search_audience`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_topics [::Google::Ads::GoogleAds::V19::Services::SearchTopics, ::Hash]
               #     Content topics to return trend information for.
               #
-              #     Note: The following fields are mutually exclusive: `search_topics`, `search_audience`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `search_topics`, `search_audience`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V19::Services::GenerateTrendingInsightsResponse]
@@ -369,8 +368,7 @@ module Google
               def generate_trending_insights request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::GenerateTrendingInsightsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::GenerateTrendingInsightsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -514,9 +512,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil

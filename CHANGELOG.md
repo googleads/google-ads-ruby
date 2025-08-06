@@ -1,13 +1,19 @@
+35.0.0
+-----
+ - Compatibility with v21, v20.1, v19.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v18.
+ - Updated examples to include the `containsEuPoliticalAdvertising` field on campaign creation.
+
 34.2.0
 -----
- - Add a minimum version for standard
- - Remove allocation_tracer
- - Update gapic-common to 1.0.1
+ - Added a minimum version for standard
+ - Removed allocation_tracer
+ - Updated gapic-common to 1.0.1
 
 34.1.0
 -----
- - Update activesupport version to 7.1
- - Increase upper bound for google-protobuf and gapic-common dependencies
+ - Updated activesupport version to 7.1
+ - Increased upper bound for google-protobuf and gapic-common dependencies
 
 34.0.0
 -----
@@ -17,7 +23,7 @@
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
- - Update Ruby version in .gemspec file to require a minimum version of 3.0.0
+ - Updated Ruby version in .gemspec file to require a minimum version of 3.0.0
 
 33.0.0
 ------

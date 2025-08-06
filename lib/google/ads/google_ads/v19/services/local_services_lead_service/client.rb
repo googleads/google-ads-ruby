@@ -233,8 +233,7 @@ module Google
               def append_lead_conversation request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::AppendLeadConversationRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::AppendLeadConversationRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -299,11 +298,11 @@ module Google
               #   @param survey_satisfied [::Google::Ads::GoogleAds::V19::Services::SurveySatisfied, ::Hash]
               #     Details about various factors for being satisfied with the lead.
               #
-              #     Note: The following fields are mutually exclusive: `survey_satisfied`, `survey_dissatisfied`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `survey_satisfied`, `survey_dissatisfied`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param survey_dissatisfied [::Google::Ads::GoogleAds::V19::Services::SurveyDissatisfied, ::Hash]
               #     Details about various factors for not being satisfied with the lead.
               #
-              #     Note: The following fields are mutually exclusive: `survey_dissatisfied`, `survey_satisfied`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `survey_dissatisfied`, `survey_satisfied`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V19::Services::ProvideLeadFeedbackResponse]
@@ -331,8 +330,7 @@ module Google
               def provide_lead_feedback request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::ProvideLeadFeedbackRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::ProvideLeadFeedbackRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -476,9 +474,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil
