@@ -279,8 +279,7 @@ module Google
               def mutate_campaigns request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::MutateCampaignsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::MutateCampaignsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -382,8 +381,7 @@ module Google
               def enable_p_max_brand_guidelines request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::EnablePMaxBrandGuidelinesRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::EnablePMaxBrandGuidelinesRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

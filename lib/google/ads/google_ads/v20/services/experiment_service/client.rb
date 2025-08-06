@@ -262,8 +262,7 @@ module Google
               def mutate_experiments request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::MutateExperimentsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::MutateExperimentsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -363,8 +362,7 @@ module Google
               def end_experiment request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::EndExperimentRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::EndExperimentRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -474,8 +472,7 @@ module Google
               def list_experiment_async_errors request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::ListExperimentAsyncErrorsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::ListExperimentAsyncErrorsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -581,8 +578,7 @@ module Google
               def graduate_experiment request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GraduateExperimentRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GraduateExperimentRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -701,8 +697,7 @@ module Google
               def schedule_experiment request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::ScheduleExperimentRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::ScheduleExperimentRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -815,8 +810,7 @@ module Google
               def promote_experiment request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::PromoteExperimentRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::PromoteExperimentRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

@@ -260,8 +260,7 @@ module Google
               def mutate_keyword_plan_ad_group_keywords request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::MutateKeywordPlanAdGroupKeywordsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::MutateKeywordPlanAdGroupKeywordsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

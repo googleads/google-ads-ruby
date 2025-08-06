@@ -408,6 +408,10 @@ def create_smart_campaign_operation(
       # Assigns the resource name with a temporary ID.
       c.resource_name = client.path.campaign(customer_id, SMART_CAMPAIGN_TEMPORARY_ID)
       c.campaign_budget = client.path.campaign_budget(customer_id, BUDGET_TEMPORARY_ID)
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
     end
   end
 

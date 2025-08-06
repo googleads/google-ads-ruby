@@ -61,6 +61,11 @@ def add_campaigns(customer_id)
     ns.target_partner_search_network = false
   end
 
+  # Declare whether or not this campaign serves political ads targeting the EU.
+  # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+  # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+  campaign.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
   # Alternate non-block style, where we pass the campaign object we built
   # up
   campaign_operation = client.operation.create_resource.campaign(campaign)

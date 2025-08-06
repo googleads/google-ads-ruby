@@ -67,6 +67,11 @@ def create_campaign(client, customer_id, merchant_center_id, campaign_budget_id)
                                                     campaign_budget_id)
     c.manual_cpc = client.resource.manual_cpc
 
+    # Declare whether or not this campaign serves political ads targeting the EU.
+    # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+    # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+    c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
     # The settings for the shopping campaign.
     # This connects the campaign to the merchant center account.
     c.shopping_setting = client.resource.shopping_setting do |ss|

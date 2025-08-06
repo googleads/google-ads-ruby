@@ -25,7 +25,6 @@ def update_campaign(customer_id, campaign_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-
   resource_name = client.path.campaign(customer_id, campaign_id)
 
   operation = client.operation.update_resource.campaign(resource_name) do |c|

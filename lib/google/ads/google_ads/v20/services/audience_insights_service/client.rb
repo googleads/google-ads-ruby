@@ -250,8 +250,7 @@ module Google
               def generate_insights_finder_report request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GenerateInsightsFinderReportRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GenerateInsightsFinderReportRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -375,8 +374,7 @@ module Google
               def list_audience_insights_attributes request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::ListAudienceInsightsAttributesRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::ListAudienceInsightsAttributesRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -472,8 +470,7 @@ module Google
               def list_insights_eligible_dates request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::ListInsightsEligibleDatesRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::ListInsightsEligibleDatesRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -583,8 +580,7 @@ module Google
               def generate_audience_composition_insights request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GenerateAudienceCompositionInsightsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GenerateAudienceCompositionInsightsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -663,12 +659,12 @@ module Google
               #   @param audience_definition [::Google::Ads::GoogleAds::V20::Services::InsightsAudienceDefinition, ::Hash]
               #     Provide a seed audience to get suggestions for.
               #
-              #     Note: The following fields are mutually exclusive: `audience_definition`, `audience_description`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `audience_definition`, `audience_description`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param audience_description [::Google::Ads::GoogleAds::V20::Services::InsightsAudienceDescription, ::Hash]
               #     Provide a text description of an audience to get AI-generated targeting
               #     suggestions. This can take around 5 or more seconds to complete.
               #
-              #     Note: The following fields are mutually exclusive: `audience_description`, `audience_definition`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `audience_description`, `audience_definition`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V20::Services::GenerateSuggestedTargetingInsightsResponse]
@@ -696,8 +692,7 @@ module Google
               def generate_suggested_targeting_insights request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GenerateSuggestedTargetingInsightsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GenerateSuggestedTargetingInsightsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -811,8 +806,7 @@ module Google
               def generate_audience_overlap_insights request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GenerateAudienceOverlapInsightsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GenerateAudienceOverlapInsightsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -919,8 +913,7 @@ module Google
               def generate_targeting_suggestion_metrics request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::GenerateTargetingSuggestionMetricsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::GenerateTargetingSuggestionMetricsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

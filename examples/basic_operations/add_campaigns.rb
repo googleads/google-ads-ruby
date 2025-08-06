@@ -68,6 +68,11 @@ def add_campaigns(customer_id)
       ns.target_partner_search_network = false
     end
 
+    # Declare whether or not this campaign serves political ads targeting the EU.
+    # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+    # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+    c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
     # Optional: Set the start date.
     c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
 

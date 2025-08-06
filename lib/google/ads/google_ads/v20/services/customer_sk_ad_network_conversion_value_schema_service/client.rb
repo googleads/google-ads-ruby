@@ -245,8 +245,7 @@ module Google
               def mutate_customer_sk_ad_network_conversion_value_schema request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::MutateCustomerSkAdNetworkConversionValueSchemaRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::MutateCustomerSkAdNetworkConversionValueSchemaRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

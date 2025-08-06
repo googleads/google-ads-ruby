@@ -230,6 +230,10 @@ def build_campaign_operations(client, customer_id, campaign_budget_resource_name
       # Sets the bidding strategy and budget.
       c.manual_cpc = client.resource.manual_cpc
       c.campaign_budget = campaign_budget_resource_name
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
     end
   end
 

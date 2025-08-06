@@ -211,6 +211,11 @@ def create_performance_max_campaign_operation(
       # Set the budget using the given budget resource name.
       c.campaign_budget = client.path.campaign_budget(customer_id, BUDGET_TEMPORARY_ID)
 
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
       # Optional fields
       c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
       c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')

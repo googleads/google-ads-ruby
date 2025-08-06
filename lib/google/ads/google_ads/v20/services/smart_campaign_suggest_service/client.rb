@@ -205,11 +205,11 @@ module Google
               #   @param campaign [::String]
               #     Required. The resource name of the campaign to get suggestion for.
               #
-              #     Note: The following fields are mutually exclusive: `campaign`, `suggestion_info`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `campaign`, `suggestion_info`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param suggestion_info [::Google::Ads::GoogleAds::V20::Services::SmartCampaignSuggestionInfo, ::Hash]
               #     Required. Information needed to get budget options
               #
-              #     Note: The following fields are mutually exclusive: `suggestion_info`, `campaign`. If a field in that set is populated, all other fields in the set will automatically be cleared.
+              #     Note: The following parameters are mutually exclusive: `suggestion_info`, `campaign`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V20::Services::SuggestSmartCampaignBudgetOptionsResponse]
@@ -237,8 +237,7 @@ module Google
               def suggest_smart_campaign_budget_options request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::SuggestSmartCampaignBudgetOptionsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::SuggestSmartCampaignBudgetOptionsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -330,8 +329,7 @@ module Google
               def suggest_smart_campaign_ad request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::SuggestSmartCampaignAdRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::SuggestSmartCampaignAdRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -428,8 +426,7 @@ module Google
               def suggest_keyword_themes request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V20::Services::SuggestKeywordThemesRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V20::Services::SuggestKeywordThemesRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h

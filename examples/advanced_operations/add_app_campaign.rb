@@ -73,15 +73,18 @@ def create_campaign(client, customer_id, budget_resource_name)
   campaign = client.resource.campaign do |c|
     c.name = "Interplanetary Cruise App #{(Time.now.to_f * 1000).to_i}"
     c.campaign_budget = budget_resource_name
+
     # Recommendation: Set the campaign to PAUSED when creating it to
     # prevent the ads from immediately serving. Set to ENABLED once you've
     # added targeting and the ads are ready to serve.
     c.status = :PAUSED
+
     # All App campaigns have an advertising_channel_type of
     # MULTI_CHANNEL to reflect the fact that ads from these campaigns are
     # eligible to appear on multiple channels.
     c.advertising_channel_type = :MULTI_CHANNEL
     c.advertising_channel_sub_type = :APP_CAMPAIGN
+
     # Sets the target CPA to $1 / app install.
     #
     # campaign_bidding_strategy is a 'oneof' message so setting target_cpa
@@ -92,6 +95,7 @@ def create_campaign(client, customer_id, budget_resource_name)
     c.target_cpa = client.resource.target_cpa do |tcpa|
       tcpa.target_cpa_micros = 1_000_000
     end
+
     # Sets the App Campaign Settings.
     c.app_campaign_setting = client.resource.app_campaign_setting do |acs|
       acs.app_id = 'com.google.android.apps.adwords'
@@ -99,6 +103,12 @@ def create_campaign(client, customer_id, budget_resource_name)
       # Optimize this campaign for getting new users for your app.
       acs.bidding_strategy_goal_type = :OPTIMIZE_INSTALLS_TARGET_INSTALL_COST
     end
+
+    # Declare whether or not this campaign serves political ads targeting the EU.
+    # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+    # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+    c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
     # Optional fields
     c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
     c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
