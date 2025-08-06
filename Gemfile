@@ -15,3 +15,4 @@ gem 'benchmark-ips'
 gem 'yard'
 gem 'rubocop', require: false
 gem 'rubocop-google_ads', require: false
+gem 'grpc', '1.73.0'
