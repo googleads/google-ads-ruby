@@ -1,3 +1,7 @@
+35.1.0
+-----
+- Made grpc versioning more permissive.
+
 35.0.0
 -----
  - Compatibility with v21, v20.1, v19.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
