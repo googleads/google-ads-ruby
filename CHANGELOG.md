@@ -3,6 +3,7 @@
  - Compatibility with v21, v20.1, v19.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
  - Removed support for v18.
  - Updated examples to include the `containsEuPoliticalAdvertising` field on campaign creation.
+ - Pinned grpc version 1.73.0
 
 34.2.0
 -----
