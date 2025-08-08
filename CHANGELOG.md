@@ -1,6 +1,6 @@
 35.2.0
 -----
-- Made grpc versioning more permissive to allow any version except 1.74.0.
+- Made grpc versioning more permissive to allow any version except 1.74.0, to fix [issue#524](https://github.com/googleads/google-ads-ruby/issues/524).
 
 35.1.0
 -----
