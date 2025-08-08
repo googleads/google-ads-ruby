@@ -10,9 +10,9 @@ gem 'google-adwords-api', '~> 1.5'
 # used for the factories generator
 gem 'activesupport', '~> 7.1'
 gem 'rspec', '~> 3.6'
-gem 'standard', ">= 1.35.1"
+gem 'standard', '>= 1.35.1'
 gem 'benchmark-ips'
 gem 'yard'
 gem 'rubocop', require: false
 gem 'rubocop-google_ads', require: false
-gem 'grpc', '<= 1.73.0'
+gem 'grpc', ['~> 1.0', '!= 1.74.0']

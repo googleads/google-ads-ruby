@@ -1,3 +1,7 @@
+35.2.0
+-----
+- Made grpc versioning more permissive to allow any version except 1.74.0.
+
 35.1.0
 -----
 - Made grpc versioning more permissive.
