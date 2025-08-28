@@ -104,8 +104,12 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
+  # For a list of valid location IDs, see:
+  # https://developers.google.com/google-ads/api/reference/data/geotargets
   options[:location_ids] = ['INSERT_LOCATION_ID_1_HERE', 'INSERT_LOCATION_ID_2_HERE']
 
+  # For a list of valid language IDs, see:
+  # https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
   options[:language_id] = 'INSERT_LANGUAGE_ID_HERE'
 
   # Optional but recommended
