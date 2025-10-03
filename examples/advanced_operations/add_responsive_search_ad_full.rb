@@ -254,7 +254,7 @@ end
 #
 # Returns:
 #   Ad group resource name.
-def create_ad_group(client, customer_id, campaign_resource_name, customizer_attribute_resource_name)
+def create_ad_group(client, customer_id, campaign_resource_name)
   ad_group_service = client.service.ad_group
 
   operation = client.operation.create_ad_group do |ag|
@@ -285,7 +285,7 @@ end
 #
 # Returns:
 #   Ad group ad resource name.
-def create_ad_group_ad(client, customer_id, ad_group_resource_name)
+def create_ad_group_ad(client, customer_id, ad_group_resource_name, customizer_attribute_resource_name=nil)
   ad_group_ad_service = client.service.ad_group_ad
 
   operation = client.operation.create_ad_group_ad do |aga|
