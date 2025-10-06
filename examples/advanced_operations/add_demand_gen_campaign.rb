@@ -34,7 +34,7 @@ LOGO_ASSET_TEMPORARY_ID = -5
 
 # URLs for assets
 DEFAULT_LOGO_IMAGE_URL = "https://gaagl.page.link/bjYi"
-DEFAULT_FINAL_URL = "http://example.com/demand_gen"
+DEFAULT_FINAL_URL = "http://example.com"
 
 def add_demand_gen_campaign(customer_id, video_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -160,7 +160,7 @@ def create_demand_gen_ad_operation(client, ad_group_resource_name, video_asset_r
     aga.ad_group = ad_group_resource_name
     aga.status = :ENABLED
     aga.ad = client.resource.ad do |ad|
-      ad.name = "Demand gen multi asset ad"
+      ad.name = "Demand gen video responsive ad"
       ad.final_urls << DEFAULT_FINAL_URL
       ad.demand_gen_video_responsive_ad = client.resource.demand_gen_video_responsive_ad_info do |dgv|
         dgv.business_name = client.resource.ad_text_asset do |ata|
@@ -193,7 +193,7 @@ def create_image_asset_operation(client, asset_resource_name, url, asset_name)
     a.name = asset_name
     a.type = :IMAGE
     a.image_asset = client.resource.image_asset do |ia|
-      ia.data = open(url).read
+      ia.data = open(url) { |f| f.read }
     end
   end
 end
