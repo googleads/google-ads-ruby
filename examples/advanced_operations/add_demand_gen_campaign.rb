@@ -193,7 +193,7 @@ def create_image_asset_operation(client, asset_resource_name, url, asset_name)
     a.name = asset_name
     a.type = :IMAGE
     a.image_asset = client.resource.image_asset do |ia|
-      ia.data = URI.open(url).read
+      ia.data = open(url).read
     end
   end
 end
