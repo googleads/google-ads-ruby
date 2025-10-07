@@ -79,7 +79,6 @@ def add_demand_gen_campaign(customer_id, video_id)
   puts "Created campaign with resource name '#{response.mutate_operation_responses.first.campaign_result.resource_name}'"
 end
 
-# [START add_demand_gen_campaign_2]
 def create_campaign_budget_operation(client, budget_resource_name)
   # Creates a campaign budget.
   client.operation.create_resource.campaign_budget do |cb|
@@ -96,9 +95,8 @@ def create_campaign_budget_operation(client, budget_resource_name)
     cb.resource_name = budget_resource_name
   end
 end
-# [END add_demand_gen_campaign_2]
 
-# [START add_demand_gen_campaign_3]
+# [START add_demand_gen_campaign_2]
 def create_demand_gen_campaign_operation(client, campaign_resource_name, budget_resource_name)
   client.operation.create_resource.campaign do |c|
     c.name = "Demand Gen ##{Time.now.to_f}"
@@ -133,9 +131,9 @@ def create_demand_gen_campaign_operation(client, campaign_resource_name, budget_
     c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
   end
 end
-# [END add_demand_gen_campaign_3]
+# [END add_demand_gen_campaign_2]
 
-# [START add_demand_gen_campaign_4]
+# [START add_demand_gen_campaign_3]
 def create_ad_group_operation(client, ad_group_resource_name, campaign_resource_name)
   # Creates an ad group.
   client.operation.create_resource.ad_group do |ag|
@@ -143,9 +141,27 @@ def create_ad_group_operation(client, ad_group_resource_name, campaign_resource_
     ag.name = "Earth to Mars Cruises ##{Time.now.to_f}"
     ag.status = :ENABLED
     ag.campaign = campaign_resource_name
+
+    # [START add_demand_gen_campaign_5]
+    # Select the specific channels for the ad group.
+    # For further information on Demand Gen channel controls, see
+    # https://developers.google.com/google-ads/api/docs/demand-gen/channel-controls
+    ag.demand_gen_ad_group_settings = client.resource.demand_gen_ad_group_settings do |dgas|
+      dgas.channel_controls = client.resource.demand_gen_channel_controls do |dcc|
+        dcc.selected_channels = client.resource.demand_gen_selected_channels do |dsc|
+          dsc.gmail = false
+          dsc.discover = false
+          dsc.display = false
+          dsc.youtube_in_feed = true
+          dsc.youtube_in_stream = true
+          dsc.youtube_shorts = true
+        end
+      end
+    end
+    # [END add_demand_gen_campaign_5]
   end
 end
-# [END add_demand_gen_campaign_4]
+# [END add_demand_gen_campaign_3]
 
 def create_asset_operations(client, video_asset_resource_name, video_id, logo_asset_resource_name)
   [
@@ -154,7 +170,7 @@ def create_asset_operations(client, video_asset_resource_name, video_id, logo_as
   ]
 end
 
-# [START add_demand_gen_campaign_5]
+# [START add_demand_gen_campaign_4]
 def create_demand_gen_ad_operation(client, ad_group_resource_name, video_asset_resource_name, logo_asset_resource_name)
   client.operation.create_resource.ad_group_ad do |aga|
     aga.ad_group = ad_group_resource_name
@@ -185,7 +201,7 @@ def create_demand_gen_ad_operation(client, ad_group_resource_name, video_asset_r
     end
   end
 end
-# [END add_demand_gen_campaign_5]
+# [END add_demand_gen_campaign_4]
 
 def create_image_asset_operation(client, asset_resource_name, url, asset_name)
   client.operation.create_resource.asset do |a|
@@ -193,7 +209,7 @@ def create_image_asset_operation(client, asset_resource_name, url, asset_name)
     a.name = asset_name
     a.type = :IMAGE
     a.image_asset = client.resource.image_asset do |ia|
-      ia.data = open(url) { |f| f.read }
+      ia.data = URI.open(url) { |f| f.read }
     end
   end
 end
