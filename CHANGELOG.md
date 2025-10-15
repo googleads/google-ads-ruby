@@ -1,3 +1,9 @@
+36.0.0
+------
+ - Compatibility with v22 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Updated dependencies.
+ - Updated Performance Max examples to add Asset automation settings.
+
 35.2.0
 -----
 - Made grpc versioning more permissive to allow any version except 1.74.0, to fix [issue#524](https://github.com/googleads/google-ads-ruby/issues/524).
