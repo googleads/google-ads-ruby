@@ -26,6 +26,7 @@ module Google
         attr_accessor :client_id
         attr_accessor :client_secret
         attr_accessor :keyfile
+        attr_accessor :use_application_default_credentials
         attr_accessor :impersonate
         attr_accessor :authentication
 
@@ -50,6 +51,7 @@ module Google
           @client_id = nil
           @client_secret = nil
           @keyfile = nil
+          @use_application_default_credentials = nil
           @impersonate = nil
           @authentication = nil
 

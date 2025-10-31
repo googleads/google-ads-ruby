@@ -35,6 +35,7 @@ require 'logger'
 require 'json'
 require 'openssl'
 require 'signet/oauth_2/client'
+require 'googleauth'
 require 'delegate'
 
 module Google
@@ -99,6 +100,7 @@ module Google
           @config.client_id = ENV.fetch("GOOGLE_ADS_CLIENT_ID", @config.client_id)
           @config.client_secret = ENV.fetch("GOOGLE_ADS_CLIENT_SECRET", @config.client_secret)
           @config.keyfile = ENV.fetch("GOOGLE_ADS_JSON_KEY_FILE_PATH", @config.keyfile)
+          @config.use_application_default_credentials = ENV.fetch("GOOGLE_APPLICATION_CREDENTIALS", @config.use_application_default_credentials)
           @config.impersonate = ENV.fetch("GOOGLE_ADS_IMPERSONATED_EMAIL", @config.impersonate)
           @config.developer_token = ENV.fetch("GOOGLE_ADS_DEVELOPER_TOKEN", @config.developer_token)
           @config.login_customer_id = ENV.fetch("GOOGLE_ADS_LOGIN_CUSTOMER_ID", @config.login_customer_id)
@@ -205,6 +207,8 @@ module Google
             @config.authentication
           elsif @config.keyfile
             get_service_account_credentials
+          elsif @config.use_application_default_credentials
+            get_application_default_credentials
           else
             get_updater_proc
           end
@@ -235,6 +239,12 @@ module Google
             person: @config.impersonate,
             scope: [SCOPE],
           ).updater_proc
+        end
+        
+        # Provides a Google::Auth::Credentials initialized with Application
+        # Default Credentials specified in the config.
+        def get_application_default_credentials
+          Google::Auth.get_application_default(SCOPE).updater_proc
         end
 
         # Create the default logger, useful if the user hasn't defined one.
