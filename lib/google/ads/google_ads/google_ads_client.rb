@@ -101,7 +101,7 @@ module Google
           @config.client_secret = ENV.fetch("GOOGLE_ADS_CLIENT_SECRET", @config.client_secret)
           @config.keyfile = ENV.fetch("GOOGLE_ADS_JSON_KEY_FILE_PATH", @config.keyfile)
           @config.impersonate = ENV.fetch("GOOGLE_ADS_IMPERSONATED_EMAIL", @config.impersonate)
-          @config.use_application_default_credentials = ENV.fetch("GOOGLE_APPLICATION_CREDENTIALS", @config.use_application_default_credentials)
+          @config.use_application_default_credentials = ENV.fetch("GOOGLE_ADS_USE_APPLICATION_DEFAULT_CREDENTIALS", @config.use_application_default_credentials)
           @config.developer_token = ENV.fetch("GOOGLE_ADS_DEVELOPER_TOKEN", @config.developer_token)
           @config.login_customer_id = ENV.fetch("GOOGLE_ADS_LOGIN_CUSTOMER_ID", @config.login_customer_id)
           @config.linked_customer_id = ENV.fetch("GOOGLE_ADS_LINKED_CUSTOMER_ID", @config.linked_customer_id)
