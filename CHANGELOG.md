@@ -1,3 +1,7 @@
+36.1.0
+------
+ - Add support for Application Default Credentials.
+
 36.0.0
 ------
  - Compatibility with v22 of the API: https://developers.google.com/google-ads/api/docs/release-notes
