@@ -13,3 +13,4 @@ gem 'yard', '~> 0.9.27'
 gem 'rubocop', require: false
 gem 'rubocop-google_ads', require: false
 gem 'grpc', ['~> 1.0', '!= 1.74.0']
+gem 'googleauth', '~> 1.15.1'

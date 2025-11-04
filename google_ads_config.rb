@@ -26,6 +26,11 @@ Google::Ads::GoogleAds::Config.new do |c|
   c.client_secret = 'INSERT_CLIENT_SECRET_HERE'
   c.refresh_token = 'INSERT_REFRESH_TOKEN_HERE'
 
+  # You can also authenticate using Application Default Credentials (ADC)
+  # To understand how ADC discovers credentials in a given environment,
+  # see: https://developers.google.com/identity/protocols/application-default-credentials.
+  c.use_application_default_credentials = false
+
   # Whether to use the Google Cloud Organization of your Google Cloud
   # project instead of developer token to determine your Google Ads API access levels.
   # Use this flag only if you are enrolled into a limited pilot that supports
