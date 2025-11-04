@@ -203,12 +203,12 @@ module Google
         private
 
         def get_credentials
-          if @config.authentication
+          if @config.use_application_default_credentials
+            get_application_default_credentials
+          elsif @config.authentication
             @config.authentication
           elsif @config.keyfile
             get_service_account_credentials
-          elsif @config.use_application_default_credentials
-            get_application_default_credentials
           else
             get_updater_proc
           end
