@@ -110,6 +110,11 @@ module Google
           # Client library-specific variables
           @config.log_level = ENV.fetch("GOOGLE_ADS_RUBY_LOG_LEVEL", @config.log_level)
           @config.http_proxy = ENV.fetch("GOOGLE_ADS_RUBY_HTTP_PROXY", @config.http_proxy)
+
+          use_cloud_org_env_val = ENV["GOOGLE_ADS_USE_CLOUD_ORG_FOR_API_ACCESS"]
+          if !use_cloud_org_env_val.nil?
+            @config.use_cloud_org_for_api_access = use_cloud_org_env_val.to_s.downcase == "true"
+          end
         end
 
         # Return a service for the provided entity type. For example, passing
