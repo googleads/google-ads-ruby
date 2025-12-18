@@ -264,8 +264,7 @@ module Google
               def create_offline_user_data_job request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::CreateOfflineUserDataJobRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::CreateOfflineUserDataJobRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -374,8 +373,7 @@ module Google
               def add_offline_user_data_job_operations request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::AddOfflineUserDataJobOperationsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::AddOfflineUserDataJobOperationsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -484,8 +482,7 @@ module Google
               def run_offline_user_data_job request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::RunOfflineUserDataJobRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::RunOfflineUserDataJobRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -631,9 +628,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil

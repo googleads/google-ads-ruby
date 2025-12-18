@@ -1,0 +1,86 @@
+inherit_gem:
+  rubocop-google_ads: default.yml # Trying a more common path
+
+AllCops:
+  TargetRubyVersion: 3.2
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'Rakefile'
+    - 'Makefile'
+    # Exclude generated files for Google Ads library and codegen
+    - 'lib/google/ads/google_ads/factories/**/*'
+    - 'lib/google/ads/google_ads/factories.rb'
+    - 'lib/google/ads/google_ads/proto_types/**/*'
+    - 'lib/google/ads/google_ads/protos/**/*'
+    - 'lib/google/ads/google_ads/resources/**/*'
+    - 'lib/google/ads/google_ads/services/**/*'
+    - 'lib/google/ads/google_ads/enums/**/*'
+    - 'lib/google/ads/google_ads/types/**/*'
+    - 'lib/google/ads/google_ads/*_pb.rb' # Generated protobuf files
+    - 'codegen/**/*'
+    # Exclude specific generated files that might exist at top level of lib/google/ads/google_ads/
+    - 'lib/google/ads/google_ads/deprecation.rb'
+    - 'lib/google/ads/google_ads/errors.rb'
+    - 'lib/google/ads/google_ads/field_mask_utils.rb'
+    - 'lib/google/ads/google_ads/lookup_utils.rb'
+    - 'lib/google/ads/google_ads/path_lookup_util.rb'
+    - 'lib/google/ads/google_ads/service_wrapper.rb'
+    - 'lib/google/ads/google_ads/utils.rb'
+    - 'lib/google/ads/google_ads/version.rb'
+    # Test files
+    - 'test/**/*'
+    - 'tests/**/*' # Covering both common names
+    # Examples
+    - 'examples/**/*'
+
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    # Example files often have long lines for readability or to show full API calls
+    - 'examples/**/*'
+    # Generated files might also have long lines
+    - 'lib/google/ads/google_ads/proto_types/**/*'
+    - 'lib/google/ads/google_ads/protos/**/*'
+    - 'lib/google/ads/google_ads/resources/**/*'
+    - 'lib/google/ads/google_ads/services/**/*'
+    - 'lib/google/ads/google_ads/enums/**/*'
+    - 'lib/google/ads/google_ads/types/**/*'
+    - 'lib/google/ads/google_ads/*_pb.rb'
+
+Naming/FileName:
+  Exclude:
+    - 'google-ads-googleads.gemspec' # Standard gemspec naming convention
+
+# If Standard gem is used, it might conflict with RuboCop's default formatting.
+# For now, let's assume we want RuboCop to take precedence or that Standard's config is compatible.
+# If Standard includes its own RuboCop config, this might need adjustment.
+# The Gemfile includes 'standard', which usually means StandardRB (a wrapper around RuboCop).
+# StandardRB enforces its own config. To use a custom .rubocop.yml with Standard,
+# one might typically run `rubocop` directly rather than `standardrb`.
+# For the purpose of this task, we are setting up .rubocop.yml for `rubocop` command.
+
+# Add specific exclusions based on initial `ls` output
+# These look like auto-generated or third-party files that shouldn't be linted.
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/google/ads/google_ads/v15/services/customer_user_access_service_client.rb' # Example, many such files
+    - 'lib/google/ads/google_ads/v16/services/customer_user_access_service_client.rb' # Example, many such files
+    # Add more specific long generated files if needed after a trial run
+
+Metrics/MethodLength:
+  Exclude:
+    - 'examples/**/*' # Examples can have longer methods for clarity
+    - 'test/**/*' # Test setup can sometimes be long
+
+Metrics/AbcSize:
+  Exclude:
+    - 'examples/**/*'
+    - 'test/**/*'
+
+Metrics/ModuleLength:
+  Enabled: false # Generated code can create very large modules

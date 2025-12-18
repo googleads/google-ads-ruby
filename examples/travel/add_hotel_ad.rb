@@ -105,6 +105,11 @@ def add_hotel_campaign(client, customer_id, budget_resource,
     c.network_settings = client.resource.network_settings do |ns|
       ns.target_google_search = true
     end
+
+    # Declare whether or not this campaign serves political ads targeting the EU.
+    # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+    # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+    c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
   end
   # [END add_hotel_ad_1]
 

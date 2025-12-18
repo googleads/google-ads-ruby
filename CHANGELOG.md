@@ -1,7 +1,48 @@
+36.1.0
+------
+ - Add support for Application Default Credentials.
+
+36.0.0
+------
+ - Compatibility with v22 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Updated dependencies.
+ - Updated Performance Max examples to add Asset automation settings.
+
+35.2.0
+-----
+- Made grpc versioning more permissive to allow any version except 1.74.0, to fix [issue#524](https://github.com/googleads/google-ads-ruby/issues/524).
+
+35.1.0
+-----
+- Made grpc versioning more permissive.
+
+35.0.0
+-----
+ - Compatibility with v21, v20.1, v19.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v18.
+ - Updated examples to include the `containsEuPoliticalAdvertising` field on campaign creation.
+ - Pinned grpc version 1.73.0. See [issue#524](https://github.com/googleads/google-ads-ruby/issues/524) for background. This is a temporary workaround that will be removed in the future.
+
+34.2.0
+-----
+ - Added a minimum version for standard
+ - Removed allocation_tracer
+ - Updated gapic-common to 1.0.1
+
+34.1.0
+-----
+ - Updated activesupport version to 7.1
+ - Increased upper bound for google-protobuf and gapic-common dependencies
+
+34.0.0
+-----
+ - Compatibility with v20 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v17.
+
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
- - Update Ruby version in .gemspec file to require a minimum version of 3.0.0
+ - Updated Ruby version in .gemspec file to require a minimum version of 3.0.0
 
 33.0.0
 ------

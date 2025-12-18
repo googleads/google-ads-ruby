@@ -8,3 +8,4 @@ lib/google/ads/google_ads/deprecation.rb
 
 # For rbenv
 .ruby-version
+vendor/bundle

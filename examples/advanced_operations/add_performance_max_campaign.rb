@@ -192,14 +192,30 @@ def create_performance_max_campaign_operation(
       c.maximize_conversion_value = client.resource.maximize_conversion_value do |mcv|
         mcv.target_roas = 3.5
       end
-      # Set the Final URL expansion opt out. This flag is specific to
-      # Performance Max campaigns. If opted out (true), only the final URLs in
-      # the asset group or URLs specified in the advertiser's Google Merchant
-      # Center or business data feeds are targeted.
-      # If opted in (false), the entire domain will be targeted. For best
-      # results, set this value to false to opt in and allow URL expansions. You
-      # can optionally add exclusions to limit traffic to parts of your website.
-      c.url_expansion_opt_out = false
+      
+      # [START add_pmax_asset_automation_settings]
+      # Configures the optional opt-in/out status for asset automation settings.
+      c.asset_automation_settings << client.resource.asset_automation_setting do |aas|
+        aas.asset_automation_type = :GENERATE_IMAGE_EXTRACTION
+        aas.asset_automation_status = :OPTED_IN
+      end
+      c.asset_automation_settings << client.resource.asset_automation_setting do |aas|
+        aas.asset_automation_type = :FINAL_URL_EXPANSION_TEXT_ASSET_AUTOMATION
+        aas.asset_automation_status = :OPTED_IN
+      end
+      c.asset_automation_settings << client.resource.asset_automation_setting do |aas|
+        aas.asset_automation_type = :TEXT_ASSET_AUTOMATION
+        aas.asset_automation_status = :OPTED_IN
+      end
+      c.asset_automation_settings << client.resource.asset_automation_setting do |aas|
+        aas.asset_automation_type = :GENERATE_ENHANCED_YOUTUBE_VIDEOS
+        aas.asset_automation_status = :OPTED_IN
+      end
+      c.asset_automation_settings << client.resource.asset_automation_setting do |aas|
+        aas.asset_automation_type = :GENERATE_IMAGE_ENHANCEMENT
+        aas.asset_automation_status = :OPTED_IN
+      end
+      # [END add_pmax_asset_automation_settings]
 
       # Set if the campaign is enabled for brand guidelines. For more
       # information on brand guidelines, see
@@ -210,6 +226,11 @@ def create_performance_max_campaign_operation(
       c.resource_name = client.path.campaign(customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID)
       # Set the budget using the given budget resource name.
       c.campaign_budget = client.path.campaign_budget(customer_id, BUDGET_TEMPORARY_ID)
+
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
       # Optional fields
       c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
@@ -487,6 +508,7 @@ def create_and_link_image_asset(client, customer_id, url, field_type, asset_name
 end
 # [END add_performance_max_campaign_8]
 
+# [START create_and_link_brand_assets]
 # Creates a list of MutateOperations that create linked brand assets.
 def create_and_link_brand_assets(
     client,
@@ -578,6 +600,7 @@ def create_and_link_brand_assets(
 
   operations
 end
+# [END create_and_link_brand_assets]
 
 # [START add_performance_max_campaign_9]
 # Create a list of MutateOperations that create AssetGroupSignals.

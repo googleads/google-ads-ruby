@@ -254,8 +254,7 @@ module Google
               def mutate_batch_job request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::MutateBatchJobRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::MutateBatchJobRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -367,8 +366,7 @@ module Google
               def list_batch_job_results request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::ListBatchJobResultsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::ListBatchJobResultsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -477,8 +475,7 @@ module Google
               def run_batch_job request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::RunBatchJobRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::RunBatchJobRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -592,8 +589,7 @@ module Google
               def add_batch_job_operations request, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
-                request = ::Gapic::Protobuf.coerce request,
-                                                   to: ::Google::Ads::GoogleAds::V19::Services::AddBatchJobOperationsRequest
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V19::Services::AddBatchJobOperationsRequest
 
                 # Converts hash and nil to an options object
                 options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
@@ -737,9 +733,9 @@ module Google
 
                 config_attr :endpoint,      nil, ::String, nil
                 config_attr :credentials,   nil do |value|
-                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials, ::Signet::OAuth2::Client,
-                             nil]
-                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC
+                  allowed = [::String, ::Hash, ::Proc, ::Symbol, ::Google::Auth::Credentials,
+                             ::Google::Auth::BaseClient, ::Signet::OAuth2::Client, nil]
+                  allowed += [::GRPC::Core::Channel, ::GRPC::Core::ChannelCredentials] if defined? ::GRPC::Core::Channel
                   allowed.any? { |klass| klass === value }
                 end
                 config_attr :scope,         nil, ::String, ::Array, nil

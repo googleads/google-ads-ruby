@@ -272,6 +272,11 @@ def create_performance_max_campaign_operation(
         # PERFORMANCE_MAX. The advertising_channel_sub_type should not be set.
         c.advertising_channel_type = :PERFORMANCE_MAX
 
+        # Declare whether or not this campaign serves political ads targeting the EU.
+        # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+        # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+        c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
+
         # To create a Performance Max for travel goals campaign, you need to set hotel_property_asset_set
         c.hotel_property_asset_set = hotel_property_asset_set_resource_name
 

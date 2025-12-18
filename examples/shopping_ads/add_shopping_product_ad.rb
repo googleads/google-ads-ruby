@@ -100,6 +100,11 @@ def add_standard_shopping_campaign(
     campaign.manual_cpc = client.resource.manual_cpc
 
     campaign.campaign_budget = budget_name
+
+    # Declare whether or not this campaign serves political ads targeting the EU.
+    # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+    # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+    c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
   end
 
   service = client.service.campaign
