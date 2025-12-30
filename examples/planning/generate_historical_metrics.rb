@@ -24,8 +24,8 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
-# [START generate_forecast_metrics]
-def generate_forecast_metrics(customer_id)
+# [START generate_historical_metrics]
+def generate_historical_metrics(customer_id)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -88,7 +88,7 @@ def generate_forecast_metrics(customer_id)
     end
   end
 end
-# [END generate_forecast_metrics]
+# [END generate_historical_metrics]
 
 
 if __FILE__ == $0
@@ -123,7 +123,7 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    generate_forecast_metrics(options.fetch(:customer_id).tr("-", ""))
+    generate_historical_metrics(options.fetch(:customer_id).tr("-", ""))
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
       STDERR.printf("Error with message: %s\n", error.message)
