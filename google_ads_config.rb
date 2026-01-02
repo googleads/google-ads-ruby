@@ -35,7 +35,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # project instead of developer token to determine your Google Ads API access levels.
   # Use this flag only if you are enrolled into a limited pilot that supports
   # this configuration.
-  # c.use_cloud_org_for_api_access = false
+  c.use_cloud_org_for_api_access = false
 
   # You can also authenticate using a service account. If "keyfile" is
   # specified below, then service account authentication will be assumed and
