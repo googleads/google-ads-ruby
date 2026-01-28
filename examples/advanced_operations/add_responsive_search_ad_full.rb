@@ -227,10 +227,10 @@ def create_campaign(client, customer_id, campaign_budget_resource_name)
     end
 
     # Optional: Set the start date.
-    #c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
+    #c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
 
     # Optional: Set the end date.
-    #c.end_date = DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d')
+    #c.end_date_time = DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d %H:%M:%S')
   end
 
   # Add the campaign.
