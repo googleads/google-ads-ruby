@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -385,7 +385,8 @@ module Google
               #     Required. The resource name of the product link invitation being removed.
               #     expected, in this format:
               #
-              #     ` `
+              #     `customers/{customer_id}/productLinkInvitations/{product_link_invitation_id}
+              #     `
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V22::Services::RemoveProductLinkInvitationResponse]
@@ -487,8 +488,6 @@ module Google
               #   @return [::String,nil]
               # @!attribute [rw] credentials
               #   Credentials to send with calls. You may provide any of the following types:
-              #    *  (`String`) The path to a service account key file in JSON format
-              #    *  (`Hash`) A service account key as a Hash
               #    *  (`Google::Auth::Credentials`) A googleauth credentials object
               #       (see the [googleauth docs](https://rubydoc.info/gems/googleauth/Google/Auth/Credentials))
               #    *  (`Signet::OAuth2::Client`) A signet oauth2 client object
@@ -497,7 +496,26 @@ module Google
               #    *  (`GRPC::Core::ChannelCredentials`) a gRPC credentails object
               #    *  (`nil`) indicating no credentials
               #
-              #   Warning: If you accept a credential configuration (JSON file or Hash) from an
+              #   @note Warning: Passing a `String` to a keyfile path or a `Hash` of credentials
+              #     is deprecated. Providing an unvalidated credential configuration to
+              #     Google APIs can compromise the security of your systems and data.
+              #
+              #   @example
+              #
+              #     # The recommended way to provide credentials is to use the `make_creds` method
+              #     # on the appropriate credentials class for your environment.
+              #
+              #     require "googleauth"
+              #
+              #     credentials = ::Google::Auth::ServiceAccountCredentials.make_creds(
+              #       json_key_io: ::File.open("/path/to/keyfile.json")
+              #     )
+              #
+              #     client = ::Google::Ads::GoogleAds::V22::Services::ProductLinkInvitationService::Client.new do |config|
+              #       config.credentials = credentials
+              #     end
+              #
+              #   @note Warning: If you accept a credential configuration (JSON file or Hash) from an
               #   external source for authentication to Google Cloud, you must validate it before
               #   providing it to a Google API client library. Providing an unvalidated credential
               #   configuration to Google APIs can compromise the security of your systems and data.

@@ -82,8 +82,8 @@ def create_campaign(client, customer_id, budget_resource_name)
     # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
-    c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
-    c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
+    c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
+    c.end_date_time = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d %H:%M:%S')
   end
 
   operation = client.operation.create_resource.campaign(campaign)

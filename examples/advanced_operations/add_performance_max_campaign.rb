@@ -233,8 +233,8 @@ def create_performance_max_campaign_operation(
       c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
       # Optional fields
-      c.start_date = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d')
-      c.end_date = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d')
+      c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
+      c.end_date_time = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d %H:%M:%S')
     end
   end
 end
@@ -661,7 +661,7 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:audience_id] = nil
-  options[:brand_guidelines_enabled] = false
+  options[:brand_guidelines_enabled] = true
 
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))

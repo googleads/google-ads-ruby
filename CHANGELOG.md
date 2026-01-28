@@ -1,3 +1,13 @@
+37.0.0
+-----
+ - Compatibility with v23 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+ - Removed support for v19.
+ - Removed add\_call\_ad example.
+ - `start_date` and `end_date` renamed to `start_date_time` and `end_date_time`.
+ - Updated bundler to 4.0.
+ - Added configuration for the assistant.
+ - Updated Performance Max examples to have `brand_guidelines_enabled` default to true.
+
 36.1.0
 ------
  - Add support for Application Default Credentials.
@@ -25,14 +35,14 @@
 
 34.2.0
 -----
- - Added a minimum version for standard
- - Removed allocation_tracer
- - Updated gapic-common to 1.0.1
+ - Added a minimum version for standard.
+ - Removed allocation_tracer.
+ - Updated gapic-common to 1.0.1.
 
 34.1.0
 -----
  - Updated activesupport version to 7.1
- - Increased upper bound for google-protobuf and gapic-common dependencies
+ - Increased upper bound for google-protobuf and gapic-common dependencies.
 
 34.0.0
 -----
@@ -42,7 +52,7 @@
 33.1.0
 -----
  - Improved the logging format to include more information and increase human readability.
- - Updated Ruby version in .gemspec file to require a minimum version of 3.0.0
+ - Updated Ruby version in .gemspec file to require a minimum version of 3.0.0.
 
 33.0.0
 ------

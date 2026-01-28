@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -221,21 +221,27 @@ module Google
               #     Required. The countries to search that apply to the criteria.
               #   @param sub_country_locations [::Array<::Google::Ads::GoogleAds::V20::Common::LocationInfo, ::Hash>]
               #     The sub-country geographic locations to search that apply to the criteria.
-              #     Only supported for [SearchAttributes] criteria.
+              #     Only supported for
+              #     {::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest::SearchAttributes SearchAttributes}
+              #     criteria.
               #   @param search_attributes [::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest::SearchAttributes, ::Hash]
               #     The attributes used to identify top creators. Data fetched is based on
               #     the list of countries or sub-country locations specified in
-              #     [country_locations] or [sub_country_locations].
+              #     {::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest#country_locations country_locations}
+              #     or
+              #     {::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest#sub_country_locations sub_country_locations}.
               #
               #     Note: The following parameters are mutually exclusive: `search_attributes`, `search_brand`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_brand [::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest::SearchBrand, ::Hash]
               #     A brand used to search for top creators. Data fetched is based on the
-              #     list of countries specified in [country_locations].
+              #     list of countries specified in
+              #     {::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
               #
               #     Note: The following parameters are mutually exclusive: `search_brand`, `search_attributes`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_channels [::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest::YouTubeChannels, ::Hash]
               #     YouTube Channel IDs for Creator Insights. Data fetched for channels is
-              #     based on the list of countries specified in [country_locations].
+              #     based on the list of countries specified in
+              #     {::Google::Ads::GoogleAds::V20::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
               #
               #     Note: The following parameters are mutually exclusive: `search_channels`, `search_attributes`, `search_brand`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
@@ -450,8 +456,6 @@ module Google
               #   @return [::String,nil]
               # @!attribute [rw] credentials
               #   Credentials to send with calls. You may provide any of the following types:
-              #    *  (`String`) The path to a service account key file in JSON format
-              #    *  (`Hash`) A service account key as a Hash
               #    *  (`Google::Auth::Credentials`) A googleauth credentials object
               #       (see the [googleauth docs](https://rubydoc.info/gems/googleauth/Google/Auth/Credentials))
               #    *  (`Signet::OAuth2::Client`) A signet oauth2 client object
@@ -460,7 +464,26 @@ module Google
               #    *  (`GRPC::Core::ChannelCredentials`) a gRPC credentails object
               #    *  (`nil`) indicating no credentials
               #
-              #   Warning: If you accept a credential configuration (JSON file or Hash) from an
+              #   @note Warning: Passing a `String` to a keyfile path or a `Hash` of credentials
+              #     is deprecated. Providing an unvalidated credential configuration to
+              #     Google APIs can compromise the security of your systems and data.
+              #
+              #   @example
+              #
+              #     # The recommended way to provide credentials is to use the `make_creds` method
+              #     # on the appropriate credentials class for your environment.
+              #
+              #     require "googleauth"
+              #
+              #     credentials = ::Google::Auth::ServiceAccountCredentials.make_creds(
+              #       json_key_io: ::File.open("/path/to/keyfile.json")
+              #     )
+              #
+              #     client = ::Google::Ads::GoogleAds::V20::Services::ContentCreatorInsightsService::Client.new do |config|
+              #       config.credentials = credentials
+              #     end
+              #
+              #   @note Warning: If you accept a credential configuration (JSON file or Hash) from an
               #   external source for authentication to Google Cloud, you must validate it before
               #   providing it to a Google API client library. Providing an unvalidated credential
               #   configuration to Google APIs can compromise the security of your systems and data.
