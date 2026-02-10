@@ -109,6 +109,8 @@ def upload_conversion_with_identifiers(
     # [START add_session_attributes]
     # Set one of the session_attributes_encoded or
     # session_attributes_key_value_pairs fields if either are provided.
+    # The session attribute fields are only available to allowlisted users.
+    # To include these fields in conversion imports, upgrade to the Data Manager API.
     if session_attributes_encoded != nil
       cc.class.module_eval { attr_accessor :session_attributes_encoded}
       cc.session_attributes_encoded = session_attributes_encoded
