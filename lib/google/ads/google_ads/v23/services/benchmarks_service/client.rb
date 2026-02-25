@@ -558,7 +558,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, product_filter: nil, currency_code: nil, customer_benchmarks_group: nil, application_info: nil)
+              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, product_filter: nil, breakdown_definition: nil, currency_code: nil, customer_benchmarks_group: nil, application_info: nil)
               #   Pass arguments to `generate_benchmarks_metrics` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -579,6 +579,9 @@ module Google
               #   @param product_filter [::Google::Ads::GoogleAds::V23::Services::ProductFilter, ::Hash]
               #     Required. The products to aggregate metrics over. Product filter settings
               #     support a list of product IDs or a list of marketing objectives.
+              #   @param breakdown_definition [::Google::Ads::GoogleAds::V23::Services::BreakdownDefinition, ::Hash]
+              #     Optional. The set of dimensions to group metrics by. If multiple dimensions
+              #     are selected, cross-dimension breakdowns are returned.
               #   @param currency_code [::String]
               #     Optional. The three-character ISO 4217 currency code. If unspecified, the
               #     default currency for monetary values is USD.

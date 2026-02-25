@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\n=google/ads/googleads/v23/enums/search_term_match_source.proto\x12\x1egoogle.ads.googleads.v23.enums\"\xd1\x01\n\x19SearchTermMatchSourceEnum\"\xb3\x01\n\x15SearchTermMatchSource\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x1f\n\x1b\x41\x44VERTISER_PROVIDED_KEYWORD\x10\x02\x12\x16\n\x12\x41I_MAX_KEYWORDLESS\x10\x03\x12\x16\n\x12\x41I_MAX_BROAD_MATCH\x10\x04\x12\x16\n\x12\x44YNAMIC_SEARCH_ADS\x10\x05\x12\x13\n\x0fPERFORMANCE_MAX\x10\x06\x42\xf4\x01\n\"com.google.ads.googleads.v23.enumsB\x1aSearchTermMatchSourceProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v23/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V23.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V23\\Enums\xea\x02\"Google::Ads::GoogleAds::V23::Enumsb\x06proto3"
+descriptor_data = "\n=google/ads/googleads/v23/enums/search_term_match_source.proto\x12\x1egoogle.ads.googleads.v23.enums\"\xed\x01\n\x19SearchTermMatchSourceEnum\"\xcf\x01\n\x15SearchTermMatchSource\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x1f\n\x1b\x41\x44VERTISER_PROVIDED_KEYWORD\x10\x02\x12\x16\n\x12\x41I_MAX_KEYWORDLESS\x10\x03\x12\x16\n\x12\x41I_MAX_BROAD_MATCH\x10\x04\x12\x16\n\x12\x44YNAMIC_SEARCH_ADS\x10\x05\x12\x13\n\x0fPERFORMANCE_MAX\x10\x06\x12\x1a\n\x16VERTICAL_ADS_DATA_FEED\x10\x07\x42\xf4\x01\n\"com.google.ads.googleads.v23.enumsB\x1aSearchTermMatchSourceProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v23/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V23.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V23\\Enums\xea\x02\"Google::Ads::GoogleAds::V23::Enumsb\x06proto3"
 
 pool = Google::Protobuf::DescriptorPool.generated_pool
 
