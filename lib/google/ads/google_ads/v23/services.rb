@@ -125,6 +125,7 @@ require "google/ads/google_ads/v23/services/third_party_app_analytics_link_servi
 require "google/ads/google_ads/v23/services/travel_asset_suggestion_service"
 require "google/ads/google_ads/v23/services/user_data_service"
 require "google/ads/google_ads/v23/services/user_list_customer_type_service"
+require "google/ads/google_ads/v23/services/you_tube_video_upload_service"
 require "google/ads/google_ads/version"
 
 module Google

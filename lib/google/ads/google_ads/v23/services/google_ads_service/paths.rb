@@ -3332,6 +3332,23 @@ module Google
                 "customers/#{customer_id}/webpageViews/#{ad_group_id}~#{criterion_id}"
               end
 
+              ##
+              # Create a fully-qualified YouTubeVideoUpload resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/youTubeVideoUploads/{video_upload_id}`
+              #
+              # @param customer_id [String]
+              # @param video_upload_id [String]
+              #
+              # @return [::String]
+              def you_tube_video_upload_path customer_id:, video_upload_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/youTubeVideoUploads/#{video_upload_id}"
+              end
+
               extend self
             end
           end
