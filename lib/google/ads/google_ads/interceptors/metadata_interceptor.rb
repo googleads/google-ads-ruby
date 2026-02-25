@@ -24,12 +24,13 @@ module Google
     module GoogleAds
       module Interceptors
         class MetadataInterceptor < GRPC::ClientInterceptor
-          def initialize(developer_token, login_customer_id, linked_customer_id, use_cloud_org_for_api_access)
+          def initialize(developer_token, login_customer_id, linked_customer_id, use_cloud_org_for_api_access, gaada)
             super()
             @developer_token = developer_token
             @login_customer_id = login_customer_id
             @linked_customer_id = linked_customer_id
             @use_cloud_org_for_api_access = use_cloud_org_for_api_access
+            @gaada = gaada
           end
 
           def request_response(request:, call:, method:, metadata: {})
@@ -60,6 +61,10 @@ module Google
             # The python library iterates over metadata and modifies x-goog-api-client
             # Here we can directly access it.
             if metadata.key?(:"x-goog-api-client")
+              if @gaada
+                 metadata[:"x-goog-api-client"] += " gaada/#{@gaada}"
+              end
+
               # Check if "pb" is already in the header
               unless metadata[:"x-goog-api-client"].include?("pb")
                 metadata[:"x-goog-api-client"] += " pb/#{Gem.loaded_specs["google-protobuf"].version}"

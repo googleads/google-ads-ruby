@@ -114,6 +114,7 @@ module Google
           if @config.use_cloud_org_for_api_access.is_a?(String)
             @config.use_cloud_org_for_api_access = @config.use_cloud_org_for_api_access.downcase == "true"
           end
+          @config.gaada = ENV.fetch("GOOGLE_ADS_GAADA", @config.gaada)
         end
 
         # Return a service for the provided entity type. For example, passing

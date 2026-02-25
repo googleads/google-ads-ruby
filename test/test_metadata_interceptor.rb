@@ -13,7 +13,8 @@ class TestMetadataInterceptor < Minitest::Test
       "dev_token",
       "login_id",
       "linked_id",
-      false
+      false,
+      nil
     )
   end
 
@@ -71,7 +72,8 @@ class TestMetadataInterceptor < Minitest::Test
       "dev_token",
       "login_id",
       "linked_id",
-      true
+      true,
+      nil
     )
     metadata = {}
     mi_cloud.request_response(
@@ -82,5 +84,25 @@ class TestMetadataInterceptor < Minitest::Test
     ) do
     end
     assert_nil metadata[:"developer-token"]
+  end
+
+  def test_appends_gaada_to_x_goog_api_client
+    mi_gaada = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
+      "dev_token",
+      "login_id",
+      "linked_id",
+      false,
+      "1.2.3"
+    )
+    metadata = { :"x-goog-api-client" => "gl-ruby/1.2.3" }
+    mi_gaada.request_response(
+      request: nil,
+      call: nil,
+      method: nil,
+      metadata: metadata
+    ) do
+    end
+    assert_includes metadata[:"x-goog-api-client"], "gaada/1.2.3"
+    assert_includes metadata[:"x-goog-api-client"], "pb/#{Gem.loaded_specs["google-protobuf"].version}"
   end
 end
