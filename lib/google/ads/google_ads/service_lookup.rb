@@ -1,5 +1,6 @@
 require 'google/ads/google_ads/interceptors/logging_interceptor'
 require 'google/ads/google_ads/interceptors/error_interceptor'
+require 'google/ads/google_ads/interceptors/metadata_interceptor'
 
 module Google
   module Ads
@@ -26,16 +27,23 @@ module Google
             logging_interceptor = GoogleAds::Interceptors::LoggingInterceptor.new(logger)
           end
           error_interceptor = GoogleAds::Interceptors::ErrorInterceptor.new
+          metadata_interceptor = GoogleAds::Interceptors::MetadataInterceptor.new(
+            config.developer_token,
+            config.login_customer_id,
+            config.linked_customer_id,
+            config.use_cloud_org_for_api_access
+          )
 
           version_alternates = {}
           Factories::VERSIONS.each do |v|
-            version_alternates[v] = factory_at_version(v, error_interceptor, logging_interceptor)
+            version_alternates[v] = factory_at_version(v, error_interceptor, logging_interceptor, metadata_interceptor)
           end
 
           highest_factory = factory_at_version(
             Factories::HIGHEST_VERSION,
             error_interceptor,
             logging_interceptor,
+            metadata_interceptor,
           )
 
           VersionAlternate.new(highest_factory, version_alternates)
@@ -43,10 +51,11 @@ module Google
 
         private
 
-        def factory_at_version(version, error_interceptor, logging_interceptor)
+        def factory_at_version(version, error_interceptor, logging_interceptor, metadata_interceptor)
           factory = Factories.at_version(version).services.new(**{
             logging_interceptor: logging_interceptor,
             error_interceptor: error_interceptor,
+            metadata_interceptor: metadata_interceptor,
             deprecation: deprecator
           }.merge(gax_service_params))
 
@@ -62,27 +71,15 @@ module Google
         end
 
         def headers
-          headers = {}
-
-          # If config.use_cloud_org_for_api_access is not True, add the developer
-          # token to the request's metadata
-          if !config.use_cloud_org_for_api_access
-            headers[:"developer-token"] = config.developer_token
-          end
-
           if config.login_customer_id
             validate_customer_id(:login_customer_id)
-            # header values must be strings
-            headers[:"login-customer-id"] = config.login_customer_id.to_s
           end
 
           if config.linked_customer_id
             validate_customer_id(:linked_customer_id)
-            # header values must be strings
-            headers[:"linked-customer-id"] = config.linked_customer_id.to_s
           end
 
-          headers
+          {}
         end
 
         def validate_customer_id(field)

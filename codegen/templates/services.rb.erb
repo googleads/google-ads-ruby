@@ -9,6 +9,7 @@ module Google
             def initialize(
               logging_interceptor:,
               error_interceptor:,
+              metadata_interceptor:,
               credentials:,
               metadata:,
               endpoint:,
@@ -17,6 +18,7 @@ module Google
               @interceptors = [
                 error_interceptor,
                 logging_interceptor,
+                metadata_interceptor
               ].compact
               @credentials = credentials
               @metadata = metadata
