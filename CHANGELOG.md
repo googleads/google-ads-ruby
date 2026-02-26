@@ -1,3 +1,7 @@
+38.1.0
+-----
+- Added more detailed metadata headers.
+
 38.0.0
 -----
 - Compatibility with v23.1, v22.1, v21.1, v20.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
