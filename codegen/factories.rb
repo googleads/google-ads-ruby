@@ -16,6 +16,8 @@ module Google
 end
 Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
   Google::Ads::GoogleAds.const_set("#{version.to_s.upcase}", Module.new do
+    module Actions
+    end
     module Common
     end
     module Enums
@@ -57,6 +59,10 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
     end
 
     Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/errors/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/actions/*.rb"].each do |fn|
       require fn.gsub("#{GEM_ROOT}/lib/", "")
     end
   end
