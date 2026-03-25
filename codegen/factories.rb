@@ -26,6 +26,8 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
     end
     module Services
     end
+    module Actions
+    end
   end)
 
   potential_resources = []
@@ -57,6 +59,10 @@ Google::Ads::GoogleAds::KNOWN_API_VERSIONS.each do |version|
     end
 
     Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/errors/*.rb"].each do |fn|
+      require fn.gsub("#{GEM_ROOT}/lib/", "")
+    end
+    
+    Dir["#{GEM_ROOT}/lib/google/ads/google_ads/#{version.to_s.downcase}/actions/*.rb"].each do |fn|
       require fn.gsub("#{GEM_ROOT}/lib/", "")
     end
   end

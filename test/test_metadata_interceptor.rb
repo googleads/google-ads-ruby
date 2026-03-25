@@ -86,8 +86,8 @@ class TestMetadataInterceptor < Minitest::Test
     assert_nil metadata[:"developer-token"]
   end
 
-  def test_appends_gaada_to_x_goog_api_client
-    mi_gaada = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
+  def test_appends_ads_assistant_to_x_goog_api_client
+    mi_ads_assistant = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
       "dev_token",
       "login_id",
       "linked_id",
@@ -95,7 +95,7 @@ class TestMetadataInterceptor < Minitest::Test
       "1.2.3"
     )
     metadata = { :"x-goog-api-client" => "gl-ruby/1.2.3" }
-    mi_gaada.request_response(
+    mi_ads_assistant.request_response(
       request: nil,
       call: nil,
       method: nil,
