@@ -1,3 +1,9 @@
+39.0.0
+-----
+- Compatibility with v23.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Renamed 'gaada' to 'ads_assistant' for metadata headers.
+
+
 38.1.0
 -----
 - Added more detailed metadata headers.

@@ -34,7 +34,7 @@ module Google
         attr_accessor :login_customer_id
         attr_accessor :linked_customer_id
         attr_accessor :use_cloud_org_for_api_access
-        attr_accessor :gaada
+        attr_accessor :ads_assistant
 
         attr_accessor :log_level
         attr_accessor :log_target
@@ -60,7 +60,7 @@ module Google
           @login_customer_id = nil
           @linked_customer_id = nil
           @use_cloud_org_for_api_access = false
-          @gaada = nil
+          @ads_assistant = nil
 
           @log_level = nil
           @log_target = nil

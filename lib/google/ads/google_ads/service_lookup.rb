@@ -32,7 +32,7 @@ module Google
             config.login_customer_id,
             config.linked_customer_id,
             config.use_cloud_org_for_api_access,
-            config.gaada
+            config.ads_assistant
           )
 
           version_alternates = {}

@@ -11,29 +11,8 @@ require 'google/api/resource_pb'
 
 descriptor_data = "\n:google/ads/googleads/v23/resources/applied_incentive.proto\x12\"google.ads.googleads.v23.resources\x1a\x34google/ads/googleads/v23/enums/incentive_state.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xde\x08\n\x10\x41ppliedIncentive\x12H\n\rresource_name\x18\x01 \x01(\tB1\xe0\x41\x03\xfa\x41+\n)googleads.googleapis.com/AppliedIncentive\x12\x1d\n\x0b\x63oupon_code\x18\x02 \x01(\tB\x03\xe0\x41\x03H\x00\x88\x01\x01\x12\x64\n\x0fincentive_state\x18\x03 \x01(\x0e\x32\x41.google.ads.googleads.v23.enums.IncentiveStateEnum.IncentiveStateB\x03\xe0\x41\x03H\x01\x88\x01\x01\x12&\n\x14redemption_date_time\x18\x04 \x01(\tB\x03\xe0\x41\x03H\x02\x88\x01\x01\x12\x32\n fulfillment_expiration_date_time\x18\x05 \x01(\tB\x03\xe0\x41\x03H\x03\x88\x01\x01\x12(\n\x16reward_grant_date_time\x18\x06 \x01(\tB\x03\xe0\x41\x03H\x04\x88\x01\x01\x12-\n\x1breward_expiration_date_time\x18\x07 \x01(\tB\x03\xe0\x41\x03H\x05\x88\x01\x01\x12\x1f\n\rcurrency_code\x18\x08 \x01(\tB\x03\xe0\x41\x03H\x06\x88\x01\x01\x12&\n\x14reward_amount_micros\x18\t \x01(\x03\x42\x03\xe0\x41\x03H\x07\x88\x01\x01\x12\'\n\x15granted_amount_micros\x18\n \x01(\x03\x42\x03\xe0\x41\x03H\x08\x88\x01\x01\x12+\n\x19required_min_spend_micros\x18\x0b \x01(\x03\x42\x03\xe0\x41\x03H\t\x88\x01\x01\x12:\n(current_spend_towards_fulfillment_micros\x18\x0c \x01(\x03\x42\x03\xe0\x41\x03H\n\x88\x01\x01\x12\x31\n\x1freward_balance_remaining_micros\x18\r \x01(\x03\x42\x03\xe0\x41\x03H\x0b\x88\x01\x01:g\xea\x41\x64\n)googleads.googleapis.com/AppliedIncentive\x12\x37\x63ustomers/{customer_id}/appliedIncentives/{coupon_code}B\x0e\n\x0c_coupon_codeB\x12\n\x10_incentive_stateB\x17\n\x15_redemption_date_timeB#\n!_fulfillment_expiration_date_timeB\x19\n\x17_reward_grant_date_timeB\x1e\n\x1c_reward_expiration_date_timeB\x10\n\x0e_currency_codeB\x17\n\x15_reward_amount_microsB\x18\n\x16_granted_amount_microsB\x1c\n\x1a_required_min_spend_microsB+\n)_current_spend_towards_fulfillment_microsB\"\n _reward_balance_remaining_microsB\x87\x02\n&com.google.ads.googleads.v23.resourcesB\x15\x41ppliedIncentiveProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v23/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V23.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V23\\Resources\xea\x02&Google::Ads::GoogleAds::V23::Resourcesb\x06proto3"
 
-pool = Google::Protobuf::DescriptorPool.generated_pool
-
-begin
-  pool.add_serialized_file(descriptor_data)
-rescue TypeError
-  # Compatibility code: will be removed in the next major version.
-  require 'google/protobuf/descriptor_pb'
-  parsed = Google::Protobuf::FileDescriptorProto.decode(descriptor_data)
-  parsed.clear_dependency
-  serialized = parsed.class.encode(parsed)
-  file = pool.add_serialized_file(serialized)
-  warn "Warning: Protobuf detected an import path issue while loading generated file #{__FILE__}"
-  imports = [
-  ]
-  imports.each do |type_name, expected_filename|
-    import_file = pool.lookup(type_name).file_descriptor
-    if import_file.name != expected_filename
-      warn "- #{file.name} imports #{expected_filename}, but that import was loaded as #{import_file.name}"
-    end
-  end
-  warn "Each proto file must use a consistent fully-qualified name."
-  warn "This will become an error in the next major version."
-end
+pool = ::Google::Protobuf::DescriptorPool.generated_pool
+pool.add_serialized_file(descriptor_data)
 
 module Google
   module Ads

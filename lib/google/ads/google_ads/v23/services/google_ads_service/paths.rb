@@ -619,6 +619,27 @@ module Google
               end
 
               ##
+              # Create a fully-qualified AppTopCombinationView resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/appTopCombinationViews/{ad_group_id}~{ad_id}~{asset_combination_category}`
+              #
+              # @param customer_id [String]
+              # @param ad_group_id [String]
+              # @param ad_id [String]
+              # @param asset_combination_category [String]
+              #
+              # @return [::String]
+              def app_top_combination_view_path customer_id:, ad_group_id:, ad_id:, asset_combination_category:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                raise ::ArgumentError, "ad_group_id cannot contain /" if ad_group_id.to_s.include? "/"
+                raise ::ArgumentError, "ad_id cannot contain /" if ad_id.to_s.include? "/"
+
+                "customers/#{customer_id}/appTopCombinationViews/#{ad_group_id}~#{ad_id}~#{asset_combination_category}"
+              end
+
+              ##
               # Create a fully-qualified AppliedIncentive resource string.
               #
               # The resource will be in the following format:
@@ -3311,6 +3332,23 @@ module Google
                 raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
 
                 "customers/#{customer_id}/videos/#{video_id}"
+              end
+
+              ##
+              # Create a fully-qualified VideoEnhancement resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/videoEnhancements/{video_enhancement}`
+              #
+              # @param customer_id [String]
+              # @param video_enhancement [String]
+              #
+              # @return [::String]
+              def video_enhancement_path customer_id:, video_enhancement:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/videoEnhancements/#{video_enhancement}"
               end
 
               ##

@@ -65,7 +65,7 @@ end
 
 def get_expanded_class_name(klass)
   components = klass.name.split("::")
-  while !["Resources", "Common", "Services"].include?(components.first)
+  while !["Resources", "Common", "Services", "Actions"].include?(components.first)
     components.shift
   end
   components.shift

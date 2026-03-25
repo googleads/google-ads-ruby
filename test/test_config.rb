@@ -27,21 +27,21 @@ class TestConfig < Minitest::Test
     client_id_value = 'client id'
     client_secret_value = 'client_secret'
     developer_token_value = 'developer_token'
-    gaada_value = 'gaada_value'
+    ads_assistant_value = 'ads_assistant_value'
 
     config = Google::Ads::GoogleAds::Config.new do |c|
       c.refresh_token = refresh_token_value
       c.client_id = client_id_value
       c.client_secret = client_secret_value
       c.developer_token = developer_token_value
-      c.gaada = gaada_value
+      c.ads_assistant = ads_assistant_value
     end
 
     assert_equal(refresh_token_value, config.refresh_token)
     assert_equal(client_id_value, config.client_id)
     assert_equal(client_secret_value, config.client_secret)
     assert_equal(developer_token_value, config.developer_token)
-    assert_equal(gaada_value, config.gaada)
+    assert_equal(ads_assistant_value, config.ads_assistant)
   end
 
   def test_configure()
@@ -51,21 +51,21 @@ class TestConfig < Minitest::Test
     client_id_value = 'abcd'
     client_secret_value = '!@#$'
     developer_token_value = '7x&Z'
-    gaada_value = 'gaada_value'
+    ads_assistant_value = 'ads_assistant_value'
 
     config.configure do |c|
       c.refresh_token = refresh_token_value
       c.client_id = client_id_value
       c.client_secret = client_secret_value
       c.developer_token = developer_token_value
-      c.gaada = gaada_value
+      c.ads_assistant = ads_assistant_value
     end
 
     assert_equal(refresh_token_value, config.refresh_token)
     assert_equal(client_id_value, config.client_id)
     assert_equal(client_secret_value, config.client_secret)
     assert_equal(developer_token_value, config.developer_token)
-    assert_equal(gaada_value, config.gaada)
+    assert_equal(ads_assistant_value, config.ads_assistant)
   end
 
   def test_use_cloud_org_for_api_access()
@@ -80,7 +80,7 @@ class TestConfig < Minitest::Test
       c.refresh_token = refresh_token_value
       c.client_id = client_id_value
       c.client_secret = client_secret_value
-      c.use_cloud_org_for_api_access = true
+      c.use_cloud_org_for_api_access = use_cloud_org_for_api_access
     end
 
     assert_equal(refresh_token_value, config.refresh_token)

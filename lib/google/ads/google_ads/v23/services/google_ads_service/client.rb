@@ -412,10 +412,11 @@ module Google
               end
 
               ##
-              # Creates, updates, or removes resources. This method supports atomic
-              # transactions with multiple types of resources. For example, you can
-              # atomically create a campaign and a campaign budget, or perform up to
-              # thousands of mutates atomically.
+              # Executes mutate and actions operations. Mutate operations create, update,
+              # or remove resources. Actions perform custom operations. This method
+              # supports atomic transactions with multiple types of resources and
+              # actions. For example, you can atomically create a campaign and a campaign
+              # budget, or perform up to thousands of mutates atomically.
               #
               # This method is essentially a wrapper around a series of mutate methods. The
               # only features it offers over calling those methods directly are:
@@ -550,8 +551,8 @@ module Google
               #     out in one transaction if and only if they are all valid.
               #     Default is false.
               #   @param validate_only [::Boolean]
-              #     If true, the request is validated but not executed. Only errors are
-              #     returned, not results.
+              #     If true, the request is validated but not executed. Mutates only return
+              #     errors, not results. Actions return results and errors.
               #   @param response_content_type [::Google::Ads::GoogleAds::V23::Enums::ResponseContentTypeEnum::ResponseContentType]
               #     The response content type setting. Determines whether the mutable resource
               #     or just the resource name should be returned post mutation. The mutable

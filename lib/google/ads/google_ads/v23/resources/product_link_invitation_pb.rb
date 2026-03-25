@@ -12,29 +12,8 @@ require 'google/api/resource_pb'
 
 descriptor_data = "\n@google/ads/googleads/v23/resources/product_link_invitation.proto\x12\"google.ads.googleads.v23.resources\x1a\x38google/ads/googleads/v23/enums/linked_product_type.proto\x1a\x43google/ads/googleads/v23/enums/product_link_invitation_status.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xd1\x07\n\x15ProductLinkInvitation\x12M\n\rresource_name\x18\x01 \x01(\tB6\xe0\x41\x05\xfa\x41\x30\n.googleads.googleapis.com/ProductLinkInvitation\x12\'\n\x1aproduct_link_invitation_id\x18\x02 \x01(\x03\x42\x03\xe0\x41\x03\x12p\n\x06status\x18\x03 \x01(\x0e\x32[.google.ads.googleads.v23.enums.ProductLinkInvitationStatusEnum.ProductLinkInvitationStatusB\x03\xe0\x41\x03\x12Z\n\x04type\x18\x06 \x01(\x0e\x32G.google.ads.googleads.v23.enums.LinkedProductTypeEnum.LinkedProductTypeB\x03\xe0\x41\x03\x12\x64\n\x0chotel_center\x18\x04 \x01(\x0b\x32G.google.ads.googleads.v23.resources.HotelCenterLinkInvitationIdentifierB\x03\xe0\x41\x03H\x00\x12j\n\x0fmerchant_center\x18\x05 \x01(\x0b\x32J.google.ads.googleads.v23.resources.MerchantCenterLinkInvitationIdentifierB\x03\xe0\x41\x03H\x00\x12r\n\x13\x61\x64vertising_partner\x18\x07 \x01(\x0b\x32N.google.ads.googleads.v23.resources.AdvertisingPartnerLinkInvitationIdentifierB\x03\xe0\x41\x03H\x00\x12}\n\x1e\x61\x64vertising_partner_properties\x18\x08 \x01(\x0b\x32N.google.ads.googleads.v23.resources.AdvertisingPartnerLinkInvitationPropertiesB\x03\xe0\x41\x03H\x01:|\xea\x41y\n.googleads.googleapis.com/ProductLinkInvitation\x12Gcustomers/{customer_id}/productLinkInvitations/{customer_invitation_id}B\x11\n\x0finvited_accountB\x1c\n\x1ainvited_account_properties\"C\n#HotelCenterLinkInvitationIdentifier\x12\x1c\n\x0fhotel_center_id\x18\x01 \x01(\x03\x42\x03\xe0\x41\x03\"I\n&MerchantCenterLinkInvitationIdentifier\x12\x1f\n\x12merchant_center_id\x18\x01 \x01(\x03\x42\x03\xe0\x41\x03\"{\n*AdvertisingPartnerLinkInvitationIdentifier\x12@\n\x08\x63ustomer\x18\x01 \x01(\tB)\xe0\x41\x05\xfa\x41#\n!googleads.googleapis.com/CustomerH\x00\x88\x01\x01\x42\x0b\n\t_customer\"a\n*AdvertisingPartnerLinkInvitationProperties\x12 \n\x0e\x61llowed_domain\x18\x01 \x01(\tB\x03\xe0\x41\x05H\x00\x88\x01\x01\x42\x11\n\x0f_allowed_domainB\x8c\x02\n&com.google.ads.googleads.v23.resourcesB\x1aProductLinkInvitationProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v23/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V23.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V23\\Resources\xea\x02&Google::Ads::GoogleAds::V23::Resourcesb\x06proto3"
 
-pool = Google::Protobuf::DescriptorPool.generated_pool
-
-begin
-  pool.add_serialized_file(descriptor_data)
-rescue TypeError
-  # Compatibility code: will be removed in the next major version.
-  require 'google/protobuf/descriptor_pb'
-  parsed = Google::Protobuf::FileDescriptorProto.decode(descriptor_data)
-  parsed.clear_dependency
-  serialized = parsed.class.encode(parsed)
-  file = pool.add_serialized_file(serialized)
-  warn "Warning: Protobuf detected an import path issue while loading generated file #{__FILE__}"
-  imports = [
-  ]
-  imports.each do |type_name, expected_filename|
-    import_file = pool.lookup(type_name).file_descriptor
-    if import_file.name != expected_filename
-      warn "- #{file.name} imports #{expected_filename}, but that import was loaded as #{import_file.name}"
-    end
-  end
-  warn "Each proto file must use a consistent fully-qualified name."
-  warn "This will become an error in the next major version."
-end
+pool = ::Google::Protobuf::DescriptorPool.generated_pool
+pool.add_serialized_file(descriptor_data)
 
 module Google
   module Ads
