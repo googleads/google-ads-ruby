@@ -62,7 +62,7 @@ module Google
             # Here we can directly access it.
             if metadata.key?(:"x-goog-api-client")
               if @ads_assistant
-                 metadata[:"x-goog-api-client"] += " gaada/#{@ads_assistant}"
+                metadata[:"x-goog-api-client"] += " gaada/#{@ads_assistant}"
               end
 
               # Check if "pb" is already in the header
