@@ -71,16 +71,29 @@ module Google
           }
         end
 
+        # Workaround for gRPC Ruby bug (grpc/grpc#22448):
+        # When gapic-common calls gRPC with `return_op: true`,
+        # merge_metadata_to_send runs before interceptors execute,
+        # so MetadataInterceptor's metadata changes are silently dropped.
+        # Pass headers as initial metadata here until the upstream fix
+        # (grpc/grpc#42073) is released.
         def headers
+          h = {}
           if config.login_customer_id
             validate_customer_id(:login_customer_id)
+            h[:"login-customer-id"] = config.login_customer_id.to_s
           end
 
           if config.linked_customer_id
             validate_customer_id(:linked_customer_id)
+            h[:"linked-customer-id"] = config.linked_customer_id.to_s
           end
 
-          {}
+          unless config.use_cloud_org_for_api_access
+            h[:"developer-token"] = config.developer_token if config.developer_token
+          end
+
+          h
         end
 
         def validate_customer_id(field)
