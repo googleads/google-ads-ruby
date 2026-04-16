@@ -58,8 +58,7 @@ module Google
               metadata[:"linked-customer-id"] = @linked_customer_id.to_s
             end
 
-            # The python library iterates over metadata and modifies x-goog-api-client
-            # Here we can directly access it.
+            # Update metadata for x-goog-api-client
             if metadata.key?(:"x-goog-api-client")
               if @ads_assistant
                 metadata[:"x-goog-api-client"] += " gaada/#{@ads_assistant}"
