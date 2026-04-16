@@ -94,7 +94,7 @@ module Google
           end
 
           if config.ads_assistant
-            headers[:"ads-assistant"] = config.ads_assistant
+            headers[:"x-goog-api-client"] = "gaada/#{config.ads_assistant}"
           end
 
           headers

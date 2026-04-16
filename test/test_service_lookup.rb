@@ -37,7 +37,7 @@ class TestServiceLookup < Minitest::Test
     assert_equal "1234567890", headers[:"login-customer-id"]
     assert_equal "9876543210", headers[:"linked-customer-id"]
     assert_equal "test-dev-token", headers[:"developer-token"]
-    assert_equal "v0", headers[:"ads-assistant"]
+    assert_equal "gaada/v0", headers[:"x-goog-api-client"]
   end
 
   def test_headers_excludes_developer_token_when_cloud_org
