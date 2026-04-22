@@ -223,11 +223,9 @@ module Google
               #     the next page of results.
               #   @param page_size [::Integer]
               #     This field is deprecated and will be removed in
-              #     a future version of the API. As of v17, Google Ads API will return a
-              #     `PAGE_SIZE_NOT_SUPPORTED` error if this field is set in the request body.
-              #     See
-              #     https://ads-developers.googleblog.com/2024/07/upcoming-changes-to-page-size-in-google.html
-              #     to learn more details.
+              #     a future version of the API. Google Ads API returns a
+              #     `PAGE_SIZE_NOT_SUPPORTED` error if this field is set in the request
+              #     body.
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed.
               #   @param search_settings [::Google::Ads::GoogleAds::V23::Services::SearchSettings, ::Hash]

@@ -215,15 +215,16 @@ module Google
               #   @param conversions [::Array<::Google::Ads::GoogleAds::V23::Services::ClickConversion, ::Hash>]
               #     Required. The conversions that are being uploaded.
               #   @param partial_failure [::Boolean]
-              #     Required. If true, successful operations will be carried out and invalid
-              #     operations will return errors. If false, all operations will be carried
+              #     Required. If `true`, successful operations will be carried out and invalid
+              #     operations will return errors. If `false`, all operations will be carried
               #     out in one transaction if and only if they are all valid.
-              #     This should always be set to true.
+              #     This should always be set to `true`.
+              #
               #     See
-              #     https://developers.google.com/google-ads/api/docs/best-practices/partial-failures
-              #     for more information about partial failure.
+              #     [Best practices for partial
+              #     failures](/google-ads/api/docs/best-practices/partial-failures).
               #   @param validate_only [::Boolean]
-              #     If true, the request is validated but not executed. Only errors are
+              #     If `true`, the request is validated but not executed. Only errors are
               #     returned, not results.
               #   @param job_id [::Integer]
               #     Optional. Optional input to set job ID. Must be a non-negative number that
@@ -329,13 +330,15 @@ module Google
               #   @param conversions [::Array<::Google::Ads::GoogleAds::V23::Services::CallConversion, ::Hash>]
               #     Required. The conversions that are being uploaded.
               #   @param partial_failure [::Boolean]
-              #     Required. If true, successful operations will be carried out and invalid
-              #     operations will return errors. If false, all operations will be carried
+              #     Required. If `true`, successful operations will be carried out and invalid
+              #     operations will return errors. If `false`, all operations will be carried
               #     out in one transaction if and only if they are all valid.
-              #     This should always be set to true.
+              #
+              #     This should always be set to `true`.
+              #
               #     See
-              #     https://developers.google.com/google-ads/api/docs/best-practices/partial-failures
-              #     for more information about partial failure.
+              #     [Best practices for partial
+              #     failures](/google-ads/api/docs/best-practices/partial-failures).
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed. Only errors are
               #     returned, not results.

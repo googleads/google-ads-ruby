@@ -496,7 +496,7 @@ module Google
               #     the same user.
               #     If not specified, no cap is applied.
               #
-              #     This field is deprecated in v4 and will eventually be removed.
+              #     This field is deprecated and will eventually be removed.
               #     Use cookie_frequency_cap_setting instead.
               #   @param cookie_frequency_cap_setting [::Google::Ads::GoogleAds::V22::Services::FrequencyCap, ::Hash]
               #     Chosen cookie frequency cap to be applied to each planned product.
@@ -505,7 +505,7 @@ module Google
               #     the same user during a specified time interval.
               #     If not specified, a default of 0 (no cap) is applied.
               #
-              #     This field replaces the deprecated cookie_frequency_cap field.
+              #     This field replaces the deprecated `cookie_frequency_cap` field.
               #   @param min_effective_frequency [::Integer]
               #     Chosen minimum effective frequency (the number of times a person was
               #     exposed to the ad) for the reported reach metrics [1-10].
