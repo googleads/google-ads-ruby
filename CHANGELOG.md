@@ -1,3 +1,7 @@
+40.0.0
+-----
+- Compatibility with v24 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 39.1.0
 -----
 - Added workaround for gRPC issue affecting metadata headers.
