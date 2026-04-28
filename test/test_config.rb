@@ -86,7 +86,7 @@ class TestConfig < Minitest::Test
     assert_equal(refresh_token_value, config.refresh_token)
     assert_equal(client_id_value, config.client_id)
     assert_equal(client_secret_value, config.client_secret)
-    assert_equal(nil, config.developer_token)
+    assert_nil(config.developer_token)
     assert_equal(true, config.use_cloud_org_for_api_access)
   end
 end
