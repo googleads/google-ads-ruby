@@ -1,3 +1,11 @@
+41.0.0
+-----
+- Compatibility with v24 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
+40.1.0
+-----
+- Updated minitest to 6.0.
+
 40.0.0
 -----
 - Updated minitest to 6.0.
