@@ -26,6 +26,74 @@ module Google
             # Path helper methods for the ExperimentArmService API.
             module Paths
               ##
+              # Create a fully-qualified Ad resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/ads/{ad_id}`
+              #
+              # @param customer_id [String]
+              # @param ad_id [String]
+              #
+              # @return [::String]
+              def ad_path customer_id:, ad_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/ads/#{ad_id}"
+              end
+
+              ##
+              # Create a fully-qualified AdGroup resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/adGroups/{ad_group_id}`
+              #
+              # @param customer_id [String]
+              # @param ad_group_id [String]
+              #
+              # @return [::String]
+              def ad_group_path customer_id:, ad_group_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/adGroups/#{ad_group_id}"
+              end
+
+              ##
+              # Create a fully-qualified Asset resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/assets/{asset_id}`
+              #
+              # @param customer_id [String]
+              # @param asset_id [String]
+              #
+              # @return [::String]
+              def asset_path customer_id:, asset_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/assets/#{asset_id}"
+              end
+
+              ##
+              # Create a fully-qualified AssetGroup resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/assetGroups/{asset_group_id}`
+              #
+              # @param customer_id [String]
+              # @param asset_group_id [String]
+              #
+              # @return [::String]
+              def asset_group_path customer_id:, asset_group_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/assetGroups/#{asset_group_id}"
+              end
+
+              ##
               # Create a fully-qualified Campaign resource string.
               #
               # The resource will be in the following format:
