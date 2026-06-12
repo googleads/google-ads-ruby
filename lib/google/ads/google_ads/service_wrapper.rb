@@ -41,16 +41,16 @@ module Google
               write_field(request, value, name)
             end
 
-            service.public_send(name, request, options)
+            service.public_send(name, request, options, &blk)
           elsif !kwargs.empty? && args.empty?
             kwargs.each do |name, value|
               write_field(request, value, name)
             end
 
-            service.public_send(name, request, nil)
+            service.public_send(name, request, nil, &blk)
           elsif args.empty?
             # no args specified at all, just pass through
-            service.public_send(name, request, nil)
+            service.public_send(name, request, nil, &blk)
           else
             # this branch is the legacy version, which is no longer supported
 
