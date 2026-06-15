@@ -1,3 +1,8 @@
+41.1.0
+-----
+- Added Bundler autorequire support
+- Restored block forwarding.
+
 41.0.0
 -----
 - Compatibility with v24 of the API: https://developers.google.com/google-ads/api/docs/release-notes
