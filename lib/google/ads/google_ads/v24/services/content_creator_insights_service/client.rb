@@ -30,7 +30,10 @@ module Google
             #
             # Content Creator Insights Service helps users find information about YouTube
             # Creators and their content and how these creators and their audiences can be
-            # reached with Google Ads. Accessible to allowlisted customers only.
+            # reached with Google Ads. Refer to the
+            # [YouTube creator insights
+            # guide](https://developers.google.com/google-ads/api/docs/insights/creator-insights)
+            # for more details. Accessible to allowlisted customers only.
             #
             class Client
               # @private
@@ -205,7 +208,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_creator_insights(customer_id: nil, customer_insights_group: nil, insights_application_info: nil, country_locations: nil, sub_country_locations: nil, search_attributes: nil, search_brand: nil, search_channels: nil)
+              # @overload generate_creator_insights(customer_id: nil, customer_insights_group: nil, insights_application_info: nil, country_locations: nil, sub_country_locations: nil, supplemental_data: nil, search_attributes: nil, search_brand: nil, search_channels: nil, search_topics: nil)
               #   Pass arguments to `generate_creator_insights` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -224,6 +227,10 @@ module Google
               #     Only supported for
               #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest::SearchAttributes SearchAttributes}
               #     criteria.
+              #   @param supplemental_data [::Array<::Google::Ads::GoogleAds::V24::Enums::ContentCreatorInsightsSupplementalDataEnum::ContentCreatorInsightsSupplementalData>]
+              #     Optional. Optional features to include in the response. By default, only
+              #     core insight data is returned. Including supplemental data here will
+              #     populate additional fields in the response.
               #   @param search_attributes [::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest::SearchAttributes, ::Hash]
               #     The attributes used to identify top creators. Data fetched is based on
               #     the list of countries or sub-country locations specified in
@@ -231,19 +238,28 @@ module Google
               #     or
               #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest#sub_country_locations sub_country_locations}.
               #
-              #     Note: The following parameters are mutually exclusive: `search_attributes`, `search_brand`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
+              #     Note: The following parameters are mutually exclusive: `search_attributes`, `search_brand`, `search_channels`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_brand [::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest::SearchBrand, ::Hash]
               #     A brand used to search for top creators. Data fetched is based on the
               #     list of countries specified in
-              #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
+              #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.This
+              #     option is deprecated and will be removed in the V25 release. Use
+              #     search_topics instead.
               #
-              #     Note: The following parameters are mutually exclusive: `search_brand`, `search_attributes`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
+              #     Note: The following parameters are mutually exclusive: `search_brand`, `search_attributes`, `search_channels`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_channels [::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest::YouTubeChannels, ::Hash]
               #     YouTube Channel IDs for Creator Insights. Data fetched for channels is
               #     based on the list of countries specified in
               #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
               #
-              #     Note: The following parameters are mutually exclusive: `search_channels`, `search_attributes`, `search_brand`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
+              #     Note: The following parameters are mutually exclusive: `search_channels`, `search_attributes`, `search_brand`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
+              #   @param search_topics [::Google::Ads::GoogleAds::V24::Services::SearchTopics, ::Hash]
+              #     Search for relevant creators who make content about the specified topics.
+              #     Data fetched is based on the country specified in
+              #     {::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
+              #     Note: This option allows searching for one country only.
+              #
+              #     Note: The following parameters are mutually exclusive: `search_topics`, `search_attributes`, `search_brand`, `search_channels`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V24::Services::GenerateCreatorInsightsResponse]
@@ -333,7 +349,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_trending_insights(customer_id: nil, customer_insights_group: nil, insights_application_info: nil, country_location: nil, search_audience: nil, search_topics: nil)
+              # @overload generate_trending_insights(customer_id: nil, customer_insights_group: nil, insights_application_info: nil, country_location: nil, sub_country_locations: nil, supplemental_data: nil, search_audience: nil, search_topics: nil)
               #   Pass arguments to `generate_trending_insights` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -347,8 +363,19 @@ module Google
               #     Optional. Additional information on the application issuing the request.
               #   @param country_location [::Google::Ads::GoogleAds::V24::Common::LocationInfo, ::Hash]
               #     Required. The country to find trends in.
+              #   @param sub_country_locations [::Array<::Google::Ads::GoogleAds::V24::Common::LocationInfo, ::Hash>]
+              #     Optional. The sub-country geographic locations to search that apply to the
+              #     criteria. Only supported for `search_audience` criteria.
+              #   @param supplemental_data [::Array<::Google::Ads::GoogleAds::V24::Enums::ContentCreatorInsightsSupplementalDataEnum::ContentCreatorInsightsSupplementalData>]
+              #     Optional. Optional features to include in the response. By default, only
+              #     core insight data is returned. Including supplemental data here will
+              #     populate additional fields in the response.
               #   @param search_audience [::Google::Ads::GoogleAds::V24::Services::SearchAudience, ::Hash]
-              #     An audience to search for trending content in.
+              #     An audience to search for trending content in. Data fetched is based on
+              #     the country or sub-country locations specified in
+              #     {::Google::Ads::GoogleAds::V24::Services::GenerateTrendingInsightsRequest#country_location country_location}
+              #     or
+              #     {::Google::Ads::GoogleAds::V24::Services::GenerateTrendingInsightsRequest#sub_country_locations sub_country_locations}.
               #
               #     Note: The following parameters are mutually exclusive: `search_audience`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_topics [::Google::Ads::GoogleAds::V24::Services::SearchTopics, ::Hash]
@@ -517,6 +544,7 @@ module Google
               #    *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
               #    *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
               #    *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+              #    *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
               #    *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
               #       trigger a retry.
               #   @return [::Hash]
@@ -601,6 +629,7 @@ module Google
                 #      *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
                 #      *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
                 #      *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+                #      *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
                 #      *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
                 #         trigger a retry.
                 #

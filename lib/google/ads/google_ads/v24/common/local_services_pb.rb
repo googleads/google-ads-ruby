@@ -4,8 +4,10 @@
 
 require 'google/protobuf'
 
+require 'google/ads/google_ads/v24/enums/gls_phone_number_type_pb'
 
-descriptor_data = "\n4google/ads/googleads/v24/common/local_services.proto\x12\x1fgoogle.ads.googleads.v24.common\"K\n\x1dLocalServicesDocumentReadOnly\x12\x19\n\x0c\x64ocument_url\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_document_urlB\xf2\x01\n#com.google.ads.googleads.v24.commonB\x12LocalServicesProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v24/common;common\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V24.Common\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V24\\Common\xea\x02#Google::Ads::GoogleAds::V24::Commonb\x06proto3"
+
+descriptor_data = "\n4google/ads/googleads/v24/common/local_services.proto\x12\x1fgoogle.ads.googleads.v24.common\x1a:google/ads/googleads/v24/enums/gls_phone_number_type.proto\"K\n\x1dLocalServicesDocumentReadOnly\x12\x19\n\x0c\x64ocument_url\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x0f\n\r_document_url\"\xf3\x01\n\x18LocalServicesPhoneNumber\x12\x19\n\x0cphone_number\x18\x01 \x01(\tH\x00\x88\x01\x01\x12\x19\n\x0c\x63ountry_code\x18\x02 \x01(\tH\x01\x88\x01\x01\x12i\n\x11phone_number_type\x18\x03 \x01(\x0e\x32I.google.ads.googleads.v24.enums.GlsPhoneNumberTypeEnum.GlsPhoneNumberTypeH\x02\x88\x01\x01\x42\x0f\n\r_phone_numberB\x0f\n\r_country_codeB\x14\n\x12_phone_number_typeB\xf2\x01\n#com.google.ads.googleads.v24.commonB\x12LocalServicesProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v24/common;common\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V24.Common\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V24\\Common\xea\x02#Google::Ads::GoogleAds::V24::Commonb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
@@ -16,6 +18,7 @@ module Google
       module V24
         module Common
           LocalServicesDocumentReadOnly = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v24.common.LocalServicesDocumentReadOnly").msgclass
+          LocalServicesPhoneNumber = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("google.ads.googleads.v24.common.LocalServicesPhoneNumber").msgclass
         end
       end
     end

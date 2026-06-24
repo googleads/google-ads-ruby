@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\n6google/ads/googleads/v24/enums/conversion_origin.proto\x12\x1egoogle.ads.googleads.v24.enums\"\xa4\x01\n\x14\x43onversionOriginEnum\"\x8b\x01\n\x10\x43onversionOrigin\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x0b\n\x07WEBSITE\x10\x02\x12\x11\n\rGOOGLE_HOSTED\x10\x03\x12\x07\n\x03\x41PP\x10\x04\x12\x11\n\rCALL_FROM_ADS\x10\x05\x12\t\n\x05STORE\x10\x06\x12\x12\n\x0eYOUTUBE_HOSTED\x10\x07\x42\xef\x01\n\"com.google.ads.googleads.v24.enumsB\x15\x43onversionOriginProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v24/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V24.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V24\\Enums\xea\x02\"Google::Ads::GoogleAds::V24::Enumsb\x06proto3"
+descriptor_data = "\n6google/ads/googleads/v24/enums/conversion_origin.proto\x12\x1egoogle.ads.googleads.v24.enums\"\xbc\x01\n\x14\x43onversionOriginEnum\"\xa3\x01\n\x10\x43onversionOrigin\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x0b\n\x07WEBSITE\x10\x02\x12\x11\n\rGOOGLE_HOSTED\x10\x03\x12\x07\n\x03\x41PP\x10\x04\x12\x11\n\rCALL_FROM_ADS\x10\x05\x12\t\n\x05STORE\x10\x06\x12\x12\n\x0eYOUTUBE_HOSTED\x10\x07\x12\x16\n\x12LOCAL_SERVICES_ADS\x10\x08\x42\xef\x01\n\"com.google.ads.googleads.v24.enumsB\x15\x43onversionOriginProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v24/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V24.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V24\\Enums\xea\x02\"Google::Ads::GoogleAds::V24::Enumsb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)

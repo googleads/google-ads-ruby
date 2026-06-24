@@ -30,7 +30,10 @@ module Google
             #
             # Content Creator Insights Service helps users find information about YouTube
             # Creators and their content and how these creators and their audiences can be
-            # reached with Google Ads. Accessible to allowlisted customers only.
+            # reached with Google Ads. Refer to the
+            # [YouTube creator insights
+            # guide](https://developers.google.com/google-ads/api/docs/insights/creator-insights)
+            # for more details. Accessible to allowlisted customers only.
             #
             class Client
               # @private
@@ -517,6 +520,7 @@ module Google
               #    *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
               #    *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
               #    *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+              #    *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
               #    *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
               #       trigger a retry.
               #   @return [::Hash]
@@ -601,6 +605,7 @@ module Google
                 #      *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
                 #      *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
                 #      *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+                #      *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
                 #      *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
                 #         trigger a retry.
                 #

@@ -29,7 +29,10 @@ module Google
             #
             # Content Creator Insights Service helps users find information about YouTube
             # Creators and their content and how these creators and their audiences can be
-            # reached with Google Ads. Accessible to allowlisted customers only.
+            # reached with Google Ads. Refer to the
+            # [YouTube creator insights
+            # guide](https://developers.google.com/google-ads/api/docs/insights/creator-insights)
+            # for more details. Accessible to allowlisted customers only.
             class Service
 
               include ::GRPC::GenericService

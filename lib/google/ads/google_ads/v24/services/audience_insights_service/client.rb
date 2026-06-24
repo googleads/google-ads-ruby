@@ -312,7 +312,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload list_audience_insights_attributes(customer_id: nil, dimensions: nil, query_text: nil, customer_insights_group: nil, insights_application_info: nil, location_country_filters: nil, youtube_reach_location: nil)
+              # @overload list_audience_insights_attributes(customer_id: nil, dimensions: nil, query_text: nil, customer_insights_group: nil, insights_application_info: nil, location_country_filters: nil, youtube_reach_location: nil, knowledge_graph_entity_search_options: nil)
               #   Pass arguments to `list_audience_insights_attributes` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -324,13 +324,13 @@ module Google
               #     dimensions are CATEGORY, KNOWLEDGE_GRAPH, DEVICE,
               #     GEO_TARGET_COUNTRY, SUB_COUNTRY_LOCATION, YOUTUBE_LINEUP,
               #     AFFINITY_USER_INTEREST, IN_MARKET_USER_INTEREST, LIFE_EVENT_USER_INTEREST,
-              #      PARENTAL_STATUS, INCOME_RANGE, AGE_RANGE, and GENDER.
+              #      PARENTAL_STATUS, INCOME_RANGE, AGE_RANGE, GENDER, and USER_LIST.
               #   @param query_text [::String]
               #     Required. A free text query.  If the requested dimensions include
               #     Attributes CATEGORY or KNOWLEDGE_GRAPH, then the attributes returned for
               #     those dimensions will match or be related to this string.  For other
               #     dimensions, this field is ignored and all available attributes are
-              #     returned.
+              #     returned. Example: "Millennials interested in the World Cup and soccer."
               #   @param customer_insights_group [::String]
               #     The name of the customer being planned for.  This is a user-defined value.
               #   @param insights_application_info [::Google::Ads::GoogleAds::V24::Common::AdditionalApplicationInfo, ::Hash]
@@ -347,6 +347,8 @@ module Google
               #     only available for the AGE_RANGE, GENDER, AFFINITY_USER_INTEREST and
               #     IN_MARKET_USER_INTEREST dimensions, and may not be available for every
               #     attribute of those dimensions in every market.
+              #   @param knowledge_graph_entity_search_options [::Google::Ads::GoogleAds::V24::Services::KnowledgeGraphEntitySearchOptions, ::Hash]
+              #     Optional. Additional search options for Knowledge Graph Entities.
               #
               # @yield [response, operation] Access the result along with the RPC operation
               # @yieldparam response [::Google::Ads::GoogleAds::V24::Services::ListAudienceInsightsAttributesResponse]
@@ -548,7 +550,7 @@ module Google
               #     returned. Supported dimensions are KNOWLEDGE_GRAPH, GEO_TARGET_COUNTRY,
               #     SUB_COUNTRY_LOCATION, YOUTUBE_CHANNEL, YOUTUBE_LINEUP,
               #     AFFINITY_USER_INTEREST, IN_MARKET_USER_INTEREST, LIFE_EVENT_USER_INTEREST,
-              #      PARENTAL_STATUS, INCOME_RANGE, AGE_RANGE, and GENDER.
+              #      PARENTAL_STATUS, INCOME_RANGE, AGE_RANGE, GENDER, and USER_LIST.
               #   @param customer_insights_group [::String]
               #     The name of the customer being planned for.  This is a user-defined value.
               #   @param insights_application_info [::Google::Ads::GoogleAds::V24::Common::AdditionalApplicationInfo, ::Hash]
@@ -1161,6 +1163,7 @@ module Google
               #    *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
               #    *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
               #    *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+              #    *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
               #    *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
               #       trigger a retry.
               #   @return [::Hash]
@@ -1245,6 +1248,7 @@ module Google
                 #      *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
                 #      *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
                 #      *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+                #      *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
                 #      *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
                 #         trigger a retry.
                 #
