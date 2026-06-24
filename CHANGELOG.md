@@ -1,3 +1,7 @@
+42.0.0
+-----
+- Compatibility with v24.2, v23.3, v22.2, v21.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 41.1.0
 -----
 - Added Bundler autorequire support
@@ -5,7 +9,7 @@
 
 41.0.0
 -----
-- Compatibility with v24 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Compatibility with v24.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
 
 40.1.0
 -----

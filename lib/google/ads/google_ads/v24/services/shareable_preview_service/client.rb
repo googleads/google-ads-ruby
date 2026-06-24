@@ -30,6 +30,13 @@ module Google
             #
             # Service to generate Shareable Previews.
             #
+            # Only Performance Max asset groups and certain YouTube video/audio ad formats
+            # are supported. Other ad types, such as Responsive Search Ads or Responsive
+            # Display Ads, are not supported and return an `UNSUPPORTED_AD_TYPE` error.
+            #
+            # The generated preview URLs cannot be embedded in an iframe because the
+            # response headers include `X-Frame-Options: deny`.
+            #
             class Client
               # @private
               API_VERSION = ""
@@ -364,6 +371,7 @@ module Google
               #    *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
               #    *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
               #    *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+              #    *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
               #    *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
               #       trigger a retry.
               #   @return [::Hash]
@@ -448,6 +456,7 @@ module Google
                 #      *  `:initial_delay` (*type:* `Numeric`) - The initial delay in seconds.
                 #      *  `:max_delay` (*type:* `Numeric`) - The max delay in seconds.
                 #      *  `:multiplier` (*type:* `Numeric`) - The incremental backoff multiplier.
+                #      *  `:jitter` (*type:* `Numeric`) - The jitter in seconds. Default: 1.0.
                 #      *  `:retry_codes` (*type:* `Array<String>`) - The error codes that should
                 #         trigger a retry.
                 #

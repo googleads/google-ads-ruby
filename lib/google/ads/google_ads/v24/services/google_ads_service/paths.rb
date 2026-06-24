@@ -2732,6 +2732,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified MultiPartyAuthReview resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/multiPartyAuthReviews/{customer_invitation_id}`
+              #
+              # @param customer_id [String]
+              # @param customer_invitation_id [String]
+              #
+              # @return [::String]
+              def multi_party_auth_review_path customer_id:, customer_invitation_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/multiPartyAuthReviews/#{customer_invitation_id}"
+              end
+
+              ##
               # Create a fully-qualified OfflineConversionUploadClientSummary resource string.
               #
               # The resource will be in the following format:
