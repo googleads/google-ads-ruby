@@ -54,6 +54,13 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
 end
 
 if __FILE__ == $PROGRAM_NAME
+  ACCESS_ROLES = %w[
+    ADMIN
+    STANDARD
+    READ_ONLY
+    EMAIL_ONLY
+  ]
+
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -94,11 +101,23 @@ if __FILE__ == $PROGRAM_NAME
     end
   end.parse!
 
+  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
+      options[:email_address].nil? || options[:email_address] == 'INSERT_EMAIL_ADDRESS_HERE' ||
+      options[:access_role].nil? || options[:access_role] == 'INSERT_ACCESS_ROLE_HERE'
+    puts "Missing required arguments. Customer ID (-C), Email Address (-E), and Access Role (-R) are required."
+    exit 1
+  end
+
+  unless ACCESS_ROLES.include?(options[:access_role]&.upcase)
+    puts "Invalid access role. Must be one of: #{ACCESS_ROLES.join(', ')}"
+    exit 1
+  end
+
   begin
     invite_user_with_access_role(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:email_address),
-      options.fetch(:access_role).to_sym,
+      options.fetch(:access_role).upcase.to_sym,
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|

@@ -35,6 +35,8 @@ def fetch_and_approve_pending_multi_party_auth_reviews(customer_id)
     # Multi-party auth reviews can only be resolved one at a time. In this
     # code example, we illustrate approving the first pending review request.
     approve_mpa_review(client, customer_id, pending_reviews.first)
+  else
+    puts "No pending multi-party auth reviews found for customer ID #{customer_id}."
   end
 end
 
@@ -48,6 +50,7 @@ def fetch_pending_mpa_reviews(client, customer_id)
       multi_party_auth_review.resource_name,
       multi_party_auth_review.multi_party_auth_review_id,
       multi_party_auth_review.creation_date_time,
+      multi_party_auth_review.review_status,
       multi_party_auth_review.request_user_email,
       multi_party_auth_review.operation_type,
       multi_party_auth_review.justification,
@@ -79,14 +82,14 @@ def fetch_pending_mpa_reviews(client, customer_id)
         if mpa_review.operation_type == :UPDATE
           # When updating a customer user access, only the new access level
           # is populated.
-          puts "Old resource name: #{access_review.old_customer_user_access}, " \
+          puts "\tOld resource name: #{access_review.old_customer_user_access}, " \
             "new access role: #{access_review.new_customer_user_access.access_role}."
         elsif mpa_review.operation_type == :REMOVE
-          puts "Old resource name: #{access_review.old_customer_user_access}."
+          puts "\tOld resource name: #{access_review.old_customer_user_access}."
         end
       elsif mpa_review.target_resource == :CUSTOMER_USER_ACCESS_INVITATION
         new_invite = mpa_review.customer_user_access_invitation_review.new_customer_user_access_invitation
-        puts "Invitation email address: #{new_invite.email_address}, " \
+        puts "\tInvitation email address: #{new_invite.email_address}, " \
           "Role: #{new_invite.access_role}."
       end
 
@@ -114,7 +117,7 @@ def approve_mpa_review(client, customer_id, pending_review)
 
   result_or_error = response.result_or_error.first
 
-  if result_or_error.result
+  if result_or_error&.result
     result = result_or_error.result
     puts "Approved multi-party auth review: #{result.multi_party_auth_review}."
     if !result.customer_user_access_invitation.empty?
@@ -122,7 +125,7 @@ def approve_mpa_review(client, customer_id, pending_review)
     elsif !result.customer_user_access.empty?
       puts "Affected customer user access resource: #{result.customer_user_access}"
     end
-  elsif result_or_error.partial_failure_error
+  elsif result_or_error&.partial_failure_error
     # Partial failure error
     errors_count = 0
     failures = client.decode_partial_failure_error(result_or_error.partial_failure_error)
@@ -133,6 +136,8 @@ def approve_mpa_review(client, customer_id, pending_review)
       end
     end
     puts "#{errors_count} partial failure error(s) occurred"
+  else
+    puts "No result or error returned."
   end
 end
 # [END approve_mpa_review]
@@ -167,6 +172,11 @@ if __FILE__ == $PROGRAM_NAME
       exit
     end
   end.parse!
+
+  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
+    puts "Missing required argument: --customer-id (-C) is required."
+    exit 1
+  end
 
   begin
     fetch_and_approve_pending_multi_party_auth_reviews(

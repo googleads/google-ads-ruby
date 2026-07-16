@@ -93,9 +93,9 @@ def modify_user_access(client, customer_id, user_id, access_role)
     puts "Successfully updated customer user access with resource name " \
       "#{response.result.resource_name}."
   end
-end
+end 
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   ACCESS_ROLES = %w[
     ADMIN
     STANDARD
@@ -143,11 +143,23 @@ if __FILE__ == $0
     end
   end.parse!
 
+  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
+      options[:email_address].nil? || options[:email_address] == 'INSERT_EMAIL_ADDRESS_HERE' ||
+      options[:access_role].nil? || options[:access_role] == 'INSERT_ACCESS_ROLE_HERE'
+    puts "Missing required arguments. Customer ID (-C), Email Address (-e), and Access Role (-a) are required."
+    exit 1
+  end
+
+  unless ACCESS_ROLES.include?(options[:access_role]&.upcase)
+    puts "Invalid access role. Must be one of: #{ACCESS_ROLES.join(', ')}"
+    exit 1
+  end
+
   begin
     update_user_access(
       options.fetch(:customer_id).tr("-", ""),
       options.fetch(:email_address),
-      options.fetch(:access_role),
+      options.fetch(:access_role).upcase,
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
