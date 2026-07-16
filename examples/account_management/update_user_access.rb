@@ -83,8 +83,16 @@ def modify_user_access(client, customer_id, user_id, access_role)
     operation: operation,
   )
 
-  puts "Successfully updated customer user access with resource name " \
-    "#{response.result.resource_name}."
+  if !response.result.multi_party_auth_review.empty?
+    puts "A multi-party auth review was triggered. The MPA review resource " \
+      "name is #{response.result.multi_party_auth_review}. Ask a second " \
+      "administrator to approve this request to make the requested user " \
+      "access changes. See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
+      "for an example on how to approve an MPA auth review using the API."
+  else
+    puts "Successfully updated customer user access with resource name " \
+      "#{response.result.resource_name}."
+  end
 end
 
 if __FILE__ == $0
