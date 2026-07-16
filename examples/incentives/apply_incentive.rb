@@ -87,9 +87,9 @@ if __FILE__ == $0
   end.parse!
 
   # Check if required parameters are present.
-  if options[:customer_id].nil?
-    || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
-    || options[:incentive_id].nil?
+  if options[:customer_id].nil? ||
+      options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
+      options[:incentive_id].nil?
     puts "Missing required arguments. See usage:"
     puts "Customer ID and Incentive ID are required."
     exit 1
