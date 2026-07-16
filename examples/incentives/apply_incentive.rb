@@ -30,11 +30,13 @@ def apply_incentive(customer_id, incentive_id, country_code)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Issues the request.
-  response = client.service.incentive.apply_incentive(
+  request_args = {
     customer_id: customer_id,
-    selected_incentive_id: incentive_id.to_i,
-    country_code: country_code
-  )
+    selected_incentive_id: incentive_id
+  }
+  request_args[:country_code] = country_code if country_code
+
+  response = client.service.incentive.apply_incentive(request_args)
 
   # Processes the response.
   puts "Incentive was created at '#{response.creation_time}'."
@@ -67,7 +69,7 @@ if __FILE__ == $0
       options[:customer_id] = v.tr('-', '')
     end
 
-    opts.on('-I', '--incentive-id INCENTIVE-ID', String, 'Incentive ID') do |v|
+    opts.on('-I', '--incentive-id INCENTIVE-ID', Integer, 'Incentive ID') do |v|
       options[:incentive_id] = v
     end
 
@@ -85,7 +87,9 @@ if __FILE__ == $0
   end.parse!
 
   # Check if required parameters are present.
-  if options[:customer_id].nil? || options[:incentive_id].nil?
+  if options[:customer_id].nil?
+    || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
+    || options[:incentive_id].nil?
     puts "Missing required arguments. See usage:"
     puts "Customer ID and Incentive ID are required."
     exit 1

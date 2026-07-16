@@ -29,8 +29,7 @@ def fetch_incentive(email, language_code, country_code)
     email: email,
     language_code: language_code,
     country_code: country_code,
-    # IncentiveType is usually an enum, we can refer to it via its symbol representation
-    # or the exact class if needed. Let's pass the symbol :ACQUISITION.
+    # Passing :ACQUISITION as the symbol representation of the IncentiveType enum.
     type: :ACQUISITION
   )
 
@@ -48,12 +47,6 @@ def fetch_incentive(email, language_code, country_code)
     print_incentive_details(cyo_incentives.medium_offer)
     print_incentive_details(cyo_incentives.high_offer)
   end
-rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-  puts "Request ID #{e.request_id} failed due to GoogleAdsError."
-  e.failure.errors.each_with_index do |error, i|
-    puts "  Error #{i}: #{error.message}"
-  end
-  exit 1
 end
 
 def print_incentive_details(incentive)
@@ -82,10 +75,11 @@ end
 def format_money(money)
   return 'N/A' if money.nil?
 
-  amount = money.units
-  amount += money.nanos / 1_000_000_000.0 if money.nanos > 0
-
-  formatted_amount = money.nanos > 0 ? sprintf("%.2f", amount) : amount.to_s
+  formatted_amount = if money.nanos != 0
+    sprintf("%.2f", money.units + (money.nanos / 1_000_000_000.0))
+  else
+    money.units.to_s
+  end
   "#{formatted_amount} #{money.currency_code}"
 end
 
