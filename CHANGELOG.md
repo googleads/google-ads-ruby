@@ -1,3 +1,7 @@
+43.0.0
+-----
+- Compatibility with v25.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 42.0.0
 -----
 - Compatibility with v24.2, v23.3, v22.2, v21.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
