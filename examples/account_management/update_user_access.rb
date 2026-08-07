@@ -26,6 +26,13 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+ACCESS_ROLES = %w[
+  ADMIN
+  STANDARD
+  READ_ONLY
+  EMAIL_ONLY
+]
+
 def update_user_access(customer_id, email_address, access_role)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -96,13 +103,6 @@ def modify_user_access(client, customer_id, user_id, access_role)
 end 
 
 if __FILE__ == $PROGRAM_NAME
-  ACCESS_ROLES = %w[
-    ADMIN
-    STANDARD
-    READ_ONLY
-    EMAIL_ONLY
-  ]
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -126,11 +126,11 @@ if __FILE__ == $PROGRAM_NAME
       options[:customer_id] = v
     end
 
-    opts.on('-e', '--email-address EMAIL-ADDRESS', String, 'Email Address') do |v|
+    opts.on('-E', '--email-address EMAIL-ADDRESS', String, 'Email Address') do |v|
       options[:email_address] = v
     end
 
-    opts.on('-a', '--access-role ACCESS-ROLE', String, 'Access Role') do |v|
+    opts.on('-R', '--access-role ACCESS-ROLE', String, 'Access Role') do |v|
       options[:access_role] = v
     end
 
@@ -146,7 +146,7 @@ if __FILE__ == $PROGRAM_NAME
   if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
       options[:email_address].nil? || options[:email_address] == 'INSERT_EMAIL_ADDRESS_HERE' ||
       options[:access_role].nil? || options[:access_role] == 'INSERT_ACCESS_ROLE_HERE'
-    puts "Missing required arguments. Customer ID (-C), Email Address (-e), and Access Role (-a) are required."
+    puts "Missing required arguments. Customer ID (-C), Email Address (-E), and Access Role (-R) are required."
     exit 1
   end
 

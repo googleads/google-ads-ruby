@@ -43,7 +43,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
       "name is #{response.result.multi_party_auth_review}. Ask a second " \
       "administrator to approve this request to send the user access invitation. " \
       "See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
-      "for an example on how to approve an MPA auth review using the API."                                                                          
+      "for an example on how to approve an MPA auth review using the API."
   else
     # Print out information of the created invitation.
     puts "Customer user access invitation was sent for customerId = #{customer_id} " \
@@ -51,6 +51,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
       "access role = '#{access_role}'. The invitation resource name is " \
       "#{response.result.resource_name}."
   end
+  # [END invite_user_with_access_role]
 end
 
 if __FILE__ == $PROGRAM_NAME

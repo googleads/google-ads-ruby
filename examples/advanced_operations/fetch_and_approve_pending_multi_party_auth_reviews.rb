@@ -120,9 +120,9 @@ def approve_mpa_review(client, customer_id, pending_review)
   if result_or_error&.result
     result = result_or_error.result
     puts "Approved multi-party auth review: #{result.multi_party_auth_review}."
-    if !result.customer_user_access_invitation.empty?
+    if !result.customer_user_access_invitation.to_s.empty?
       puts "New user invitation created: #{result.customer_user_access_invitation}"
-    elsif !result.customer_user_access.empty?
+    elsif !result.customer_user_access.to_s.empty?
       puts "Affected customer user access resource: #{result.customer_user_access}"
     end
   elsif result_or_error&.partial_failure_error
