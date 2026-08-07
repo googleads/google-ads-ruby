@@ -31,7 +31,7 @@ ACCESS_ROLES = %w[
   STANDARD
   READ_ONLY
   EMAIL_ONLY
-]
+].freeze
 
 def update_user_access(customer_id, email_address, access_role)
   # GoogleAdsClient will read a config file from

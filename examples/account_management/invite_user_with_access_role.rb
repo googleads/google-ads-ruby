@@ -21,6 +21,13 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+ACCESS_ROLES = %w[
+  ADMIN
+  STANDARD
+  READ_ONLY
+  EMAIL_ONLY
+].freeze
+
 def invite_user_with_access_role(customer_id, email_address, access_role)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
@@ -55,13 +62,6 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
 end
 
 if __FILE__ == $PROGRAM_NAME
-  ACCESS_ROLES = %w[
-    ADMIN
-    STANDARD
-    READ_ONLY
-    EMAIL_ONLY
-  ]
-
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
