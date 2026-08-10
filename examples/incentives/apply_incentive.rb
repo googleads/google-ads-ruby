@@ -24,7 +24,7 @@ require 'google/ads/google_ads'
 require 'optparse'
 
 # [START apply_incentive]
-def apply_incentive(customer_id, incentive_id, country_code)
+def apply_incentive(customer_id, incentive_id, country_code = nil)
   # GoogleAdsClient will read a config file from a default location
   # if no path is passed.
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -32,7 +32,7 @@ def apply_incentive(customer_id, incentive_id, country_code)
   # Issues the request.
   request_args = {
     customer_id: customer_id,
-    selected_incentive_id: incentive_id
+    selected_incentive_id: incentive_id.to_i
   }
   request_args[:country_code] = country_code if country_code
 
@@ -55,6 +55,7 @@ if __FILE__ == $0
   #
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+  options[:incentive_id] = 'INSERT_INCENTIVE_ID_HERE'
 
   # The country code defaults to US.
   options[:country_code] = 'US'
@@ -89,7 +90,8 @@ if __FILE__ == $0
   # Check if required parameters are present.
   if options[:customer_id].nil? ||
       options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
-      options[:incentive_id].nil?
+      options[:incentive_id].nil? ||
+      options[:incentive_id] == 'INSERT_INCENTIVE_ID_HERE'
     puts "Missing required arguments. See usage:"
     puts "Customer ID and Incentive ID are required."
     exit 1

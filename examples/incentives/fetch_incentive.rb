@@ -19,6 +19,7 @@
 require 'google/ads/google_ads'
 require 'optparse'
 
+# [START fetch_incentive]
 def fetch_incentive(email, language_code, country_code)
   # GoogleAdsClient will read a config file from a default location
   # if no path is passed.
@@ -48,6 +49,7 @@ def fetch_incentive(email, language_code, country_code)
     print_incentive_details(cyo_incentives.high_offer)
   end
 end
+# [END fetch_incentive]
 
 def print_incentive_details(incentive)
   return if incentive.nil?
@@ -75,12 +77,8 @@ end
 def format_money(money)
   return 'N/A' if money.nil?
 
-  formatted_amount = if money.nanos != 0
-    sprintf("%.2f", money.units + (money.nanos / 1_000_000_000.0))
-  else
-    money.units.to_s
-  end
-  "#{formatted_amount} #{money.currency_code}"
+  amount = money.units.to_f + (money.nanos.to_f / 1_000_000_000.0)
+  sprintf('%.2f %s', amount, money.currency_code)
 end
 
 if __FILE__ == $0
@@ -93,6 +91,7 @@ if __FILE__ == $0
   # code.
   #
   # Running the example with -h will print the command line usage.
+  options[:email] = 'INSERT_EMAIL_HERE'
   options[:language_code] = 'en'
   options[:country_code] = 'US'
 
@@ -124,7 +123,7 @@ if __FILE__ == $0
   end.parse!
 
   # Check if required parameters are present.
-  if options[:email].nil?
+  if options[:email].nil? || options[:email] == 'INSERT_EMAIL_HERE'
     puts "Missing required argument: Email is required."
     exit 1
   end
