@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2021 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,9 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # Sanitizes the customer ID to handle hyphenated inputs.
+  customer_id = customer_id.to_s.tr('-', '')
+
   # [START invite_user_with_access_role]
   operation = client.operation.create_resource.customer_user_access_invitation do |inv|
     inv.email_address = email_address
@@ -45,7 +48,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     operation: operation,
   )
 
-  if !response.result.multi_party_auth_review.empty?
+  if !response.result.multi_party_auth_review.to_s.empty?
     puts "A multi-party auth review was triggered. The MPA review resource " \
       "name is #{response.result.multi_party_auth_review}. Ask a second " \
       "administrator to approve this request to send the user access invitation. " \
@@ -75,7 +78,7 @@ if __FILE__ == $PROGRAM_NAME
   options[:email_address] = 'INSERT_EMAIL_ADDRESS_HERE'
   options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
 
-  OptionParser.new do |opts|
+  parser = OptionParser.new do |opts|
     opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
 
     opts.separator ''
@@ -100,12 +103,14 @@ if __FILE__ == $PROGRAM_NAME
       puts opts
       exit
     end
-  end.parse!
+  end
+  parser.parse!
 
   if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
       options[:email_address].nil? || options[:email_address] == 'INSERT_EMAIL_ADDRESS_HERE' ||
       options[:access_role].nil? || options[:access_role] == 'INSERT_ACCESS_ROLE_HERE'
-    puts "Missing required arguments. Customer ID (-C), Email Address (-E), and Access Role (-R) are required."
+    puts "Missing required arguments. Customer ID (-C), Email Address (-E), and Access Role (-R) are required.\n\n"
+    puts parser
     exit 1
   end
 
@@ -116,7 +121,7 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     invite_user_with_access_role(
-      options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:customer_id),
       options.fetch(:email_address),
       options.fetch(:access_role).upcase.to_sym,
     )
