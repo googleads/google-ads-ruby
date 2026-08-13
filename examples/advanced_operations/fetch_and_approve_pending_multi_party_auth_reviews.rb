@@ -83,7 +83,7 @@ def fetch_pending_mpa_reviews(client, customer_id)
           # When updating a customer user access, only the new access level
           # is populated.
           puts "\tOld resource name: #{access_review.old_customer_user_access}, " \
-            "new access role: #{access_review.new_customer_user_access.access_role}."
+            "new access role: #{access_review.new_customer_user_access&.access_role}."
         elsif mpa_review.operation_type == :REMOVE
           puts "\tOld resource name: #{access_review.old_customer_user_access}."
         end
@@ -154,8 +154,8 @@ if __FILE__ == $PROGRAM_NAME
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
-  OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
+  parser = OptionParser.new do |opts|
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'
@@ -171,10 +171,12 @@ if __FILE__ == $PROGRAM_NAME
       puts opts
       exit
     end
-  end.parse!
+  end
+  parser.parse!
 
   if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
-    puts "Missing required argument: --customer-id (-C) is required."
+    puts "Missing required argument: --customer-id (-C) is required.\n\n"
+    puts parser
     exit 1
   end
 
