@@ -43,10 +43,13 @@ def fetch_incentive(email, language_code, country_code)
   # If the offer type is CHOOSE_YOUR_OWN_INCENTIVE, there will be 3 incentives in the
   # response. At the time this example was written, all incentive offers are CYO incentive offers.
   if response.incentive_offer.cyo_incentives
-    cyo_incentives = response.incentive_offer.cyo_incentives
-    print_incentive_details(cyo_incentives.low_offer)
-    print_incentive_details(cyo_incentives.medium_offer)
-    print_incentive_details(cyo_incentives.high_offer)
+    cyo = response.incentive_offer.cyo_incentives
+    [cyo.low_offer, cyo.medium_offer, cyo.high_offer].each do |incentive|
+      print_incentive_details(incentive)
+    end
+  else
+    puts "Incentive offer is not a CHOOSE_YOUR_OWN_INCENTIVE type." \
+      "Non-CYO offers are not supported by this example."
   end
 end
 # [END fetch_incentive]
@@ -77,8 +80,12 @@ end
 def format_money(money)
   return 'N/A' if money.nil?
 
-  amount = money.units.to_f + (money.nanos.to_f / 1_000_000_000.0)
-  sprintf('%.2f %s', amount, money.currency_code)
+  units = money.units ? money.units.to_f : 0.0
+  nanos = money.nanos ? money.nanos.to_f : 0.0
+  currency = money.currency_code || 'N/A'
+
+  amount = units + (nanos / 1_000_000_000.0)
+  sprintf('%.2f %s', amount, currency)
 end
 
 if __FILE__ == $0
@@ -95,7 +102,7 @@ if __FILE__ == $0
   options[:language_code] = 'en'
   options[:country_code] = 'US'
 
-  OptionParser.new do |opts|
+  parser = OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
@@ -120,11 +127,13 @@ if __FILE__ == $0
       puts opts
       exit
     end
-  end.parse!
+  end
+  parser.parse!
 
   # Check if required parameters are present.
   if options[:email].nil? || options[:email] == 'INSERT_EMAIL_HERE'
-    puts "Missing required argument: Email is required."
+    puts "Missing required argument: Email is required. See usage:\n"
+    puts parser
     exit 1
   end
 
