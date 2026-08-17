@@ -551,6 +551,14 @@ module Google
               #     SUB_COUNTRY_LOCATION, YOUTUBE_CHANNEL, YOUTUBE_LINEUP,
               #     AFFINITY_USER_INTEREST, IN_MARKET_USER_INTEREST, LIFE_EVENT_USER_INTEREST,
               #      PARENTAL_STATUS, INCOME_RANGE, AGE_RANGE, GENDER, and USER_LIST.
+              #
+              #     Note that when an
+              #     {::Google::Ads::GoogleAds::V25::Services::InsightsAudience#user_list InsightsAudience.user_list}
+              #     is requested:
+              #       - Only the following dimensions are supported: AFFINITY_USER_INTEREST,
+              #       AGE_RANGE, GENDER, IN_MARKET_USER_INTEREST
+              #       - The score field is omitted from AudienceCompositionMetrics of the
+              #       GenerateAudienceCompositionInsightsResponse.
               #   @param customer_insights_group [::String]
               #     The name of the customer being planned for.  This is a user-defined value.
               #   @param insights_application_info [::Google::Ads::GoogleAds::V25::Common::AdditionalApplicationInfo, ::Hash]
