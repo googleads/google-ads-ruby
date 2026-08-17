@@ -471,7 +471,9 @@ module Google
               #   the default parameter values, pass an empty Hash as a request object (see above).
               #
               #   @param benchmarks_sources [::Array<::Google::Ads::GoogleAds::V25::Enums::BenchmarksSourceTypeEnum::BenchmarksSourceType>]
-              #     Required. The types of benchmarks sources to be returned
+              #     Required. The types of benchmarks sources to be returned. Supported sources
+              #     include INDUSTRY_VERTICAL and CATEGORY. Categories are used as filters for
+              #     scoping the benchmarks analysis when benchmarking against all advertisers.
               #   @param application_info [::Google::Ads::GoogleAds::V25::Common::AdditionalApplicationInfo, ::Hash]
               #     Additional information on the application issuing the request.
               #
@@ -557,7 +559,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, product_filter: nil, breakdown_definition: nil, currency_code: nil, customer_benchmarks_group: nil, application_info: nil)
+              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, category_filter: nil, product_filter: nil, breakdown_definition: nil, currency_code: nil, customer_benchmarks_group: nil, application_info: nil)
               #   Pass arguments to `generate_benchmarks_metrics` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -575,6 +577,15 @@ module Google
               #     Required. The location to generate benchmarks metrics for.
               #   @param benchmarks_source [::Google::Ads::GoogleAds::V25::Services::BenchmarksSource, ::Hash]
               #     Required. The source used to generate benchmarks metrics for.
+              #   @param category_filter [::Google::Ads::GoogleAds::V25::Services::CategoryFilter, ::Hash]
+              #     A list of Product & Service Categories for scoping a YouTube benchmarks
+              #     analysis. For example, when category "/Apparel/Clothing" is selected,
+              #     customer metrics represent Ad performance for "/Apparel/Clothing" Ads only
+              #     and the customer is benchmarking against all advertisers’ Ads in the
+              #     "/Apparel/Clothing" category.
+              #
+              #     This filter can only be used when `all_advertisers` is used as the
+              #     {::Google::Ads::GoogleAds::V25::Services::GenerateBenchmarksMetricsRequest#benchmarks_source benchmarks_source}.
               #   @param product_filter [::Google::Ads::GoogleAds::V25::Services::ProductFilter, ::Hash]
               #     Required. The products to aggregate metrics over. Product filter settings
               #     support a list of product IDs or a list of marketing objectives.
