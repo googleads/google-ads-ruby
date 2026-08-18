@@ -2512,6 +2512,168 @@ module Google
               end
 
               ##
+              # Create a fully-qualified LiftMeasurementAgeRange resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementAgeRanges/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param campaign_id [String]
+              # @param criterion_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_age_range_path customer_id:, lift_measurement_configuration_id:, campaign_id:,
+                                                  criterion_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementAgeRanges/#{lift_measurement_configuration_id}~#{campaign_id}~#{criterion_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementCampaign resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementCampaigns/{lift_measurement_configuration_id}~{campaign_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param campaign_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_campaign_path customer_id:, lift_measurement_configuration_id:, campaign_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+
+                "customers/#{customer_id}/liftMeasurementCampaigns/#{lift_measurement_configuration_id}~#{campaign_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementConfig resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementConfigs/{lift_measurement_configuration_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_config_path customer_id:, lift_measurement_configuration_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementConfigs/#{lift_measurement_configuration_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementDevice resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementDevices/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param campaign_id [String]
+              # @param criterion_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_device_path customer_id:, lift_measurement_configuration_id:, campaign_id:,
+                                               criterion_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementDevices/#{lift_measurement_configuration_id}~#{campaign_id}~#{criterion_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementFlight resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementFlights/{lift_measurement_configuration_id}~{lift_measurement_flight_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param lift_measurement_flight_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_flight_path customer_id:, lift_measurement_configuration_id:,
+                                               lift_measurement_flight_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+
+                "customers/#{customer_id}/liftMeasurementFlights/#{lift_measurement_configuration_id}~#{lift_measurement_flight_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementGender resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementGenders/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param campaign_id [String]
+              # @param criterion_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_gender_path customer_id:, lift_measurement_configuration_id:, campaign_id:,
+                                               criterion_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementGenders/#{lift_measurement_configuration_id}~#{campaign_id}~#{criterion_id}"
+              end
+
+              ##
+              # Create a fully-qualified LiftMeasurementVideo resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementVideos/{lift_measurement_configuration_id}~{campaign_id}~{external_video_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              # @param campaign_id [String]
+              # @param external_video_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_video_path customer_id:, lift_measurement_configuration_id:, campaign_id:,
+                                              external_video_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+                if lift_measurement_configuration_id.to_s.include? "/"
+                  raise ::ArgumentError,
+                        "lift_measurement_configuration_id cannot contain /"
+                end
+                raise ::ArgumentError, "campaign_id cannot contain /" if campaign_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementVideos/#{lift_measurement_configuration_id}~#{campaign_id}~#{external_video_id}"
+              end
+
+              ##
               # Create a fully-qualified LocalServicesEmployee resource string.
               #
               # The resource will be in the following format:
