@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\nOgoogle/ads/googleads/v25/enums/content_creator_insights_supplemental_data.proto\x12\x1egoogle.ads.googleads.v25.enums\"\x8c\x01\n*ContentCreatorInsightsSupplementalDataEnum\"^\n&ContentCreatorInsightsSupplementalData\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x16\n\x12LOCAL_CREATOR_DATA\x10\x03\x42\x85\x02\n\"com.google.ads.googleads.v25.enumsB+ContentCreatorInsightsSupplementalDataProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v25/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V25.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V25\\Enums\xea\x02\"Google::Ads::GoogleAds::V25::Enumsb\x06proto3"
+descriptor_data = "\nOgoogle/ads/googleads/v25/enums/content_creator_insights_supplemental_data.proto\x12\x1egoogle.ads.googleads.v25.enums\"\xa6\x01\n*ContentCreatorInsightsSupplementalDataEnum\"x\n&ContentCreatorInsightsSupplementalData\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x18\n\x14\x42RAND_SENTIMENT_DATA\x10\x02\x12\x16\n\x12LOCAL_CREATOR_DATA\x10\x03\x42\x85\x02\n\"com.google.ads.googleads.v25.enumsB+ContentCreatorInsightsSupplementalDataProtoP\x01ZCgoogle.golang.org/genproto/googleapis/ads/googleads/v25/enums;enums\xa2\x02\x03GAA\xaa\x02\x1eGoogle.Ads.GoogleAds.V25.Enums\xca\x02\x1eGoogle\\Ads\\GoogleAds\\V25\\Enums\xea\x02\"Google::Ads::GoogleAds::V25::Enumsb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
