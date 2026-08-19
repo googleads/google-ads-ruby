@@ -128,6 +128,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified CustomConversionGoal resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/customConversionGoals/{goal_id}`
+              #
+              # @param customer_id [String]
+              # @param goal_id [String]
+              #
+              # @return [::String]
+              def custom_conversion_goal_path customer_id:, goal_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/customConversionGoals/#{goal_id}"
+              end
+
+              ##
               # Create a fully-qualified Recommendation resource string.
               #
               # The resource will be in the following format:
