@@ -31,7 +31,6 @@ module Google
             config.developer_token,
             config.login_customer_id,
             config.linked_customer_id,
-            config.use_cloud_org_for_api_access,
             config.ads_assistant
           )
 
@@ -89,8 +88,9 @@ module Google
             headers[:"linked-customer-id"] = config.linked_customer_id.to_s
           end
 
-          unless config.use_cloud_org_for_api_access
-            headers[:"developer-token"] = config.developer_token if config.developer_token
+          # Add the developer-token header if provided.
+          if config.developer_token && !config.developer_token.empty?
+            headers[:"developer-token"] = config.developer_token
           end
 
           if config.ads_assistant

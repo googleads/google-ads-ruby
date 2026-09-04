@@ -1,3 +1,8 @@
+45.0.0
+-----
+- Removed `use_cloud_org_for_api_access` setting.
+- Removed developer token validation checks.
+
 44.0.0
 -----
 - Compatibility with v25.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
