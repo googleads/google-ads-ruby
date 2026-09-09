@@ -40,10 +40,19 @@ class TestServiceLookup < Minitest::Test
     assert_equal "gaada/v0", headers[:"x-goog-api-client"]
   end
 
-  def test_headers_excludes_developer_token_when_cloud_org
+  def test_headers_excludes_developer_token_when_nil
     config = Google::Ads::GoogleAds::Config.new do |c|
-      c.developer_token = "test-dev-token"
-      c.use_cloud_org_for_api_access = true
+      c.developer_token = nil
+    end
+    lookup = create_lookup(config)
+
+    headers = lookup.send(:headers)
+    assert_nil headers[:"developer-token"]
+  end
+
+  def test_headers_excludes_developer_token_when_empty
+    config = Google::Ads::GoogleAds::Config.new do |c|
+      c.developer_token = ""
     end
     lookup = create_lookup(config)
 

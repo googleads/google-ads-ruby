@@ -24,12 +24,11 @@ module Google
     module GoogleAds
       module Interceptors
         class MetadataInterceptor < GRPC::ClientInterceptor
-          def initialize(developer_token, login_customer_id, linked_customer_id, use_cloud_org_for_api_access, ads_assistant)
+          def initialize(developer_token, login_customer_id, linked_customer_id, ads_assistant)
             super()
             @developer_token = developer_token
             @login_customer_id = login_customer_id
             @linked_customer_id = linked_customer_id
-            @use_cloud_org_for_api_access = use_cloud_org_for_api_access
             @ads_assistant = ads_assistant
           end
 
@@ -46,7 +45,8 @@ module Google
           private
 
           def update_metadata(metadata)
-            if !@use_cloud_org_for_api_access
+            # Add the developer-token header if provided.
+            if @developer_token && !@developer_token.empty?
               metadata[:"developer-token"] = @developer_token
             end
 

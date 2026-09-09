@@ -110,10 +110,6 @@ module Google
           # Client library-specific variables
           @config.log_level = ENV.fetch("GOOGLE_ADS_RUBY_LOG_LEVEL", @config.log_level)
           @config.http_proxy = ENV.fetch("GOOGLE_ADS_RUBY_HTTP_PROXY", @config.http_proxy)
-          @config.use_cloud_org_for_api_access = ENV.fetch("GOOGLE_ADS_USE_CLOUD_ORG_FOR_API_ACCESS", @config.use_cloud_org_for_api_access)
-          if @config.use_cloud_org_for_api_access.is_a?(String)
-            @config.use_cloud_org_for_api_access = @config.use_cloud_org_for_api_access.downcase == "true"
-          end
           @config.ads_assistant = ENV.fetch("GOOGLE_ADS_ASSISTANT", @config.ads_assistant)
         end
 
