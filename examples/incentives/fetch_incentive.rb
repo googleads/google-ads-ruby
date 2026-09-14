@@ -26,13 +26,15 @@ def fetch_incentive(email, language_code, country_code)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   # Issues the request.
-  response = client.service.incentive.fetch_incentive(
+  request_args = {
     email: email,
     language_code: language_code,
     country_code: country_code,
     # Passing :ACQUISITION as the symbol representation of the IncentiveType enum.
-    type: :ACQUISITION
-  )
+    incentive_type: :ACQUISITION
+  }.compact
+  
+  response = client.service.incentive.fetch_incentive(request_args)
 
   # Processes the response.
   if response.incentive_offer.nil?
@@ -44,11 +46,11 @@ def fetch_incentive(email, language_code, country_code)
   # response. At the time this example was written, all incentive offers are CYO incentive offers.
   if response.incentive_offer.cyo_incentives
     cyo = response.incentive_offer.cyo_incentives
-    [cyo.low_offer, cyo.medium_offer, cyo.high_offer].each do |incentive|
+    [cyo.low_offer, cyo.medium_offer, cyo.high_offer].compact.each do |incentive|
       print_incentive_details(incentive)
     end
   else
-    puts "Incentive offer is not a CHOOSE_YOUR_OWN_INCENTIVE type." \
+    puts "Incentive offer is not a CHOOSE_YOUR_OWN_INCENTIVE type. " \
       "Non-CYO offers are not supported by this example."
   end
 end
@@ -80,9 +82,9 @@ end
 def format_money(money)
   return 'N/A' if money.nil?
 
-  units = money.units ? money.units.to_f : 0.0
-  nanos = money.nanos ? money.nanos.to_f : 0.0
-  currency = money.currency_code || 'N/A'
+  units = (money.units || 0).to_f
+  nanos = (money.nanos || 0).to_f
+  currency = money.currency_code.to_s.empty? ? 'N/A' : money.currency_code
 
   amount = units + (nanos / 1_000_000_000.0)
   sprintf('%.2f %s', amount, currency)

@@ -35,7 +35,6 @@ def apply_incentive(customer_id, incentive_id, country_code = nil)
     selected_incentive_id: incentive_id.to_i,
     country_code: country_code
   }.compact
-  request_args[:country_code] = country_code if country_code
 
   response = client.service.incentive.apply_incentive(request_args)
 
