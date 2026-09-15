@@ -28,6 +28,9 @@ def fetch_and_approve_pending_multi_party_auth_reviews(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  # Sanitizes the customer ID to handle hyphenated inputs.
+  customer_id = customer_id.to_s.tr('-', '')
+
   # Retrieve the list of pending MPA reviews.
   pending_reviews = fetch_pending_mpa_reviews(client, customer_id)
 
@@ -42,6 +45,7 @@ end
 
 # [START fetch_mpa_review]
 def fetch_pending_mpa_reviews(client, customer_id)
+  customer_id = customer_id.to_s.tr('-', '')
   pending_reviews = []
 
   # Create a query that will retrieve all the pending MPA reviews.
@@ -82,15 +86,15 @@ def fetch_pending_mpa_reviews(client, customer_id)
         if mpa_review.operation_type == :UPDATE
           # When updating a customer user access, only the new access level
           # is populated.
-          puts "\tOld resource name: #{access_review.old_customer_user_access}, " \
-            "new access role: #{access_review.new_customer_user_access&.access_role}."
+          puts "\tOld resource name: #{access_review&.old_customer_user_access}, " \
+            "new access role: #{access_review&.new_customer_user_access&.access_role}."
         elsif mpa_review.operation_type == :REMOVE
-          puts "\tOld resource name: #{access_review.old_customer_user_access}."
+          puts "\tOld resource name: #{access_review&.old_customer_user_access}."
         end
       elsif mpa_review.target_resource == :CUSTOMER_USER_ACCESS_INVITATION
-        new_invite = mpa_review.customer_user_access_invitation_review.new_customer_user_access_invitation
-        puts "\tInvitation email address: #{new_invite.email_address}, " \
-          "Role: #{new_invite.access_role}."
+        new_invite = mpa_review.customer_user_access_invitation_review&.new_customer_user_access_invitation
+        puts "\tInvitation email address: #{new_invite&.email_address}, " \
+          "Role: #{new_invite&.access_role}."
       end
 
       pending_reviews << mpa_review.resource_name
@@ -103,6 +107,7 @@ end
 
 # [START approve_mpa_review]
 def approve_mpa_review(client, customer_id, pending_review)
+  customer_id = customer_id.to_s.tr('-', '')
   # Currently, you can only approve one request at a time. In addition, the approvals
   # can only be done by a second administrator.
   response = client.service.multi_party_auth_review.resolve_multi_party_auth_review(
@@ -115,7 +120,7 @@ def approve_mpa_review(client, customer_id, pending_review)
     ],
   )
 
-  result_or_error = response.result_or_error.first
+  result_or_error = response.result_or_error&.first
 
   if result_or_error&.result
     result = result_or_error.result
@@ -128,7 +133,7 @@ def approve_mpa_review(client, customer_id, pending_review)
   elsif result_or_error&.partial_failure_error
     # Partial failure error
     errors_count = 0
-    failures = client.decode_partial_failure_error(result_or_error.partial_failure_error)
+    failures = client.decode_partial_failure_error(result_or_error.partial_failure_error) || []
     failures.each do |failure|
       failure.errors.each do |error|
         puts "\tError with message '#{error.message}'."
@@ -182,19 +187,21 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     fetch_and_approve_pending_multi_party_auth_reviews(
-      options.fetch(:customer_id).tr("-", "")
+      options.fetch(:customer_id)
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
+    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
+      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      STDERR.printf("\tError with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
       end
     end
     raise

@@ -36,6 +36,13 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
   # Sanitizes the customer ID to handle hyphenated inputs.
   customer_id = customer_id.to_s.tr('-', '')
 
+  access_role_str = access_role.to_s.upcase
+  if !ACCESS_ROLES.include?(access_role_str)
+    raise "Illegal access role specified. Expected one of " \
+      "#{ACCESS_ROLES.join(' ')}"
+  end
+  access_role = access_role_str.to_sym
+
   # [START invite_user_with_access_role]
   operation = client.operation.create_resource.customer_user_access_invitation do |inv|
     inv.email_address = email_address
@@ -48,9 +55,9 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     operation: operation,
   )
 
-  if !response.result.multi_party_auth_review.to_s.empty?
+  if !response.result&.multi_party_auth_review.to_s.empty?
     puts "A multi-party auth review was triggered. The MPA review resource " \
-      "name is #{response.result.multi_party_auth_review}. Ask a second " \
+      "name is #{response.result&.multi_party_auth_review}. Ask a second " \
       "administrator to approve this request to send the user access invitation. " \
       "See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
       "for an example on how to approve an MPA auth review using the API."
@@ -59,7 +66,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     puts "Customer user access invitation was sent for customerId = #{customer_id} " \
       "email address = '#{email_address}', " \
       "access role = '#{access_role}'. The invitation resource name is " \
-      "#{response.result.resource_name}."
+      "#{response.result&.resource_name}."
   end
   # [END invite_user_with_access_role]
 end
@@ -126,16 +133,18 @@ if __FILE__ == $PROGRAM_NAME
       options.fetch(:access_role).upcase.to_sym,
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
+    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
+      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      STDERR.printf("\tError with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
       end
     end
     raise
