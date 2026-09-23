@@ -240,8 +240,8 @@ module Google
               #
               #     Note: The following parameters are mutually exclusive: `search_attributes`, `search_channels`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.
               #   @param search_channels [::Google::Ads::GoogleAds::V25::Services::GenerateCreatorInsightsRequest::YouTubeChannels, ::Hash]
-              #     YouTube Channel IDs for Creator Insights. Data fetched for channels is
-              #     based on the list of countries specified in
+              #     YouTube Channel IDs and YouTube Channel handles for Creator Insights.
+              #     Data fetched for channels is based on the list of countries specified in
               #     {::Google::Ads::GoogleAds::V25::Services::GenerateCreatorInsightsRequest#country_locations country_locations}.
               #
               #     Note: The following parameters are mutually exclusive: `search_channels`, `search_attributes`, `search_topics`. At most one of these parameters can be set. If more than one is set, only one will be used, and it is not defined which one.

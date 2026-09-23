@@ -40,6 +40,11 @@ module Google
               rpc :GetSmartCampaignStatus, ::Google::Ads::GoogleAds::V25::Services::GetSmartCampaignStatusRequest, ::Google::Ads::GoogleAds::V25::Services::GetSmartCampaignStatusResponse
               # Updates Smart campaign settings for campaigns.
               rpc :MutateSmartCampaignSettings, ::Google::Ads::GoogleAds::V25::Services::MutateSmartCampaignSettingsRequest, ::Google::Ads::GoogleAds::V25::Services::MutateSmartCampaignSettingsResponse
+              # Generates a Performance Max (PMax) draft campaign from an existing Smart
+              # campaign, initialized with a status of [CampaignStatus.PAUSED] and a
+              # creation status of [CampaignCreationStatus.INCOMPLETE]. Returns the draft
+              # PMax campaign ID and related entity IDs.
+              rpc :GeneratePMaxDraftCampaign, ::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignRequest, ::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignResponse
             end
 
             Stub = Service.rpc_stub_class

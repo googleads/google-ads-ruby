@@ -31,7 +31,7 @@ module Google
       module V25
         module Services
           ##
-          # Service to remove automatically created assets.
+          # Service to remove text customization (formerly automatically created assets).
           #
           # @example Load this service and instantiate a gRPC client
           #

@@ -559,6 +559,9 @@ module Google
               #       AGE_RANGE, GENDER, IN_MARKET_USER_INTEREST
               #       - The score field is omitted from AudienceCompositionMetrics of the
               #       GenerateAudienceCompositionInsightsResponse.
+              #
+              #     Note: The USER_LIST dimension does not support the score metric in
+              #     AudienceCompositionMetrics.
               #   @param customer_insights_group [::String]
               #     The name of the customer being planned for.  This is a user-defined value.
               #   @param insights_application_info [::Google::Ads::GoogleAds::V25::Common::AdditionalApplicationInfo, ::Hash]
@@ -1004,6 +1007,14 @@ module Google
               #     Required. The ID of the customer.
               #   @param audiences [::Array<::Google::Ads::GoogleAds::V25::Services::InsightsAudience, ::Hash>]
               #     Required. Audiences to request metrics for.
+              #     {::Google::Ads::GoogleAds::V25::Services::InsightsAudience#country_locations InsightsAudience.country_locations},
+              #     {::Google::Ads::GoogleAds::V25::Services::InsightsAudience#gender InsightsAudience.gender},
+              #     {::Google::Ads::GoogleAds::V25::Services::InsightsAudience#age_ranges InsightsAudience.age_ranges}
+              #     and
+              #     {::Google::Ads::GoogleAds::V25::Services::InsightsAudience#topic_audience_combinations InsightsAudience.topic_audience_combinations}
+              #     are the only supported fields for these audiences. Only
+              #     {::Google::Ads::GoogleAds::V25::Common::AudienceInsightsAttribute#user_interest AudienceInsightsAttribute.user_interest}
+              #     attributes are supported for topic_audience_combinations.
               #   @param customer_insights_group [::String]
               #     Optional. The name of the customer being planned for.  This is a
               #     user-defined value.

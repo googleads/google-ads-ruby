@@ -83,7 +83,8 @@ module Google
               #   [StringLengthError]()
               #   [UrlFieldError]()
               rpc :MutateAdGroupAds, ::Google::Ads::GoogleAds::V25::Services::MutateAdGroupAdsRequest, ::Google::Ads::GoogleAds::V25::Services::MutateAdGroupAdsResponse
-              # Remove automatically created assets from an ad.
+              # Remove text customization (formerly automatically created assets) from an
+              # ad.
               #
               # List of thrown errors:
               #   [AdError]()
