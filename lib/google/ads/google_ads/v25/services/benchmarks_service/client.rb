@@ -559,7 +559,7 @@ module Google
               #   @param options [::Gapic::CallOptions, ::Hash]
               #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
               #
-              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, category_filter: nil, product_filter: nil, breakdown_definition: nil, currency_code: nil, customer_benchmarks_group: nil, application_info: nil)
+              # @overload generate_benchmarks_metrics(customer_id: nil, date_range: nil, location: nil, benchmarks_source: nil, category_filter: nil, product_filter: nil, breakdown_definition: nil, currency_code: nil, customer_benchmarks_group: nil, supplemental_data: nil, application_info: nil)
               #   Pass arguments to `generate_benchmarks_metrics` via keyword arguments. Note that at
               #   least one keyword argument is required. To specify no parameters, or to keep all
               #   the default parameter values, pass an empty Hash as a request object (see above).
@@ -597,6 +597,10 @@ module Google
               #     default currency for monetary values is USD.
               #   @param customer_benchmarks_group [::String]
               #     The name of the customer being planned for. This is a user-defined value.
+              #   @param supplemental_data [::Array<::Google::Ads::GoogleAds::V25::Enums::BenchmarksSupplementalDataEnum::BenchmarksSupplementalData>]
+              #     Optional. Optional features to include in the response. By default, only
+              #     core data is returned. Including supplemental data here will populate
+              #     additional metrics in the response such as percentile metrics.
               #   @param application_info [::Google::Ads::GoogleAds::V25::Common::AdditionalApplicationInfo, ::Hash]
               #     Additional information on the application issuing the request.
               #

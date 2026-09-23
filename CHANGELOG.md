@@ -1,3 +1,10 @@
+45.1.0
+------
+- Compatibility with v25.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Changed versioning strategy to align with semver (https://semver.org/)
+- Updated the generate forecast metrics example
+- Added text guidelines to the PMax example
+
 45.0.0
 -----
 - Removed `use_cloud_org_for_api_access` setting.

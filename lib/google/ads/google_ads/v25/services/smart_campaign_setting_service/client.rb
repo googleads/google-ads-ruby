@@ -371,6 +371,104 @@ module Google
               end
 
               ##
+              # Generates a Performance Max (PMax) draft campaign from an existing Smart
+              # campaign, initialized with a status of [CampaignStatus.PAUSED] and a
+              # creation status of [CampaignCreationStatus.INCOMPLETE]. Returns the draft
+              # PMax campaign ID and related entity IDs.
+              #
+              # @overload generate_p_max_draft_campaign(request, options = nil)
+              #   Pass arguments to `generate_p_max_draft_campaign` via a request object, either of type
+              #   {::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignRequest} or an equivalent Hash.
+              #
+              #   @param request [::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignRequest, ::Hash]
+              #     A request object representing the call parameters. Required. To specify no
+              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #   @param options [::Gapic::CallOptions, ::Hash]
+              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #
+              # @overload generate_p_max_draft_campaign(resource_name: nil, validate_only: nil, gbp_enabled: nil, image_enabled: nil)
+              #   Pass arguments to `generate_p_max_draft_campaign` via keyword arguments. Note that at
+              #   least one keyword argument is required. To specify no parameters, or to keep all
+              #   the default parameter values, pass an empty Hash as a request object (see above).
+              #
+              #   @param resource_name [::String]
+              #     Required. The resource name of the Smart campaign setting to regenerate.
+              #   @param validate_only [::Boolean]
+              #     Optional. If true, the request will be validated but not executed. Only
+              #     validation errors/warnings will be returned.
+              #   @param gbp_enabled [::Boolean]
+              #     Optional. Whether to enable to convert GBP (Google Business Profile)
+              #     location linked with the PMax campaign.
+              #   @param image_enabled [::Boolean]
+              #     Optional. Whether to generate PMax campaign required images, like
+              #     Horizontal, Square, logo types.
+              #
+              # @yield [response, operation] Access the result along with the RPC operation
+              # @yieldparam response [::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignResponse]
+              # @yieldparam operation [::GRPC::ActiveCall::Operation]
+              #
+              # @return [::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignResponse]
+              #
+              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              #
+              # @example Basic example
+              #   require "google/ads/google_ads/v25/services"
+              #
+              #   # Create a client object. The client can be reused for multiple calls.
+              #   client = Google::Ads::GoogleAds::V25::Services::SmartCampaignSettingService::Client.new
+              #
+              #   # Create a request. To set request fields, pass in keyword arguments.
+              #   request = Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignRequest.new
+              #
+              #   # Call the generate_p_max_draft_campaign method.
+              #   result = client.generate_p_max_draft_campaign request
+              #
+              #   # The returned object is of type Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignResponse.
+              #   p result
+              #
+              def generate_p_max_draft_campaign request, options = nil
+                raise ::ArgumentError, "request must be provided" if request.nil?
+
+                request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V25::Services::GeneratePMaxDraftCampaignRequest
+
+                # Converts hash and nil to an options object
+                options = ::Gapic::CallOptions.new(**options.to_h) if options.respond_to? :to_h
+
+                # Customize the options with defaults
+                metadata = @config.rpcs.generate_p_max_draft_campaign.metadata.to_h
+
+                # Set x-goog-api-client, x-goog-user-project and x-goog-api-version headers
+                metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
+                  lib_name: @config.lib_name, lib_version: @config.lib_version,
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                metadata[:"x-goog-api-version"] = API_VERSION unless API_VERSION.empty?
+                metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
+
+                header_params = {}
+                if request.resource_name
+                  header_params["resource_name"] = request.resource_name
+                end
+
+                request_params_header = header_params.map { |k, v| "#{k}=#{v}" }.join("&")
+                metadata[:"x-goog-request-params"] ||= request_params_header
+
+                options.apply_defaults timeout:      @config.rpcs.generate_p_max_draft_campaign.timeout,
+                                       metadata:     metadata,
+                                       retry_policy: @config.rpcs.generate_p_max_draft_campaign.retry_policy
+
+                options.apply_defaults timeout:      @config.timeout,
+                                       metadata:     @config.metadata,
+                                       retry_policy: @config.retry_policy
+
+                @smart_campaign_setting_service_stub.call_rpc :generate_p_max_draft_campaign, request,
+                                                              options: options do |response, operation|
+                  yield response, operation if block_given?
+                end
+                # rescue GRPC::BadStatus => grpc_error
+                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+              end
+
+              ##
               # Configuration class for the SmartCampaignSettingService API.
               #
               # This class represents the configuration for SmartCampaignSettingService,
@@ -566,6 +664,11 @@ module Google
                   # @return [::Gapic::Config::Method]
                   #
                   attr_reader :mutate_smart_campaign_settings
+                  ##
+                  # RPC-specific configuration for `generate_p_max_draft_campaign`
+                  # @return [::Gapic::Config::Method]
+                  #
+                  attr_reader :generate_p_max_draft_campaign
 
                   # @private
                   def initialize parent_rpcs = nil
@@ -573,6 +676,8 @@ module Google
                     @get_smart_campaign_status = ::Gapic::Config::Method.new get_smart_campaign_status_config
                     mutate_smart_campaign_settings_config = parent_rpcs.mutate_smart_campaign_settings if parent_rpcs.respond_to? :mutate_smart_campaign_settings
                     @mutate_smart_campaign_settings = ::Gapic::Config::Method.new mutate_smart_campaign_settings_config
+                    generate_p_max_draft_campaign_config = parent_rpcs.generate_p_max_draft_campaign if parent_rpcs.respond_to? :generate_p_max_draft_campaign
+                    @generate_p_max_draft_campaign = ::Gapic::Config::Method.new generate_p_max_draft_campaign_config
 
                     yield self if block_given?
                   end
