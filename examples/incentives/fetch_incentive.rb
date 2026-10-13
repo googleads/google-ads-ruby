@@ -1,5 +1,7 @@
+#!/usr/bin/env ruby
+# Encoding: utf-8
 # frozen_string_literal: true
-
+#
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,13 +29,13 @@ def fetch_incentive(email, language_code = 'en', country_code = 'US')
 
   # Issues the request.
   request_args = {
-    email: email,
+    email: email.to_s.strip,
     language_code: language_code,
     country_code: country_code,
     # Passing :ACQUISITION as the symbol representation of the IncentiveType enum.
     incentive_type: :ACQUISITION
   }.compact
-  
+
   response = client.service.incentive.fetch_incentive(request_args)
 
   # Processes the response.
@@ -48,6 +50,9 @@ def fetch_incentive(email, language_code = 'en', country_code = 'US')
     cyo = response.incentive_offer.cyo_incentives
     [cyo.low_offer, cyo.medium_offer, cyo.high_offer].compact.each do |incentive|
       print_incentive_details(incentive)
+    end
+    if !response.incentive_offer.consolidated_terms_and_conditions_url.to_s.empty?
+      puts "Consolidated terms and conditions: '#{response.incentive_offer.consolidated_terms_and_conditions_url}'"
     end
   else
     puts 'Incentive offer is not a CHOOSE_YOUR_OWN_INCENTIVE type. ' \
@@ -135,7 +140,7 @@ if __FILE__ == $0
   parser.parse!
 
   # Check if required parameters are present.
-  if options[:email].nil? || options[:email] == 'INSERT_EMAIL_HERE'
+  if options[:email].to_s.empty? || options[:email] == 'INSERT_EMAIL_HERE'
     puts "Missing required argument: --email (-E) is required.\n\n"
     puts parser
     exit 1

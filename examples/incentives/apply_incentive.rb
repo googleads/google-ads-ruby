@@ -1,5 +1,7 @@
+#!/usr/bin/env ruby
+# Encoding: utf-8
 # frozen_string_literal: true
-
+#
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,6 +46,9 @@ def apply_incentive(customer_id, incentive_id, country_code = 'US')
   end
   if !response.coupon_code.to_s.empty?
     puts "Applied incentive with coupon code '#{response.coupon_code}'."
+  end
+  if response.creation_time.to_s.empty? && response.coupon_code.to_s.empty?
+    puts "Incentive applied successfully."
   end
 end
 # [END apply_incentive]
