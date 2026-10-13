@@ -107,7 +107,7 @@ def modify_user_access(client, customer_id, user_id, access_role)
   end
 end
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $0
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

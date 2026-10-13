@@ -147,7 +147,7 @@ def approve_mpa_review(client, customer_id, pending_review)
 end
 # [END approve_mpa_review]
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $0
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

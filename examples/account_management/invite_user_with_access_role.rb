@@ -71,7 +71,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
   # [END invite_user_with_access_role]
 end
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $0
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -86,7 +86,7 @@ if __FILE__ == $PROGRAM_NAME
   options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
 
   parser = OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'
