@@ -38,7 +38,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
 
   access_role_str = access_role.to_s.upcase
   if !ACCESS_ROLES.include?(access_role_str)
-    raise "Illegal access role specified. Expected one of " \
+    raise ArgumentError, "Illegal access role specified. Expected one of " \
       "#{ACCESS_ROLES.join(' ')}"
   end
   access_role = access_role_str.to_sym
@@ -66,7 +66,7 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     puts "Customer user access invitation was sent for customerId = #{customer_id} " \
       "email address = '#{email_address}', " \
       "access role = '#{access_role}'. The invitation resource name is " \
-      "#{response.result&.resource_name}."
+      "#{response.result&.resource_name || 'N/A'}."
   end
   # [END invite_user_with_access_role]
 end
@@ -130,7 +130,7 @@ if __FILE__ == $0
     invite_user_with_access_role(
       options.fetch(:customer_id),
       options.fetch(:email_address),
-      options.fetch(:access_role).upcase.to_sym,
+      options.fetch(:access_role),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",

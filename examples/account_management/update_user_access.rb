@@ -43,7 +43,7 @@ def update_user_access(customer_id, email_address, access_role)
 
   access_role_str = access_role.to_s.upcase
   if !ACCESS_ROLES.include?(access_role_str)
-    raise "Illegal access role specified. Expected one of " \
+    raise ArgumentError, "Illegal access role specified. Expected one of " \
       "#{ACCESS_ROLES.join(' ')}"
   end
   access_role = access_role_str.to_sym
@@ -64,6 +64,7 @@ def get_user_id(client, customer_id, email_address)
       customer_user_access.access_creation_date_time
     FROM customer_user_access
     WHERE customer_user_access.email_address LIKE "#{email_address}"
+    LIMIT 1
   QUERY
 
   response = client.service.google_ads.search(
@@ -87,7 +88,7 @@ end
 def modify_user_access(client, customer_id, user_id, access_role)
   operation = client.operation.update_resource.customer_user_access(
       client.path.customer_user_access(customer_id, user_id)) do |ua|
-    ua.access_role = access_role.to_sym
+    ua.access_role = access_role
   end
 
   response = client.service.customer_user_access.mutate_customer_user_access(
@@ -103,7 +104,7 @@ def modify_user_access(client, customer_id, user_id, access_role)
       "for an example on how to approve an MPA auth review using the API."
   else
     puts "Successfully updated customer user access with resource name " \
-      "#{response.result&.resource_name}."
+      "#{response.result&.resource_name || 'N/A'}."
   end
 end
 
@@ -166,7 +167,7 @@ if __FILE__ == $0
     update_user_access(
       options.fetch(:customer_id),
       options.fetch(:email_address),
-      options.fetch(:access_role).upcase.to_sym,
+      options.fetch(:access_role),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
+# frozen_string_literal: true
 #
 # Copyright 2026 Google LLC
 #
@@ -64,6 +64,7 @@ def fetch_pending_mpa_reviews(client, customer_id)
       multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation
     FROM multi_party_auth_review
     WHERE multi_party_auth_review.review_status = 'PENDING'
+    ORDER BY multi_party_auth_review.creation_date_time ASC
   QUERY
 
   responses = client.service.google_ads.search_stream(
@@ -93,8 +94,10 @@ def fetch_pending_mpa_reviews(client, customer_id)
         end
       elsif mpa_review.target_resource == :CUSTOMER_USER_ACCESS_INVITATION
         new_invite = mpa_review.customer_user_access_invitation_review&.new_customer_user_access_invitation
-        puts "\tInvitation email address: #{new_invite&.email_address}, " \
-          "Role: #{new_invite&.access_role}."
+        if new_invite
+          puts "\tInvitation email address: #{new_invite.email_address}, " \
+            "Role: #{new_invite.access_role}."
+        end
       end
 
       pending_reviews << mpa_review.resource_name
@@ -110,14 +113,14 @@ def approve_mpa_review(client, customer_id, pending_review)
   customer_id = customer_id.to_s.tr('-', '')
   # Currently, you can only approve one request at a time. In addition, the approvals
   # can only be done by a second administrator.
+  operation = client.operation.resolve_multi_party_auth_review do |op|
+    op.multi_party_auth_review = pending_review
+    op.new_status = :APPROVED
+  end
+
   response = client.service.multi_party_auth_review.resolve_multi_party_auth_review(
     customer_id: customer_id,
-    operations: [
-      {
-        multi_party_auth_review: pending_review,
-        new_status: :APPROVED,
-      }
-    ],
+    operations: [operation],
   )
 
   result_or_error = response.result_or_error&.first
@@ -140,7 +143,11 @@ def approve_mpa_review(client, customer_id, pending_review)
         errors_count += 1
       end
     end
-    puts "#{errors_count} partial failure error(s) occurred"
+    if errors_count.zero?
+      puts "Partial failure error occurred: #{result_or_error.partial_failure_error.message}"
+    else
+      puts "#{errors_count} partial failure error(s) occurred"
+    end
   else
     puts "No result or error returned."
   end
