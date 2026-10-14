@@ -30,14 +30,14 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
             ad_group_bid_modifier.criterion_id,
             ad_group_bid_modifier.bid_modifier,
             ad_group_bid_modifier.device.type,
-            ad_group_bid_modifier.hotel_date_selection_type.type,
-            ad_group_bid_modifier.hotel_advance_booking_window.min_days,
-            ad_group_bid_modifier.hotel_advance_booking_window.max_days,
-            ad_group_bid_modifier.hotel_length_of_stay.min_nights,
-            ad_group_bid_modifier.hotel_length_of_stay.max_nights,
-            ad_group_bid_modifier.hotel_check_in_day.day_of_week,
-            ad_group_bid_modifier.hotel_check_in_date_range.start_date,
-            ad_group_bid_modifier.hotel_check_in_date_range.end_date,
+            ad_group_bid_modifier.user_set_dates.type,
+            ad_group_bid_modifier.advance_booking_window.min_days,
+            ad_group_bid_modifier.advance_booking_window.max_days,
+            ad_group_bid_modifier.length_of_booking.min_days,
+            ad_group_bid_modifier.length_of_booking.max_days,
+            ad_group_bid_modifier.start_day_of_week.day_of_week,
+            ad_group_bid_modifier.start_date_range.start_date,
+            ad_group_bid_modifier.start_date_range.end_date,
             campaign.id
     FROM ad_group_bid_modifier
   QUERY
@@ -73,24 +73,24 @@ def get_ad_group_bid_modifiers(customer_id, ad_group_id = nil)
     case ad_group_bid_modifier.criterion
     when :device
       criterion_details += "Type: #{ad_group_bid_modifier.device.type}"
-    when :hotel_advance_booking_window
-      hotel_advance_booking_window = ad_group_bid_modifier.hotel_advance_booking_window
-      criterion_details += "Min Days: #{hotel_advance_booking_window.min_days}, " \
-          "Max Days: #{hotel_advance_booking_window.max_days}"
-    when :hotel_check_in_day
-      hotel_check_in_day = ad_group_bid_modifier.hotel_check_in_day
-      criterion_details += "Day of the week: #{hotel_check_in_day.day_of_week}"
-    when :hotel_date_selection_type
-      hotel_date_selection_type = ad_group_bid_modifier.hotel_date_selection_type
-      criterion_details += "Date selection type: #{hotel_date_selection_type.min_days}"
-    when :hotel_length_of_stay
-      hotel_length_of_stay = ad_group_bid_modifier.hotel_length_of_stay
-      criterion_details += "Min Nights: #{hotel_length_of_stay.min_nights}, " \
-          "Max Nights: #{hotel_length_of_stay.max_nights}"
-    when :hotel_check_in_date_range
-      hotel_check_in_date_range = ad_group_bid_modifier.hotel_check_in_date_range
-      criterion_details += "Start Date: #{hotel_check_in_date_range.start_date}, " \
-          "End Date: #{hotel_check_in_date_range.end_date}"
+    when :advance_booking_window
+      advance_booking_window = ad_group_bid_modifier.advance_booking_window
+      criterion_details += "Min Days: #{advance_booking_window.min_days}, " \
+          "Max Days: #{advance_booking_window.max_days}"
+    when :start_day_of_week
+      start_day_of_week = ad_group_bid_modifier.start_day_of_week
+      criterion_details += "Day of the week: #{start_day_of_week.day_of_week}"
+    when :user_set_dates
+      user_set_dates = ad_group_bid_modifier.user_set_dates
+      criterion_details += "Date selection type: #{user_set_dates.type}"
+    when :length_of_booking
+      length_of_booking = ad_group_bid_modifier.length_of_booking
+      criterion_details += "Min Days: #{length_of_booking.min_days}, " \
+          "Max Days: #{length_of_booking.max_days}"
+    when :start_date_range
+      start_date_range = ad_group_bid_modifier.start_date_range
+      criterion_details += "Start Date: #{start_date_range.start_date}, " \
+          "End Date: #{start_date_range.end_date}"
     else
       criterion_details = '  - No Criterion type found.'
     end

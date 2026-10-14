@@ -6,14 +6,15 @@ require 'google/ads/google_ads/service_lookup'
 require 'google/ads/google_ads/config'
 
 class TestServiceLookup < Minitest::Test
-  def create_lookup(config)
+  def create_lookup(config, channel_args: nil)
     Google::Ads::GoogleAds::ServiceLookup.new(
       nil,    # lookup_util
       nil,    # logger
       config,
       nil,    # credentials_or_channel
       nil,    # endpoint
-      nil     # deprecator
+      nil,    # deprecator
+      channel_args
     )
   end
 
@@ -58,5 +59,22 @@ class TestServiceLookup < Minitest::Test
 
     headers = lookup.send(:headers)
     assert_nil headers[:"developer-token"]
+  end
+
+  def test_gax_service_params_includes_channel_args_when_provided
+    config = Google::Ads::GoogleAds::Config.new
+    channel_args = {"grpc.max_receive_message_length" => 64 * 1024 * 1024}
+    lookup = create_lookup(config, channel_args: channel_args)
+
+    params = lookup.send(:gax_service_params)
+    assert_equal channel_args, params[:channel_args]
+  end
+
+  def test_gax_service_params_excludes_channel_args_when_nil
+    config = Google::Ads::GoogleAds::Config.new
+    lookup = create_lookup(config)
+
+    params = lookup.send(:gax_service_params)
+    refute params.key?(:channel_args)
   end
 end
