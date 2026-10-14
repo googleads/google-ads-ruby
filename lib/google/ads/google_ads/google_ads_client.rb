@@ -122,9 +122,10 @@ module Google
             lookup_util,
             @logger,
             @config,
-            make_channel,
+            get_credentials,
             endpoint,
             deprecator,
+            channel_args,
           ).call
         end
 
@@ -137,12 +138,14 @@ module Google
           target = @config.api_endpoint || default_target
         end
 
-        def make_channel
-          channel_args = {
+        def channel_args
+          {
             MAX_MESSAGE_LENGTH => 64*1024*1024,
             MAX_METADATA_SIZE => 16*1024*1024,
           }
+        end
 
+        def make_channel
           if !@config.use_insecure_channel
             call_creds = GRPC::Core::CallCredentials.new(get_credentials)
             chan_creds = GRPC::Core::ChannelCredentials.new.compose(call_creds)
@@ -204,7 +207,9 @@ module Google
         private
 
         def get_credentials
-          if @config.use_application_default_credentials
+          if @config.use_insecure_channel
+            :this_channel_is_insecure
+          elsif @config.use_application_default_credentials
             get_application_default_credentials
           elsif @config.authentication
             @config.authentication

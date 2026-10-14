@@ -1,3 +1,9 @@
+46.0.0
+------
+- Added support for version 26 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
+- Added new examples: `add_ad_group_image_asset`, `add_responsive_search_ad_with_ad_customizer`, `create_asset_optimization_experiment`, `create_search_adopt_ai_max_experiment`, `evaluate_and_update_experiment`, `generate_audience_insights`, `generate_budget_recommendations`, and `get_recommendation_impact_metrics`.
+- Updated the ad group bid modifier examples for v26 (`get_ad_group_bid_modifiers` and `add_hotel_ad_group_bid_modifiers`).
+
 45.1.0
 ------
 - Compatibility with v25.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
