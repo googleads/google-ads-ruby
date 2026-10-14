@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
 # frozen_string_literal: true
 #
 # Copyright 2026 Google LLC
@@ -34,8 +33,8 @@ def apply_incentive(customer_id, incentive_id, country_code = 'US')
   # Issues the request.
   request_args = {
     customer_id: customer_id.to_s.tr('-', ''),
-    selected_incentive_id: incentive_id&.to_i,
-    country_code: country_code
+    selected_incentive_id: incentive_id ? Integer(incentive_id) : nil,
+    country_code: country_code.to_s.strip,
   }.compact
 
   response = client.service.incentive.apply_incentive(request_args)
@@ -110,7 +109,7 @@ if __FILE__ == $0
     exit 1
   end
 
-  if options[:country_code].to_s.empty?
+  if options[:country_code].to_s.strip.empty?
     puts "Missing required argument: --country-code (-K) is required.\n\n"
     puts parser
     exit 1

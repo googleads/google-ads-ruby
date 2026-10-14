@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# Encoding: utf-8
 # frozen_string_literal: true
 #
 # Copyright 2026 Google LLC
@@ -21,8 +20,8 @@
 require 'google/ads/google_ads'
 require 'optparse'
 
-# [START fetch_incentive]
-def fetch_incentive(email, language_code = 'en', country_code = 'US')
+# [START fetch_incentives]
+def fetch_incentives(email, language_code = 'en', country_code = 'US')
   # GoogleAdsClient will read a config file from a default location
   # if no path is passed.
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
@@ -39,14 +38,14 @@ def fetch_incentive(email, language_code = 'en', country_code = 'US')
   response = client.service.incentive.fetch_incentive(request_args)
 
   # Processes the response.
-  if response.incentive_offer.nil?
+  if response.incentive_offer.nil? || response.incentive_offer.offer_type == :NO_INCENTIVE
     puts 'No incentive offer was found.'
     return
   end
 
   # If the offer type is CHOOSE_YOUR_OWN_INCENTIVE, there will be 3 incentives in the
   # response. At the time this example was written, all incentive offers are CYO incentive offers.
-  if response.incentive_offer&.cyo_incentives
+  if response.incentive_offer.cyo_incentives
     cyo = response.incentive_offer.cyo_incentives
     [cyo.low_offer, cyo.medium_offer, cyo.high_offer].compact.each do |incentive|
       print_incentive_details(incentive)
@@ -59,6 +58,8 @@ def fetch_incentive(email, language_code = 'en', country_code = 'US')
       'Non-CYO offers are not supported by this example.'
   end
 end
+
+alias fetch_incentive fetch_incentives
 
 def print_incentive_details(incentive)
   return if incentive.nil?
@@ -95,7 +96,7 @@ def format_money(money)
   amount = units + (nanos / 1_000_000_000.0)
   sprintf('%.2f%s', amount, currency)
 end
-# [END fetch_incentive]
+# [END fetch_incentives]
 
 if __FILE__ == $0
   options = {}
@@ -140,14 +141,14 @@ if __FILE__ == $0
   parser.parse!
 
   # Check if required parameters are present.
-  if options[:email].to_s.empty? || options[:email] == 'INSERT_EMAIL_HERE'
+  if options[:email].to_s.strip.empty? || options[:email] == 'INSERT_EMAIL_HERE'
     puts "Missing required argument: --email (-E) is required.\n\n"
     puts parser
     exit 1
   end
 
   begin
-    fetch_incentive(options[:email], options[:language_code], options[:country_code])
+    fetch_incentives(options[:email], options[:language_code], options[:country_code])
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
       e.request_id, e.class.name)
