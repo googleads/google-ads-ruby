@@ -12,7 +12,8 @@ module Google
           config,
           credentials_or_channel,
           endpoint,
-          deprecator
+          deprecator,
+          channel_args = nil
         )
           @lookup_util = lookup_util
           @logger = logger
@@ -20,6 +21,7 @@ module Google
           @credentials_or_channel = credentials_or_channel
           @endpoint = endpoint
           @deprecator = deprecator
+          @channel_args = channel_args
         end
 
         def call
@@ -63,11 +65,13 @@ module Google
         end
 
         def gax_service_params
-          {
+          params = {
             credentials: credentials_or_channel,
             metadata: headers,
             endpoint: endpoint
           }
+          params[:channel_args] = channel_args if channel_args
+          params
         end
 
         # Workaround for gRPC Ruby bug (grpc/grpc#22448):
@@ -131,6 +135,7 @@ module Google
         attr_reader :lookup_util
         attr_reader :endpoint
         attr_reader :deprecator
+        attr_reader :channel_args
       end
     end
   end

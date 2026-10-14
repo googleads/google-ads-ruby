@@ -30,6 +30,10 @@ module Google
             #
             # Service to manage YouTube video uploads.
             #
+            # `create_you_tube_video_upload` performs a resumable upload: it returns a {::Gapic::ResumableUpload} handle
+            # instead of a response, and the per-call `timeout` and retry policy cover only the request that
+            # creates the upload session, not the upload itself.
+            #
             class Client
               # @private
               API_VERSION = ""
@@ -148,6 +152,14 @@ module Google
                 @quota_project_id = @config.quota_project
                 @quota_project_id ||= credentials.quota_project_id if credentials.respond_to? :quota_project_id
 
+                @resumable_upload_stub = ::Google::Ads::GoogleAds::V25::Services::YouTubeVideoUploadService::ResumableUploadStub.new(
+                  endpoint: @config.endpoint,
+                  endpoint_template: DEFAULT_ENDPOINT_TEMPLATE,
+                  universe_domain: @config.universe_domain,
+                  credentials: credentials,
+                  logger: @config.logger
+                )
+
                 @you_tube_video_upload_service_stub = ::Gapic::ServiceStub.new(
                   ::Google::Ads::GoogleAds::V25::Services::YouTubeVideoUploadService::Stub,
                   credentials: credentials,
@@ -186,15 +198,22 @@ module Google
               # Uploads a video to Google-managed or advertiser owned (brand) YouTube
               # channel.
               #
-              # @overload create_you_tube_video_upload(request, options = nil)
+              # @overload create_you_tube_video_upload(request = {}, options = nil)
               #   Pass arguments to `create_you_tube_video_upload` via a request object, either of type
               #   {::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadRequest} or an equivalent Hash.
               #
               #   @param request [::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadRequest, ::Hash]
-              #     A request object representing the call parameters. Required. To specify no
-              #     parameters, or to keep all the default parameter values, pass an empty Hash.
+              #     A request object representing the call parameters. Optional: it is ignored when the returned
+              #     handle is resumed rather than started, because a resumed upload targets a session the server
+              #     has already created.
               #   @param options [::Gapic::CallOptions, ::Hash]
-              #     Overrides the default settings for this call, e.g, timeout, retries, etc. Optional.
+              #     Overrides for the initiation request only. The `timeout`, `retry_policy` and `metadata` set
+              #     here apply to the single request that creates the upload session, not to the upload as a
+              #     whole: an upload still transferring bytes an hour later has long outlived this `timeout`.
+              #     To bound the whole upload, pass `upload_timeout:` to {::Gapic::ResumableUpload#start} or
+              #     {::Gapic::ResumableUpload#resume}. Chunk transfers are retried by the upload protocol itself,
+              #     with the defaults documented on {::Gapic::ResumableUpload}; no call option reaches them.
+              #     Optional.
               #
               # @overload create_you_tube_video_upload(customer_id: nil, you_tube_video_upload: nil)
               #   Pass arguments to `create_you_tube_video_upload` via keyword arguments. Note that at
@@ -206,13 +225,11 @@ module Google
               #   @param you_tube_video_upload [::Google::Ads::GoogleAds::V25::Resources::YouTubeVideoUpload, ::Hash]
               #     Required. The initial details of the video to upload. Required.
               #
-              # @yield [response, operation] Access the result along with the RPC operation
-              # @yieldparam response [::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadResponse]
-              # @yieldparam operation [::GRPC::ActiveCall::Operation]
-              #
-              # @return [::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadResponse]
-              #
-              # @raise [Google::Ads::GoogleAds::Error] if the RPC is aborted.
+              # @return [::Gapic::ResumableUpload]
+              #   A reusable upload handle. No request is sent and no byte is read from a stream until
+              #   {::Gapic::ResumableUpload#start} or {::Gapic::ResumableUpload#resume} is called on it.
+              #   Upload failures, including a failed initiation request, are raised by those methods,
+              #   not by this one.
               #
               # @example Basic example
               #   require "google/ads/google_ads/v25/services"
@@ -224,12 +241,18 @@ module Google
               #   request = Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadRequest.new
               #
               #   # Call the create_you_tube_video_upload method.
-              #   result = client.create_you_tube_video_upload request
+              #   upload = client.create_you_tube_video_upload request
+              #
+              #   # The returned object is a handle for a resumable upload. Nothing has been
+              #   # uploaded yet, and the timeout and retry policy of the call above cover only
+              #   # the request that creates the upload session, not the upload as a whole.
+              #   stream = File.open "input.bin", "rb"
+              #   result = upload.start stream: stream, content_type: "application/octet-stream"
               #
               #   # The returned object is of type Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadResponse.
               #   p result
               #
-              def create_you_tube_video_upload request, options = nil
+              def create_you_tube_video_upload request = {}, options = nil
                 raise ::ArgumentError, "request must be provided" if request.nil?
 
                 request = ::Gapic::Protobuf.coerce request, to: ::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadRequest
@@ -243,7 +266,8 @@ module Google
                 # Set x-goog-api-client, x-goog-user-project and x-goog-api-version headers
                 metadata[:"x-goog-api-client"] ||= ::Gapic::Headers.x_goog_api_client \
                   lib_name: @config.lib_name, lib_version: @config.lib_version,
-                  gapic_version: ::Google::Ads::GoogleAds::VERSION
+                  gapic_version: ::Google::Ads::GoogleAds::VERSION,
+                  transports_version_send: [:rest]
                 metadata[:"x-goog-api-version"] = API_VERSION unless API_VERSION.empty?
                 metadata[:"x-goog-user-project"] = @quota_project_id if @quota_project_id
 
@@ -263,12 +287,17 @@ module Google
                                        metadata:     @config.metadata,
                                        retry_policy: @config.retry_policy
 
-                @you_tube_video_upload_service_stub.call_rpc :create_you_tube_video_upload, request,
-                                                             options: options do |response, operation|
-                  yield response, operation if block_given?
-                end
-                # rescue GRPC::BadStatus => grpc_error
-                #  raise Google::Ads::GoogleAds::Error.new grpc_error.message
+                ::Gapic::ResumableUpload.new(
+                  client_stub_proc:     -> { @resumable_upload_stub.client_stub },
+                  initial_request_proc: lambda {
+                    ::Google::Ads::GoogleAds::V25::Services::YouTubeVideoUploadService::ResumableUploadStub.transcode_create_you_tube_video_upload_request request
+                  },
+                  initial_headers:      options.metadata,
+                  start_retry_policy:   ::Gapic::Rest::ResumableUpload.start_retry_policy_for(options),
+                  response_type:        ::Google::Ads::GoogleAds::V25::Services::CreateYouTubeVideoUploadResponse,
+                  method_name:          "create_you_tube_video_upload",
+                  error_handler:        nil
+                )
               end
 
               ##
@@ -642,6 +671,12 @@ module Google
                 class Rpcs
                   ##
                   # RPC-specific configuration for `create_you_tube_video_upload`
+                  #
+                  # `create_you_tube_video_upload` performs a resumable upload, so the `timeout` and `retry_policy`
+                  # configured here cover the request that creates the upload session only, not the upload
+                  # itself. The whole-upload budget is the `upload_timeout:` argument of
+                  # {::Gapic::ResumableUpload#start} and {::Gapic::ResumableUpload#resume}.
+                  #
                   # @return [::Gapic::Config::Method]
                   #
                   attr_reader :create_you_tube_video_upload

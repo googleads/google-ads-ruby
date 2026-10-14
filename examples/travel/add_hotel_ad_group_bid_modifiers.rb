@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 # This example shows how to add ad group bid modifiers to a hotel ad group
-# based on hotel check-in day and hotel length of stay.
+# based on check-in day and length of booking.
 
 require 'optparse'
 require 'google/ads/google_ads'
@@ -30,13 +30,13 @@ def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
   operations = []
   ad_group_resource = client.path.ad_group(customer_id, ad_group_id)
 
-  # 1) Creates an ad group bid modifier based on the hotel check-in day.
+  # 1) Creates an ad group bid modifier based on the check-in day.
   operations << client.operation.create_resource.ad_group_bid_modifier do |bm|
     # Sets the ad group.
     bm.ad_group = ad_group_resource
 
     # Sets the check-in day to Monday.
-    bm.hotel_check_in_day = client.resource.hotel_check_in_day_info do |info|
+    bm.start_day_of_week = client.resource.start_day_of_week_info do |info|
       info.day_of_week = :MONDAY
     end
 
@@ -44,15 +44,15 @@ def add_hotel_ad_group_bid_modifiers(customer_id, ad_group_id)
     bm.bid_modifier = 1.5
   end
 
-  # 2) Creates an ad group bid modifier based on the hotel length of stay.
+  # 2) Creates an ad group bid modifier based on the length of booking.
   operations << client.operation.create_resource.ad_group_bid_modifier do |bm|
     # Sets the ad group.
     bm.ad_group = ad_group_resource
 
-    # Creates the hotel length of stay info.
-    bm.hotel_length_of_stay = client.resource.hotel_length_of_stay_info do |info|
-      info.min_nights = 3
-      info.max_nights = 7
+    # Creates the length of booking info.
+    bm.length_of_booking = client.resource.length_of_booking_info do |info|
+      info.min_days = 3
+      info.max_days = 7
     end
 
     # Sets the bid modifier value to 170%.
