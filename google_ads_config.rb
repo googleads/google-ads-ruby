@@ -14,10 +14,6 @@ Google::Ads::GoogleAds::Config.new do |c|
   # behaviour is to only issue a warning once for each call site in your code.
   c.warn_on_all_deprecations = false
 
-  # The developer token is required to authenticate that you are allowed to
-  # make API calls.
-  c.developer_token = 'INSERT_DEVELOPER_TOKEN_HERE'
-
   # Authentication tells the API that you are allowed to make changes to the
   # specific account you're trying to access.
   # The default method of authentication is to use a refresh token, client id,
