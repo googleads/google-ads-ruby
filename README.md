@@ -64,10 +64,7 @@ file:
 ## Set Up Authentication
 
 To authenticate your API calls, you need to specify your client ID, client
-secret, refresh token, and developer token to the library.
-
-1. See the [Developer token guide][] to obtain your developer token, if you
-   don't already have one.
+secret, and refresh token to the library.
 
 1. See the [Authorization guide][] to generate a client ID and client secret,
    if you don't already have them.
@@ -95,12 +92,10 @@ way:
       config.client_id = 'INSERT_CLIENT_ID_HERE'
       config.client_secret = 'INSERT_CLIENT_SECRET_HERE'
       config.refresh_token = 'INSERT_REFRESH_TOKEN_HERE'
-      config.developer_token = 'INSERT_DEVELOPER_TOKEN_HERE'
     end
 
 Find out more at the [Configuration guide][].
 
-[Developer token guide]: https://developers.google.com/google-ads/api/docs/first-call/dev-token
 [Authorization guide]: https://developers.google.com/google-ads/api/docs/oauth/overview
 [Authentication example]: https://github.com/googleads/google-ads-ruby/blob/main/examples/authentication/generate_user_credentials.rb
 [google_ads_config.rb]: https://github.com/googleads/google-ads-ruby/blob/main/google_ads_config.rb
