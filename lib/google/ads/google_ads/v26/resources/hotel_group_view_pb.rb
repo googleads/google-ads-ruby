@@ -8,7 +8,7 @@ require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 
 
-descriptor_data = "\n9google/ads/googleads/v26/resources/hotel_group_view.proto\x12\"google.ads.googleads.v26.resources\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xcc\x01\n\x0eHotelGroupView\x12\x46\n\rresource_name\x18\x01 \x01(\tB/\xe0\x41\x03\xfa\x41)\n\'googleads.googleapis.com/HotelGroupView:r\xea\x41o\n\'googleads.googleapis.com/HotelGroupView\x12\x44\x63ustomers/{customer_id}/hotelGroupViews/{ad_group_id}~{criterion_id}B\x85\x02\n&com.google.ads.googleads.v26.resourcesB\x13HotelGroupViewProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v26/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V26.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V26\\Resources\xea\x02&Google::Ads::GoogleAds::V26::Resourcesb\x06proto3"
+descriptor_data = "\n9google/ads/googleads/v26/resources/hotel_group_view.proto\x12\"google.ads.googleads.v26.resources\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xcd\x01\n\x0eHotelGroupView\x12G\n\rresource_name\x18\x01 \x01(\tB0\xe2\x41\x01\x03\xfa\x41)\n\'googleads.googleapis.com/HotelGroupView:r\xea\x41o\n\'googleads.googleapis.com/HotelGroupView\x12\x44\x63ustomers/{customer_id}/hotelGroupViews/{ad_group_id}~{criterion_id}B\x85\x02\n&com.google.ads.googleads.v26.resourcesB\x13HotelGroupViewProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v26/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V26.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V26\\Resources\xea\x02&Google::Ads::GoogleAds::V26::Resourcesb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)

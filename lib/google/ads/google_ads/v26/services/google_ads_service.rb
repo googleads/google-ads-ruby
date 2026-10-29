@@ -33,6 +33,21 @@ module Google
         module Services
           ##
           # Service to fetch data and metrics across resources.
+          # Use the interactive [Google Ads Query
+          # Builder](/google-ads/api/fields/latest/overview_query_builder)
+          # to construct and validate Google Ads Query Language (GAQL) queries.
+          #
+          # Search versus SearchStream:
+          #
+          # * `Search`: Paginated using `next_page_token` with up to 10,000 rows per
+          # page. Caches pages across requests. Best for small result sets (< 10,000
+          # rows) or user-driven paginated interfaces.
+          # * `SearchStream`: Delivers a single stream of response batches with up to
+          # 10,000 rows per batch. Lower overhead without request caching. Best for large
+          # result sets (> 10,000 rows) or batch reporting workloads.
+          #
+          # For more details, see [Streaming versus
+          # paging](/google-ads/api/docs/reporting/streaming).
           #
           # @example Load this service and instantiate a gRPC client
           #
