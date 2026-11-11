@@ -222,7 +222,7 @@ module Google
               #
               #     See
               #     [Best practices for partial
-              #     failures](/google-ads/api/docs/best-practices/partial-failures).
+              #     failures](https://developers.google.com/google-ads/api/docs/best-practices/partial-failures).
               #   @param validate_only [::Boolean]
               #     If `true`, the request is validated but not executed. Only errors are
               #     returned, not results.
@@ -337,7 +337,7 @@ module Google
               #
               #     See
               #     [Best practices for partial
-              #     failures](/google-ads/api/docs/best-practices/partial-failures).
+              #     failures](https://developers.google.com/google-ads/api/docs/best-practices/partial-failures).
               #   @param validate_only [::Boolean]
               #     If true, the request is validated but not executed. Only errors are
               #     returned, not results.
