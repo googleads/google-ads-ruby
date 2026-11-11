@@ -29,8 +29,9 @@ module Google
             # Client for the GoogleAdsService service.
             #
             # Service to fetch data and metrics across resources.
-            # Use the interactive [Google Ads Query
-            # Builder](/google-ads/api/fields/latest/overview_query_builder)
+            # Use the interactive
+            # [Google Ads Query
+            # Builder](https://developers.google.com/google-ads/api/fields/latest/overview_query_builder)
             # to construct and validate Google Ads Query Language (GAQL) queries.
             #
             # Search versus SearchStream:
@@ -42,8 +43,9 @@ module Google
             # 10,000 rows per batch. Lower overhead without request caching. Best for large
             # result sets (> 10,000 rows) or batch reporting workloads.
             #
-            # For more details, see [Streaming versus
-            # paging](/google-ads/api/docs/reporting/streaming).
+            # For more details, see
+            # [Streaming versus
+            # paging](https://developers.google.com/google-ads/api/docs/reporting/streaming).
             #
             class Client
               # @private
@@ -203,7 +205,7 @@ module Google
               # result sets larger than 10,000 rows, prefer
               # {::Google::Ads::GoogleAds::V26::Services::GoogleAdsService::Client#search_stream GoogleAdsService.SearchStream}.
               # To build and validate queries, use the [Google Ads Query
-              # Builder](/google-ads/api/fields/latest/overview_query_builder).
+              # Builder](https://developers.google.com/google-ads/api/fields/latest/overview_query_builder).
               #
               # List of thrown errors:
               #   [AuthenticationError]()
@@ -330,7 +332,7 @@ module Google
               # {::Google::Ads::GoogleAds::V26::Services::GoogleAdsService::Client#search GoogleAdsService.Search}
               # for large result sets (> 10,000 rows). To build and validate queries, use
               # the [Google Ads Query
-              # Builder](/google-ads/api/fields/latest/overview_query_builder).
+              # Builder](https://developers.google.com/google-ads/api/fields/latest/overview_query_builder).
               #
               # List of thrown errors:
               #   [AuthenticationError]()

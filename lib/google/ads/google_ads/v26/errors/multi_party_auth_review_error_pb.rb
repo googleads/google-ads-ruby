@@ -5,7 +5,7 @@
 require 'google/protobuf'
 
 
-descriptor_data = "\nCgoogle/ads/googleads/v26/errors/multi_party_auth_review_error.proto\x12\x1fgoogle.ads.googleads.v26.errors\"\xd8\x01\n\x1dMultiPartyAuthReviewErrorEnum\"\xb6\x01\n\x19MultiPartyAuthReviewError\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x1f\n\x1b\x41\x43\x43\x45SS_INVITATION_NOT_FOUND\x10\x02\x12$\n ACCESS_INVITATION_INVALID_STATUS\x10\x03\x12\x1d\n\x19INVALID_STATUS_TRANSITION\x10\x04\x12\x15\n\x11PERMISSION_DENIED\x10\x05\x42\xfe\x01\n#com.google.ads.googleads.v26.errorsB\x1eMultiPartyAuthReviewErrorProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v26/errors;errors\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V26.Errors\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V26\\Errors\xea\x02#Google::Ads::GoogleAds::V26::Errorsb\x06proto3"
+descriptor_data = "\nCgoogle/ads/googleads/v26/errors/multi_party_auth_review_error.proto\x12\x1fgoogle.ads.googleads.v26.errors\"\xfc\x01\n\x1dMultiPartyAuthReviewErrorEnum\"\xda\x01\n\x19MultiPartyAuthReviewError\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0b\n\x07UNKNOWN\x10\x01\x12\x1f\n\x1b\x41\x43\x43\x45SS_INVITATION_NOT_FOUND\x10\x02\x12$\n ACCESS_INVITATION_INVALID_STATUS\x10\x03\x12\x1d\n\x19INVALID_STATUS_TRANSITION\x10\x04\x12\x15\n\x11PERMISSION_DENIED\x10\x05\x12\"\n\x1eSTALE_MULTI_PARTY_AUTH_REQUEST\x10\x06\x42\xfe\x01\n#com.google.ads.googleads.v26.errorsB\x1eMultiPartyAuthReviewErrorProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v26/errors;errors\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V26.Errors\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V26\\Errors\xea\x02#Google::Ads::GoogleAds::V26::Errorsb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)

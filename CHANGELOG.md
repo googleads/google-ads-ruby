@@ -1,3 +1,7 @@
+46.2.0
+------
+- Added support for version 26.2 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
+
 46.1.0
 ------
 - Added support for version 26.1 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
