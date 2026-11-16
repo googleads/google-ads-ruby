@@ -127,8 +127,9 @@ def create_demand_gen_campaign_operation(client, campaign_resource_name, budget_
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
     # Optional fields
-    c.start_date_time = (Date.today + 1).strftime('%Y-%m-%d 00:00:00')
-    c.end_date_time = Date.today.next_year.strftime('%Y-%m-%d 23:59:59')
+    today = Date.today
+    c.start_date_time = (today + 1).strftime('%Y-%m-%d 00:00:00')
+    c.end_date_time = today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
 end
 # [END add_demand_gen_campaign_2]

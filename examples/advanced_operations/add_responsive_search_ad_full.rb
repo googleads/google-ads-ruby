@@ -226,11 +226,10 @@ def create_campaign(client, customer_id, campaign_budget_resource_name)
       ns.target_content_network = true
     end
 
-    # Optional: Set the start date.
-    # campaign.start_date_time = (Date.today + 1).strftime('%Y-%m-%d 00:00:00')
-
-    # Optional: Set the end date.
-    # campaign.end_date_time = Date.today.next_year.strftime('%Y-%m-%d 23:59:59')
+    # Optional: Set the start and end dates.
+    # today = Date.today
+    # campaign.start_date_time = (today + 1).strftime('%Y-%m-%d 00:00:00')
+    # campaign.end_date_time = today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
 
   # Add the campaign.

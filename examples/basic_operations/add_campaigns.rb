@@ -73,11 +73,13 @@ def add_campaigns(customer_id)
     # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
+    today = Date.today
+
     # Optional: Set the start date.
-    c.start_date_time = (Date.today + 1).strftime('%Y-%m-%d 00:00:00')
+    c.start_date_time = (today + 1).strftime('%Y-%m-%d 00:00:00')
 
     # Optional: Set the end date.
-    c.end_date_time = Date.today.next_year.strftime('%Y-%m-%d 23:59:59')
+    c.end_date_time = today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
   # [END add_campaigns_1]
 
