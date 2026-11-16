@@ -234,7 +234,7 @@ if __FILE__ == $0
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: add_app_campaign.rb [options]')
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'
