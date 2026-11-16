@@ -268,8 +268,8 @@ def create_performance_max_campaign_operation(
         c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
         # Optional fields
-        c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
-        c.end_date_time = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d %H:%M:%S')
+        c.start_date_time = (Date.today + 1).strftime('%Y-%m-%d 00:00:00')
+        c.end_date_time = Date.today.next_year.strftime('%Y-%m-%d 23:59:59')
       end
     end
   end

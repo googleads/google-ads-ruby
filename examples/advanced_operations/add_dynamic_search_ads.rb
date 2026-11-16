@@ -21,6 +21,7 @@
 
 require 'optparse'
 require 'google/ads/google_ads'
+require 'date'
 
 def add_dynamic_search_ads(customer_id)
   # GoogleAdsClient will read a config file from
@@ -82,8 +83,8 @@ def create_campaign(client, customer_id, budget_resource_name)
     # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
-    c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
-    c.end_date_time = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d %H:%M:%S')
+    c.start_date_time = (Date.today + 1).strftime('%Y-%m-%d 00:00:00')
+    c.end_date_time = Date.today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
 
   operation = client.operation.create_resource.campaign(campaign)
@@ -192,7 +193,7 @@ if __FILE__ == $0
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf("Usage: #{__FILE__} [options]")
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'
