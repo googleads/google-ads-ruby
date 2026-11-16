@@ -8,7 +8,7 @@ require 'google/api/field_behavior_pb'
 require 'google/api/resource_pb'
 
 
-descriptor_data = "\n6google/ads/googleads/v26/resources/location_view.proto\x12\"google.ads.googleads.v26.resources\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xc4\x01\n\x0cLocationView\x12\x44\n\rresource_name\x18\x01 \x01(\tB-\xe0\x41\x03\xfa\x41\'\n%googleads.googleapis.com/LocationView:n\xea\x41k\n%googleads.googleapis.com/LocationView\x12\x42\x63ustomers/{customer_id}/locationViews/{campaign_id}~{criterion_id}B\x83\x02\n&com.google.ads.googleads.v26.resourcesB\x11LocationViewProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v26/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V26.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V26\\Resources\xea\x02&Google::Ads::GoogleAds::V26::Resourcesb\x06proto3"
+descriptor_data = "\n6google/ads/googleads/v26/resources/location_view.proto\x12\"google.ads.googleads.v26.resources\x1a\x1fgoogle/api/field_behavior.proto\x1a\x19google/api/resource.proto\"\xc5\x01\n\x0cLocationView\x12\x45\n\rresource_name\x18\x01 \x01(\tB.\xe2\x41\x01\x03\xfa\x41\'\n%googleads.googleapis.com/LocationView:n\xea\x41k\n%googleads.googleapis.com/LocationView\x12\x42\x63ustomers/{customer_id}/locationViews/{campaign_id}~{criterion_id}B\x83\x02\n&com.google.ads.googleads.v26.resourcesB\x11LocationViewProtoP\x01ZKgoogle.golang.org/genproto/googleapis/ads/googleads/v26/resources;resources\xa2\x02\x03GAA\xaa\x02\"Google.Ads.GoogleAds.V26.Resources\xca\x02\"Google\\Ads\\GoogleAds\\V26\\Resources\xea\x02&Google::Ads::GoogleAds::V26::Resourcesb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)

@@ -8,7 +8,7 @@ require 'google/ads/google_ads/v26/enums/customizer_attribute_type_pb'
 require 'google/api/field_behavior_pb'
 
 
-descriptor_data = "\n6google/ads/googleads/v26/common/customizer_value.proto\x12\x1fgoogle.ads.googleads.v26.common\x1a>google/ads/googleads/v26/enums/customizer_attribute_type.proto\x1a\x1fgoogle/api/field_behavior.proto\"\x94\x01\n\x0f\x43ustomizerValue\x12\x66\n\x04type\x18\x01 \x01(\x0e\x32S.google.ads.googleads.v26.enums.CustomizerAttributeTypeEnum.CustomizerAttributeTypeB\x03\xe0\x41\x02\x12\x19\n\x0cstring_value\x18\x02 \x01(\tB\x03\xe0\x41\x02\x42\xf4\x01\n#com.google.ads.googleads.v26.commonB\x14\x43ustomizerValueProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v26/common;common\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V26.Common\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V26\\Common\xea\x02#Google::Ads::GoogleAds::V26::Commonb\x06proto3"
+descriptor_data = "\n6google/ads/googleads/v26/common/customizer_value.proto\x12\x1fgoogle.ads.googleads.v26.common\x1a>google/ads/googleads/v26/enums/customizer_attribute_type.proto\x1a\x1fgoogle/api/field_behavior.proto\"\x96\x01\n\x0f\x43ustomizerValue\x12g\n\x04type\x18\x01 \x01(\x0e\x32S.google.ads.googleads.v26.enums.CustomizerAttributeTypeEnum.CustomizerAttributeTypeB\x04\xe2\x41\x01\x02\x12\x1a\n\x0cstring_value\x18\x02 \x01(\tB\x04\xe2\x41\x01\x02\x42\xf4\x01\n#com.google.ads.googleads.v26.commonB\x14\x43ustomizerValueProtoP\x01ZEgoogle.golang.org/genproto/googleapis/ads/googleads/v26/common;common\xa2\x02\x03GAA\xaa\x02\x1fGoogle.Ads.GoogleAds.V26.Common\xca\x02\x1fGoogle\\Ads\\GoogleAds\\V26\\Common\xea\x02#Google::Ads::GoogleAds::V26::Commonb\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)

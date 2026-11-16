@@ -1703,6 +1703,20 @@ module Google
               end
 
               ##
+              # Create a fully-qualified CustomerBudgetNetworkSetting resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/customerBudgetNetworkSettings`
+              #
+              # @param customer_id [String]
+              #
+              # @return [::String]
+              def customer_budget_network_setting_path customer_id:
+                "customers/#{customer_id}/customerBudgetNetworkSettings"
+              end
+
+              ##
               # Create a fully-qualified CustomerClient resource string.
               #
               # The resource will be in the following format:
