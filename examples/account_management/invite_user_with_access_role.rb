@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Copyright 2026 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,11 +33,10 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # Sanitizes the customer ID to handle hyphenated inputs.
   customer_id = customer_id.to_s.tr('-', '')
 
   access_role_str = access_role.to_s.upcase
-  if !ACCESS_ROLES.include?(access_role_str)
+  unless ACCESS_ROLES.include?(access_role_str)
     raise ArgumentError, "Illegal access role specified. Expected one of " \
       "#{ACCESS_ROLES.join(' ')}"
   end
@@ -55,23 +54,23 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     operation: operation,
   )
 
-  if !response.result&.multi_party_auth_review.to_s.empty?
-    puts "A multi-party auth review was triggered. The MPA review resource " \
-      "name is #{response.result&.multi_party_auth_review}. Ask a second " \
-      "administrator to approve this request to send the user access invitation. " \
-      "See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
-      "for an example on how to approve an MPA auth review using the API."
-  else
-    # Print out information of the created invitation.
+  if response.result.nil? || response.result.multi_party_auth_review.empty?
+    # Prints out information of the created invitation.
     puts "Customer user access invitation was sent for customerId = #{customer_id} " \
       "email address = '#{email_address}', " \
       "access role = '#{access_role}'. The invitation resource name is " \
       "#{response.result&.resource_name || 'N/A'}."
+  else
+    puts "A multi-party auth review was triggered. The MPA review resource " \
+      "name is #{response.result.multi_party_auth_review}. Ask a second " \
+      "administrator to approve this request to send the user access invitation. " \
+      "See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
+      "for an example on how to approve an MPA auth review using the API."
   end
   # [END invite_user_with_access_role]
 end
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -85,8 +84,8 @@ if __FILE__ == $0
   options[:email_address] = 'INSERT_EMAIL_ADDRESS_HERE'
   options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
 
-  parser = OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -110,21 +109,7 @@ if __FILE__ == $0
       puts opts
       exit
     end
-  end
-  parser.parse!
-
-  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE' ||
-      options[:email_address].nil? || options[:email_address] == 'INSERT_EMAIL_ADDRESS_HERE' ||
-      options[:access_role].nil? || options[:access_role] == 'INSERT_ACCESS_ROLE_HERE'
-    puts "Missing required arguments. Customer ID (-C), Email Address (-E), and Access Role (-R) are required.\n\n"
-    puts parser
-    exit 1
-  end
-
-  unless ACCESS_ROLES.include?(options[:access_role]&.upcase)
-    puts "Invalid access role. Must be one of: #{ACCESS_ROLES.join(', ')}"
-    exit 1
-  end
+  end.parse!
 
   begin
     invite_user_with_access_role(
@@ -133,18 +118,16 @@ if __FILE__ == $0
       options.fetch(:access_role),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
-      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("\tError with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise

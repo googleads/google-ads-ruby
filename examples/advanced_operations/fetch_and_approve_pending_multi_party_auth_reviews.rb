@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
+# Encoding: utf-8
 #
 # Copyright 2026 Google LLC
 #
@@ -28,24 +28,22 @@ def fetch_and_approve_pending_multi_party_auth_reviews(customer_id)
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  # Sanitizes the customer ID to handle hyphenated inputs.
   customer_id = customer_id.to_s.tr('-', '')
 
   # Retrieve the list of pending MPA reviews.
   pending_reviews = fetch_pending_mpa_reviews(client, customer_id)
 
-  if !pending_reviews.empty?
+  if pending_reviews.empty?
+    puts "No pending multi-party auth reviews found for customer ID #{customer_id}."
+  else
     # Multi-party auth reviews can only be resolved one at a time. In this
     # code example, we illustrate approving the first pending review request.
     approve_mpa_review(client, customer_id, pending_reviews.first)
-  else
-    puts "No pending multi-party auth reviews found for customer ID #{customer_id}."
   end
 end
 
 # [START fetch_mpa_review]
 def fetch_pending_mpa_reviews(client, customer_id)
-  customer_id = customer_id.to_s.tr('-', '')
   pending_reviews = []
 
   # Create a query that will retrieve all the pending MPA reviews.
@@ -110,7 +108,6 @@ end
 
 # [START approve_mpa_review]
 def approve_mpa_review(client, customer_id, pending_review)
-  customer_id = customer_id.to_s.tr('-', '')
   # Currently, you can only approve one request at a time. In addition, the approvals
   # can only be done by a second administrator.
   operation = client.operation.resolve_multi_party_auth_review do |op|
@@ -128,9 +125,10 @@ def approve_mpa_review(client, customer_id, pending_review)
   if result_or_error&.result
     result = result_or_error.result
     puts "Approved multi-party auth review: #{result.multi_party_auth_review}."
-    if !result.customer_user_access_invitation.to_s.empty?
+    case result.resolved_resource
+    when :customer_user_access_invitation
       puts "New user invitation created: #{result.customer_user_access_invitation}"
-    elsif !result.customer_user_access.to_s.empty?
+    when :customer_user_access
       puts "Affected customer user access resource: #{result.customer_user_access}"
     end
   elsif result_or_error&.partial_failure_error
@@ -154,7 +152,7 @@ def approve_mpa_review(client, customer_id, pending_review)
 end
 # [END approve_mpa_review]
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -166,8 +164,8 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
-  parser = OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -183,32 +181,23 @@ if __FILE__ == $0
       puts opts
       exit
     end
-  end
-  parser.parse!
-
-  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
-    puts "Missing required argument: --customer-id (-C) is required.\n\n"
-    puts parser
-    exit 1
-  end
+  end.parse!
 
   begin
     fetch_and_approve_pending_multi_party_auth_reviews(
-      options.fetch(:customer_id)
+      options.fetch(:customer_id),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
-      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("\tError with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise
