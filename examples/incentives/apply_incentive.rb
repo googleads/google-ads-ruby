@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
+# Encoding: utf-8
 #
 # Copyright 2026 Google LLC
 #
@@ -14,15 +14,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 # This example applies an incentive to a user's account.
 #
 # This example is a no-op if the user already has an accepted incentive. If the user attempts to
 # apply a new incentive, the response will simply return the existing incentive that has already
 # been applied to the account.
 
-require 'google/ads/google_ads'
 require 'optparse'
+require 'google/ads/google_ads'
 
 # [START apply_incentive]
 def apply_incentive(customer_id, incentive_id, country_code = 'US')
@@ -30,29 +30,35 @@ def apply_incentive(customer_id, incentive_id, country_code = 'US')
   # if no path is passed.
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
+  cleaned_country = country_code&.to_s&.strip
+
   # Issues the request.
   request_args = {
     customer_id: customer_id.to_s.tr('-', ''),
     selected_incentive_id: incentive_id ? Integer(incentive_id) : nil,
-    country_code: country_code.to_s.strip,
+    country_code: cleaned_country&.empty? ? nil : cleaned_country,
   }.compact
 
-  response = client.service.incentive.apply_incentive(request_args)
+  response = client.service.incentive.apply_incentive(**request_args)
 
   # Processes the response.
-  if !response.creation_time.to_s.empty?
-    puts "Incentive was created at '#{response.creation_time}'."
+  messages = []
+  unless response.creation_time.empty?
+    messages << "Incentive was created at '#{response.creation_time}'."
   end
-  if !response.coupon_code.to_s.empty?
-    puts "Applied incentive with coupon code '#{response.coupon_code}'."
+  unless response.coupon_code.empty?
+    messages << "Applied incentive with coupon code '#{response.coupon_code}'."
   end
-  if response.creation_time.to_s.empty? && response.coupon_code.to_s.empty?
-    puts "Incentive applied successfully."
+
+  if messages.empty?
+    puts 'Incentive applied successfully.'
+  else
+    puts messages
   end
 end
 # [END apply_incentive]
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -64,12 +70,10 @@ if __FILE__ == $0
   # Running the example with -h will print the command line usage.
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
   options[:incentive_id] = 'INSERT_INCENTIVE_ID_HERE'
-
-  # The country code defaults to US.
   options[:country_code] = 'US'
 
-  parser = OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -93,43 +97,25 @@ if __FILE__ == $0
       puts opts
       exit
     end
-  end
-  parser.parse!
-
-  # Check if required parameters are present.
-  if options[:customer_id].nil? || options[:customer_id] == 'INSERT_CUSTOMER_ID_HERE'
-    puts "Missing required argument: --customer-id (-C) is required.\n\n"
-    puts parser
-    exit 1
-  end
-
-  if options[:incentive_id].nil? || options[:incentive_id] == 'INSERT_INCENTIVE_ID_HERE'
-    puts "Missing required argument: --incentive-id (-I) is required.\n\n"
-    puts parser
-    exit 1
-  end
-
-  if options[:country_code].to_s.strip.empty?
-    puts "Missing required argument: --country-code (-K) is required.\n\n"
-    puts parser
-    exit 1
-  end
+  end.parse!
 
   begin
-    apply_incentive(options[:customer_id], options[:incentive_id], options[:country_code])
+    apply_incentive(
+      options.fetch(:customer_id),
+      options.fetch(:incentive_id),
+      options[:country_code],
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
-      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("\tError with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
+# Encoding: utf-8
 #
 # Copyright 2026 Google LLC
 #
@@ -14,11 +14,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
 # This example fetches the available incentives for a user.
 
-require 'google/ads/google_ads'
+require 'bigdecimal'
 require 'optparse'
+require 'google/ads/google_ads'
 
 # [START fetch_incentives]
 def fetch_incentives(email, language_code = 'en', country_code = 'US')
@@ -32,10 +33,10 @@ def fetch_incentives(email, language_code = 'en', country_code = 'US')
     language_code: language_code,
     country_code: country_code,
     # Passing :ACQUISITION as the symbol representation of the IncentiveType enum.
-    incentive_type: :ACQUISITION
+    incentive_type: :ACQUISITION,
   }.compact
 
-  response = client.service.incentive.fetch_incentive(request_args)
+  response = client.service.incentive.fetch_incentive(**request_args)
 
   # Processes the response.
   if response.incentive_offer.nil? || response.incentive_offer.offer_type == :NO_INCENTIVE
@@ -50,7 +51,7 @@ def fetch_incentives(email, language_code = 'en', country_code = 'US')
     [cyo.low_offer, cyo.medium_offer, cyo.high_offer].compact.each do |incentive|
       print_incentive_details(incentive)
     end
-    if !response.incentive_offer.consolidated_terms_and_conditions_url.to_s.empty?
+    unless response.incentive_offer.consolidated_terms_and_conditions_url.empty?
       puts "Consolidated terms and conditions: '#{response.incentive_offer.consolidated_terms_and_conditions_url}'"
     end
   else
@@ -59,15 +60,13 @@ def fetch_incentives(email, language_code = 'en', country_code = 'US')
   end
 end
 
-alias fetch_incentive fetch_incentives
-
 def print_incentive_details(incentive)
   return if incentive.nil?
 
   puts '=' * 68
   puts "Incentive ID: '#{incentive.incentive_id}'"
   puts "Incentive requirement: '#{format_requirement(incentive.requirement)}'"
-  if !incentive.incentive_terms_and_conditions_url.to_s.empty?
+  unless incentive.incentive_terms_and_conditions_url.empty?
     puts "Incentive terms and conditions: '#{incentive.incentive_terms_and_conditions_url}'"
   end
   puts '=' * 68
@@ -89,16 +88,14 @@ end
 def format_money(money)
   return 'N/A' if money.nil?
 
-  units = (money.units || 0).to_f
-  nanos = (money.nanos || 0).to_f
-  currency = money.currency_code.to_s.empty? ? '' : " #{money.currency_code}"
+  amount = BigDecimal(money.units) + (BigDecimal(money.nanos) / 1_000_000_000)
+  currency = money.currency_code.empty? ? '' : " #{money.currency_code}"
 
-  amount = units + (nanos / 1_000_000_000.0)
-  sprintf('%.2f%s', amount, currency)
+  format('%.2f%s', amount, currency)
 end
 # [END fetch_incentives]
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the default values below, or on
@@ -112,8 +109,8 @@ if __FILE__ == $0
   options[:language_code] = 'en'
   options[:country_code] = 'US'
 
-  parser = OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+  OptionParser.new do |opts|
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -137,31 +134,25 @@ if __FILE__ == $0
       puts opts
       exit
     end
-  end
-  parser.parse!
-
-  # Check if required parameters are present.
-  if options[:email].to_s.strip.empty? || options[:email] == 'INSERT_EMAIL_HERE'
-    puts "Missing required argument: --email (-E) is required.\n\n"
-    puts parser
-    exit 1
-  end
+  end.parse!
 
   begin
-    fetch_incentives(options[:email], options[:language_code], options[:country_code])
+    fetch_incentives(
+      options.fetch(:email),
+      options[:language_code],
+      options[:country_code],
+    )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
-    STDERR.printf("Request with ID '%s' failed with status '%s' and includes the following errors:\n",
-      e.request_id, e.class.name)
     e.failure.errors.each do |error|
-      STDERR.printf("\tError with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\t\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\t\tType: %s, Code: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise
