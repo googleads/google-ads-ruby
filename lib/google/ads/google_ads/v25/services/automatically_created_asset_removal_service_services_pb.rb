@@ -25,7 +25,7 @@ module Google
       module V25
         module Services
           module AutomaticallyCreatedAssetRemovalService
-            # Service to remove automatically created assets.
+            # Service to remove text customization (formerly automatically created assets).
             class Service
 
               include ::GRPC::GenericService
@@ -34,7 +34,8 @@ module Google
               self.unmarshal_class_method = :decode
               self.service_name = 'google.ads.googleads.v25.services.AutomaticallyCreatedAssetRemovalService'
 
-              # Removes automatically created assets from a campaign.
+              # Removes text customization (formerly automatically created assets) from a
+              # campaign.
               #
               # List of thrown errors:
               #   [AuthenticationError]()

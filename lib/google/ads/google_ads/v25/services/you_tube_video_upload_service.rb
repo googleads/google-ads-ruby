@@ -24,6 +24,7 @@ require "google/ads/google_ads/version"
 
 require "google/ads/google_ads/v25/services/you_tube_video_upload_service/credentials"
 require "google/ads/google_ads/v25/services/you_tube_video_upload_service/paths"
+require "google/ads/google_ads/v25/services/you_tube_video_upload_service/resumable_upload_stub"
 require "google/ads/google_ads/v25/services/you_tube_video_upload_service/client"
 
 module Google

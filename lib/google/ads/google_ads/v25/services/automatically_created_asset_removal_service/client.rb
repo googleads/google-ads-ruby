@@ -28,7 +28,7 @@ module Google
             ##
             # Client for the AutomaticallyCreatedAssetRemovalService service.
             #
-            # Service to remove automatically created assets.
+            # Service to remove text customization (formerly automatically created assets).
             #
             class Client
               # @private
@@ -181,7 +181,8 @@ module Google
               # Service calls
 
               ##
-              # Removes automatically created assets from a campaign.
+              # Removes text customization (formerly automatically created assets) from a
+              # campaign.
               #
               # List of thrown errors:
               #   [AuthenticationError]()

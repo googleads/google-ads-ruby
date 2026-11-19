@@ -12,7 +12,8 @@ module Google
           config,
           credentials_or_channel,
           endpoint,
-          deprecator
+          deprecator,
+          channel_args = nil
         )
           @lookup_util = lookup_util
           @logger = logger
@@ -20,6 +21,7 @@ module Google
           @credentials_or_channel = credentials_or_channel
           @endpoint = endpoint
           @deprecator = deprecator
+          @channel_args = channel_args
         end
 
         def call
@@ -31,7 +33,6 @@ module Google
             config.developer_token,
             config.login_customer_id,
             config.linked_customer_id,
-            config.use_cloud_org_for_api_access,
             config.ads_assistant
           )
 
@@ -64,11 +65,13 @@ module Google
         end
 
         def gax_service_params
-          {
+          params = {
             credentials: credentials_or_channel,
             metadata: headers,
             endpoint: endpoint
           }
+          params[:channel_args] = channel_args if channel_args
+          params
         end
 
         # Workaround for gRPC Ruby bug (grpc/grpc#22448):
@@ -89,8 +92,9 @@ module Google
             headers[:"linked-customer-id"] = config.linked_customer_id.to_s
           end
 
-          unless config.use_cloud_org_for_api_access
-            headers[:"developer-token"] = config.developer_token if config.developer_token
+          # Add the developer-token header if provided.
+          if config.developer_token && !config.developer_token.empty?
+            headers[:"developer-token"] = config.developer_token
           end
 
           if config.ads_assistant
@@ -131,6 +135,7 @@ module Google
         attr_reader :lookup_util
         attr_reader :endpoint
         attr_reader :deprecator
+        attr_reader :channel_args
       end
     end
   end

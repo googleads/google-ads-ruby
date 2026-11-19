@@ -313,10 +313,22 @@ def build_ad_group_ad_operations(client, ad_group_operations)
   ad_group_operations.each do |op|
     operations << client.operation.create_resource.ad_group_ad do |aga|
       aga.ad = client.resource.ad do |ad|
-        ad.expanded_text_ad = client.resource.expanded_text_ad_info do |eta|
-          eta.headline_part1 = "Cruise to Mars ##{(Time.new.to_f * 1000).to_i}"
-          eta.headline_part2 = "Best Space Cruise Line"
-          eta.description = "Buy your tickets now!"
+        ad.responsive_search_ad = client.resource.responsive_search_ad_info do |rsa|
+          rsa.headlines << client.resource.ad_text_asset do |ta|
+            ta.text = "Cruise to Mars ##{(Time.new.to_f * 1000).to_i}"
+          end
+          rsa.headlines << client.resource.ad_text_asset do |ta|
+            ta.text = "Best Space Cruise Line"
+          end
+          rsa.headlines << client.resource.ad_text_asset do |ta|
+            ta.text = "Experience the Stars"
+          end
+          rsa.descriptions << client.resource.ad_text_asset do |ta|
+            ta.text = "Buy your tickets now"
+          end
+          rsa.descriptions << client.resource.ad_text_asset do |ta|
+            ta.text = "Visit the Red Planet"
+          end
         end
         ad.final_urls << "http://www.example.com"
       end

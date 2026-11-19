@@ -13,12 +13,11 @@ class TestMetadataInterceptor < Minitest::Test
       "dev_token",
       "login_id",
       "linked_id",
-      false,
       nil
     )
   end
 
-  def test_adds_developer_token_if_not_cloud_org
+  def test_adds_developer_token
     metadata = {}
     mi.request_response(
       request: nil,
@@ -67,31 +66,11 @@ class TestMetadataInterceptor < Minitest::Test
     assert_equal "gl-ruby/1.2.3 pb/1.2.3", metadata[:"x-goog-api-client"]
   end
 
-  def test_skips_developer_token_if_cloud_org
-    mi_cloud = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
-      "dev_token",
-      "login_id",
-      "linked_id",
-      true,
-      nil
-    )
-    metadata = {}
-    mi_cloud.request_response(
-      request: nil,
-      call: nil,
-      method: nil,
-      metadata: metadata
-    ) do
-    end
-    assert_nil metadata[:"developer-token"]
-  end
-
   def test_appends_ads_assistant_to_x_goog_api_client
     mi_ads_assistant = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
       "dev_token",
       "login_id",
       "linked_id",
-      false,
       "1.2.3"
     )
     metadata = { :"x-goog-api-client" => "gl-ruby/1.2.3" }
@@ -104,5 +83,41 @@ class TestMetadataInterceptor < Minitest::Test
     end
     assert_includes metadata[:"x-goog-api-client"], "gaada/1.2.3"
     assert_includes metadata[:"x-goog-api-client"], "pb/#{Gem.loaded_specs["google-protobuf"].version}"
+  end
+
+  def test_skips_developer_token_if_nil
+    mi_nil = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
+      nil,
+      "login_id",
+      "linked_id",
+      nil
+    )
+    metadata = {}
+    mi_nil.request_response(
+      request: nil,
+      call: nil,
+      method: nil,
+      metadata: metadata
+    ) do
+    end
+    assert_nil metadata[:"developer-token"]
+  end
+
+  def test_skips_developer_token_if_empty
+    mi_empty = Google::Ads::GoogleAds::Interceptors::MetadataInterceptor.new(
+      "",
+      "login_id",
+      "linked_id",
+      nil
+    )
+    metadata = {}
+    mi_empty.request_response(
+      request: nil,
+      call: nil,
+      method: nil,
+      metadata: metadata
+    ) do
+    end
+    assert_nil metadata[:"developer-token"]
   end
 end

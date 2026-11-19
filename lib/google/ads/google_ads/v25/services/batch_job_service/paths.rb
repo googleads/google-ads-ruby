@@ -1187,6 +1187,23 @@ module Google
               end
 
               ##
+              # Create a fully-qualified LiftMeasurementConfig resource string.
+              #
+              # The resource will be in the following format:
+              #
+              # `customers/{customer_id}/liftMeasurementConfigs/{lift_measurement_configuration_id}`
+              #
+              # @param customer_id [String]
+              # @param lift_measurement_configuration_id [String]
+              #
+              # @return [::String]
+              def lift_measurement_config_path customer_id:, lift_measurement_configuration_id:
+                raise ::ArgumentError, "customer_id cannot contain /" if customer_id.to_s.include? "/"
+
+                "customers/#{customer_id}/liftMeasurementConfigs/#{lift_measurement_configuration_id}"
+              end
+
+              ##
               # Create a fully-qualified MobileAppCategoryConstant resource string.
               #
               # The resource will be in the following format:
