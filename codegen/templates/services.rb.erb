@@ -13,7 +13,8 @@ module Google
               credentials:,
               metadata:,
               endpoint:,
-              deprecation:
+              deprecation:,
+              channel_args: nil
             )
               @interceptors = [
                 error_interceptor,
@@ -24,6 +25,7 @@ module Google
               @metadata = metadata
               @endpoint = endpoint
               @deprecation = deprecation
+              @channel_args = channel_args
             end
 
             def have_logging_interceptor?
@@ -36,6 +38,7 @@ module Google
               svc = ServiceWrapper.new(
                 service: <%= service.name %>.new do |config|
                   config.credentials = @credentials
+                  config.channel_args = (config.channel_args || {}).merge(@channel_args) if @channel_args
                   config.interceptors = @interceptors
                   config.metadata = @metadata
                   config.endpoint = @endpoint

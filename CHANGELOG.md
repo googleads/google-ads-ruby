@@ -1,3 +1,38 @@
+46.2.0
+------
+- Added support for version 26.2 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
+
+46.1.0
+------
+- Added support for version 26.1 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
+
+46.0.0
+------
+- Added support for version 26 of the Google Ads API: https://developers.google.com/google-ads/api/docs/release-notes
+- Added new examples: `add_ad_group_image_asset`, `add_responsive_search_ad_with_ad_customizer`, `create_asset_optimization_experiment`, `create_search_adopt_ai_max_experiment`, `evaluate_and_update_experiment`, `generate_audience_insights`, `generate_budget_recommendations`, and `get_recommendation_impact_metrics`.
+- Updated the ad group bid modifier examples for v26 (`get_ad_group_bid_modifiers` and `add_hotel_ad_group_bid_modifiers`).
+
+45.1.0
+------
+- Compatibility with v25.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Changed versioning strategy to align with semver (https://semver.org/)
+- Updated the generate forecast metrics example
+- Added text guidelines to the PMax example
+
+45.0.0
+-----
+- Removed `use_cloud_org_for_api_access` setting.
+- Removed developer token validation checks.
+
+44.0.0
+-----
+- Compatibility with v25.1 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Removed support for v21.
+
+43.0.0
+-----
+- Compatibility with v25.0 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+
 42.0.0
 -----
 - Compatibility with v24.2, v23.3, v22.2, v21.2 of the API: https://developers.google.com/google-ads/api/docs/release-notes
@@ -22,6 +57,7 @@
 40.0.0
 -----
 - Compatibility with v24 of the API: https://developers.google.com/google-ads/api/docs/release-notes
+- Removed support for v20.
 
 39.1.0
 -----

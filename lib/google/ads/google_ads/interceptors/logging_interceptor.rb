@@ -38,6 +38,7 @@ module Google
             customer_user_access_invitation.email_address|
             change_event.user_email|
             local_services_lead.contact_details.phone_number|
+            local_services_lead.contact_details.phone_number_extension|
             local_services_lead.contact_details.email|
             local_services_lead.contact_details.consumer_name|
             local_services_lead_conversation.message_details.text
@@ -268,6 +269,9 @@ module Google
               end
               if message["contactDetails"].include?("phoneNumber")
                 message["contactDetails"]["phoneNumber"] = MASK_REPLACEMENT
+              end
+              if message["contactDetails"].include?("phoneNumberExtension")
+                message["contactDetails"]["phoneNumberExtension"] = MASK_REPLACEMENT
               end
               if message["contactDetails"].include?("consumerName")
                 message["contactDetails"]["consumerName"] = MASK_REPLACEMENT
