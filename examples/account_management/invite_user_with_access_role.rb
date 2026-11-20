@@ -21,10 +21,26 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+ACCESS_ROLES = %w[
+  ADMIN
+  STANDARD
+  READ_ONLY
+  EMAIL_ONLY
+].freeze
+
 def invite_user_with_access_role(customer_id, email_address, access_role)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
+
+  customer_id = customer_id.to_s.tr('-', '')
+
+  access_role_str = access_role.to_s.upcase
+  unless ACCESS_ROLES.include?(access_role_str)
+    raise ArgumentError, "Illegal access role specified. Expected one of " \
+      "#{ACCESS_ROLES.join(' ')}"
+  end
+  access_role = access_role_str.to_sym
 
   # [START invite_user_with_access_role]
   operation = client.operation.create_resource.customer_user_access_invitation do |inv|
@@ -38,10 +54,19 @@ def invite_user_with_access_role(customer_id, email_address, access_role)
     operation: operation,
   )
 
-  # Prints out information of the created invitation.
-  puts "Customer user access invitation was sent for customerId = #{customer_id} " \
-    "email address = '#{email_address}', " \
-    "access role = '#{access_role}'."
+  if response.result.nil? || response.result.multi_party_auth_review.empty?
+    # Prints out information of the created invitation.
+    puts "Customer user access invitation was sent for customerId = #{customer_id} " \
+      "email address = '#{email_address}', " \
+      "access role = '#{access_role}'. The invitation resource name is " \
+      "#{response.result&.resource_name || 'N/A'}."
+  else
+    puts "A multi-party auth review was triggered. The MPA review resource " \
+      "name is #{response.result.multi_party_auth_review}. Ask a second " \
+      "administrator to approve this request to send the user access invitation. " \
+      "See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
+      "for an example on how to approve an MPA auth review using the API."
+  end
   # [END invite_user_with_access_role]
 end
 
@@ -60,7 +85,7 @@ if __FILE__ == $PROGRAM_NAME
   options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: ruby %s [options]', File.basename(__FILE__))
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -88,21 +113,21 @@ if __FILE__ == $PROGRAM_NAME
 
   begin
     invite_user_with_access_role(
-      options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:customer_id),
       options.fetch(:email_address),
-      options.fetch(:access_role).to_sym,
+      options.fetch(:access_role),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise

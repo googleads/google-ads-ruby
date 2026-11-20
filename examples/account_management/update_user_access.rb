@@ -26,15 +26,26 @@
 require 'optparse'
 require 'google/ads/google_ads'
 
+ACCESS_ROLES = %w[
+  ADMIN
+  STANDARD
+  READ_ONLY
+  EMAIL_ONLY
+].freeze
+
 def update_user_access(customer_id, email_address, access_role)
   # GoogleAdsClient will read a config file from
   # ENV['HOME']/google_ads_config.rb when called without parameters
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
-  if !ACCESS_ROLES.include?(access_role)
-    raise "Illegal access role specified. Expected one of " \
-      "#{ACCESS_ROLES.join(" ")}"
+  customer_id = customer_id.to_s.tr('-', '')
+
+  access_role_str = access_role.to_s.upcase
+  unless ACCESS_ROLES.include?(access_role_str)
+    raise ArgumentError, "Illegal access role specified. Expected one of " \
+      "#{ACCESS_ROLES.join(' ')}"
   end
+  access_role = access_role_str.to_sym
 
   user_id = get_user_id(client, customer_id, email_address)
 
@@ -51,7 +62,8 @@ def get_user_id(client, customer_id, email_address)
       customer_user_access.access_role,
       customer_user_access.access_creation_date_time
     FROM customer_user_access
-    WHERE customer_user_access.email_address LIKE "#{email_address}"
+    WHERE customer_user_access.email_address LIKE '#{email_address}'
+    LIMIT 1
   QUERY
 
   response = client.service.google_ads.search(
@@ -59,7 +71,7 @@ def get_user_id(client, customer_id, email_address)
     query: query,
   )
 
-  result = response.first.customer_user_access
+  result = response.first&.customer_user_access
   if result
     puts "Customer user access with User ID #{result.user_id}, Access Role " \
       "#{result.access_role}, Creation Time #{result.access_creation_date_time}, " \
@@ -75,7 +87,7 @@ end
 def modify_user_access(client, customer_id, user_id, access_role)
   operation = client.operation.update_resource.customer_user_access(
       client.path.customer_user_access(customer_id, user_id)) do |ua|
-    ua.access_role = access_role.to_sym
+    ua.access_role = access_role
   end
 
   response = client.service.customer_user_access.mutate_customer_user_access(
@@ -83,18 +95,19 @@ def modify_user_access(client, customer_id, user_id, access_role)
     operation: operation,
   )
 
-  puts "Successfully updated customer user access with resource name " \
-    "#{response.result.resource_name}."
+  if response.result.nil? || response.result.multi_party_auth_review.empty?
+    puts "Successfully updated customer user access with resource name " \
+      "#{response.result&.resource_name || 'N/A'}."
+  else
+    puts "A multi-party auth review was triggered. The MPA review resource " \
+      "name is #{response.result.multi_party_auth_review}. Ask a second " \
+      "administrator to approve this request to make the requested user " \
+      "access changes. See advanced_operations/fetch_and_approve_pending_multi_party_auth_reviews.rb " \
+      "for an example on how to approve an MPA auth review using the API."
+  end
 end
 
-if __FILE__ == $0
-  ACCESS_ROLES = %w[
-    ADMIN
-    STANDARD
-    READ_ONLY
-    EMAIL_ONLY
-  ]
-
+if __FILE__ == $PROGRAM_NAME
   options = {}
   # The following parameter(s) should be provided to run the example. You can
   # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -109,7 +122,7 @@ if __FILE__ == $0
   options[:access_role] = 'INSERT_ACCESS_ROLE_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
+    opts.banner = "Usage: #{File.basename(__FILE__)} [options]"
 
     opts.separator ''
     opts.separator 'Options:'
@@ -137,21 +150,21 @@ if __FILE__ == $0
 
   begin
     update_user_access(
-      options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:customer_id),
       options.fetch(:email_address),
       options.fetch(:access_role),
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise
