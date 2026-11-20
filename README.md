@@ -6,7 +6,7 @@ easy-to-use client library for the [Google Ads API][].
 [google-gax]: https://github.com/googleapis/gax-ruby
 [Google Ads API]: https://developers.google.com/google-ads/api
 
-# Documentation for Users
+## Documentation
 
 **For thorough documentation of all features and utilities, visit our
 [Developers site Ruby guide][].**
@@ -120,7 +120,7 @@ examples—they are specifically used by Google.
 
 Once you're familiar with the [examples][], we also recommend familiarizing
 yourself with [factories][], which provides a set of high level convenience
-methods for working with the Google Ads API
+methods for working with the Google Ads API.
 
 [examples]: https://github.com/googleads/google-ads-ruby/blob/main/examples
 [factories]: https://developers.google.com/google-ads/api/docs/client-libs/ruby/factories
@@ -143,14 +143,6 @@ However, we will not actively fix bugs for unsupported Ruby versions. If you run
 into an issue on an older version of Ruby, be sure to upgrade to a new version
 and test again before filing an issue.
 
-# Authors
+## Authors
 
-Authors:
-
- - Danial Klimkin
- - Michael Cloonan
-
-Maintainers:
-
- - Michael Cloonan
- - Daniel Rodriguez
+- [Dora Sun](https://github.com/dorasun)

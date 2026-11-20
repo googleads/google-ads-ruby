@@ -21,9 +21,9 @@ require_relative 'lib/google/ads/google_ads/version.rb'
 Gem::Specification.new do |s|
   s.name          = 'google-ads-googleads'
   s.version       = Google::Ads::GoogleAds::CLIENT_LIB_VERSION
-  s.authors       = ['Google Inc']
+  s.authors       = ['Google LLC']
   s.description   = '%s is a Google Ads API client library for Ruby' % s.name
-  s.email         = ['adwordsapiadvisor+michael@google.com']
+  s.email         = ['googleapis-packages@google.com']
   s.files = Dir.glob(File.join('lib', '**', '*.rb')) +
       Dir.glob(File.join('lib', '**', '*.json')) +
       %w(Rakefile README.md CHANGELOG.md google_ads_config.rb THIRD-PARTY-LICENCES.txt)

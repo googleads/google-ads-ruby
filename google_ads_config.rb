@@ -24,7 +24,7 @@ Google::Ads::GoogleAds::Config.new do |c|
 
   # You can also authenticate using Application Default Credentials (ADC)
   # To understand how ADC discovers credentials in a given environment,
-  # see: https://developers.google.com/identity/protocols/application-default-credentials.
+  # see: https://cloud.google.com/docs/authentication/application-default-credentials
   c.use_application_default_credentials = false
 
   # You can also authenticate using a service account. If "keyfile" is
@@ -36,7 +36,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # c.impersonate = 'INSERT_EMAIL_ADDRESS_TO_IMPERSONATE_HERE'
 
   # Alternatively, you may specify your own custom authentication, which can be:
-  # A `Google::Auth::Credentials` uses a the properties of its represented
+  # A `Google::Auth::Credentials` uses the properties of its represented
   # keyfile for authenticating requests made by this client.
   # A `String` will be treated as the path to the keyfile to be used for the
   # construction of credentials for this client.
@@ -57,7 +57,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # Required for manager accounts only: Specify the login customer ID used to
   # authenticate API calls. This will be the customer ID of the authenticated
   # manager account. If you need to use different values for this field, then
-  # make sure fetch a new copy of the service after each time you change the
+  # make sure to fetch a new copy of the service after each time you change the
   # value.
   # c.login_customer_id = 'INSERT_LOGIN_CUSTOMER_ID_HERE'
 
