@@ -29,20 +29,13 @@ def upload_image_asset(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   url = 'https://gaagl.page.link/Eit5'
-  image_data = open(url) { |f| f.read }
+  image_data = URI.open(url, &:read)
 
   # Create the operation for uploading the image asset.
   asset_operation = client.operation.create_resource.asset do |asset|
     asset.type = :IMAGE
     asset.image_asset = client.resource.image_asset do |image_asset|
       image_asset.data = image_data
-      image_asset.file_size = image_data.length()
-      image_asset.mime_type = :IMAGE_JPEG
-      image_asset.full_size = client.resource.image_dimension do |dimension|
-        dimension.height_pixels = 315
-        dimension.width_pixels = 600
-        dimension.url = url
-      end
     end
     # Provide a unique friendly name to identify your asset.
     # When there is an existing image asset with the same content but a different
