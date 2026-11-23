@@ -110,8 +110,9 @@ def create_campaign(client, customer_id, budget_resource_name)
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
     # Optional fields
-    c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
-    c.end_date_time = DateTime.parse(Date.today.next_year.to_s).strftime('%Y%m%d %H:%M:%S')
+    today = Date.today
+    c.start_date_time = (today + 1).strftime('%Y-%m-%d 00:00:00')
+    c.end_date_time = today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
 
   operation = client.operation.create_resource.campaign(campaign)
@@ -207,7 +208,7 @@ def create_app_ad(client, customer_id, ad_group_resource_name)
         end
         # Optional: You can set up to 20 image assets for your campaign.
         # info.images << client.resource.ad_image_asset do |aia|
-        #   ala = "[INSERT_AD_IMAGE_RESOURCE_NAME(s)_HERE]"
+        #   aia.asset = 'INSERT_AD_IMAGE_ASSET_RESOURCE_NAME_HERE'
         # end
       end
     end
@@ -234,7 +235,7 @@ if __FILE__ == $0
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: add_app_campaigns.rb [options]')
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'

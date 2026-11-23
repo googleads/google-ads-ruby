@@ -73,11 +73,13 @@ def add_campaigns(customer_id)
     # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
     c.contains_eu_political_advertising = :DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
 
+    today = Date.today
+
     # Optional: Set the start date.
-    c.start_date_time = DateTime.parse((Date.today + 1).to_s).strftime('%Y%m%d %H:%M:%S')
+    c.start_date_time = (today + 1).strftime('%Y-%m-%d 00:00:00')
 
     # Optional: Set the end date.
-    c.end_date_time = DateTime.parse((Date.today.next_year).to_s).strftime('%Y%m%d %H:%M:%S')
+    c.end_date_time = today.next_year.strftime('%Y-%m-%d 23:59:59')
   end
   # [END add_campaigns_1]
 
@@ -106,7 +108,7 @@ if __FILE__ == $0
   options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
 
   OptionParser.new do |opts|
-    opts.banner = sprintf('Usage: add_campaigns.rb [options]')
+    opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
     opts.separator ''
     opts.separator 'Options:'
