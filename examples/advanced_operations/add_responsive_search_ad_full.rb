@@ -161,7 +161,7 @@ def create_campaign_budget(client, customer_id)
   operation = client.operation.create_resource.campaign_budget do |cb|
     cb.name = "Campaign budget #{SecureRandom.uuid}"
     cb.delivery_method = :STANDARD
-    cb.amount_micros = 500_000 # 500,000
+    cb.amount_micros = 500_000
   end
 
   # Add budget.
@@ -425,10 +425,13 @@ end
 # Main function that creates all necessary entities for the example.
 #
 # Args:
-#   client: An initialized GoogleAdsClient instance.
 #   customer_id: A client customer ID.
 #   customizer_attribute_name: (optional) The name of the customizer attribute to be created.
-def add_responsive_search_ad_full(client, customer_id, customizer_attribute_name = nil)
+def add_responsive_search_ad_full(customer_id, customizer_attribute_name = nil)
+  # GoogleAdsClient will read a config file from
+  # ENV['HOME']/google_ads_config.rb when called without parameters.
+  client = Google::Ads::GoogleAds::GoogleAdsClient.new
+
   unless customizer_attribute_name.to_s.empty?
     customizer_attribute_resource_name = create_customizer_attribute(
       client,
@@ -473,7 +476,16 @@ end
 # Entry point of the script
 if __FILE__ == $0
   options = {}
+  # The following parameter(s) should be provided to run the example. You can
+  # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
+  # the command line.
+  #
+  # Parameters passed on the command line will override any parameters set in
+  # code.
+  #
   # Running the example with -h will print the command line usage.
+  options[:customer_id] = 'INSERT_CUSTOMER_ID_HERE'
+
   OptionParser.new do |opts|
     opts.banner = sprintf('Usage: %s [options]', File.basename(__FILE__))
 
@@ -505,15 +517,8 @@ if __FILE__ == $0
   end.parse!
 
   begin
-    customer_id = options.fetch(:customer_id).tr("-", "")
-
-    # GoogleAdsClient will read a config file from
-    # ENV['HOME']/google_ads_config.rb when called without parameters.
-    client = Google::Ads::GoogleAds::GoogleAdsClient.new
-
     add_responsive_search_ad_full(
-      client,
-      customer_id,
+      options.fetch(:customer_id).tr("-", ""),
       options[:customizer_attribute_name],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
@@ -530,8 +535,5 @@ if __FILE__ == $0
       end
     end
     raise
-  rescue KeyError
-    STDERR.puts "Missing required argument: -C or --customer-id"
-    exit 1
   end
 end
