@@ -76,7 +76,7 @@ for a different project), you probably don't need to do it again.
 This section is intended to provide background regarding how we generate our client libraries so
 that you only submit pull requests that we will be able to use (we don't want you wasting your
 time). We automatically generate the majority of our client library code from these
-[protocol buffers](https://github.com/googleapis/googleapis/tree/master/google/ads/googleads)
+[protocol buffers](https://github.com/googleapis/googleapis/tree/HEAD/google/ads/googleads)
 that define the API. As a result, the names of certain methods and variables may be
 created automatically. Generated code is generally located in folders named after an API
 version, such as `v26`. We will not be able to accept pull requests for open source
