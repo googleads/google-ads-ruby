@@ -29,7 +29,7 @@ def upload_image_asset(customer_id)
   client = Google::Ads::GoogleAds::GoogleAdsClient.new
 
   url = 'https://gaagl.page.link/Eit5'
-  image_data = URI.open(url, &:read)
+  image_data = URI(url).open(&:read)
 
   # Create the operation for uploading the image asset.
   asset_operation = client.operation.create_resource.asset do |asset|
