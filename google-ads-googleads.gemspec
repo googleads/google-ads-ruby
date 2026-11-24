@@ -1,29 +1,28 @@
 # -*- ruby -*-
 # encoding: utf-8
 #
-# Copyright:: Copyright 2017, Google Inc. All Rights Reserved.
+# Copyright 2017 Google LLC
 #
-# License:: Licensed under the Apache License, Version 2.0 (the "License");
-#           you may not use this file except in compliance with the License.
-#           You may obtain a copy of the License at
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-#           http://www.apache.org/licenses/LICENSE-2.0
+#     https://www.apache.org/licenses/LICENSE-2.0
 #
-#           Unless required by applicable law or agreed to in writing, software
-#           distributed under the License is distributed on an "AS IS" BASIS,
-#           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-#           implied.
-#           See the License for the specific language governing permissions and
-#           limitations under the License.
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 require_relative 'lib/google/ads/google_ads/version.rb'
 
 Gem::Specification.new do |s|
   s.name          = 'google-ads-googleads'
   s.version       = Google::Ads::GoogleAds::CLIENT_LIB_VERSION
-  s.authors       = ['Google Inc']
-  s.description   = '%s is a Google Ads API client library for Ruby' % s.name
-  s.email         = ['adwordsapiadvisor+michael@google.com']
+  s.authors       = ['Google LLC']
+  s.description   = "#{s.name} is a Google Ads API client library for Ruby"
+  s.email         = ['googleapis-packages@google.com']
   s.files = Dir.glob(File.join('lib', '**', '*.rb')) +
       Dir.glob(File.join('lib', '**', '*.json')) +
       %w(Rakefile README.md CHANGELOG.md google_ads_config.rb THIRD-PARTY-LICENCES.txt)
@@ -31,7 +30,7 @@ Gem::Specification.new do |s|
   s.license = 'Apache-2.0'
   s.platform = Gem::Platform::RUBY
   s.require_paths = ['lib']
-  s.required_ruby_version = '>= 3.0.0'
+  s.required_ruby_version = '>= 3.2.0'
   s.summary = 'Google client library for the Google Ads API'
 
   s.add_dependency 'gapic-common', ['>= 1.5.0', '< 3.0']

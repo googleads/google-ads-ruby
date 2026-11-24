@@ -24,7 +24,7 @@ Google::Ads::GoogleAds::Config.new do |c|
 
   # You can also authenticate using Application Default Credentials (ADC)
   # To understand how ADC discovers credentials in a given environment,
-  # see: https://developers.google.com/identity/protocols/application-default-credentials.
+  # see: https://cloud.google.com/docs/authentication/application-default-credentials
   c.use_application_default_credentials = false
 
   # You can also authenticate using a service account. If "keyfile" is
@@ -36,7 +36,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # c.impersonate = 'INSERT_EMAIL_ADDRESS_TO_IMPERSONATE_HERE'
 
   # Alternatively, you may specify your own custom authentication, which can be:
-  # A `Google::Auth::Credentials` uses a the properties of its represented
+  # A `Google::Auth::Credentials` uses the properties of its represented
   # keyfile for authenticating requests made by this client.
   # A `String` will be treated as the path to the keyfile to be used for the
   # construction of credentials for this client.
@@ -57,7 +57,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # Required for manager accounts only: Specify the login customer ID used to
   # authenticate API calls. This will be the customer ID of the authenticated
   # manager account. If you need to use different values for this field, then
-  # make sure fetch a new copy of the service after each time you change the
+  # make sure to fetch a new copy of the service after each time you change the
   # value.
   # c.login_customer_id = 'INSERT_LOGIN_CUSTOMER_ID_HERE'
 
@@ -69,7 +69,7 @@ Google::Ads::GoogleAds::Config.new do |c|
   # instead of 123-456-7890.
   # Read https://support.google.com/google-ads/answer/7365001 to learn more
   # about Linked Accounts.
-  # c.linked_customer_id = "INSERT_LINKED_CUSTOMER_ID_HERE"
+  # c.linked_customer_id = 'INSERT_LINKED_CUSTOMER_ID_HERE'
 
   # Logging-related fields. You may also specify a logger after instantiation
   # by using client.logger=.
@@ -81,15 +81,15 @@ Google::Ads::GoogleAds::Config.new do |c|
 
   # The location where you want the logs to be recorded. This will be passed
   # along to the logger.
-  # You can provide a filename as a String, an IO object like STDOUT or STDERR,
+  # You can provide a filename as a String, an IO object like $stdout or $stderr,
   # or an open file.
-  c.log_target = STDOUT
+  c.log_target = $stdout
 
   # Instead of specifying logging through level and target, you can also pass a
   # logger directly (e.g. passing Rails.logger in a config/initializer). The
   # passed logger will override log_level and log_target.
-  # c.logger = Logger.new(STDOUT)
+  # c.logger = Logger.new($stdout)
 
   # If you need to use a HTTP proxy you can set one with this config attribute
-  # c.http_proxy = "http://example.com:8080"
+  # c.http_proxy = 'http://example.com:8080'
 end
