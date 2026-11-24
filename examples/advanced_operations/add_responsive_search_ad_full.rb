@@ -29,23 +29,23 @@ require 'date'
 require 'securerandom'
 
 # Keywords from user.
-KEYWORD_TEXT_EXACT = "example of exact match"
-KEYWORD_TEXT_PHRASE = "example of phrase match"
-KEYWORD_TEXT_BROAD = "example of broad match"
+KEYWORD_TEXT_EXACT = 'example of exact match'
+KEYWORD_TEXT_PHRASE = 'example of phrase match'
+KEYWORD_TEXT_BROAD = 'example of broad match'
 
 # Geo targeting from user.
-GEO_LOCATION_1 = "Buenos Aires"
-GEO_LOCATION_2 = "San Isidro"
-GEO_LOCATION_3 = "Mar del Plata"
+GEO_LOCATION_1 = 'Buenos Aires'
+GEO_LOCATION_2 = 'San Isidro'
+GEO_LOCATION_3 = 'Mar del Plata'
 
 # LOCALE and COUNTRY_CODE are used for geo targeting.
 # LOCALE uses ISO 639-1 format. If an invalid LOCALE is given,
 # 'en' is used by default.
-LOCALE = "es"
+LOCALE = 'es'
 
 # A list of country codes can be referenced here:
 # https://developers.google.com/google-ads/api/data/geotargets
-COUNTRY_CODE = "AR"
+COUNTRY_CODE = 'AR'
 
 # Creates a customizer attribute with the given customizer attribute name.
 #
@@ -94,7 +94,7 @@ def link_customizer_attribute_to_customer(client, customer_id, customizer_attrib
       val.type = :PRICE
       # The ad customizer will dynamically replace the placeholder with this value
       # when the ad serves.
-      val.string_value = "100USD"
+      val.string_value = '100USD'
     end
   end
 
@@ -252,7 +252,7 @@ def create_ad_group(client, customer_id, campaign_resource_name)
     ag.campaign = campaign_resource_name
     ag.type = :SEARCH_STANDARD
     # If you want to set up a max CPC bid uncomment line below.
-    # ag.cpc_bid_micros = 1_000_000 # 1,000,000
+    # ag.cpc_bid_micros = 1_000_000
   end
 
   # Add the ad group.
@@ -283,25 +283,25 @@ def create_ad_group_ad(client, customer_id, ad_group_resource_name, customizer_a
     # Set responsive search ad info.
     # https://developers.google.com/google-ads/api/reference/rpc/latest/ResponsiveSearchAdInfo
     aga.ad = client.resource.ad do |ad|
-      ad.final_urls << "https://www.example.com/"
+      ad.final_urls << 'https://www.example.com/'
 
       # Headline 1 (pinned)
       pinned_headline = create_ad_text_asset(
         client,
-        "Headline 1 testing",
+        'Headline 1 testing',
         :HEADLINE_1,
       )
 
       # Headlines
       ad.responsive_search_ad = client.resource.responsive_search_ad_info do |rsa|
         rsa.headlines << pinned_headline
-        rsa.headlines << create_ad_text_asset(client, "Headline 2 testing")
-        rsa.headlines << create_ad_text_asset(client, "Headline 3 testing")
+        rsa.headlines << create_ad_text_asset(client, 'Headline 2 testing')
+        rsa.headlines << create_ad_text_asset(client, 'Headline 3 testing')
 
         # Descriptions
-        description_1 = create_ad_text_asset(client, "Desc 1 testing")
+        description_1 = create_ad_text_asset(client, 'Desc 1 testing')
         description_2 = if customizer_attribute_name.to_s.empty?
-          create_ad_text_asset(client, "Desc 2 testing")
+          create_ad_text_asset(client, 'Desc 2 testing')
         else
           create_ad_text_asset_with_customizer(client, customizer_attribute_name)
         end
@@ -310,8 +310,8 @@ def create_ad_group_ad(client, customer_id, ad_group_resource_name, customizer_a
         rsa.descriptions << description_2
 
         # Paths
-        rsa.path1 = "all-inclusive"
-        rsa.path2 = "deals"
+        rsa.path1 = 'all-inclusive'
+        rsa.path2 = 'deals'
       end
     end
   end
@@ -407,7 +407,7 @@ def add_geo_targeting(client, customer_id, campaign_resource_name)
   end
 
   if operations.empty?
-    puts "No geo target suggestions found for the given locations. Skipping campaign criteria creation."
+    puts 'No geo target suggestions found for the given locations. Skipping campaign criteria creation.'
     return
   end
 
@@ -502,8 +502,12 @@ if __FILE__ == $0
     # there is a limit for the number of enabled customizer attributes in one
     # account:
     # https://developers.google.com/google-ads/api/docs/responsive-search-ads/customize-responsive-search-ads#rules-and-limitations
-    opts.on('-n', '--customizer-attribute-name CUSTOMIZER-ATTRIBUTE-NAME', String,
-        'Customizer attribute name (optional)') do |v|
+    opts.on(
+      '-n',
+      '--customizer-attribute-name CUSTOMIZER-ATTRIBUTE-NAME',
+      String,
+      'Customizer attribute name (optional)',
+    ) do |v|
       options[:customizer_attribute_name] = v
     end
 
@@ -518,20 +522,20 @@ if __FILE__ == $0
 
   begin
     add_responsive_search_ad_full(
-      options.fetch(:customer_id).tr("-", ""),
+      options.fetch(:customer_id).tr('-', ''),
       options[:customizer_attribute_name],
     )
   rescue Google::Ads::GoogleAds::Errors::GoogleAdsError => e
     e.failure.errors.each do |error|
-      STDERR.printf("Error with message: %s\n", error.message)
+      $stderr.printf("Error with message: %s\n", error.message)
       if error.location
         error.location.field_path_elements.each do |field_path_element|
-          STDERR.printf("\tOn field: %s\n", field_path_element.field_name)
+          $stderr.printf("\tOn field: %s\n", field_path_element.field_name)
         end
       end
       error.error_code.to_h.each do |k, v|
         next if v == :UNSPECIFIED
-        STDERR.printf("\tType: %s\n\tCode: %s\n", k, v)
+        $stderr.printf("\tType: %s\n\tCode: %s\n", k, v)
       end
     end
     raise
